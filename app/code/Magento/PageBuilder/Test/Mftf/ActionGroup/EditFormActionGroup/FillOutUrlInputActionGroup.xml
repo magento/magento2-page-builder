@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillOutUrlInput">
+        <arguments>
+            <argument name="fieldName"/>
+            <argument name="linkName"/>
+            <argument name="searchString"/>
+            <argument name="searchResult"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('fieldName')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('fieldName')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="{{linkName}}" stepKey="selectOption"/>
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1"/>
+        <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" stepKey="focusOnField"/>
+        <fillField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="{{searchString}}" stepKey="fill2FirstLetters"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="waitForSearchResult"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="seeCMSPageAOnSearchResult"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="selectResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{searchResult}}</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

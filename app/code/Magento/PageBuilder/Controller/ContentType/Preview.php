@@ -17,6 +17,8 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
  * This isn't placed within the adminhtml folder as it has to extend from the front-end controllers app action to
  * ensure the content is rendered in the storefront scope.
  *
+ * @deprecated use \Magento\PageBuilder\Controller\Adminhtml\Stage\Preview
+ *
  * @api
  */
 class Preview extends \Magento\Framework\App\Action\Action implements HttpPostActionInterface

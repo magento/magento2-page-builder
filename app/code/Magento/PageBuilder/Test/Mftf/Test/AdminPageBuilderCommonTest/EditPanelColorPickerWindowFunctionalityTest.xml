@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="EditPanelColorPickerWindowFunctionalityTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Color Picker - Validate Color Picker Window Functionality"/>
+            <description value="Validate the following for the color picker window: 1) Hex chart, 2) Favorite colors, 3) Color picker area, 4) Light/Dark slide, 5) Hex Input, 6) Cancel button, 7) Apply button."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MC-2852"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Open Color Picker -->
+        <comment userInput="Open Color Picker" stepKey="commentOpen"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateDefault">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Default.value}}"/>
+        </actionGroup>
+        <!-- Validate Hex Chart -->
+        <comment userInput="Validate Hex Chart" stepKey="commentHexChart"/>
+        <waitForElementVisible selector="{{ColorPicker.firstColorBox}}" stepKey="waitForFirstColorBox"/>
+        <waitForElementVisible selector="{{ColorPicker.allColorBoxes}}" stepKey="waitForColorBoxes"/>
+        <seeNumberOfElements selector="{{ColorPicker.allColorBoxes}}" userInput="64" stepKey="verifyNumberOfColorBoxes"/>
+        <!-- Validate Color Wheel -->
+        <comment userInput="Validate Color Wheel" stepKey="commentColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.colorWheelColor(PageBuilderBackgroundColor_Default.colorWheelDefault)}}" stepKey="waitForColorWheelDefaultColor"/>
+        <click selector="{{ColorPicker.colorWheel}}" stepKey="clickColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorPicker.section, PageBuilderBackgroundColor_CenterColorPicker.fieldName, PageBuilderBackgroundColor_CenterColorPicker.rgb)}}" stepKey="waitForColorSwatchColor"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorPicker.hex}}" stepKey="seeColorInInputField"/>
+        <!-- Validate Clear Color Button-->
+        <comment userInput="Validate Clear Color Button" stepKey="commentClearColorButton"/>
+        <click selector="{{ColorPicker.clearColorBtn}}" stepKey="clickClearColorButton"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName, PageBuilderBackgroundColor_Default.colorSwatchColor)}}" stepKey="waitForColorSwatchColor2"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Default.value}}" stepKey="seeColorInInputField2"/>
+        <!-- Validate Hue Slider -->
+        <comment userInput="Validate Hue Slider" stepKey="commentHueSlider"/>
+        <click selector="{{ColorPicker.hueSlider}}" stepKey="clickHueSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgb)}}" stepKey="waitForColorSwatchColor3"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.hex}}" stepKey="seeColorInInputField3"/>
+        <!-- Validate Light/Dark Slider -->
+        <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
+        <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider}}" stepKey="seeColorInInputField4"/>
+        <!-- Validate Hex Input Field -->
+        <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
+        <!-- Validate Apply Button -->
+        <comment userInput="Validate Apply Button" stepKey="commentApplyButton"/>
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApplyButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <!-- Validate Cancel Button -->
+        <comment userInput="Validate Cancel Button" stepKey="commentCancelButton"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Hex_White.value}}" stepKey="inputColorInInputField2"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField2"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
+        <click selector="{{ColorPicker.cancelBtn}}" stepKey="clickCancelButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker2">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Validate Favorite Colors -->
+        <comment userInput="Validate Favorite Colors" stepKey="commentFavoriteColors"/>
+        <waitForElementVisible selector="{{ColorPicker.activeFavoriteColorBox(PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForActiveFavoriteColor"/>
+    </test>
+</tests>

@@ -13,7 +13,7 @@ define([
         defaults: {
             noticeMessage: '',
             listens: {
-                value: 'setNoticeMessage',
+                value: 'setNoticeMessage'
             }
         },
 
@@ -116,21 +116,22 @@ define([
         /**
          * Set the notice message on value change
          *
-         * @param value
+         * @param {any} value
          * @returns {exports}
          */
         setNoticeMessage: function (value) {
-            var noticeMessage = "",
+            var noticeMessage = '',
                 selectedOption = _.find(this.options(), function (option) {
                     return option.value === value;
                 });
 
-            if (selectedOption && typeof selectedOption.noticeMessage !== "undefined") {
+            if (selectedOption && typeof selectedOption.noticeMessage !== 'undefined') {
                 noticeMessage = selectedOption.noticeMessage;
             }
 
             this.noticeMessage(noticeMessage);
+
             return this;
-        },
+        }
     });
 });

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductCanCreatePageBuilderProductAttributeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Can create product attribute with pagebuilder"/>
+            <description value="The user should be able to create product attribute type of pagebuilder"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1423"/>
+            <testCaseId value="MC-1321"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-productAttribute"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{ProductAttributePage.url}}" stepKey="amOnProductAttributeCreationForm"/>
+        <fillField selector="{{AttributePropertiesSection.DefaultLabel}}" userInput="{{ProductAttributeFrontendLabel.label}}" stepKey="fillDefaultLabel"/>
+        <click selector="{{AttributePropertiesSection.InputType}}" stepKey="openInputTypeDropdown"/>
+        <see userInput="Page Builder" stepKey="seePageBuilderInputType"/>
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectOption1"/>
+        <waitForElementVisible time="10" selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="waitForSaveAndContinueButton"/>
+        <click selector="{{AttributePropertiesSection.SaveAndEdit}}" stepKey="saveAndEdit"/>
+        <waitForPageLoad time="10" stepKey="waitForPageToLoad"/>
+        <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderIsSaved"/>
+    </test>
+</tests>

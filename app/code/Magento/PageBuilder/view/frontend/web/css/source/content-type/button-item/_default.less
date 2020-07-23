@@ -7,46 +7,48 @@
 //  Default appearance styles
 //  _____________________________________________
 
-[data-content-type='button-item'] {
-    max-width: 100%;
-    [data-element='link'],
-    [data-element='empty_link'] {
+& when (@media-common = true) {
+    [data-content-type='button-item'] {
         max-width: 100%;
-        word-wrap: break-word;
-    }
-    [data-element='empty_link'] {
-        cursor: default;
-    }
-}
-
-a,
-button,
-div {
-    &.pagebuilder-button-link {
-        .lib-button-l();
-        .lib-button-as-link(
-            @_margin: 0 10px 10px 0,
-            @_padding: @button__padding__l
-        );
-        .lib-css(font-weight, @font-weight__semibold);
-        box-shadow: none;
-        box-sizing: border-box;
-        display: inline-block;
+        [data-element='link'],
+        [data-element='empty_link'] {
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+        [data-element='empty_link'] {
+            cursor: default;
+        }
     }
 
-    &.pagebuilder-button-primary {
-        .lib-link-as-button();
-        .lib-button-primary(@_button-margin: 0 10px 10px 0);
-        .lib-button-l();
-        .lib-css(border-radius, @button__border-radius);
-        box-shadow: none;
-    }
+    a,
+    button,
+    div {
+        &.pagebuilder-button-link {
+            .lib-button-l();
+            .lib-button-as-link(
+                @_margin: 0 10px 10px 0,
+                @_padding: @button__padding__l
+            );
+            .lib-css(font-weight, @font-weight__semibold);
+            box-shadow: none;
+            box-sizing: border-box;
+            display: inline-block;
+        }
 
-    &.pagebuilder-button-secondary {
-        .lib-link-as-button();
-        .lib-button(@_button-margin: 0 10px 10px 0);
-        .lib-button-l();
-        .lib-css(border-radius, @button__border-radius);
-        box-shadow: none;
+        &.pagebuilder-button-primary {
+            .lib-link-as-button();
+            .lib-button-primary(@_button-margin: 0 10px 10px 0);
+            .lib-button-l();
+            .lib-css(border-radius, @button__border-radius);
+            box-shadow: none;
+        }
+
+        &.pagebuilder-button-secondary {
+            .lib-link-as-button();
+            .lib-button(@_button-margin: 0 10px 10px 0);
+            .lib-button-l();
+            .lib-css(border-radius, @button__border-radius);
+            box-shadow: none;
+        }
     }
 }

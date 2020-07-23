@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderColumnBottomAlignmentAppearanceThroughBlockContentTypeTest" extends="BlockRenderColumnFullHeightAppearanceThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Bottom Alignment Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with bottom alignment appearance and all attributes through the Block content type."/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="MC-15224"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearanceColumn1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="validateColumnAppearanceBottomAligned" stepKey="validateColumn1AppearanceCMSBlockStage">
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateColumnAppearanceBottomAligned" stepKey="validateColumn1AppearanceCMSPageStage">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStage">
+            <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateColumnAppearanceBottomAligned" stepKey="validateColumn1AppearanceCMSPageStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStorefront">
+            <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+</tests>

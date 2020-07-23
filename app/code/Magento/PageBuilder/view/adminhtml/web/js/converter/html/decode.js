@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_directives, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

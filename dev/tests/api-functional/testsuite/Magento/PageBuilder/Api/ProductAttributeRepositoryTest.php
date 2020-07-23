@@ -45,10 +45,10 @@ class ProductAttributeRepositoryTest extends \Magento\TestFramework\TestCase\Web
                 "frontend_input" => "textarea",
                 "is_wysiwyg_enabled" => 1,
                 "is_visible_on_front" => true,
-                "is_searchable" => true,
-                "is_visible_in_advanced_search" => true,
-                "is_filterable" => true,
-                "is_filterable_in_search" => true,
+                "is_searchable" => false,
+                "is_visible_in_advanced_search" => false,
+                "is_filterable" => false,
+                "is_filterable_in_search" => false,
                 \Magento\Framework\Api\ExtensibleDataInterface::EXTENSION_ATTRIBUTES_KEY => [
                     'is_pagebuilder_enabled' => 1
                 ]

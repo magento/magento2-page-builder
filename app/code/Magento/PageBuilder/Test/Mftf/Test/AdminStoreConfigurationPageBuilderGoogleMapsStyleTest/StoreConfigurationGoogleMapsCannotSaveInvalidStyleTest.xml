@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGoogleMapsCannotSaveInvalidStyleTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
+            <title value="Validate Cannot Save Invalid Google Maps Style"/>
+            <description value="Tests that a user cannot save invalid Google Maps Style."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MC-2851"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Go To AdminContentManagementPage -->
+        <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <!-- Invalid: One Character -->
+        <comment userInput="Invalid: One Character" stepKey="commentInvalid1"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle1">
+            <argument name="style" value="{{googleMapsStyle.invalidOneCharacter}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError1">
+            <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
+            <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
+        </actionGroup>
+        <!-- Invalid: Missing Braces -->
+        <comment userInput="Invalid: Missing Braces" stepKey="commentInvalid2"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
+            <argument name="style" value="{{googleMapsStyle.invalidMissingBraces}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError2">
+            <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
+            <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
+        </actionGroup>
+        <!-- Invalid: Missing Comma -->
+        <comment userInput="Invalid: Missing Comma" stepKey="commentInvalid3"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle3">
+            <argument name="style" value="{{googleMapsStyle.invalidMMissingComma}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError3">
+            <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
+            <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
+        </actionGroup>
+        <!-- Verify Can Save Valid -->
+        <comment userInput="Verify Can Save Valid" stepKey="commentValid"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle4">
+            <argument name="style" value="{{googleMapsStyle.validLong}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
+        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
+        <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validLong}}" stepKey="seeStyle"/>
+    </test>
+</tests>

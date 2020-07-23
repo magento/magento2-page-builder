@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="DuplicateRowWithImageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Duplicate Row with an Image"/>
+            <description value="A user should be able to duplicate a row containing an Image content type. Verify on Stage and Storefront."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4305"/>
+            <testCaseId value="MC-5013"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Add Image to Stage -->
+        <comment userInput="Add Image to Stage" stepKey="commentAddImageToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Duplicate Row -->
+        <comment userInput="Duplicate Row" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeXCoordinate" value="5"/>
+            <argument name="contentTypeYCoordinate" value="5"/>
+        </actionGroup>
+        <!-- Validate content type is duplicated -->
+        <comment userInput="Validate content type is duplicated" stepKey="commentValidateDuplicateOnStage"/>
+        <seeElement selector="{{ImageOnStage.base('1')}}" stepKey="seeImage1"/>
+        <seeElement selector="{{RowOnStage.base('1')}}" stepKey="seeRow1"/>
+        <seeElement selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2"/>
+        <seeElement selector="{{RowOnStage.base('2')}}" stepKey="seeRow2"/>
+        <!-- Stage: Validate After Save -->
+        <comment userInput="Stage: Validate After Save" stepKey="CommentValidateOnStageAfterSave"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{ImageOnStage.base('1')}}" stepKey="seeImage1AfterSave"/>
+        <seeElement selector="{{RowOnStage.base('1')}}" stepKey="seeRow1AfterSave"/>
+        <seeElement selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2AfterSave"/>
+        <seeElement selector="{{RowOnStage.base('2')}}" stepKey="seeRow2AfterSave"/>
+        <!-- Validate content type is duplicated in Storefront -->
+        <comment userInput="Validate content type is duplicated in Storefront" stepKey="commentValidateDuplicatedStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="seeImage1Storefront"/>
+        <seeElement selector="{{RowOnStorefront.base('1')}}" stepKey="seeRow1Storefront"/>
+        <seeElement selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
+        <seeElement selector="{{RowOnStorefront.base('2')}}" stepKey="seeRow2Storefront"/>
+    </test>
+</tests>

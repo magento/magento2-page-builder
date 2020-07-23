@@ -8,9 +8,6 @@
 //  _____________________________________________
 
 .pagebuilder-content-type .pagebuilder-block {
-    &:before {
-        content: '';
-    }
     .pagebuilder-block-placeholder {
         align-items: center;
         background-color: @color-gray98;
@@ -28,6 +25,9 @@
         min-height: 50px;
         pointer-events: none;
     }
+    .admin__data-grid-loading-mask {
+        z-index: 21;
+    }
 }
 .pagebuilder-block-chooser {
     .block-title {
@@ -38,7 +38,7 @@
     }
     .block-info {
         margin-top: 25px;
-        width: 365px;
+        width: 100%;
 
         tr._odd-row td {
             background-color: @color-white-smoke;
@@ -47,6 +47,17 @@
             background-color: @color-white;
             color: @color-very-dark-gray-black;
             padding: 1rem 1rem;
+
+            &:first-child {
+                width: 33%;
+            }
+        }
+        p {
+            margin: 0;
+
+            & + p {
+                margin: .5em 0 0;
+            }
         }
     }
 }
@@ -69,4 +80,8 @@
             visibility: visible;
         }
     }
+}
+
+.pagebuilder-block-modal {
+    margin-top: 15px;
 }

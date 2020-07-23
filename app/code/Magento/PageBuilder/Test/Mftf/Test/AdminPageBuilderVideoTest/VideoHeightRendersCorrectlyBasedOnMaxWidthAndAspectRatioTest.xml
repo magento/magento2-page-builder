@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="VideoHeightRendersCorrectlyBasedOnMaxWidthAndAspectRatioTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Video"/>
+            <title value="Video height is based on max width and aspect ratio"/>
+            <description value="A user can see Video height is based on max width and aspect ratio"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-15812"/>
+            <testCaseId value="MC-18149"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" after="enterPageTitle" stepKey="expandMenuSection">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" after="openEditPanel" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" after="enterVideoUrlProperty" stepKey="enterWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <remove keyForRemoval="enterMinHeightProperty"/>
+        <remove keyForRemoval="enterBorder"/>
+        <remove keyForRemoval="enterBorderColor"/>
+        <remove keyForRemoval="enterBorderWidth"/>
+        <remove keyForRemoval="enterPadding"/>
+        <comment userInput="Validate height on stage before save" stepKey="commentValidateHeightOnStageBeforeSave"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{VideoOnStage.mainCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderVideoContainerHeight.value}}"/>
+            <argument name="pixelBuffer" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{VideoOnStage.mainCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderVideoContainerHeight.value}}"/>
+            <argument name="pixelBuffer" value="2"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <comment userInput="Validate height on storefront" stepKey="commentValidateHeightOnStorefront"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{VideoOnStorefront.mainCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderVideoContainerHeight.value}}"/>
+            <argument name="pixelBuffer" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

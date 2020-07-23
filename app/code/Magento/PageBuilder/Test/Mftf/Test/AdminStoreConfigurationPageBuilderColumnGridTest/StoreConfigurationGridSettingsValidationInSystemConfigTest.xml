@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGridSettingsValidationInSystemConfigTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Verify validations for grid default and max size."/>
+            <description value="Verify validations for grid default and max size."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2293"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSizeConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
+        <conditionalClick stepKey="uncheckUseSystemValueMax" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
+        <!-- Enter Invalid Default Grid Size -->
+        <comment userInput="Enter Invalid Default Grid Size" stepKey="comment1"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSize">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_50}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError1">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDefaultGridSizeErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Valid Default Grid Size -->
+        <comment userInput="Enter Valid Default Grid Size" stepKey="comment2"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_6}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration2"/>
+        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
+        <!-- Enter Invalid Maximum Grid Size -->
+        <comment userInput="Enter Invalid Maximum Grid Size" stepKey="comment3"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidMaxGridSize">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_3}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError2">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDefaultGridSizeErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Valid Maximum Grid Size -->
+        <comment userInput="Enter Valid Maximum Grid Size" stepKey="comment4"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_32}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration4"/>
+        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
+        <!-- Enter Invalid Default Grid Size Negative -->
+        <comment userInput="Enter Invalid Default Grid Size Negative" stepKey="commentNegativeNumber"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeNegative">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorNegative}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError3">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Default Grid Size Zero -->
+        <comment userInput="Enter Invalid Default Grid Size Zero" stepKey="commentZeroNumber"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeZero">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorZero}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError4">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Default Grid Size One -->
+        <comment userInput="Enter Invalid Default Grid Size One" stepKey="commentDefaultOne"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeOne">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorOne}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldErrorOne">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Default Grid Size Float -->
+        <comment userInput="Enter Invalid Default Grid Size Float" stepKey="commentFloatNumber"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeFloat">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorFloat}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError5">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
+        </actionGroup>
+        <!-- Restore Default Values for Default and Maximum Grid Size -->
+        <comment userInput="Restore Default Values for Default and Maximum Grid Size" stepKey="comment5"/>
+        <click selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" stepKey="restoreDefaultGridSize"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration5"/>
+        <!-- Enter Invalid Max Default Grid Size Negative -->
+        <comment userInput="Enter Invalid Max Default Grid Size Negative" stepKey="commentNegativeNumberMax"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterNegativeMaxGridSize">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorNegative}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError6">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Max Default Grid Size Zero -->
+        <comment userInput="Enter Invalid Max Default Grid Size Zero" stepKey="commentZeroNumberMax"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidDefaultGridSizeZeroMax">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorZero}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError7">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Max Default Grid Size One -->
+        <comment userInput="Enter Invalid Max Default Grid Size One" stepKey="commentMaxOne"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidMaxGridSizeOne">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorOne}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldErrorMaxOne">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Max Default Grid Size Float -->
+        <comment userInput="Enter Invalid Max Default Grid Size Float" stepKey="commentFloatNumberMax"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidDefaultGridSizeFloatMax">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorFloat}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError8">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
+        </actionGroup>
+        <click selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" stepKey="restoreDefaultMaxGridSize"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration6"/>
+        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage3"/>
+    </test>
+</tests>

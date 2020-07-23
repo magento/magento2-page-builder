@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateBackgroundImage">
+        <arguments>
+            <argument name="section"/>
+            <argument name="backgroundImage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateBackgroundImage" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
+        <grabAttributeFrom selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
+        <!-- Return the string value of background-image -->
+        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
+            <expectedResult type="string">/.*\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundImage.fileName}}(_\d+)?\.{{backgroundImage.extension}}/</expectedResult>
+            <actualResult type="variable">$backgroundImageValue</actualResult>
+        </assertRegExp>
+    </actionGroup>
+</actionGroups>

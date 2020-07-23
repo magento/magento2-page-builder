@@ -31,4 +31,23 @@ export default class Preview extends BasePreview {
 
         return options;
     }
+
+    public isHosted(src: string): boolean {
+        const youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" +
+            "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
+        const vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" +
+            "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
+        return (vimeoRegExp.test(src) || youtubeRegExp.test(src));
+    }
+
+    /**
+     * After render callback
+     *
+     * @param {HTMLVideoElement} videoElement
+     * @param {Preview} self
+     */
+    public onAfterRender(videoElement: HTMLVideoElement, self: Preview) {
+        // Assign muted attribute explicitly due to API issues
+        videoElement.muted = self.data.video.attributes().autoplay;
+    }
 }

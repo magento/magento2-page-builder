@@ -23,6 +23,11 @@
         </dataProvider>
     </dataSource>
     <modal name="modal" component="Magento_PageBuilder/js/modal/modal">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="insertFormProvider" xsi:type="string">${ $.name }.insert_form</item>
+            </item>
+        </argument>
         <settings>
             <options>
                 <option name="title" xsi:type="string" translate="true">Edit</option>

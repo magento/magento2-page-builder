@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefaultTest" extends="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefaultTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Text Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Text content type through the Block content type with TinyMCE4 and Wysiwyg Disabled By Default."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MC-15175"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="configWYSIWYG"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="deleteCMSBlock"/>
+        </after>
+    </test>
+</tests>

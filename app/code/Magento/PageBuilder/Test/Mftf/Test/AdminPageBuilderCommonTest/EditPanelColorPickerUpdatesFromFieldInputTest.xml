@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="EditPanelColorPickerUpdatesFromFieldInputTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Color Picker - Validate Color Picker Updates From Input Field Values"/>
+            <description value="Validate that when the user inputs different types of color values into the Background Color input field, the color picker updates with the appropriate color."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MC-1347"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Input: Plaintext -->
+        <comment userInput="Input: Plaintext" stepKey="commentPlaintext"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputPlaintext">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchPlaintextColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validatePlaintext">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Input: Hex -->
+        <comment userInput="Input: Hex" stepKey="commentHex"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHex">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHexColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHex">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Hex_White.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGB -->
+        <comment userInput="Input: RGB" stepKey="commentRGB"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGB">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGB">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGB_Blue.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGBa -->
+        <comment userInput="Input: RGBa" stepKey="commentRGBa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
+        </actionGroup>
+        <!-- Input: HSL -->
+        <comment userInput="Input: HSL" stepKey="commentHSL"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSL">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSL">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSL_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSLa -->
+        <comment userInput="Input: HSLa" stepKey="commentHSLa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSLa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSLa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSLa_Orange.rgb}}"/>
+        </actionGroup>
+        <!-- Input: HSV -->
+        <comment userInput="Input: HSV" stepKey="commentHSV"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSV">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSV">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSV_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSVa -->
+        <comment userInput="Input: HSVa" stepKey="commentHSVa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSVa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSVa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSVa_Orange.rgb}}"/>
+        </actionGroup>
+    </test>
+</tests>

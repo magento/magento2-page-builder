@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TabsWithBordersAndPaddingEqualToMinHeightTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tab"/>
+            <title value="Tabs Group - Tabs with borders and padding is equal to min height"/>
+            <description value="A user can see Tab group height with borders and padding is equal to min height"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5775"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsGroup"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" after="dragContentTypeToStage" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderTabsDefinedMinHeight"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="saveEditPanelSettings" stepKey="openTabItemEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" after="openTabItemEditPanel" stepKey="enterMinHeightPropertyTabItem">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterMinHeightPropertyTabItem" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{TabsOnStage.tabsContentCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{TabsOnStage.tabsContentCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{TabsOnFrontend.tabsContentCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+        </actionGroup>
+    </test>
+</tests>

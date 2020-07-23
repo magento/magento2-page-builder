@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderCanManageSlidesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider - Validate Active Navigation Dots And Tooltips"/>
+            <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-83933"/>
+            <testCaseId value="MC-2562"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate Slide 1 Is Shown -->
+        <comment userInput="Validate Slide 1 Is Shown" stepKey="commentValidateStage1"/>
+        <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeFirstSlideOnStage"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickingSlideNavigationDot"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu"/>
+        <assertElementContainsAttribute stepKey="assertFirstDotActive">
+            <expectedResult selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" type="string">active</expectedResult>
+        </assertElementContainsAttribute>
+        <see selector="{{SlideOnBackend.optionsMenu('1')}}" userInput="Slide 1" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
+        <!-- Update Slide 1 -->
+        <comment userInput="Update Slide 1" stepKey="commentUpdateSlide1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText1">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+        <!-- User Still Sees Slide Item Option Menu If Hovering Over Slider -->
+        <comment userInput="User Still Sees Slide Item Option Menu If Hovering Over Slider" stepKey="commentHoverSlider"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu1"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu2"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu3"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="dontSeeSliderOptionsMenu"/>
+        <!-- User Sees Slider Option Menu After Unfocusing Slide Item -->
+        <comment userInput="User Sees Slider Option Menu After Unfocusing Slide Item" stepKey="commentHoverSlider2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="waitForContentTypeOptionsMenu"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="seeOptionsMenu"/>
+        <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="dontSeeSlideOptionsMenu"/>
+        <!-- Add 2nd Slide -->
+        <comment userInput="Add 2nd Slide" stepKey="commentAddSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate Slide 2 Is Shown -->
+        <comment userInput="Validate Slide 2 Is Shown" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSeeingSlideNavigationDot2"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2OptionsMenu"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickingSlideNavigationDot2"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsMenu4"/>
+        <assertElementContainsAttribute stepKey="assertSecondDotActive">
+            <expectedResult selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" type="string">active</expectedResult>
+        </assertElementContainsAttribute>
+        <see userInput="Slide 2" selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
+        <!-- Update Slide 2 -->
+        <comment userInput="Update Slide 2" stepKey="commentUpdateSlide2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate On Hover Tooltips -->
+        <comment userInput="Validate On Hover Tooltips" stepKey="commentValidateTooltips"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
+        <waitForPageLoad stepKey="waitForPageLoad7"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltip"/>
+        <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad8"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
+    </test>
+</tests>

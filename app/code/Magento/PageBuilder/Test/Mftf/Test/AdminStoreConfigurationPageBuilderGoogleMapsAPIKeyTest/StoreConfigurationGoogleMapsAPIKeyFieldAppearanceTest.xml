@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGoogleMapsAPIKeyFieldAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps API Key"/>
+            <title value="Validate Google Maps API Key Field Appearance"/>
+            <description value="Tests the following for Google Maps API Key field: 1) Global config key, 2) Helper text, 3) Default Test Key button is disabled, 4) Correct Get API Key link."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MC-2809"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <closeTab stepKey="closeTab"/>
+        </after>
+        <!-- Go To AdminContentManagementPage -->
+        <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <!-- Validate Global Scope -->
+        <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(googleMapsAPIKey.section, googleMapsAPIKey.row, googleMapsAPIKey.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
+        <!-- Validate Helper Text -->
+        <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyHelperText}}" stepKey="waitForHelperText"/>
+        <see selector="{{ContentManagementSection.GoogleMapsAPIKeyHelperText}}" userInput="Enter API key to use the Map content type. Get API Key." stepKey="seeHelperText"/>
+        <!-- Validate Test Key Button Text -->
+        <comment userInput="Validate Test Key Button Text" stepKey="commentValidateTestKeyButtonText"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="waitForTestKeyButton"/>
+        <see selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" userInput="{{googleMapsAPIKey.keyButtonText}}" stepKey="seeTestKeyButtonText"/>
+        <!-- Validate Get API Key Link -->
+        <comment userInput="Validate Get API Key Link" stepKey="commentValidateLink"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="waitForLink"/>
+        <click selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="clickLink"/>
+        <wait time="2" stepKey="waitForTabCreation"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <seeCurrentUrlEquals url="https://developers.google.com/maps/documentation/javascript/get-api-key" stepKey="validateURL"/>
+    </test>
+</tests>

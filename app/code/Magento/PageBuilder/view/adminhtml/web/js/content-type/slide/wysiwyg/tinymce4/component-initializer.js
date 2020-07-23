@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils/delay-until"], function (_jquery, _events, _delayUntil) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

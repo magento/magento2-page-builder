@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="EditPanelForm">
+        <element name="editForm" type="text" selector="//div[contains(@class, &quot;pagebuilder_modal_form_pagebuilder_modal_form_modal&quot;)]"/>
+        <element name="editFormTitle" type="text" selector="aside._show .modal-title[data-role='title']"/>
+        <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
+        <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
+        <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
+        <element name="editPanelSectionName" type="button" selector="//div[@data-index='{{arg1}}']" parameterized="true"/>
+        <element name="editPanelSectionExpanded" type="button" selector="//div[@data-index='{{arg1}}' and contains(@class,'_show')]" parameterized="true"/>
+        <element name="panelFieldLabel" type="text" selector="//aside//div[@data-index=&quot;{{arg1}}&quot;]/descendant::div[@data-index=&quot;{{arg2}}&quot;]/descendant::label[not(contains(@style,&quot;display: none;&quot;))] | //aside//div[@data-index=&quot;{{arg3}}&quot;]/descendant::*[@class=&quot;admin__field-label&quot; or @class=&quot;title&quot;]/descendant::span[text()=&quot;{{arg4}}&quot;][not(ancestor::legend)]" parameterized="true"/>
+        <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
+        <element name="panelSectionError" type="text" selector="[data-index='{{arg1}}'] span._error .admin__page-nav-item-message-icon" parameterized="true"/>
+        <element name="panelFieldControl" type="input" selector="//aside//div[@data-index=&quot;{{arg1}}&quot;]/descendant::*[@name=&quot;{{arg2}}&quot;]" parameterized="true"/>
+        <element name="panelFieldControlCheckbox" type="input" selector="//input[@type='checkbox' and @name='{{arg1}}']" parameterized="true"/>
+        <element name="panelFieldControlCheckboxState" type="input" selector="//input[@type='checkbox' and @name='{{arg1}}' and @value='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
+        <element name="panelFieldOptions" type="input" selector="//div[@data-index=&quot;{{arg1}}&quot;]/descendant::*[@name=&quot;{{arg2}}&quot;]/option" parameterized="true"/>
+        <element name="panelFieldRequired" type="input" selector="//div[@data-index=&quot;{{arg1}}&quot;]/descendant::div[@data-index=&quot;{{arg2}}&quot; and contains(@class, &quot;_required&quot;)]" parameterized="true"/>
+        <element name="panelFieldDisabled" type="input" selector="//div[@data-index=&quot;{{arg1}}&quot;]/descendant::*[@name=&quot;{{arg2}}&quot; and @disabled]" parameterized="true"/>
+        <element name="panelFieldNotDisabled" type="input" selector="//div[@data-index=&quot;{{arg1}}&quot;]/descendant::*[@name=&quot;{{arg2}}&quot; and not(@disabled)]" parameterized="true"/>
+        <element name="panelFieldPlaceholderText" type="text" selector="//div[@data-index=&quot;{{arg1}}&quot;]/descendant::*[@name=&quot;{{arg2}}&quot; and @placeholder=&quot;{{arg3}}&quot;]" parameterized="true"/>
+        <element name="panelFieldNoPlaceholderText" type="input" selector="//div[@data-index=&quot;{{arg1}}&quot;]/descendant::*[@name=&quot;{{arg2}}&quot; and not(@placeholder)]" parameterized="true"/>
+        <element name="panelFieldAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter' and .='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldNoAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter']" parameterized="true"/>
+        <element name="panelFieldHelperText" type="text" parameterized="true" selector="//aside//*[@data-index='{{section}}']/descendant::*[@name='{{field}}']/ancestor::*[contains(@class,'admin__field-control')]/descendant::*[contains(@class,'admin__field-note') or contains(@class,'image-upload-requirements')]"/>
+        <element name="panelFieldTooltip" type="button" parameterized="true" selector="//aside//*[@data-index='{{section}}']/descendant::*[@name='{{field}}']/ancestor::*[contains(@class,'admin__field-control')]/descendant::a[contains(@class,'admin__field-tooltip-action')]"/>
+        <element name="panelFieldTooltipContent" type="text" parameterized="true" selector="//aside//*[@data-index='{{section}}']/descendant::*[@name='{{field}}']/ancestor::*[contains(@class,'admin__field-control')]/descendant::*[contains(@class,'admin__field-tooltip-content')]"/>
+        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}' and contains(@class,'_error')]//div[contains(@class,'')]//*[@name='{{arg2}}' or contains(@class,'mce-tinymce')]" parameterized="true"/>
+        <element name="panelFieldValidationErrorMessage" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//*[@name='{{arg2}}' or contains(@class,'mce-tinymce')]//..//..//..//label[.='{{arg3}}']" parameterized="true"/>
+        <element name="panelMultiSelectFieldControl" type="input" selector="aside [data-index='{{arg1}}'] [data-index='{{arg2}}'] [data-role='advanced-select']" parameterized="true"/>
+        <element name="panelMultiSelectFieldControlInput" type="input" selector="aside [data-index='{{arg1}}'] [data-index='{{arg2}}'] .admin__action-multiselect-search" parameterized="true"/>
+        <element name="panelMultiSelectFieldControlResult" type="input" selector="//aside//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'action-menu-item')]//span[.='{{arg3}}']" parameterized="true"/>
+        <element name="editFormAllRequiredFields" type="text" selector="aside.pagebuilder_modal_form_pagebuilder_modal_form_modal ._required:not([style*='display: none;'])"/>
+        <element name="editFormUploadedImage" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']/ancestor::*[contains(@class,'admin__field-control')]//img[@class='preview-image']" parameterized="true"/>
+        <element name="editFormNoUploadedImage" type="button" selector="//span[text()='{{arg1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
+        <element name="editFormUploadedImageSource" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']/ancestor::*[contains(@class,'admin__field-control')]//img[contains(@src,'{{arg3}}') and contains(@src,'{{arg4}}')]" parameterized="true"/>
+        <element name="backgroundImagePreview" type="button" selector="//div[@data-index=&quot;background&quot;]/descendant::img[@class=&quot;preview-image&quot;]"/>
+        <element name="selectFromGalleryBtn" type="button" selector="//aside//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//label[text()='Select from Gallery']" parameterized="true"/>
+        <element name="invalidUploadTitle" type="text" selector="//aside[contains(@class,'modal-popup')]//header/h1[contains(.,'Attention')]"/>
+        <element name="invalidUploadMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
+        <element name="invalidUploadOkBtn" type="text" selector="//aside[contains(@class,'modal-popup')]//footer//button//span[.='OK']"/>
+    </section>
+</sections>

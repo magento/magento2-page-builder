@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="VideoValidateURLTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Video"/>
+            <title value="Invalid Video URLs"/>
+            <description value="Validate that validation message will display when inputting invalid video URL."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-1410"/>
+            <testCaseId value="MC-2514"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Validate Invalid URL Message -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty_Text">
+            <argument name="property" value="PageBuilder_InvalidVideoURL_Text"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorText">
+            <argument name="property" value="PageBuilder_InvalidVideoURL_Text"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty_HTML">
+            <argument name="property" value="PageBuilder_InvalidVideoURL_HTML"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorHTML">
+            <argument name="property" value="PageBuilder_InvalidVideoURL_HTML"/>
+        </actionGroup>
+        <!-- Update to YouTube Embedded -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeEmbedded">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeEmbedded"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeEmbeddedStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <!-- Update to YouTube Non-Embedded -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeNonEmbedded">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeNonEmbedded">
+            <argument name="property" value="PageBuilderVideoUrl_NonEmbedded"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeNonEmbedded"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeNonEmbeddedStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_NonEmbedded"/>
+        </actionGroup>
+        <!-- Update to YouTube Insecure -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeInsecure">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeInsecure">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube_Insecure"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInsecure"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeInsecureStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube_Insecure"/>
+        </actionGroup>
+        <!-- Update to Vimeo Embedded-->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoEmbedded">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoEmbedded">
+            <argument name="property" value="PageBuilderVideoUrl_Vimeo_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoEmbedded"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateVimeoEmbeddedStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_Vimeo_Embedded"/>
+        </actionGroup>
+        <!-- Update to Vimeo Non-Embedded -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoNonEmbedded">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoNonEmbedded">
+            <argument name="property" value="PageBuilderVideoUrl_Vimeo_NonEmbedded"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoNonEmbedded"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateVimeoNonEmbeddedStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_Vimeo_NonEmbedded"/>
+        </actionGroup>
+        <!-- Update to Vimeo Insecure -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoInsecure">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoInsecure">
+            <argument name="property" value="PageBuilderVideoUrl_Vimeo_Insecure"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoInsecure"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateVimeoInsecureStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_Vimeo_Insecure"/>
+        </actionGroup>
+        <!-- Update to .mp4 URL -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMp4">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlMp4">
+            <argument name="property" value="PageBuilderVideoUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrlMp4" stepKey="validateMp4Stage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_Mp4_URL"/>
+        </actionGroup>
+        <!-- Update to .mp4 URL Insecure -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMp4Insecure">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlMp4Insecure">
+            <argument name="property" value="PageBuilderVideoUrl_Mp4_URL_Insecure"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4Insecure"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrlMp4" stepKey="validateMp4InsecureStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_Mp4_URL_Insecure"/>
+        </actionGroup>
+    </test>
+</tests>

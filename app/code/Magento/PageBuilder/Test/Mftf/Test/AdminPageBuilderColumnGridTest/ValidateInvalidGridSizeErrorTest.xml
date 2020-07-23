@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidateInvalidGridSizeErrorTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Cant set grid size above to invalid number"/>
+            <description value="Checks if setting the grid size to negative prompts an error"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2302"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterNegativeGridSize">
+            <argument name="gridSize" value="-50"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize1">
+            <argument name="gridSize" value="1"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize0">
+            <argument name="gridSize" value="0"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
+        </actionGroup>
+        <!-- Check validation occurs when entering as text -->
+        <comment userInput="Check validation occurs when entering as text" stepKey="commentValidateStringInput"/>
+        <executeJS function="document.evaluate(&quot;{{ColumnOnBackend.gridSizeInput('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.setAttribute('type', 'text')" stepKey="changeInputToText"/>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSizeString">
+            <argument name="gridSize" value="InvalidString"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>
+        </actionGroup>
+    </test>
+</tests>

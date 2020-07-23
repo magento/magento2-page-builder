@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemAppearanceSectionDefaultsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Validate Appearance Section Default Values"/>
+            <description value="Validate the default values for every attribute in the Appearance form for slide item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-4040"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Verify default and available values on Appearance section of Add Slide form -->
+        <comment userInput="Appearance defaults to Poster" stepKey="AC0"/>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderAppearance_Poster"/>
+            <argument name="property2" value="PageBuilderAppearance_CollageLeft"/>
+            <argument name="property3" value="PageBuilderAppearance_CollageCentered"/>
+            <argument name="property4" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
+        <dontSeeElement selector="//li[@name='advanced content']" stepKey="advancedContentAppearanceNotPresent"/>
+        <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemSlideName_Slide1.section, PageBuilderSlideItemSlideName_Slide1.fieldName)}}" stepKey="grabNameDefaultValue"/>
+        <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
+            <actualResult type="variable">grabNameDefaultValue</actualResult>
+        </assertEmpty>
+        <comment userInput="Minimum Height: input defaults to 300px" stepKey="AC4"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinHeightDefault300">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+    </test>
+</tests>

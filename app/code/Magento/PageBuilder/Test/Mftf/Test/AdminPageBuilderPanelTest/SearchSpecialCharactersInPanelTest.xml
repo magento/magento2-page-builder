@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SearchSpecialCharactersInPanelTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search using special characters in PageBuilder Panel"/>
+            <description value="When searching using regular expression special characters, assert no JS errors are produced."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-61"/>
+            <testCaseId value="MC-21478"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="$" stepKey="fillSearchWithInvalidInput"/>
+        <see userInput="Nothing found" selector="{{PageBuilderPanel.nothingFound}}" stepKey="validateNothingFound"/>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Code" stepKey="fillCode"/>
+        <see userInput="HTML Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtonShowsUp"/>
+    </test>
+</tests>

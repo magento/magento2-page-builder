@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="DividerNoRequiredTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Divider No Required Attributes"/>
+            <description value="A user should only have to enter required fields."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2506"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Clear Fields -->
+        <comment userInput="Clear Fields" stepKey="commentClearFields"/>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Default"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="enterDividerLineWidth">
+            <argument name="property" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateDividerLineColorNotRequired">
+            <argument name="property" value="PageBuilderDividerLineColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateDividerLineThicknessNotRequired">
+            <argument name="property" value="PageBuilderDividerLineThickness_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateDividerLineWidthNotRequired">
+            <argument name="property" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{DividerOnStage.base('1')}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{DividerOnStage.noColor('1')}}" stepKey="waitForColorVisible"/>
+        <waitForElementVisible selector="{{DividerOnStage.noThickness('1')}}" stepKey="waitForThicknessVisible"/>
+        <waitForElementVisible selector="{{DividerOnStage.noWidth('1')}}" stepKey="waitForWidthVisible"/>
+    </test>
+</tests>

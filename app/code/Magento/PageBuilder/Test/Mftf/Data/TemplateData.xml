@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Template Name -->
+    <entity name="PageBuilderTemplateNameRandom" type="pagebuilder_template_name">
+        <data key="name" unique="suffix">MFTF Template</data>
+    </entity>
+    <entity name="PageBuilderTemplateNameRandom2" type="pagebuilder_template_name">
+        <data key="name" unique="suffix">MFTF Second Template</data>
+    </entity>
+    <entity name="PageBuilderTemplateName_Sorting" type="pagebuilder_template_name_sort">
+        <data key="0">sorting_0</data>
+        <data key="999">sorting_999</data>
+        <data key="aaa">sorting_aaa</data>
+        <data key="A">sorting_A</data>
+        <data key="zzz">sorting_zzz</data>
+        <data key="Z">sorting_Z</data>
+    </entity>
+    <entity name="PageBuilderTemplateName_EdgeCases" type="pagebuilder_template_name_edge_case">
+        <data key="empty"/>
+        <data key="leadingSpace"> leadingSpaceTest</data>
+        <data key="noLeadingSpace">leadingSpaceTest</data>
+        <data key="0">0</data>
+        <data key="commonCharacters">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+        <data key="specialCharacters">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <!-- Template Created For -->
+    <entity name="PageBuilderTemplateCreatedFor" type="pagebuilder_template_created_for">
+        <data key="any">Any</data>
+        <data key="page">Page</data>
+        <data key="product">Product</data>
+        <data key="category">Category</data>
+        <data key="block">Block</data>
+        <data key="dynamicBlock">Dynamic Block</data>
+    </entity>
+    <!-- Template Grid -->
+    <entity name="PageBuilderTemplateGridColumns" type="pagebuilder_template_grid_column_header">
+        <data key="id">ID</data>
+        <data key="previewImage">Preview Image</data>
+        <data key="templateName">Template Name</data>
+        <data key="createdFor">Created For</data>
+        <data key="created">Created</data>
+    </entity>
+    <!-- User Roles -->
+    <entity name="roleNoPageBuilderTemplates" type="user_role" extends="adminRestrictedProductRole">
+        <data key="name" unique="suffix">Role_Page_Builder_Templates_</data>
+        <data key="rolename" unique="suffix">Role_Page_Builder_Templates_</data>
+        <data key="current_password">{{_ENV.MAGENTO_ADMIN_PASSWORD}}</data>
+        <data key="all">0</data>
+        <data key="gws_is_all">0</data>
+        <array key="gws_websites">
+            <item>1</item>
+        </array>
+        <array key="resource">
+            <item name="Magento_Backend::dashboard">Magento_Backend::dashboard</item>
+            <item name="Magento_Backend::content">Magento_Backend::content</item>
+            <item name="Magento_Backend::content_elements">Magento_Backend::content_elements</item>
+            <item name="Magento_Cms::page">Magento_Cms::page</item>
+            <item name="Magento_Cms::save">Magento_Cms::save</item>
+        </array>
+    </entity>
+    <entity name="rolePageBuilderTemplates" type="user_role" extends="adminRestrictedProductRole">
+        <data key="name" unique="suffix">Role_Page_Builder_Templates_</data>
+        <data key="rolename" unique="suffix">Role_Page_Builder_Templates_</data>
+        <data key="current_password">{{_ENV.MAGENTO_ADMIN_PASSWORD}}</data>
+        <data key="all">0</data>
+        <data key="gws_is_all">0</data>
+        <array key="gws_websites">
+            <item>1</item>
+        </array>
+        <array key="resource">
+            <item name="Magento_Backend::dashboard">Magento_Backend::dashboard</item>
+            <item name="Magento_Backend::content">Magento_Backend::content</item>
+            <item name="Magento_Backend::content_elements">Magento_Backend::content_elements</item>
+            <item name="Magento_Cms::page">Magento_Cms::page</item>
+            <item name="Magento_Cms::save">Magento_Cms::save</item>
+            <item name="Magento_PageBuilder::templates">Magento_PageBuilder::templates</item>
+        </array>
+    </entity>
+    <entity name="rolePageBuilderSaveTemplates" type="user_role" extends="adminRestrictedProductRole">
+        <data key="name" unique="suffix">Role_Page_Builder_Save_Templates_</data>
+        <data key="rolename" unique="suffix">Role_Page_Builder_Save_Templates_</data>
+        <data key="current_password">{{_ENV.MAGENTO_ADMIN_PASSWORD}}</data>
+        <data key="all">0</data>
+        <data key="gws_is_all">0</data>
+        <array key="gws_websites">
+            <item>1</item>
+        </array>
+        <array key="resource">
+            <item name="Magento_Backend::dashboard">Magento_Backend::dashboard</item>
+            <item name="Magento_Backend::content">Magento_Backend::content</item>
+            <item name="Magento_Backend::content_elements">Magento_Backend::content_elements</item>
+            <item name="Magento_Cms::page">Magento_Cms::page</item>
+            <item name="Magento_Cms::save">Magento_Cms::save</item>
+            <item name="Magento_PageBuilder::templates">Magento_PageBuilder::templates</item>
+            <item name="Magento_PageBuilder::template_save">Magento_PageBuilder::template_save</item>
+        </array>
+    </entity>
+    <entity name="rolePageBuilderApplyTemplates" type="user_role" extends="adminRestrictedProductRole">
+        <data key="name" unique="suffix">Role_Page_Builder_Apply_Templates_</data>
+        <data key="rolename" unique="suffix">Role_Page_Builder_Apply_Templates_</data>
+        <data key="current_password">{{_ENV.MAGENTO_ADMIN_PASSWORD}}</data>
+        <data key="all">0</data>
+        <data key="gws_is_all">0</data>
+        <array key="gws_websites">
+            <item>1</item>
+        </array>
+        <array key="resource">
+            <item name="Magento_Backend::dashboard">Magento_Backend::dashboard</item>
+            <item name="Magento_Backend::content">Magento_Backend::content</item>
+            <item name="Magento_Backend::content_elements">Magento_Backend::content_elements</item>
+            <item name="Magento_Cms::page">Magento_Cms::page</item>
+            <item name="Magento_Cms::save">Magento_Cms::save</item>
+            <item name="Magento_PageBuilder::templates">Magento_PageBuilder::templates</item>
+            <item name="Magento_PageBuilder::template_apply">Magento_PageBuilder::template_apply</item>
+        </array>
+    </entity>
+    <entity name="rolePageBuilderDeleteTemplates" type="user_role" extends="adminRestrictedProductRole">
+        <data key="name" unique="suffix">Role_Page_Builder_Delete_Templates_</data>
+        <data key="rolename" unique="suffix">Role_Page_Builder_Delete_Templates_</data>
+        <data key="current_password">{{_ENV.MAGENTO_ADMIN_PASSWORD}}</data>
+        <data key="all">0</data>
+        <data key="gws_is_all">0</data>
+        <array key="gws_websites">
+            <item>1</item>
+        </array>
+        <array key="resource">
+            <item name="Magento_Backend::dashboard">Magento_Backend::dashboard</item>
+            <item name="Magento_Backend::content">Magento_Backend::content</item>
+            <item name="Magento_Backend::content_elements">Magento_Backend::content_elements</item>
+            <item name="Magento_Cms::page">Magento_Cms::page</item>
+            <item name="Magento_Cms::save">Magento_Cms::save</item>
+            <item name="Magento_PageBuilder::templates">Magento_PageBuilder::templates</item>
+            <item name="Magento_PageBuilder::template_delete">Magento_PageBuilder::template_delete</item>
+        </array>
+    </entity>
+</entities>

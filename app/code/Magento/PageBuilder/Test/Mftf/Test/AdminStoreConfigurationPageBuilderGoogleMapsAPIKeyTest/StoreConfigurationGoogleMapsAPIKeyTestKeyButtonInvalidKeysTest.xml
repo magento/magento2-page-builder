@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGoogleMapsAPIKeyTestKeyButtonInvalidKeysTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps API Key"/>
+            <title value="Test Key Button: Invalid Keys"/>
+            <description value="Tests that the Google Maps API Key Test Key button works with invalid keys."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MC-2554"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <!-- Invalid Key: One Character -->
+        <comment userInput="Invalid Key: One Character" stepKey="comment1"/>
+        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey1">
+            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
+        </actionGroup>
+        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1">
+            <argument name="expectedResult" value="error"/>
+            <argument name="buttonText" value="{{googleMapsAPIKey.invalidKeyButtonText}}"/>
+        </actionGroup>
+        <!-- Invalid Key: One Character Off Of Valid -->
+        <comment userInput="Invalid Key: One Character Off Of Valid" stepKey="comment2"/>
+        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey2">
+            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacterOffOfValid}}"/>
+        </actionGroup>
+        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
+            <argument name="expectedResult" value="error"/>
+            <argument name="buttonText" value="{{googleMapsAPIKey.invalidKeyButtonText}}"/>
+        </actionGroup>
+        <!-- Invalid Key: Empty -->
+        <comment userInput="Invalid Key: Empty" stepKey="comment3"/>
+        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey3">
+            <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled"/>
+    </test>
+</tests>

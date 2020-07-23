@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["knockout"], function (_knockout) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

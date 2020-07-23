@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationInvalidPaddingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Invalid - Padding"/>
+            <description value="A user cannot add an invalid value for padding"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3723"/>
+            <testCaseId value="MC-4214"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Text to Stage -->
+        <comment userInput="Add Text to Stage" stepKey="commentAddTextToStage"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <!-- Add Invalid Padding: NonNumeric - Padding Top -->
+        <comment userInput="Add Invalid Padding: NonNumeric - Padding Top" stepKey="commentNonNumericPaddingTop"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericPaddingTop">
+            <argument name="field" value="paddingTop"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericPaddingTop">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericPaddingTop">
+            <argument name="field" value="paddingTop"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: NonNumeric - Padding Right -->
+        <comment userInput="Add Invalid Padding: NonNumeric - Padding Right" stepKey="commentNonNumericPaddingRight"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericPaddingRight">
+            <argument name="field" value="paddingRight"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericPaddingRight">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericPaddingRight">
+            <argument name="field" value="paddingRight"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: NonNumeric - Padding Bottom -->
+        <comment userInput="Add Invalid Padding: NonNumeric - Padding Bottom" stepKey="commentNonNumericPaddingBottom"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericPaddingBottom">
+            <argument name="field" value="paddingBottom"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericPaddingBottom">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericPaddingBottom">
+            <argument name="field" value="paddingBottom"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: NonNumeric - Padding Left -->
+        <comment userInput="Add Invalid Padding: NonNumeric - Padding Left" stepKey="commentNonNumericPaddingLeft"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericPaddingLeft">
+            <argument name="field" value="paddingLeft"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericPaddingLeft">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericPaddingLeft">
+            <argument name="field" value="paddingLeft"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Min - Padding Top -->
+        <comment userInput="Add Invalid Padding: Invalid Min - Padding Top" stepKey="commentInvalidMinPaddingTop"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinPaddingTop">
+            <argument name="field" value="paddingTop"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinPaddingTop">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinPaddingTop">
+            <argument name="field" value="paddingTop"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Min - Padding Right -->
+        <comment userInput="Add Invalid Padding: Invalid Min - Padding Right" stepKey="commentInvalidMinPaddingRight"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinPaddingRight">
+            <argument name="field" value="paddingRight"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinPaddingRight">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinPaddingRight">
+            <argument name="field" value="paddingRight"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Min - Padding Bottom -->
+        <comment userInput="Add Invalid Padding: Invalid Min - Padding Bottom" stepKey="commentInvalidMinPaddingBottom"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinPaddingBottom">
+            <argument name="field" value="paddingBottom"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinPaddingBottom">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinPaddingBottom">
+            <argument name="field" value="paddingBottom"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Min - Padding Left -->
+        <comment userInput="Add Invalid Padding: Invalid Min - Padding Left" stepKey="commentInvalidMinPaddingLeft"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinPaddingLeft">
+            <argument name="field" value="paddingLeft"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinPaddingLeft">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinPaddingLeft">
+            <argument name="field" value="paddingLeft"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Max - Padding Top -->
+        <comment userInput="Add Invalid Padding: Invalid Max - Padding Top" stepKey="commentInvalidMaxPaddingTop"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMaxPaddingTop">
+            <argument name="field" value="paddingTop"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMax}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMaxPaddingTop">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMaxError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMaxPaddingTop">
+            <argument name="field" value="paddingTop"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Max - Padding Right -->
+        <comment userInput="Add Invalid Padding: Invalid Max - Padding Right" stepKey="commentInvalidMaxPaddingRight"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMaxPaddingRight">
+            <argument name="field" value="paddingRight"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMax}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMaxPaddingRight">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMaxError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMaxPaddingRight">
+            <argument name="field" value="paddingRight"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Max - Padding Bottom -->
+        <comment userInput="Add Invalid Padding: Invalid Max - Padding Bottom" stepKey="commentInvalidMaxPaddingBottom"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMaxPaddingBottom">
+            <argument name="field" value="paddingBottom"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMax}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMaxPaddingBottom">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMaxError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMaxPaddingBottom">
+            <argument name="field" value="paddingBottom"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Padding: Invalid Max - Padding Left -->
+        <comment userInput="Add Invalid Padding: Invalid Max - Padding Left" stepKey="commentInvalidMaxPaddingLeft"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMaxPaddingLeft">
+            <argument name="field" value="paddingLeft"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMax}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMaxPaddingLeft">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMaxError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMaxPaddingLeft">
+            <argument name="field" value="paddingLeft"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- User can recover after invalid input -->
+        <comment userInput="User can recover after invalid input" stepKey="commentCanRecover"/>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+</tests>

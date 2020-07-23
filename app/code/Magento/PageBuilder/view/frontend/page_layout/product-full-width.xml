@@ -49,6 +49,11 @@
                         <arguments>
                             <argument name="title" translate="true" xsi:type="string">Reviews</argument>
                         </arguments>
+                        <block class="Magento\Review\Block\Product\View\ListView" name="product.info.product_additional_data.wrapper" template="Magento_Review::product/view/list.phtml" ifconfig="catalog/review/active">
+                            <arguments>
+                                <argument name="hide_title" xsi:type="boolean">true</argument>
+                            </arguments>
+                        </block>
                     </block>
                 </container>
             </container>

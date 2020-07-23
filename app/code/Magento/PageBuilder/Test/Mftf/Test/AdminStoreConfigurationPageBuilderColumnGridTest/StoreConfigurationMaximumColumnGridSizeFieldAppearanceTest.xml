@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationMaximumColumnGridSizeFieldAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Validate Max Column Grid Size Field Appearance"/>
+            <description value="Verify the Maximum Column Grid Size field is global and has correct helper text."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2352"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSizeConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <!-- Go To AdminContentManagementPage -->
+            <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+            <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Validate Global Scope -->
+        <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(PageBuilderMaximumColumnGridSize.section, PageBuilderMaximumColumnGridSize.row, PageBuilderMaximumColumnGridSize.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
+        <!-- Validate Helper Text -->
+        <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridMaxHelperText}}" stepKey="waitForHelperText"/>
+        <see selector="{{ContentManagementSection.ColumnGridMaxHelperText}}" userInput="Maximum grid size determines the maximum amount of columns available." stepKey="seeHelperText"/>
+    </test>
+</tests>

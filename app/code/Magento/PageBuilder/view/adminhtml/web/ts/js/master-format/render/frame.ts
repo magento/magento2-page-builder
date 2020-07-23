@@ -7,6 +7,8 @@ import csso from "csso";
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
+import mageUtils from "mageUtils";
+import _ from "underscore";
 import Config from "../../config";
 import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
@@ -21,11 +23,29 @@ let port: MessagePort = null;
 let styleRegistry: StyleRegistry;
 const portDeferred: JQueryDeferred<MessagePort> = $.Deferred();
 const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
+let lastRenderId: string;
+
+/**
+ * Debounce the render call, so we don't render until the final request
+ */
+const debounceRender = _.debounce((message: {stageId: string, tree: TreeItem}, renderId: string) => {
+    render(message).then((output) => {
+        // Only post the most recent render back to the parent
+        if (lastRenderId === renderId) {
+            port.postMessage({
+                type: "render",
+                message: output,
+            });
+        }
+    });
+}, 50);
 
 /**
  * Listen for requests from the parent window for a render
  */
 export default function listen(config: ConfigInterface) {
+    const stageId = window.location.href.split("?")[1].split("=")[1];
+
     Config.setConfig(config);
     Config.setMode("Master");
 
@@ -41,12 +61,9 @@ export default function listen(config: ConfigInterface) {
                 portDeferred.resolve(port);
                 port.onmessage = (messageEvent) => {
                     if (messageEvent.data.type === "render") {
-                        render(messageEvent.data.message).then((output) => {
-                            port.postMessage({
-                                type: "render",
-                                message: output,
-                            });
-                        });
+                        const renderId = mageUtils.uniqueid();
+                        lastRenderId = renderId;
+                        debounceRender(messageEvent.data.message, renderId);
                     }
                     if (messageEvent.data.type === "template") {
                         const message = messageEvent.data.message;
@@ -62,7 +79,7 @@ export default function listen(config: ConfigInterface) {
     );
 
     // Inform the parent iframe that we're ready to receive the port
-    window.parent.postMessage("PB_RENDER_READY", "*");
+    window.parent.postMessage({name: "PB_RENDER_READY", stageId}, "*");
 }
 
 /**
@@ -97,36 +114,77 @@ export function loadTemplate(name: string): Promise<string> {
 }
 
 /**
+ * Assert if the render has finished
+ */
+const assertRenderFinished = _.debounce((element: HTMLElement, expectedCount: number, callback: () => {}) => {
+    if (element.querySelectorAll("[data-content-type]").length === expectedCount) {
+        callback();
+    }
+}, 50);
+
+/**
+ * Iterate over the root container and count all content types
+ *
+ * @param rootContainer
+ * @param count
+ */
+function countContentTypes(rootContainer: ContentTypeCollectionInterface, count?: number) {
+    count = count || 0;
+    rootContainer.getChildren()().forEach((child: ContentTypeCollectionInterface) => {
+        ++count;
+        if (typeof child.getChildren !== "undefined" && child.getChildren()().length > 0) {
+            count = countContentTypes(child, count);
+        }
+    });
+    return count;
+}
+
+/**
  * Perform a render of the provided data
  *
  * @param message
  */
-function render(message: {stageId: string, tree: TreeItem}): Promise<string> {
+function render(message: {stageId: string, tree: TreeItem}) {
     if (!styleRegistry) {
         styleRegistry = new StyleRegistry(message.stageId);
     }
-    return createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
-        const element = document.createElement("div");
-        // Assign the observer before executing the render to ensure no race condition occurs
-        const engineRender = engine.waitForFinishRender().then(() => {
-            ko.cleanNode(element);
-            $(element).append(
-                $("<style />").html(generateMasterCss(styleRegistry)),
-            );
-            const filtered: JQuery = filterHtml($(element));
-            const output = decodeAllDataUrlsInString(filtered.html());
-            return output;
-        });
-        ko.applyBindingsToNode(
-            element,
-            {
-                template: {
-                    data: rootContainer.content,
-                    name: rootContainer.content.template,
+    return new Promise((resolve, reject) => {
+        createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
+            const element = document.createElement("div");
+            /**
+             * Setup an event on the element to observe changes and count the expected amount of content types are
+             * present within the content.
+             */
+            const renderFinished = $.Deferred();
+            const observer = new MutationObserver(() => {
+                assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
+            });
+            observer.observe(element, { attributes: true, childList: true, subtree: true });
+
+            // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
+            $.when(engine.waitForFinishRender(), renderFinished).then(() => {
+                observer.disconnect();
+                ko.cleanNode(element);
+                $(element).append(
+                    $("<style />").html(generateMasterCss(styleRegistry)),
+                );
+                const filtered: JQuery = filterHtml($(element));
+                const output = decodeAllDataUrlsInString(filtered.html());
+                resolve(output);
+            });
+
+            ko.applyBindingsToNode(
+                element,
+                {
+                    template: {
+                        data: rootContainer.content,
+                        name: rootContainer.content.template,
+                    },
                 },
-            },
-        );
-        return engineRender;
+            );
+        }).catch((error) => {
+            reject(error);
+        });
     });
 }
 

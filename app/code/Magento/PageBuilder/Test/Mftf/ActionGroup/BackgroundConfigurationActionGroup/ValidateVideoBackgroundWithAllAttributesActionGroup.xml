@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateVideoBackgroundWithAllAttributes">
+        <annotations>
+            <description>Validates all video background attributes when all attributes are configured</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="backgroundColor" defaultValue="{{PageBuilderBackgroundColor_Default.rgb}}" type="string"/>
+            <argument name="videoUrl" defaultValue="PageBuilderVideoBackgroundUrl_Empty"/>
+            <argument name="overlayColor" defaultValue="{{PageBuilderVideoBackgroundOverlayColor_Empty.rgb}}" type="string"/>
+            <argument name="infiniteLoop" defaultValue="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" defaultValue="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" defaultValue="PageBuilderVideoBackgroundFallbackImage_Empty"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
+        <waitForElement selector="{{section.backgroundColorElement(index)}}" stepKey="waitForVideoBackgroundColor"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{section.backgroundColorElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).backgroundColor" stepKey="backgroundColor"/>
+        <assertEquals stepKey="assertBackgroundColor">
+            <expectedResult type="string">{{backgroundColor}}</expectedResult>
+            <actualResult type="variable">$backgroundColor</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
+        <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
+        <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
+        <assertStringContainsString stepKey="assertHeight">
+            <expectedResult type="string">height: 100%;</expectedResult>
+            <actualResult type="variable">$jarallaxStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertWidth">
+            <expectedResult type="string">width: 100%;</expectedResult>
+            <actualResult type="variable">$jarallaxStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertOverflowHidden">
+            <expectedResult type="string">overflow: hidden;</expectedResult>
+            <actualResult type="variable">$jarallaxStyle</actualResult>
+        </assertStringContainsString>
+        <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
+        <assertStringContainsString stepKey="assertVideoPosition">
+            <expectedResult type="string">position: absolute;</expectedResult>
+            <actualResult type="variable">$videoStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVideoPlaying">
+            <expectedResult type="string">transform: translate3d(</expectedResult>
+            <actualResult type="variable">$videoStyle</actualResult>
+        </assertStringContainsString>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{section.videoBackgroundOverlayElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).backgroundColor" stepKey="overlayColor"/>
+        <assertEquals stepKey="assertOverlayColor">
+            <expectedResult type="string">{{overlayColor}}</expectedResult>
+            <actualResult type="variable">$overlayColor</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{section.videoBackgroundInfiniteLoop(index, infiniteLoop.value)}}" stepKey="waitForInfiniteLoop"/>
+        <waitForElementVisible selector="{{section.videoBackgroundLazyLoad(index, lazyLoad.value)}}" stepKey="waitForLazyLoad"/>
+        <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyWhenVisible(index, playOnlyWhenVisible.value)}}" stepKey="waitForPlayOnlyWhenVisible"/>
+        <waitForElement selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImage"/>
+        <waitForElementNotVisible selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImageNotVisible"/>
+        <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="src" stepKey="fallbackImageSource"/>
+        <assertRegExp stepKey="assertFallbackImageValueContainsFileInformation">
+            <expectedResult type="string">/.*\/(pub\/|\/)?media\/{{fallbackImage.path}}\/{{fallbackImage.fileName}}(_\d+)?\.{{fallbackImage.extension}}/</expectedResult>
+            <actualResult type="variable">$fallbackImageSource</actualResult>
+        </assertRegExp>
+        <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="style" stepKey="fallbackImageStyle"/>
+        <assertStringContainsString stepKey="assertImageCover">
+            <expectedResult type="string">object-fit: cover;</expectedResult>
+            <actualResult type="variable">$fallbackImageStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertImagePosition">
+            <expectedResult type="string">position: absolute;</expectedResult>
+            <actualResult type="variable">$fallbackImageStyle</actualResult>
+        </assertStringContainsString>
+    </actionGroup>
+</actionGroups>

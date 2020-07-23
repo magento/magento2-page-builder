@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductCanCreatePageBuilderProductAttributeOnProductFormTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Can create pagebuilder product attribute on product form"/>
+            <description value="Can create pagebuilder product attribute on product form"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1423"/>
+            <testCaseId value="MC-1332"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-productAttribute"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <click selector="{{AdminProductFormSection.addAttributeBtn}}" stepKey="clickAddAtttributeBtn"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1"/>
+        <click selector="{{AdminProductFormSection.createNewAttributeBtn}}" stepKey="clickCreateNewAtttributeBtn"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2"/>
+        <fillField selector="{{AdminProductFormSection.attributeLabel}}" userInput="{{ProductAttributeFrontendLabel.label}}" stepKey="fillDefaultLabel"/>
+        <click selector="{{AdminProductFormSection.frontendInput}}" stepKey="openInputTypeDropdown"/>
+        <see userInput="Page Builder" stepKey="seePageBuilderInputType"/>
+        <selectOption selector="{{AdminProductFormSection.frontendInput}}" userInput="Page Builder" stepKey="selectOption1"/>
+        <click selector="{{AdminProductFormSection.saveNewAttribute}}" stepKey="saveAttribute"/>
+        <waitForElementNotVisible selector="{{AdminProductFormSection.saveNewAttribute}}" stepKey="waitForSlideOutCloses"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <click selector="{{AdminProductFormSection.attributeTab}}" stepKey="expandAttributeTab"/>
+        <waitForElementVisible selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="waitForAttributeVisbile"/>
+        <click selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="enablePageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderVisible"/>
+        <seeElement selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
+        <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <amOnPage url="{{SimpleProduct.name}}.html" stepKey="navigateToProductPageOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <see userInput="Hello Product Page From PageBuilder" stepKey="pagebuilderContent"/>
+    </test>
+</tests>

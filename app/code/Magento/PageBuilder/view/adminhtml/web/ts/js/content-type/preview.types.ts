@@ -17,8 +17,10 @@ export interface PreviewInterface {
     placeholderCss: KnockoutObservable<object>;
     isPlaceholderVisible: KnockoutObservable<boolean>;
     isEmpty: KnockoutObservable<boolean>;
+    appearance: KnockoutObservable<string>;
+
     /**
-     * @deprecated
+     * Destroys current instance
      */
-    previewData: {[key: string]: any};
+    destroy(): void;
 }

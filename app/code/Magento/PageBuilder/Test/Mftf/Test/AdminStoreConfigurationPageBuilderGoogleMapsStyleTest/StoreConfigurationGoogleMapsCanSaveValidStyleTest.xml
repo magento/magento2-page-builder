@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGoogleMapsCanSaveValidStyleTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
+            <title value="Validate Can Save Valid Google Maps Style"/>
+            <description value="Tests that a user can save a valid Google Maps Style."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MC-2534"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Go To AdminContentManagementPage -->
+        <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <!-- Verify Can Save Valid -->
+        <comment userInput="Verify Can Save Valid" stepKey="commentSave"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+            <argument name="style" value="{{googleMapsStyle.validLong}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
+        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
+        <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validLong}}" stepKey="seeStyle"/>
+        <!-- Verify Can Save Valid With No Content -->
+        <comment userInput="Verify Can Save Valid With No Content" stepKey="commentSave2"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
+            <argument name="style" value="{{googleMapsStyle.validNoContent}}"/>
+        </actionGroup>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration2"/>
+        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
+        <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validNoContent}}" stepKey="seeStyle2"/>
+    </test>
+</tests>

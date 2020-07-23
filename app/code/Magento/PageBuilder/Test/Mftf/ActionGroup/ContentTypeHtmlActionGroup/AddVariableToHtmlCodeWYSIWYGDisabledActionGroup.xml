@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addVariableToHtmlCodeWYSIWYGDisabled">
+        <arguments>
+            <argument name="variable" defaultValue=""/>
+        </arguments>
+        <comment userInput="addVariableToHtmlCodeWYSIWYGDisabled" stepKey="commentAddVariableToHtmlCodeWYSIWYGDisabled"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.insertVariableButton}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{HtmlOnConfiguration.insertVariableButton}}" stepKey="clickInsertVariable1"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
+        <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
+        <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.textarea}}" stepKey="waitForTextArea"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnConfiguration.textareaCSS}}')[0].value;" stepKey="getValueFromTextarea"/>
+        <assertStringContainsString stepKey="assertTextareaContainsValue">
+            <expectedResult type="string">{{variable.editPanelValue}}</expectedResult>
+            <actualResult type="variable">getValueFromTextarea</actualResult>
+        </assertStringContainsString>
+    </actionGroup>
+</actionGroups>

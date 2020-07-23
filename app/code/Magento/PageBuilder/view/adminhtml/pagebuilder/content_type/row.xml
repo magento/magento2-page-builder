@@ -47,12 +47,18 @@
                             <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                             <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                             <style name="justify_content" source="justify_content" persistence_mode="read"/>
-                            <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                            <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/min-height"/>
                             <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                             <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
                             <attribute name="enable_parallax" source="data-enable-parallax"/>
                             <attribute name="parallax_speed" source="data-parallax-speed"/>
                             <attribute name="background_images" source="data-background-images"/>
+                            <attribute name="background_type" source="data-background-type"/>
+                            <attribute name="video_source" source="data-video-src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
+                            <attribute name="video_loop" source="data-video-loop"/>
+                            <attribute name="video_play_only_visible" source="data-video-play-only-visible"/>
+                            <attribute name="video_lazy_load" source="data-video-lazy-load"/>
+                            <attribute name="video_fallback_image" source="data-video-fallback-src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
                             <css name="css_classes"/>
                         </element>
                         <element name="container">
@@ -60,8 +66,22 @@
                             <static_style source="display" value="flex"/>
                             <static_style source="flex_direction" value="column"/>
                         </element>
+                        <element name="video_overlay">
+                            <style name="video_overlay_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/video-overlay-color" persistence_mode="write"/>
+                            <attribute name="video_overlay_color_attribute" storage_key="video_overlay_color" source="data-video-overlay-color" converter="Magento_PageBuilder/js/converter/attribute/video-overlay-color"/>
+                        </element>
                     </elements>
                     <converters>
+                        <converter name="background_type" component="Magento_PageBuilder/js/mass-converter/background-type">
+                            <config>
+                                <item name="attribute_name" value="background_type"/>
+                                <item name="desktop_image_variable" value="background_image"/>
+                                <item name="mobile_image_variable" value="mobile_image"/>
+                                <item name="video_source_variable" value="video_source"/>
+                                <item name="video_fallback_image_variable" value="video_fallback_image"/>
+                                <item name="video_overlay_color_variable" value="video_overlay_color"/>
+                            </config>
+                        </converter>
                         <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
                             <config>
                                 <item name="attribute_name" value="background_images"/>
@@ -89,7 +109,7 @@
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="justify_content" source="justify_content" persistence_mode="read"/>
-                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/min-height"/>
                         <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
@@ -98,13 +118,23 @@
                         <attribute name="enable_parallax" source="data-enable-parallax"/>
                         <attribute name="parallax_speed" source="data-parallax-speed"/>
                         <attribute name="background_images" source="data-background-images"/>
+                        <attribute name="background_type" source="data-background-type"/>
+                        <attribute name="video_source" source="data-video-src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
+                        <attribute name="video_loop" source="data-video-loop"/>
+                        <attribute name="video_play_only_visible" source="data-video-play-only-visible"/>
+                        <attribute name="video_lazy_load" source="data-video-lazy-load"/>
+                        <attribute name="video_fallback_image" source="data-video-fallback-src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
                         <css name="css_classes"/>
                     </element>
-                    <element name="inner" />
+                    <element name="inner"/>
                     <element name="container">
                         <style name="justify_content" source="justify_content"/>
                         <static_style source="display" value="flex"/>
                         <static_style source="flex_direction" value="column"/>
+                    </element>
+                    <element name="video_overlay">
+                        <style name="video_overlay_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/video-overlay-color" persistence_mode="write"/>
+                        <attribute name="video_overlay_color_attribute" storage_key="video_overlay_color" source="data-video-overlay-color" converter="Magento_PageBuilder/js/converter/attribute/video-overlay-color"/>
                     </element>
                 </elements>
                 <converters>
@@ -113,6 +143,16 @@
                             <item name="attribute_name" value="background_images"/>
                             <item name="desktop_image_variable" value="background_image"/>
                             <item name="mobile_image_variable" value="mobile_image"/>
+                        </config>
+                    </converter>
+                    <converter name="background_type" component="Magento_PageBuilder/js/mass-converter/background-type">
+                        <config>
+                            <item name="attribute_name" value="background_type"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
+                            <item name="video_source_variable" value="video_source"/>
+                            <item name="video_fallback_image_variable" value="video_fallback_image"/>
+                            <item name="video_overlay_color_variable" value="video_overlay_color"/>
                         </config>
                     </converter>
                 </converters>
@@ -135,7 +175,7 @@
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="justify_content" source="justify_content" persistence_mode="read"/>
-                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/min-height"/>
                         <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
@@ -144,6 +184,12 @@
                         <attribute name="enable_parallax" source="data-enable-parallax"/>
                         <attribute name="parallax_speed" source="data-parallax-speed"/>
                         <attribute name="background_images" source="data-background-images"/>
+                        <attribute name="background_type" source="data-background-type"/>
+                        <attribute name="video_source" source="data-video-src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
+                        <attribute name="video_loop" source="data-video-loop"/>
+                        <attribute name="video_play_only_visible" source="data-video-play-only-visible"/>
+                        <attribute name="video_lazy_load" source="data-video-lazy-load"/>
+                        <attribute name="video_fallback_image" source="data-video-fallback-src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
                         <css name="css_classes"/>
                     </element>
                     <element name="inner" />
@@ -152,6 +198,10 @@
                         <static_style source="display" value="flex"/>
                         <static_style source="flex_direction" value="column"/>
                     </element>
+                    <element name="video_overlay">
+                        <style name="video_overlay_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/video-overlay-color" persistence_mode="write"/>
+                        <attribute name="video_overlay_color_attribute" storage_key="video_overlay_color" source="data-video-overlay-color" converter="Magento_PageBuilder/js/converter/attribute/video-overlay-color"/>
+                    </element>
                 </elements>
                 <converters>
                     <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
@@ -159,6 +209,16 @@
                             <item name="attribute_name" value="background_images"/>
                             <item name="desktop_image_variable" value="background_image"/>
                             <item name="mobile_image_variable" value="mobile_image"/>
+                        </config>
+                    </converter>
+                    <converter name="background_type" component="Magento_PageBuilder/js/mass-converter/background-type">
+                        <config>
+                            <item name="attribute_name" value="background_type"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
+                            <item name="video_source_variable" value="video_source"/>
+                            <item name="video_fallback_image_variable" value="video_fallback_image"/>
+                            <item name="video_overlay_color_variable" value="video_overlay_color"/>
                         </config>
                     </converter>
                 </converters>

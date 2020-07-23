@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addPageLinkWidgetToTinyMCE">
+        <arguments>
+            <argument name="page" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Adding Widget To Tiny MCE" stepKey="commentAddWidget"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{WidgetSection.WidgetType}}" stepKey="waitForWidgetType"/>
+        <selectOption selector="{{WidgetSection.WidgetType}}" userInput="{{TinyMCEWidgetCMSPageLink.widgetType}}" stepKey="selectCMSPageLinkWidget"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
+        <waitForElementVisible selector="{{WidgetSection.SelectPageButton}}" stepKey="waitForSelectPage"/>
+        <click selector="{{WidgetSection.SelectPageButton}}" stepKey="clickSelectPage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSelectPageModal"/>
+        <waitForElementVisible selector="{{WidgetSection.SelectPageFilterInput('chooser_title')}}" stepKey="waitForGrid"/>
+        <fillField selector="{{WidgetSection.SelectPageFilterInput('chooser_identifier')}}" userInput="{{page}}" stepKey="enterPageName"/>
+        <click selector=".modal-slide._show {{AdminProductGridFilterSection.applyFilters}}" stepKey="clickSearch"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
+        <waitForElementVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForSearchResult"/>
+        <click selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="clickCmsPageLinkRow"/>
+        <waitForElementNotVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForPageSelectionModalToClose"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear4"/>
+        <waitForPageLoad stepKey="waitForPanelSlideOut"/>
+        <waitForElementVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidget2"/>
+        <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
+        <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
+    </actionGroup>
+</actionGroups>

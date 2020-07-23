@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateAdvancedStyleWithNoAlignmentNotVisible">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForElement"/>
+        <dontSeeElement selector="{{page.base(index)}}" stepKey="dontSeeElement"/>
+        <waitForElement selector="{{page.noAlignment(index)}}" stepKey="waitForAlignment"/>
+        <dontSeeElement selector="{{page.noAlignment(index)}}" stepKey="dontSeeAlignment"/>
+        <waitForElement selector="{{page.border(index, border.value)}}" stepKey="waitForBorder"/>
+        <dontSeeElement selector="{{page.border(index, border.value)}}" stepKey="dontSeeBorder"/>
+        <waitForElement selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColor"/>
+        <dontSeeElement selector="{{page.noBorderColor(index)}}" stepKey="dontSeeBorderColor"/>
+        <waitForElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidth"/>
+        <dontSeeElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="dontSeeBorderWidth"/>
+        <waitForElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadius"/>
+        <dontSeeElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="dontSeeBorderRadius"/>
+        <waitForElement selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClasses"/>
+        <dontSeeElement selector="{{page.noCssClasses(index)}}" stepKey="dontSeeCSSClasses"/>
+        <waitForElement selector="{{page.margins(index, margin.value)}}" stepKey="waitForMargin"/>
+        <dontSeeElement selector="{{page.margins(index, margin.value)}}" stepKey="dontSeeMargin"/>
+        <waitForElement selector="{{page.padding(index, padding.value)}}" stepKey="waitForPadding"/>
+        <dontSeeElement selector="{{page.padding(index, padding.value)}}" stepKey="dontSeePadding"/>
+    </actionGroup>
+</actionGroups>

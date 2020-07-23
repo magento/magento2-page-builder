@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemOverflowNotHiddenAfterDuplicatingParent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide item overflow is not hidden after duplicating parent"/>
+            <description value="Slide item overflow is not hidden after duplicating parent container."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-50"/>
+            <testCaseId value="MC-30386"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Column to Stage -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Slider to Column -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderToColumn">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Duplicate column 1 -->
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusSlide"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
+        <!-- Invoke inline editing of slide -->
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Assert slide overflow is not hidden -->
+        <executeJS function="{{SlideOnBackend.slideOverflowPropertyJS('0')}}" stepKey="slideOverflowProperty"/>
+        <assertEquals stepKey="assertSlideOverflowVisible">
+            <expectedResult type="string">visible</expectedResult>
+            <actualResult type="variable">$slideOverflowProperty</actualResult>
+        </assertEquals>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="verifySlideInsertVariableButtonIsVisible">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+    </test>
+</tests>

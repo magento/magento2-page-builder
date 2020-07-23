@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addPageLinkVariableWYSIWYGDisabled">
+        <arguments>
+            <argument name="variable" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{TextOnConfiguration.insertVariableButton}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{TextOnConfiguration.insertVariableButton}}" stepKey="clickInsertVariable1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
+        <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
+        <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextArea"/>
+        <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
+        <assertStringContainsString stepKey="assertValue">
+            <expectedResult type="string">{{variable.editPanelValue}}</expectedResult>
+            <actualResult type="variable">getText</actualResult>
+        </assertStringContainsString>
+    </actionGroup>
+</actionGroups>

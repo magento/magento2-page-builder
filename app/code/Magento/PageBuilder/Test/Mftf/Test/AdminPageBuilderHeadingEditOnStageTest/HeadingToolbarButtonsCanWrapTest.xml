@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="HeadingToolbarButtonsCanWrapTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Stage Edit - Heading Toolbar Buttons Can Wrap"/>
+            <description value="Inline edit toolbar button items can wrap on multiple lines when in a one-sixth column"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88142"/>
+            <testCaseId value="MC-2659"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeading1ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <!-- Stage: Check toolbar buttons have wrapped -->
+        <comment userInput="Stage: Check toolbar buttons have wrapped" stepKey="commentStageCheckToolbarButtonsAreWrapped"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarButtonViewportPositionTop('first')}}" stepKey="actualFirstButtonYPosition"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarButtonViewportPositionTop('last')}}" stepKey="actualLastButtonYPosition"/>
+        <!-- Assert first button y-coordinate is less than last button y-coordinate -->
+        <assertLessThan message="AssertButtonPositions" stepKey="assertSecondButtonIsBelowFirstButton">
+            <actualResult type="variable">actualFirstButtonYPosition</actualResult>
+            <expectedResult type="variable">actualLastButtonYPosition</expectedResult>
+        </assertLessThan>
+    </test>
+</tests>

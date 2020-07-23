@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TextDisabledByDefaultWYSIWYGUpdateAdvancedConfigurationValuesTest" extends="TextUpdateAdvancedConfigurationValuesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Update Advanced Configuration Values With Disabled By Default WYSIWYG"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for Text will update the Stage and Storefront correctly with disabled wysiwyg by default."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3713"/>
+            <testCaseId value="MC-5732"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="disableByDefaultWYSIWYG" before="loginAsAdmin"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache" after="disableByDefaultWYSIWYG"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enableWYSIWYG"/>
+        </after>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel" before="enterText"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="enterText"/>
+    </test>
+</tests>

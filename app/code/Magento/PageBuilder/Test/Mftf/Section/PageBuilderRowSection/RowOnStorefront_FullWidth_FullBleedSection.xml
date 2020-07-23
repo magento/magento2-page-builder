@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="RowOnStorefront_FullWidth_FullBleed">
+        <element name="base" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-content-type=row]')).width)"/>
+        <element name="rowStyle" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, '{{arg2}}')]" parameterized="true"/>
+        <element name="rowWidthJS" type="text" selector="document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1].clientWidth" parameterized="true"/>
+        <element name="rowChildContentWidthJS" type="text" selector="document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1].querySelectorAll('[data-content-type={{arg2}}]')[{{arg3}} - 1].clientWidth" parameterized="true"/>
+        <element name="appearance" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <!-- Background Configuration -->
+        <element name="backgroundType" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{index}}][@data-background-type='{{backgroundType}}']"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColorElement" type="button" parameterized="true" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-color:')]"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}][contains(@style,&quot;background-image: url('&quot;) and contains(@style,&quot;/{{arg2}}_&quot;) and contains(@style,&quot;.{{arg3}}');&quot;)]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}][not(contains(@style,&quot;background-image:&quot;))]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <!-- Parallax Background Configuration -->
+        <element name="parallaxClass" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][@class='jarallax']" parameterized="true"/>
+        <element name="parallaxState" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][@data-enable-parallax='{{arg2}}']" parameterized="true"/>
+        <element name="parallaxSpeed" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/descendant::div[contains(@id,&quot;jarallax-container&quot;)]/div[contains(@style,&quot;background-image: url(&quot;) and contains(@style,&quot;{{arg2}}&quot;) and contains(@style,&quot;{{arg3}}&quot;)]" parameterized="true"/>
+        <element name="parallaxJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('[id*=jarallax-container] &gt; div')" parameterized="true"/>
+        <!-- Video Background -->
+        <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]"/>
+        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
+        <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
+        <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[@data-element='video_overlay']"/>
+        <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}][@data-video-loop='{{infiniteLoopValue}}']"/>
+        <element name="videoBackgroundLazyLoad" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}][@data-video-lazy-load='{{lazyLoadValue}}']"/>
+        <element name="videoBackgroundPlayOnlyWhenVisible" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}][@data-video-play-only-visible='{{playOnlyWhenVisibleValue}}']"/>
+        <element name="videoBackgroundFallbackImage" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//img"/>
+        <element name="videoBackgroundFallbackImageSource" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//img[contains(@src,'{{fileName}}')]"/>
+        <element name="videoBackgroundNoFallbackImage" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//div"/>
+        <!-- Layout Configuration -->
+        <element name="minHeight" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style, 'min-height: {{arg2}};')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+</sections>

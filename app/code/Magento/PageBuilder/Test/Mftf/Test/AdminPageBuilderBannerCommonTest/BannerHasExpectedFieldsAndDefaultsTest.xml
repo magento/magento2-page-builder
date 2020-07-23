@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerHasExpectedFieldsAndDefaultsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner has the correct fields and default values in edit form"/>
+            <description value="A user should see the correct fields and default values when edit button is clicked for banner"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-81599"/>
+            <testCaseId value="MC-2664"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel Fields -->
+        <comment userInput="Validate Edit Panel Fields" stepKey="commentValidateEditPanelFields"/>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderAppearance_Poster"/>
+            <argument name="property2" value="PageBuilderAppearance_CollageLeft"/>
+            <argument name="property3" value="PageBuilderAppearance_CollageRight"/>
+            <argument name="property4" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMinimumHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldHelperText" stepKey="validateHelperText">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMobileImageProperty">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMessageProperty">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTextProperty">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonLinkProperty">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeSlideOutPanelFieldNotOpenInNewTab" stepKey="seeOpenInNewTabProperty">
+            <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTypeProperty">
+            <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeShowButtonProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeShowOverlayProperty">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayColorProperty">
+            <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
+        </actionGroup>
+        <!-- Validate Edit Panel Defaults -->
+        <comment userInput="Validate Edit Panel Defaults" stepKey="commentValidateEditPanelDefaults"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
+            <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
+            <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
+        </assertEquals>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultOpenInNewTabProperty">
+            <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerButtonTypeProperty">
+            <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerShowButtonPositionProperty">
+            <argument name="property" value="PageBuilderBannerShowButtonDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerShowContentOverlayProperty">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
+        </actionGroup>
+        <!-- Validate Edit Panel Disabled -->
+        <comment userInput="Validate Edit Panel Disabled" stepKey="commentValidateEditPanelDisabled"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerButtonTextPropertyIsDisabled">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerButtonTypePropertyIsDisabled">
+            <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayColorPropertyIsDisabled">
+            <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
+        </actionGroup>
+    </test>
+</tests>

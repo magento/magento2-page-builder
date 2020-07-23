@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Variables -->
+    <entity name="TinyMCEVariableBaseURL" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:web/unsecure/base_url</data>
+        <data key="variableNameEncoded">d2ViL3Vuc2VjdXJlL2Jhc2VfdXJs</data>
+        <data key="editPanelValue">Base URL</data>
+        <data key="stageValue">{{config path=&quot;web/unsecure/base_url&quot;}}</data>
+    </entity>
+    <entity name="TinyMCEVariableStoreName" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:general/store_information/name</data>
+        <data key="storefrontValue">The_Magento_Store_Name_Is_A_Long_Magento_Store_Name_With_No_Spaces</data>
+    </entity>
+    <entity name="TinyMCEVariableCountry" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:general/store_information/country_id</data>
+        <data key="editPanelValue">Country</data>
+        <data key="stageValue">{{config path=&quot;general/store_information/country_id&quot;}}</data>
+    </entity>
+    <entity name="PageBuilderTextArea_VariableBaseURL" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:web/unsecure/base_url</data>
+        <data key="editPanelValue">{{config path="web/unsecure/base_url"}}</data>
+    </entity>
+    <!-- Widgets -->
+    <entity name="TinyMCEWidgets" type="pagebuilder_widget_property">
+        <data key="CatalogProductsListType">Magento\CatalogWidget\Block\Product\ProductsList</data>
+        <data key="CatalogProductsListName">Catalog Products List</data>
+    </entity>
+    <entity name="TinyMCEWidgetCMSPageLink" type="pagebuilder_text_widget_property">
+        <data key="widgetType">Magento\Cms\Block\Widget\Page\Link</data>
+        <data key="editPanelValue">CMS Page Link</data>
+        <data key="stageValue">{{widget type=&quot;Magento\Cms\Block\Widget\Page\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id=</data>
+        <data key="stageValueEncoded">e3t3aWRnZXQgdHlwZT0iTWFnZW50b1xDbXNcQmxvY2tcV2lkZ2V0XFBhZ2VcTGluayIgdGVtcGxhdGU9IndpZGdldC9saW5rL2xpbmtfYmxvY2sucGh0bWwiIHBhZ2VfaWQ9</data>
+    </entity>
+    <entity name="TinyMCEWidgetCMSPageLinkWithAnchorAndTitle" extends="TinyMCEWidgetCMSPageLink" type="pagebuilder_text_widget_property">
+        <data key="anchorText">Piiramatult kõnesid ja SMSe Eestis ja ELi rändluses</data>
+        <data key="title">Piiramatult kõnesid ja SMSe Eestis ja ELi rändluses</data>
+    </entity>
+    <entity name="PageBuilderTextArea_WidgetCMSPageLink" type="pagebuilder_text_widget_property">
+        <data key="widgetType">Magento\Cms\Block\Widget\Page\Link</data>
+        <data key="editPanelValue">{{widget type=&quot;Magento\\Cms\\Block\\Widget\\Page\\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id=</data>
+    </entity>
+    <entity name="PageBuilderTextArea_WidgetCMSHomepageLink" type="pagebuilder_text_widget_property">
+        <data key="widgetType">Magento\Cms\Block\Widget\Page\Link</data>
+        <data key="editPanelValue">{{widget type="Magento\Cms\Block\Widget\Page\Link" template="widget/link/link_block.phtml" page_id="2" type_name="CMS Page Link"}}</data>
+        <data key="identifier">home</data>
+    </entity>
+    <entity name="PageBuilderVariableWidgetText" type="pagebuilder_text_property">
+        <data key="value">test string</data>
+        <data key="expectedString1">test str</data>
+        <data key="expectedString2">ing</data>
+    </entity>
+    <!-- TinyMCE Formats -->
+    <entity name="TinyMCEFormatParagraph" type="pagebuilder_tinymce_format">
+        <data key="label">Paragraph</data>
+        <data key="tagName">p</data>
+    </entity>
+    <entity name="TinyMCEFormatHeading1" type="pagebuilder_tinymce_format">
+        <data key="label">Heading 1</data>
+        <data key="tagName">h1</data>
+    </entity>
+    <entity name="TinyMCEFormatHeading2" type="pagebuilder_tinymce_format">
+        <data key="label">Heading 2</data>
+        <data key="tagName">h2</data>
+    </entity>
+    <entity name="TinyMCEFormatHeading3" type="pagebuilder_tinymce_format">
+        <data key="label">Heading 3</data>
+        <data key="tagName">h3</data>
+    </entity>
+    <entity name="TinyMCEFormatHeading4" type="pagebuilder_tinymce_format">
+        <data key="label">Heading 4</data>
+        <data key="tagName">h4</data>
+    </entity>
+    <entity name="TinyMCEFormatHeading5" type="pagebuilder_tinymce_format">
+        <data key="label">Heading 5</data>
+        <data key="tagName">h5</data>
+    </entity>
+    <entity name="TinyMCEFormatHeading6" type="pagebuilder_tinymce_format">
+        <data key="label">Heading 6</data>
+        <data key="tagName">h6</data>
+    </entity>
+    <entity name="TinyMCEFormatImportant" type="pagebuilder_tinymce_format">
+        <data key="label">Important</data>
+        <data key="tagName">div</data>
+    </entity>
+    <entity name="TinyMCEFormatPreformatted" type="pagebuilder_tinymce_format">
+        <data key="label">Preformatted</data>
+        <data key="tagName">div</data>
+    </entity>
+    <!-- TinyMCE Selections -->
+    <entity name="TinyMCEPartialHeadingSelection" type="pagebuilder_text_selection">
+        <data key="startX">15</data>
+        <data key="endX">115</data>
+        <data key="startY">15</data>
+        <data key="endY">15</data>
+        <data key="selection">his is a h</data>
+    </entity>
+    <entity name="TinyMCEPartialTextSelection" type="pagebuilder_text_selection">
+        <data key="startX">18</data>
+        <data key="endX">55</data>
+        <data key="startY">15</data>
+        <data key="endY">15</data>
+        <data key="selection">t strin</data>
+    </entity>
+    <entity name="TinyMCEHeadingVariableTextSelection" type="pagebuilder_multiple_text_selection">
+        <data key="selection">his is a heading
+Base URL
+
+test strin</data>
+    </entity>
+</entities>

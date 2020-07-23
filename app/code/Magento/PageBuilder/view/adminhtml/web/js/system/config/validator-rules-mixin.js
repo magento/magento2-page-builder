@@ -39,7 +39,7 @@ define([
             'validate-default-grid-size',
             function (value) {
                 return !(parseInt(value, 10) >
-                    parseInt($("[name='groups[pagebuilder][fields][column_grid_max][value]']").val(), 10)
+                    parseInt($('[name="groups[pagebuilder][fields][column_grid_max][value]"]').val(), 10)
                 );
             },
             $.mage.__('Default grid size must be less than the maximum grid size.')

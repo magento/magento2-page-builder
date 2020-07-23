@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowAddAdditionalRowAboveInitialRowTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Can add an additional row above the initial row on stage"/>
+            <description value="If user drags Row above the stage Droppable area is still registered and new row is added to the top"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-72398"/>
+            <testCaseId value="MC-4033"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="dropZoneIndex" value="1"/>
+            <argument name="offsetXCoordinate" value="0"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
+        <comment userInput="Stage: Check Background Color is present for existing row" stepKey="commentStageCheckBackground"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNewRowNoColor">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '1')}}" stepKey="waitForFirstDropZone"/>
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '2')}}" stepKey="waitForSecondDropZone"/>
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '3')}}" stepKey="waitForThirdDropZone"/>
+    </test>
+</tests>

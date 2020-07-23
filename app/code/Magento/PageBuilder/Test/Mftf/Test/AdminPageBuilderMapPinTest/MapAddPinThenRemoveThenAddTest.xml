@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapAddPinThenRemoveThenAddTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Add Pin Then Remove Then Add and Verify"/>
+            <description value="Make sure the user can add a map after adding a map and then removing it."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2875"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+            <skip>
+                <issueId value="MTS-657"/>
+            </skip>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Enter Required Fields -->
+        <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <!-- Empty Both Coordinate Fields -->
+        <comment userInput="Empty Both Coordinate Fields" stepKey="commentEmptyCoordinates"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitudeEmpty">
+            <argument name="property" value="PageBuilderMapLatitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitudeEmpty">
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorLatitudeEmpty">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLatitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorLongitudeEmpty">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <!-- Add Pin To Map After Error -->
+        <comment userInput="Add Pin To Map After Error" stepKey="commentAddPinToMap2"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin2"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+    </test>
+</tests>

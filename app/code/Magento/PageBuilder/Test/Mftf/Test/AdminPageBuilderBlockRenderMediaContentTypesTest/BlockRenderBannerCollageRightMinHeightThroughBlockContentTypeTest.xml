@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderBannerCollageRightMinHeightThroughBlockContentTypeTest" extends="BlockRenderBannerPosterMinHeightThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Validate Collage Right Banner Min Height Through Block Content Type"/>
+            <description value="Verify that a collage right banner's minimum height attribute renders correctly through the Block content type."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-378"/>
+            <testCaseId value="MC-31604"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageRight"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
+    </test>
+</tests>

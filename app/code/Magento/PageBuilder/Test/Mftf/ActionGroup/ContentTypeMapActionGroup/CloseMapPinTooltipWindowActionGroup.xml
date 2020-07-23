@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="closeMapPinTooltipWindow">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="closeMapPinTooltipWindow" stepKey="comment"/>
+        <moveMouseOver selector="{{page.base(mapIndex)}}" x="-1" y="0" stepKey="moveMouseOutsideMap"/>
+        <waitForPageLoad stepKey="waitForOptionMenuGone"/>
+        <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
+        <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
+    </actionGroup>
+</actionGroups>

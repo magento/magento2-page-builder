@@ -1,8 +1,9 @@
 /*eslint-disable */
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+/* jscs:disable */
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _hideShowOption, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   /**
@@ -44,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.ready = false;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
-      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_assertThisInitialized(_this))), 10);
+      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_this)), 10);
       _this.ignoredKeysForBuild = ["display", "margins_and_padding", "border", "border_color", "border_radius", "border_width", "css_classes", "name", "text_align"];
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
@@ -77,7 +78,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }); // Set the stage to interacting when a slide is focused
 
 
-          _this.focusedSlide.subscribe(function (value) {
+          _this.focusedSlideSubscriber = _this.focusedSlide.subscribe(function (value) {
             if (value !== null) {
               _events.trigger("stage:interactionStart");
             } else {
@@ -324,6 +325,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.setFocusedSlide(index);
     }
     /**
+     * @inheritdoc
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _previewCollection2.prototype.destroy.call(this);
+
+      if (this.focusedSlideSubscriber) {
+        this.focusedSlideSubscriber.dispose();
+      }
+    }
+    /**
      * Bind events
      */
     ;
@@ -357,7 +370,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var newItemIndex;
 
       _events.on("slide:removeAfter", function (args) {
-        if (args.contentType.parentContentType.id === _this4.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this4.contentType.id) {
           // Mark the previous slide as active
           newItemIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
@@ -399,6 +412,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("slide:createAfter", function (args) {
         if (_this4.element && _this4.ready && args.contentType.parentContentType.id === _this4.contentType.id) {
           _this4.forceContainerHeight();
+
+          _underscore.defer(function () {
+            (0, _jquery)(_this4.element).css({
+              height: "",
+              overflow: ""
+            });
+          });
         }
       }); // ContentType being mounted onto container
 
@@ -553,9 +573,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this6 = this;
 
       setTimeout(function () {
-        (0, _jquery)(_this6.element).slick("setPosition");
+        if (_this6.element) {
+          (0, _jquery)(_this6.element).slick("setPosition");
 
-        _this6.checkWidth();
+          _this6.checkWidth();
+        }
       }, 250);
     }
     /**

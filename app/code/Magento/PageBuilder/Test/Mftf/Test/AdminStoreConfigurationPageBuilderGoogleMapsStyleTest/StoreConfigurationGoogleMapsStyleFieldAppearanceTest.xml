@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGoogleMapsStyleFieldAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
+            <title value="Validate Google Maps Style Field Appearance"/>
+            <description value="Tests the following for Google Maps Style field: 1) Global config key, 2) Helper text, 3) Correct Create Map Style link."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MC-2859"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <closeTab stepKey="closeTab"/>
+        </after>
+        <!-- Go To AdminContentManagementPage -->
+        <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <!-- Validate Global Scope -->
+        <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(googleMapsStyle.section, googleMapsStyle.row, googleMapsStyle.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
+        <!-- Validate Helper Text -->
+        <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleHelperText}}" stepKey="waitForHelperText"/>
+        <see selector="{{ContentManagementSection.GoogleMapsStyleHelperText}}" userInput="Paste the Google Maps style JSON code here to change the look and feel of the Map content type. Create Map Style." stepKey="seeHelperText"/>
+        <!-- Validate Create Map Style Link -->
+        <comment userInput="Validate Create Map Style Link" stepKey="commentValidateLink"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsCreateMapStyleLink}}" stepKey="waitForLink"/>
+        <click selector="{{ContentManagementSection.GoogleMapsCreateMapStyleLink}}" stepKey="clickLink"/>
+        <wait time="2" stepKey="waitForTabCreation"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <seeCurrentUrlEquals url="https://mapstyle.withgoogle.com/" stepKey="validateURL"/>
+    </test>
+</tests>

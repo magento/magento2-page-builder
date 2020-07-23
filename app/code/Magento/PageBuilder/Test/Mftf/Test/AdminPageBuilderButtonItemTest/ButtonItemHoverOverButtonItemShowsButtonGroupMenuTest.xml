@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonItemHoverOverButtonItemShowsButtonGroupMenuTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Hovering Over Button Item Shows Button Group Menu"/>
+            <description value="A user should see the button group on-hover menu when they hover over a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-941"/>
+            <testCaseId value="MC-3497"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <skip>
+                <issueId value="MC-3702"/>
+            </skip>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Must Click Button Item To Show Menu -->
+        <comment userInput="Must Click Button Item To Show Menu" stepKey="commentValidateOptionMenu"/>
+        <moveMouseOver selector="{{ButtonItemOnStage.base('1')}}" stepKey="moveMouseOverButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForButtonGroupOptionsMenu"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="seeButtonGroupOptionsMenu"/>
+        <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="dontSeeButtonItemOptionsMenu"/>
+        <click selector="{{ButtonItemOnStage.base('1')}}" stepKey="clickButtonItem"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="waitForButtonItemOptionsMenuVisible"/>
+        <seeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="seeButtonItemOptionsMenu"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForButtonGroupOptionsMenuNotVisible"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="dontSeeButtonGroupOptionsMenu"/>
+    </test>
+</tests>

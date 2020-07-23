@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderFullScreenLeftPanelHeightAndFunctionalityTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Full-Screen"/>
+            <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3329"/>
+            <testCaseId value="MC-13660"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().top" stepKey="topPositionOfLeftPanel"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().left" stepKey="leftPositionOfLeftPanel"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().height" stepKey="heightOfLeftPanel"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().width" stepKey="widthOfLeftPanel"/>
+        <assertEquals stepKey="assertTopPosition">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">topPositionOfLeftPanel</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertLeftPosition">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">leftPositionOfLeftPanel</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertHeight">
+            <expectedResult type="variable">viewportHeight</expectedResult>
+            <actualResult type="variable">heightOfLeftPanel</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertWidth">
+            <expectedResult type="int">150</expectedResult>
+            <actualResult type="variable">widthOfLeftPanel</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderPanel.firstSection}}" parameterArray="['class' =&gt; 'active']" stepKey="firstSectionOfPanelIsOpen"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypes"/>
+    </test>
+</tests>

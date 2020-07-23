@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addPageLinkWidgetWYSIWYGDisabled" extends="addPageLinkWidgetToTinyMCE">
+        <arguments>
+            <argument name="widget" defaultValue=""/>
+            <argument name="page" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Adding Widget To Textarea" stepKey="commentAddWidget"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.insertWidgetButton}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{TextOnConfiguration.insertWidgetButton}}" stepKey="clickAddWidgetBtn"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForInsertWidgetModalToClose"/>
+        <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
+        <assertStringContainsString stepKey="assertValue">
+            <expectedResult type="string">{{widget.editPanelValue}}</expectedResult>
+            <actualResult type="variable">getText</actualResult>
+        </assertStringContainsString>
+    </actionGroup>
+</actionGroups>

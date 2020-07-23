@@ -36,7 +36,7 @@ module.exports = {
             prefix: moduleName
         }],
         ['@comandeer/babel-plugin-banner', {
-            'banner': "/*eslint-disable */\n"
+            'banner': "/*eslint-disable */\n/* jscs:disable */",
         }],
         '@babel/plugin-syntax-object-rest-spread'
     ],

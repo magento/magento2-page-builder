@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationFunctionalBorder2Test">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Border 2 of 2"/>
+            <description value="Tests that the Border attribute functions as expected on Stage and Storefront for Text. 2 of 2."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-4223"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Text to Stage -->
+        <comment userInput="Add Text to Stage" stepKey="commentAddTextToStage"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <!-- Add Border: Double -->
+        <comment userInput="Add Border: Double" stepKey="commentAddBorderDouble"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor1"/>
+        <!-- Add Border: Groove -->
+        <comment userInput="Add Border: Groove" stepKey="commentAddBorderGroove"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyGroove"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2"/>
+        <!-- Add Border: Ridge -->
+        <comment userInput="Add Border: Ridge" stepKey="commentAddBorderRidge"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyRidge"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor3"/>
+        <!-- Add Border: Inset -->
+        <comment userInput="Add Border: Inset" stepKey="commentAddBorderInset"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyInset"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor4"/>
+        <!-- Add Border: Outset -->
+        <comment userInput="Add Border: Outset" stepKey="commentAddBorderOutset"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyOutset"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor5"/>
+        <!-- Stage: Check Border: Double -->
+        <comment userInput="Stage: Check Border: Double" stepKey="commentStageCheckDouble"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDouble">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Groove -->
+        <comment userInput="Stage: Check Border: Groove" stepKey="commentStageCheckGroove"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageGroove">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Ridge -->
+        <comment userInput="Stage: Check Border: Ridge" stepKey="commentStageCheckRidge"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageRidge">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Inset -->
+        <comment userInput="Stage: Check Border: Inset" stepKey="commentStageCheckInset"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInset">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Outset -->
+        <comment userInput="Stage: Check Border: Outset" stepKey="commentStageCheckOutset"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageOutset">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Border: Double -->
+        <comment userInput="Stage: Check Border: Double" stepKey="commentStageCheckDouble2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDouble2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Groove -->
+        <comment userInput="Stage: Check Border: Groove" stepKey="commentStageCheckGroove2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageGroove2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Ridge -->
+        <comment userInput="Stage: Check Border: Ridge" stepKey="commentStageCheckRidge2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageRidge2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Inset -->
+        <comment userInput="Stage: Check Border: Inset" stepKey="commentStageCheckInset2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInset2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Stage: Check Border: Outset -->
+        <comment userInput="Stage: Check Border: Outset" stepKey="commentStageCheckOutset2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageOutset2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Storefront: Check Border: Double -->
+        <comment userInput="Storefront: Check Border: Double" stepKey="commentStorefrontCheckDouble2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontDouble2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Border: Groove -->
+        <comment userInput="Storefront: Check Border: Groove" stepKey="commentStorefrontCheckGroove2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontGroove2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Check Border: Ridge -->
+        <comment userInput="Storefront: Check Border: Ridge" stepKey="commentStorefrontCheckRidge2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontRidge2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Storefront: Check Border: Inset -->
+        <comment userInput="Storefront: Check Border: Inset" stepKey="commentStorefrontCheckInset2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontInset2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Storefront: Check Border: Outset -->
+        <comment userInput="Storefront: Check Border: Outset" stepKey="commentStorefrontCheckOutset2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontOutset2">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+    </test>
+</tests>

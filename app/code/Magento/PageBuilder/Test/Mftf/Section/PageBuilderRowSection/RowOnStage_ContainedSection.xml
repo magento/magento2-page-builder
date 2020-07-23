@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="RowOnStage_Contained">
+        <element name="base" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]//div[@data-element='inner']" parameterized="true"/>
+        <element name="baseJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('[data-element=inner]')" parameterized="true"/>
+    </section>
+</sections>

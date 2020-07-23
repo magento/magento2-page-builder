@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowAppearancesWarningMessageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Warning message displays for Full Width and Full Bleed appearances."/>
+            <description value="Warning message displays for Full Width and Full Bleed appearances."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-930"/>
+            <testCaseId value="MC-3346"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowAppearances"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage}}" stepKey="warningMessageHidden"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectFullWidthAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{RowOnBackend.appearanceWarningMessage}}" stepKey="warningMessageVisibleFullWidth"/>
+        <see userInput="{{PageBuilderRowAppearance_FullWidth.warningMessage}}" stepKey="seeFullWidthWarningMessage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectContainedAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage}}" stepKey="warningMessageHidden2"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectFullBleedAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{RowOnBackend.appearanceWarningMessage}}" stepKey="warningMessageVisibleFullBleed"/>
+        <see userInput="{{PageBuilderRowAppearance_FullBleed.warningMessage}}" stepKey="seeFullBleedWarningMessage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectContainedAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage}}" stepKey="warningMessageHidden3"/>
+    </test>
+</tests>

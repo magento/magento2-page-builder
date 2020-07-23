@@ -7,15 +7,17 @@
 //  Default appearance styles
 //  _____________________________________________
 
-figure[data-content-type='image'] {
-    box-sizing: border-box;
+& when (@media-common = true) {
+    figure[data-content-type='image'] {
+        box-sizing: border-box;
 
-    > [data-element='link'],
-    > [data-element='link'] img {
-        border-radius: inherit;
-    }
+        > [data-element='link'],
+        > [data-element='link'] img {
+            border-radius: inherit;
+        }
 
-    figcaption {
-        word-wrap: break-word;
+        figcaption {
+            word-wrap: break-word;
+        }
     }
 }

@@ -41,7 +41,8 @@ define([
          */
         save: function (redirect, data) {
             var submit = this._super.bind(this, redirect, data),
-                timeout;
+                timeout,
+                locks;
 
             if (_.isEmpty(this.pageBuilderInstances)) {
                 submit();
@@ -56,7 +57,9 @@ define([
                 $.when.apply(
                     null,
                     this.pageBuilderInstances.map(function (instance) {
-                        return instance.stage.renderingLock;
+                        locks = instance.stage.renderingLocks;
+
+                        return locks[locks.length - 1];
                     })
                 ).then(function () {
                     $('body').trigger('processStop');

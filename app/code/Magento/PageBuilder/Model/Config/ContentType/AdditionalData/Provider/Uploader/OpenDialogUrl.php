@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\U
 
 use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
 use Magento\Backend\Model\Url;
+use Magento\Ui\Component\Form\Element\DataType\Media\OpenDialogUrl as OpenDialogConfig;
 
 /**
  * Provides open dialog URL for media gallery slideout
@@ -22,11 +23,20 @@ class OpenDialogUrl implements ProviderInterface
     private $urlBuilder;
 
     /**
-     * @param Url $urlBuilder
+     * @var OpenDialogConfig
      */
-    public function __construct(Url $urlBuilder)
-    {
+    private $openDialogConfig;
+
+    /**
+     * @param Url $urlBuilder
+     * @param OpenDialogConfig $openDialogConfig
+     */
+    public function __construct(
+        Url $urlBuilder,
+        OpenDialogConfig $openDialogConfig // phpstan:ignore
+    ) {
         $this->urlBuilder = $urlBuilder;
+        $this->openDialogConfig = $openDialogConfig;
     }
 
     /**
@@ -35,10 +45,7 @@ class OpenDialogUrl implements ProviderInterface
     public function getData(string $itemName) : array
     {
         return [
-            $itemName => $this->urlBuilder->getUrl(
-                'cms/wysiwyg_images/index',
-                ['_secure' => true]
-            )
+            $itemName => $this->urlBuilder->getUrl($this->openDialogConfig->get(), ['_secure' => true])
         ];
     }
 }

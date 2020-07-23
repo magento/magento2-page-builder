@@ -1,0 +1,135 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+
+//
+//  Replace box-shadow with borders when capturing a screenshot for template manager
+//  ______________________________________________________________________
+
+.pagebuilder-stage.capture .pagebuilder-canvas {
+    margin: -10px;
+    padding: 10px;
+    transition: none;
+
+    .pagebuilder-content-type {
+        border: 0 !important;
+        box-shadow: none !important;
+
+        &.type-container {
+            border: 1px solid @color-pagebuilder-lighter-gray !important;
+            box-shadow: none !important;
+        }
+
+        &.pagebuilder-video .pagebuilder-video-container {
+            background-color: @color-gray98;
+
+            &:before {
+                &:extend(.pagebuilder-icon all);
+                color: @color-gray65-lighten;
+                content: @icon-pagebuilder-video__content;
+                display: block;
+                font-size: 80px;
+                left: 50%;
+                position: absolute;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            iframe {
+                display: none;
+            }
+        }
+    }
+}
+
+.pagebuilder-stage-wrapper.stage-full-screen .pagebuilder-stage.capture .pagebuilder-canvas {
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+//
+//  Style modal and grid slide out panel
+//  ______________________________________________________________________
+
+.modal-popup.template-manager-save .modal-inner-wrap {
+    max-width: 50rem;
+
+    .template-manager-preview-spinner,
+    .template-manager-preview-image {
+        background: @color-white-fog;
+        font-size: 0;
+        height: 300px;
+        overflow: hidden;
+        overflow-y: auto;
+        position: relative;
+        width: 100%;
+    }
+
+    .template-manager-preview-spinner .spinner {
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .template-manager-preview-image img {
+        width: 100%;
+    }
+}
+
+.preview-image-preview {
+    .preview-image-preview-image {
+        border: 1px solid @color-gray84;
+        margin-top: .5rem;
+        padding: .5rem;
+    }
+}
+
+.pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid,
+.pagebuilder-template-index .admin__data-grid-wrap {
+    .data-grid th:nth-child(1) {
+        width: 6rem;
+    }
+    .data-grid th:nth-child(2) {
+        width: 20rem;
+    }
+    .data-grid td.data-grid-preview-image-cell {
+        font-size: 0;
+
+        img {
+            background: @color-white;
+            border: 1px solid @color-gray84;
+            cursor: pointer;
+            max-height: 150px;
+            object-fit: cover;
+            object-position: top;
+            padding: 5px;
+            width: 100%;
+
+            &:hover {
+                border-color: @color-brownie-vanilla;
+            }
+        }
+    }
+    .data-grid th:nth-child(4) {
+        width: 20rem;
+    }
+    .data-grid th:nth-child(5) {
+        width: 20rem;
+    }
+}
+
+.preview-image-preview-image-block {
+    padding-bottom: 3rem;
+}
+
+.modal-slide.pagebuilder_stage_template_pagebuilder_stage_template_modal .admin__action-multiselect-crumb .action-close {
+    &:extend(.admin__action-multiselect-crumb .action-close all);
+    padding: 0;
+
+    &:before {
+        font-size: inherit;
+    }
+}

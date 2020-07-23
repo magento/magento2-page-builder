@@ -94,7 +94,7 @@
             <settings>
                 <dataType>text</dataType>
                 <imports>
-                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_select_grid:externalValue</link>
+                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_select_grid.columns.ids:lastSelected</link>
                 </imports>
             </settings>
         </field>
@@ -127,27 +127,12 @@
     </fieldset>
     <modal name="modal" sortOrder="30">
         <settings>
+            <listens>
+                <link name="pagebuilder_block_select_grid.pagebuilder_block_select_grid.columns.ids:lastSelected">closeModal</link>
+            </listens>
+            <modalClass>pagebuilder-block-modal</modalClass>
             <options>
                 <option name="title" xsi:type="string" translate="true">Select Block</option>
-                <option name="buttons" xsi:type="array">
-                    <item name="0" xsi:type="array">
-                        <item name="text" xsi:type="string" translate="true">Cancel</item>
-                        <item name="actions" xsi:type="array">
-                            <item name="0" xsi:type="string">closeModal</item>
-                        </item>
-                    </item>
-                    <item name="1" xsi:type="array">
-                        <item name="text" xsi:type="string">Add Selected</item>
-                        <item name="class" xsi:type="string">action-primary</item>
-                        <item name="actions" xsi:type="array">
-                            <item name="0" xsi:type="array">
-                                <item name="targetName" xsi:type="string">${ $.name }.pagebuilder_block_select_grid</item>
-                                <item name="actionName" xsi:type="string">save</item>
-                            </item>
-                            <item name="1" xsi:type="string">closeModal</item>
-                        </item>
-                    </item>
-                </option>
             </options>
         </settings>
         <insertListing name="pagebuilder_block_select_grid" sortOrder="10">
@@ -163,6 +148,9 @@
                     <imports>false</imports>
                     <exports>true</exports>
                 </dataLinks>
+                <listens>
+                    <link name="pagebuilder_block_select_grid.pagebuilder_block_select_grid.columns.ids:lastSelected">save</link>
+                </listens>
             </settings>
         </insertListing>
     </modal>

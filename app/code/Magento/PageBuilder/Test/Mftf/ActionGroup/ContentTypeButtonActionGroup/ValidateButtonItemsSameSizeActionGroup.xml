@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateButtonItemsSameSize">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="validateButtonItemsSameSize" stepKey="comment"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupIndex)}}" stepKey="waitForButtonGroup"/>
+        <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Enabled.value)}}" stepKey="seeButtonSameSizeValue"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{buttonItemPage.jsButtonSelector(firstButtonIndex)}}).width)" stepKey="button1Width"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{buttonItemPage.jsButtonSelector(secondButtonIndex)}}).width)" stepKey="button2Width"/>
+        <assertGreaterThan stepKey="assertButtonWidthGreaterThanZero">
+            <actualResult type="variable">button1Width</actualResult>
+            <expectedResult type="int">0</expectedResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertButtonWidthSize">
+            <actualResult type="variable">button1Width</actualResult>
+            <expectedResult type="variable">button2Width</expectedResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

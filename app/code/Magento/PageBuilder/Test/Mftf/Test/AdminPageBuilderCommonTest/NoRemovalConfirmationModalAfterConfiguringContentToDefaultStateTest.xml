@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="NoRemovalConfirmationModalAfterConfiguringContentToDefaultStateTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Verify No Removal Confirmation Modal After Configuring Content Back To Default State"/>
+            <description value="The user should not see a removal confirmation modal if they reconfigure their content to match default state"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MC-2835"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add 2nd Row and Heading-->
+        <comment userInput="2nd Row and Heading" stepKey="commentAdd"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop2"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentEditHeading1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Configure Heading Back To Default -->
+        <comment userInput="Configure Heading Back To Default" stepKey="commentEditHeading2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle2">
+            <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Remove Heading -->
+        <comment userInput="Remove Heading" stepKey="commentRemoveHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify No Modal 1 -->
+        <comment userInput="Verify No Modal 1" stepKey="commentNoModal1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeading"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeading"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeRows1"/>
+        <!-- Remove Parent Row -->
+        <comment userInput="Remove Parent Row" stepKey="commentRemoveRow"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <!-- Verify No Modal 2 -->
+        <comment userInput="Verify No Modal 2" stepKey="commentNoModal2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalRow"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkRow"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeRows2"/>
+    </test>
+</tests>

@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm"], function (_jquery, _translate, _dismissibleConfirm) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

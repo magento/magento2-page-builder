@@ -10,9 +10,8 @@ define([
     'Magento_Ui/js/form/element/image-uploader',
     'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver',
     'Magento_PageBuilder/js/events',
-    'mage/translate',
-    'mage/adminhtml/browser'
-], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t, browser) {
+    'mage/translate'
+], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
     'use strict';
 
     var initializedOnce = false;
@@ -71,15 +70,7 @@ define([
                 initializedOnce = true;
             }
         },
-        
-        /**
-         * {@inheritDoc}
-         */
-        openMediaBrowserDialog: function (imageUploader, e) {
-            browser.modalLoaded = false;
-            this._super(imageUploader, e);
-        },
-        
+
         /**
          * {@inheritDoc}
          */
@@ -87,6 +78,21 @@ define([
             this._super(fileInput);
             this.$uploadArea = $(this.$fileInput).closest('.pagebuilder-image-empty-preview');
             new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea.get(0));
+        },
+
+        /**
+         * Checks if provided file is allowed to be uploaded.
+         * {@inheritDoc}
+         */
+        isFileAllowed: function () {
+            var result = this._super(),
+                allowedExtensions = this.getAllowedFileExtensionsInCommaDelimitedFormat();
+
+            if (!result.passed && result.rule === 'validate-file-type') {
+                result.message += ' ' + this.translations.allowedFileTypes + ': ' + allowedExtensions + '.';
+            }
+
+            return result;
         },
 
         /**
@@ -104,28 +110,19 @@ define([
          * @param {jQuery.event} e
          */
         highlightDropzone: function (e) {
-            var draggedItem,
-                $dropzone = $(e.target).closest(this.dropZone),
+            var $dropzone = $(e.target).closest(this.dropZone),
                 $otherDropzones = $(this.dropZone).not($dropzone),
                 isInsideDropzone = !!$dropzone.length;
 
-            if (e.originalEvent.dataTransfer.items.length === 0) {
-                return false;
+            if (isInsideDropzone) {
+                $dropzone
+                  .removeClass(this.classes.draggingOutside)
+                  .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
             }
 
-            draggedItem = e.originalEvent.dataTransfer.items[0];
-
-            if (draggedItem.kind === 'file' && /image\//.test(draggedItem.type)) {
-                if (isInsideDropzone) {
-                    $dropzone
-                        .removeClass(this.classes.draggingOutside)
-                        .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
-                }
-
-                $otherDropzones
-                    .removeClass(this.classes.draggingInside)
-                    .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
-            }
+            $otherDropzones
+              .removeClass(this.classes.draggingInside)
+              .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
         },
 
         /**
@@ -208,7 +205,9 @@ define([
 
             for (modifierClass in this.elementWidthModifierClasses) {
                 if (!this.elementWidthModifierClasses.hasOwnProperty(modifierClass)) {
+                    // jscs:disable disallowKeywords
                     continue;
+                    // jscs:enable disallowKeywords
                 }
 
                 classConfig = this.elementWidthModifierClasses[modifierClass];
@@ -233,6 +232,19 @@ define([
         hasData: function () {
             // Some of the components automatically add an empty object if the value is unset.
             return this._super() && !$.isEmptyObject(this.value()[0]);
+        },
+
+        /**
+         * Stop event to prevent it from reaching any objects other than the current object.
+         *
+         * @param {Object} uploader
+         * @param {Event} event
+         * @returns {Boolean}
+         */
+        stopEvent: function (uploader, event) {
+            event.stopPropagation();
+
+            return true;
         }
     });
 });

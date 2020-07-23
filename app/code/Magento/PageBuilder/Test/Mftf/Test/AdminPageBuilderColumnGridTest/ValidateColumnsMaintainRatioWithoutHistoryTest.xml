@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidateColumnsMaintainRatioWithoutHistoryTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set the grid size and restore without history"/>
+            <description value="Set the grid size to 6, change 1st column to 1/6 clear history and change back to 12 grid size"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2332"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+            <group value="pagebuilder-divider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo6">
+            <argument name="gridSize" value="6"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="validateLeftColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="validateRightColumnWidth"/>
+        <!-- Drag divider into first column to clear history -->
+        <comment userInput="Drag divider into first column to clear history" stepKey="commentAddDividerToColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Resize first column to 1/6 -->
+        <comment userInput="Resize first column to 1/6" stepKey="commentResizeColumn"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/6')}}" stepKey="validateLeftColumnWidth2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/6')}}" stepKey="validateRightColumnWidth2"/>
+        <!-- Change grid size back to 12 and validate column maintained ratio -->
+        <comment userInput="Change grid size back to 12 and validate column maintained ratio" stepKey="commentSetGridSizeTo12"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo12">
+            <argument name="gridSize" value="12"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateLeftColumnWidth3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','10/12')}}" stepKey="validateRightColumnWidth3"/>
+    </test>
+</tests>

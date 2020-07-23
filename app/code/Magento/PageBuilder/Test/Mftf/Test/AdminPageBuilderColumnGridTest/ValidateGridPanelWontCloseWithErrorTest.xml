@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidateGridPanelWontCloseWithErrorTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Grid Form Stays Open When Error Is Present"/>
+            <description value="Verify the grid panel is displayed always when an error is present"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2304"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
+            <argument name="gridSize" value="50"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
+        </actionGroup>
+        <click selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="clickOtherArea"/>
+        <seeElement selector="{{ColumnOnBackend.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2"/>
+        <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
+        <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
+    </test>
+</tests>

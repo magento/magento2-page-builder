@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground">
+        <annotations>
+            <description>Validates that the video background fallback image renders when the video in video background finishes playing.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="fallbackImage" defaultValue="PageBuilderVideoBackgroundFallbackImage_Empty"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideo"/>
+        <waitForElementVisible selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImageVisible"/>
+        <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="src" stepKey="fallbackImageSource"/>
+        <assertRegExp stepKey="assertFallbackImageValueContainsFileInformation">
+            <expectedResult type="string">/.*\/(pub\/|\/)?media\/{{fallbackImage.path}}\/{{fallbackImage.fileName}}(_\d+)?\.{{fallbackImage.extension}}/</expectedResult>
+            <actualResult type="variable">$fallbackImageSource</actualResult>
+        </assertRegExp>
+        <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="style" stepKey="fallbackImageStyle"/>
+        <assertStringContainsString stepKey="assertCover">
+            <expectedResult type="string">display: block;</expectedResult>
+            <actualResult type="variable">$fallbackImageStyle</actualResult>
+        </assertStringContainsString>
+    </actionGroup>
+</actionGroups>

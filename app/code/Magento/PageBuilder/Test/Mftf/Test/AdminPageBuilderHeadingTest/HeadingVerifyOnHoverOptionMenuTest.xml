@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="HeadingVerifyOnHoverOptionMenuTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Verify On Hover Option Menu"/>
+            <description value="Test verifies that on hover option menu for Heading content type contains all buttons"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2493"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="waitForHeadingInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="onMouseOverHeadingStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" stepKey="waitForOptionsMenu"/>
+        <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" userInput="{{PageBuilderHeadingContentType.name}}" stepKey="seeHeadingOptionMenuTitle"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeMove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsMove"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEdit(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsEdit"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderHeadingContentType.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsRemove"/>
+    </test>
+</tests>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonGroupCreateNewSmallerButtonWithSameSizeEnabledTest" extends="ButtonGroupCreateNewLargestButtonWithSameSizeEnabledTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Create New Smaller Button With Same Size Enabled"/>
+            <description value="Validate that when the same size button feature is enabled, creating a new button that is not thee largest size will not increase the size of all buttons"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3609"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add New Smaller Button -->
+        <comment userInput="Add New Smaller Button" stepKey="commentAddNewButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Validate Stage: New Smaller Button -->
+        <comment userInput="Validate Stage: New Smaller Button" stepKey="commentValidateStage2"/>
+        <assertEquals stepKey="assertButtonWidthStage">
+            <actualResult type="variable">button1WidthStage2</actualResult>
+            <expectedResult type="variable">button1WidthStage1</expectedResult>
+        </assertEquals>
+        <!-- Validate Storefront: New Smaller Button -->
+        <comment userInput="Validate Storefront: New Smaller Button" stepKey="commentValidateStorefront2"/>
+        <assertEquals stepKey="assertButtonWidthStorefront">
+            <actualResult type="variable">button1WidthStorefront2</actualResult>
+            <expectedResult type="variable">button1WidthStorefront1</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

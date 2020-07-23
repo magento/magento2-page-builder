@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowHeightAdjustsToContentWhenContentIsSmallerHeadingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Row height shrinks to fit Heading"/>
+            <description value="A user should see the row height adjust to be smaller when Heading is added to the row"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-75136"/>
+            <testCaseId value="MC-2648"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Assert row height is 320px when empty -->
+        <comment userInput="Assert row height is 320px when empty" stepKey="comment1"/>
+        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setEmptyRowHeight"/>
+        <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getEmptyRowHeight"/>
+        <assertEquals stepKey="assertEmptyRowHeight">
+            <expectedResult type="string">320</expectedResult>
+            <actualResult type="variable">getEmptyRowHeight</actualResult>
+        </assertEquals>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Assert row height has changed when content added -->
+        <comment userInput="Assert row height has changed when content added" stepKey="comment2"/>
+        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setNewRowHeight"/>
+        <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getNewRowHeight"/>
+        <assertNotEquals stepKey="assertNewRowHeight">
+            <expectedResult type="variable">getEmptyRowHeight</expectedResult>
+            <actualResult type="variable">getNewRowHeight</actualResult>
+        </assertNotEquals>
+        <assertNotEquals stepKey="assertNewRowHeight2">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">getNewRowHeight</actualResult>
+        </assertNotEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeaderFromRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Assert row height is 320px after removing children -->
+        <comment userInput="Assert row height is 320px after removing children" stepKey="comment3"/>
+        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setNewRowHeight2"/>
+        <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getNewRowHeight2"/>
+        <assertEquals stepKey="assertNewRowHeight3">
+            <expectedResult type="variable">getEmptyRowHeight</expectedResult>
+            <actualResult type="variable">getNewRowHeight2</actualResult>
+        </assertEquals>
+    </test>
+</tests>

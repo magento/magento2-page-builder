@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="enterHeadingOnStage">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="headingAlignment" defaultValue="PageBuilderHeadingAlignmentProperty_left"/>
+        </arguments>
+        <comment userInput="Edit heading text inline on stage" stepKey="commentEditHeading"/>
+        <pressKey selector="{{HeadingOnStage.headingEditableText(index)}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText"/>
+        <waitForPageLoad stepKey="waitForToolbar" time="30"/>
+        <waitForElementVisible selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="waitForToolbarVisible"/>
+        <click selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="clickHeadingType"/>
+        <waitForPageLoad stepKey="waitForClickAlignment" time="30"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbarSelected(index, headingType.toolbar)}}" stepKey="seeHeadingTypeSelected"/>
+        <click selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="clickTextAlign"/>
+        <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected(index, headingAlignment.toolbar)}}" stepKey="seeAlignmentSelected"/>
+    </actionGroup>
+</actionGroups>

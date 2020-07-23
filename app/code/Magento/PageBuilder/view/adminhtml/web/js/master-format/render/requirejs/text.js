@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["mage/requirejs/text", "Magento_PageBuilder/js/master-format/render/frame"], function (_text, _frame) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

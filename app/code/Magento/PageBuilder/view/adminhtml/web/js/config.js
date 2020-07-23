@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

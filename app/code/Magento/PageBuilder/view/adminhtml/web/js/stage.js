@@ -1,5 +1,6 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
+/* jscs:disable */
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "mageUtils", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _mageUtils, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -8,6 +9,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
   /*#__PURE__*/
   function () {
     "use strict";
+
+    /**
+     * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
+     * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
+     */
 
     /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
@@ -29,17 +35,20 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       this.focusChild = _knockout.observable(false);
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
+      this.renderingLocks = [];
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
-      this.applyBindingsDebounce = _underscore.debounce(function () {
-        _this.renderingLock = _jquery.Deferred();
-
+      this.applyBindingsDebounce = _underscore.debounce(function (renderId) {
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
-          return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
-            value: renderedOutput
-          });
-        }).then(function () {
-          _this.renderingLock.resolve();
+          if (_this.lastRenderId === renderId) {
+            _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
+              value: renderedOutput
+            });
+
+            _this.renderingLocks.forEach(function (lock) {
+              lock.resolve(renderedOutput);
+            });
+          }
         }).catch(function (error) {
           if (error) {
             console.error(error);
@@ -123,7 +132,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       _events.on("stage:updateAfter", function (args) {
         if (args.stageId === _this2.id) {
-          _this2.applyBindingsDebounce();
+          // Create the rendering lock straight away
+          _this2.createLock();
+
+          var renderId = _mageUtils.uniqueid();
+
+          _this2.lastRenderId = renderId;
+
+          _this2.applyBindingsDebounce(renderId);
         }
       });
 
@@ -157,6 +173,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       });
     }
     /**
+     * Create a new lock for rendering
+     */
+    ;
+
+    _proto.createLock = function createLock() {
+      this.renderingLocks.push(_jquery.Deferred());
+    }
+    /**
      * On content type removed
      *
      * @param params
@@ -164,7 +188,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     ;
 
     _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
-      params.parentContentType.removeChild(params.contentType);
+      if (params.parentContentType) {
+        params.parentContentType.removeChild(params.contentType);
+      }
     };
 
     return Stage;

@@ -9,11 +9,6 @@
 
 [data-content-type='products'],
 .pagebuilder-products {
-    .rendered-content a,
-    .rendered-content button {
-        pointer-events: none;
-    }
-
     .pagebuilder-products-placeholder {
         align-items: center;
         background-color: @color-gray98;
@@ -41,11 +36,17 @@
         max-width: 100%;
         min-width: 50px;
         padding-left: 20px;
+        text-align: left;
         vertical-align: top;
         width: 200px;
 
         &:extend(.abs-add-box-sizing all);
 
+        a,
+        button,
+        .swatch-attribute-options {
+            pointer-events: none;
+        }
 
         .price-box {
             margin: @indent__s 0 @indent__m;
@@ -88,6 +89,22 @@
         .price-from,
         .price-to {
             margin: 0;
+        }
+
+        .map-old-price {
+            display: inline-block;
+
+            &:not(:last-child) {
+                margin-right: @indent__s;
+            }
+
+            .price-wrapper {
+                text-decoration: line-through;
+            }
+        }
+
+        .map-fallback-price {
+            display: none;
         }
 
         .actions-primary {
@@ -217,7 +234,34 @@
     }
 
     .product-reviews-summary {
-        margin-bottom: 15px;
+        margin-bottom: @indent__s + @indent__xs;
+
+        .reviews-actions {
+            display: inline-block;
+            font-size: @font-size__s;
+            margin-top: 5px;
+            vertical-align: middle;
+
+            a:not(:last-child) {
+                margin-right: 30px;
+            }
+            .action.add {
+                white-space: nowrap;
+            }
+        }
+
+        .rating-summary {
+            .lib-rating-summary(
+                @_icon-font: 'luma-icons',
+                @_icon-font-size: 16px,
+                @_icon-letter-spacing: 2px
+            );
+            .lib-rating-summary-label-hide();
+
+            display: inline-block;
+            margin: 0 4px 0 0;
+            vertical-align: middle;
+        }
     }
 
     .product-item-actions {
@@ -284,6 +328,25 @@
                 }
             }
         }
+    }
+
+    .swatch-attribute {
+        box-sizing: content-box;
+
+        &:last-child {
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+.admin__field-product-tooltip {
+    [data-role='spinner'] {
+        display: inline-block;
+    }
+
+    .admin__field-tooltip-content ul {
+        padding-left: 17px;
+        padding-top: 10px;
     }
 }
 

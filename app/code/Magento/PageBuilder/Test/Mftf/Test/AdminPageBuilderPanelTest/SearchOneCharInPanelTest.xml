@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SearchOneCharInPanelTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for one character in PageBuilder Panel"/>
+            <description value="When typing one letter into the panel search box, I see Content Types that contains words that start with letter entered."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-2866"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="b" stepKey="fillSearch"/>
+        <see userInput="Buttons" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeButtons"/>
+        <see userInput="Banner" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeBanner"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeStaticBlock"/>
+    </test>
+</tests>

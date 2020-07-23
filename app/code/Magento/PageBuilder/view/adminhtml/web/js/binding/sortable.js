@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "knockout", "underscore"], function (_jquery, _knockout, _underscore) {
   "use strict";
 

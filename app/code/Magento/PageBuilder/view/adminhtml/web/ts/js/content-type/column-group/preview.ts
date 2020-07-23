@@ -108,7 +108,7 @@ export default class Preview extends PreviewCollection {
         }, "grid_size");
 
         events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.parentContentType.id === this.contentType.id) {
+            if (args.parentContentType && args.parentContentType.id === this.contentType.id) {
                 _.defer(() => {
                     this.spreadWidth(args.index);
                 });

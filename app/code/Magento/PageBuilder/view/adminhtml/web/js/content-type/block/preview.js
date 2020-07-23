@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -65,7 +66,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       if (element) {
         this.element = element;
         (0, _widgetInitializer)({
-          config: _config.getConfig("widgets")
+          config: _config.getConfig("widgets"),
+          breakpoints: _config.getConfig("breakpoints")
         }, element);
       }
     }

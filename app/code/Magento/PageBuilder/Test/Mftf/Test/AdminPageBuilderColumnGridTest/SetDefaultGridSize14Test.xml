@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SetDefaultGridSize14Test">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set the grid size to 14"/>
+            <description value="Set the grid size to 14 and validate columns width doesn't change"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2282"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo14">
+            <argument name="gridSize" value="14"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid14"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid14"/>
+        <!-- Validate first column unchanged -->
+        <comment userInput="Validate first column unchanged" stepKey="commentValidateFirstCommentUnchanged"/>
+        <assertEquals stepKey="assertFirstColumnsWidth">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid14</actualResult>
+        </assertEquals>
+        <!-- Validate second column unchanged -->
+        <comment userInput="Validate second column unchanged" stepKey="commentValidateSecondCommentUnchanged"/>
+        <assertEquals stepKey="assertSecondColumnsWidth">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid14</actualResult>
+        </assertEquals>
+    </test>
+</tests>

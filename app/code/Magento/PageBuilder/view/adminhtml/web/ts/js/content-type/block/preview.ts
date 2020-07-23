@@ -73,6 +73,7 @@ export default class Preview extends BasePreview {
             this.element = element;
             widgetInitializer({
                 config: Config.getConfig("widgets"),
+                breakpoints: Config.getConfig("breakpoints"),
             }, element);
         }
     }

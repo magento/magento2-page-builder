@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidatePanelDefaultStateTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel default state as specified"/>
+            <description value="The panel should only have the layout menu section expanded"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-4025"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Layout')}}" stepKey="checkLayoutActive"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Elements')}}" stepKey="checkInactiveMenuSection1"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Media')}}" stepKey="checkInactiveMenuSection2"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Add Content')}}" stepKey="checkInactiveMenuSection3"/>
+    </test>
+</tests>

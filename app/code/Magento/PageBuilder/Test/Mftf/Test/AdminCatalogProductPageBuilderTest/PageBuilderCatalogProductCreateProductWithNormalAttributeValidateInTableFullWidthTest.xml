@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductCreateProductWithNormalAttributeValidateInTableFullWidthTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Custom attribute text field displays as expected with full width"/>
+            <description value="Create product attribute of type text field, populate on full width product, verify display of attribute on front-end in more information section"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3103"/>
+            <testCaseId value="MC-3279"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData stepKey="createTextAttribute" entity="productAttributeText"/>
+            <createData stepKey="assignTextAttributeGroup" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="createTextAttribute"/>
+            </createData>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createTextAttribute" stepKey="deletePreReqProductAttribute"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Create a new product -->
+        <comment userInput="Create a new product" stepKey="commentCreateNewProduct"/>
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForProductPage"/>
+        <!-- Add a value to our attribute -->
+        <comment userInput="Add a value to our attribute" stepKey="commentAddAttributeValue"/>
+        <fillField selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" userInput="Normal Text Attribute Value" stepKey="fillCustomAttribute"/>
+        <!-- Fill the remaining product fields accordingly -->
+        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <!-- Save product -->
+        <comment userInput="Save product" stepKey="commentSaveProduct"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <!-- Verify text field attribute is displayed correctly in table -->
+        <comment userInput="Verify text field attribute is displayed correctly in table" stepKey="commentVerifyAttributeInTable"/>
+        <amOnPage url="{{SimpleProduct.name}}.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadProductPage"/>
+        <waitForElementVisible selector="{{PageBuilderProductStorefront.attributeTableValue($$createTextAttribute.default_frontend_label$$, 'Normal Text Attribute Value')}}" stepKey="seeAttributeValueInTable"/>
+    </test>
+</tests>

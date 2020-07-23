@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["consoleLogger", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style", "Magento_PageBuilder/js/content-type/style-registry"], function (_consoleLogger, _knockout, _events, _appearanceConfig, _attributes, _css, _html, _style, _styleRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -97,10 +98,8 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/events", "Magento_P
       var convertedData = this.convertData(data, converters);
       var generatedData = {};
 
-      var _arr = Object.keys(elements);
-
-      for (var _i = 0; _i < _arr.length; _i++) {
-        var elementName = _arr[_i];
+      for (var _i = 0, _Object$keys = Object.keys(elements); _i < _Object$keys.length; _i++) {
+        var elementName = _Object$keys[_i];
         var elementConfig = elements[elementName];
 
         if (this.previousData[elementName] === undefined) {

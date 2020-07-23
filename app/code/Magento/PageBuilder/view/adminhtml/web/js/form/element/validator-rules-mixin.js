@@ -53,6 +53,15 @@ define([
     }
 
     /**
+     * Validate that string has a widget
+     * @param {String} str
+     * @return {Boolean}
+     */
+    function validateWysiwygHasWidget(str) {
+        return (/\{\{widget(.*?)\}\}/ig).test(str);
+    }
+
+    /**
      * Validate that string is a proper css-class
      * @param {String} str
      * @return {Boolean}
@@ -69,6 +78,19 @@ define([
      */
     function validateOneAnchorTagField(message, url) {
         return !(validateWysiwygHasAnchorTags(message) &&
+            ['page', 'product', 'category', 'default'].indexOf(url.type) !== -1 &&
+            url[url.type] &&
+            url[url.type].length > 0);
+    }
+
+    /**
+     * Validate message field and url field html standards, nested widget
+     * @param {String} message
+     * @param {Object} url
+     * @return {Boolean}
+     */
+    function validateNestedWidgetElement(message, url) {
+        return !(validateWysiwygHasWidget(message) &&
             ['page', 'product', 'category', 'default'].indexOf(url.type) !== -1 &&
             url[url.type] &&
             url[url.type].length > 0);
@@ -103,6 +125,25 @@ define([
             },
             $.mage.__(rule.message)
         );
+    }
+
+    /**
+     * Validate calc value.
+     *
+     * @param {String} value
+     * @returns {Boolean}
+     */
+    function validateCalc(value) {
+        var el = document.createElement('div'),
+            style = el.style;
+
+        if (!value.trim().length) {
+            return true;
+        }
+
+        style.width = 'calc(' + value + ')';
+
+        return !!style.width.length;
     }
 
     return function (validator) {
@@ -157,6 +198,24 @@ define([
         );
 
         validator.addRule(
+            'validate-video-source',
+            function (href) {
+                if (utils.isEmptyNoTrim(href)) {
+                    return true;
+                }
+
+                href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
+
+                return validateIsUrl(href) && (
+                    href.match(/youtube\.com|youtu\.be/) ||
+                    href.match(/vimeo\.com/) ||
+                    href.match(/\.(mp4|ogv|webm)(?!\w)/)
+                );
+            },
+            $.mage.__('Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or links to videos on YouTube or Vimeo.')//eslint-disable-line max-len
+        );
+
+        validator.addRule(
             'validate-css-class',
             function (value) {
                 if (utils.isEmptyNoTrim(value)) {
@@ -207,6 +266,30 @@ define([
                 return validateOneAnchorTagField(message, url);
             },
             $.mage.__('Adding link in both content and outer element is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-message-no-widget',
+            function (url, message) {
+                return validateNestedWidgetElement(message, url);
+            },
+            $.mage.__('Adding link in outer element and widget in content is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-no-widget',
+            function (message, url) {
+                return validateNestedWidgetElement(message, url);
+            },
+            $.mage.__('Adding widget in content and link in outer element is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-calc',
+            function (value) {
+                return validateCalc(value);
+            },
+            $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
         );
 
         validateObjectField(validator, 'validate-number');

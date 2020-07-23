@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/content-type/observable-updater", "Magento_PageBuilder/js/content-type/style-registry"], function (_converterPoolFactory, _converterPoolFactory2, _observableUpdater, _styleRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

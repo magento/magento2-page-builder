@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickProductCarouselNavigationDot">
+        <arguments>
+            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+            <argument name="navigationDotIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.carouselNavigationDot(productGroupIndex, navigationDotIndex)}}" stepKey="waitForNavigationDot"/>
+        <click selector="{{page.carouselNavigationDot(productGroupIndex, navigationDotIndex)}}" stepKey="clickNavigationDot"/>
+        <waitForPageLoad stepKey="waitForCarouselNavigation"/>
+        <seeElement selector="{{page.carouselActiveProductNavigationDotByIndex(productGroupIndex, navigationDotIndex)}}" stepKey="seeClickedNavigationDotIsActive"/>
+    </actionGroup>
+</actionGroups>

@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/style-registry"], function (_knockout, _events, _styleRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -17,8 +18,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
 
       _events.on("styles:update", function (args) {
         if (args.stageId === _this.stageId) {
-          var _css = (0, _styleRegistry.generateCssBlock)(args.className, args.styles); // Remove any existing style blocks for the current class name
-
+          var css = (0, _styleRegistry.generateCssBlock)(args.className, args.styles); // Remove any existing style blocks for the current class name
 
           var existingBlock = _this.styleBlocks().find(function (block) {
             return block.className === args.className;
@@ -26,7 +26,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
 
           if (existingBlock) {
             // Don't do an update if the CSS matches
-            if (existingBlock.css === _css) {
+            if (existingBlock.css === css) {
               return;
             }
 
@@ -35,7 +35,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
 
           _this.styleBlocks.push({
             className: args.className,
-            css: _css
+            css: css
           });
         }
       });

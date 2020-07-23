@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="LoginCycleResetsRemoveConfirmationDismissalTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissed confirmation is removed on logout"/>
+            <description value="The users choice to not show the confirmation again should be reset on logout"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2392"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <comment userInput="Configure first heading" stepKey="commentFirstHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading, we shall attempt to remove this after save -->
+        <comment userInput="Duplicate initial heading" stepKey="commentDuplicateFirstHeading"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateHeadingOnce">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, check to not receive this warning again -->
+        <comment userInput="Remove first heading, validate modal is displayed" stepKey="commentRemoveFirstHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeFirstHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal"/>
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <comment userInput="Remove second heading, validate modal is not displayed" stepKey="commentRemoveSecondHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeSecondHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader"/>
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+
+        <!-- Logout, then login -->
+        <comment userInput="Complete a login cycle" stepKey="commentLoginCycle"/>
+        <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+        <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Add a single header into the first row -->
+        <comment userInput="Add a heading to the stage" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeadingAgain">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <comment userInput="Configure new heading" stepKey="commentConfigureHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH52">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty2">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+
+        <!-- Remove the heading, we should receive the warning again -->
+        <comment userInput="Remove the third heading, see modal" stepKey="commentRemoveThirdHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeThirdHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible2"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal2"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk2"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval2"/>
+        <wait time="2" stepKey="waitForRemovalModal1"/>
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage2"/>
+    </test>
+</tests>

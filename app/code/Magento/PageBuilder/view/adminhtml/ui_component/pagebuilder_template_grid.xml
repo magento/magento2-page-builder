@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pagebuilder_template_grid.pagebuilder_template_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>columns</spinner>
+        <deps>
+            <dep>pagebuilder_template_grid.pagebuilder_template_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="pagebuilder_template_grid_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">template_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Magento_Backend::content</aclResource>
+        <dataProvider class="Magento\PageBuilder\Ui\Component\Template\DataProvider" name="pagebuilder_template_grid_data_source">
+            <settings>
+                <requestFieldName>template_id</requestFieldName>
+                <primaryFieldName>template_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <filterSearch name="fulltext"/>
+        <paging name="listing_paging"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
+                </item>
+            </argument>
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+        </filters>
+    </listingToolbar>
+    <columns name="columns">
+        <settings>
+            <childDefaults>
+                <param name="actionField" xsi:type="string">actions</param>
+            </childDefaults>
+        </settings>
+        <column name="template_id" sortOrder="10">
+            <settings>
+                <label translate="true">ID</label>
+                <filter>textRange</filter>
+                <sorting>asc</sorting>
+                <resizeEnabled>true</resizeEnabled>
+                <resizeDefaultWidth>80</resizeDefaultWidth>
+                <draggable>false</draggable>
+            </settings>
+        </column>
+        <column name="preview_image" class="Magento\PageBuilder\Ui\Component\Listing\Columns\PreviewImage" component="Magento_PageBuilder/js/grid/columns/preview-image" sortOrder="20">
+            <settings>
+                <altField>name</altField>
+                <hasPreview>1</hasPreview>
+                <label translate="true">Preview Image</label>
+                <sortable>false</sortable>
+                <draggable>false</draggable>
+            </settings>
+        </column>
+        <column name="name" sortOrder="30">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Template Name</label>
+                <draggable>false</draggable>
+            </settings>
+        </column>
+        <column name="created_for" component="Magento_Ui/js/grid/columns/select" sortOrder="40">
+            <settings>
+                <options class="Magento\PageBuilder\Model\Template\Source\TemplateTypes"/>
+                <filter>select</filter>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+                <dataType>select</dataType>
+                <label translate="true">Created For</label>
+                <draggable>false</draggable>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="50">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created</label>
+                <draggable>false</draggable>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Magento\PageBuilder\Ui\Component\Listing\Columns\TemplateManagerActions">
+            <settings>
+                <indexField>template_id</indexField>
+                <draggable>false</draggable>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

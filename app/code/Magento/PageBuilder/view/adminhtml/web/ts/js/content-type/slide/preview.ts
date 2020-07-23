@@ -3,20 +3,35 @@
  * See COPYING.txt for license details.
  */
 
+import "jarallax";
+import "jarallaxVideo";
 import $ from "jquery";
+import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import mageUtils from "mageUtils";
+import {Editor} from "tinymce";
 import _ from "underscore";
+import "vimeoWrapper";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
-import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
+import {
+    createBookmark, createDoubleClickEvent,
+    findNodeIndex, getActiveEditor, getNodeByIndex,
+    isWysiwygSupported,
+    lockImageSize,
+    moveToBookmark,
+    unlockImageSize,
+} from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
+import nestingWidgetDialog from "../../utils/nesting-widget-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
+import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
 
@@ -25,6 +40,17 @@ import SliderPreview from "../slider/preview";
  */
 export default class Preview extends BasePreview {
     public buttonPlaceholder: string = $t("Edit Button Text");
+
+    /**
+     * Slide name
+     */
+    public slideName: KnockoutObservable<string> = ko.observable();
+
+    /**
+     * Wysiwyg deferred event
+     */
+    private wysiwygDeferred: JQueryDeferred<void> = $.Deferred();
+
     /**
      * Wysiwyg instance
      */
@@ -41,9 +67,93 @@ export default class Preview extends BasePreview {
     private element: HTMLElement;
 
     /**
+     * The element the text content type is bound to
+     */
+    private wrapper: HTMLElement;
+
+    /**
      * Slide flag
      */
     private slideChanged: boolean = true;
+
+    /**
+     * Have we handled a double click on init?
+     */
+    private handledDoubleClick: boolean = false;
+
+    /**
+     * Properties change that should cause rebuilding video background
+     */
+    private videoUpdateProperties = [
+        "background_type",
+        "video_fallback_image",
+        "video_lazy_load",
+        "video_loop",
+        "video_play_only_visible",
+        "video_source",
+    ];
+
+    /**
+     * Debounce and defer the init of Jarallax
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private buildJarallax = _.debounce(() => {
+        // Destroy all instances of the plugin prior
+        try {
+            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+            const style = this.wrapper.getAttribute("style") ||
+                this.wrapper.getAttribute("data-jarallax-original-styles");
+            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
+            jarallax(this.wrapper, "destroy");
+            this.wrapper.setAttribute("style", style);
+            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
+                this.wrapper.style.backgroundImage = `url(${backgroundImage[0].url})`;
+            }
+        } catch (e) {
+            // Failure of destroying is acceptable
+        }
+
+        if (this.wrapper &&
+            (this.wrapper.dataset.backgroundType as string) === "video" &&
+            (this.wrapper.dataset.videoSrc as string).length
+        ) {
+
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                const viewportElement = $("<div/>").addClass("jarallax-viewport-element") as JQuery;
+
+                $(this.wrapper).append(
+                    $(".jarallax-viewport-element", this.wrapper).length ? "" : viewportElement,
+                );
+
+                jarallax(
+                    this.wrapper,
+                    {
+                        videoSrc: this.wrapper.dataset.videoSrc as string,
+                        imgSrc: this.wrapper.dataset.videoFallbackSrc as string,
+                        videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
+                        speed: 1,
+                        videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
+                        elementInViewport: $(".jarallax-viewport-element", this.wrapper),
+                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
+                    },
+                );
+                // @ts-ignore
+                if (this.wrapper.jarallax && this.wrapper.jarallax.video) {
+                    // @ts-ignore
+                    this.wrapper.jarallax.video.on("started", () => {
+                        // @ts-ignore
+                        if (this.wrapper.jarallax && this.wrapper.jarallax.$video) {
+                            // @ts-ignore
+                            this.wrapper.jarallax.$video.style.visibility = "visible";
+                        }
+                    });
+                }
+            });
+        }
+
+    }, 50);
 
     /**
      * @param {HTMLElement} element
@@ -51,6 +161,15 @@ export default class Preview extends BasePreview {
     public afterRenderWysiwyg(element: HTMLElement) {
         this.element = element;
         element.id = this.contentType.id + "-editor";
+
+        // Set the innerHTML manually so we don't upset Knockout & TinyMCE
+        element.innerHTML = this.data.content.html();
+        this.contentType.dataStore.subscribe(() => {
+            // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+            if (!this.wysiwyg || (this.wysiwyg && this.wysiwyg.getAdapter().id !== getActiveEditor().id)) {
+                element.innerHTML = this.data.content.html();
+            }
+        }, "content");
 
         /**
          * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
@@ -154,35 +273,65 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const activate = () => {
-            const element = this.wysiwyg && this.element || this.textarea;
-            element.focus();
-        };
-
-        if (!this.slideChanged) {
-            event.preventDefault();
-            return false;
-        }
-
         if (this.element && !this.wysiwyg) {
+            const bookmark = createBookmark(event);
+            lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
-                this.initWysiwyg(true)
+                this.initWysiwygFromClick(true)
                     .then(() => delayUntil(
                         () => {
-                            activate();
-                            this.restoreSelection(this.element, this.saveSelection());
+                            // We no longer need to handle double click once it's initialized
+                            this.handledDoubleClick = true;
+                            this.wysiwygDeferred.resolve();
+                            moveToBookmark(bookmark);
+                            unlockImageSize(this.element);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,
                     )).catch((error) => {
-                        // If there's an error with init of WYSIWYG editor push into the console to aid support
-                        console.error(error);
-                    });
+                    // If there's an error with init of WYSIWYG editor push into the console to aid support
+                    console.error(error);
+                });
             });
-        } else {
-            activate();
+        } else if (this.element && this.wysiwyg) {
+            const element = this.element || this.textarea;
+
+            if (event.currentTarget !== event.target &&
+                event.target !== element &&
+                !element.contains(event.target)
+            ) {
+                return;
+            }
+
+            element.focus();
         }
+    }
+
+    /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    public handleDoubleClick(preview: Preview, event: JQueryEventObject) {
+        if (this.handledDoubleClick) {
+            return;
+        }
+        event.preventDefault();
+        const targetIndex = findNodeIndex(this.element, event.target.tagName, event.target);
+        this.handledDoubleClick = true;
+
+        this.wysiwygDeferred.then(() => {
+            let target = document.getElementById(event.target.id);
+            if (!target) {
+                target = getNodeByIndex(this.element, event.target.tagName, targetIndex);
+            }
+
+            if (target) {
+                target.dispatchEvent(createDoubleClickEvent());
+            }
+        });
     }
 
     /**
@@ -202,7 +351,7 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public isWysiwygSupported(): boolean {
-        return Config.getConfig("can_use_inline_editing_on_stage");
+        return isWysiwygSupported();
     }
 
     /**
@@ -251,20 +400,44 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    public initWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
+        this.wysiwyg = null;
+
+        return this.initWysiwygFromClick(true);
+    }
+
+    /**
      * Init the WYSIWYG
      *
      * @param {boolean} focus Should wysiwyg focus after initialization?
      * @returns Promise
      */
-    public initWysiwyg(focus: boolean = false) {
+    public initWysiwygFromClick(focus: boolean = false): Promise<WysiwygInterface> {
         if (this.wysiwyg) {
-            return;
+            return Promise.resolve(this.wysiwyg);
         }
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+            wysiwygConfig.adapter.settings.init_instance_callback = (editor: Editor) => {
+                editor.on("blur", () => {
+                    nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
+                    nestingWidgetDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
+                });
+                _.defer(() => {
+                    this.element.blur();
+                    this.element.focus();
+                });
+            };
         }
 
         return WysiwygFactory(
@@ -275,9 +448,33 @@ export default class Preview extends BasePreview {
             this.contentType.dataStore,
             "content",
             this.contentType.stageId,
-        ).then((wysiwyg: WysiwygInterface): void => {
+        ).then((wysiwyg: WysiwygInterface): WysiwygInterface => {
             this.wysiwyg = wysiwyg;
+            return wysiwyg;
         });
+    }
+
+    /**
+     * Init the parallax element
+     *
+     * @param {HTMLElement} element
+     */
+    public initParallax(element: HTMLElement) {
+        this.wrapper = element;
+        _.defer(() => {
+            this.buildJarallax();
+        });
+    }
+
+    /**
+     * Destroy jarallax instance.
+     */
+    public destroy(): void {
+        super.destroy();
+
+        if (this.wrapper) {
+            jarallax(this.wrapper, "destroy");
+        }
     }
 
     /**
@@ -286,11 +483,16 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
+        events.on("slide:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.buildJarallax();
+            }
+        });
+
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const dataStore = this.contentType.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
-            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
         });
 
         // Remove wysiwyg before assign new instance.
@@ -319,10 +521,28 @@ export default class Preview extends BasePreview {
                 $((slider.preview as SliderPreview).element).on("beforeChange", () => {
                     this.slideChanged = false;
                 });
-                $((slider.preview as SliderPreview).element).on("afterChange", () => {
+                $((slider.preview as SliderPreview).element).on("afterChange", (event, slick) => {
+                    $(slick.$slides).each((index, slide) => {
+                        const videoSlide = slide.querySelector(".jarallax");
+                        if (videoSlide) {
+                            jarallax(videoSlide, "onScroll");
+                        }
+                    });
                     this.slideChanged = true;
                 });
             }
+        });
+
+        this.contentType.dataStore.subscribe((data: DataObject) => {
+            this.slideName(data.slide_name);
+
+            if (this.shouldUpdateVideo(data)) {
+                this.buildJarallax();
+            }
+        });
+
+        events.on(`image:${this.contentType.id}:uploadAfter`, () => {
+            this.contentType.dataStore.set("background_type", "image");
         });
     }
 
@@ -355,84 +575,23 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Save the current selection to be restored at a later point
+     * Check if video options has been updated.
      *
-     * @returns {Selection}
+     * @return boolean
      */
-    private saveSelection(): Selection {
-        if (window.getSelection) {
-            const selection = window.getSelection();
-            if (selection.getRangeAt && selection.rangeCount) {
-                const range = selection.getRangeAt(0).cloneRange();
-                $(range.startContainer.parentNode).attr("data-startContainer", "true");
-                $(range.endContainer.parentNode).attr("data-endContainer", "true");
-                return {
-                    startContainer: range.startContainer,
-                    startOffset: range.startOffset,
-                    endContainer: range.endContainer,
-                    endOffset: range.endOffset,
-                };
-            }
-        }
-        return null;
-    }
+    private shouldUpdateVideo(state: DataObject): boolean {
+        const previousState = this.contentType.dataStore.getPreviousState();
+        const diff = mageUtils.compare(previousState, state).changes;
 
-    /**
-     * Restore the original selection
-     *
-     * @param {HTMLElement} element
-     * @param {Selection} selection
-     */
-    private restoreSelection(element: HTMLElement, selection: Selection) {
-        if (selection && window.getSelection) {
-            // Find the original container that had the selection
-            const startContainerParent = $(element).find("[data-startContainer]");
-            startContainerParent.removeAttr("data-startContainer");
-            const startContainer: HTMLElement = this.findTextNode(
-                startContainerParent,
-                selection.startContainer.nodeValue,
-            );
-            const endContainerParent = $(element).find("[data-endContainer]");
-            endContainerParent.removeAttr("data-endContainer");
-            let endContainer: HTMLElement = startContainer;
-            if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-                endContainer = this.findTextNode(
-                    endContainerParent,
-                    selection.endContainer.nodeValue,
-                );
-            }
+        if (diff.length > 0) {
+            return _.some(diff, (element) => {
+                if (element.name === "video_fallback_image") {
+                    return (!_.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !==
+                        (!_.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+                }
 
-            if (startContainer && endContainer) {
-                const newSelection = window.getSelection();
-                newSelection.removeAllRanges();
-
-                const range = document.createRange();
-                range.setStart(startContainer, selection.startOffset);
-                range.setEnd(endContainer, selection.endOffset);
-                newSelection.addRange(range);
-            }
-        }
-    }
-
-    /**
-     * Find a text node within an existing element
-     *
-     * @param {HTMLElement} element
-     * @param {string} text
-     * @returns {HTMLElement}
-     */
-    private findTextNode(element: JQuery, text: string): HTMLElement {
-        if (text && text.trim().length > 0) {
-            return element.contents().toArray().find((node: HTMLElement) => {
-                return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+                return this.videoUpdateProperties.indexOf(element.name) !== -1;
             });
         }
     }
-}
-
-interface Selection {
-    startContainer: Node;
-    startOffset: number;
-    endContainer: Node;
-    endOffset: number;
 }

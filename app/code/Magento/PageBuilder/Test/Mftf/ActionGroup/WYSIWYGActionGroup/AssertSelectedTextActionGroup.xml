@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="assertSelectedText">
+        <arguments>
+            <argument name="expectedSelectedText"/>
+        </arguments>
+        <executeJS function="return window.getSelection().toString()" stepKey="selectionString"/>
+        <assertEquals stepKey="assertSelectionText">
+            <expectedResult type="string">{{expectedSelectedText.selection}}</expectedResult>
+            <actualResult type="variable">selectionString</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

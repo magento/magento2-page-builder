@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonItemCannotMoveButtonOutsideButtonGroupTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Move Button - Cannot Move Button Outside Button Group"/>
+            <description value="A user should not be able to move a button item outside of a button group."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-1138"/>
+            <testCaseId value="MC-3671"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-moveButtons"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Edit 1st button -->
+        <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Edit 2nd Button -->
+        <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Validate Initial Button Order -->
+        <comment userInput="Stage: Validate Initial Button Order" stepKey="commentValidateStage1"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Stage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage"/>
+        <!-- Attempt To Move Button To Row -->
+        <comment userInput="Attempt To Move Button To Row" stepKey="commentMoveButton1"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragContentTypeToStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="dropZoneIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle('2')}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderRowContentType.role, '2')}}" stepKey="dragAndDropButtonToRow"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <!-- Stage: Validate Button Did Not Move To Row -->
+        <comment userInput="Stage: Validate Button Did Not Move To Row" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Stage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage2"/>
+        <!-- Attempt To Move Button To Column -->
+        <comment userInput="Attempt To Move Button To Column" stepKey="commentMoveButton2"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu1">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle('2')}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderColumnContentType.role, '2')}}" stepKey="dragAndDropButtonToColumn"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <!-- Stage: Validate Button Did Not Move To Column -->
+        <comment userInput="Stage: Validate Button Did Not Move To Column" stepKey="commentValidateStage3"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Stage3"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage3"/>
+        <!-- Attempt To Move Button To Tab -->
+        <comment userInput="Attempt To Move Button To Tab" stepKey="commentMoveButton3"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage4">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton3"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle('2')}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderTabContentType.role, '1')}}" stepKey="dragAndDropButtonToTab"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+        <!-- Stage: Validate Button Did Not Move To Tab -->
+        <comment userInput="Stage: Validate Button Did Not Move To Tab" stepKey="commentValidateStage4"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Stage4"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage4"/>
+    </test>
+</tests>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addChildContentTypeFromOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <executeJS function="return document.getElementsByClassName('pagebuilder-{{contentType.childContent}}').length+1" stepKey="initialNumberOfChildContentTypesPlusOne"/>
+        <scrollTo selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" x="0" y="-150" stepKey="scrollToSearchPanel"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusContentType"/>
+        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" stepKey="mouseOverContentType"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, index)}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAddByIndex(contentType.role, index)}}" stepKey="clickAddChildContentType"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
+        <executeJS function="return document.getElementsByClassName('pagebuilder-{{contentType.childContent}}').length" stepKey="numberOfChildContentTypesAfterAdd"/>
+        <assertEquals stepKey="assertOneMoreChildContentTypes">
+            <expectedResult type="variable">initialNumberOfChildContentTypesPlusOne</expectedResult>
+            <actualResult type="variable">numberOfChildContentTypesAfterAdd</actualResult>
+        </assertEquals>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <waitForPageLoad stepKey="waitForAnimation2"/>
+    </actionGroup>
+</actionGroups>

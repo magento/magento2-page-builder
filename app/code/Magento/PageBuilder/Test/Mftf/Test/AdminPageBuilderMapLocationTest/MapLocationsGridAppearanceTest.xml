@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapLocationsGridAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Locations Grid Appearance"/>
+            <description value="Make sure the locations grid appears as expected (column names, empty message, pagination items)."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2461"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Validate Grid Column Headers-->
+        <comment userInput="Validate Grid Column Headers" stepKey="commentValidateGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('2', PageBuilderMapGrid.col2)}}" stepKey="waitForPhoneNumber"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('3', PageBuilderMapGrid.col3)}}" stepKey="waitForAddress"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('4', PageBuilderMapGrid.col4)}}" stepKey="waitForCity"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('5', PageBuilderMapGrid.col5)}}" stepKey="waitForState"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('6', PageBuilderMapGrid.col6)}}" stepKey="waitForZip"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('7', PageBuilderMapGrid.col7)}}" stepKey="waitForCountry"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('8', PageBuilderMapGrid.col8)}}" stepKey="waitForSelect"/>
+        <!-- Validate No Grid Pagination -->
+        <comment userInput="Validate No Grid Pagination" stepKey="commentValidateNoGridPagination"/>
+        <waitForElementNotVisible selector="{{PageBuilderDataGrid.gridPagination}}" stepKey="waitForPaginationNotVisible"/>
+        <!-- Validate Empty Grid Message-->
+        <comment userInput="Validate Empty Grid Message" stepKey="commentValidateEmptyGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid"/>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Validate Grid Pagination -->
+        <comment userInput="Validate Grid Pagination" stepKey="commentValidateGridPagination"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPagination}}" stepKey="waitForPagination"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationLeftButton}}" stepKey="waitForPaginationLeft"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationRightButton}}" stepKey="waitForPaginationRight"/>
+        <seeInField selector="{{PageBuilderDataGrid.gridPaginationPage}}" userInput="1" stepKey="seePaginationPage"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationTotalPages('1')}}" stepKey="waitForPaginationTotalPages"/>
+    </test>
+</tests>

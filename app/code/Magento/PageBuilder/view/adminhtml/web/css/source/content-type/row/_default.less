@@ -16,15 +16,34 @@
 //  Support for plugin github.com/bfred-it/object-fit-images
 //  _________________________________________________________________
 
-.jarallax > .jarallax-img {
-    font-family: 'object-fit: cover;', sans-serif;
-    height: 100%;
+.jarallax {
+    > .jarallax-img {
+        font-family: 'object-fit: cover;', sans-serif;
+        height: 100%;
+        left: 0;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+    }
+
+    [id*='jarallax-container'] {
+        video,
+        iframe {
+            visibility: hidden;
+        }
+    }
+}
+
+.video-overlay {
+    -webkit-transform: translate3d(0,0,0);
+    bottom: 0;
     left: 0;
-    object-fit: cover;
     position: absolute;
+    right: 0;
     top: 0;
-    width: 100%;
-    z-index: -1;
+    z-index: -99;
 }
 
 .pagebuilder-content-type.children-min-height.pagebuilder-row {

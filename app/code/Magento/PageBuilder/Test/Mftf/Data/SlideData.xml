@@ -39,38 +39,6 @@
         <data key="fieldName">slide_name</data>
         <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
     </entity>
-    <!-- Minimum Height -->
-    <entity name="PageBuilderSlideItemMinimumHeight_500" type="pagebuilder_slide_item_minimum_height_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">500</data>
-    </entity>
-    <entity name="PageBuilderSlideItemMinimumHeight_300" type="pagebuilder_slide_item_minimum_height_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">300</data>
-    </entity>
-    <entity name="PageBuilderSlideItemMinimumHeight_100" type="pagebuilder_slide_item_minimum_height_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">100</data>
-    </entity>
-    <entity name="PageBuilderSlideItemMinimumHeight_Empty" type="pagebuilder_slide_item_minimum_height_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value"/>
-    </entity>
-    <!-- Background Color -->
-    <entity name="PageBuilderSlideItemBackgroundColor_Empty" type="pagebuilder_slide_item_background_color_property">
-        <data key="name">Background Color</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_color</data>
-        <data key="stageValue">rgb(250, 250, 250)</data>
-    </entity>
     <!-- Link -->
     <entity name="PageBuilderSlideItemLinkURL_Empty" type="pagebuilder_slide_item_link_url_property">
         <data key="name">Link</data>
@@ -101,6 +69,12 @@
         <data key="section">general</data>
         <data key="fieldName">link_url</data>
         <data key="errorMessage">Adding link in both content and outer element is not allowed.</data>
+    </entity>
+    <entity name="PageBuilderSlideItemLinkUrlInvalidWidgetProperty" type="pagebuilder_slide_item_link_url_property">
+        <data key="name">Link</data>
+        <data key="section">general</data>
+        <data key="fieldName">link_url</data>
+        <data key="errorMessage">Adding link in outer element and widget in content is not allowed.</data>
     </entity>
     <!-- Show Button -->
     <entity name="PageBuilderSlideItemShowButton_Always" type="pagebuilder_slide_item_show_button_property">
@@ -271,5 +245,12 @@
         <data key="fieldName">content</data>
         <data key="errorMessage">Adding link in both content and outer element is not allowed.</data>
         <data key="stageErrorMessage">We are unable to support links within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a link within the content. We will automatically remove the links within the content field.</data>
+    </entity>
+    <entity name="PageBuilderSlideItemMessageInvalidWidgetProperty" type="pagebuilder_slide_item_message__property">
+        <data key="name">Message Text</data>
+        <data key="section">general</data>
+        <data key="fieldName">content</data>
+        <data key="errorMessage">Adding widget in content and link in outer element is not allowed.</data>
+        <data key="stageErrorMessage">We are unable to support widget within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a widget within the content. We will automatically remove the widget within the content field.</data>
     </entity>
 </entities>

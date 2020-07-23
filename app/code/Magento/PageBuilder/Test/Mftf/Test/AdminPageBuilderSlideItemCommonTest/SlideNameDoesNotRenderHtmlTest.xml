@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideNameDoesNotRenderHtmlTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Slide name does not render HTML"/>
+            <description value="The slide name does not render as HTML within the tooltip on the slide navigation dot"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-13922"/>
+            <testCaseId value="MC-13932"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Edit Slide 1 -->
+        <comment userInput="Edit Slide 1" stepKey="commentEditSlide1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText1">
+            <argument name="property" value="PageBuilderSlideItemSlideName_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+        <dontSeeJsError stepKey="dontSeeThrownError"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unfocusSlideOptions">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+        <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverTooltip"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <!-- Verify tooltip hasn't rendered HTML -->
+        <comment userInput="Verify tooltip hasn't rendered HTML" stepKey="commentVerifyTooltipNotRendered"/>
+        <waitForElementVisible selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="waitForTooltipVisible"/>
+        <see selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" userInput="{{PageBuilderSlideItemSlideName_HtmlCode.value}}" stepKey="seeHtmlCodeInTooltip"/>
+    </test>
+</tests>

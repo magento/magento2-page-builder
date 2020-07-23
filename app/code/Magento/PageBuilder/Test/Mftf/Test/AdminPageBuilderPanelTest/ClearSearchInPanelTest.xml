@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ClearSearchInPanelTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Clear search in PageBuilder Panel using clear search button and backspace"/>
+            <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content type groups are displayed."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-2454"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <comment userInput="Verify Clear Search button is not shown before typing" stepKey="commentClearSearchButton"/>
+        <dontSeeElement selector="//*[@id=&quot;pagebuilder-panel&quot;]/div[1]/a" stepKey="dontSeeClearSearch"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="i" stepKey="fillSearchFieldi"/>
+        <seeElement selector="{{PageBuilderPanel.searchField}}" stepKey="seeClearSearch"/>
+        <see userInput="Image" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateImageAppears"/>
+        <dontSee userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowDoesNotAppear"/>
+        <comment userInput="Use Clear Search button to show all content types on Pagebuilder panel" stepKey="commentClearSearch"/>
+        <click selector="{{PageBuilderPanel.clearSearch}}" stepKey="clickClearSearch"/>
+        <dontSee userInput="i" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClickClear"/>
+        <actionGroup ref="closePageBuilderPanelMenuSections" stepKey="closePageBuilderPanelMenuSections"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
+        <see userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowAppears"/>
+        <dontSee userInput="Column" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateColumnDoesNotAppear"/>
+        <comment userInput="Clear input field using backspace to show all content types on Pagebuilder panel" stepKey="commentDeleteSearch"/>
+        <pressKey selector="{{PageBuilderPanel.searchPanel}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
+        <dontSee userInput="r" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClearField"/>
+    </test>
+</tests>

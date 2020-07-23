@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderColumnDragAndDropMultipleColumnsResizingThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Validate Column Width When Rendered Through Block Content Type"/>
+            <description value="Verify that column widths are rendered correctly when rendered through the Block content type."/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="MC-15225"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Column -->
+        <comment userInput="Add Column" stepKey="commentAddColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsCMSBlockStage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1CMSBlockStage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="findAfterLabelColumn2CMSBlockStage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','4/12')}}" stepKey="findAfterLabelColumn3CMSBlockStage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('4','6/12')}}" stepKey="findAfterLabelColumn4CMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnFourWidthCMSBlockStage"/>
+        <executeJS function="return Math.round({$columnTwoWidthCMSBlockStage}/{$columnOneWidthCMSBlockStage})" stepKey="columnRatioCMSBlockStage"/>
+        <assertEquals stepKey="assertRatioIsCorrectCMSBlockStage">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioCMSBlockStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnThreeWidthCMSBlockStage}/{$columnOneWidthCMSBlockStage})" stepKey="columnRatio2CMSBlockStage"/>
+        <assertEquals stepKey="assertRatioIsCorrect2CMSBlockStage">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2CMSBlockStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnFourWidthCMSBlockStage}/{$columnOneWidthCMSBlockStage})" stepKey="columnRatio3CMSBlockStage"/>
+        <assertEquals stepKey="assertRatioIsCorrect3CMSBlockStage">
+            <expectedResult type="int">6</expectedResult>
+            <actualResult type="variable">columnRatio3CMSBlockStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthCMSBlockStage}+{$columnTwoWidthCMSBlockStage}+{$columnThreeWidthCMSBlockStage}+{$columnFourWidthCMSBlockStage})" stepKey="totalColumnWidthCMSBlockStage"/>
+        <executeJS function="return Math.round({{RowOnStage.rowWidthJS('1')}}-{{PageBuilderPaddingPropertyRowDefault.paddingLeft}}-{{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowWidthCMSBlockStage"/>
+        <executeJS function="return Math.abs({$totalColumnWidthCMSBlockStage}-{$rowWidthCMSBlockStage})" stepKey="widthDifferenceCMSBlockStage"/>
+        <assertLessThanOrEqual stepKey="assertWidthOfAllColumnsCMSBlockStage">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">widthDifferenceCMSBlockStage</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthCMSPageStage"/>
+        <executeJS function="return Math.round({$columnTwoWidthCMSPageStage}/{$columnOneWidthCMSPageStage})" stepKey="columnRatioCMSPageStage"/>
+        <assertEquals stepKey="assertRatioIsCorrectCMSPageStage">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioCMSPageStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnThreeWidthCMSPageStage}/{$columnOneWidthCMSPageStage})" stepKey="columnRatio2CMSPageStage"/>
+        <assertEquals stepKey="assertRatioIsCorrect2CMSPageStage">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2CMSPageStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnFourWidthCMSPageStage}/{$columnOneWidthCMSPageStage})" stepKey="columnRatio3CMSPageStage"/>
+        <assertEquals stepKey="assertRatioIsCorrect3CMSPageStage">
+            <expectedResult type="int">6</expectedResult>
+            <actualResult type="variable">columnRatio3CMSPageStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthCMSPageStage}+{$columnTwoWidthCMSPageStage}+{$columnThreeWidthCMSPageStage}+{$columnFourWidthCMSPageStage})" stepKey="totalColumnWidthCMSPageStage"/>
+        <executeJS function="return Math.round({{RowOnStorefront.rowWidthJS('2')}}-{{PageBuilderPaddingPropertyRowDefault.paddingLeft}}-{{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowWidthCMSPageStage"/>
+        <executeJS function="return Math.abs({$totalColumnWidthCMSPageStage}-{$rowWidthCMSPageStage})" stepKey="widthDifferenceCMSPageStage"/>
+        <assertLessThanOrEqual stepKey="assertWidthOfAllColumnsCMSPageStage">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">widthDifferenceCMSPageStage</actualResult>
+        </assertLessThanOrEqual>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsCMSPageStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthCMSPageStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthCMSPageStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthCMSPageStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthCMSPageStorefront"/>
+        <executeJS function="return Math.round({$columnTwoWidthCMSPageStorefront}/{$columnOneWidthCMSPageStorefront})" stepKey="columnRatioCMSPageStorefront"/>
+        <assertEquals stepKey="assertRatioIsCorrectCMSPageStorefront">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioCMSPageStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnThreeWidthCMSPageStorefront}/{$columnOneWidthCMSPageStorefront})" stepKey="columnRatio2CMSPageStorefront"/>
+        <assertEquals stepKey="assertRatioIsCorrect2CMSPageStorefront">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2CMSPageStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnFourWidthCMSPageStorefront}/{$columnOneWidthCMSPageStorefront})" stepKey="columnRatio3CMSPageStorefront"/>
+        <assertEquals stepKey="assertRatioIsCorrect3CMSPageStorefront">
+            <expectedResult type="int">6</expectedResult>
+            <actualResult type="variable">columnRatio3CMSPageStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthCMSPageStorefront}+{$columnTwoWidthCMSPageStorefront}+{$columnThreeWidthCMSPageStorefront}+{$columnFourWidthCMSPageStorefront})" stepKey="totalColumnWidthCMSPageStorefront"/>
+        <executeJS function="return Math.round({{RowOnStorefront.rowWidthJS('2')}}-{{PageBuilderPaddingPropertyRowDefault.paddingLeft}}-{{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowWidthCMSPageStorefront"/>
+        <executeJS function="return Math.abs({$totalColumnWidthCMSPageStorefront}-{$rowWidthCMSPageStorefront})" stepKey="widthDifferenceCMSPageStorefront"/>
+        <assertLessThanOrEqual stepKey="assertWidthOfAllColumnsCMSPageStorefront">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">widthDifferenceCMSPageStorefront</actualResult>
+        </assertLessThanOrEqual>
+    </test>
+</tests>

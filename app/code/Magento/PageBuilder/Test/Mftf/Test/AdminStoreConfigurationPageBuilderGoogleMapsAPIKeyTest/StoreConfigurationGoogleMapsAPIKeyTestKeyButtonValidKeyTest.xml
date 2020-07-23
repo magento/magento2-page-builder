@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StoreConfigurationGoogleMapsAPIKeyTestKeyButtonValidKeyTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps API Key"/>
+            <title value="Test Key Button: Valid Key"/>
+            <description value="Tests that the Google Maps API Key Test Key button works with a valid key."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MC-2778"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+            <skip>
+                <issueId value="MTS-657"/>
+            </skip>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
+            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
+        </actionGroup>
+        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton">
+            <argument name="buttonText" value="{{googleMapsAPIKey.validKeyButtonText}}"/>
+        </actionGroup>
+    </test>
+</tests>

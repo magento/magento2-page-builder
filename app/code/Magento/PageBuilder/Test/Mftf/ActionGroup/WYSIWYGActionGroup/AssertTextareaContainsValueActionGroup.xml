@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="assertTextareaContainsValue">
+        <arguments>
+            <argument name="selector" type="string"/>
+            <argument name="value" type="string"/>
+        </arguments>
+        <executeJS function="return document.evaluate(&quot;{{selector}}&quot;, document.body).iterateNext().value" stepKey="textareaValue"/>
+        <assertStringContainsString stepKey="assertTextareaContainsValue">
+            <expectedResult type="string">{{value}}</expectedResult>
+            <actualResult type="variable">textareaValue</actualResult>
+        </assertStringContainsString>
+    </actionGroup>
+</actionGroups>

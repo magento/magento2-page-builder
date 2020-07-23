@@ -8,50 +8,6 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
-    <!-- Appearance -->
-    <entity name="PageBuilderBannerAppearanceDefaultProperty" type="pagebuilder_banner_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">poster</data>
-    </entity>
-    <entity name="PageBuilderBannerAppearance_Poster" type="pagebuilder_banner_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">poster</data>
-    </entity>
-    <entity name="PageBuilderBannerCollageLeftProperty" type="pagebuilder_banner_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">collage-left</data>
-    </entity>
-    <entity name="PageBuilderBannerCollageRightProperty" type="pagebuilder_banner_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">collage-right</data>
-    </entity>
-    <entity name="PageBuilderBannerCollageCenteredProperty" type="pagebuilder_banner_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">collage-centered</data>
-    </entity>
-    <!-- Minimum Height -->
-    <entity name="PageBuilderBannerMinimumHeightProperty" type="pagebuilder_banner_minimumHeight_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">500</data>
-    </entity>
-    <entity name="PageBuilderBannerMinimumHeightDefaultProperty" type="pagebuilder_banner_minimumHeightDefault_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">300</data>
-    </entity>
     <!-- Message Text -->
     <entity name="PageBuilderBannerMessageDefaultProperty" type="pagebuilder_banner_message_property">
         <data key="name">Message Text</data>
@@ -81,6 +37,13 @@
         <data key="fieldName">message</data>
         <data key="errorMessage">Adding link in both content and outer element is not allowed.</data>
         <data key="stageErrorMessage">We are unable to support links within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a link within the content. We will automatically remove the links within the content field.</data>
+    </entity>
+    <entity name="PageBuilderBannerMessageInvalidWidgetProperty" type="pagebuilder_banner_message_property">
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">message</data>
+        <data key="errorMessage">Adding widget in content and link in outer element is not allowed.</data>
+        <data key="stageErrorMessage">We are unable to support widget within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a widget within the content. We will automatically remove the widget within the content field.</data>
     </entity>
     <!-- Background Color -->
     <entity name="PageBuilderBannerBackgroundColor_Empty" type="pagebuilder_banner_background_color_property">
@@ -125,6 +88,12 @@
         <data key="section">contents</data>
         <data key="fieldName">link_url</data>
         <data key="errorMessage">Adding link in both content and outer element is not allowed.</data>
+    </entity>
+    <entity name="PageBuilderBannerLinkUrlInvalidWidgetProperty" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="errorMessage">Adding link in outer element and widget in content is not allowed.</data>
     </entity>
     <!-- Show Button -->
     <entity name="PageBuilderBannerShowButtonDefaultProperty" type="pagebuilder_banner_show_button_property">

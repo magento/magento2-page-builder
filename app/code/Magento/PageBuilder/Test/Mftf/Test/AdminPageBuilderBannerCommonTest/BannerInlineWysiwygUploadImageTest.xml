@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerInlineWysiwygUploadImageTest" extends="SlideItemInlineWysiwygUploadImageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Can Add Banner WYSIWYG Image From Gallery or Link to Image in Gallery After Page Has Been Saved"/>
+            <description value="A user should be able to upload image to inline wysiwyg after a banner has been saved to a page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4323"/>
+            <testCaseId value="MC-5019"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <comment userInput="Removed closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Add Image to Banner -->
+        <comment userInput="Add Image to Banner" stepKey="commentAddImageToContentType"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <!-- Validate Image Editor On Backend -->
+        <seeElement selector="{{BannerOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
+        <!-- Validate Image Editor On Backend After Save -->
+        <seeElement selector="{{BannerOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
+        <!-- Validate Image Editor On Storefront -->
+        <seeElement selector="{{BannerOnFrontend.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
+    </test>
+</tests>

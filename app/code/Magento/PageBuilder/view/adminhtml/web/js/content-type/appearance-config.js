@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/config"], function (_config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

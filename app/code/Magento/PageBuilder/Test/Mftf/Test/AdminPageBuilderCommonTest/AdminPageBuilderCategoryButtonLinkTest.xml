@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderCategoryButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Link - Admin are able to add Category link into PageBuilder content"/>
+            <description value="Admin are able to add Category link link into PageBuilder content"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-88961"/>
+            <testCaseId value="MC-1319"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-link"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="SimpleSubCategory" stepKey="createCategoryB"/>
+        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryY">
+            <requiredEntity createDataKey="createCategoryB"/>
+        </createData>
+        <createData entity="_defaultCategory" stepKey="createCategoryA"/>
+        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryX">
+            <requiredEntity createDataKey="createCategoryA"/>
+        </createData>
+
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption"/>
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1"/>
+        <see userInput="Default Category" stepKey="seeLevel1Category"/>
+        <see userInput="$createCategoryA.name$" stepKey="seeLevel2Category"/>
+        <dontSee userInput="$createSubCategoryX.name$" stepKey="dontSeeLevel3Category"/>
+
+        <!--Type 2 first letters into Search box-->
+        <pressKey selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult"/>
+        <see userInput="$createSubCategoryX.name$" stepKey="seeSubCategoryOnSearchResult"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createSubCategoryX.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1"/>
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput3"/>
+        <seeInField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="su" stepKey="seeSearchNotCleared"/>
+        <wait time="3" stepKey="wait"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createSubCategoryX.name$)}}" stepKey="seeSearchResultHighlighted"/>
+
+        <!--Select another category from dropdown-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryY.name$)}}" stepKey="clickSubCategoryYOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createSubCategoryY.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify Category Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createSubCategoryY.name_lwr$)}}" stepKey="seeExternalLinkOnStoreFront"/>
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName"/>
+
+        <deleteData createDataKey="createSubCategoryY" stepKey="deletePreReqSubCategoryY"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn"/>
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/Category with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createCategoryA" stepKey="deletePreReqCatalogA"/>
+    </test>
+</tests>

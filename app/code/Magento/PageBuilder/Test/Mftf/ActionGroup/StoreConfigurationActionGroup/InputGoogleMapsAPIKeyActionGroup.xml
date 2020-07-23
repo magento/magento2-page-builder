@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="inputGoogleMapsAPIKey">
+        <arguments>
+            <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="inputGoogleMapsAPIKey" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
+        <pressKey selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKey"/>
+    </actionGroup>
+</actionGroups>

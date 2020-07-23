@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE">
+        <arguments>
+            <argument name="page" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Adding Widget To TinyMCE3" stepKey="commentAddWidget"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="clickAddWidgetBtn"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidgetModalToClose"/>
+    </actionGroup>
+</actionGroups>

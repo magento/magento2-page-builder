@@ -1,0 +1,95 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+//
+//  Carousel appearance styles
+//  _____________________________________________
+
+[data-content-type='products'][data-appearance='carousel'] {
+    .product-item {
+        padding-left: 0;
+    }
+
+    .slick-slide {
+        > div {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .rendered-content button.slick-arrow {
+        pointer-events: inherit;
+    }
+
+    .slick-dots {
+        display: block;
+        list-style: none;
+        margin: 0;
+        padding: 15px 0;
+        text-align: center;
+        width: 100%;
+        li {
+            cursor: pointer;
+            display: inline-block;
+            height: 14px;
+            margin: 0 5px;
+            padding: 0;
+            position: relative;
+            vertical-align: middle;
+            width: 14px;
+            button {
+                background: @color-white;
+                border: 1px solid @color-gray80;
+                border-radius: 10px;
+                box-shadow: none;
+                cursor: pointer;
+                display: block;
+                height: 14px;
+                padding: 0;
+                text-indent: -99999px;
+                transition: .3s;
+                width: 14px;
+
+                &:hover {
+                    border: 1px solid @b3;
+                }
+
+                &:active,
+                &:focus,
+                &:not(.primary) {
+                    box-shadow: none;
+                }
+            }
+
+            &.slick-active {
+                button {
+                    background: @color-pagebuilder-darkest-gray;
+                }
+            }
+        }
+    }
+
+    &.center-mode,
+    .center-mode {
+        .product-item {
+            opacity: .5;
+            transition: all 300ms ease;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .slick-current .product-item {
+            opacity: 1;
+        }
+    }
+}
+
+.pagebuilder-content-type-hidden [data-content-type='products'][data-appearance='carousel'] {
+    .rendered-content button.slick-arrow {
+        pointer-events: none;
+    }
+}

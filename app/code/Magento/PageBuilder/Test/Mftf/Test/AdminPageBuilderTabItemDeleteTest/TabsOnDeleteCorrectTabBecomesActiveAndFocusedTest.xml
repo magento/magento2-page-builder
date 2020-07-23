@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TabsOnDeleteCorrectTabBecomesActiveAndFocusedTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Third Tab And Second Becomes Active And Focused"/>
+            <description value="A user should be able to delete a tab from tabs and next tab becomes active and focused."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2712"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added Tabs container with 3 Tabs to the stage" stepKey="AC1"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('2')}}" stepKey="waitForNewTabContent2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForNewTabHeader2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('3')}}" stepKey="waitForNewTabContent3"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('3')}}" stepKey="waitForNewTabHeader3"/>
+        <comment userInput="When I delete third Tab from the stage" stepKey="AC2"/>
+        <click stepKey="clickTabHeader3" selector="{{TabOnStage.tabHeader('3')}}"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTabOnStorefront"/>
+        <comment userInput="Second Tab becomes both active and focused" stepKey="AC3"/>
+        <waitForPageLoad stepKey="waitForTabChangeAnimation"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2Active"/>
+        <assertElementContainsAttribute stepKey="assertTab1Hidden">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertTab2Visible">
+			<expectedResult selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
+    </test>
+</tests>

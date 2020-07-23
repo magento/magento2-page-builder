@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ProductCombinedConditionRuleWorksProperlyTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Product Content Type Combined Condition Rule Works Properly"/>
+            <description value="As a Content Manager I want the Products Content Type's combined condition rule to function properly when filtering products from the product list"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-15297"/>
+            <testCaseId value="MC-15312"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutOfAdmin"/>
+        </after>
+        <!-- Add Product to Page -->
+        <comment userInput="Add Product to Page" stepKey="commentAddProduct"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Add Conditions Combination For Category and Cost -->
+        <comment userInput="Add Conditions Combination For Category and Cost" stepKey="commentAddConditionsCombination"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <actionGroup ref="addConditionsCombinationToProductsAndSetAggregateParameters" stepKey="addCategoryWrappedInConditionalCombineWithTrueValue"/>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCategoryConditionToProducts">
+            <argument name="conditionInput" value="$$createCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addPriceConditionToProducts">
+            <argument name="conditionType" value="PageBuilderProductsConditionPrice"/>
+            <argument name="conditionInput" value="$$createProduct.price$$"/>
+        </actionGroup>
+        <!-- Add SKU Condition Outside Of Combination Condition -->
+        <comment userInput="Add SKU Condition Outside Of Combination Condition" stepKey="commentSetSKUProductCondition"/>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addSKUToProductCondition">
+            <argument name="conditionType" value="PageBuilderProductsConditionSKU"/>
+            <argument name="conditionInput" value="$$createProduct.sku$$"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage1">
+            <argument name="page" value="ProductsOnStage"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{ProductsOnStorefront.product('1')}}" stepKey="seeProductStorefront"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <!-- Changing Combination Condition to False -->
+        <comment userInput="Changing Combination Condition to False" stepKey="commentChangeCombinationConditionToFalse"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeProducts">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Add Conditions Combination For Category and Cost 2 -->
+        <comment userInput="Add Conditions Combination For Category and Cost 2" stepKey="commentAddConditionsCombination2"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy2">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <actionGroup ref="addConditionsCombinationToProductsAndSetAggregateParameters" stepKey="addCategoryWrappedInConditionalCombineWithFalseValue">
+            <argument name="booleanValueForAggregator" value="0"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCategoryConditionToProducts2">
+            <argument name="conditionInput" value="$$createCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addPriceConditionToProducts2">
+            <argument name="conditionType" value="PageBuilderProductsConditionPrice"/>
+            <argument name="conditionInput" value="$$createProduct.price$$"/>
+        </actionGroup>
+        <!-- Add SKU Condition Outside Of Combination Condition 2 -->
+        <comment userInput="Add SKU Condition Outside Of Combination Condition 2" stepKey="commentSetSKUProductCondition2"/>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addSKUToProductCondition2">
+            <argument name="conditionType" value="PageBuilderProductsConditionSKU"/>
+            <argument name="conditionInput" value="$$createProduct.sku$$"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterChangingToFalse"/>
+        <!-- Validate Stage After Changing to False -->
+        <comment userInput="Validate Stage Changing to False" stepKey="commentValidateStageAfterChangingToFalse"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="validateProductCountStageAfterChangingToFalse"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront 2 -->
+        <comment userInput="Validate Storefront 2" stepKey="commentValidateStorefrontAfterChangingToFalse"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefrontAfterChangingToFalse">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateProductCountStorefrontAfterChangingToFalse"/>
+    </test>
+</tests>

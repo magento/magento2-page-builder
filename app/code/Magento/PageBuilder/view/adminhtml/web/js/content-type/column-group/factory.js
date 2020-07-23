@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory"], function (_config, _contentTypeFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

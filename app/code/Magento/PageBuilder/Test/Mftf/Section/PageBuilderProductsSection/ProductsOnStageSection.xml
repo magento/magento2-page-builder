@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ProductsOnStage">
+        <element name="base" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]"/>
+        <element name="price" type="text" selector="//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//div[contains(@data-role,'priceBox')]"/>
+        <element name="hidden" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]"/>
+        <element name="notHidden" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products') and not(contains(@class,'placeholder'))])[{{indexOfProductGroup}}]//parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]"/>
+        <element name="emptyProductsPlaceholder" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]//*[contains(@class,'pagebuilder-products-placeholder')]"/>
+        <element name="product" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]//ol//li[contains(@class,'product-item')]"/>
+        <element name="productJS" type="text" selector="document.querySelectorAll('div[data-content-type=products] ol li.product-item')[{{indexOfProductItem}} - 1]" parameterized="true"/>
+        <element name="productByIndex" type="text" parameterized="true" selector="((//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]"/>
+        <element name="productImage" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//img[@class='product-image-photo']"/>
+        <element name="productImageCSS" type="text" selector=".pagebuilder-products div[data-appearance=grid] ol li.product-item img.product-image-photo"/>
+        <element name="productName" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{productName}}')]"/>
+        <element name="productPrice" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//span[@class='price' and .='${{productPrice}}']"/>
+        <element name="productPriceContainer" type="text" selector=".pagebuilder-products div[data-appearance=grid] ol li.product-item div.price-box"/>
+        <element name="productAddToCart" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//button[contains(@class,'tocart') and @title='Add to Cart']"/>
+        <element name="productAddToWishList" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']"/>
+        <element name="productAddToCompare" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//a[contains(@class,'tocompare') and @title='Add to Compare']"/>
+        <element name="productActions" type="text" selector=".pagebuilder-products div[data-appearance=grid] ol li.product-item div.product-item-actions"/>
+        <element name="productSwatch" type="button" selector="((//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//div[contains(@class, 'swatch-option')][@aria-label='{{swatchLabel}}']" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'text-align: {{alignment}};')]"/>
+        <element name="noAlignment" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][not(contains(@style,'text-align:'))]"/>
+        <element name="border" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'border-style: {{borderStyle}};')]"/>
+        <element name="borderColor" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'border-color: {{borderColor}};')]"/>
+        <element name="noBorderColor" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][not(contains(@style,'border-color:'))]"/>
+        <element name="borderWidth" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'border-width: {{borderWidth}}px;')]"/>
+        <element name="borderRadius" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'border-radius: {{borderRadius}}px;')]"/>
+        <element name="cssClasses" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@class,'{{cssClass}}')]"/>
+        <element name="noCssClasses" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][not(@class)]"/>
+        <element name="margins" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'margin: {{margin}}px;')]"/>
+        <element name="padding" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}][contains(@style,'padding: {{padding}}px;')]"/>
+    </section>
+</sections>

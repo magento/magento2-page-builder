@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragColumnToAnotherColumnGroup">
+        <arguments>
+            <argument name="contentType" defaultValue="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="10" type="string"/>
+            <argument name="y" defaultValue="0" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad time="30" stepKey="waitForMouseOverAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnMoveByIndex(contentTypeIndex)}}" stepKey="waitForMoveHandle"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnMoveByIndex(contentTypeIndex)}}" selector2="{{PageBuilderStage.contentTypeContainer(contentType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
+        <waitForPageLoad stepKey="waitForDragOperation"/>
+    </actionGroup>
+</actionGroups>

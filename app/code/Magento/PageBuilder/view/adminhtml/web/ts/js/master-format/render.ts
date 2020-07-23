@@ -81,13 +81,13 @@ export default class MasterFormatRenderer {
         this.channel = new MessageChannel();
         const frame = this.getRenderFrame();
         window.addEventListener("message", (event) => {
-            if (!this.ready && event.data === "PB_RENDER_READY") {
+            if (!this.ready && event.data.name === "PB_RENDER_READY" && this.stageId === event.data.stageId) {
                 frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [this.channel.port2]);
                 this.ready = true;
                 this.readyDeferred.resolve();
             }
         });
-        frame.src = Config.getConfig("render_url");
+        frame.src = Config.getConfig("render_url") + "?stageId=" + this.stageId;
     }
 
     /**

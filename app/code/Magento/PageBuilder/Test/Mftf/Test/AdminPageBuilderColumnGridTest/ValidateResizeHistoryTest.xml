@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidateResizeHistoryTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify when changing back to previous grid size the original division is restored."/>
+            <description value="Verify when changing back to previous grid size the original division is restored."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2296"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12"/>
+        <assertEquals stepKey="assertColumnsAreEqual">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12</actualResult>
+        </assertEquals>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo13">
+            <argument name="gridSize" value="13"/>
+        </actionGroup>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid13"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid13"/>
+        <!-- Validate first column grew larger -->
+        <comment userInput="Validate first column grew larger" stepKey="commentValidateFirstCommentUnchanged"/>
+        <assertGreaterThan stepKey="assertColumnOneGreaterThanColumnTwo">
+            <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid13</actualResult>
+        </assertGreaterThan>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="12" stepKey="resetGridSizeTo12"/>
+        <pressKey selector="{{ColumnOnBackend.gridSizeInput('1')}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForPageLoad stepKey="waitForUpdate"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
+        <!-- Validate columns are equal again -->
+        <comment userInput="Validate columns are equal again" stepKey="commentValidateColumnsEqual"/>
+        <assertEquals stepKey="assertColumnsAreEqualAgain">
+            <expectedResult type="variable">columnOneWidthGrid12Restored</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumn1IsRestored">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid12Restored</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumn2IsRestored">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
+        </assertEquals>
+    </test>
+</tests>

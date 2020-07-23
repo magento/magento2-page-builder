@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCreateTemplateAndValidateTemplateGridData">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Create Page Builder Template and Validate Grid Data"/>
+            <description value="Verify that when a user saves a template, all of the entered data is shown correctly on the template grid"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30592"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Save Template -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+        <generateDate date="now" format="M j, Y g:" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        <!-- Verify Info on Apply Template Slide Out -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+        <!-- Verify Info on Template Grid Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2"/>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid2">
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+    </test>
+</tests>

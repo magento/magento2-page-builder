@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidatePanelContentTypeIconsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel Icons are as specified"/>
+            <description value="The panel should have correct icons for each content type"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-3199"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Validate Layout Icons -->
+        <comment userInput="Validate layout icons" stepKey="commentValidatePanel1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('row','Row')}}" stepKey="validateRowIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('column','Column')}}" stepKey="validateColumnIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('tabs','Tabs')}}" stepKey="validateTabsIcon"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
+        <!-- Validate Elements Icons -->
+        <comment userInput="Validate elements icons" stepKey="commentValidatePanel2"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="openElementsMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('text','Text')}}" stepKey="validateTextIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('heading','Heading')}}" stepKey="validateHeadingIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('button','Buttons')}}" stepKey="validateButtonsIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('divider','Divider')}}" stepKey="validateDividerIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('code','HTML Code')}}" stepKey="validateHTMLIcon"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="closeElementsMenuSection"/>
+        <!-- Validate Media Icons -->
+        <comment userInput="Validate media icons" stepKey="commentValidatePanel3"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="openMediaMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('image','Image')}}" stepKey="validateImageIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('video','Video')}}" stepKey="validateVideoIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('banner','Banner')}}" stepKey="validateBannerIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('slider','Slider')}}" stepKey="validateSliderIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('map','Map')}}" stepKey="validateMapIcon"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="closeMediaMenuSection"/>
+        <!-- Validate Add Content Icons -->
+        <comment userInput="Validate add content icons" stepKey="commentValidatePanel4"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="openAddContentMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('block','Block')}}" stepKey="validateBlockIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('products','Products')}}" stepKey="validateProductsIcon"/>
+    </test>
+</tests>

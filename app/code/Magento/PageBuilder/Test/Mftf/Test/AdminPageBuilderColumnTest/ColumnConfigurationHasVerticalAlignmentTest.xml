@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnConfigurationHasVerticalAlignmentTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column Configuration Has Vertical Alignment"/>
+            <description value="Slide out panel column configuration should have vertical alignment settings"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-929"/>
+            <testCaseId value="MC-2825"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add column to stage and open configuration form -->
+        <comment userInput="Add column to stage" stepKey="commentAddColumnToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Vertical Alignment Fields -->
+        <comment userInput="Validate vertical alignment fields" stepKey="commentVerticalAlignment"/>
+        <actionGroup ref="validateVerticalAlignmentVisualSelects" stepKey="validateVerticalAlignment">
+            <argument name="property1" value="PageBuilderVerticalAlignmentPropertyTop"/>
+            <argument name="property2" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="property3" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="verticalAlignTopSelected">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+    </test>
+</tests>

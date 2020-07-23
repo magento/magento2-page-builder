@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -82,6 +83,18 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
     _proto.removeChild = function removeChild(child) {
       this.collection.removeChild(child);
+    }
+    /**
+     * Destroys current instance and all children
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      [].concat(this.getChildren()()).forEach(function (contentType) {
+        contentType.destroy();
+      });
+
+      _contentType2.prototype.destroy.call(this);
     }
     /**
      * Set the children observable array into the class

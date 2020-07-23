@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateVideoBackgroundWithOnlyVideoUrl">
+        <annotations>
+            <description>Validates video background attributes when only the Video URL is set and all other attributes are left as default</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="videoUrl" defaultValue="PageBuilderVideoBackgroundUrl_Empty"/>
+            <argument name="infiniteLoop" defaultValue="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" defaultValue="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
+        <dontSeeElementInDOM selector="{{section.backgroundColorElement(index)}}" stepKey="dontSeeBackgroundColorInDOM"/>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
+        <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
+        <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
+        <assertStringContainsString stepKey="assertHeight">
+            <expectedResult type="string">height: 100%;</expectedResult>
+            <actualResult type="variable">$jarallaxStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertWidth">
+            <expectedResult type="string">width: 100%;</expectedResult>
+            <actualResult type="variable">$jarallaxStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertOverflowHidden">
+            <expectedResult type="string">overflow: hidden;</expectedResult>
+            <actualResult type="variable">$jarallaxStyle</actualResult>
+        </assertStringContainsString>
+        <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
+        <assertStringContainsString stepKey="assertVideoPosition">
+            <expectedResult type="string">position: absolute;</expectedResult>
+            <actualResult type="variable">$videoStyle</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVideoPlaying">
+            <expectedResult type="string">transform: translate3d(</expectedResult>
+            <actualResult type="variable">$videoStyle</actualResult>
+        </assertStringContainsString>
+        <dontSeeElementInDOM selector="{{section.videoBackgroundOverlayElement(index)}}" stepKey="dontSeeOverlayColorInDOM"/>
+        <waitForElementVisible selector="{{section.videoBackgroundInfiniteLoop(index, infiniteLoop.value)}}" stepKey="waitForInfiniteLoop"/>
+        <waitForElementVisible selector="{{section.videoBackgroundLazyLoad(index, lazyLoad.value)}}" stepKey="waitForLazyLoad"/>
+        <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyWhenVisible(index, playOnlyWhenVisible.value)}}" stepKey="waitForPlayOnlyWhenVisible"/>
+        <waitForElement selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="waitForNoFallbackImage"/>
+        <dontSeeElement selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="dontSeeFallbackImage"/>
+        <dontSeeElementInDOM selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="dontSeeFallbackImageInDOM"/>
+    </actionGroup>
+</actionGroups>

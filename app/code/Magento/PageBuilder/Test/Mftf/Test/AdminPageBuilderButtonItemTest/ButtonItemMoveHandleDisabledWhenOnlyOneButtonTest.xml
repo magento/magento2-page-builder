@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonItemMoveHandleDisabledWhenOnlyOneButtonTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Move Handle Disabled When Only One Button"/>
+            <description value="The button item move handle should be disabled when there is only one button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-941"/>
+            <testCaseId value="MC-3498"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Validate Disabled Move Handle -->
+        <comment userInput="Validate Disabled Move Handle" stepKey="commentValidateDisabled"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="seeMoveHandleDisabled"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="dontSeeMoveHandleEnabled"/>
+        <clickWithLeftButton selector="{{ButtonItemOnStage.base('1')}}" x="-1" y="-1" stepKey="clickOutsideButton"/>
+        <!-- Add Button and Validate Move Handles Enabled -->
+        <comment userInput="Add Button and Validate Move Handles Enabled" stepKey="commentValidateEnabled"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="seeMoveHandleEnabled"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="dontSeeMoveHandleDisabled"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandle('2')}}" stepKey="seeMoveHandleEnabled2"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('2')}}" stepKey="dontSeeMoveHandleDisabled2"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButton">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="seeMoveHandleDisabled2"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="dontSeeMoveHandleEnabled2"/>
+    </test>
+</tests>

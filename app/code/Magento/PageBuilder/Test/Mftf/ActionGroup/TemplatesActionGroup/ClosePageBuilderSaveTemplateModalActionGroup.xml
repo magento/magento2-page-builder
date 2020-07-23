@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="closePageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Closes the Page Builder Save as Template modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
+</actionGroups>

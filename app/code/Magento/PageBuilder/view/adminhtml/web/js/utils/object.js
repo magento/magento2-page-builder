@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["object-path"], function (_objectPath) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

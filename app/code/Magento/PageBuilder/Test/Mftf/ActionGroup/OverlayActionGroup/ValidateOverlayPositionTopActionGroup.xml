@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateOverlayPositionTop">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+        </arguments>
+        <!-- Validate top edge of overlay with padding -->
+        <comment userInput="Validate top edge of overlay with padding" stepKey="commentValidateTopEdgeOfOverlayWithPadding"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top" stepKey="wrapperTopPosition"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().top-{{padding.paddingTop}}" stepKey="overlayTopPositionWithPadding"/>
+        <executeJS function="return Math.round(({$overlayTopPositionWithPadding}/{$wrapperTopPosition})*100)/100" stepKey="overlayTopRatio"/>
+        <assertEquals stepKey="assertOverlayTopRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">overlayTopRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SearchContentTypeAndAddToStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for content blocks and add them to stage"/>
+            <description value="After search I can drag and drop content blocks onto the stage before and after clicking X on the panel search "/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-92004"/>
+            <testCaseId value="MC-2690"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <comment userInput="Search Map in Panel and drag to stage" stepKey="commentSearchMap"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Map" stepKey="fillSearchField"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <comment userInput="Clear search Map and drag Column to stage" stepKey="commentClearSearch"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.searchField}}" stepKey="seeClearSearch"/>
+        <click selector="{{PageBuilderPanel.searchField}}" stepKey="clickClearSearch"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+    </test>
+</tests>

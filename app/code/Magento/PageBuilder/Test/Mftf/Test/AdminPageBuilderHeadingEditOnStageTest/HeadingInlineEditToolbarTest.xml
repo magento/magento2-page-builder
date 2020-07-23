@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="HeadingInlineEditToolbarTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Stage Edit - WYSIWYG Toolbar Interactions"/>
+            <description value="Inline edit toolbar becomes active on stage when adding or focusing on Heading"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-88142"/>
+            <testCaseId value="MC-2621"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <comment userInput="Validate Heading edit toolbar" stepKey="CommentHeadingEditToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H1.toolbar)}}" stepKey="seeH1InToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H2.toolbar)}}" stepKey="seeH2InToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H3.toolbar)}}" stepKey="seeH3InToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H4.toolbar)}}" stepKey="seeH4InToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H5.toolbar)}}" stepKey="seeH5InToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H6.toolbar)}}" stepKey="seeH6InToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1', PageBuilderHeadingAlignmentProperty_left.toolbar)}}" stepKey="seeLeftAlignmentOnToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="seeCenterAlignmentOnToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="seeRightAlignmentOnToolbar"/>
+        <comment userInput="When click outside heading heading input loses focus, toolbar disappears, and placeholder displays Enter Heading Text" stepKey="commentClickOutsideHeading"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
+        <grabValueFrom selector="{{HeadingOnStage.headingOnStage(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="getHeadingText"/>
+        <assertEmpty message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute">
+            <actualResult type="variable">getHeadingText</actualResult>
+        </assertEmpty>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H1.toolbar)}}" stepKey="dontSeeH1InToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H2.toolbar)}}" stepKey="dontSeeH2InToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H3.toolbar)}}" stepKey="dontSeeH3InToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H4.toolbar)}}" stepKey="dontSeeH4InToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H5.toolbar)}}" stepKey="dontSeeH5InToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H6.toolbar)}}" stepKey="dontSeeH6InToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1', PageBuilderHeadingAlignmentProperty_left.toolbar)}}" stepKey="dontSeeLeftAlignmentSelected"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
+        <comment userInput="When click inside heading see heading input gain focus, placeholder disappears and WYSIWYG toolbar appears" stepKey="commentClickInsideHeading"/>
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="clickInsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H1.toolbar)}}" stepKey="seeH1InToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H2.toolbar)}}" stepKey="seeH2InToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H3.toolbar)}}" stepKey="seeH3InToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H4.toolbar)}}" stepKey="seeH4InToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H5.toolbar)}}" stepKey="seeH5InToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H6.toolbar)}}" stepKey="seeH6InToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1',PageBuilderHeadingAlignmentProperty_left.toolbar)}}" stepKey="seeLeftAlignmentOnToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1',PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="seeCenterAlignmentOnToolbarAgain"/>
+        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar('1',PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="seeRightAlignmentOnToolbarAgain"/>
+    </test>
+</tests>

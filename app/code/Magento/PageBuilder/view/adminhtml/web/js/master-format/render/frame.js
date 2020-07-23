@@ -1,5 +1,8 @@
 /*eslint-disable */
-define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_csso, _jquery, _knockout, _engine, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
+/* jscs:disable */
+define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_csso, _jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
+  function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,11 +13,30 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
   var portDeferred = _jquery.Deferred();
 
   var deferredTemplates = {};
+  var lastRenderId;
+  /**
+   * Debounce the render call, so we don't render until the final request
+   */
+
+  var debounceRender = _underscore.debounce(function (message, renderId) {
+    render(message).then(function (output) {
+      // Only post the most recent render back to the parent
+      if (lastRenderId === renderId) {
+        port.postMessage({
+          type: "render",
+          message: output
+        });
+      }
+    });
+  }, 50);
   /**
    * Listen for requests from the parent window for a render
    */
 
+
   function listen(config) {
+    var stageId = window.location.href.split("?")[1].split("=")[1];
+
     _config.setConfig(config);
 
     _config.setMode("Master");
@@ -31,12 +53,10 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
 
         port.onmessage = function (messageEvent) {
           if (messageEvent.data.type === "render") {
-            render(messageEvent.data.message).then(function (output) {
-              port.postMessage({
-                type: "render",
-                message: output
-              });
-            });
+            var renderId = _mageUtils.uniqueid();
+
+            lastRenderId = renderId;
+            debounceRender(messageEvent.data.message, renderId);
           }
 
           if (messageEvent.data.type === "template") {
@@ -51,7 +71,10 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
       }
     }, false); // Inform the parent iframe that we're ready to receive the port
 
-    window.parent.postMessage("PB_RENDER_READY", "*");
+    window.parent.postMessage({
+      name: "PB_RENDER_READY",
+      stageId: stageId
+    }, "*");
   }
   /**
    * Use our MessageChannel to load a template from the parent window, this is required as the iframe isn't allowed to
@@ -87,6 +110,35 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
     });
   }
   /**
+   * Assert if the render has finished
+   */
+
+
+  var assertRenderFinished = _underscore.debounce(function (element, expectedCount, callback) {
+    if (element.querySelectorAll("[data-content-type]").length === expectedCount) {
+      callback();
+    }
+  }, 50);
+  /**
+   * Iterate over the root container and count all content types
+   *
+   * @param rootContainer
+   * @param count
+   */
+
+
+  function countContentTypes(rootContainer, count) {
+    count = count || 0;
+    rootContainer.getChildren()().forEach(function (child) {
+      ++count;
+
+      if (typeof child.getChildren !== "undefined" && child.getChildren()().length > 0) {
+        count = countContentTypes(child, count);
+      }
+    });
+    return count;
+  }
+  /**
    * Perform a render of the provided data
    *
    * @param message
@@ -98,26 +150,45 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
       styleRegistry = new _styleRegistry(message.stageId);
     }
 
-    return createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
-      var element = document.createElement("div"); // Assign the observer before executing the render to ensure no race condition occurs
+    return new Promise(function (resolve, reject) {
+      createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
+        var element = document.createElement("div");
+        /**
+         * Setup an event on the element to observe changes and count the expected amount of content types are
+         * present within the content.
+         */
 
-      var engineRender = _engine.waitForFinishRender().then(function () {
-        _knockout.cleanNode(element);
+        var renderFinished = _jquery.Deferred();
 
-        (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCss(styleRegistry)));
-        var filtered = (0, _filterHtml)((0, _jquery)(element));
-        var output = (0, _directives)(filtered.html());
-        return output;
+        var observer = new MutationObserver(function () {
+          assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
+        });
+        observer.observe(element, {
+          attributes: true,
+          childList: true,
+          subtree: true
+        }); // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
+
+        _jquery.when(_engine.waitForFinishRender(), renderFinished).then(function () {
+          observer.disconnect();
+
+          _knockout.cleanNode(element);
+
+          (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCss(styleRegistry)));
+          var filtered = (0, _filterHtml)((0, _jquery)(element));
+          var output = (0, _directives)(filtered.html());
+          resolve(output);
+        });
+
+        _knockout.applyBindingsToNode(element, {
+          template: {
+            data: rootContainer.content,
+            name: rootContainer.content.template
+          }
+        });
+      }).catch(function (error) {
+        reject(error);
       });
-
-      _knockout.applyBindingsToNode(element, {
-        template: {
-          data: rootContainer.content,
-          name: rootContainer.content.template
-        }
-      });
-
-      return engineRender;
     });
   }
   /**

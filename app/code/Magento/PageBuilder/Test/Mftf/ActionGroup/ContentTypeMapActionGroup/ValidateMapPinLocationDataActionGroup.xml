@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMapPinLocationData">
+        <arguments>
+            <argument name="page"/>
+            <argument name="locationName" defaultValue="PageBuilderMapLocationName_Default"/>
+            <argument name="comment" defaultValue="PageBuilderMapComment_Default"/>
+            <argument name="phoneNumber" defaultValue="PageBuilderMapPhoneNumber_Default"/>
+            <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
+            <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
+            <argument name="state" defaultValue="PageBuilderMapState_Default"/>
+            <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
+            <argument name="country" defaultValue="PageBuilderMapCountry_Default"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+            <argument name="pinIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
+        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
+        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
+        <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
+        <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
+        <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
+        <waitForElement selector="{{page.locationNameElement(mapIndex)}}" stepKey="waitForLocationName"/>
+        <see selector="{{page.locationNameElement(mapIndex)}}" userInput="{{locationName.value}}" stepKey="seeLocationName"/>
+        <waitForElement selector="{{page.commentElement(mapIndex)}}" stepKey="waitForComment"/>
+        <see selector="{{page.commentElement(mapIndex)}}" userInput="{{comment.value}}" stepKey="seeComment"/>
+        <waitForElement selector="{{page.phoneNumberElement(mapIndex)}}" stepKey="waitForPhoneNumber"/>
+        <see selector="{{page.phoneNumberElement(mapIndex)}}" userInput="{{phoneNumber.value}}" stepKey="seePhoneNumber"/>
+        <waitForElement selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" stepKey="waitForAddressVisible"/>
+        <see selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" userInput="{{address.value}}\n{{city.value}}, {{state.value}} {{zip.value}}\n{{country.value}}" stepKey="seeAddress"/>
+        <moveMouseOver selector="{{page.base(mapIndex)}}" x="-1" y="0" stepKey="moveMouseOutsideMap"/>
+        <waitForPageLoad stepKey="waitForOptionMenuGone"/>
+        <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
+        <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
+    </actionGroup>
+</actionGroups>

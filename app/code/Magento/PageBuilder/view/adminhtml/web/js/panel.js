@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/menu", "Magento_PageBuilder/js/panel/menu/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_consoleLogger, _jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _menu, _contentType, _positionSticky) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -88,9 +89,13 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       } else {
         this.searching(true);
         this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentType) {
-          var regEx = new RegExp("\\b" + self.searchValue(), "gi");
-          var matches = !!contentType.label.toLowerCase().match(regEx);
-          return matches && contentType.is_system === true;
+          if (contentType.is_system !== true) {
+            return false;
+          }
+
+          var escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+          var regEx = new RegExp("\\b" + escapedSearchValue, "gi");
+          return regEx.test(contentType.label.toLowerCase());
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
           return new _contentType.ContentType(identifier, contentType, _this2.pageBuilder.stage.id);

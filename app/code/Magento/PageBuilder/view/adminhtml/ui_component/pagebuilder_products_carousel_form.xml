@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_products_form">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pagebuilder_products_carousel_form.pagebuilder_products_carousel_form_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <deps>
+            <dep>pagebuilder_products_carousel_form.pagebuilder_products_carousel_form_data_source</dep>
+        </deps>
+        <namespace>pagebuilder_products_carousel_form</namespace>
+    </settings>
+    <dataSource name="pagebuilder_products_carousel_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/products/form/provider</item>
+            </item>
+        </argument>
+        <dataProvider name="pagebuilder_products_carousel_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">carousel</item>
+                </item>
+            </argument>
+        </field>
+        <htmlContent name="conditions_form" sortOrder="30" template="Magento_PageBuilder/form/element/widget-conditions">
+            <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions">
+                <arguments>
+                    <argument name="formNamespace" xsi:type="string">pagebuilder_products_carousel_form</argument>
+                    <argument name="attribute" xsi:type="string">condition_source</argument>
+                    <argument name="label" xsi:type="string" translate="true">Condition</argument>
+                </arguments>
+            </block>
+        </htmlContent>
+        <container name="product_count_group" component="Magento_Ui/js/form/components/group" sortOrder="80">
+            <field name="products_count" sortOrder="20" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="carousel_products_count" sortOrder="10" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="default" xsi:type="number">20</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>number</dataType>
+                    <label translate="true">Number of Products to Display</label>
+                    <additionalClasses>
+                        <class name="admin__field-small">true</class>
+                    </additionalClasses>
+                    <dataScope>carousel_products_count</dataScope>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="less-than-equals-to" xsi:type="number">999</rule>
+                        <rule name="greater-than-equals-to" xsi:type="number">1</rule>
+                    </validation>
+                </settings>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="settings" sortOrder="30">
+        <settings>
+            <label translate="true">Carousel Settings</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="carousel_mode" sortOrder="10" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Carousel Mode</label>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="CarouselModeSource"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="autoplay" sortOrder="20" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">false</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Autoplay</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="autoplay_speed" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">4000</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Autoplay Speed</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <addAfter translate="true">ms</addAfter>
+                <dataScope>autoplay_speed</dataScope>
+                <notice translate="true">Delay in milliseconds between each slide</notice>
+                <imports>
+                    <link name="disabled">!ns = ${ $.ns }, index = autoplay:checked</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="is_infinite" sortOrder="40" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">false</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">continuous</item>
+                    </item>
+                    <item name="dependentValues" xsi:type="array">
+                        <item name="continuous" xsi:type="string">true</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Infinite Loop</label>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = carousel_mode:value</link>
+                    <link name="setDependentValues">ns = ${ $.ns }, index = carousel_mode:value</link>
+                </imports>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="show_arrows" sortOrder="50" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">false</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Show Arrows</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="show_dots" sortOrder="60" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">true</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Show Dots</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="showSmallContentType">
+        <arguments>
+            <argument name="section"/>
+            <argument name="contentType"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Showing content type -->
+        <comment userInput="Showing content type" stepKey="commentShowContentType"/>
+        <waitForElementVisible selector="{{section.base(targetIndex)}}" stepKey="waitForContentType"/>
+        <waitForElementVisible time="20" selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentTypeOptions"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
+        <waitForPageLoad stepKey="waitForMouseOver"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role, targetIndex)}}" stepKey="waitForShowOptionVisible"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role, targetIndex)}}" stepKey="showContentType"/>
+        <waitForPageLoad stepKey="waitForDisable"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible"/>
+        <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden"/>
+    </actionGroup>
+</actionGroups>

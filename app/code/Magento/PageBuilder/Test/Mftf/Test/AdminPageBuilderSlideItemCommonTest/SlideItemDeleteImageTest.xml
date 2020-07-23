@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemDeleteImageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Image from Slider Content Block get wiped out after delete image from Media Storage"/>
+            <description value="Image from Slider Content Block get wiped out after delete image from Media Storage"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-2294"/>
+            <testCaseId value="MC-3594"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!--Upload image from local machine using image placeholder button-->
+        <comment userInput="Upload image from local machine using image placeholder button on slide out" stepKey="commentUploadImage"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachSlideImageFile1">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut1">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Delete image B -->
+        <comment stepKey="deleteImageB" userInput="Delete image B"/>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeStorage"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
+        <dontSeeElementInDOM selector="{{SlideOnBackend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageNameOnPreview1"/>
+        <!--Upload image from local machine -->
+        <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromSlide"/>
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+        <!-- Delete image A -->
+        <comment stepKey="deleteImageA" userInput="Delete image A"/>
+        <waitForElementVisible selector="{{MediaGallerySection.lastImageOrImageCopy(PageBuilderBackgroundImage_GIF.fileName, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="waitForLastImage"/>
+        <click selector="{{MediaGallerySection.lastImageOrImageCopy(PageBuilderBackgroundImage_GIF.fileName, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="selectImage"/>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+            <argument name="Image" value="PageBuilderBackgroundImage_GIF"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
+        <!-- Assert not to see deleted image on stage -->
+        <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
+        <seeElementInDOM selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySliderOnStage"/>
+        <dontSeeElementInDOM selector="{{SlideOnBackend.backgroundImage('1', PageBuilderBackgroundImage_GIF.fileName)}}" stepKey="dontSeeImageInrMainImageSource1"/>
+    </test>
+</tests>

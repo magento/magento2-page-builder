@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyHeadingInStorefront">
+        <arguments>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingType(headingType.value, index)}}" stepKey="waitForStorefrontHeadingStyle"/>
+        <seeElement selector="{{HeadingOnStorefront.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStorefrontHeadingText"/>
+    </actionGroup>
+</actionGroups>

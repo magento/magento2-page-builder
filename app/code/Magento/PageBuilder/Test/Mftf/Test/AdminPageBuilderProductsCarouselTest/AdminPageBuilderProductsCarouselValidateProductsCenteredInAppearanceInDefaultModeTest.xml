@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselValidateProductsCenteredInAppearanceInDefaultModeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Products Are Centered In Carousel Appearance In Default Mode"/>
+            <description value="Validate that setting the Products content type to a Carousel appearance renders products in the center of the content type when in default mode"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22717"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyOne"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselMode">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Validate 1 Product Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage1">
+            <argument name="centerProductIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Validate 1 Product Centered -->
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="centerProductIndex" value="1"/>
+        </actionGroup>
+        <!-- Edit to 2 Products -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount2">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyTwo"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Validate 2 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStage2">
+            <argument name="adjacentLeftOfCenterProductIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Storefront: Validate 2 Products Centered -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage2"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="adjacentLeftOfCenterProductIndex" value="1"/>
+        </actionGroup>
+        <!-- Edit to 3 Products -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount3">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyThree"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Stage: Validate 3 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage3">
+            <argument name="centerProductIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage3"/>
+        <!-- Storefront: Validate 3 Products Centered -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage4"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="centerProductIndex" value="2"/>
+        </actionGroup>
+        <!-- Edit to 4 Products -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage5"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel4">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount4">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Validate 4 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStage4">
+            <argument name="adjacentLeftOfCenterProductIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage4"/>
+        <!-- Storefront: Validate 4 Products Centered -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage6"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="adjacentLeftOfCenterProductIndex" value="2"/>
+        </actionGroup>
+        <!-- Edit to 5 Products -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage7"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel5">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount5">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFive"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
+        <!-- Stage: Validate 5 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage5">
+            <argument name="centerProductIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage5"/>
+        <!-- Storefront: Validate 5 Products Centered -->
+        <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage8"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="centerProductIndex" value="3"/>
+        </actionGroup>
+        <closeTab stepKey="closeTab"/>
+    </test>
+</tests>

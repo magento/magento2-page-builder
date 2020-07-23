@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="doubleClickWidgetTinyMCE">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetVisible"/>
+        <doubleClick selector="{{section.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButtonVisible"/>
+    </actionGroup>
+</actionGroups>

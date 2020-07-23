@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidatePanelContentTypesGroupedCorrectlyTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Content types are grouped as specified"/>
+            <description value="The panel should contain the proper menu sections with content types"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-2897"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Validate Layout menu section -->
+        <comment userInput="Validate layout menu section" stepKey="commentValidatePanel1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '1', 'Row')}}" stepKey="validateContentTypeRow"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '2', 'Column')}}" stepKey="validateContentTypeColumn"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentTypeTabs"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
+        <!-- Validate Elements menu section -->
+        <comment userInput="Validate elements menu section" stepKey="commentValidatePanel2"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="openElementMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '1', 'Text')}}" stepKey="validateContentTypeText"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '2', 'Heading')}}" stepKey="validateContentTypeHeading"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '3', 'Buttons')}}" stepKey="validateContentTypeButtons"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '4', 'Divider')}}" stepKey="validateContentTypeDivider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '5', 'HTML Code')}}" stepKey="validateContentTypeHTML"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="closeElementMenuSection"/>
+        <!-- Validate Media menu section -->
+        <comment userInput="Validate media menu section" stepKey="commentValidatePanel3"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="openMediaMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '1', 'Image')}}" stepKey="validateContentTypeImage"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '2', 'Video')}}" stepKey="validateContentTypeVideo"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '3', 'Banner')}}" stepKey="validateContentTypeBanner"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '4', 'Slider')}}" stepKey="validateContentTypeSlider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '5', 'Map')}}" stepKey="validateContentTypeMap"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="closeMediaMenuSection"/>
+        <!-- Validate Add Content menu section -->
+        <comment userInput="Validate add content menu section" stepKey="commentValidatePanel4"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="openAddContentMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '1', 'Block')}}" stepKey="validateContentTypeBlock"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentTypeProducts"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="closeAddContentMenuSection"/>
+    </test>
+</tests>

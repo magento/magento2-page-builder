@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/content-type-collection"], function (_contentTypeCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

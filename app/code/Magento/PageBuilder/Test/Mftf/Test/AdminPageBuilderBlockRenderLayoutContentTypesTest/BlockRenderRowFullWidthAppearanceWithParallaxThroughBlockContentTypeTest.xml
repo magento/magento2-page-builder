@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderRowFullWidthAppearanceWithParallaxThroughBlockContentTypeTest" extends="BlockRenderRowContainedAppearanceWithParallaxThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Row Full Width Appearance With Parallax Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the row content type full width appearance with parallax enabled through the Block content type."/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="MC-14934"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-parallax"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <!-- Validate CMS Block Stage -->
+        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
+        <!-- Validate CMS Page Stage -->
+        <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSPageStage">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStage">
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSBlockStage">
+            <argument name="content" value="{{RowOnStage.baseCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
+        </actionGroup>
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStage">
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="index" value="2"/>
+            <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
+            <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStage">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStage">
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="index" value="2"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront -->
+        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateRowAppearanceCMSPageStorefront">
+            <argument name="pageOrStageWidthJS" value="{{PageBuilderStoreFront.pageWidthJS}}"/>
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStorefront">
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStorefront">
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="index" value="2"/>
+            <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
+            <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStorefront">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStorefront">
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="index" value="2"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

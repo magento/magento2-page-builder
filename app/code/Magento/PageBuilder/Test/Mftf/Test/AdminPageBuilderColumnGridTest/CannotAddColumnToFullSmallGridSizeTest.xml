@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CannotAddColumnToFullSmallGridSizeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify we cannot add a column to a full group with a small grid size."/>
+            <description value="Set grid size to 2, attempt to add additional column, validate no column added."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2298"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo2">
+            <argument name="gridSize" value="2"/>
+        </actionGroup>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumn1Visible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="mouseOverColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '1')}}" stepKey="clickDuplicate"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="waitForCannotDuplicateColumnModal"/>
+        <seeElement selector="{{PageBuilderStage.errorModal(PageBuilderColumnDuplicate.cannotDuplicateColumnErrorMessage)}}" stepKey="seeErrorMessage"/>
+        <click selector="{{PageBuilderStage.modalOk}}" stepKey="closeModal"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+    </test>
+</tests>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="SliderOnFrontend">
+        <element name="all" type="button" selector="div[data-content-type=slider]"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'display: none'))]" parameterized="true"/>
+        <element name="slideNavigationDot" type="button" selector="((//div[@data-content-type='slider'])[{{sliderIndex}}]//ul[@class='slick-dots']//button)[{{navigationDotIndex}}]" parameterized="true"/>
+        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
+        <element name="previousSlideArrowDisabled" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev') and contains(@class,'slick-disabled')]" parameterized="true"/>
+        <element name="previousSlideArrowEnabled" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev') and not(contains(@class,'slick-disabled'))]" parameterized="true"/>
+        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
+        <element name="nextSlideArrowDisabled" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next') and contains(@class,'slick-disabled')]" parameterized="true"/>
+        <element name="nextSlideArrowEnabled" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next') and not(contains(@class,'slick-disabled'))]" parameterized="true"/>
+        <!-- Settings Configuration -->
+        <element name="autoPlay" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-autoplay='{{autoplay}}']" parameterized="true"/>
+        <element name="autoPlaySpeed" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-autoplay-speed='{{autoplaySpeed}}']" parameterized="true"/>
+        <element name="fade" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-fade='{{fade}}']" parameterized="true"/>
+        <element name="infiniteLoop" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-infinite-loop='{{infiniteLoop}}']" parameterized="true"/>
+        <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-arrows='{{showArrows}}']" parameterized="true"/>
+        <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-dots='{{showDots}}']" parameterized="true"/>
+        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
+    </section>
+</sections>

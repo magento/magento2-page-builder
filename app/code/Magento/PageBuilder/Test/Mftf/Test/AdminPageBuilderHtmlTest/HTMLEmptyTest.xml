@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="HTMLEmptyTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Validate that empty html will not display any space on Storefront"/>
+            <description value="Validate that empty html will not display any space on Storefront"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3238"/>
+            <testCaseId value="MC-5816"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-html"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragToStage">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlBaseStage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Validate Stage after saving CMS Page-->
+        <comment userInput="Validate Stage after saving CMS Page" stepKey="commentValidateStage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlBaseStage2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <dontSeeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="dontSeeHtmlContentVisible"/>
+        <seeElementInDOM selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlContentInDOM"/>
+    </test>
+</tests>

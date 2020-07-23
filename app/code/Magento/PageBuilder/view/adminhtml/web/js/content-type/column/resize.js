@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

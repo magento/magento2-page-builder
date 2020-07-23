@@ -13,7 +13,8 @@ define([
     var serializer = new ConditionsDataNormalizer();
 
     return function (data, attribute) {
-        var pairs = {};
+        var pairs = {},
+            conditions = '';
 
         /*
          * The Condition Rule Tree is not a UI component and doesn't provide good data.
@@ -29,8 +30,49 @@ define([
             }
         });
 
+        /*
+         * The Combine Condition rule needs to have children,
+         * if does not have, we cannot parse the rule in the backend.
+         */
+        _.each(pairs, function (element, key) {
+            var keyIds = key.match(/[\d?-]+/g),
+              combineElement = 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine',
+              nextPairsFirstKey = 'parameters[condition_source][NEXT_ITEM--1][type]',
+              nextPairsSecondKey = 'parameters[condition_source][NEXT_ITEM--2][type]';
+
+            if (keyIds !== null && element === combineElement) {
+                if (pairs[nextPairsFirstKey.replace('NEXT_ITEM', keyIds[0])] === undefined ||
+                    pairs[nextPairsFirstKey.replace('NEXT_ITEM', keyIds[0])] === combineElement &&
+                    pairs[nextPairsSecondKey.replace('NEXT_ITEM', keyIds[0])] === undefined) {
+                    pairs[key] = '';
+                }
+            }
+        });
+
+        /*
+         * Add pairs in case conditions source is not rules configurator
+         */
+        if (data['condition_option'] !== 'condition') {
+            pairs['parameters[' + attribute + '][1--1][operator]'] =
+                data[data['condition_option'] + '-condition_operator'] ?
+                data[data['condition_option'] + '-condition_operator'] :
+                '==';
+            pairs['parameters[' + attribute + '][1--1][type]'] =
+                'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product';
+            pairs['parameters[' + attribute + '][1][aggregator]'] = 'all';
+            pairs['parameters[' + attribute + '][1][new_child]'] = '';
+            pairs['parameters[' + attribute + '][1][type]'] = 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine';
+            pairs['parameters[' + attribute + '][1][value]'] = '1';
+            pairs['parameters[' + attribute + '][1--1][attribute]'] = data['condition_option'];
+            pairs['parameters[' + attribute + '][1--1][value]'] = _.isString(data[data['condition_option']]) ?
+                data[data['condition_option']].trim() :
+                '';
+        }
+
         if (!_.isEmpty(pairs)) {
-            objectUtils.nested(data, attribute, JSON.stringify(serializer.normalize(pairs).parameters[attribute]));
+            conditions = JSON.stringify(serializer.normalize(pairs).parameters[attribute]);
+            data['conditions_encoded'] = conditions;
+            objectUtils.nested(data, attribute, conditions);
         }
     };
 });

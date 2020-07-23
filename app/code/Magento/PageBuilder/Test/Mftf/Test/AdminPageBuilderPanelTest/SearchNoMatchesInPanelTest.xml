@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SearchNoMatchesInPanelTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for no matches in PageBuilder Panel"/>
+            <description value="When there is no match on a search, display appropriate message."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-2604"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
+        <see userInput="Nothing found" selector="{{PageBuilderPanel.nothingFound}}" stepKey="validateNothingFound"/>
+    </test>
+</tests>

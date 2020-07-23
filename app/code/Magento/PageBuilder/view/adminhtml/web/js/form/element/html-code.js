@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+/* global MediabrowserUtility, widgetTools, MagentovariablePlugin */
 define([
     'Magento_Ui/js/form/element/textarea',
     'mage/adminhtml/wysiwyg/widget'
@@ -42,6 +43,6 @@ define([
                 this.variableUrl,
                 this.uid
             );
-        },
+        }
     });
 });

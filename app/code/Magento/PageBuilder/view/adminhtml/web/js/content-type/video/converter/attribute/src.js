@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -20,6 +21,12 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
+      var fileRegExp = new RegExp("^(webm:|mp4:|ogv:)");
+
+      if (fileRegExp.test(value)) {
+        return value.substr(fileRegExp.exec(value)[0].length);
+      }
+
       return value;
     }
     /**
@@ -40,11 +47,15 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
 
       var youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
       var vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" + "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
+      var fileRegExp = new RegExp("^(?:https:|http:)?\\/\\/.*[\\\\\\/].+\\.(webm|mp4|ogv)(?!\w)");
 
       if (youtubeRegExp.test(value)) {
         return "https://www.youtube.com/embed/" + youtubeRegExp.exec(value)[1];
       } else if (vimeoRegExp.test(value)) {
         return "https://player.vimeo.com/video/" + vimeoRegExp.exec(value)[3] + "?title=0&byline=0&portrait=0";
+      } else if (fileRegExp.test(value)) {
+        var result = fileRegExp.exec(value);
+        return result[1] + ":" + value;
       }
 
       return value;

@@ -5,17 +5,19 @@
 
 //
 //  Full Bleed row appearance styles
-//  ________________________________
+//  _____________________________________________
 
-[data-content-type='row'][data-appearance='full-bleed'] {
-    box-sizing: border-box;
+& when (@media-common = true) {
+    [data-content-type='row'][data-appearance='full-bleed'] {
+        box-sizing: border-box;
+    }
 }
 
 //
-//  Responsive Classes
+//  Mobile (style-m.css)
 //  _____________________________________________
 
-@media only screen and (max-width: @screen__m) {
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     [data-content-type='row'][data-appearance='full-bleed'] {
         background-attachment: scroll !important;
     }

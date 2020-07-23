@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderMinHeightWithPosterSlideMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider Min Height With Poster Slide Min Height"/>
+            <description value="A user can submit valid min height values (px, view port percentages, calculations, etc.) and they apply correctly to a sliders and poster slide items."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-379"/>
+            <testCaseId value="MC-31462"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Slide 1: Min Height = empty-->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlide1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceSlide1">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideMinHeight1">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideEditPanelSettings"/>
+        <!-- Slider 1: Min Height = 200px -->
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide1"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightSlider1">
+            <argument name="property" value="PageBuilderMinHeightProperty_200px"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPadding_0"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType3">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Slider 2: Min Height = 100vh -->
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightSlider2">
+            <argument name="property" value="PageBuilderMinHeightProperty_100vh"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Slide 2: Min Height = 200px-->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlide2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideMinHeight2">
+            <argument name="property" value="PageBuilderMinHeightProperty_200px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideEditPanelSettings2"/>
+        <!-- Slider 3: Min Height = 100vh - 200px -->
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightSlider3">
+            <argument name="property" value="PageBuilderMinHeightProperty_100vh_Minus_200px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Slide 3: Min Height = 100vh-->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlide3">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideMinHeight3">
+            <argument name="property" value="PageBuilderMinHeightProperty_100vh"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideEditPanelSettings3"/>
+        <!-- Slider 4: Min Height = empty -->
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide4"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel4">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightSlider4">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Slide 4: Min Height = 100vh - 200px-->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlide4">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideMinHeight4">
+            <argument name="property" value="PageBuilderMinHeightProperty_100vh_Minus_200px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideEditPanelSettings4"/>
+        <!-- Validate Stage -->
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeightStage"/>
+        <waitForElementVisible selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstSliderMinHeightStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.noPosterMinimumHeight('1')}}" stepKey="seeFirstSlideHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="firstSliderMinHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[0].getBoundingClientRect().height" stepKey="firstSlideMinHeightStage"/>
+        <assertEquals stepKey="assertFirstSliderMinHeightStage">
+            <actualResult type="variable">firstSliderMinHeightStage</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertFirstSlideMinHeightStage">
+            <actualResult type="variable">firstSlideMinHeightStage</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{SliderOnStage.minHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondSliderMinHeightStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.posterMinimumHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeSecondSlideHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="secondSliderMinHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[1].getBoundingClientRect().height" stepKey="secondSlideMinHeightStage"/>
+        <assertEquals stepKey="assertSecondSliderMinHeightStage">
+            <actualResult type="variable">secondSliderMinHeightStage</actualResult>
+            <expectedResult type="variable">viewportHeightStage</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertSecondSlideMinHeightStage">
+            <actualResult type="variable">secondSlideMinHeightStage</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{SliderOnStage.minHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdSliderMinHeightStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.posterMinimumHeight('3', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeThirdSlideHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdSliderMinHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdSlideMinHeightStage"/>
+        <assertEquals stepKey="assertThirdSliderMinHeightStage">
+            <actualResult type="variable">thirdSliderMinHeightStage</actualResult>
+            <expectedResult type="variable">viewportHeightStage</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertThirdSlideMinHeightStage">
+            <actualResult type="variable">thirdSlideMinHeightStage</actualResult>
+            <expectedResult type="variable">viewportHeightStage</expectedResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{SliderOnStage.noMinHeight('4')}}" stepKey="seeFourthSliderMinHeightStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.posterMinimumHeight('4', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeFourthSlideHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[3].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="fourthSliderMinHeightStage"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[3].getBoundingClientRect().height" stepKey="fourSlideMinHeightStage"/>
+        <executeJS function="return Math.abs({$viewportHeightStage} - 200)" stepKey="expectedFourthHeightStage"/>
+        <assertEquals stepKey="assertFourthSliderMinHeightStage">
+            <actualResult type="variable">fourthSliderMinHeightStage</actualResult>
+            <expectedResult type="variable">expectedFourthHeightStage</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertFourthSlideMinHeightStage">
+            <actualResult type="variable">fourSlideMinHeightStage</actualResult>
+            <expectedResult type="variable">expectedFourthHeightStage</expectedResult>
+        </assertEquals>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstSliderMinHeightStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.noMinimumHeight('1')}}" stepKey="seeFirstSlideHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstSliderMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[0].getBoundingClientRect().height" stepKey="firstSlideMinHeightStorefront"/>
+        <assertEquals stepKey="assertFirstSliderMinHeightStorefront">
+            <actualResult type="variable">firstSliderMinHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertFirstSlidMinHeightStorefront">
+            <actualResult type="variable">firstSlideMinHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{SliderOnFrontend.minHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondSliderMinHeightStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.minimumHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeSecondSlideHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondSliderMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[1].getBoundingClientRect().height" stepKey="secondSlideMinHeightStorefront"/>
+        <assertEquals stepKey="assertSecondSliderMinHeightStorefront">
+            <actualResult type="variable">secondSliderMinHeightStorefront</actualResult>
+            <expectedResult type="variable">viewportHeightStorefront</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertSecondSlidMinHeightStorefront">
+            <actualResult type="variable">secondSlideMinHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{SliderOnFrontend.minHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdSliderMinHeightStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.minimumHeight('3', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeThirdSlideHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdSliderMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdSlideMinHeightStorefront"/>
+        <assertEquals stepKey="assertThirdSliderMinHeightStorefront">
+            <actualResult type="variable">thirdSliderMinHeightStorefront</actualResult>
+            <expectedResult type="variable">viewportHeightStorefront</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertThirdSlidMinHeightStorefront">
+            <actualResult type="variable">thirdSlideMinHeightStorefront</actualResult>
+            <expectedResult type="variable">viewportHeightStorefront</expectedResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{SliderOnFrontend.noMinHeight('4')}}" stepKey="seeFourthSliderMinHeightStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.minimumHeight('4', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeFourthSlideHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[3].getBoundingClientRect().height" stepKey="fourthSliderMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[3].getBoundingClientRect().height" stepKey="fourthSlideMinHeightStorefront"/>
+        <executeJS function="return Math.abs({$viewportHeightStorefront} - 200)" stepKey="expectedFourthHeightStorefront"/>
+        <assertEquals stepKey="assertFourthSliderMinHeightStorefront">
+            <actualResult type="variable">fourthSliderMinHeightStorefront</actualResult>
+            <expectedResult type="variable">expectedFourthHeightStorefront</expectedResult>
+        </assertEquals>
+        <assertEquals stepKey="assertFourthSlidMinHeightStorefront">
+            <actualResult type="variable">fourthSlideMinHeightStorefront</actualResult>
+            <expectedResult type="variable">expectedFourthHeightStorefront</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

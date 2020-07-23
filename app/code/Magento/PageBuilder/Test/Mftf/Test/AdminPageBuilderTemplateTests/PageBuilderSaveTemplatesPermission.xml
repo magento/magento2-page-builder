@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderSaveTemplatesPermission">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Save Templates Permission Functionality"/>
+            <description value="Verify that a user can save a template with only the save template permission and cannot save without the permission."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30595"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-templates-permissions"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="rolePageBuilderSaveTemplates" stepKey="role1"/>
+            <createData entity="rolePageBuilderTemplates" stepKey="role2"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderSaveTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+                <argument name="username" value="{{NewAdminUser.username}}"/>
+                <argument name="password" value="{{NewAdminUser.password}}"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
+                <argument name="role" value="rolePageBuilderSaveTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole2">
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
+        </after>
+        <!-- Verify Can Save Template -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+        <generateDate date="now" format="M j, Y g:" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        <!-- Verify Info on Template Grid Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid2">
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        <!-- Change User Role -->
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
+            <argument name="user" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="AdminUpdateUserRoleActionGroup" stepKey="AdminUpdateUserRoleActionGroup">
+            <argument name="role" value="rolePageBuilderTemplates"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
+        <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
+        <!-- Verify Cannot Save Template -->
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+            <argument name="username" value="{{NewAdminUser.username}}"/>
+            <argument name="password" value="{{NewAdminUser.password}}"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="verifyNoPageBuilderSaveOrApplyTemplateButtons" stepKey="verifyNoPageBuilderSaveOrApplyTemplateButtons"/>
+    </test>
+</tests>

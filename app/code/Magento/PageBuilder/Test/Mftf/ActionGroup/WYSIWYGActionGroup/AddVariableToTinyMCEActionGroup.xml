@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addVariableToTinyMCE">
+        <arguments>
+            <argument name="variable" defaultValue=""/>
+        </arguments>
+        <comment userInput="Adding Variable To Tiny MCE" stepKey="commentAddVariableToTinyMCE"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
+        <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
+        <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+    </actionGroup>
+</actionGroups>

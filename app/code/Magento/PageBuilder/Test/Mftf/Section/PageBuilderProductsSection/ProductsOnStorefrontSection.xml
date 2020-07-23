@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ProductsOnStorefront">
+        <element name="base" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]"/>
+        <element name="price" type="text" selector="//div[contains(@data-content-type,'products')]//div[contains(@data-role,'priceBox')]"/>
+        <element name="hidden" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style, 'display: none')]"/>
+        <element name="notHidden" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][not(contains(@style, 'display: none'))]"/>
+        <element name="product" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//li[contains(@class,'product-item')]"/>
+        <element name="productJS" type="text" selector="document.querySelectorAll('div[data-content-type=products] ol li.product-item')[{{indexOfProductItem}} - 1]" parameterized="true"/>
+        <element name="productsInCarouselNotClonedBySlick" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//div[contains(@class,'slick-slide') and not(contains(@class,'slick-cloned'))]//li[contains(@class,'product-item')]"/>
+        <element name="productsInCarouselNotClonedBySlickJS" type="text" parameterized="true" selector="(document.querySelectorAll('div[data-content-type=products]')[{{indexOfProductGroup}} - 1]).querySelector('ol div.slick-slide:not(.slick-cloned) li.product-item')"/>
+        <element name="productByIndex" type="text" parameterized="true" selector="((//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]"/>
+        <element name="productInCarouselNotClonedBySlickByIndex" type="text" parameterized="true" selector="((//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//div[contains(@class,'slick-slide') and not(contains(@class,'slick-cloned'))]//li[contains(@class,'product-item')])[{{indexOfProductItem}}]"/>
+        <element name="productInCarouselBySlickSlideIndex" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[@data-slick-index='{{indexOfSlickSlide}}']//li[contains(@class,'product-item')]"/>
+        <element name="productImage" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//img[@class='product-image-photo']"/>
+        <element name="productImageCSS" type="text" selector="div[data-content-type=products] ol li.product-item img.product-image-photo"/>
+        <element name="productImageByProductName" type="text" parameterized="true" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{productName}}')]//ancestor::li[contains(@class,'product-item')]//img[@class='product-image-photo']"/>
+        <element name="productImageInCarouselBySlickSlideIndex" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[@data-slick-index='{{indexOfSlickSlide}}']//li[contains(@class,'product-item')]//img[@class='product-image-photo']"/>
+        <element name="productName" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{productName}}')]"/>
+        <element name="productNameInProductGroup" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//li[contains(@class,'product-item')]//strong//a[@class='product-item-link' and @href and contains(.,'{{productName}}')]"/>
+        <element name="productNameInCarouselNotClonedBySlick" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[contains(@class,'slick-slide') and not(contains(@class,'slick-cloned'))]//li[contains(@class,'product-item')]//strong//a[@class='product-item-link' and @href and contains(.,'{{productName}}')]"/>
+        <element name="productNameInCarouselBySlickSlideIndex" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[@data-slick-index='{{indexOfSlickSlide}}']//li[contains(@class,'product-item')]//strong//a[@class='product-item-link' and @href and contains(.,'{{productName}}')]"/>
+        <element name="productNameByProductName" type="text" parameterized="true" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{productName}}')]"/>
+        <element name="productPrice" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//span[@class='price' and .='${{productPrice}}']"/>
+        <element name="productPriceContainer" type="text" selector="div[data-content-type=products] ol li.product-item div.price-box"/>
+        <element name="productAddToCart" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//button[contains(@class,'tocart') and @title='Add to Cart']"/>
+        <element name="productAddToCartByProductName" type="text" parameterized="true" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{productName}}')]//ancestor::li[contains(@class,'product-item')]//button[contains(@class,'tocart') and @title='Add to Cart']"/>
+        <element name="productAddToCartInCarouselBySlickSlideIndex" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[@data-slick-index='{{indexOfSlickSlide}}']//li[contains(@class,'product-item')]//button[contains(@class,'tocart') and @title='Add to Cart']"/>
+        <element name="productAddToWishList" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']"/>
+        <element name="productAddToWishListByProductName" type="text" parameterized="true" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{productName}}')]//ancestor::li[contains(@class,'product-item')]//a[contains(@class,'towishlist') and @title='Add to Wish List']"/>
+        <element name="productAddToWishListInCarouselBySlickSlideIndex" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[@data-slick-index='{{indexOfSlickSlide}}']//li[contains(@class,'product-item')]//a[contains(@class,'towishlist') and @title='Add to Wish List']"/>
+        <element name="productAddToCompare" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{indexOfProductItem}}]//a[contains(@class,'tocompare') and @title='Add to Compare']"/>
+        <element name="productAddToCompareByProductName" type="text" parameterized="true" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{productName}}')]//ancestor::li[contains(@class,'product-item')]//a[contains(@class,'tocompare') and @title='Add to Compare']"/>
+        <element name="productAddToCompareInCarouselBySlickSlideIndex" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//ol//*[@data-slick-index='{{indexOfSlickSlide}}']//li[contains(@class,'product-item')]//a[contains(@class,'tocompare') and @title='Add to Compare']"/>
+        <element name="productActions" type="text" selector="div[data-content-type=products] ol li.product-item div.product-item-actions"/>
+        <!-- Carousel Settings Configuration -->
+        <element name="carouselMode" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][@data-carousel-mode='{{carouselMode}}']"/>
+        <element name="autoplay" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][@data-autoplay='{{autoplay}}']"/>
+        <element name="autoplaySpeed" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][@data-autoplay-speed='{{autoplaySpeed}}']"/>
+        <element name="infiniteLoop" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][@data-infinite-loop='{{infiniteLoop}}']"/>
+        <element name="showArrows" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][@data-show-arrows='{{showArrows}}']"/>
+        <element name="showDots" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][@data-show-dots='{{showDots}}']"/>
+        <element name="carouselNavigationDotsArea" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//*[contains(@class,'slick-dots')]"/>
+        <element name="carouselNavigationDots" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//*[contains(@class,'slick-dots')]//button"/>
+        <element name="carouselNavigationDot" type="button" parameterized="true" selector="((//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//*[contains(@class,'slick-dots')]//button)[{{indexOfNavigationDot}}]"/>
+        <element name="carouselActiveProductNavigationDot" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//*[contains(@class,'slick-dots')]//*[contains(@class,'slick-active')]"/>
+        <element name="carouselActiveProductNavigationDotByIndex" type="button" parameterized="true" selector="((//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//*[contains(@class,'slick-dots')]//li)[{{indexOfNavigationDot}}][contains(@class,'slick-active')]"/>
+        <element name="carouselPreviousProductNavigationArrow" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]"/>
+        <element name="carouselPreviousProductNavigationArrowDisabled" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev') and contains(@class,'slick-disabled')]"/>
+        <element name="carouselNextProductNavigationArrow" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]"/>
+        <element name="carouselNextProductNavigationArrowDisabled" type="button" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next') and contains(@class,'slick-disabled')]"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'text-align: {{alignment}};')]"/>
+        <element name="noAlignment" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][not(contains(@style,'text-align:'))]"/>
+        <element name="border" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'border-style: {{borderStyle}};')]"/>
+        <element name="borderColor" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'border-color: {{borderColor}};')]"/>
+        <element name="noBorderColor" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][not(contains(@style,'border-color:'))]"/>
+        <element name="borderWidth" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'border-width: {{borderWidth}}px;')]"/>
+        <element name="borderRadius" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'border-radius: {{borderRadius}}px;')]"/>
+        <element name="cssClasses" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@class,'{{cssClass}}')]"/>
+        <element name="noCssClasses" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]"/>
+        <element name="margins" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'margin: {{margin}}px;')]"/>
+        <element name="padding" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style,'padding: {{padding}}px;')]"/>
+    </section>
+</sections>

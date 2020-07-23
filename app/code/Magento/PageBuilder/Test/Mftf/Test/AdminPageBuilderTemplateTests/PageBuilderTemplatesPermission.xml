@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderTemplatesPermission">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Templates Permission Functionality"/>
+            <description value="Verify that a user can access the templates grid page with only the template permission and cannot access this page without the permission."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30594"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-templates-permissions"/>
+        </annotations>
+        <before>
+            <createData entity="rolePageBuilderTemplates" stepKey="role1"/>
+            <createData entity="roleNoPageBuilderTemplates" stepKey="role2"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+                <argument name="username" value="{{NewAdminUser.username}}"/>
+                <argument name="password" value="{{NewAdminUser.password}}"/>
+            </actionGroup>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole2">
+                <argument name="role" value="roleNoPageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
+        </after>
+        <!-- Verify Successful Navigation to Templates Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        <!-- Change User Role -->
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
+            <argument name="user" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="AdminUpdateUserRoleActionGroup" stepKey="AdminUpdateUserRoleActionGroup">
+            <argument name="role" value="roleNoPageBuilderTemplates"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
+        <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
+        <!-- Verify Unsuccessful Navigation to Templates Page -->
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+            <argument name="username" value="{{NewAdminUser.username}}"/>
+            <argument name="password" value="{{NewAdminUser.password}}"/>
+        </actionGroup>
+        <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage"/>
+    </test>
+</tests>

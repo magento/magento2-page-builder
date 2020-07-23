@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CanAddColumnToSmallGridSizeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify we can add a column into a grid with a small size."/>
+            <description value="Set grid size to 3, add new column, validate existence and equal widths for all columns."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2297"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo3">
+            <argument name="gridSize" value="3"/>
+        </actionGroup>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/3')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','1/3')}}" stepKey="checkWidthSecondColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','1/3')}}" stepKey="checkWidthThirdColumn"/>
+    </test>
+</tests>

@@ -14,6 +14,7 @@ define([
             bodyTmpl: 'Magento_PageBuilder/grid/cells/single-select',
             label: '',
             extendedSelections: [],
+            lastSelected: null,
             listens: {
                 selected: 'onSelectedChange setExtendedSelections'
             }
@@ -22,7 +23,7 @@ define([
         /** @inheritdoc */
         initObservable: function () {
             this._super()
-                .observe('extendedSelections');
+                .observe('extendedSelections lastSelected');
 
             return this;
         },
@@ -58,6 +59,14 @@ define([
             id = this.getId(id, isIndex);
 
             return this.selected()[0] === id;
+        },
+
+        /** @inheritdoc **/
+        select: function (id) {
+            this._super();
+            this.lastSelected(id);
+
+            return this;
         },
 
         /** @inheritdoc */

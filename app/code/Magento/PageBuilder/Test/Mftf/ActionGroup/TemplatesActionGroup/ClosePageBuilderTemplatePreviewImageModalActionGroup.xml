@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="closePageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Closes the template preview image modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderPreviewImageModal.activeModal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{section.grid}}" stepKey="waitForTemplateGridVisible"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ReadHtmlWithNewImageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="WYSIWYG Conversion"/>
+            <title value="HTML with media url directive for a new image converted to HTML content type"/>
+            <description value="HTML with media url directive for a new image converted to HTML content type"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-66620"/>
+            <testCaseId value="MC-4032"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="ImageUpload"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="waitForPageBuilderDisplay"/>
+        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible selector="{{TinyMCESection.TinyMCE4}}" stepKey="waitForTinyMCE4"/>
+        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{MediaGallerySection.Browse}}" stepKey="clickBrowse"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear1"/>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CreateFolder}}" stepKey="createFolder"/>
+        <waitForElementVisible selector="{{MediaGallerySection.FolderName}}" stepKey="waitForPopup"/>
+        <fillField selector="{{MediaGallerySection.FolderName}}" userInput="{{ImageFolder.name}}" stepKey="fillFolderName"/>
+        <click selector="{{MediaGallerySection.AcceptFolderName}}" stepKey="acceptFolderName"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
+        <conditionalClick selector="{{MediaGallerySection.StorageRootArrow}}" dependentSelector="{{MediaGallerySection.checkIfArrowExpand}}" stepKey="clickStorageRootArrowIfClosed" visible="true"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForText userInput="{{ImageFolder.name}}" stepKey="waitForNewFolder"/>
+        <click userInput="{{ImageFolder.name}}" stepKey="clickOnCreatedFolder"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
+        <attachFile selector="{{MediaGallerySection.BrowseUploadImage}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear4"/>
+        <waitForElementVisible selector="{{MediaGallerySection.image(ImageUpload.file)}}" stepKey="waitForUploadImage1"/>
+        <seeElement selector="{{MediaGallerySection.imageSelected(ImageUpload.file)}}" stepKey="seeImageSelected"/>
+        <waitForElementVisible selector="{{MediaGallerySection.image(ImageUpload.file)}}" stepKey="waitForUploadImage2"/>
+        <click selector="{{MediaGallerySection.InsertFile}}" stepKey="clickInsertBtn"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
+        <waitForElementVisible selector="{{MediaGallerySection.OkBtn}}" stepKey="waitForOkBtn"/>
+        <fillField selector="{{MediaGallerySection.ImageDescription}}" userInput="{{ImageUpload.content}}" stepKey="fillImageDescription"/>
+        <fillField selector="{{MediaGallerySection.Height}}" userInput="{{ImageUpload.height}}" stepKey="fillImageHeight"/>
+        <click selector="{{MediaGallerySection.OkBtn}}" stepKey="clickOkBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <dontSeeElementInDOM selector="{{HtmlOnBackendMediaDirective.content}}" stepKey="assertHtmlContent"/>
+    </test>
+</tests>

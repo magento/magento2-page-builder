@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TabItemValidateAdvancedConfigurationDefaultValuesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Item - Validate Advanced Configuration Default Values"/>
+            <description value="New tab has default values on Advanced section"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-71593"/>
+            <testCaseId value="MC-2877"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!--Add Tabs to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Text Alignment -->
+        <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0"/>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="property2" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="property3" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="property4" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateTextAlignmentAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateAlignmentFieldIsNotDisabled" stepKey="validateTextAlignmentAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <!-- Border -->
+        <comment userInput="Border: dropdown defaults to Default" stepKey="AC1"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderAttribute">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+        </actionGroup>
+        <comment userInput="Border: available values None, Default, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset" stepKey="AC2"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
+        <assertEquals message="Verify Border dropdown options" stepKey="assertBorderOptions2">
+            <actualResult type="variable">grabBorderOptions</actualResult>
+            <expectedResult type="array">{{PageBuilderAdvancedBorderDefaultSlideProperty.optionsList}}</expectedResult>
+        </assertEquals>
+        <!-- Border Color -->
+        <comment userInput="Border Color: input defaults to empty." stepKey="AC3"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
+        <assertEmpty stepKey="assertBorderColorEmpty" message="Border Color has text: getTextFromBorderColorAttribute">
+            <actualResult type="variable">getTextFromBorderColorAttribute</actualResult>
+        </assertEmpty>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderColorAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <comment userInput="Border Color: Field is enabled by default due to Default on Border." stepKey="AC4"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderColorAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
+        </actionGroup>
+        <!-- Border Size -->
+        <comment userInput="Border Width: input defaults to 1." stepKey="AC5"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderSizeAttribute">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderSizePlaceholderText">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderSizeAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <comment userInput="Border Width: Field is enabled by default due to Default on Border." stepKey="AC6"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderSizeAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <!-- Border Radius -->
+        <comment userInput="Border radius: input defaults to 0." stepKey="AC7"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderRadiusAttribute">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderRadiusAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderRadiusAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadiusAttributePlaceholderText">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <!-- CSS Classes -->
+        <comment userInput="CSS classes: input defaults to empty." stepKey="AC8"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeCSSClassesAttribute">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateCSSClassesAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateCSSClassesAttributeNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
+        <assertEmpty stepKey="assertGetTextFromCSSClassesAttribute" message="CSS Classes field was not empty. Had text: $getTextFromCSSClassesAttribute">
+            <actualResult type="variable">getTextFromCSSClassesAttribute</actualResult>
+        </assertEmpty>
+        <!-- Margins and Padding -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMarginsAndPaddingAttribute">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateMarginsAndPaddingAttributeNotRequired">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </actionGroup>
+        <!-- Assert against values -->
+        <comment userInput="Margins: defaults to 0" stepKey="AC9"/>
+        <comment userInput="Padding: defaults to 40 all sides" stepKey="AC10"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getTextMarginTop"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextMarginTop">
+            <actualResult type="variable">getTextMarginTop</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginTop}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getTextMarginRight"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextMarginRight">
+            <actualResult type="variable">getTextMarginRight</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginRight}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getTextMarginLeft"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextMarginLeft">
+            <actualResult type="variable">getTextMarginLeft</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginLeft}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getTextMarginBottom"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextMarginBottom">
+            <actualResult type="variable">getTextMarginBottom</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.marginBottom}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getTextPaddingTop"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingTop">
+            <actualResult type="variable">getTextPaddingTop</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getTextPaddingRight"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingRight">
+            <actualResult type="variable">getTextPaddingRight</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getTextPaddingLeft"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingLeft">
+            <actualResult type="variable">getTextPaddingLeft</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}}</expectedResult>
+        </assertEquals>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getTextPaddingBottom"/>
+        <assertEquals message="Verify Text Alignment dropdown options" stepKey="assertTextPaddingBottom">
+            <actualResult type="variable">getTextPaddingBottom</actualResult>
+            <expectedResult type="string">{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}}</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

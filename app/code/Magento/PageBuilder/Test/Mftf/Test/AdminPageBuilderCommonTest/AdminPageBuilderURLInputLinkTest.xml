@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderURLInputLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Link - Admin are able to add External URL link into PageBuilder content"/>
+            <description value="Admin are able to add External URL link into PageBuilder content"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-71571"/>
+            <testCaseId value="MC-1342"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-link"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault"/>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify External Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLInCurrentTab(PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="seeExternalLinkOnStoreFront"/>
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemLink_NotSecure.value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl1</actualResult>
+        </assertEquals>
+
+        <!--Go to admin to edit Secure External Link-->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn"/>
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1SecureLinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+
+        <!--Go to storefront to verify Secure External Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLInNewTab(PageBuilderButtonItemLink_Secure.value)}}" stepKey="seeExternalSecureLinkOnStoreFront"/>
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemLink_Secure.value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl2</actualResult>
+        </assertEquals>
+    </test>
+</tests>

@@ -14,7 +14,7 @@ import "../binding/sortable";
 import "../binding/sortable-children";
 import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
-import ContentTypeConfigInterface from "../content-type-config.types";
+import ContentTypeConfigInterface, {ConfigFieldInterface} from "../content-type-config.types";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
@@ -40,15 +40,18 @@ export default class Preview implements PreviewInterface {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
     public display: KnockoutObservable<boolean> = ko.observable(true);
+    public appearance: KnockoutObservable<string> = ko.observable();
     public wrapperElement: Element;
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
-     * @deprecated
+     * Provide preview data as an object which can be queried
+     *
+     * @deprecated please use getOptionValue directly
      */
-    public previewData: {[key: string]: any} = {};
+    public previewData: {[key: string]: KnockoutObservable<any>} = {};
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
@@ -85,8 +88,8 @@ export default class Preview implements PreviewInterface {
             "visible": this.isEmpty,
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
-        this.setupDataFields();
         this.bindEvents();
+        this.populatePreviewData();
     }
 
     /**
@@ -95,8 +98,7 @@ export default class Preview implements PreviewInterface {
      * @returns {string}
      */
     get template(): string {
-        const appearance = this.previewData.appearance ? this.previewData.appearance() as string : undefined;
-        return appearanceConfig(this.config.name, appearance).preview_template;
+        return appearanceConfig(this.config.name, this.appearance()).preview_template;
     }
 
     /**
@@ -151,22 +153,12 @@ export default class Preview implements PreviewInterface {
     }
 
     /**
-     * Update the data value of a part of our internal Knockout data store
+     * Retrieve the value for an option
      *
-     * @param {string} key
-     * @param value
-     * @deprecated
+     * @param key
      */
-    public updateDataValue(key: string, value: any) {
-        if (typeof this.previewData[key] !== "undefined" && ko.isObservable(this.previewData[key])) {
-            this.previewData[key](value);
-        } else {
-            if (_.isArray(value)) {
-                this.previewData[key] = ko.observableArray(value);
-            } else {
-                this.previewData[key] = ko.observable(value);
-            }
-        }
+    public getOptionValue(key: string) {
+        return this.contentType.dataStore.get(key);
     }
 
     /**
@@ -356,26 +348,13 @@ export default class Preview implements PreviewInterface {
      */
     public onOptionRemove(): void {
         const removeContentType = () => {
-            const dispatchRemoveEvent = () => {
-                const params = {
-                    contentType: this.contentType,
-                    index: (this.contentType.parentContentType as ContentTypeCollectionInterface)
-                        .getChildren()
-                        .indexOf(this.contentType),
-                    parentContentType: this.contentType.parentContentType,
-                    stageId: this.contentType.stageId,
-                };
-                events.trigger("contentType:removeAfter", params);
-                events.trigger(this.contentType.config.name + ":removeAfter", params);
-            };
-
             if (this.wrapperElement) {
                 // Fade out the content type
                 $(this.wrapperElement).fadeOut(350 / 2, () => {
-                    dispatchRemoveEvent();
+                    this.contentType.destroy();
                 });
             } else {
-                dispatchRemoveEvent();
+                this.contentType.destroy();
             }
         };
 
@@ -414,6 +393,13 @@ export default class Preview implements PreviewInterface {
      */
     public getSortableOptions(): JQueryUI.SortableOptions | any {
         return getSortableOptions(this);
+    }
+
+    /**
+     * Destroys current instance
+     */
+    public destroy(): void {
+        return;
     }
 
     /**
@@ -512,6 +498,7 @@ export default class Preview implements PreviewInterface {
                 this.updatePlaceholderVisibility(data);
                 // Keep a reference to the display state in an observable for adding classes to the wrapper
                 this.display(!!data.display);
+                this.appearance(data.appearance);
             },
         );
         if (this.contentType instanceof ContentTypeCollection) {
@@ -531,37 +518,16 @@ export default class Preview implements PreviewInterface {
     }
 
     /**
-     * Setup fields observables within the data class property
-     *
-     * @deprecated
-     */
-    protected setupDataFields() {
-        // Create an empty observable for all fields
-        if (this.config.fields) {
-            _.keys(this.config.fields).forEach((key: string) => {
-                this.updateDataValue(key, "");
-            });
-        }
-
-        // Subscribe to this content types data in the store
-        this.contentType.dataStore.subscribe(
-            (data: DataObject) => {
-                _.forEach(data, (value, key) => {
-                    this.updateDataValue(key, value);
-                });
-            },
-        );
-    }
-
-    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
     protected isConfigured() {
         const data = this.contentType.dataStore.getState();
+        const fields = this.contentType.config.fields[this.appearance() + "-appearance"] ||
+            this.contentType.config.fields.default;
         let hasDataChanges = false;
-        _.each(this.contentType.config.fields, (field, key: string) => {
+        _.each(fields, (field, key: string) => {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
                 return;
             }
@@ -614,7 +580,6 @@ export default class Preview implements PreviewInterface {
             _.extend({}, this.contentType.dataStore.getState()),
         );
         this.afterObservablesUpdated();
-        events.trigger("previewData:updateAfter", {preview: this});
     }
 
     /**
@@ -632,5 +597,38 @@ export default class Preview implements PreviewInterface {
         const paddingTop = parseFloat(padding.top) || 0;
 
         this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
+    }
+
+    /**
+     * Populate the preview data with calls to the supported getOptionValue method
+     *
+     * @deprecated this function is only included to preserve backwards compatibility, use getOptionValue directly
+     */
+    private populatePreviewData(): void {
+        if (this.config.fields) {
+            _.each(this.config.fields, (fields) => {
+                _.keys(fields).forEach((key: string) => {
+                    this.previewData[key] = ko.observable("");
+                });
+            });
+        }
+
+        // Subscribe to this content types data in the store
+        this.contentType.dataStore.subscribe(
+            (data: DataObject) => {
+                _.forEach(data, (value, key) => {
+                    const optionValue = this.getOptionValue(key);
+                    if (ko.isObservable(this.previewData[key])) {
+                        this.previewData[key](optionValue);
+                    } else {
+                        if (_.isArray(optionValue)) {
+                            this.previewData[key] = ko.observableArray(optionValue);
+                        } else {
+                            this.previewData[key] = ko.observable(optionValue);
+                        }
+                    }
+                });
+            },
+        );
     }
 }

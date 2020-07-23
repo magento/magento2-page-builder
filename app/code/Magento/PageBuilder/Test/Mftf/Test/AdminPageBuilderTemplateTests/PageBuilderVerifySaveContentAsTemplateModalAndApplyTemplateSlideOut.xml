@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderVerifySaveContentAsTemplateModalAndApplyTemplateSlideOut">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Verify Save Content as Template Modal and Apply Template Slide Out"/>
+            <description value="Verify the functionality and content of the Save Content as Template modal and the Apply Template slide out."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30619"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+                <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+                <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate2">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+                <argument name="keyword" value="./;[]"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate3">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.specialCharacters}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid4">
+                <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate4">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Open and Close Save Template Modal -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal1"/>
+        <actionGroup ref="closePageBuilderSaveTemplateModal" stepKey="closePageBuilderSaveTemplateModal"/>
+        <!-- Validate Save Template Modal -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal2"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateModal" stepKey="validatePageBuilderSaveTemplateModal"/>
+        <!-- Create Leading Space Templates -->
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormLeadingSpace1">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModal" stepKey="clickSaveOnPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateConfirmationModal" stepKey="validatePageBuilderSaveTemplateConfirmationModal"/>
+        <actionGroup ref="clickCloseOnPageBuilderSaveTemplateConfirmationModal" stepKey="clickCloseOnPageBuilderSaveTemplateConfirmationModal"/>
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal3"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormLeadingSpace2">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.leadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal" stepKey="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateErrorModal" stepKey="validatePageBuilderSaveTemplateErrorModal">
+            <argument name="errorMessage" value="A template with this name already exists."/>
+        </actionGroup>
+        <actionGroup ref="clickOkOnPageBuilderSaveTemplateErrorModal" stepKey="clickOkOnPageBuilderSaveTemplateErrorModal"/>
+        <!-- Attempt Save Empty Template Name -->
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormEmpty">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.empty}}"/>
+        </actionGroup>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModalAndExpectNoChanges" stepKey="clickSaveOnPageBuilderSaveTemplateModalAndExpectNoChanges"/>
+        <!-- Attempt Save Space in Template Name -->
+        <actionGroup ref="fillPageBuilderSaveTemplateFormWithSpaceForTemplateName" stepKey="fillPageBuilderSaveTemplateFormSpace"/>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal" stepKey="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal2"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateErrorModal" stepKey="validatePageBuilderSaveTemplateErrorModal2"/>
+        <actionGroup ref="clickOkOnPageBuilderSaveTemplateErrorModal" stepKey="clickOkOnPageBuilderSaveTemplateErrorModal2"/>
+        <actionGroup ref="closePageBuilderSaveTemplateModal" stepKey="closePageBuilderSaveTemplateModal2"/>
+        <!-- Validate No Invalid Templates Were Saved -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.leadingSpace}}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGridLeadingSpace">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="1"/>
+        </actionGroup>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut"/>
+        <!-- Create 0 Template Name -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal4"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormZero">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplateZero"/>
+        <!-- Create Special Characters Template Name -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal5"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormSpecialCharacters">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.specialCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplateZeroSpecialCharacters"/>
+        <!-- Create Common Characters Template Name -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal6"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormCommonCharacters">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <generateDate date="now" format="M j, Y g:" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplateZeroCommonCharacters"/>
+        <!-- Validate Common Characters Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGridCommon">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate 0 Template -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateZero">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Special Characters Template -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateSpecial">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="./;[]"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.specialCharacters}}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut2"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Reopen Apply Template and Cancel Apply Confirm -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut3"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateCommon">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2">
+            <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="closeConfirmModal" stepKey="closeConfirmModal"/>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut4"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+    </test>
+</tests>

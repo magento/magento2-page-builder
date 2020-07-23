@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowValidateBorderOnAppearanceChangeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Row border should change to correct element on appearance change"/>
+            <description value="A user should be able to change the appearance on a row and see the border update as expected"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4126"/>
+            <testCaseId value="MC-4229"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Select full width appearance -->
+        <comment userInput="Select full width appearance" stepKey="commentFullWidth"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRowFullWidth">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <!-- I configure border within advanced section -->
+        <comment userInput="I configure border within advanced section" stepKey="commentConfigureBorder"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible"/>
+        <seeElement selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible"/>
+        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="waitForBorderColorVisible"/>
+        <seeElement selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <!-- Change appearance to contained -->
+        <comment userInput="Change appearance to contained" stepKey="commentContained"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRowContained">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible1"/>
+        <seeElement selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible1"/>
+        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="waitForBorderColorVisible1"/>
+        <seeElement selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible1"/>
+        <!-- Verify the border is not on the outside of the contained row -->
+        <comment userInput="Verify the border is not on the outside of the contained row" stepKey="commentVerifyBorder"/>
+        <dontSeeElement selector="{{RowOnStage_Contained_Invalid.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="dontSeeBorderOnOutside"/>
+        <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="dontSeeBorderColorOnOutside"/>
+        <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="dontSeeBorderWidthOnOutside"/>
+    </test>
+</tests>

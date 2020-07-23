@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateProductCountInProducts">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="count" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.product(index)}}" stepKey="waitForProduct"/>
+        <grabMultiple selector="{{page.product(index)}}" stepKey="grabProducts"/>
+        <assertCount stepKey="assertCount">
+            <expectedResult type="int">{{count}}</expectedResult>
+            <actualResult type="variable">grabProducts</actualResult>
+        </assertCount>
+    </actionGroup>
+</actionGroups>
