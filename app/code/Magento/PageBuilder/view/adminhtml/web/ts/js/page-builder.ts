@@ -32,6 +32,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
+    public isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public isAllowedTemplateSave: boolean;
@@ -45,6 +46,7 @@ export default class PageBuilder implements PageBuilderInterface {
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
+        this.isSnapshot(config.pagebuilder_content_snapshot);
         this.config = config;
 
         this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
@@ -61,6 +63,7 @@ export default class PageBuilder implements PageBuilderInterface {
         });
 
         this.panel = new Panel(this);
+
         this.initListeners();
     }
 
@@ -76,6 +79,7 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public initListeners() {
         events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
+        events.on(`stage:fullScreenModeChangeAfter`, this.toggleStage.bind(this));
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -85,6 +89,9 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param {StageToggleFullScreenParamsInterface} args
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isSnapshot(this.isFullScreen());
+        }
         if (args.animate === false) {
             this.isFullScreen(!this.isFullScreen());
             return;
@@ -132,9 +139,9 @@ export default class PageBuilder implements PageBuilderInterface {
                 panel.css("height", "");
                 pageBuilderWrapper.css("height", "");
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
-                    .reduce((object: object, styleName: string) => {
-                        return Object.assign(object, {[styleName]: ""});
-                    }, {}),
+                                       .reduce((object: object, styleName: string) => {
+                                           return Object.assign(object, {[styleName]: ""});
+                                       }, {}),
                 );
                 this.previousWrapperStyles = {};
                 this.previousPanelHeight = null;
@@ -152,7 +159,11 @@ export default class PageBuilder implements PageBuilderInterface {
             $("body").css("overflow", "");
         }
 
-        events.trigger(`stage:${ this.id }:fullScreenModeChangeAfter`, {
+        events.trigger(`stage:${this.id}:fullScreenModeChangeAfter`, {
+            fullScreen: this.isFullScreen(),
+        });
+        events.trigger(`stage:fullScreenModeChangeAfter`, {
+            pageBuilderId: this.id,
             fullScreen: this.isFullScreen(),
         });
     }
@@ -205,5 +216,15 @@ export default class PageBuilder implements PageBuilderInterface {
         _.defer(() => {
             require(previewTemplates);
         });
+    }
+
+    /**
+     * Renders only active stages.
+     * @param args
+     */
+    private toggleStage(args: any): void {
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isStageReady(args.pageBuilderId === this.id && this.isFullScreen() || !args.fullScreen);
+        }
     }
 }
