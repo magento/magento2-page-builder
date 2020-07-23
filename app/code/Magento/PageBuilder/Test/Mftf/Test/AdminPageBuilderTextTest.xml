@@ -95,17 +95,6 @@
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetValue"/>
         <seeElement selector="{{TextOnStage.widgetPlaceholder('1')}}" stepKey="waitForWidgetPlaceholder"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage4"/>
-        <!-- Switch to TinyMCE3 -->
-        <comment userInput="Switch to TinyMCE3" stepKey="comment6"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
-        <reloadPage stepKey="reloadPage1"/>
-        <waitForPageLoad stepKey="waitForPageToBeLoaded1"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
-        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
-        <assertEquals stepKey="assertTextValue">
-            <expectedResult type="variable">expectedData</expectedResult>
-            <actualResult type="variable">actualData</actualResult>
-        </assertEquals>
         <!-- Switch to Textarea -->
         <comment userInput="Switch to Textarea" stepKey="comment7"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
@@ -257,7 +246,7 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
     </test>
-    <test name="TextTinyMCE3OnTextContentType">
+    <test name="TextTinyMCE3OnTextContentType" deprecated="This version of TinyMCE is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -268,6 +257,9 @@
             <testCaseId value="MC-3669"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="DEPRECATED">This version of TinyMCE is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />

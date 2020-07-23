@@ -99,7 +99,7 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
-    <test name="BannerCollageLeftTinyMCE3InlineEdit" extends="BannerPosterCanInlineEditContent">
+    <test name="BannerCollageLeftTinyMCE3InlineEdit" extends="BannerPosterCanInlineEditContent" deprecated="This version of TinyMCE is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -111,6 +111,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCollageLeft"/>
+            <skip>
+                <issueId value="DEPRECATED">This version of TinyMCE is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>
