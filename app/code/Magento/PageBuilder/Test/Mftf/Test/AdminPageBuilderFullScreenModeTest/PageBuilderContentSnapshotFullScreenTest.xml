@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderContentSnapshotFullScreenTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Content Snapshot"/>
+            <title value="Verify PageBuilder Content Snapshot"/>
+            <description value="This test is to ensure that the PageBuilder Content Snapshot appears on stage and PageBuilder works in full-screen mode."/>
+            <severity value="AVERAGE"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-contentSnapshot"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- See Edit with Page Builder button -->
+        <waitForElementVisible selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="waitForEditWithPageBuilderButton"/>
+        <!-- Verify Stage Empty -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Verify Empty Preview Message is on Stage-->
+        <see selector="{{RowOnStage.base('1')}}" userInput="Drag content types or columns here" stepKey="seeEmptyPreviewMessageOnStage"/>
+        <!-- Verify no PageBuilder Content Type Panel -->
+        <dontSeeElementInDOM selector="{{PageBuilderPanel.leftPanel}}" stepKey="dontSeePageBuilderContentTypePanelOnStage"/>
+        <!-- Verify no Apply Template and Save as Template buttons -->
+        <actionGroup ref="verifyNoPageBuilderSaveOrApplyTemplateButtons" stepKey="verifyNoPageBuilderSaveOrApplyTemplateButtonsOnStage"/>
+        <!-- Verify Overlay -->
+        <moveMouseOver selector="{{PageBuilderStage.stageOverlay}}" stepKey="mouseOverWYSIWYGOverlayOnStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlayOnHover}}" stepKey="waitForWYSIWYGOverlayOnStageHover"/>
+        <!-- Verify full screen mode -->
+        <click selector="{{PageBuilderStage.stageOverlay}}" stepKey="clickOnWYSIWYGOverlayOnStage"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderVisible"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen"/>
+        <!-- Verify Empty Row -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyFullScreenEmptyRow"/>
+        <!-- Add Button to Row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Exit full screen -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
+        <!-- Verify PageBuilder Button Content Type is on Stage -->
+        <seeElementInDOM selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seePageBuilderButtonsContentTypeEmpty"/>
+        <!-- Verify no Empty Preview Message on Stage -->
+        <dontSeeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeEmptyPreviewMessageOnStage"/>
+        <!-- Verify no PageBuilder Content Type Panel -->
+        <dontSeeElementInDOM selector="{{PageBuilderPanel.leftPanel}}" stepKey="dontSeePageBuilderContentTypePanel"/>
+        <!-- Verify no Apply Template and Save as Template buttons -->
+        <actionGroup ref="verifyNoPageBuilderSaveOrApplyTemplateButtons" stepKey="verifyNoPageBuilderSaveOrApplyTemplateButtons"/>
+        <!-- Verify Overlay after hover over preview outside of button -->
+        <moveMouseOver selector="{{PageBuilderStage.stageOverlay}}" stepKey="mouseOverWYSIWYGOverlay"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlayOnHover}}" stepKey="waitForWYSIWYGOverlayHover"/>
+        <!-- Verify Overlay after hover over button in preview -->
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderButtonsContentType.role)}}" stepKey="mouseOverPageBuilderButtonsContentTypeEmpty"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlayOnHover}}" stepKey="waitForWYSIWYGOverlayHoverVisible"/>
+        <!-- Verify PageBuilder Button has no option menu -->
+        <actionGroup ref="validateOnHoverNoOptionMenu" stepKey="verifyPageBuilderButtonsHasNoOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Verify full screen mode  -->
+        <click selector="{{PageBuilderStage.stageOverlay}}" stepKey="clickOnWYSIWYGOverlay"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation2"/>
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder2"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderVisible2"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen2"/>
+    </test>
+</tests>
