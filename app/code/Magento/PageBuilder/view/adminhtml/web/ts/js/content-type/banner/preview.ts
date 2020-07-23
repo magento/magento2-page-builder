@@ -26,6 +26,7 @@ import {
     unlockImageSize,
 } from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
+import nestingWidgetDialog from "../../utils/nesting-widget-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
@@ -259,6 +260,8 @@ export default class Preview extends BasePreview {
                 });
                 editor.on("blur", () => {
                     $(this.element).parents(this.bannerOverlaySelector).zIndex(this.defaultOverlayZIndex);
+                    nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
+                    nestingWidgetDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
                 });
                 _.defer(() => {
                     this.element.blur();
@@ -496,7 +499,6 @@ export default class Preview extends BasePreview {
                 this.contentType.dataStore.set("message", "");
             }
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
-            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
         });
         this.contentType.dataStore.subscribe(function(data: DataObject) {
             if (this.shouldUpdateVideo(data)) {
