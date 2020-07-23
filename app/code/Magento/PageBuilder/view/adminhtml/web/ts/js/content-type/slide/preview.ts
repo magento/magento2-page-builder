@@ -10,6 +10,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";
+import {Editor} from "tinymce";
 import _ from "underscore";
 import "vimeoWrapper";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
@@ -27,6 +28,7 @@ import {
     unlockImageSize,
 } from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
+import nestingWidgetDialog from "../../utils/nesting-widget-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
@@ -426,7 +428,11 @@ export default class Preview extends BasePreview {
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
-            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+            wysiwygConfig.adapter.settings.init_instance_callback = (editor: Editor) => {
+                editor.on("blur", () => {
+                    nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
+                    nestingWidgetDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
+                });
                 _.defer(() => {
                     this.element.blur();
                     this.element.focus();
@@ -487,7 +493,6 @@ export default class Preview extends BasePreview {
             const dataStore = this.contentType.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
-            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
         });
 
         // Remove wysiwyg before assign new instance.
