@@ -40,6 +40,9 @@ var config = {
             },
             'Magento_PageBuilder/js/content-type/row/appearance/default/widget': {
                 'Magento_PageBuilder/js/content-type/row/appearance/default/widget-mixin': true
+            },
+            'Magento_PageBuilder/js/events': {
+                'Magento_PageBuilder/js/page-builder/events-mixin': true
             }
         }
     }
