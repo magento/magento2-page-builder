@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextTinyMCE3OnTextContentTypeTest">
+    <test name="TextTinyMCE3OnTextContentTypeTest" deprecated="TinyMCE3 is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -18,6 +18,9 @@
             <testCaseId value="MC-3669"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="DEPRECATED">TinyMCE3 is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
