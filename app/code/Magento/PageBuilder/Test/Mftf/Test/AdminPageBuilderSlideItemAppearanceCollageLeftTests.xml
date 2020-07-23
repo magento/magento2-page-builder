@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SlideItemCollageLeftCanInlineEditContent" extends="SlideItemPosterCanInlineEditContent" deprecated="This version of TinyMCE is no longer supported">
+    <test name="SlideItemCollageLeftCanInlineEditContent" extends="SlideItemPosterCanInlineEditContent">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -20,9 +20,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageLeft"/>
-            <skip>
-                <issueId value="DEPRECATED">This version of TinyMCE is no longer supported</issueId>
-            </skip>
         </annotations>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
@@ -67,7 +64,7 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
-    <test name="SlideItemCollageLeftTinyMCE3InlineEdit" extends="SlideItemPosterCanInlineEditContent">
+    <test name="SlideItemCollageLeftTinyMCE3InlineEdit" extends="SlideItemPosterCanInlineEditContent" deprecated="This version of TinyMCE is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -79,6 +76,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageLeft"/>
+            <skip>
+                <issueId value="DEPRECATED">This version of TinyMCE is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>
