@@ -20,7 +20,10 @@ define([], function () {
 
             originalTarget.call(originalTarget, name, args);
 
-            if (name.indexOf('readyAfter') !== -1) {
+            if (name.indexOf('readyAfter') !== -1 &&
+                window.digitalData !== undefined &&
+                typeof window.digitalData !== 'undefined'
+            ) {
                 window.digitalData.page.url = window.location.href;
                 window.digitalData.page.attributes = {
                     editedWithPageBuilder: 'true'
