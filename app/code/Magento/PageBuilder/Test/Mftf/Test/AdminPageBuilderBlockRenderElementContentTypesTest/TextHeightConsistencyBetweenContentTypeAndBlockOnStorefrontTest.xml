@@ -36,7 +36,6 @@
         </actionGroup>
         <!-- Update block with text -->
         <comment userInput="Update block with text" stepKey="commentUpdateBlockWithText"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForText1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -47,7 +46,6 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="saveBlock"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCmsPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
