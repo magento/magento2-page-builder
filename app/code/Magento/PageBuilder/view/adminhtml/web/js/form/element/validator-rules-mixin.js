@@ -53,6 +53,15 @@ define([
     }
 
     /**
+     * Validate that string has a widget
+     * @param {String} str
+     * @return {Boolean}
+     */
+    function validateWysiwygHasWidget(str) {
+        return (/\{\{widget(.*?)\}\}/ig).test(str);
+    }
+
+    /**
      * Validate that string is a proper css-class
      * @param {String} str
      * @return {Boolean}
@@ -69,6 +78,19 @@ define([
      */
     function validateOneAnchorTagField(message, url) {
         return !(validateWysiwygHasAnchorTags(message) &&
+            ['page', 'product', 'category', 'default'].indexOf(url.type) !== -1 &&
+            url[url.type] &&
+            url[url.type].length > 0);
+    }
+
+    /**
+     * Validate message field and url field html standards, nested widget
+     * @param {String} message
+     * @param {Object} url
+     * @return {Boolean}
+     */
+    function validateNestedWidgetElement(message, url) {
+        return !(validateWysiwygHasWidget(message) &&
             ['page', 'product', 'category', 'default'].indexOf(url.type) !== -1 &&
             url[url.type] &&
             url[url.type].length > 0);
@@ -244,6 +266,22 @@ define([
                 return validateOneAnchorTagField(message, url);
             },
             $.mage.__('Adding link in both content and outer element is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-message-no-widget',
+            function (url, message) {
+                return validateNestedWidgetElement(message, url);
+            },
+            $.mage.__('Adding link in outer element and widget in content is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-no-widget',
+            function (message, url) {
+                return validateNestedWidgetElement(message, url);
+            },
+            $.mage.__('Adding widget in content and link in outer element is not allowed.')
         );
 
         validator.addRule(
