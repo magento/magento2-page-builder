@@ -294,11 +294,14 @@
 
 .pagebuilder-wysiwyg-snapshot {
     .pagebuilder-stage {
-        background-color: @color-white;
-        -webkit-transition: .3s ease-in-out;
-        -moz-transition: .3s ease-in-out;
-        transition: .3s ease-in-out;
+        -webkit-transition: .35s ease-in-out;
+        -moz-transition: .35s ease-in-out;
+        transition: .35s ease-in-out;
         margin-left: auto;
+    }
+
+    .element-children.content-type-container.root-container-container {
+        background-color: @color-white;
     }
 
     .pagebuilder-stage-wrapper {
@@ -306,6 +309,32 @@
         background-color: transparent;
 
         &.stage-full-screen {
+            .keyframes(fade-in;{
+                0% {
+                    background-color: transparent;
+                }
+                100% {
+                    background-color: @color-white;
+                }
+            });
+            .animation(fade-in .175s ease-in-out both);
+            background-color: @color-white;
+
+            &.transition-out {
+                .keyframes(fade-out;{
+                    0% {
+                        background-color: @color-white;
+                    }
+                    50% {
+                        background-color: @color-white;
+                    }
+                    100% {
+                        background-color: transparent;
+                    }
+                });
+                .animation(fade-out .35s ease-in-out both);
+            }
+
             .pagebuilder-stage {
                 width: calc(~"100% - 150px");
                 top: 0;
@@ -326,7 +355,7 @@
                 transform: translateY(0);
             }
         });
-        .animation(slide-in-top .3s ease-in-out both);
+        .animation(slide-in-top .35s ease-in-out both);
         opacity: 1;
         transition: none;
         visibility: visible;
@@ -343,7 +372,7 @@
                     transform: translateY(-41px);
                 }
             });
-            .animation(slide-out-top .3s ease-in-out both);
+            .animation(slide-out-top .35s ease-in-out both);
             transition: none;
             z-index: 801;
         }
@@ -360,7 +389,7 @@
                 transform: translateX(0);
             }
         });
-        .animation(slide-in-left .3s ease-in-out both);
+        .animation(slide-in-left .35s ease-in-out both);
         opacity: 1;
         transition: none;
         visibility: visible;
@@ -377,7 +406,7 @@
                     transform: translateX(-150px);
                 }
             });
-            .animation(slide-out-left .3s ease-in-out both);
+            .animation(slide-out-left .35s ease-in-out both);
             transition: none;
             z-index: 801;
         }
