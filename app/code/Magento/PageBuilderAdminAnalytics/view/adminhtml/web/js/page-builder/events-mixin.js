@@ -22,14 +22,12 @@ define(['underscore'], function (_underscore) {
             if (name.indexOf('readyAfter') !== -1 &&
                 !_underscore.isUndefined(window.digitalData)
             ) {
-                console.log(222);
                 window.digitalData.page.url = window.location.href;
                 window.digitalData.page.attributes = {
                     editedWithPageBuilder: 'true'
                 };
 
                 if (!_underscore.isUndefined(window._satellite)) {
-                    console.log(333);
                     window._satellite.track('page');
                 }
             }
