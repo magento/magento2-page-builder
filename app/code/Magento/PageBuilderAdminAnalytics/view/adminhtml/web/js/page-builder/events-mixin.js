@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define([], function () {
+define(['underscore'], function (_underscore) {
     'use strict';
 
     return function (target) {
@@ -18,18 +18,19 @@ define([], function () {
          */
 
         target.trigger = function (name, args) {
-
-            originalTarget.call(originalTarget, name, args);
+            originalTarget.apply([originalTarget, name, args]);
 
             if (name.indexOf('readyAfter') !== -1 &&
-                window.digitalData !== undefined &&
-                typeof window.digitalData !== 'undefined'
+                !_underscore.isUndefined(window.digitalData)
             ) {
                 window.digitalData.page.url = window.location.href;
                 window.digitalData.page.attributes = {
                     editedWithPageBuilder: 'true'
                 };
-                window._satellite.track('page');
+
+                if (!_underscore.isUndefined(window._satellite)) {
+                    window._satellite.track('page');
+                }
             }
 
             if (args.contentType !== undefined && typeof args.contentType !== undefined &&
