@@ -115,7 +115,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.isFullScreen(true);
 
         if (this.snapshot()) {
-          this.stageStyles(this.previousStyles);
           this.isSnapshot(false);
           this.stageStyles(this.previousStyles);
         } else {

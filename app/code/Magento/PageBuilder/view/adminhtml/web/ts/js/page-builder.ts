@@ -122,7 +122,6 @@ export default class PageBuilder implements PageBuilderInterface {
             };
             this.isFullScreen(true);
             if (this.snapshot()) {
-                this.stageStyles(this.previousStyles);
                 this.isSnapshot(false);
                 this.stageStyles(this.previousStyles);
             } else {
@@ -177,7 +176,7 @@ export default class PageBuilder implements PageBuilderInterface {
                 pageBuilderWrapper.css("height", "");
                 this.previousStyles = {};
                 this.previousPanelHeight = null;
-            },350);
+            }, 350);
         }
     }
 
