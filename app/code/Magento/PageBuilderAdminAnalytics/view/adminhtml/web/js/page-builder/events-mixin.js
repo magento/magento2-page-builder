@@ -20,7 +20,7 @@ define(['underscore'], function (_underscore) {
          */
 
         target.trigger = function (name, args) {
-            originalTarget.apply([originalTarget, name, args]);
+            originalTarget.apply(originalTarget, [name, args]);
 
             if (name.indexOf('readyAfter') !== -1 && isPageBuilderEnabled) {
                 window.digitalData.page.url = window.location.href;
