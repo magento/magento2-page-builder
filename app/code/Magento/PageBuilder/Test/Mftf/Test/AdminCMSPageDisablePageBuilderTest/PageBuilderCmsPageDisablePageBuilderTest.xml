@@ -33,7 +33,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <seeElement selector="{{PageBuilderStage.stageWrapper}}" stepKey="seeElementPageBuilderStage"/>
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seeElementPageBuilderStage"/>
         <dontSeeElementInDOM selector="{{CmsNewPagePageContentSection.content}}" stepKey="dontSeeContentAreaInDOM"/>
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
