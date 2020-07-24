@@ -31,7 +31,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public initialValue: string;
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
-    public snapshot:KnockoutObservable<boolean> = ko.observable(false);
+    public snapshot: boolean;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshotTransition: KnockoutObservable<boolean> = ko.observable(false);
@@ -51,7 +51,7 @@ export default class PageBuilder implements PageBuilderInterface {
         this.isFullScreen(config.isFullScreen);
         this.isSnapshot(config.pagebuilder_content_snapshot);
         this.isSnapshotTransition(false);
-        this.snapshot(config.pagebuilder_content_snapshot);
+        this.snapshot = config.pagebuilder_content_snapshot;
         this.config = config;
 
         this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
@@ -111,17 +111,17 @@ export default class PageBuilder implements PageBuilderInterface {
              * screen.
              */
             const xPosition = parseInt(stageWrapper.offset().top.toString(), 10) -
-                parseInt($(window).scrollTop().toString(), 10) - (this.snapshot() ? 63 : 0);
-            const yPosition = stageWrapper.offset().left - (this.snapshot() ? 150 : 0);
+                parseInt($(window).scrollTop().toString(), 10) - (this.snapshot ? 63 : 0);
+            const yPosition = stageWrapper.offset().left - (this.snapshot ? 150 : 0);
             this.previousStyles = {
-                position: this.snapshot() ? "relative" : "fixed",
+                position: this.snapshot ? "relative" : "fixed",
                 top: `${xPosition}px`,
                 left: `${yPosition}px`,
                 zIndex: "800",
                 width: stageWrapper.outerWidth().toString() + "px",
             };
             this.isFullScreen(true);
-            if (this.snapshot()) {
+            if (this.snapshot) {
                 this.isSnapshot(false);
                 this.stageStyles(this.previousStyles);
             } else {
@@ -131,7 +131,7 @@ export default class PageBuilder implements PageBuilderInterface {
             _.defer(() => {
                 // Remove all styles we applied to fix the position once we're transitioning
                 panel.css("height", "");
-                if (this.snapshot()) {
+                if (this.snapshot) {
                     this.stageStyles(Object.keys(this.previousStyles)
                         .reduce((object: object, styleName: string) => {
                             return Object.assign(object, {[styleName]: ""});
@@ -147,7 +147,7 @@ export default class PageBuilder implements PageBuilderInterface {
             });
         } else {
             // When leaving full screen mode just transition back to the original state
-            if (this.snapshot()) {
+            if (this.snapshot) {
                 this.isSnapshotTransition(true);
                 this.stageStyles(this.previousStyles)
             } else {
@@ -156,7 +156,7 @@ export default class PageBuilder implements PageBuilderInterface {
             panel.css("height", this.previousPanelHeight + "px");
             // Wait for the 350ms animation to complete before changing these properties back
             _.delay(() => {
-                if (this.snapshot()) {
+                if (this.snapshot) {
                     this.isSnapshot(true);
                     this.isSnapshotTransition(false);
                     this.stageStyles(Object.keys(this.previousStyles)

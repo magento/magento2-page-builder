@@ -17,7 +17,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.isStageReady = _knockout.observable(false);
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
-      this.snapshot = _knockout.observable(false);
       this.isFullScreen = _knockout.observable(false);
       this.isSnapshot = _knockout.observable(false);
       this.isSnapshotTransition = _knockout.observable(false);
@@ -35,7 +34,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.isFullScreen(config.isFullScreen);
       this.isSnapshot(config.pagebuilder_content_snapshot);
       this.isSnapshotTransition(false);
-      this.snapshot(config.pagebuilder_content_snapshot);
+      this.snapshot = config.pagebuilder_content_snapshot;
       this.config = config;
       this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
       this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
@@ -103,10 +102,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
          * screen.
          */
 
-        var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10) - (this.snapshot() ? 63 : 0);
-        var yPosition = stageWrapper.offset().left - (this.snapshot() ? 150 : 0);
+        var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10) - (this.snapshot ? 63 : 0);
+        var yPosition = stageWrapper.offset().left - (this.snapshot ? 150 : 0);
         this.previousStyles = {
-          position: this.snapshot() ? "relative" : "fixed",
+          position: this.snapshot ? "relative" : "fixed",
           top: xPosition + "px",
           left: yPosition + "px",
           zIndex: "800",
@@ -114,7 +113,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         };
         this.isFullScreen(true);
 
-        if (this.snapshot()) {
+        if (this.snapshot) {
           this.isSnapshot(false);
           this.stageStyles(this.previousStyles);
         } else {
@@ -125,7 +124,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           // Remove all styles we applied to fix the position once we're transitioning
           panel.css("height", "");
 
-          if (_this3.snapshot()) {
+          if (_this3.snapshot) {
             _this3.stageStyles(Object.keys(_this3.previousStyles).reduce(function (object, styleName) {
               var _Object$assign;
 
@@ -141,7 +140,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         });
       } else {
         // When leaving full screen mode just transition back to the original state
-        if (this.snapshot()) {
+        if (this.snapshot) {
           this.isSnapshotTransition(true);
           this.stageStyles(this.previousStyles);
         } else {
@@ -151,7 +150,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
         _underscore.delay(function () {
-          if (_this3.snapshot()) {
+          if (_this3.snapshot) {
             _this3.isSnapshot(true);
 
             _this3.isSnapshotTransition(false);
