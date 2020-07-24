@@ -7,7 +7,10 @@ define(['underscore'], function (_underscore) {
     'use strict';
 
     return function (target) {
-        var originalTarget = target.trigger;
+        var originalTarget = target.trigger,
+            isPageBuilderEnabled =
+                !_underscore.isUndefined(window.digitalData) &&
+                !_underscore.isUndefined(window._satellite);
 
         /**
          * Invokes custom code to track information regarding Page Builder usage
@@ -19,17 +22,12 @@ define(['underscore'], function (_underscore) {
         target.trigger = function (name, args) {
             originalTarget.apply([originalTarget, name, args]);
 
-            if (name.indexOf('readyAfter') !== -1 &&
-                !_underscore.isUndefined(window.digitalData)
-            ) {
+            if (name.indexOf('readyAfter') !== -1 && isPageBuilderEnabled) {
                 window.digitalData.page.url = window.location.href;
                 window.digitalData.page.attributes = {
                     editedWithPageBuilder: 'true'
                 };
-
-                if (!_underscore.isUndefined(window._satellite)) {
-                    window._satellite.track('page');
-                }
+                window._satellite.track('page');
             }
         };
 
