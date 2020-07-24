@@ -31,14 +31,16 @@ export default class PageBuilder implements PageBuilderInterface {
     public initialValue: string;
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
+    public snapshot:KnockoutObservable<boolean> = ko.observable(false);
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshotTransition: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
+    public stageStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public isAllowedTemplateSave: boolean;
     public isAllowedTemplateApply: boolean;
-    private previousWrapperStyles: {[key: string]: string} = {};
+    private previousStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
     constructor(config: any, initialValue: string) {
@@ -49,6 +51,7 @@ export default class PageBuilder implements PageBuilderInterface {
         this.isFullScreen(config.isFullScreen);
         this.isSnapshot(config.pagebuilder_content_snapshot);
         this.isSnapshotTransition(false);
+        this.snapshot(config.pagebuilder_content_snapshot);
         this.config = config;
 
         this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
@@ -95,10 +98,10 @@ export default class PageBuilder implements PageBuilderInterface {
             this.isFullScreen(!this.isFullScreen());
             return;
         }
-
         const stageWrapper = $("#" + this.stage.id).parent();
         const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
         const panel = stageWrapper.find(".pagebuilder-panel");
+        stageWrapper.scrollTop(0);
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
             this.previousPanelHeight = panel.outerHeight();
@@ -108,57 +111,73 @@ export default class PageBuilder implements PageBuilderInterface {
              * screen.
              */
             const xPosition = parseInt(stageWrapper.offset().top.toString(), 10) -
-                parseInt($(window).scrollTop().toString(), 10);
-            const yPosition = stageWrapper.offset().left;
-            this.previousWrapperStyles = {
-                position: "fixed",
+                parseInt($(window).scrollTop().toString(), 10) - (this.snapshot() ? 63 : 0);
+            const yPosition = stageWrapper.offset().left - (this.snapshot() ? 150 : 0);
+            this.previousStyles = {
+                position: this.snapshot() ? "relative" : "fixed",
                 top: `${xPosition}px`,
                 left: `${yPosition}px`,
                 zIndex: "800",
                 width: stageWrapper.outerWidth().toString() + "px",
             };
-            this.wrapperStyles(this.previousWrapperStyles);
             this.isFullScreen(true);
+            if (this.snapshot()) {
+                this.stageStyles(this.previousStyles);
+                this.isSnapshot(false);
+                this.stageStyles(this.previousStyles);
+            } else {
+                this.wrapperStyles(this.previousStyles);
+            }
+
             _.defer(() => {
                 // Remove all styles we applied to fix the position once we're transitioning
                 panel.css("height", "");
-                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
-                    .reduce((object: object, styleName: string) => {
-                        return Object.assign(object, {[styleName]: ""});
-                    }, {}),
-                );
-            });
-            _.delay(() => {
-                if (Config.getConfig("pagebuilder_content_snapshot")) {
-                    this.isSnapshot(false);
+                if (this.snapshot()) {
+                    this.stageStyles(Object.keys(this.previousStyles)
+                        .reduce((object: object, styleName: string) => {
+                            return Object.assign(object, {[styleName]: ""});
+                        }, {}),
+                    );
+                } else {
+                    this.wrapperStyles(Object.keys(this.previousStyles)
+                        .reduce((object: object, styleName: string) => {
+                            return Object.assign(object, {[styleName]: ""});
+                        }, {}),
+                    );
                 }
-            }, 350);
+            });
         } else {
             // When leaving full screen mode just transition back to the original state
-            if (Config.getConfig("pagebuilder_content_snapshot")) {
+            if (this.snapshot()) {
                 this.isSnapshotTransition(true);
+                this.stageStyles(this.previousStyles)
+            } else {
+                this.wrapperStyles(this.previousStyles);
             }
-            this.wrapperStyles(this.previousWrapperStyles);
-            _.delay(() => {
-                if (Config.getConfig("pagebuilder_content_snapshot")) {
-                    this.isSnapshot(true);
-                    this.isSnapshotTransition(false);
-                }
-            }, 350);
             panel.css("height", this.previousPanelHeight + "px");
             // Wait for the 350ms animation to complete before changing these properties back
             _.delay(() => {
+                if (this.snapshot()) {
+                    this.isSnapshot(true);
+                    this.isSnapshotTransition(false);
+                    this.stageStyles(Object.keys(this.previousStyles)
+                        .reduce((object: object, styleName: string) => {
+                            return Object.assign(object, {[styleName]: ""});
+                        }, {}),
+                    );
+                } else {
+                    this.wrapperStyles(Object.keys(this.previousStyles)
+                        .reduce((object: object, styleName: string) => {
+                            return Object.assign(object, {[styleName]: ""});
+                        }, {}),
+                    );
+                }
                 this.isFullScreen(false);
                 panel.css("height", "");
                 pageBuilderWrapper.css("height", "");
-                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
-                                       .reduce((object: object, styleName: string) => {
-                                           return Object.assign(object, {[styleName]: ""});
-                                       }, {}),
-                );
-                this.previousWrapperStyles = {};
+                this.previousStyles = {};
                 this.previousPanelHeight = null;
-            }, 600);
+            },350);
         }
     }
 
