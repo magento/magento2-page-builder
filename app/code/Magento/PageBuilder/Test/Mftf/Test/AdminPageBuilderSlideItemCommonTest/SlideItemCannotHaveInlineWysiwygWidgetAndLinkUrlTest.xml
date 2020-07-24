@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemCannotHaveInlineWysiwygWidgetAndLinkUrlTest" extends="BannerCannotHaveInlineWysiwygWidgetAndLinkUrlTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item inline WYSIWYG editor will notify user that they cannot add Widget, Link and Link URL at the same time"/>
+            <description value="Slide Item edit form and inline WYSIWYG editor validate Widget, Link and Link URL cannot be added at the same time."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Fill out Edit Panel Link Url -->
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillOutLinkUrl">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <!-- Check invalid Link Url and Message Text Widget -->
+        <!-- Add Widget to TinyMCE -->
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithWidget">
+        <argument name="property" value="PageBuilderSlideItemMessageInvalidWidgetProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidLinkUrlAndWidget">
+        <argument name="property" value="PageBuilderSlideItemLinkUrlInvalidWidgetProperty"/>
+        </actionGroup>
+        <!-- Replace Text to TinyMCE -->
+        <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceMessageTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <!-- Check invalid Link Url and Message Text Link -->
+        <!-- Add Link to TinyMCE -->
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithLink">
+            <argument name="property" value="PageBuilderSlideItemMessageInvalidProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidLinkUrlAndLink">
+            <argument name="property" value="PageBuilderSlideItemLinkUrlInvalidProperty"/>
+        </actionGroup>
+        <!-- Replace Text to TinyMCE -->
+        <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceTextToTinyMCEAfterLink">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <!-- Check invalid Link Url and Message Text Image Link -->
+        <!-- Add Image Link to TinyMCE -->
+        <actionGroup ref="FillTinyMCEInsertImageModalAndSaveActionGroup" stepKey="fillTinyMCEInsertImageModalAndSave">
+            <argument name="textToDisplay" value="{{PageBuilderSlideItemLinkURL_External.value}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithImageLink">
+            <argument name="property" value="PageBuilderSlideItemMessageInvalidProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidLinkUrlAndImageLink">
+            <argument name="property" value="PageBuilderSlideItemLinkUrlInvalidProperty"/>
+        </actionGroup>
+        <!-- Replace Text to TinyMCE -->
+        <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceTextToTinyMCEAfterImageLink">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <!-- Clean out Edit Panel Link Url -->
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="cleanOutLinkUrl">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_Empty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <!-- Add Widget to TinyMCE -->
+        <!-- Fill out Edit Panel Link Url -->
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillOutLinkUrlBack">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithWidgetAfterFillOutLinkUrl">
+            <argument name="property" value="PageBuilderSlideItemMessageInvalidWidgetProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidLinkUrlAndWidgetAfterFillOutLinkUrl">
+            <argument name="property" value="PageBuilderSlideItemLinkUrlInvalidWidgetProperty"/>
+        </actionGroup>
+        <!-- Replace Text to TinyMCE -->
+        <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceTextToTinyMCEBeforeSave">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <!-- Check inline WYSIWYG editor will validate for not allowing Widget and Link URL at the same time -->
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorArea">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Add Widget to inline WYSIWYG editor on Stage  -->
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingWidgetCorrectErrorModal"/>
+        <!-- Checks for Widget (placeholder) within the WYSIWYG with regex -->
+        <!-- Check inline WYSIWYG editor will validate for not allowing Link and Link URL at the same time -->
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink" >
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Add Link to inline WYSIWYG editor on Stage -->
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingLinkCorrectErrorModal"/>
+        <!-- Checks for A tags within the WYSIWYG with regex -->
+        <!-- Check inline WYSIWYG editor will validate for not allowing Image Link and Link URL at the same time -->
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Add Image Link to inline WYSIWYG -->
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingImageLinkCorrectErrorModal"/>
+        <!-- Checks for A tags within the TinyMCE with regex -->
+        <!-- Checks for Widget Block within the message with regex -->
+        <executeJS function="return (/&lt;div.*(class=)(&quot;|\').*((widget).*(block)|(block).*(widget)).*&lt;\/div&gt;/igm).test({{SlideOnFrontend.contentJS('1')}}.innerHTML);" stepKey="grabIfFrontendWidgetBlockInContentBoolean"/>
+        <assertFalse stepKey="assertFrontendMessageHasNoWidgetBlock">
+            <actualResult type="variable">grabIfFrontendWidgetBlockInContentBoolean</actualResult>
+        </assertFalse>
+        <!-- Checks for A tags within the message with regex -->
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test({{SlideOnFrontend.contentJS('1')}}.innerHTML);" stepKey="grabIfFrontendAnchorInContentBoolean"/>
+        <assertFalse stepKey="assertFrontendMessageHasNoAnchorTags">
+            <actualResult type="variable">grabIfFrontendAnchorInContentBoolean</actualResult>
+        </assertFalse>
+    </test>
+</tests>

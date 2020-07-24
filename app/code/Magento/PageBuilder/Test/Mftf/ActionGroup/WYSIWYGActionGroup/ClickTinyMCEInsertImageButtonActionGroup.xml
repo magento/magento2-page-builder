@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ClickTinyMCEInsertImageButtonActionGroup">
+        <annotations>
+            <description>Clicks the Insert Link button from the TinyMCE.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="TinyMCESection"/>
+            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForTinyMCEInsertLinkButton"/>
+        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickTinyMCEInsertLinkButton"/>
+        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForWYSIWYGInsertLinkModal"/>
+    </actionGroup>
+</actionGroups>
