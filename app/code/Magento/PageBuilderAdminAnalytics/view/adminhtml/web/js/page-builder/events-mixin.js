@@ -8,9 +8,7 @@ define(['underscore'], function (_underscore) {
 
     return function (target) {
         var originalTarget = target.trigger,
-            isPageBuilderEnabled =
-                !_underscore.isUndefined(window.digitalData) &&
-                !_underscore.isUndefined(window._satellite);
+            isPageBuilderEnabled;
 
         /**
          * Invokes custom code to track information regarding Page Builder usage
@@ -21,6 +19,9 @@ define(['underscore'], function (_underscore) {
 
         target.trigger = function (name, args) {
             originalTarget.apply(originalTarget, [name, args]);
+            isPageBuilderEnabled =
+                !_underscore.isUndefined(window.digitalData) &&
+                !_underscore.isUndefined(window._satellite);
 
             if (name.indexOf('readyAfter') !== -1 && isPageBuilderEnabled) {
                 window.digitalData.page.url = window.location.href;
