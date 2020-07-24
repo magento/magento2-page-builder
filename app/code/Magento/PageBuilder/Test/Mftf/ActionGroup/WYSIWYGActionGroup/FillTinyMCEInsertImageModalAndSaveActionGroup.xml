@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="FillTinyMCEInsertImageModalAndSaveActionGroup">
+        <annotations>
+            <description>Adds text to Text To Display field from the TinyMCE Insert Link Modal window.</description>
+        </annotations>
+        <arguments>
+            <argument name="textToDisplay" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" stepKey="waitForTinyMCELinkModalTextToDisplayInput"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{textToDisplay}}" stepKey="insertTinyMCELinkModalTextToDisplayInput"/>
+        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="waitForTinyMCEInsertLinkModalOkButton"/>
+        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickTinyMCEInsertLinkModalOkButton"/>
+        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForTinyMCEInsertLinkModalNotVisible"/>
+    </actionGroup>
+</actionGroups>
