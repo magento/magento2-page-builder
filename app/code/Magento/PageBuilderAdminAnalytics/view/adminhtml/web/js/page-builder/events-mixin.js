@@ -32,23 +32,21 @@ define(['underscore'], function (_underscore) {
                 window._satellite.track('page');
             }
 
-            if (args.contentType !== undefined && typeof args.contentType !== undefined &&
-                args.contentType.config !== undefined && typeof args.contentType.config !== undefined) {
-
+            if (!_underscore.isUndefined(args.contentType) && !_underscore.isUndefined(args.contentType.config)) {
                 event = {
                     element: args.contentType.config.label,
                     type: args.contentType.config.name,
-                    action: "custom-action",
+                    action: 'custom-action',
                     widget: {
                         name: args.contentType.config.form,
                         type: args.contentType.config.menu_section
                     },
-                    feature: "page-builder-tracker"
+                    feature: 'page-builder-tracker'
                 };
 
-                console.log("EVENT:", event);
+                console.log('EVENT:', event);
 
-                if (window.digitalData !== undefined && typeof window.digitalData !== 'undefined') {
+                if (isAdminAnalyticsEnabled) {
                     window.digitalData.events.push(event);
                     window._satellite.track('event');
                 }
