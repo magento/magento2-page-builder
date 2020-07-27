@@ -111,7 +111,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           zIndex: "800",
           width: stageWrapper.outerWidth().toString() + "px"
         };
-        this.isFullScreen(true);
 
         if (this.snapshot) {
           this.isSnapshot(false);
@@ -119,6 +118,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           this.wrapperStyles(this.previousStyles);
         }
+
+        this.isFullScreen(true);
 
         _underscore.defer(function () {
           // Remove all styles we applied to fix the position once we're transitioning
@@ -145,6 +146,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           this.stageStyles(this.previousStyles);
         } else {
           this.wrapperStyles(this.previousStyles);
+          this.isFullScreen(false);
         }
 
         panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
@@ -160,6 +162,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
               return Object.assign(object, (_Object$assign3 = {}, _Object$assign3[styleName] = "", _Object$assign3));
             }, {}));
+
+            _this3.isFullScreen(false);
           } else {
             _this3.wrapperStyles(Object.keys(_this3.previousStyles).reduce(function (object, styleName) {
               var _Object$assign4;
@@ -167,8 +171,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               return Object.assign(object, (_Object$assign4 = {}, _Object$assign4[styleName] = "", _Object$assign4));
             }, {}));
           }
-
-          _this3.isFullScreen(false);
 
           panel.css("height", "");
           pageBuilderWrapper.css("height", "");

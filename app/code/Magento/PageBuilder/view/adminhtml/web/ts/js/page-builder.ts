@@ -31,7 +31,6 @@ export default class PageBuilder implements PageBuilderInterface {
     public initialValue: string;
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
-    public snapshot: boolean;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshotTransition: KnockoutObservable<boolean> = ko.observable(false);
@@ -42,6 +41,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public isAllowedTemplateApply: boolean;
     private previousStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
+    private snapshot: boolean;
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
@@ -98,10 +98,12 @@ export default class PageBuilder implements PageBuilderInterface {
             this.isFullScreen(!this.isFullScreen());
             return;
         }
+
         const stageWrapper = $("#" + this.stage.id).parent();
         const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
         const panel = stageWrapper.find(".pagebuilder-panel");
         stageWrapper.scrollTop(0);
+
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
             this.previousPanelHeight = panel.outerHeight();
@@ -120,7 +122,7 @@ export default class PageBuilder implements PageBuilderInterface {
                 zIndex: "800",
                 width: stageWrapper.outerWidth().toString() + "px",
             };
-            this.isFullScreen(true);
+
             if (this.snapshot) {
                 this.isSnapshot(false);
                 this.stageStyles(this.previousStyles);
@@ -128,6 +130,7 @@ export default class PageBuilder implements PageBuilderInterface {
                 this.wrapperStyles(this.previousStyles);
             }
 
+            this.isFullScreen(true);
             _.defer(() => {
                 // Remove all styles we applied to fix the position once we're transitioning
                 panel.css("height", "");
@@ -152,7 +155,9 @@ export default class PageBuilder implements PageBuilderInterface {
                 this.stageStyles(this.previousStyles)
             } else {
                 this.wrapperStyles(this.previousStyles);
+                this.isFullScreen(false);
             }
+
             panel.css("height", this.previousPanelHeight + "px");
             // Wait for the 350ms animation to complete before changing these properties back
             _.delay(() => {
@@ -164,6 +169,7 @@ export default class PageBuilder implements PageBuilderInterface {
                             return Object.assign(object, {[styleName]: ""});
                         }, {}),
                     );
+                    this.isFullScreen(false);
                 } else {
                     this.wrapperStyles(Object.keys(this.previousStyles)
                         .reduce((object: object, styleName: string) => {
@@ -171,7 +177,7 @@ export default class PageBuilder implements PageBuilderInterface {
                         }, {}),
                     );
                 }
-                this.isFullScreen(false);
+
                 panel.css("height", "");
                 pageBuilderWrapper.css("height", "");
                 this.previousStyles = {};
