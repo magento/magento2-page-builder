@@ -8,6 +8,7 @@ define(['underscore'], function (_underscore) {
 
     return function (target) {
         var originalTarget = target.trigger,
+            isAdminAnalyticsEnabled,
             event;
 
         /**
@@ -18,19 +19,17 @@ define(['underscore'], function (_underscore) {
          */
 
         target.trigger = function (name, args) {
-            originalTarget.apply([originalTarget, name, args]);
+            originalTarget.apply(originalTarget, [name, args]);
+            isAdminAnalyticsEnabled =
+                !_underscore.isUndefined(window.digitalData) &&
+                !_underscore.isUndefined(window._satellite);
 
-            if (name.indexOf('readyAfter') !== -1 &&
-                !_underscore.isUndefined(window.digitalData)
-            ) {
+            if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
                 window.digitalData.page.url = window.location.href;
                 window.digitalData.page.attributes = {
                     editedWithPageBuilder: 'true'
                 };
-
-                if (!_underscore.isUndefined(window._satellite)) {
-                    window._satellite.track('page');
-                }
+                window._satellite.track('page');
             }
 
             if (args.contentType !== undefined && typeof args.contentType !== undefined &&
