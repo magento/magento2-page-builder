@@ -33,6 +33,7 @@ class InnerHtmlValidator implements TagValidatorInterface
             return;
         }
 
+        // phpcs:ignore Magento2.Functions.DiscouragedFunction
         $recursiveValidator->validate(html_entity_decode($value));
     }
 }

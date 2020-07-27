@@ -22,6 +22,8 @@ class SrcAttributeValidator implements AttributeValidatorInterface
     private $allowedHosts;
 
     /**
+     * SrcAttributeValidator constructor.
+     *
      * @param string[] $allowedHosts
      */
     public function __construct(array $allowedHosts)
@@ -29,6 +31,9 @@ class SrcAttributeValidator implements AttributeValidatorInterface
         $this->allowedHosts = $allowedHosts;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function validate(string $tag, string $attributeName, string $value): void
     {
         if ($tag !== 'iframe' || $attributeName !== 'src') {
@@ -36,21 +41,20 @@ class SrcAttributeValidator implements AttributeValidatorInterface
         }
 
         if (mb_strpos($value, 'http') !== 0) {
+            //Relative link
             return;
         }
+        // phpcs:ignore Magento2.Functions.DiscouragedFunction
         $srcHost = parse_url($value, PHP_URL_HOST);
-        if ($srcHost && $this->allowedHosts) {
-            $srcHostLength = mb_strlen($srcHost);
-            $allowed = false;
-            foreach ($this->allowedHosts as $host) {
-                $hostLength = mb_strlen($host);
-                $foundIndex = mb_strpos($srcHost, $host);
-                if ($foundIndex !== false && ($foundIndex + $hostLength) === $srcHostLength) {
-                    $allowed = true;
-                    break;
-                }
-            }
-            if ($allowed) {
+        if (!$srcHost || !$this->allowedHosts) {
+            //Either the link is invalid or we do not have the allowed list.
+            return;
+        }
+        $srcHostLength = mb_strlen($srcHost);
+        foreach ($this->allowedHosts as $host) {
+            $hostLength = mb_strlen($host);
+            $foundIndex = mb_strpos($srcHost, $host);
+            if ($foundIndex !== false && ($foundIndex + $hostLength) === $srcHostLength) {
                 return;
             }
         }
