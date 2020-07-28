@@ -102,7 +102,10 @@ export default class PageBuilder implements PageBuilderInterface {
         const stageWrapper = $("#" + this.stage.id).parent();
         const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
         const panel = stageWrapper.find(".pagebuilder-panel");
-        stageWrapper.scrollTop(0);
+
+        if (this.snapshot) {
+            stageWrapper.scrollTop(0);
+        }
 
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());

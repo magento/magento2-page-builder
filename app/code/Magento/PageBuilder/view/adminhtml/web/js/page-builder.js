@@ -91,7 +91,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var stageWrapper = (0, _jquery)("#" + this.stage.id).parent();
       var pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
       var panel = stageWrapper.find(".pagebuilder-panel");
-      stageWrapper.scrollTop(0);
+
+      if (this.snapshot) {
+        stageWrapper.scrollTop(0);
+      }
 
       if (!this.isFullScreen()) {
         pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
