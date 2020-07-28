@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryContentSnapshotTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Content Snapshot"/>
+            <title value="Catalog Category - Verify PageBuilder Content Snapshot"/>
+            <description value="This test is to ensure that the PageBuilder Content Snapshot appears on stage and PageBuilder works in full-screen mode."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-contentSnapshot"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandContentSection"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Verify Page Builder preview is ready -->
+        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreview"/>
+        <!-- Verify Empty Row -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyPreviewEmptyRow"/>
+        <!-- Open Page Builder Full Screen -->
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+        <!-- Verify Empty Row -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyFullScreenEmptyRow"/>
+        <!-- Add Button to Row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+        <!-- Exit full screen -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
+        <!-- Verify PageBuilder Button Content Type is on Stage -->
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_OneCharacter.value)}}" stepKey="seePageBuilderButtonText"/>
+        <!-- Verify no Empty Preview Message on Stage -->
+        <dontSeeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeEmptyRowOnPreview"/>
+        <!-- Verify Page Builder preview is ready -->
+        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreviewAfterFullScreen"/>
+        <!-- Verify Page Builder Full Screen -->
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
+    </test>
+</tests>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidatePageBuilderPreviewActionGroup">
+        <annotations>
+            <description>Verifies Page Builder preview has the 'Edit with Page Builder' button, has an overlay, does not have the Page Builder left panel, does not have the Page Builder template buttons, and does not open content type option menus.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.editWithPageBuilderButton}}" stepKey="waitForEditWithPageBuilderButton"/>
+        <see userInput="Edit with Page Builder" selector="{{pageBuilderArea}}{{PageBuilderStage.editWithPageBuilderButton}}" stepKey="seeEditWithPageBuilderButton"/>
+        <dontSeeElementInDOM selector="{{PageBuilderPanel.leftPanel}}" stepKey="dontSeePageBuilderContentTypePanel"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeePageBuilderApplyTemplateButton"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeePageBuilderSaveAsTemplateButton"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlay}}" stepKey="waitForStageOverlay"/>
+        <moveMouseOver selector="{{PageBuilderStage.stageOverlay}}" stepKey="mouseOverStageOverlay"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlayOnHover}}" stepKey="waitForStageOverlayOnHover"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="dontSeeRowOptionMenu"/>
+    </actionGroup>
+</actionGroups>
