@@ -19,9 +19,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
       this.isSnapshot = _knockout.observable(false);
+      this.isSnapshotTransition = _knockout.observable(false);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
-      this.previousWrapperStyles = {};
+      this.stageStyles = _knockout.observable({});
+      this.previousStyles = {};
 
       _config.setConfig(config);
 
@@ -31,6 +33,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
       this.isSnapshot(config.pagebuilder_content_snapshot);
+      this.isSnapshotTransition(false);
+      this.snapshot = config.pagebuilder_content_snapshot;
       this.config = config;
       this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
       this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
@@ -79,10 +83,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this3 = this;
 
-      if (_config.getConfig("pagebuilder_content_snapshot")) {
-        this.isSnapshot(this.isFullScreen());
-      }
-
       if (args.animate === false) {
         this.isFullScreen(!this.isFullScreen());
         return;
@@ -91,6 +91,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var stageWrapper = (0, _jquery)("#" + this.stage.id).parent();
       var pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
       var panel = stageWrapper.find(".pagebuilder-panel");
+
+      if (this.snapshot) {
+        stageWrapper.scrollTop(0);
+      }
 
       if (!this.isFullScreen()) {
         pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
@@ -101,45 +105,79 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
          * screen.
          */
 
-        var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10);
-        var yPosition = stageWrapper.offset().left;
-        this.previousWrapperStyles = {
-          position: "fixed",
+        var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10) - (this.snapshot ? 63 : 0);
+        var yPosition = stageWrapper.offset().left - (this.snapshot ? 150 : 0);
+        this.previousStyles = {
+          position: this.snapshot ? "relative" : "fixed",
           top: xPosition + "px",
           left: yPosition + "px",
           zIndex: "800",
           width: stageWrapper.outerWidth().toString() + "px"
         };
-        this.wrapperStyles(this.previousWrapperStyles);
+
+        if (this.snapshot) {
+          this.isSnapshot(false);
+          this.stageStyles(this.previousStyles);
+        } else {
+          this.wrapperStyles(this.previousStyles);
+        }
+
         this.isFullScreen(true);
 
         _underscore.defer(function () {
           // Remove all styles we applied to fix the position once we're transitioning
           panel.css("height", "");
 
-          _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
-            var _Object$assign;
+          if (_this3.snapshot) {
+            _this3.stageStyles(Object.keys(_this3.previousStyles).reduce(function (object, styleName) {
+              var _Object$assign;
 
-            return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
-          }, {}));
+              return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
+            }, {}));
+          } else {
+            _this3.wrapperStyles(Object.keys(_this3.previousStyles).reduce(function (object, styleName) {
+              var _Object$assign2;
+
+              return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
+            }, {}));
+          }
         });
       } else {
         // When leaving full screen mode just transition back to the original state
-        this.wrapperStyles(this.previousWrapperStyles);
-        this.isFullScreen(false);
+        if (this.snapshot) {
+          this.isSnapshotTransition(true);
+          this.stageStyles(this.previousStyles);
+        } else {
+          this.wrapperStyles(this.previousStyles);
+          this.isFullScreen(false);
+        }
+
         panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
         _underscore.delay(function () {
+          if (_this3.snapshot) {
+            _this3.isSnapshot(true);
+
+            _this3.isSnapshotTransition(false);
+
+            _this3.stageStyles(Object.keys(_this3.previousStyles).reduce(function (object, styleName) {
+              var _Object$assign3;
+
+              return Object.assign(object, (_Object$assign3 = {}, _Object$assign3[styleName] = "", _Object$assign3));
+            }, {}));
+
+            _this3.isFullScreen(false);
+          } else {
+            _this3.wrapperStyles(Object.keys(_this3.previousStyles).reduce(function (object, styleName) {
+              var _Object$assign4;
+
+              return Object.assign(object, (_Object$assign4 = {}, _Object$assign4[styleName] = "", _Object$assign4));
+            }, {}));
+          }
+
           panel.css("height", "");
           pageBuilderWrapper.css("height", "");
-
-          _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
-            var _Object$assign2;
-
-            return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
-          }, {}));
-
-          _this3.previousWrapperStyles = {};
+          _this3.previousStyles = {};
           _this3.previousPanelHeight = null;
         }, 350);
       }
