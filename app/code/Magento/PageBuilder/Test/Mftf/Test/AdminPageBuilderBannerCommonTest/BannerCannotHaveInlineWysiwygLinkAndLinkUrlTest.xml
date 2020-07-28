@@ -73,7 +73,8 @@
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
             <argument name="wysiwygArea" value=""/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeCorrectErrorModal"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
         <!-- Checks for a tags within the tinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInWysiwygBoolean"/>
