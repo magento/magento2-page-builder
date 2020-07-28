@@ -17,7 +17,7 @@
     <if args="isComponentInitialized">
         <div visible="visiblePageBuilder"
              class="pagebuilder-wysiwyg-wrapper"
-             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'] && !wysiwygConfigData()['pagebuilder_content_snapshot'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut}">
+             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'] && !wysiwygConfigData()['pagebuilder_content_snapshot'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut, 'pagebuilder-wysiwyg-snapshot': wysiwygConfigData()['pagebuilder_content_snapshot']}">
             <div if="wysiwygConfigData()['pagebuilder_content_snapshot']"
                  class="pagebuilder-wysiwyg-overlay"
                  click="pageBuilderEditButtonClick.bind($data)"
