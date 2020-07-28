@@ -32,7 +32,9 @@ define(['underscore'], function (_underscore) {
                 window._satellite.track('page');
             }
 
-            if (!_underscore.isUndefined(args.contentType) && !_underscore.isUndefined(args.contentType.config)) {
+            if (!_underscore.isUndefined(args) && !_underscore.isUndefined(args.contentType) &&
+                !_underscore.isUndefined(args.contentType.config)
+            ) {
                 event = {
                     element: args.contentType.config.label,
                     type: args.contentType.config.name,
@@ -46,7 +48,7 @@ define(['underscore'], function (_underscore) {
 
                 console.log('EVENT:', event);
 
-                if (isAdminAnalyticsEnabled) {
+                if (isAdminAnalyticsEnabled && !_underscore.isUndefined(window.digitalData.events)) {
                     window.digitalData.events.push(event);
                     window._satellite.track('event');
                 }
