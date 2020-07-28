@@ -6,8 +6,7 @@
   */
 -->
 
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="VerifyPageBuilderSwitcherAndDisclaimerMessageTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -40,6 +39,12 @@
             <actualResult type="variable">grabTextFromDisclaimerMsg</actualResult>
             <expectedResult type="string">Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.\n\nFor Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content.</expectedResult>
         </assertEquals>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilderContentPreview}}" userInput="Yes" stepKey="seeEnablePageBuilderContentPreview"/>
+        <grabTextFrom selector="//tr[@id='row_cms_pagebuilder_enable_content_preview']/td[@class='value']//span" stepKey="grabTextFromEnablePageBuilderContentPreviewComment"/>
+        <assertEquals message="pass" stepKey="assertEquals3">
+            <actualResult type="variable">grabTextFromEnablePageBuilderContentPreviewComment</actualResult>
+            <expectedResult type="string">Preview Page Builder content on product and category editing pages. Setting to "No" can improve performance in case several attributes are editable by Page Builder.</expectedResult>
+        </assertEquals>
         <!--Disable PageBuilder-->
         <comment userInput="Disable PageBuilder" stepKey="commentDisablePageBuilder"/>
         <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO1"/>
@@ -52,6 +57,7 @@
         <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
         <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff" />
         <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose2"/>
+        <dontSee selector="{{ContentManagementSection.EnablePageBuilderContentPreview}}" stepKey="dontSeeEnablePageBuilderContentPreview"/>
         <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="seeNoIsSelected" />
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
         <!-- I switch between NO -> YES - > NO without saving the Config, Then: Warning message will not appear on page-->
