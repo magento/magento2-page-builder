@@ -155,7 +155,7 @@ export default class PageBuilder implements PageBuilderInterface {
             // When leaving full screen mode just transition back to the original state
             if (this.snapshot) {
                 this.isSnapshotTransition(true);
-                this.stageStyles(this.previousStyles)
+                this.stageStyles(this.previousStyles);
             } else {
                 this.wrapperStyles(this.previousStyles);
                 this.isFullScreen(false);
