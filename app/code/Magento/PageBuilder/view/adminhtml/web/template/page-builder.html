@@ -5,10 +5,10 @@
  */
 -->
 <div class="pagebuilder-stage-wrapper"
-     css="'stage-full-screen': isFullScreen, 'pagebuilder-content-snapshot': isSnapshot"
+     css="'stage-full-screen': isFullScreen, 'stage-content-snapshot': isSnapshot, 'transition-out': isSnapshotTransition"
      ko-style="wrapperStyles">
     <div class="admin__field pagebuilder-header"
-         css="visible: panel.isVisible()"
+         css="visible: panel.isVisible(), 'transition-out': isSnapshotTransition()"
          if="!isSnapshot()">
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>

@@ -24,18 +24,18 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandContentSection"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Verify Page Builder preview is ready -->
-        <actionGroup ref="ValidatePageBuilderPreview" stepKey="verifyPageBuilderPreview"/>
+        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreview"/>
         <!-- Verify Empty Row -->
-        <actionGroup ref="verifyEmptyStage" stepKey="verifyStageEmptyRow"/>
-        <!-- Verify Page Builder Full Screen -->
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlay" stepKey="verifyPageBuilderFullScreen"/>
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyPreviewEmptyRow"/>
+        <!-- Open Page Builder Full Screen -->
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <!-- Verify Empty Row -->
         <actionGroup ref="verifyEmptyStage" stepKey="verifyFullScreenEmptyRow"/>
         <!-- Add Button to Row -->
@@ -53,10 +53,10 @@
         <!-- Verify PageBuilder Button Content Type is on Stage -->
         <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_OneCharacter.value)}}" stepKey="seePageBuilderButtonText"/>
         <!-- Verify no Empty Preview Message on Stage -->
-        <dontSeeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeEmptyPreviewMessageOnStage"/>
+        <dontSeeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeEmptyRowOnPreview"/>
         <!-- Verify Page Builder preview is ready -->
-        <actionGroup ref="ValidatePageBuilderPreview" stepKey="verifyPageBuilderPreviewAfterFullScreen"/>
+        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreviewAfterFullScreen"/>
         <!-- Verify Page Builder Full Screen -->
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlay" stepKey="verifyPageBuilderFullScreenAfterFullScreen"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
     </test>
 </tests>
