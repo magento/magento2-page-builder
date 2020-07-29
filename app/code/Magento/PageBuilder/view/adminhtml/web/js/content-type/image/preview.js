@@ -64,12 +64,34 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
 
       _preview2.prototype.bindEvents.call(this);
 
+      _events.on("image:mountAfter", function (args) {
+        if (args.id === _this.contentType.id) {
+          _this.isSnapshot.subscribe(function (value) {
+            _this.changeUploaderControlsVisibility();
+          });
+
+          _this.changeUploaderControlsVisibility();
+        }
+      });
+
       _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
         var files = _this.contentType.dataStore.get(_this.config.additional_data.uploaderConfig.dataScope);
 
         var imageObject = files ? files[0] : {};
 
         _events.trigger("image:" + _this.contentType.id + ":assignAfter", imageObject);
+      });
+    }
+    /**
+     * Change uploader controls visibility
+     */
+    ;
+
+    _proto.changeUploaderControlsVisibility = function changeUploaderControlsVisibility() {
+      var _this2 = this;
+
+      this.getUploader().getUiComponent()(function (uploader) {
+        uploader.visibleControls = !_this2.isSnapshot();
       });
     };
 
