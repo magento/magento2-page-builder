@@ -48,8 +48,8 @@ define(['underscore'], function (_underscore) {
 
                 console.log('EVENT:', event);
 
-                if (isAdminAnalyticsEnabled && !_underscore.isUndefined(window.digitalData.events)) {
-                    window.digitalData.events.push(event);
+                if (isAdminAnalyticsEnabled && !_underscore.isUndefined(window.digitalData.event)) {
+                    window.digitalData.event.push(event);
                     window._satellite.track('event');
                 }
             }
