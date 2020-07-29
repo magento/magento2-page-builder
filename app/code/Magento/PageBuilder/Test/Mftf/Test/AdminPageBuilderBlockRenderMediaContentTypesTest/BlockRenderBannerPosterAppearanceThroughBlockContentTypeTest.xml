@@ -153,7 +153,7 @@
         </assertLessThanOrEqual>
         <executeJS function="return window.getComputedStyle({{BannerOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSBlockStage"/>
         <assertEquals stepKey="assertDefaultComputedTextAlignCMSBlockStage">
-            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
             <actualResult type="variable">grabDefaultComputedTextAlignCMSBlockStage</actualResult>
         </assertEquals>
         <!-- Add Block to CMS Page -->
@@ -211,7 +211,7 @@
         </assertLessThanOrEqual>
         <executeJS function="return window.getComputedStyle({{BannerOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStage"/>
         <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStage">
-            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
             <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStage</actualResult>
         </assertEquals>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
