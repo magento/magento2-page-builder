@@ -67,8 +67,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
-      _events.on("stage:fullScreenModeChangeAfter", this.toggleStage.bind(this));
-
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
       });
@@ -260,17 +258,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _underscore.defer(function () {
         require(previewTemplates);
       });
-    }
-    /**
-     * Renders only active stages.
-     * @param args
-     */
-    ;
-
-    _proto.toggleStage = function toggleStage(args) {
-      if (_config.getConfig("pagebuilder_content_snapshot")) {
-        this.isStageReady(args.pageBuilderId === this.id && this.isFullScreen() || !args.fullScreen);
-      }
     };
 
     return PageBuilder;
