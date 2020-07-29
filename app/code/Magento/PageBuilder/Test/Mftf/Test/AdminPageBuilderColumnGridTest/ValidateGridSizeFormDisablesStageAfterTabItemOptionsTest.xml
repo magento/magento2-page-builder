@@ -65,7 +65,10 @@
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm"/>
-        <scrollTo selector="{{RowOnStage.base('1')}}" stepKey="scrollToTop"/>
+        <actionGroup ref="ScrollToActionGroup" stepKey="scrollToTop">
+            <argument name="cssSelector" value="{{RowOnStage.baseCSS}}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
