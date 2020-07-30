@@ -34,8 +34,10 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>

@@ -37,8 +37,10 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="AddPageLinkWidgetToTinyMCEWithAnchorAndTitleActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
