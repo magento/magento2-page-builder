@@ -26,7 +26,7 @@ use \Magento\PageBuilder\Model\Stage\Config as Config;
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
     /**
-     * Wysiwyg constructor.
+     * WYSIWYG Constructor
      *
      * @param ContextInterface $context
      * @param FormFactory $formFactory
@@ -37,7 +37,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $components
      * @param array $data
      * @param array $config
-     * @param PageBuilderConfig $pageBuilderConfig
+     * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
      */
     public function __construct(
