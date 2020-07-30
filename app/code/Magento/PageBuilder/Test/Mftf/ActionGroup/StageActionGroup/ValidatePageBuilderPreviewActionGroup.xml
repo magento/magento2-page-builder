@@ -16,7 +16,8 @@
         </arguments>
         <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.editWithPageBuilderButton}}" stepKey="waitForEditWithPageBuilderButton"/>
         <see userInput="Edit with Page Builder" selector="{{pageBuilderArea}}{{PageBuilderStage.editWithPageBuilderButton}}" stepKey="seeEditWithPageBuilderButton"/>
-        <seeElementInDOM selector="{{PageBuilderPanel.leftPanel}}" stepKey="dontSeePageBuilderContentTypePanel"/>
+        <seeElementInDOM selector="{{PageBuilderPanel.leftPanel}}" stepKey="seePageBuilderContentTypePanelInDom"/>
+        <dontSeeElement selector="{{PageBuilderPanel.leftPanel}}" stepKey="dontSeeElementPanel"/>
         <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeePageBuilderApplyTemplateButton"/>
         <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeePageBuilderSaveAsTemplateButton"/>
         <waitForElementVisible selector="{{PageBuilderStage.stageOverlay}}" stepKey="waitForStageOverlay"/>
