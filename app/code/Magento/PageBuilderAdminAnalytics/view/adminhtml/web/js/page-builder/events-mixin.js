@@ -9,6 +9,7 @@ define(['underscore'], function (_underscore) {
     return function (target) {
         var originalTarget = target.trigger,
             isAdminAnalyticsEnabled,
+            action = '',
             event;
 
         /**
@@ -24,6 +25,8 @@ define(['underscore'], function (_underscore) {
                 !_underscore.isUndefined(window.digitalData) &&
                 !_underscore.isUndefined(window._satellite);
 
+            console.log(name, args);
+
             if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
                 window.digitalData.page.url = window.location.href;
                 window.digitalData.page.attributes = {
@@ -32,13 +35,17 @@ define(['underscore'], function (_underscore) {
                 window._satellite.track('page');
             }
 
+            if (name.indexOf('duplicateAfter') !== -1) action='duplicate';
+            if (name.indexOf('removeAfter') !== -1) action='remove';
+            if (name.indexOf('createAfter') !== -1) action='create';
+
             if (!_underscore.isUndefined(args) && !_underscore.isUndefined(args.contentType) &&
-                !_underscore.isUndefined(args.contentType.config)
+                !_underscore.isUndefined(args.contentType.config && action !== '')
             ) {
                 event = {
                     element: args.contentType.config.label,
                     type: args.contentType.config.name,
-                    action: 'custom-action',
+                    action: action,
                     widget: {
                         name: args.contentType.config.form,
                         type: args.contentType.config.menu_section
