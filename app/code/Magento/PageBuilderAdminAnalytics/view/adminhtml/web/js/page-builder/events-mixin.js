@@ -39,6 +39,19 @@ define(['underscore'], function (_underscore) {
             if (name.indexOf('removeAfter') !== -1) action='remove';
             if (name.indexOf('createAfter') !== -1) action='create';
 
+            if (name.indexOf('updateAfter') !== -1 &&
+                !_underscore.isUndefined(args) &&
+                !_underscore.isUndefined(args.dataStore) &&
+                !_underscore.isUndefined(args.dataStore.previousState) &&
+                !_underscore.isUndefined(args.dataStore.state)
+            ) {
+                console.log('hiding/showing');
+                if (args.dataStore.previousState.display === true &&
+                    args.dataStore.state.display === false) action = 'hide';
+                if (args.dataStore.previousState.display === false &&
+                    args.dataStore.state.display === true) action = 'show';
+            }
+
             if (!_underscore.isUndefined(args) && !_underscore.isUndefined(args.contentType) &&
                 !_underscore.isUndefined(args.contentType.config && action !== '')
             ) {
