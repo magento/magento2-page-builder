@@ -49,9 +49,9 @@ export default class PageBuilder implements PageBuilderInterface {
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
-        this.isSnapshot(config.pagebuilder_content_snapshot);
+        this.isSnapshot(!!config.pagebuilder_content_snapshot);
         this.isSnapshotTransition(false);
-        this.snapshot = config.pagebuilder_content_snapshot;
+        this.snapshot = !!config.pagebuilder_content_snapshot;
         this.config = config;
 
         this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
@@ -109,8 +109,6 @@ export default class PageBuilder implements PageBuilderInterface {
 
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-            this.previousPanelHeight = panel.outerHeight();
-            panel.css("height", this.previousPanelHeight + "px");
             /**
              * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
              * screen.
@@ -130,6 +128,8 @@ export default class PageBuilder implements PageBuilderInterface {
                 this.isSnapshot(false);
                 this.stageStyles(this.previousStyles);
             } else {
+                this.previousPanelHeight = panel.outerHeight();
+                panel.css("height", this.previousPanelHeight + "px");
                 this.wrapperStyles(this.previousStyles);
             }
 

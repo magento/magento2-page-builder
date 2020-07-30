@@ -32,9 +32,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.preloadTemplates(config);
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
-      this.isSnapshot(config.pagebuilder_content_snapshot);
+      this.isSnapshot(!!config.pagebuilder_content_snapshot);
       this.isSnapshotTransition(false);
-      this.snapshot = config.pagebuilder_content_snapshot;
+      this.snapshot = !!config.pagebuilder_content_snapshot;
       this.config = config;
       this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
       this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
@@ -98,8 +98,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (!this.isFullScreen()) {
         pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-        this.previousPanelHeight = panel.outerHeight();
-        panel.css("height", this.previousPanelHeight + "px");
         /**
          * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
          * screen.
@@ -119,6 +117,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           this.isSnapshot(false);
           this.stageStyles(this.previousStyles);
         } else {
+          this.previousPanelHeight = panel.outerHeight();
+          panel.css("height", this.previousPanelHeight + "px");
           this.wrapperStyles(this.previousStyles);
         }
 
