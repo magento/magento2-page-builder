@@ -32,9 +32,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.preloadTemplates(config);
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
-      this.isSnapshot(config.pagebuilder_content_snapshot);
+      this.isSnapshot(!!config.pagebuilder_content_snapshot);
       this.isSnapshotTransition(false);
-      this.snapshot = config.pagebuilder_content_snapshot;
+      this.snapshot = !!config.pagebuilder_content_snapshot;
       this.config = config;
       this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
       this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
@@ -67,8 +67,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
-      _events.on("stage:fullScreenModeChangeAfter", this.toggleStage.bind(this));
-
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
       });
@@ -98,8 +96,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (!this.isFullScreen()) {
         pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-        this.previousPanelHeight = panel.outerHeight();
-        panel.css("height", this.previousPanelHeight + "px");
         /**
          * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
          * screen.
@@ -119,6 +115,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           this.isSnapshot(false);
           this.stageStyles(this.previousStyles);
         } else {
+          this.previousPanelHeight = panel.outerHeight();
+          panel.css("height", this.previousPanelHeight + "px");
           this.wrapperStyles(this.previousStyles);
         }
 
@@ -260,17 +258,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _underscore.defer(function () {
         require(previewTemplates);
       });
-    }
-    /**
-     * Renders only active stages.
-     * @param args
-     */
-    ;
-
-    _proto.toggleStage = function toggleStage(args) {
-      if (_config.getConfig("pagebuilder_content_snapshot")) {
-        this.isStageReady(args.pageBuilderId === this.id && this.isFullScreen() || !args.fullScreen);
-      }
     };
 
     return PageBuilder;
