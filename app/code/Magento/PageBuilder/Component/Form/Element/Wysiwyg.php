@@ -7,11 +7,14 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Component\Form\Element;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\PageBuilder\Model\View\File\Collector\PageBuilder;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use \Magento\PageBuilder\Model\Stage\Config as Config;
 
@@ -34,6 +37,8 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $components
      * @param array $data
      * @param array $config
+     * @param PageBuilderConfig $pageBuilderConfig
+     * @param bool $overrideSnapshot
      */
     public function __construct(
         ContextInterface $context,
@@ -44,7 +49,9 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         Config $stageConfig,
         array $components = [],
         array $data = [],
-        array $config = []
+        array $config = [],
+        PageBuilderConfig $pageBuilderConfig = null,
+        bool $overrideSnapshot = false
     ) {
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
         // If a dataType is present we're dealing with an attribute
@@ -69,12 +76,24 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $data['config']['template'] = 'Magento_PageBuilder/form/element/wysiwyg';
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/form/element/wysiwyg';
             $wysiwygConfigData = $stageConfig->getConfig();
+
+            if ($overrideSnapshot) {
+                $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
+                $wysiwygConfigData['pagebuilder_content_snapshot'] = $pageBuilderConfig->isContentPreviewEnabled();
+            }
+
+            // Add Classes for Page Builder Stage
+            if (isset($wysiwygConfigData['pagebuilder_content_snapshot'])
+                && $wysiwygConfigData['pagebuilder_content_snapshot']) {
+                $data['config']['additionalClasses'] = 'admin__field-wide admin__field-page-builder';
+            }
+
             $data['config']['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?
                 array_replace_recursive($config['wysiwygConfigData'], $wysiwygConfigData) :
                 $wysiwygConfigData;
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
+
             $config['wysiwygConfigData'] = $wysiwygConfigData;
-            $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
         }
 
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
