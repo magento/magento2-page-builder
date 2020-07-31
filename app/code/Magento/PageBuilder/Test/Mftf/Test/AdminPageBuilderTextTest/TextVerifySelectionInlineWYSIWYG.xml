@@ -31,11 +31,14 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="focusTinyMCE" stepKey="focusTinyMCE"/>
         <!-- Create new Heading 2 -->
@@ -58,8 +61,9 @@
         <actionGroup ref="seeVariableTinyMCE" stepKey="seeVariableTinyMCE">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue"/>
         </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE"/>
         <!-- Select portion of Heading "his is a h" -->
         <helper class="\Magento\PageBuilder\Test\Mftf\Helper\SelectText" method="selectText" stepKey="selectHeadingTextInTinyMCE">
