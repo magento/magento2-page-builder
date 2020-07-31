@@ -8,10 +8,11 @@ define(['underscore'], function (_underscore) {
 
     return function (target) {
         var originalTarget = target.trigger,
-            isAdminAnalyticsEnabled,
             action = '',
+            event,
             getAction,
-            event;
+            isAdminAnalyticsEnabled,
+            visibilityHasChanged;
 
         /**
          * Invokes custom code to track information regarding Page Builder usage
@@ -64,9 +65,7 @@ define(['underscore'], function (_underscore) {
         getAction = function (name, args) {
             var triggeredAction = '',
                 arrayName,
-                arrayNameObject,
-                state,
-                previousState;
+                arrayNameObject;
 
             if (name.indexOf('duplicateAfter') !== -1) triggeredAction = 'duplicate';
 
@@ -81,23 +80,29 @@ define(['underscore'], function (_underscore) {
 
                 if (arrayName.length === 3) {
                     arrayNameObject = arrayName[1];
-
-                    if (!_underscore.isUndefined(args[arrayNameObject]) &&
-                        !_underscore.isUndefined(args[arrayNameObject]).dataStore
-                    ) {
-                        previousState = !_underscore.isUndefined(args[arrayNameObject].dataStore.previousState) ?
-                            args[arrayNameObject].dataStore.previousState.display : '';
-                        state = !_underscore.isUndefined(args[arrayNameObject].dataStore.state) ?
-                            args[arrayNameObject].dataStore.state.display : '';
-
-                        if (previousState === true && state === false) triggeredAction = 'hide';
-                        else if (previousState === false && state === true) triggeredAction = 'show';
-                        else triggeredAction = '';
-                    }
+                    triggeredAction = visibilityHasChanged(args[arrayNameObject]) ? 'hide/show': '';
                 }
             }
 
             return triggeredAction;
+        };
+
+        visibilityHasChanged = function(objectWrapper) {
+            var state,
+                previousState;
+
+            if (!_underscore.isUndefined(objectWrapper) &&
+                !_underscore.isUndefined(objectWrapper).dataStore
+            ) {
+                previousState = !_underscore.isUndefined(objectWrapper.dataStore.previousState) ?
+                    objectWrapper.dataStore.previousState.display : '';
+                state = !_underscore.isUndefined(objectWrapper.dataStore.state) ?
+                    objectWrapper.dataStore.state.display : '';
+
+                if (previousState !== state && previousState !== '' && state !== '') return true;
+            }
+
+            return false;
         };
 
         return target;
