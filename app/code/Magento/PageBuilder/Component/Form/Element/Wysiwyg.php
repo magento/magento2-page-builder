@@ -69,6 +69,11 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $data['config']['template'] = 'ui/form/field';
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/form/element/wysiwyg';
             $wysiwygConfigData = $stageConfig->getConfig();
+            $wysiwygConfigData['pagebuilder_button'] = true;
+            $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
+            $data['config']['additionalClasses'] = [
+                'admin__field-wide admin__field-page-builder' => true
+            ];
             $data['config']['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?
                 array_replace_recursive($config['wysiwygConfigData'], $wysiwygConfigData) :
                 $wysiwygConfigData;
