@@ -10,10 +10,10 @@ define(['underscore'], function (_underscore) {
         var originalTarget = target.trigger,
             action = '',
             event,
-            getAction,
-            isAdminAnalyticsEnabled,
+            eventData,
             hasVisibilityChanged,
-            objectToCheck;
+            isAdminAnalyticsEnabled,
+            setupEventAttributes;
 
         /**
          * Invokes custom code to track information regarding Page Builder usage
@@ -27,7 +27,6 @@ define(['underscore'], function (_underscore) {
             isAdminAnalyticsEnabled =
                 !_underscore.isUndefined(window.digitalData) &&
                 !_underscore.isUndefined(window._satellite);
-            objectToCheck = '';
 
             if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
                 window.digitalData.page.url = window.location.href;
@@ -37,27 +36,19 @@ define(['underscore'], function (_underscore) {
                 window._satellite.track('page');
             }
 
-            console.log("antes", name);
-            action = getAction(name, args);
+            setupEventAttributes(name, args);
 
-            if (objectToCheck === '') objectToCheck = args.contentType;
-
-            if (!_underscore.isUndefined(args) && !_underscore.isUndefined(args.contentType) &&
-                !_underscore.isUndefined(objectToCheck.config) && action !== ''
-            ) {
-                console.log('justo antes de event');
+            if (action !== '' && !_underscore.isEmpty(eventData)) {
                 event = {
-                    element: objectToCheck.config.label,
-                    type: objectToCheck.config.name,
+                    element: eventData.label,
+                    type: eventData.name,
                     action: action,
                     widget: {
-                        name: objectToCheck.config.form,
-                        type: objectToCheck.config.menu_section
+                        name: eventData.form,
+                        type: eventData.menu_section
                     },
                     feature: 'page-builder-tracker'
                 };
-
-                console.log('dentro', event);
 
                 if (isAdminAnalyticsEnabled && !_underscore.isUndefined(window.digitalData.event)) {
                     window.digitalData.event.push(event);
@@ -66,33 +57,47 @@ define(['underscore'], function (_underscore) {
             }
         };
 
-        getAction = function (name, args) {
-            var triggeredAction = '',
-                arrayName,
+        setupEventAttributes = function (name, args) {
+            var arrayName = name.split(':'),
                 arrayNameObject;
 
-            if (name.indexOf('duplicateAfter') !== -1) triggeredAction = 'duplicate';
+            action = '';
+            eventData = {};
 
-            if (name.indexOf('removeAfter') !== -1) triggeredAction = 'remove';
-
-            if (name.indexOf('createAfter') !== -1) triggeredAction = 'create';
-
-            if (name.indexOf('renderAfter') !== -1) triggeredAction = 'edit';
-
-            if (name.indexOf('updateAfter') !== -1) {
-                arrayName = name.split(':');
-
-                if (arrayName.length === 3) {
-                    arrayNameObject = arrayName[1];
-                    triggeredAction = hasVisibilityChanged(args[arrayNameObject]) ? 'hide/show': '';
-                    objectToCheck = args[arrayNameObject];
-                }
+            if (_underscore.isUndefined(args)) {
+                return;
             }
 
-            return triggeredAction;
+            if (arrayName.length === 3) {
+                arrayNameObject = arrayName[1];
+                action = hasVisibilityChanged(args[arrayNameObject]) ? 'hide/show' : '';
+                eventData =
+                    !_underscore.isUndefined(args[arrayNameObject]) &&
+                    !_underscore.isUndefined(args[arrayNameObject].config) ?
+                        args[arrayNameObject].config : {};
+            } else if (arrayName.length === 2) {
+                if (name.indexOf('duplicateAfter') !== -1) {
+                    action = 'duplicate';
+                    eventData =
+                        !_underscore.isUndefined(args.originalContentType) &&
+                        !_underscore.isUndefined(args.originalContentType.config) ?
+                            args.originalContentType.config : {};
+                }
+
+                if (name.indexOf('removeAfter') !== -1) action = 'remove';
+
+                if (name.indexOf('createAfter') !== -1) action = 'create';
+
+                if (name.indexOf('renderAfter') !== -1) action = 'edit';
+
+                eventData =
+                    !_underscore.isUndefined(args.contentType) &&
+                    !_underscore.isUndefined(args.contentType.config) ?
+                        args.contentType.config : {};
+            }
         };
 
-        hasVisibilityChanged = function(objectWrapper) {
+        hasVisibilityChanged = function (objectWrapper) {
             var state,
                 previousState;
 
