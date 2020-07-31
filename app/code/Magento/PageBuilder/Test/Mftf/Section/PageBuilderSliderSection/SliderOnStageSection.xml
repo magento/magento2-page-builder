@@ -10,6 +10,7 @@
     <section name="SliderOnStage">
         <element name="all" type="button" selector="div[data-content-type=slider]"/>
         <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="div.pagebuilder-content-type.pagebuilder-slider"/>
         <element name="containerCSS" type="text" selector="[data-content-type=slider] &gt; .slider-container"/>
         <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
