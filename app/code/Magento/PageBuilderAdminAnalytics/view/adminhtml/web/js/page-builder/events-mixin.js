@@ -12,7 +12,8 @@ define(['underscore'], function (_underscore) {
             event,
             getAction,
             isAdminAnalyticsEnabled,
-            visibilityHasChanged;
+            hasVisibilityChanged,
+            objectToCheck;
 
         /**
          * Invokes custom code to track information regarding Page Builder usage
@@ -26,6 +27,7 @@ define(['underscore'], function (_underscore) {
             isAdminAnalyticsEnabled =
                 !_underscore.isUndefined(window.digitalData) &&
                 !_underscore.isUndefined(window._satellite);
+            objectToCheck = '';
 
             if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
                 window.digitalData.page.url = window.location.href;
@@ -38,17 +40,19 @@ define(['underscore'], function (_underscore) {
             console.log("antes", name);
             action = getAction(name, args);
 
+            if (objectToCheck === '') objectToCheck = args.contentType;
+
             if (!_underscore.isUndefined(args) && !_underscore.isUndefined(args.contentType) &&
-                !_underscore.isUndefined(args.contentType.config && action !== '')
+                !_underscore.isUndefined(objectToCheck.config) && action !== ''
             ) {
                 console.log('justo antes de event');
                 event = {
-                    element: args.contentType.config.label,
-                    type: args.contentType.config.name,
+                    element: objectToCheck.config.label,
+                    type: objectToCheck.config.name,
                     action: action,
                     widget: {
-                        name: args.contentType.config.form,
-                        type: args.contentType.config.menu_section
+                        name: objectToCheck.config.form,
+                        type: objectToCheck.config.menu_section
                     },
                     feature: 'page-builder-tracker'
                 };
@@ -80,14 +84,15 @@ define(['underscore'], function (_underscore) {
 
                 if (arrayName.length === 3) {
                     arrayNameObject = arrayName[1];
-                    triggeredAction = visibilityHasChanged(args[arrayNameObject]) ? 'hide/show': '';
+                    triggeredAction = hasVisibilityChanged(args[arrayNameObject]) ? 'hide/show': '';
+                    objectToCheck = args[arrayNameObject];
                 }
             }
 
             return triggeredAction;
         };
 
-        visibilityHasChanged = function(objectWrapper) {
+        hasVisibilityChanged = function(objectWrapper) {
             var state,
                 previousState;
 
