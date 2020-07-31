@@ -21,6 +21,7 @@
         <waitForElementVisible time="30" selector="{{snapshotSelector}}" stepKey="waitForSnapshot"/>
         <waitForElementVisible time="30" selector="{{editButtonSelector}}" stepKey="waitForEditButton"/>
         <click selector="{{editButtonSelector}}" stepKey="clickEditButton"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementNotVisible selector="{{PageBuilderStage.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
         <waitForElementVisible time="30" selector="{{RowOnStage.base(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
