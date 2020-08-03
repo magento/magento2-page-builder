@@ -10,7 +10,7 @@ define(['underscore'], function (_underscore) {
         var originalTarget = target.trigger,
             action = '',
             event,
-            eventData,
+            eventAttributes,
             hasVisibilityChanged,
             isAdminAnalyticsEnabled,
             setupEventAttributes;
@@ -38,14 +38,14 @@ define(['underscore'], function (_underscore) {
 
             setupEventAttributes(name, args);
 
-            if (action !== '' && !_underscore.isEmpty(eventData)) {
+            if (action !== '' && !_underscore.isEmpty(eventAttributes)) {
                 event = {
-                    element: eventData.label,
-                    type: eventData.name,
+                    element: eventAttributes.label,
+                    type: eventAttributes.name,
                     action: action,
                     widget: {
-                        name: eventData.form,
-                        type: eventData.menu_section
+                        name: eventAttributes.form,
+                        type: eventAttributes.menu_section
                     },
                     feature: 'page-builder-tracker'
                 };
@@ -57,12 +57,18 @@ define(['underscore'], function (_underscore) {
             }
         };
 
+        /**
+         * Sets up event attributes depending on name and args
+         *
+         * @param name
+         * @param args
+         */
         setupEventAttributes = function (name, args) {
             var arrayName = name.split(':'),
                 arrayNameObject;
 
             action = '';
-            eventData = {};
+            eventAttributes = {};
 
             if (_underscore.isUndefined(args)) {
                 return;
@@ -71,14 +77,14 @@ define(['underscore'], function (_underscore) {
             if (arrayName.length === 3) {
                 arrayNameObject = arrayName[1];
                 action = hasVisibilityChanged(args[arrayNameObject]) ? 'hide/show' : '';
-                eventData =
+                eventAttributes =
                     !_underscore.isUndefined(args[arrayNameObject]) &&
                     !_underscore.isUndefined(args[arrayNameObject].config) ?
                         args[arrayNameObject].config : {};
             } else if (arrayName.length === 2) {
                 if (name.indexOf('duplicateAfter') !== -1) {
                     action = 'duplicate';
-                    eventData =
+                    eventAttributes =
                         !_underscore.isUndefined(args.originalContentType) &&
                         !_underscore.isUndefined(args.originalContentType.config) ?
                             args.originalContentType.config : {};
@@ -90,13 +96,19 @@ define(['underscore'], function (_underscore) {
 
                 if (name.indexOf('renderAfter') !== -1) action = 'edit';
 
-                eventData =
+                eventAttributes =
                     !_underscore.isUndefined(args.contentType) &&
                     !_underscore.isUndefined(args.contentType.config) ?
                         args.contentType.config : {};
             }
         };
 
+        /**
+         * Checks if visibility has changed from previousState to state
+         *
+         * @param objectWrapper
+         * @return {boolean} Returns true when the display attribute on previousState is different from state
+         */
         hasVisibilityChanged = function (objectWrapper) {
             var state,
                 previousState;
