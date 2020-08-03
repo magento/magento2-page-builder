@@ -45,7 +45,7 @@ define(['underscore'], function (_underscore) {
                     action: action,
                     widget: {
                         name: eventAttributes.form,
-                        type: eventAttributes.menu_section
+                        type: eventAttributes['menu_section']
                     },
                     feature: 'page-builder-tracker'
                 };
