@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="PageBuilderStage">
         <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="applyTemplateButton" type="button" selector="//button[contains(@data-bind,'toggleTemplateManger') and text()='Apply Template']"/>
@@ -19,6 +18,7 @@
         <element name="enabled" type="button" selector="//div[not(contains(@class, '_disabled'))]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
         <element name="disabled" type="button" selector="//div[contains(@class, '_disabled')]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
+        <element name="stageSnapshot" type="button" selector="//div[contains(@class, 'pagebuilder-wysiwyg-wrapper') and contains(@class, 'pagebuilder-wysiwyg-snapshot')]"/>
         <element name="stageOverlay" type="button" selector="div.pagebuilder-wysiwyg-overlay"/>
         <element name="stageOverlayOnHover" type="button" selector="div.pagebuilder-wysiwyg-overlay._hover"/>
         <element name="stageWidthJS" type="button" selector="document.querySelector('div[class~=\'root-container-container\']').clientWidth"/>
