@@ -122,13 +122,13 @@ define([
          */
         toggleFocusableElements: function () {
             var pageBuilderSelector = '#' + this.pageBuilder.id,
-                editableSelector = ' [contenteditable]',
+                editable = $(pageBuilderSelector).find('[contenteditable]:not(.mceNonEditable)'),
                 focusableSelector = ' :focusable:not(' + this.overlaySelector + ')',
                 mediaSelector = pageBuilderSelector + ' iframe,' + pageBuilderSelector + ' video',
                 tabIndexValue = this.pageBuilder.isFullScreen() ? '0' : '-1',
                 editableValue = this.pageBuilder.isFullScreen();
 
-            $(pageBuilderSelector + editableSelector).attr('contenteditable', editableValue);
+            editable.attr('contenteditable', editableValue);
             $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue);
             $(mediaSelector).attr('tabindex', tabIndexValue);
         },
