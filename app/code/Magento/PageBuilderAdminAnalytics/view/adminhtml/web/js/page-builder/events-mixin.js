@@ -60,8 +60,8 @@ define(['underscore'], function (_underscore) {
         /**
          * Sets up event attributes depending on name and args
          *
-         * @param name
-         * @param args
+         * @param {String} name
+         * @param {Array} args
          */
         setupEventAttributes = function (name, args) {
             var arrayName = name.split(':'),
@@ -90,11 +90,17 @@ define(['underscore'], function (_underscore) {
                             args.originalContentType.config : {};
                 }
 
-                if (name.indexOf('removeAfter') !== -1) action = 'remove';
+                if (name.indexOf('removeAfter') !== -1) {
+                    action = 'remove';
+                }
 
-                if (name.indexOf('createAfter') !== -1) action = 'create';
+                if (name.indexOf('createAfter') !== -1) {
+                    action = 'create';
+                }
 
-                if (name.indexOf('renderAfter') !== -1) action = 'edit';
+                if (name.indexOf('renderAfter') !== -1) {
+                    action = 'edit';
+                }
 
                 eventAttributes =
                     !_underscore.isUndefined(args.contentType) &&
@@ -104,10 +110,9 @@ define(['underscore'], function (_underscore) {
         };
 
         /**
-         * Checks if visibility has changed from previousState to state
+         * Returns true when visibility has changed from previousState to state
          *
-         * @param objectWrapper
-         * @return {boolean} Returns true when the display attribute on previousState is different from state
+         * @param {Object} objectWrapper
          */
         hasVisibilityChanged = function (objectWrapper) {
             var state,
@@ -121,7 +126,9 @@ define(['underscore'], function (_underscore) {
                 state = !_underscore.isUndefined(objectWrapper.dataStore.state) ?
                     objectWrapper.dataStore.state.display : '';
 
-                if (previousState !== state && previousState !== '' && state !== '') return true;
+                if (previousState !== state && previousState !== '' && state !== '') {
+                    return true;
+                }
             }
 
             return false;
