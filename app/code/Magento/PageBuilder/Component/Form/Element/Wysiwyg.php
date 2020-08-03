@@ -39,6 +39,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
+     * @suppresswarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         ContextInterface $context,
@@ -54,10 +55,12 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         bool $overrideSnapshot = false
     ) {
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
+
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
                 $attribute = $attrRepository->get($data['name']);
+
                 if ($attribute) {
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
@@ -65,6 +68,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                 // This model is used by non product attributes
             }
         }
+
         $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
             && !$wysiwygConfigData['is_pagebuilder_enabled']
             || false;
