@@ -29,7 +29,7 @@
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
-            <magentoCLI command="config:set cms/pagebuilder/enable_content_preview 1" stepKey="enablePageBuilderContentPreview"/>
+            <actionGroup ref="adminSetPageBuilderContentPreviewActionGroup" stepKey="resetPageBuilderContentPreview"/>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>

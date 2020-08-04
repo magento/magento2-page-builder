@@ -68,7 +68,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     public function isEnabled(): bool
     {
         return (bool)$this->scopeConfig->getValue(
-            \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
+            self::IS_PAGEBUILDER_ENABLED
         );
     }
 
@@ -80,7 +80,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     public function isContentPreviewEnabled(): bool
     {
         return (bool) $this->scopeConfig->getValue(
-            \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_CONTENT_PREVIEW_ENABLED
+            self::IS_PAGEBUILDER_CONTENT_PREVIEW_ENABLED
         );
     }
 }
