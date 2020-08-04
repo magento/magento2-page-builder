@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define(['underscore'], function (_underscore) {
+define(['underscore'], function (_) {
     'use strict';
 
     return function (target) {
@@ -25,8 +25,8 @@ define(['underscore'], function (_underscore) {
         target.trigger = function (name, args) {
             originalTarget.apply(originalTarget, [name, args]);
             isAdminAnalyticsEnabled =
-                !_underscore.isUndefined(window.digitalData) &&
-                !_underscore.isUndefined(window._satellite);
+                !_.isUndefined(window.digitalData) &&
+                !_.isUndefined(window._satellite);
 
             if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
                 window.digitalData.page.url = window.location.href;
@@ -38,7 +38,7 @@ define(['underscore'], function (_underscore) {
 
             setupEventAttributes(name, args);
 
-            if (action !== '' && !_underscore.isEmpty(eventAttributes)) {
+            if (action !== '' && !_.isEmpty(eventAttributes)) {
                 event = {
                     element: eventAttributes.label,
                     type: eventAttributes.name,
@@ -50,7 +50,7 @@ define(['underscore'], function (_underscore) {
                     feature: 'page-builder-tracker'
                 };
 
-                if (isAdminAnalyticsEnabled && !_underscore.isUndefined(window.digitalData.event)) {
+                if (isAdminAnalyticsEnabled && !_.isUndefined(window.digitalData.event)) {
                     window.digitalData.event.push(event);
                     window._satellite.track('event');
                 }
@@ -70,7 +70,7 @@ define(['underscore'], function (_underscore) {
             action = '';
             eventAttributes = {};
 
-            if (_underscore.isUndefined(args)) {
+            if (_.isUndefined(args)) {
                 return;
             }
 
@@ -78,33 +78,38 @@ define(['underscore'], function (_underscore) {
                 arrayNameObject = arrayName[1];
                 action = hasVisibilityChanged(args[arrayNameObject]) ? 'hide/show' : '';
                 eventAttributes =
-                    !_underscore.isUndefined(args[arrayNameObject]) &&
-                    !_underscore.isUndefined(args[arrayNameObject].config) ?
+                    !_.isUndefined(args[arrayNameObject]) &&
+                    !_.isUndefined(args[arrayNameObject].config) ?
                         args[arrayNameObject].config : {};
             } else if (arrayName.length === 2) {
-                if (name.indexOf('duplicateAfter') !== -1) {
-                    action = 'duplicate';
-                    eventAttributes =
-                        !_underscore.isUndefined(args.originalContentType) &&
-                        !_underscore.isUndefined(args.originalContentType.config) ?
-                            args.originalContentType.config : {};
-                }
+                switch (arrayName[arrayName.length - 1]) {
+                    case 'duplicateAfter':
+                        action = 'duplicate';
+                        eventAttributes =
+                            !_.isUndefined(args.originalContentType) &&
+                            !_.isUndefined(args.originalContentType.config) ?
+                                args.originalContentType.config : {};
+                        break;
 
-                if (name.indexOf('removeAfter') !== -1) {
-                    action = 'remove';
-                }
+                    case 'removeAfter':
+                        action = 'remove';
+                        break;
 
-                if (name.indexOf('createAfter') !== -1) {
-                    action = 'create';
-                }
+                    case 'createAfter':
+                        action = 'create';
+                        break;
 
-                if (name.indexOf('renderAfter') !== -1) {
-                    action = 'edit';
+                    case 'renderAfter':
+                        action = 'edit';
+                        break;
+
+                    default:
+                        break;
                 }
 
                 eventAttributes =
-                    !_underscore.isUndefined(args.contentType) &&
-                    !_underscore.isUndefined(args.contentType.config) ?
+                    !_.isUndefined(args.contentType) &&
+                    !_.isUndefined(args.contentType.config) ?
                         args.contentType.config : {};
             }
         };
@@ -118,12 +123,12 @@ define(['underscore'], function (_underscore) {
             var state,
                 previousState;
 
-            if (!_underscore.isUndefined(objectWrapper) &&
-                !_underscore.isUndefined(objectWrapper).dataStore
+            if (!_.isUndefined(objectWrapper) &&
+                !_.isUndefined(objectWrapper).dataStore
             ) {
-                previousState = !_underscore.isUndefined(objectWrapper.dataStore.previousState) ?
+                previousState = !_.isUndefined(objectWrapper.dataStore.previousState) ?
                     objectWrapper.dataStore.previousState.display : '';
-                state = !_underscore.isUndefined(objectWrapper.dataStore.state) ?
+                state = !_.isUndefined(objectWrapper.dataStore.state) ?
                     objectWrapper.dataStore.state.display : '';
 
                 if (previousState !== state && previousState !== '' && state !== '') {
