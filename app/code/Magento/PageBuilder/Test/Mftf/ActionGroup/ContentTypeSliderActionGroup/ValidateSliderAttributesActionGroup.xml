@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateSliderAttributesActionGroup">
+        <annotations>
+            <description>Validates a slider instance based on its HTML attributes.</description>
+        </annotations>
+        <arguments>
+            <argument name="sliderSection" defaultValue="SliderOnStage"/>
+            <argument name="sliderIndex" defaultValue="1" type="string"/>
+            <argument name="sliderAutoplay" defaultValue="{{PageBuilderSliderAutoPlay_Disabled.value}}" type="string"/>
+            <argument name="sliderAutoplaySpeed" defaultValue="{{PageBuilderSliderAutoPlaySpeed_Default.value}}" type="string"/>
+            <argument name="sliderFade" defaultValue="{{PageBuilderSliderFade_Disabled.value}}" type="string"/>
+            <argument name="sliderInfiniteLoop" defaultValue="{{PageBuilderSliderInfiniteLoop_Disabled.value}}" type="string"/>
+            <argument name="sliderShowArrows" defaultValue="{{PageBuilderSliderShowArrows_Disabled.value}}" type="string"/>
+            <argument name="sliderShowDots" defaultValue="{{PageBuilderSliderShowDots_Enabled.value}}" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{sliderSection.autoPlay(sliderIndex, sliderAutoplay)}}" stepKey="seeAutoplay"/>
+        <waitForElementVisible selector="{{sliderSection.autoPlaySpeed(sliderIndex, sliderAutoplaySpeed)}}" stepKey="seeAutoplaySpeed"/>
+        <waitForElementVisible selector="{{sliderSection.fade(sliderIndex, sliderFade)}}" stepKey="seeFade"/>
+        <waitForElementVisible selector="{{sliderSection.infiniteLoop(sliderIndex, sliderInfiniteLoop)}}" stepKey="seeInfiniteLoop"/>
+        <waitForElementVisible selector="{{sliderSection.showArrows(sliderIndex, sliderShowArrows)}}" stepKey="seeShowArrows"/>
+        <waitForElementVisible selector="{{sliderSection.showDots(sliderIndex, sliderShowDots)}}" stepKey="seeShowDots"/>
+    </actionGroup>
+</actionGroups>
