@@ -39,7 +39,9 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function __construct(
         ContextInterface $context,
@@ -65,7 +67,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {
-                // This model is used by non product attributes
+                throw new NoSuchEntityException();
             }
         }
 
