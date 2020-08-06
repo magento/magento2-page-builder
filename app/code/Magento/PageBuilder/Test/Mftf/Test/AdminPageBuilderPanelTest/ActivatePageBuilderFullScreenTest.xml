@@ -27,17 +27,17 @@
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stagePreview}}" stepKey="waitForStage"/>
         <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen"/>
         <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
         <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderStage.stageNotNormalScreen}}" stepKey="verifyStageNotNormalScreen"/>
-        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stagePreview}}" stepKey="verifyStageNotNormalScreen"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="clickExitFullScreen"/>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
         <waitForPageLoad stepKey="waitForFullScreenAnimation2"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stagePreview}}" stepKey="waitForStage2"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
 </tests>
