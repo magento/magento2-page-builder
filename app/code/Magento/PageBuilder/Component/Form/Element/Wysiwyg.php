@@ -56,6 +56,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                 }
             } catch (NoSuchEntityException $e) {
                 // This model is used by non product attributes
+                $config['wysiwyg'] = false;
             }
         }
         $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
