@@ -33,8 +33,10 @@
         <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
         <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="clickExitFullScreen"/>
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation2"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
 </tests>
