@@ -14,7 +14,6 @@ use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\PageBuilder\Model\Stage\Config as Config;
-use Psr\Log\LoggerInterface;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -24,14 +23,8 @@ use Psr\Log\LoggerInterface;
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * Wysiwyg constructor.
      *
-     * @param LoggerInterface $logger
      * @param ContextInterface $context
      * @param FormFactory $formFactory
      * @param ConfigInterface $wysiwygConfig
@@ -43,7 +36,6 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      */
     public function __construct(
-        LoggerInterface $logger,
         ContextInterface $context,
         FormFactory $formFactory,
         ConfigInterface $wysiwygConfig,
@@ -63,9 +55,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {
-                $logger->warning(
-                    __('This model is used by non product attributes: %1', $e->getMessage())
-                );
+                // This model is used by non product attributes
             }
         }
         $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
@@ -88,6 +78,5 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         }
 
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
-        $this->logger = $logger;
     }
 }
