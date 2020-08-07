@@ -6,17 +6,25 @@
 -->
 
 <div visible="visible" css="{'_disabled': disabled}">
-    <button if="wysiwygConfigData()['pagebuilder_button']"
+    <button if="wysiwygConfigData()['pagebuilder_button'] || wysiwygConfigData()['pagebuilder_content_snapshot']"
             type="button"
             class="action-default action"
             ko-disabled="disabled"
-            click="pageBuilderEditButtonClick.bind($data)">
+            click="pageBuilderEditButtonClick.bind($data)"
+            event="{ mouseover: overlayMouseover.bind($data, true), mouseout: overlayMouseover.bind($data, false) }, mouseoverBubble: false">
         <span translate="pageBuilderEditButtonText" />
     </button>
     <if args="isComponentInitialized">
         <div visible="visiblePageBuilder"
              class="pagebuilder-wysiwyg-wrapper"
-             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut}">
+             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'] && !wysiwygConfigData()['pagebuilder_content_snapshot'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut, 'pagebuilder-wysiwyg-snapshot': wysiwygConfigData()['pagebuilder_content_snapshot']}">
+            <div if="wysiwygConfigData()['pagebuilder_content_snapshot']"
+                 class="pagebuilder-wysiwyg-overlay"
+                 click="pageBuilderEditButtonClick.bind($data)"
+                 css="'visible': !pageBuilder.isFullScreen(), _hover: overlayMouseover"
+                 event="{ mouseover: overlayMouseover.bind($data, true), mouseout: overlayMouseover.bind($data, false), keydown: onOverlayKeyDown }, mouseoverBubble: false"
+                 tabindex="0">
+            </div>
             <with args="pageBuilder">
                 <render />
             </with>

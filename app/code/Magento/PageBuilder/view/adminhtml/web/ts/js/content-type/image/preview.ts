@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import {ContentTypeReadyEventParamsInterface} from "Magento_PageBuilder/js/content-type/content-type-events.types";
 import events from "Magento_PageBuilder/js/events";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
@@ -58,6 +59,15 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
+        events.on("image:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.isSnapshot.subscribe((value) => {
+                    this.changeUploaderControlsVisibility();
+                });
+                this.changeUploaderControlsVisibility();
+            }
+        });
+
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const files = this
                 .contentType
@@ -65,6 +75,15 @@ export default class Preview extends BasePreview {
                 .get<object[]>(this.config.additional_data.uploaderConfig.dataScope);
             const imageObject: object = files ? (files[0] as object) : {};
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
+        });
+    }
+
+    /**
+     * Change uploader controls visibility
+     */
+    private changeUploaderControlsVisibility() {
+        this.getUploader().getUiComponent()((uploader: any) => {
+            uploader.visibleControls = !this.isSnapshot();
         });
     }
 }

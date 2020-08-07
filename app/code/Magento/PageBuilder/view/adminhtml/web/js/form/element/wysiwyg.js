@@ -24,10 +24,14 @@ define([
             transitionOut: false,
             elementSelector: '> textarea',
             stageSelector: '.pagebuilder-stage-wrapper',
+            overlaySelector: '.pagebuilder-wysiwyg-overlay',
+            overlayMouseover: false,
             pageBuilder: false,
             visiblePageBuilder: false,
             isComponentInitialized: false,
-            wysiwygConfigData: {},
+            wysiwygConfigData: {
+                isFullScreen: false
+            },
             pageBuilderEditButtonText: $t('Edit with Page Builder'),
             isWithinModal: false,
             modal: false
@@ -39,7 +43,8 @@ define([
         initialize: function () {
             this._super();
 
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
+            if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                 this.initPageBuilder();
             }
 
@@ -52,7 +57,7 @@ define([
         initObservable: function () {
             this._super()
                 .observe('isComponentInitialized visiblePageBuilder wysiwygConfigData loading transition ' +
-                    'transitionOut');
+                    'transitionOut overlayMouseover');
 
             return this;
         },
@@ -78,7 +83,10 @@ define([
         initPageBuilder: function () {
             if (!this.isComponentInitialized()) {
                 this.loading(true);
-                this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
+                this.pageBuilder = new PageBuilder(
+                  this.wysiwygConfigData(),
+                  this.initialValue
+                );
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,
                     instance: this.pageBuilder
@@ -91,10 +99,11 @@ define([
                     component: this,
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
-            }
 
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
-                this.visiblePageBuilder(true);
+                if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                    this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.visiblePageBuilder(true);
+                }
             }
         },
 
@@ -106,6 +115,22 @@ define([
         disableDomObserver: function (node) {
             this.determineIfWithinModal(node);
             domObserver.disableNode(node);
+        },
+
+        /**
+         * Changes tabindex and content editable on stage elements
+         */
+        toggleFocusableElements: function () {
+            var pageBuilderSelector = '#' + this.pageBuilder.id,
+                editable = $(pageBuilderSelector).find('[contenteditable]:not(.mceNonEditable)'),
+                focusableSelector = ' :focusable:not(' + this.overlaySelector + ')',
+                mediaSelector = pageBuilderSelector + ' iframe,' + pageBuilderSelector + ' video',
+                tabIndexValue = this.pageBuilder.isFullScreen() ? '0' : '-1',
+                editableValue = this.pageBuilder.isFullScreen();
+
+            editable.attr('contenteditable', editableValue);
+            $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue);
+            $(mediaSelector).attr('tabindex', tabIndexValue);
         },
 
         /**
@@ -125,11 +150,22 @@ define([
         },
 
         /**
+         * Press Enter key on Overlay
+         */
+        onOverlayKeyDown: function (context, event) {
+            if (event.which === 13 || event.keyCode === 13) {
+                this.pageBuilderEditButtonClick(context, event);
+            }
+
+            return true;
+        },
+
+        /**
          * Toggle Page Builder full screen mode
          */
         toggleFullScreen: function () {
             events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {
-                animate: false
+                animate: !!this.wysiwygConfigData()['pagebuilder_content_snapshot']
             });
         },
 
@@ -153,6 +189,10 @@ define([
 
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
+
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.toggleFocusableElements();
+                }
             }.bind(this));
 
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
@@ -166,7 +206,8 @@ define([
                         }.bind(this), 350);
                     }
 
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    if (this.wysiwygConfigData()['pagebuilder_button'] &&
+                        !this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                         // Force full screen mode whilst the animation occurs
                         this.transitionOut(true);
                         // Trigger animation out
@@ -186,7 +227,8 @@ define([
                         });
                     }
 
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    if (this.wysiwygConfigData()['pagebuilder_button'] &&
+                        !this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                         this.visiblePageBuilder(true);
 
                         fullScreenDeferred.resolve();
@@ -200,6 +242,10 @@ define([
                         }
                         /* eslint-enable max-depth */
                     }
+                }
+
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.toggleFocusableElements();
                 }
             }.bind(this));
 
