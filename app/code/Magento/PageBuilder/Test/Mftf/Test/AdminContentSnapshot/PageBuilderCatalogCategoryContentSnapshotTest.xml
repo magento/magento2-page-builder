@@ -31,7 +31,7 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Verify Page Builder preview is ready -->
-        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreview"/>
+        <actionGroup ref="validatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreview"/>
         <!-- Verify Empty Row -->
         <actionGroup ref="verifyEmptyStage" stepKey="verifyPreviewEmptyRow"/>
         <!-- Open Page Builder Full Screen -->
@@ -55,7 +55,7 @@
         <!-- Verify no Empty Preview Message on Stage -->
         <dontSeeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeEmptyRowOnPreview"/>
         <!-- Verify Page Builder preview is ready -->
-        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreviewAfterFullScreen"/>
+        <actionGroup ref="validatePageBuilderPreviewActionGroup" stepKey="verifyPageBuilderPreviewAfterFullScreen"/>
         <!-- Verify Page Builder Full Screen -->
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
     </test>

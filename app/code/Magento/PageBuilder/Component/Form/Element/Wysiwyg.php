@@ -13,7 +13,7 @@ use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\State as PageBuilderState;
-use \Magento\PageBuilder\Model\Stage\Config as Config;
+use Magento\PageBuilder\Model\Stage\Config as Config;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -56,6 +56,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                 }
             } catch (NoSuchEntityException $e) {
                 // This model is used by non product attributes
+                $config['wysiwyg'] = false;
             }
         }
         $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
