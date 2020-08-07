@@ -67,7 +67,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {
-                throw new NoSuchEntityException();
+                $config['wysiwyg'] = false;
             }
         }
 
