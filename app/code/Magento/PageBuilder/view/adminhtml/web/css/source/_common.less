@@ -48,3 +48,30 @@
         display: none !important;
     }
 }
+
+//
+//  Animations
+//  _____________________________________________
+
+.keyframes(
+    @name;
+    @arguments
+) {
+    @-moz-keyframes @name {
+        @arguments();
+    }
+
+    @-webkit-keyframes @name {
+        @arguments();
+    }
+
+    @keyframes @name {
+        @arguments();
+    }
+}
+
+.animation (@arguments) {
+    -webkit-animation: @arguments;
+    -moz-animation: @arguments;
+    animation: @arguments;
+}

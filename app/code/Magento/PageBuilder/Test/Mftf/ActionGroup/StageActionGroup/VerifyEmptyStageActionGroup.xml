@@ -18,6 +18,7 @@
         <waitForPageLoad stepKey="waitForStageLoad"/>
         <waitForElementVisible selector="{{RowOnStage.empty(rowIndex)}}" stepKey="waitForEmptyRow"/>
         <seeElement selector="{{RowOnStage.empty(rowIndex)}}" stepKey="seeEmptyRow"/>
+        <see userInput="Drag content types or columns here" selector="{{RowOnStage.emptyPlaceholder(rowIndex)}}" stepKey="seeEmptyRowPlaceholderMessage"/>
         <seeNumberOfElements userInput="1" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
     </actionGroup>
 </actionGroups>

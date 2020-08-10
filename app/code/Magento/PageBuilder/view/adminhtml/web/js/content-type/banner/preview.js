@@ -426,6 +426,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _events.on("banner:mountAfter", function (args) {
         if (args.id === _this8.contentType.id) {
           _this8.buildJarallax();
+
+          _this8.isSnapshot.subscribe(function (value) {
+            _this8.changeUploaderControlsVisibility();
+          });
+
+          _this8.changeUploaderControlsVisibility();
         }
       });
 
@@ -449,6 +455,18 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
 
       _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
         _this8.contentType.dataStore.set("background_type", "image");
+      });
+    }
+    /**
+     * Change uploader controls visibility
+     */
+    ;
+
+    _proto.changeUploaderControlsVisibility = function changeUploaderControlsVisibility() {
+      var _this9 = this;
+
+      this.getUploader().getUiComponent()(function (uploader) {
+        uploader.visibleControls = !_this9.isSnapshot();
       });
     }
     /**
@@ -476,7 +494,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
     ;
 
     _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
-      var _this9 = this;
+      var _this10 = this;
 
       var previousState = this.contentType.dataStore.getPreviousState();
 
@@ -488,7 +506,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
             return (!_underscore.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !== (!_underscore.isEmpty(state.video_fallback_image) && state.video_fallback_image);
           }
 
-          return _this9.videoUpdateProperties.indexOf(element.name) !== -1;
+          return _this10.videoUpdateProperties.indexOf(element.name) !== -1;
         });
       }
     };
