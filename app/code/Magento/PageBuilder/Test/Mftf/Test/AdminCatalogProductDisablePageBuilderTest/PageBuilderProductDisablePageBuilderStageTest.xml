@@ -29,7 +29,7 @@
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
-            <actionGroup ref="adminSetPageBuilderContentPreviewActionGroup" stepKey="resetPageBuilderContentPreview"/>
+            <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="resetPageBuilderContentPreview"/>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -37,7 +37,7 @@
         <!-- Verify (Enabled) Content Preview -->
         <actionGroup ref="validatePageBuilderPreviewActionGroup" stepKey="validatePageBuilderPreviewActionGroup"/>
         <!-- Verify (Disabled) Content Preview -->
-        <actionGroup ref="adminSetPageBuilderContentPreviewActionGroup" stepKey="disablePageBuilderContentPreview">
+        <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="disablePageBuilderContentPreview">
             <argument name="enablePageBuilderContentPreview" value="0"/>
         </actionGroup>
         <reloadPage stepKey="reloadPage"/>
