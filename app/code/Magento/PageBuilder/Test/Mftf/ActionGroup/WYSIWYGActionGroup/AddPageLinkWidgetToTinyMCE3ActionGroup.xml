@@ -7,13 +7,13 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE">
+    <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE" deprecated="This version of TinyMCE is no longer supported">
         <arguments>
             <argument name="page" defaultValue="" type="string"/>
         </arguments>
         <comment userInput="Adding Widget To TinyMCE3" stepKey="commentAddWidget"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidget1"/>
-        <click selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="clickAddWidgetBtn"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidgetModalToClose"/>
+        <comment userInput="removing deprecated element" stepKey="waitForInsertWidget1"/>
+        <comment userInput="removing deprecated element" stepKey="clickAddWidgetBtn"/>
+        <comment userInput="removing deprecated element" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
 </actionGroups>
