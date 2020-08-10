@@ -486,6 +486,10 @@ export default class Preview extends BasePreview {
         events.on("slide:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.contentType.id) {
                 this.buildJarallax();
+                this.isSnapshot.subscribe((value) => {
+                    this.changeUploaderControlsVisibility();
+                });
+                this.changeUploaderControlsVisibility();
             }
         });
 
@@ -543,6 +547,15 @@ export default class Preview extends BasePreview {
 
         events.on(`image:${this.contentType.id}:uploadAfter`, () => {
             this.contentType.dataStore.set("background_type", "image");
+        });
+    }
+
+    /**
+     * Change uploader controls visibility
+     */
+    private changeUploaderControlsVisibility() {
+        this.getUploader().getUiComponent()((uploader: any) => {
+            uploader.visibleControls = !this.isSnapshot();
         });
     }
 
