@@ -30,6 +30,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedProductEditPage"/>
             <comment userInput="---merging to remove step---" stepKey="expandAdminProductSection"/>
             <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescription"/>
         </before>
@@ -38,8 +39,8 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
             <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
-        <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct" after="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <comment userInput="---merging to remove step---" stepKey="expandAdminProductSection"/>
         <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescription"/>
         <!-- Go to CMS Page and choose Block -->
