@@ -7,20 +7,17 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextDataConsistencyBetweenTextEditorTest" deprecated="TinyMCE3 is no longer supported">
+    <test name="TextDataConsistencyBetweenTextEditorWithoutTinyMCE3Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
             <title value="Data consistency between TextArea, TinyMCE4, TinyMCE4 in PageBuilder stage"/>
             <description value="Verify data consistent when switching between TinyMCE versions and TextArea"/>
             <severity value="AVERAGE"/>
-            <useCaseId value="MC-1438"/>
-            <testCaseId value="MC-3741"/>
+            <useCaseId value="MC-36390"/>
+            <testCaseId value="MC-36391"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="DEPRECATED">TinyMCE3 is no longer supported</issueId>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
@@ -45,7 +42,6 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -55,7 +51,6 @@
         <click selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.textareaPlaceholder('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTextarea"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!--Verify Text Content Type on stage after saving cms page-->
@@ -82,7 +77,6 @@
         </actionGroup>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="expectedData"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage3"/>
         <!-- Switch to TinyMCE4 -->
         <comment userInput="Switch to TinyMCE4 " stepKey="comment4"/>
@@ -99,19 +93,7 @@
         <seeElement selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariablePlaceholder"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetValue"/>
         <seeElement selector="{{TextOnStage.widgetPlaceholder('1')}}" stepKey="waitForWidgetPlaceholder"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen3"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage4"/>
-        <!-- Switch to TinyMCE3 -->
-        <comment userInput="Switch to TinyMCE3" stepKey="comment6"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
-        <reloadPage stepKey="reloadPage1"/>
-        <waitForPageLoad stepKey="waitForPageToBeLoaded1"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
-        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
-        <assertEquals stepKey="assertTextValue">
-            <expectedResult type="variable">expectedData</expectedResult>
-            <actualResult type="variable">actualData</actualResult>
-        </assertEquals>
         <!-- Switch to Textarea -->
         <comment userInput="Switch to Textarea" stepKey="comment7"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
@@ -138,7 +120,6 @@
         </actionGroup>
         <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen4"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage5"/>
         <!-- Switch to TinyMCE4 -->
         <comment userInput="Switch to TinyMCE4 " stepKey="comment9"/>
