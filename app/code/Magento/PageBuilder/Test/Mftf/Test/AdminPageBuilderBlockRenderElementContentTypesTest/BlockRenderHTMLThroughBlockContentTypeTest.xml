@@ -28,6 +28,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -80,7 +81,8 @@
             <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock" after="exitPageBuilderFullScreen"/>
         <!-- Validate CMS Block Stage After Save -->
         <comment userInput="Validate CMS Block Stage After Save" stepKey="commentValidateCMSBlockStageAfterSave"/>
         <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSave"/>
@@ -134,7 +136,7 @@
             <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
         </assertStringContainsString>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
