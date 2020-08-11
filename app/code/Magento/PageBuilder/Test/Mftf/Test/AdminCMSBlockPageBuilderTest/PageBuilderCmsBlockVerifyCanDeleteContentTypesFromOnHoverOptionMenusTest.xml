@@ -30,21 +30,19 @@
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
             <comment userInput="---merging to remove step---" stepKey="expandAdminProductSection"/>
-            <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
             <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
-        <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
         <comment userInput="---merging to remove step---" stepKey="expandAdminProductSection"/>
-        <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescription"/>
-        <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreenAfterDelete"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderForDescription"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProductAfterDelete"/>
         <comment userInput="---merging to remove step---" stepKey="expandAdminProductSectionAfterDelete"/>
-        <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescriptionAfterDelete"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderForDescriptionAfterDelete"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage" after="dontSeeDividerInStageAfterSave"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
