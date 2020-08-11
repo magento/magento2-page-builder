@@ -18,23 +18,22 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"],
   function generate(elementName, config, data, converterResolver, converterPool) {
     var attributeData = {};
 
-    for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-      var _ref;
-
+    var _loop2 = function _loop2() {
       if (_isArray) {
-        if (_i >= _iterator.length) break;
+        if (_i >= _iterator.length) return "break";
         _ref = _iterator[_i++];
       } else {
         _i = _iterator.next();
-        if (_i.done) break;
+        if (_i.done) return "break";
         _ref = _i.value;
       }
 
       var attributeConfig = _ref;
 
       if ("read" === attributeConfig.persistence_mode) {
-        continue;
-      }
+        return "continue";
+      } // @ts-ignore
+
 
       var value = void 0;
 
@@ -52,9 +51,29 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"],
 
 
       if (attributeConfig.name === "src" && _config.getMode() !== "Preview") {
-        attributeData["data-" + attributeConfig.name] = value;
+        attributeData["data-" + attributeConfig.name] = value; // @ts-ignore
+
+        Object.defineProperty(attributeData, attributeConfig.name, {
+          get: function get() {
+            return value;
+          }
+        });
       } else {
         attributeData[attributeConfig.name] = value;
+      }
+    };
+
+    _loop: for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      var _ref;
+
+      var _ret = _loop2();
+
+      switch (_ret) {
+        case "break":
+          break _loop;
+
+        case "continue":
+          continue;
       }
     }
 

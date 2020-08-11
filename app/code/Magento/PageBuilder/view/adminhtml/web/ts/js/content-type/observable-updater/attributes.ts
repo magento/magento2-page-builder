@@ -30,6 +30,7 @@ export default function generate(
         if ("read" === attributeConfig.persistence_mode) {
             continue;
         }
+        // @ts-ignore
         let value;
         if (!!attributeConfig.static) {
             value = attributeConfig.value;
@@ -43,7 +44,9 @@ export default function generate(
 
         // Replacing src attribute with data-src to prevent img requests in iframe during master format rendering
         if (attributeConfig.name === "src" && Config.getMode() !== "Preview") {
-            attributeData["data-" + attributeConfig.name] = value;
+            attributeData["data-" + attributeConfig.name] = value as string;
+            // @ts-ignore
+            Object.defineProperty(attributeData, attributeConfig.name, { get() { return value; } });
         } else {
             attributeData[attributeConfig.name] = value;
         }
