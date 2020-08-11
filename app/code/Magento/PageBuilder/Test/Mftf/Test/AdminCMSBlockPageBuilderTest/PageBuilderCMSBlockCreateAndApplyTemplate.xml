@@ -25,7 +25,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSBlockPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <remove keyForRemoval="switchToPageBuilderStage"/>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate">
             <argument name="baseContent" value="{{BlockNewPagePageActionsSection.saveBlock}}"/>
@@ -34,7 +34,7 @@
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSBlockPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <remove keyForRemoval="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut">
             <argument name="baseContent" value="{{BlockNewPagePageActionsSection.saveBlock}}"/>
         </actionGroup>

@@ -30,17 +30,16 @@
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
             <comment userInput="---merging to remove step---" stepKey="expandAdminProductSection"/>
-            <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
             <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
-        <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
         <comment userInput="---merging to remove step---" stepKey="expandAdminProductSection"/>
-        <comment userInput="---merging to remove step---" stepKey="openPageBuilderForDescription"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderForDescription"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage" after="see2ButtonItemsStageAfterSave"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
