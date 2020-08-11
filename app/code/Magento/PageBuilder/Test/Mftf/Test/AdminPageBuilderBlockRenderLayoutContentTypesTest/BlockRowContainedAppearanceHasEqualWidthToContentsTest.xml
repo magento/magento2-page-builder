@@ -30,6 +30,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
@@ -39,6 +40,8 @@
         <comment userInput="Edit Block and configure Row" stepKey="commentConfigureRowInBlock"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="offsetXCoordinate" value="0"/>
+            <argument name="offsetYCoordinate" value="-40"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
@@ -66,6 +69,7 @@
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveBlock"/>
         <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -95,7 +99,7 @@
             <argument name="containerIndex" value="2"/>
             <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
          <!-- Validate width after save -->
