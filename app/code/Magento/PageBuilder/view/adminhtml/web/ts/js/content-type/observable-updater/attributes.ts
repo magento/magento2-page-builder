@@ -41,6 +41,7 @@ export default function generate(
             value = converterPool.get(converter).toDom(attributeConfig.var, data);
         }
 
+        // Replacing src attribute with data-src to prevent img requests in iframe during master format rendering
         if (attributeConfig.name === "src" && Config.getMode() !== "Preview") {
             attributeData["data-" + attributeConfig.name] = value;
         } else {

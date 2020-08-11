@@ -48,7 +48,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"],
 
       if (converterPool.get(converter)) {
         value = converterPool.get(converter).toDom(attributeConfig.var, data);
-      }
+      } // Replacing src attribute with data-src to prevent img requests in iframe during master format rendering
+
 
       if (attributeConfig.name === "src" && _config.getMode() !== "Preview") {
         attributeData["data-" + attributeConfig.name] = value;
