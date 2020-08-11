@@ -7,13 +7,13 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
+    <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE" deprecated="This version of TinyMCE is no longer supported">
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
         <comment userInput="Adding Variable To TinyMCE3" stepKey="commentAddVariableToTinyMCE"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3VariableBtn}}" stepKey="waitForInsertVariable1"/>
-        <click selector="{{TextOnConfiguration.tinyMCE3VariableBtn}}" stepKey="clickInsertVariable1"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3VariableBtn}}" stepKey="waitForVariableModalToClose"/>
+        <comment userInput="removing deprecated element" stepKey="waitForInsertVariable1"/>
+        <comment userInput="removing deprecated element" stepKey="clickInsertVariable1"/>
+        <comment userInput="removing deprecated element" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
 </actionGroups>
