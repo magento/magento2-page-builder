@@ -29,6 +29,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -39,6 +40,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
+            <argument name="contentTypeXCoordinate" value="0"/>
+            <argument name="contentTypeYCoordinate" value="-40"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
@@ -100,6 +103,7 @@
             <actualResult type="variable">thirdMinHeightCMSBlockStage</actualResult>
             <expectedResult type="variable">expectedThirdHeightCMSBlockStage</expectedResult>
         </assertEquals>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
@@ -140,7 +144,7 @@
             <actualResult type="variable">thirdMinHeightCMSPageStage</actualResult>
             <expectedResult type="variable">expectedThirdHeightCMSPageStage</expectedResult>
         </assertEquals>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
