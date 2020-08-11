@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../../config";
 import {ContentTypeConfigAppearanceElementInterface} from "../../content-type-config.types";
 import ConverterPool from "../../converter/converter-pool";
 import {DataObject} from "../../data-store";
@@ -39,7 +40,12 @@ export default function generate(
         if (converterPool.get(converter)) {
             value = converterPool.get(converter).toDom(attributeConfig.var, data);
         }
-        attributeData[attributeConfig.name] = value;
+
+        if (attributeConfig.name === "src" && Config.getMode() !== "Preview") {
+            attributeData["data-" + attributeConfig.name] = value;
+        } else {
+            attributeData[attributeConfig.name] = value;
+        }
     }
 
     attributeData["data-element"] = elementName;

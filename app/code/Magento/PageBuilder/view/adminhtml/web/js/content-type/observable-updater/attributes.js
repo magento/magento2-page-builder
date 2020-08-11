@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/utils/object"], function (_object) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"], function (_config, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -50,7 +50,11 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
         value = converterPool.get(converter).toDom(attributeConfig.var, data);
       }
 
-      attributeData[attributeConfig.name] = value;
+      if (attributeConfig.name === "src" && _config.getMode() !== "Preview") {
+        attributeData["data-" + attributeConfig.name] = value;
+      } else {
+        attributeData[attributeConfig.name] = value;
+      }
     }
 
     attributeData["data-element"] = elementName;

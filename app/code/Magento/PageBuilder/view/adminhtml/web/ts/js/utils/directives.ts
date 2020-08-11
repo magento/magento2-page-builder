@@ -131,3 +131,10 @@ export function convertMediaDirectivesToUrls(html: string): string {
     }
     return html;
 }
+
+export function replaceSrc(html: string): string {
+    return html.replace(
+        new RegExp("data-src=\"\{\{", "g"),
+        "src=\"{{",
+    );
+}
