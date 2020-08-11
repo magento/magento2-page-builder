@@ -45,3 +45,33 @@
         }
     }
 }
+
+//
+//  Page Builder full width field
+//  _____________________________________________
+
+.admin__fieldset {
+    > .admin__field.admin__field-wide.admin__field-page-builder[class]:not(.admin__field-option) {
+        > .admin__field-label {
+            margin-bottom: @indent__xs;
+            margin-top: @indent__xs;
+            min-height: 32px;
+
+            span[data-config-scope] {
+                &:before {
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+.admin__field-wide.admin__field-page-builder {
+    margin-bottom: 32px;
+
+    button.action-default {
+        position: absolute;
+        right: 0;
+        top: @indent__xs;
+    }
+}
