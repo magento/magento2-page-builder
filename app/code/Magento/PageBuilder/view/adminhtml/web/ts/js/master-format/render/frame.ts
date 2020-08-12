@@ -13,7 +13,7 @@ import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ContentTypeInterface from "../../content-type.types";
-import decodeAllDataUrlsInString from "../../utils/directives";
+import decodeAllDataUrlsInString, { replaceSrc } from "../../utils/directives";
 import filterHtml from "../filter-html";
 import { TreeItem } from "./serialize";
 
@@ -160,7 +160,7 @@ function render(message: {stageId: string, tree: TreeItem}) {
                 observer.disconnect();
                 ko.cleanNode(element);
                 const filtered: JQuery = filterHtml($(element));
-                const output = decodeAllDataUrlsInString(filtered.html());
+                const output = replaceSrc(decodeAllDataUrlsInString(filtered.html()));
                 resolve(output);
             });
 

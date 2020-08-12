@@ -140,13 +140,25 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
     return html;
   }
+  /**
+   * Replace data-src attribute with src.
+   *
+   * @param {string} html
+   * @returns {string}
+   */
+
+
+  function replaceSrc(html) {
+    return html.replace(new RegExp("data-tmp-src=\"\{\{", "g"), "src=\"{{");
+  }
 
   return Object.assign(decodeAllDataUrlsInString, {
     toDataUrl: toDataUrl,
     fromDataUrl: fromDataUrl,
     getImageUrl: getImageUrl,
     removeQuotesInMediaDirectives: removeQuotesInMediaDirectives,
-    convertMediaDirectivesToUrls: convertMediaDirectivesToUrls
+    convertMediaDirectivesToUrls: convertMediaDirectivesToUrls,
+    replaceSrc: replaceSrc
   });
 });
 //# sourceMappingURL=directives.js.map
