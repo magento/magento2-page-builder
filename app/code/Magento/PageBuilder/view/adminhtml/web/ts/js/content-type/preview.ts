@@ -12,6 +12,7 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
+import Config from "../config";
 import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import ContentTypeConfigInterface, {ConfigFieldInterface} from "../content-type-config.types";
@@ -25,6 +26,7 @@ import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
+import checkStageFullScreen from "../utils/check-stage-full-screen";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
@@ -61,6 +63,7 @@ export default class Preview implements PreviewInterface {
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
     protected events: DataObject = {};
+    protected isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
 
     private edit: Edit;
     private optionsMenu: ContentTypeMenu;
@@ -88,6 +91,11 @@ export default class Preview implements PreviewInterface {
             "visible": this.isEmpty,
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
+
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isSnapshot(!checkStageFullScreen(this.contentType.stageId));
+        }
+
         this.bindEvents();
         this.populatePreviewData();
     }
@@ -492,6 +500,8 @@ export default class Preview implements PreviewInterface {
      * Bind events
      */
     protected bindEvents() {
+        const fullScreenModeChangeAfterEvent = `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`;
+
         this.contentType.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -508,6 +518,8 @@ export default class Preview implements PreviewInterface {
                 },
             );
         }
+
+        events.on(fullScreenModeChangeAfterEvent, this.toggleSnapshot.bind(this));
     }
 
     /**
@@ -630,5 +642,16 @@ export default class Preview implements PreviewInterface {
                 });
             },
         );
+    }
+
+    /**
+     * Enable snapshot mode.
+     * @param args
+     */
+    private toggleSnapshot(args: any): void
+    {
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isSnapshot(!args.fullScreen);
+        }
     }
 }

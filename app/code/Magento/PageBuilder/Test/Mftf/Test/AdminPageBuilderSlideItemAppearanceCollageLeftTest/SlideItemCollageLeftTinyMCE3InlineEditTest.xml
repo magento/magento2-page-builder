@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SlideItemCollageLeftTinyMCE3InlineEditTest" extends="SlideItemPosterCanInlineEditContentTest">
+    <test name="SlideItemCollageLeftTinyMCE3InlineEditTest" extends="SlideItemPosterCanInlineEditContentTest" deprecated="TinyMCE3 is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageLeft"/>
+            <skip>
+                <issueId value="DEPRECATED">TinyMCE3 is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>

@@ -21,6 +21,7 @@ define([
             $uploadArea: null,
             isShowImageUploadInstructions: true,
             isShowImageUploadOptions: false,
+            visibleControls: true,
             classes: {
                 dragging: 'dragging',
                 draggingInside: 'dragging-inside',
@@ -45,6 +46,9 @@ define([
                 or: $t('or'),
                 uploadImage: $t('Upload Image'),
                 uploadNewImage: $t('Upload New Image')
+            },
+            tracks: {
+                visibleControls: true
             }
         },
 
