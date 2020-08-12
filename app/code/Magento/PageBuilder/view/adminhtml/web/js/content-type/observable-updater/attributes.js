@@ -50,8 +50,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"],
       } // Replacing src attribute with data-src to prevent img requests in iframe during master format rendering
 
 
-      if (attributeConfig.name === "src" && _config.getMode() !== "Preview") {
-        attributeData["data-" + attributeConfig.name] = value; // @ts-ignore
+      if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && _config.getMode() !== "Preview") {
+        attributeData["data-tmp-" + attributeConfig.name] = value; // @ts-ignore
 
         Object.defineProperty(attributeData, attributeConfig.name, {
           get: function get() {

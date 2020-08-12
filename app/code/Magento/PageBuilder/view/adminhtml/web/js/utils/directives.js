@@ -149,7 +149,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
 
   function replaceSrc(html) {
-    return html.replace(new RegExp("data-src=\"\{\{", "g"), "src=\"{{");
+    return html.replace(new RegExp("data-tmp-src=\"\{\{", "g"), "src=\"{{");
   }
 
   return Object.assign(decodeAllDataUrlsInString, {

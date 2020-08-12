@@ -43,8 +43,8 @@ export default function generate(
         }
 
         // Replacing src attribute with data-src to prevent img requests in iframe during master format rendering
-        if (attributeConfig.name === "src" && Config.getMode() !== "Preview") {
-            attributeData["data-" + attributeConfig.name] = value as string;
+        if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && Config.getMode() !== "Preview") {
+            attributeData["data-tmp-" + attributeConfig.name] = value;
             // @ts-ignore
             Object.defineProperty(attributeData, attributeConfig.name, { get() { return value; } });
         } else {
