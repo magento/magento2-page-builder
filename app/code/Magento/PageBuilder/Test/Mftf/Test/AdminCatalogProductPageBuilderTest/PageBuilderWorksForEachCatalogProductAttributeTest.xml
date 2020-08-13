@@ -77,6 +77,7 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
@@ -110,7 +111,8 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
-            <argument name="containerTargetIndex" value="2"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
         <!-- Edit Button Item -->
@@ -151,6 +153,7 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerIntoRow">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
         </actionGroup>

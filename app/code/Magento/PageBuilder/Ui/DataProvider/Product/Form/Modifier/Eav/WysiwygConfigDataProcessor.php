@@ -12,13 +12,14 @@ class WysiwygConfigDataProcessor implements
     \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessorInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function process(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute)
     {
         $wysiwygConfigData = [];
         if ($attribute->getData('is_pagebuilder_enabled')) {
             $wysiwygConfigData['is_pagebuilder_enabled'] = true;
+            $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
             $wysiwygConfigData['pagebuilder_button'] = true;
         } else {
             $wysiwygConfigData['is_pagebuilder_enabled'] = false;
