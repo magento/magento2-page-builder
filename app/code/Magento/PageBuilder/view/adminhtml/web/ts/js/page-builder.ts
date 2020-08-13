@@ -84,7 +84,6 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public initListeners() {
         events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
-        events.on(`stage:fullScreenModeChangeAfter`, this.toggleStage.bind(this));
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -256,15 +255,5 @@ export default class PageBuilder implements PageBuilderInterface {
         _.defer(() => {
             require(previewTemplates);
         });
-    }
-
-    /**
-     * Renders only active stages.
-     * @param args
-     */
-    private toggleStage(args: any): void {
-        if (Config.getConfig("pagebuilder_content_snapshot")) {
-            this.isStageReady(args.pageBuilderId === this.id && this.isFullScreen() || !args.fullScreen);
-        }
     }
 }
