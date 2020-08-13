@@ -34,8 +34,8 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory" after="deleteCreatedProduct"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage" after="exitPageBuilderFullScreen"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage" after="seeTab2NameStageAfterSave"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
@@ -55,8 +55,8 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" after="saveEditPanelSettingsAfterBlock"/>
-        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1" after="saveEditPanelSettingsAfterBlock"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="exitPageBuilderFullScreen1"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
