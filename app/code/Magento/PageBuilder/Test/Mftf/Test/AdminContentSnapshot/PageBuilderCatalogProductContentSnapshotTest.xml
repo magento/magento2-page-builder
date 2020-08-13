@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductContentSnapshotTest" extends="PageBuilderCatalogCategoryContentSnapshotTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Content Snapshot"/>
+            <title value="Catalog Product - Verify PageBuilder Content Snapshot"/>
+            <description value="This test is to ensure that the PageBuilder Content Snapshot appears on stage in Product Admin Page and PageBuilder works in full-screen mode."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-contentSnapshot"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultProduct" stepKey="createProduct" after="createPreReqCategory">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="product" value="$$createProduct$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandContentSection"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct" after="deleteCreatedCategory"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView" after="deleteCreatedProduct"/>
+        </after>
+    </test>
+</tests>
