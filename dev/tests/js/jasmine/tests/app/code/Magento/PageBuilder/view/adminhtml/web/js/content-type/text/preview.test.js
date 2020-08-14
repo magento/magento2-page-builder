@@ -8,7 +8,8 @@
 /* jscs:disable jsDoc*/
 define([
     'Magento_PageBuilder/js/content-type/text/preview',
-    'Magento_PageBuilder/js/content-type'
+    'Magento_PageBuilder/js/content-type',
+    'Magento_PageBuilder/js/resource/babel/polyfill'
 ], function (Preview, ContentType) {
     'use strict';
 
