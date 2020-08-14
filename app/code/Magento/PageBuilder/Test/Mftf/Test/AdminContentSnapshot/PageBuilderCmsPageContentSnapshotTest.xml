@@ -19,15 +19,14 @@
             <group value="pagebuilder-cms-page"/>
         </annotations>
         <before>
-            <comment userInput="---merging to remove step---" stepKey="createPreReqCategory"/>
-            <createData entity="_emptyCmsPage" stepKey="createCMSPage" before="navigateToAPageWithPageBuilder"/>
+            <createData entity="_emptyCmsPage" stepKey="createPreReqCategory"/>
             <actionGroup ref="navigateToCMSPage" stepKey="navigateToAPageWithPageBuilder">
-                <argument name="CMSPage" value="$$createCMSPage$$"/>
+                <argument name="CMSPage" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandContentSection">
+                <argument name="sectionSelector" value="{{CmsNewPagePageContentSection.header}}"/>
+                <argument name="sectionDependentSelector" value="{{CmsNewPagePageContentSection.header}}._show"/>
             </actionGroup>
         </before>
-        <after>
-            <comment userInput="---merging to remove step---" stepKey="deleteCreatedCategory"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage" before="logout"/>
-        </after>
     </test>
 </tests>
