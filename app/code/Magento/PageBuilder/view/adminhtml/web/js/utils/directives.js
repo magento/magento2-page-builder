@@ -141,15 +141,26 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     return html;
   }
   /**
-   * Replace data-src attribute with src.
+   * Replace data-tmp-src attribute with src.
    *
    * @param {string} html
    * @returns {string}
    */
 
 
-  function replaceSrc(html) {
+  function replaceWithSrc(html) {
     return html.replace(new RegExp("data-tmp-src=\"\{\{", "g"), "src=\"{{");
+  }
+  /**
+   * Replace src attribute with data-tmp-src.
+   *
+   * @param {string} html
+   * @returns {string}
+   */
+
+
+  function replaceWithDataSrc(html) {
+    return html.replace(new RegExp("src=\"\{\{", "g"), "data-tmp-src=\"{{");
   }
 
   return Object.assign(decodeAllDataUrlsInString, {
@@ -158,7 +169,8 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     getImageUrl: getImageUrl,
     removeQuotesInMediaDirectives: removeQuotesInMediaDirectives,
     convertMediaDirectivesToUrls: convertMediaDirectivesToUrls,
-    replaceSrc: replaceSrc
+    replaceWithSrc: replaceWithSrc,
+    replaceWithDataSrc: replaceWithDataSrc
   });
 });
 //# sourceMappingURL=directives.js.map
