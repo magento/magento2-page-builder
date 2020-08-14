@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/utils/object"], function (_object) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"], function (_config, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -18,23 +18,22 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   function generate(elementName, config, data, converterResolver, converterPool) {
     var attributeData = {};
 
-    for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-      var _ref;
-
+    var _loop2 = function _loop2() {
       if (_isArray) {
-        if (_i >= _iterator.length) break;
+        if (_i >= _iterator.length) return "break";
         _ref = _iterator[_i++];
       } else {
         _i = _iterator.next();
-        if (_i.done) break;
+        if (_i.done) return "break";
         _ref = _i.value;
       }
 
       var attributeConfig = _ref;
 
       if ("read" === attributeConfig.persistence_mode) {
-        continue;
-      }
+        return "continue";
+      } // @ts-ignore
+
 
       var value = void 0;
 
@@ -48,9 +47,34 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
 
       if (converterPool.get(converter)) {
         value = converterPool.get(converter).toDom(attributeConfig.var, data);
-      }
+      } // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
 
-      attributeData[attributeConfig.name] = value;
+
+      if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && _config.getMode() !== "Preview") {
+        attributeData["data-tmp-" + attributeConfig.name] = value; // @ts-ignore
+
+        Object.defineProperty(attributeData, attributeConfig.name, {
+          get: function get() {
+            return value;
+          }
+        });
+      } else {
+        attributeData[attributeConfig.name] = value;
+      }
+    };
+
+    _loop: for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      var _ref;
+
+      var _ret = _loop2();
+
+      switch (_ret) {
+        case "break":
+          break _loop;
+
+        case "continue":
+          continue;
+      }
     }
 
     attributeData["data-element"] = elementName;

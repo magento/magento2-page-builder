@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../../config";
 import {ContentTypeConfigAppearanceElementInterface} from "../../content-type-config.types";
 import ConverterPool from "../../converter/converter-pool";
 import {DataObject} from "../../data-store";
@@ -29,6 +30,7 @@ export default function generate(
         if ("read" === attributeConfig.persistence_mode) {
             continue;
         }
+        // @ts-ignore
         let value;
         if (!!attributeConfig.static) {
             value = attributeConfig.value;
@@ -39,7 +41,15 @@ export default function generate(
         if (converterPool.get(converter)) {
             value = converterPool.get(converter).toDom(attributeConfig.var, data);
         }
-        attributeData[attributeConfig.name] = value;
+
+        // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
+        if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && Config.getMode() !== "Preview") {
+            attributeData["data-tmp-" + attributeConfig.name] = value;
+            // @ts-ignore
+            Object.defineProperty(attributeData, attributeConfig.name, { get() { return value; } });
+        } else {
+            attributeData[attributeConfig.name] = value;
+        }
     }
 
     attributeData["data-element"] = elementName;

@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BannerCollageLeftTinyMCE3InlineEditTest" extends="BannerPosterCanInlineEditContentTest">
+    <test name="BannerCollageLeftTinyMCE3InlineEditTest" extends="BannerPosterCanInlineEditContentTest" deprecated="TinyMCE3 is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCollageLeft"/>
+            <skip>
+                <issueId value="DEPRECATED">TinyMCE3 is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>
