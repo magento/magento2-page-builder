@@ -3,9 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../../config";
 import {ContentTypeConfigAppearanceElementInterface} from "../../content-type-config.types";
 import ConverterPool from "../../converter/converter-pool";
 import {DataObject} from "../../data-store";
+import { replaceWithDataSrc } from "../../utils/directives";
 import {get} from "../../utils/object";
 
 /**
@@ -33,5 +35,10 @@ export default function generate(
     if (typeof value === "string" && !value.length && config.html.placeholder) {
         value = config.html.placeholder;
     }
+    // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
+    if (Config.getMode() !== "Preview" && typeof value === "string" && value.indexOf("{{media url=") !== -1) {
+        value = replaceWithDataSrc(value);
+    }
+
     return value;
 }

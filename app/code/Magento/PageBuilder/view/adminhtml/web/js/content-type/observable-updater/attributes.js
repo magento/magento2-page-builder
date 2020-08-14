@@ -47,7 +47,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"],
 
       if (converterPool.get(converter)) {
         value = converterPool.get(converter).toDom(attributeConfig.var, data);
-      } // Replacing src attribute with data-src to prevent img requests in iframe during master format rendering
+      } // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
 
 
       if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && _config.getMode() !== "Preview") {
