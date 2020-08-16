@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ScrollToActionGroup">
+        <annotations>
+            <description>Scroll to element inside Page Builder stage using CSS selector</description>
+        </annotations>
+        <arguments>
+            <argument name="cssSelector" type="string"/>
+            <argument name="index" defaultValue="1" type="string" />
+            <argument name="verticalOffset" defaultValue="0" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{cssSelector}}')[{{index}}-1].offsetTop" stepKey="elementPosition"/>
+        <executeJS function="document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').scrollTop = parseInt({$elementPosition} - {{verticalOffset}}, 10)" stepKey="scrollToElement"/>
+    </actionGroup>
+</actionGroups>
