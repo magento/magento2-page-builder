@@ -41,6 +41,7 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -120,6 +121,7 @@
         <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
         <waitForElementVisible selector="{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="waitForImage"/>
         <seeElement selector="{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="assertMediaSourceOnStage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify Content Block on storefront-->
         <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>

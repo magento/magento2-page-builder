@@ -41,6 +41,7 @@
         <!-- Stage: Get Initial Slide Height -->
         <comment userInput="Stage: Get Initial Slide Height" stepKey="commentInitialHeightStage"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role, '1')}}" stepKey="slideInitialHeightStage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Slide Height -->
         <comment userInput="Storefront: Get Initial Slide Height" stepKey="commentInitialHeightStorefront"/>
@@ -71,6 +72,7 @@
             <expectedResult type="variable">slideInitialHeightStage</expectedResult>
             <actualResult type="variable">slideNewHeightStage</actualResult>
         </assertGreaterThan>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage 2 -->

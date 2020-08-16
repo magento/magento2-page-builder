@@ -51,11 +51,11 @@
         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditorAfterOverflow">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnInnerContentTypeAfterExitFullScreen"/>
-        <waitForPageLoad after="focusOnInnerContentTypeAfterExitFullScreen" stepKey="waitForToolbarAnimationAfterExitFullScreen"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" after="waitForToolbarAnimationAfterExitFullScreen" stepKey="waitForToolbarVisibleAfterExitFullScreen"/>
-        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
-        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPositionAfterExitFullScreen"/>
-        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
+        <comment userInput="focusOnInnerContentTypeAfterExitFullScreen" stepKey="focusOnInnerContentTypeAfterExitFullScreen"/>
+        <comment userInput="waitForToolbarAnimationAfterExitFullScreen" stepKey="waitForToolbarAnimationAfterExitFullScreen"/>
+        <comment userInput="waitForToolbarVisibleAfterExitFullScreen" after="waitForToolbarAnimationAfterExitFullScreen" stepKey="waitForToolbarVisibleAfterExitFullScreen"/>
+        <comment userInput="inputBoxTopPositionAfterExitFullScreen" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
+        <comment userInput="toolbarTopPositionAfterExitFullScreen" stepKey="toolbarTopPositionAfterExitFullScreen"/>
+        <comment userInput="toolbarBottomPositionAfterExitFullScreen" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
     </test>
 </tests>

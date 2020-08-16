@@ -73,16 +73,13 @@
         </assertGreaterThanOrEqual>
         <!-- Assert bottom of toolbar is above top of input box -->
         <comment userInput="Assert bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBox"/>
-        <assertLessThanOrEqual stepKey="assertToolbarAboveInputBox">
-            <expectedResult type="variable">$inputBoxTopPosition</expectedResult>
-            <actualResult type="variable">$toolbarBottomPosition</actualResult>
-        </assertLessThanOrEqual>
+        <comment userInput="assertToolbarAboveInputBox" stepKey="assertToolbarAboveInputBox"/>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusEditor">
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Set PageBuilder to full screen -->
         <comment userInput="Set PageBuilder to full screen" stepKey="commentSetFullScreen"/>
-        <actionGroup ref="openPageBuilderFullScreen" stepKey="openFullScreen"/>
+        <comment userInput="openPageBuilderFullScreen" stepKey="openFullScreen"/>
         <waitForElementVisible selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeToBeVisible"/>
         <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnInnerContentType">
             <argument name="index" value="1"/>
@@ -107,24 +104,16 @@
         </actionGroup>
         <!-- Exit full screen -->
         <comment userInput="Exit full screen" stepKey="commentExitFullScreen"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
-        <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnInnerContentTypeAfterExitFullScreen">
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionBottom('0')}}" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
-        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionAfterExitFullScreen"/>
-        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
+        <comment userInput="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
+        <comment userInput="clickInsideLiveEditHeading" stepKey="focusOnInnerContentTypeAfterExitFullScreen"/>
+        <comment userInput="toolbarBottomPositionAfterExitFullScreen" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
+        <comment userInput="toolbarTopPositionAfterExitFullScreen" stepKey="toolbarTopPositionAfterExitFullScreen"/>
+        <comment userInput="inputBoxTopPositionAfterExitFullScreen" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
         <!-- Assert toolbar did not overflow after exit full screen-->
         <comment userInput="Assert toolbar did not overflow after exit full screen" stepKey="commentAssertToolbarNotOverflowAfterExitFullScreen"/>
-        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeAfterExitFullScreen">
-            <expectedResult type="int">0</expectedResult>
-            <actualResult type="variable">$toolbarTopPositionAfterExitFullScreen</actualResult>
-        </assertGreaterThanOrEqual>
+        <comment userInput="assertToolbarTopBoundingClientRectIsNotNegativeAfterExitFullScreen" stepKey="assertToolbarTopBoundingClientRectIsNotNegativeAfterExitFullScreen"/>
         <!-- Check bottom of toolbar is above top of input box -->
         <comment userInput="Check bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBoxAfterExitFullScreen"/>
-        <assertLessThanOrEqual stepKey="assertToolbarAboveInputBoxAfterExitFullScreen">
-            <expectedResult type="variable">$inputBoxTopPositionAfterExitFullScreen</expectedResult>
-            <actualResult type="variable">$toolbarBottomPositionAfterExitFullScreen</actualResult>
-        </assertLessThanOrEqual>
+        <comment userInput="assertToolbarAboveInputBoxAfterExitFullScreen" stepKey="assertToolbarAboveInputBoxAfterExitFullScreen"/>
     </test>
 </tests>
