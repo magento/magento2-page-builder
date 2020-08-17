@@ -32,6 +32,7 @@
             <deleteData createDataKey="createCmsPage" stepKey="deleteCmsPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -64,8 +65,7 @@
                   parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]"
                   stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="clickOutsideTextEdit"/>
-        <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="SaveAndContinueEdit"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}"
