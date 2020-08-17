@@ -37,6 +37,7 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Add Image to Stage -->
         <comment userInput="Add Image to Stage" stepKey="commentAddImageToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
@@ -60,6 +61,7 @@
         <dontSeeJsError stepKey="dontSeeThrownError"/>
         <waitForElementVisible selector="{{ImageOnStage.caption('1')}}" stepKey="waitForImageCaption"/>
         <see selector="{{ImageOnStage.caption('1')}}" userInput="{{PageBuilderImageCaptionProperty_HtmlCode.value}}" stepKey="seeHtmlCodeInCaption"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <dontSeeJsError stepKey="dontSeeThrownErrorAfterSave"/>
         <!-- Verify storefront -->

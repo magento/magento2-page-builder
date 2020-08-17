@@ -27,6 +27,7 @@
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -83,6 +84,7 @@
             <expectedResult type="variable">$tabWidth</expectedResult>
             <actualResult type="variable">$buttonWidth</actualResult>
         </assertLessThan>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront1"/>

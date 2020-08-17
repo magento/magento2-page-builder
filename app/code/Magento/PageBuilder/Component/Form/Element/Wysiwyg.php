@@ -16,7 +16,7 @@ use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
-use \Magento\PageBuilder\Model\Stage\Config as Config;
+use Magento\PageBuilder\Model\Stage\Config as Config;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -79,7 +79,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 
             // Override the templates to include our KnockoutJS code
-            $data['config']['template'] = 'Magento_PageBuilder/form/element/wysiwyg';
+            $data['config']['template'] = 'ui/form/field';
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/form/element/wysiwyg';
             $wysiwygConfigData = $stageConfig->getConfig();
 
