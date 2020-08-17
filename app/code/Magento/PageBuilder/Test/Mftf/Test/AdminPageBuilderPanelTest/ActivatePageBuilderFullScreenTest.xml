@@ -6,7 +6,7 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ActivatePageBuilderFullScreenTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -22,20 +22,23 @@
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement"/>
+            <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible"/>
+            <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
-        <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
+        <waitForElementVisible selector="{{PageBuilderStage.snapshot}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.editButtonSelector}}" stepKey="waitForFullScreenButton"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen"/>
-        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <click selector="{{PageBuilderStage.editButtonSelector}}" stepKey="clickFullScreenButton"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
         <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.snapshot}}" stepKey="verifyStageNotNormalScreen"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="clickExitFullScreen"/>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
+        <waitForElementVisible selector="{{PageBuilderStage.snapshot}}" stepKey="waitForStage2"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
 </tests>

@@ -39,11 +39,14 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
@@ -72,6 +75,7 @@
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEImage(ImageUpload3.fileName)}}" stepKey="waitForImage3"/>
         <switchToIFrame stepKey="exitIFrame"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify image on stage after saving cms page-->
         <comment userInput="Verify image on stage" stepKey="commentVerifyImageOnStage"/>

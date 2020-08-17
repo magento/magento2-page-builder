@@ -24,6 +24,7 @@ define([
             transitionOut: false,
             elementSelector: '> textarea',
             stageSelector: '.pagebuilder-stage-wrapper',
+            fieldsetSelector: 'fieldset.admin__fieldset',
             overlaySelector: '.pagebuilder-wysiwyg-overlay',
             overlayMouseover: false,
             pageBuilder: false,
@@ -115,6 +116,7 @@ define([
         disableDomObserver: function (node) {
             this.determineIfWithinModal(node);
             domObserver.disableNode(node);
+            domObserver.disableNode($(node).parents(this.fieldsetSelector)[0]);
         },
 
         /**
