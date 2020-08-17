@@ -17,6 +17,7 @@
             <useCaseId value="MC-35220"/>
             <testCaseId value="MC-36666"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
@@ -55,15 +56,19 @@
                   parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, \Facebook\WebDriver\WebDriverKeys::INSERT]"
                   stepKey="copyAllText"/>
         <waitForPageLoad stepKey="waitForTextCopy"/>
-        <pressKey selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}"
-                  parameterArray="[\Facebook\WebDriver\WebDriverKeys::ARROW_RIGHT, \Facebook\WebDriver\WebDriverKeys::ENTER]"
-                  stepKey="unSelectTextAndNewLine"/>
-        <waitForPageLoad stepKey="waitForUnselect"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeadingAfterCopy">
+            <argument name="index" value="1"/>
+        </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}"
                   parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]"
                   stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
-        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="SaveAndContinueEdit"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
+        <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}"
+                               stepKey="waitForHeadingVisible"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}"
+                               stepKey="waitForTextVisible"/>
     </test>
 </tests>
