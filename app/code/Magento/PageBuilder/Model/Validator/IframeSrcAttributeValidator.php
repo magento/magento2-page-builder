@@ -14,7 +14,7 @@ use Magento\Framework\Validator\HTML\AttributeValidatorInterface;
 /**
  * Validates "src" of iframes.
  */
-class SrcAttributeValidator implements AttributeValidatorInterface
+class IframeSrcAttributeValidator implements AttributeValidatorInterface
 {
     /**
      * @var string[]
@@ -22,7 +22,7 @@ class SrcAttributeValidator implements AttributeValidatorInterface
     private $allowedHosts;
 
     /**
-     * SrcAttributeValidator constructor.
+     * IframeSrcAttributeValidator constructor.
      *
      * @param string[] $allowedHosts
      */
