@@ -6,31 +6,27 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="PageBuilderProductDisablePageBuilderStageTest">
+    <test name="PageBuilderCategoryDisablePageBuilderContentPreviewTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Catalog Product"/>
-            <title value="Product - Validate Toggling Page Builder Content Preview"/>
-            <description value="Ensures that Page Builder content staging can be enabled/disabled for Edit Product pages via the Enable Page Builder Content Preview flag."/>
+            <stories value="Catalog Category"/>
+            <title value="Category - Validate Toggling Page Builder Content Preview"/>
+            <description value="Ensures that Page Builder content staging can be enabled/disabled for Edit Category pages via the Enable Page Builder Content Preview flag."/>
             <severity value="MAJOR"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-disable"/>
-            <group value="pagebuilder-catalog-product"/>
+            <group value="pagebuilder-catalog-category"/>
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createCategory"/>
-            <createData entity="_defaultProduct" stepKey="createProduct">
-                <requiredEntity createDataKey="createCategory"/>
-            </createData>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
-                <argument name="product" value="$$createProduct$$"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+                <argument name="Category" value="$$createCategory$$"/>
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="resetPageBuilderContentPreview"/>
-            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -40,7 +36,9 @@
         <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="disablePageBuilderContentPreview">
             <argument name="enablePageBuilderContentPreview" value="0"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage"/>
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createCategory$$"/>
+        </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.stageSnapshot}}" stepKey="dontSeeStageSnapshot"/>
