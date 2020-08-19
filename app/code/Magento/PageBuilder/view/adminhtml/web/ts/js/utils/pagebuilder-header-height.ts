@@ -6,13 +6,19 @@
 import $ from "jquery";
 
 /**
- * Checks if PageBuilder has header and return it's height
+ * Checks if PageBuilder has header and returns it's height
  *
  * @param {string} stageId
+ * @param {string} stageWrapper
+ * @param {string} pageBuilderHeader
  * @returns {number}
  */
-export default function pageBuilderHeaderHeight(stageId: string): number {
-    const $stageWrapper = $("#" + stageId).closest('.pagebuilder-stage-wrapper');
-    const $pageBuilderHeader = $stageWrapper.find('.pagebuilder-header');
+export default function pageBuilderHeaderHeight(
+    stageId: string,
+    stageWrapper: string = ".pagebuilder-stage-wrapper",
+    pageBuilderHeader: string = ".pagebuilder-header"
+): number {
+    const $stageWrapper = $("#" + stageId).closest(stageWrapper);
+    const $pageBuilderHeader = $stageWrapper.find(pageBuilderHeader);
     return (!!$pageBuilderHeader.length) ? $pageBuilderHeader.height() : 0;
 }
