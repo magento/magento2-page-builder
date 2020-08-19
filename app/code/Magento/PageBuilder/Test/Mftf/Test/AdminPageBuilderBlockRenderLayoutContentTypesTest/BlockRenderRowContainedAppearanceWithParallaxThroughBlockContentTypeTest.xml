@@ -140,24 +140,12 @@
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
         </actionGroup>
-        <!-- Edit Row On CMS Page -->
-        <comment userInput="Edit Row On CMS Page" stepKey="commentEditRowCMSPage"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRowCMSPage">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCMSPage">
-            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingCMSPage">
-            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRowCMSPage"/>
-        <!-- Add Block to CMS Page -->
-        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -171,6 +159,18 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Edit Row On CMS Page -->
+        <comment userInput="Edit Row On CMS Page" stepKey="commentEditRowCMSPage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRowCMSPage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCMSPage">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingCMSPage">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRowCMSPage"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <actionGroup ref="validateContainedRowAppearance" stepKey="validateRowAppearanceCMSPageStage">
