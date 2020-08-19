@@ -23,7 +23,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
                 <argument name="Category" value="$$createCategory$$"/>
             </actionGroup>
-            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandContentSection"/>
         </before>
         <after>
             <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="resetPageBuilderContentPreview"/>
@@ -39,9 +39,8 @@
         <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
             <argument name="Category" value="$$createCategory$$"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandContentSection"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.stageSnapshot}}" stepKey="dontSeeStageSnapshot"/>
-        <actionGroup ref="VerifyFullScreenActionGroup" stepKey="verifyFullScreen"/>
+        <actionGroup ref="ClickEditWithPageBuilderButtonActionGroup" stepKey="clickEditWithPageBuilderButtonActionGroup"/>
     </test>
 </tests>
