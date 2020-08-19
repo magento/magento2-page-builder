@@ -32,6 +32,7 @@
             <deleteData createDataKey="createCmsPage" stepKey="deleteCmsPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
+        <!-- Add Text and Heading -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -41,6 +42,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
+        <!-- Enter Heading Content -->
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
@@ -50,26 +52,22 @@
         <actionGroup ref="clickInsideLiveEditHeading" stepKey="clickInsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
+        <!-- Select all Heading content and copy, paste into Text -->
         <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText"/>
         <waitForPageLoad stepKey="waitForTextSelect"/>
-        <pressKey selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}"
-                  parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, \Facebook\WebDriver\WebDriverKeys::INSERT]"
-                  stepKey="copyAllText"/>
+        <pressKey selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="copyAllText"/>
         <waitForPageLoad stepKey="waitForTextCopy"/>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeadingAfterCopy">
             <argument name="index" value="1"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <pressKey selector="{{TextOnStage.tinymce('1')}}"
-                  parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]"
-                  stepKey="pasteAllText"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
+        <!-- Save page and verify copy, paste -->
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="SaveAndContinueEdit"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
-        <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}"
-                               stepKey="waitForHeadingVisible"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}"
-                               stepKey="waitForTextVisible"/>
+        <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForHeadingVisible"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}" stepKey="waitForTextVisible"/>
     </test>
 </tests>
