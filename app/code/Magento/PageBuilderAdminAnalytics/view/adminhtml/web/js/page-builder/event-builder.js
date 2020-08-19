@@ -9,30 +9,27 @@
  * @param {String} name
  * @param {Array} args
  */
-define(['underscore'],
-    function (_, name, args) {
-        'use strict';
-        var EventBuilder = {};
-        EventBuilder.build = function(name,args)
-        {
+define(['underscore'], function (_, name, args) {
+    'use strict';
+    return {
+        build: function (name, args) {
             var arrayName = name.split(':'),
                 arrayNameObject,
                 action = '',
-                eventAttributes = {},
-                hasVisibilityChanged;
+                eventAttributes = {};
 
             if (_.isUndefined(args)) {
                 return;
             }
-            if (arrayName.length === 3) {
-                arrayNameObject = arrayName[1];
-                //action = hasVisibilityChanged(args[arrayNameObject]) ? 'hide/show' : '';
-                eventAttributes =
-                    !_.isUndefined(args[arrayNameObject]) &&
-                    !_.isUndefined(args[arrayNameObject].config) ?
-                        args[arrayNameObject].config : {};
-                return eventAttributes;
-            } else if (arrayName.length === 2) {
+            // if (arrayName.length === 3) {
+            //     arrayNameObject = arrayName[1];
+            //     eventAttributes =
+            //         !_.isUndefined(args[arrayNameObject]) &&
+            //         !_.isUndefined(args[arrayNameObject].config) ?
+            //             args[arrayNameObject].config : {};
+            //     eventAttributes.action = action;
+            //     return eventAttributes;
+            // } else if (arrayName.length === 2) {
                 switch (arrayName[arrayName.length - 1]) {
                     case 'duplicateAfter':
                         action = 'duplicate';
@@ -40,6 +37,7 @@ define(['underscore'],
                             !_.isUndefined(args.originalContentType) &&
                             !_.isUndefined(args.originalContentType.config) ?
                                 args.originalContentType.config : {};
+                        eventAttributes.action = action;
                         return eventAttributes;
 
                     case 'removeAfter':
@@ -54,41 +52,20 @@ define(['underscore'],
                         action = 'edit';
                         break;
 
+                    case 'visibilityAfter':
+                        action = args.visibility ? 'show' : 'hide';
+                        break;
+
                     default:
                         break;
                 }
 
                 eventAttributes = !_.isUndefined(args.contentType) &&
-                       !_.isUndefined(args.contentType.config) ?
-                       args.contentType.config : {};
+                !_.isUndefined(args.contentType.config) ?
+                    args.contentType.config : {};
+                eventAttributes.action = action;
                 return eventAttributes;
             }
         }
-        return EventBuilder;
-    });
-
-
-/**
- * Returns true when visibility has changed from previousState to state
- *
- * @param {Object} objectWrapper
- */
-/*hasVisibilityChanged = function (objectWrapper) {
-    var state,
-        previousState;
-
-    if (!_.isUndefined(objectWrapper) &&
-        !_.isUndefined(objectWrapper).dataStore
-    ) {
-        previousState = !_.isUndefined(objectWrapper.dataStore.previousState) ?
-            objectWrapper.dataStore.previousState.display : '';
-        state = !_.isUndefined(objectWrapper.dataStore.state) ?
-            objectWrapper.dataStore.state.display : '';
-
-        if (previousState !== state && previousState !== '' && state !== '') {
-            return true;
-        }
-    }
-
-    return false;
-};*/
+    //}
+});

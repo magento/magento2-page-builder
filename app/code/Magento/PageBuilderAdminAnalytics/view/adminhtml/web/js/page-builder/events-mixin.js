@@ -9,7 +9,6 @@ define(['underscore', "Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
 
     return function (target) {
         var originalTarget = target.trigger,
-            action = '',
             event,
             isAdminAnalyticsEnabled;
 
@@ -34,25 +33,27 @@ define(['underscore', "Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
                 window._satellite.track('page');
             }
 
-            var eventAttributes = EventBuilder.build(name, args);
+            var event = EventBuilder.build(name, args);
 
-            if (action !== '' && !_.isEmpty(eventAttributes)) {
-                event = {
-                    element: eventAttributes.label,
-                    type: eventAttributes.name,
-                    action: action,
-                    widget: {
-                        name: eventAttributes.form,
-                        type: eventAttributes['menu_section']
-                    },
-                    feature: 'page-builder-tracker'
-                };
+            // if (eventAttributes.action !== '' && !_.isEmpty(eventAttributes)) {
+            //     event = {
+            //         element: eventAttributes.label,
+            //         type: eventAttributes.name,
+            //         action: eventAttributes.action,
+            //         widget: {
+            //             name: eventAttributes.form,
+            //             type: eventAttributes['menu_section']
+            //         },
+            //         feature: 'page-builder-tracker'
+            //     };
 
-                if (isAdminAnalyticsEnabled && !_.isUndefined(window.digitalData.event)) {
+                if (isAdminAnalyticsEnabled &&
+                    !_.isUndefined(window.digitalData.event) &&
+                    !_.isEmpty(event)) {
                     window.digitalData.event.push(event);
                     window._satellite.track('event');
                 }
-            }
+            //}
         };
 
         return target;

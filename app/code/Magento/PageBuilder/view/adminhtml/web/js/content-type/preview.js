@@ -284,6 +284,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
       var display = this.contentType.dataStore.get("display");
       this.contentType.dataStore.set("display", !display);
+      this.dispatchContentTypeVisibilityEvents(this.contentType, !display);
     }
     /**
      * Handle duplicate of items
@@ -475,6 +476,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("contentType:duplicateAfter", duplicateEventParams);
 
       _events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
+    };
+
+    _proto.dispatchContentTypeVisibilityEvents = function dispatchContentTypeVisibilityEvents(originalContentType, visibility) {
+      var visibilityEventParams = {
+        originalContentType: originalContentType,
+        visibility: visibility
+      };
+
+      _events.trigger("contentType:visibilityAfter", visibilityEventParams);
+
+      _events.trigger(originalContentType.config.name + ":visibilityAfter", visibilityEventParams);
     }
     /**
      * Bind events
