@@ -16,7 +16,7 @@ import $ from "jquery";
 export default function pageBuilderHeaderHeight(
     stageId: string,
     stageWrapper: string = ".pagebuilder-stage-wrapper",
-    pageBuilderHeader: string = ".pagebuilder-header"
+    pageBuilderHeader: string = ".pagebuilder-header",
 ): number {
     const $stageWrapper = $("#" + stageId).closest(stageWrapper);
     const $pageBuilderHeader = $stageWrapper.find(pageBuilderHeader);
