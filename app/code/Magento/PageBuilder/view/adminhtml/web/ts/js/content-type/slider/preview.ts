@@ -122,12 +122,15 @@ export default class Preview extends PreviewCollection {
                             events.trigger("stage:interactionStop");
                         }
                     });
+                    events.on(
+                        `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
+                        this.onColumnResize.bind(this, [true])
+                    );
                 },
                 () => $(element).find(".pagebuilder-slide").length === expectedChildren,
             );
         });
     }
-
     /**
      * Return an array of options
      *

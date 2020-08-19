@@ -14,9 +14,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_previewCollection2) {
+  var Preview = /*#__PURE__*/function (_previewCollection2) {
     "use strict";
 
     _inheritsLoose(Preview, _previewCollection2);
@@ -85,6 +83,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               _events.trigger("stage:interactionStop");
             }
           });
+
+          _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.onColumnResize.bind(_assertThisInitialized(_this), [true]));
         }, function () {
           return (0, _jquery)(element).find(".pagebuilder-slide").length === expectedChildren;
         });
@@ -476,8 +476,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (this.element && this.element.children.length > 0) {
         try {
           (0, _jquery)(this.element).slick("unslick");
-        } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-        // Dispose current subscription in order to prevent infinite loop
+        } catch (e) {// We aren't concerned if this fails, slick throws an Exception when we cannot unslick
+        } // Dispose current subscription in order to prevent infinite loop
 
 
         if (this.childSubscribe) {
