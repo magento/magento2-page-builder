@@ -476,7 +476,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("contentType:duplicateAfter", duplicateEventParams);
 
       _events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
-    };
+    }
+    /**
+     * Dispatch content type visibility events
+     *
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {boolean} visibility
+     */
+    ;
 
     _proto.dispatchContentTypeVisibilityEvents = function dispatchContentTypeVisibilityEvents(originalContentType, visibility) {
       var visibilityEventParams = {

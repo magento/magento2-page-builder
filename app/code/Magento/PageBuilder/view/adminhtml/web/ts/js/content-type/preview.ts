@@ -489,6 +489,12 @@ export default class Preview implements PreviewInterface {
         events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
     }
 
+    /**
+     * Dispatch content type visibility events
+     *
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {boolean} visibility
+     */
     protected dispatchContentTypeVisibilityEvents(
         originalContentType: ContentTypeInterface | ContentTypeCollectionInterface,
         visibility: boolean,
