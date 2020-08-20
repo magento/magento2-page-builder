@@ -11,6 +11,7 @@ namespace Magento\PageBuilder\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifi
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav as EavModifier;
 use Magento\Framework\Stdlib\ArrayManager;
+use Magento\PageBuilder\Model\Config;
 
 /**
  * Data Provider for EAV Attributes on Product Page
@@ -25,11 +26,20 @@ class EavPlugin
     private $arrayManager;
 
     /**
-     * @param ArrayManager $arrayManager
+     * @var Config
      */
-    public function __construct(ArrayManager $arrayManager)
-    {
+    private $config;
+
+    /**
+     * @param ArrayManager $arrayManager
+     * @param Config $config
+     */
+    public function __construct(
+        ArrayManager $arrayManager,
+        Config $config
+    ) {
         $this->arrayManager = $arrayManager;
+        $this->config = $config;
     }
 
     /**
@@ -53,7 +63,7 @@ class EavPlugin
     ) {
         $meta = $result;
 
-        if ($attribute->getData('is_pagebuilder_enabled')) {
+        if ($this->config->isContentPreviewEnabled() && $attribute->getData('is_pagebuilder_enabled')) {
             $meta = $this->arrayManager->merge(
                 static::META_ATTRIBUTE_CONFIG_PATH,
                 $result,
@@ -83,7 +93,7 @@ class EavPlugin
     ) {
         $containerMeta = $result;
 
-        if ($attribute->getData('is_pagebuilder_enabled')) {
+        if ($this->config->isContentPreviewEnabled() && $attribute->getData('is_pagebuilder_enabled')) {
             $containerMeta = $this->arrayManager->merge(
                 static::META_ATTRIBUTE_CONFIG_PATH,
                 $result,
