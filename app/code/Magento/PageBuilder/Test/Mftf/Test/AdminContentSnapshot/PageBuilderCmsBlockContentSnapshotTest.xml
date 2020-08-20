@@ -19,16 +19,11 @@
             <group value="pagebuilder-cms-block"/>
         </annotations>
         <before>
-            <comment userInput="---merging to remove step---" stepKey="createPreReqCategory"/>
-            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock" before="navigateToAPageWithPageBuilder"/>
+            <createData entity="_emptyCmsBlock" stepKey="createPreReqCategory"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
-                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+                <argument name="CMSBlockPage" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <comment userInput="---merging to remove step---" stepKey="expandContentSection"/>
+            <remove keyForRemoval="expandContentSection"/>
         </before>
-        <after>
-            <comment userInput="---merging to remove step---" stepKey="deleteCreatedCategory"/>
-            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock" before="logout"/>
-        </after>
     </test>
 </tests>

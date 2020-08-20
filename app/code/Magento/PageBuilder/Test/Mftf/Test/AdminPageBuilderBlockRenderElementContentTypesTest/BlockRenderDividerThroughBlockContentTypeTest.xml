@@ -58,8 +58,8 @@
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsDivider"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock" after="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSBlockStage"/>
@@ -98,7 +98,7 @@
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
             <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_10.value}}*2"/>
         </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>

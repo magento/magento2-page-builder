@@ -70,14 +70,14 @@
             <expectedResult type="variable">yCoordinate1Block</expectedResult>
             <actualResult type="variable">yCoordinate2Block</actualResult>
         </assertNotEquals>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveAndCloseCMSBlockWithSplitButtonActionGroup" stepKey="saveCMSBlock"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStagePage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContentPage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -99,7 +99,7 @@
             <expectedResult type="variable">yCoordinate1Page</expectedResult>
             <actualResult type="variable">yCoordinate2Page</actualResult>
         </assertNotEquals>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
