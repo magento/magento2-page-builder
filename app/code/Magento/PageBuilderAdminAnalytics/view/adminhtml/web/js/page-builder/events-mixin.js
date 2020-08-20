@@ -36,7 +36,7 @@ define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
 
                 if (isAdminAnalyticsEnabled &&
                     !_.isUndefined(window.digitalData.event) &&
-                    !_.isEmpty(event)) {
+                    !_.isUndefined(event)) {
                     window.digitalData.event.push(event);
                     window._satellite.track('event');
                 }

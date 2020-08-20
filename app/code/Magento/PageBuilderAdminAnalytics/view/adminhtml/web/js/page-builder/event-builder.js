@@ -19,9 +19,6 @@ define(['underscore'], function (_) {
 
             /**
              * Sets up event attributes and action depending on name and args
-             *
-             * @param {String} name
-             * @param {Array} args
              */
 
             switch (arrayName[arrayName.length - 1]) {
@@ -49,15 +46,10 @@ define(['underscore'], function (_) {
                     break;
             }
 
-            if (action === 'duplicate' || action === 'hide' || action === 'show') {
-                eventAttributes =
-                    !_.isUndefined(args.originalContentType) &&
-                    !_.isUndefined(args.originalContentType.config) ?
-                        args.originalContentType.config : {};
-            } else {
-                eventAttributes = !_.isUndefined(args.contentType) &&
-                !_.isUndefined(args.contentType.config) ?
-                    args.contentType.config : {};
+            if (!_.isUndefined(args.contentType)) {
+                eventAttributes = args.contentType.config;
+            } else if (!_.isUndefined(args.originalContentType)) {
+                eventAttributes = args.originalContentType.config;
             }
 
             if (action !== '' && !_.isEmpty(eventAttributes)) {
