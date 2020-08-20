@@ -58,8 +58,8 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHeading"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock" after="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSBlockStage"/>

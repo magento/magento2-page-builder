@@ -81,8 +81,8 @@
             <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock" after="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage After Save -->
         <comment userInput="Validate CMS Block Stage After Save" stepKey="commentValidateCMSBlockStageAfterSave"/>
         <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSave"/>
@@ -136,7 +136,7 @@
             <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
         </assertStringContainsString>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
