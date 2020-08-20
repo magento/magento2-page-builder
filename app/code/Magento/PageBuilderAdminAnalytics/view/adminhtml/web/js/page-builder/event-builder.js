@@ -3,69 +3,77 @@
  * See COPYING.txt for license details.
  */
 
-/**
- * Sets up event attributes depending on name and args
- *
- * @param {String} name
- * @param {Array} args
- */
-define(['underscore'], function (_, name, args) {
+define(['underscore'], function (_) {
     'use strict';
+
     return {
         build: function (name, args) {
             var arrayName = name.split(':'),
-                arrayNameObject,
                 action = '',
-                eventAttributes = {};
+                eventAttributes = {},
+                event;
 
             if (_.isUndefined(args)) {
                 return;
             }
-            // if (arrayName.length === 3) {
-            //     arrayNameObject = arrayName[1];
-            //     eventAttributes =
-            //         !_.isUndefined(args[arrayNameObject]) &&
-            //         !_.isUndefined(args[arrayNameObject].config) ?
-            //             args[arrayNameObject].config : {};
-            //     eventAttributes.action = action;
-            //     return eventAttributes;
-            // } else if (arrayName.length === 2) {
-                switch (arrayName[arrayName.length - 1]) {
-                    case 'duplicateAfter':
-                        action = 'duplicate';
-                        eventAttributes =
-                            !_.isUndefined(args.originalContentType) &&
-                            !_.isUndefined(args.originalContentType.config) ?
-                                args.originalContentType.config : {};
-                        eventAttributes.action = action;
-                        return eventAttributes;
 
-                    case 'removeAfter':
-                        action = 'remove';
-                        break;
+            /**
+             * Sets up event attributes and action depending on name and args
+             *
+             * @param {String} name
+             * @param {Array} args
+             */
 
-                    case 'createAfter':
-                        action = 'create';
-                        break;
+            switch (arrayName[arrayName.length - 1]) {
+                case 'duplicateAfter':
+                    action = 'duplicate';
+                    break;
 
-                    case 'renderAfter':
-                        action = 'edit';
-                        break;
+                case 'removeAfter':
+                    action = 'remove';
+                    break;
 
-                    case 'visibilityAfter':
-                        action = args.visibility ? 'show' : 'hide';
-                        break;
+                case 'createAfter':
+                    action = 'create';
+                    break;
 
-                    default:
-                        break;
-                }
+                case 'renderAfter':
+                    action = 'edit';
+                    break;
 
+                case 'visibilityAfter':
+                    action = args.visibility ? 'show' : 'hide';
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (action === 'duplicate' || action === 'hide' || action === 'show') {
+                eventAttributes =
+                    !_.isUndefined(args.originalContentType) &&
+                    !_.isUndefined(args.originalContentType.config) ?
+                        args.originalContentType.config : {};
+            } else {
                 eventAttributes = !_.isUndefined(args.contentType) &&
                 !_.isUndefined(args.contentType.config) ?
                     args.contentType.config : {};
-                eventAttributes.action = action;
-                return eventAttributes;
             }
+
+            if (action !== '' && !_.isEmpty(eventAttributes)) {
+                event = {
+                    element: eventAttributes.label,
+                    type: eventAttributes.name,
+                    action: action,
+                    widget: {
+                        name: eventAttributes.form,
+                        type: eventAttributes['menu_section']
+                    },
+                    feature: 'page-builder-tracker'
+                };
+            }
+
+            return event;
         }
-    //}
+    };
 });
