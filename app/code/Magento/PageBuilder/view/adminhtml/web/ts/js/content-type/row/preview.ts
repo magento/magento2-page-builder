@@ -132,7 +132,6 @@ export default class Preview extends PreviewCollection {
                 this.buildJarallax();
             }
         });
-
         events.on(
             `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
             this.toggleFullScreen.bind(this),
