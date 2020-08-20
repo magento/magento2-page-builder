@@ -124,7 +124,7 @@ export default class Preview extends PreviewCollection {
                     });
                     events.on(
                         `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
-                        this.onColumnResize.bind(this, [true])
+                        this.onColumnResize.bind(this, [true]),
                     );
                 },
                 () => $(element).find(".pagebuilder-slide").length === expectedChildren,
