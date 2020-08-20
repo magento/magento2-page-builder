@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="PageBuilderStage">
         <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="applyTemplateButton" type="button" selector="//button[contains(@data-bind,'toggleTemplateManger') and text()='Apply Template']"/>
@@ -20,6 +19,7 @@
         <element name="editButtonSelector" type="button" selector="//button/span[contains(text(), 'Edit with Page Builder')]"/>
         <element name="enabled" type="button" selector="//div[not(contains(@class, '_disabled'))]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[contains(@class, 'pagebuilder-stage-wrapper')]"/>
         <element name="disabled" type="button" selector="//div[contains(@class, '_disabled')]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[contains(@class, 'pagebuilder-stage-wrapper')]"/>
+        <element name="stageSnapshot" type="button" selector="//div[contains(@class, 'pagebuilder-wysiwyg-wrapper') and contains(@class, 'pagebuilder-wysiwyg-snapshot')]"/>
         <element name="stagePreview" type="button" selector="//div[contains(@class, 'pagebuilder-stage-wrapper') and not(contains(@class, 'stage-full-screen'))]"/>
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-is-active.stage-full-screen"/>
         <element name="stageOverlay" type="button" selector="//div[contains(@class, 'pagebuilder-wysiwyg-overlay')]"/>
