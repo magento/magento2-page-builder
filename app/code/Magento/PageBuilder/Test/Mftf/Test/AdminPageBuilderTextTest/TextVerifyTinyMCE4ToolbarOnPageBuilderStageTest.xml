@@ -129,17 +129,21 @@
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmTextRemoval"/>
-        <!-- Verify TinyMCE4 toolbar in 11/12 column -->
+        <!-- Verify TinyMCE4 toolbar in 9/12 column -->
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumnContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <comment userInput="Change Columns To 11:12 Ratio" stepKey="ChangeColumnToDifferentRatio"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('11')}}').clientWidth" stepKey="guideWidth"/>
-        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('11')}}" x="$guideWidth" stepKey="dragColumnOneToEleven"/>
-        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextContentTypeIntoColumn">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
