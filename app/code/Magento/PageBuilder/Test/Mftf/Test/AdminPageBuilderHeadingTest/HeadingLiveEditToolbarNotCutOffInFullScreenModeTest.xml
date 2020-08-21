@@ -115,5 +115,29 @@
         <!-- Check bottom of toolbar is above top of input box -->
         <comment userInput="Check bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBoxAfterExitFullScreen"/>
         <comment userInput="assertToolbarAboveInputBoxAfterExitFullScreen" stepKey="assertToolbarAboveInputBoxAfterExitFullScreen"/>
+        <!-- Resize column to 3/12 ratio -->
+        <comment userInput="Change Column To 3:12 Ratio" stepKey="ChangeColumnToDifferentRatio"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('3')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="dragColumnOneToThree"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateColumnWidth"/>
+        <!-- Focus on Heading Content Type -->
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnHeadingContentType">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionInMediumColumn"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionBottom('0')}}" stepKey="inputBoxBottomPositionInMediumColumn"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionInMediumColumn"/>
+        <comment userInput="Assert toolbar did not overflow" stepKey="commentAssertToolbarNotOverflowInMediumColumn"/>
+        <!-- Assert toolbar did not overflow in 3/12 column -->
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeInMediumColumn">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$inputBoxTopPositionInMediumColumn</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Check top of toolbar is below bottom of input box in 3/12 column -->
+        <comment userInput="Check top of toolbar is below bottom of input box in 3/12 column" stepKey="commentCheckToolbarBelowInputBoxInMediumColumn"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarAboveInputBoxInMediumColumn">
+            <expectedResult type="variable">$inputBoxBottomPositionInMediumColumn</expectedResult>
+            <actualResult type="variable">$toolbarTopPositionInMediumColumn</actualResult>
+        </assertGreaterThanOrEqual>
     </test>
 </tests>

@@ -114,5 +114,44 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <seeElement selector="{{TextOnStorefront.textInImportantStyle(PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnStorefront"/>
+        <!-- Remove HTML Code Content Type -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateBackToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeHTMLCodeContentType">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmHTMLCodeRemoval"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeTextContentType">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmTextRemoval"/>
+        <!-- Verify TinyMCE4 toolbar in 11/12 column -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <comment userInput="Change Columns To 11:12 Ratio" stepKey="ChangeColumnToDifferentRatio"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('11')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('11')}}" x="$guideWidth" stepKey="dragColumnOneToEleven"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusAgainOnEditorArea"/>
+        <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4InColumnContentType"/>
+        <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntitiesInColumnContentType"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.undo}}" stepKey="seeUndoInColumnContentType"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.redo}}" stepKey="seeRedoInColumnContentType"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.fontSize}}" stepKey="seeFontsizeInColumnContentType"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.lineHeight}}" stepKey="seeLineHeightInColumnContentType"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.textColor}}" stepKey="seeTextColorInColumnContentType"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.backgroundColor}}" stepKey="seeBackgroundColorInColumnContentType"/>
     </test>
 </tests>
