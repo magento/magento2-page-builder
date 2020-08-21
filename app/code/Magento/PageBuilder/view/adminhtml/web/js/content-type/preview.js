@@ -486,20 +486,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Dispatch content type visibility events
      *
-     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
      * @param {boolean} visibility
      */
     ;
 
-    _proto.dispatchContentTypeVisibilityEvents = function dispatchContentTypeVisibilityEvents(originalContentType, visibility) {
+    _proto.dispatchContentTypeVisibilityEvents = function dispatchContentTypeVisibilityEvents(contentType, visibility) {
       var visibilityEventParams = {
-        originalContentType: originalContentType,
+        contentType: contentType,
         visibility: visibility
       };
 
       _events.trigger("contentType:visibilityAfter", visibilityEventParams);
 
-      _events.trigger(originalContentType.config.name + ":visibilityAfter", visibilityEventParams);
+      _events.trigger(contentType.config.name + ":visibilityAfter", visibilityEventParams);
     }
     /**
      * Bind events

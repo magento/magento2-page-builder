@@ -34,7 +34,7 @@ define(['underscore'], function (_) {
                     action = 'create';
                     break;
 
-                case 'renderAfter':
+                case 'editBefore':
                     action = 'edit';
                     break;
 

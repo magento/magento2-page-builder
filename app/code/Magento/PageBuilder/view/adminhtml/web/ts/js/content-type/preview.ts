@@ -500,20 +500,20 @@ export default class Preview implements PreviewInterface {
     /**
      * Dispatch content type visibility events
      *
-     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
      * @param {boolean} visibility
      */
     protected dispatchContentTypeVisibilityEvents(
-        originalContentType: ContentTypeInterface | ContentTypeCollectionInterface,
+        contentType: ContentTypeInterface | ContentTypeCollectionInterface,
         visibility: boolean,
     ) {
         const visibilityEventParams = {
-            originalContentType,
+            contentType,
             visibility,
         };
 
         events.trigger("contentType:visibilityAfter", visibilityEventParams);
-        events.trigger(originalContentType.config.name + ":visibilityAfter", visibilityEventParams);
+        events.trigger(contentType.config.name + ":visibilityAfter", visibilityEventParams);
     }
 
     /**
