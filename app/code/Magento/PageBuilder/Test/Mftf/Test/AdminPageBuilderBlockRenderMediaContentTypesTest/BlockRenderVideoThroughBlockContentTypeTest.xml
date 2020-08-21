@@ -28,6 +28,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -54,9 +55,11 @@
             <argument name="property" value="PageBuilderVideoWidth_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVideo"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <actionGroup ref="validateVideo" stepKey="validateCMSBlockStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>

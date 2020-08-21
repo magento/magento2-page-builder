@@ -33,6 +33,7 @@
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -44,10 +45,12 @@
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToContentCreatedCMSBlockPage2">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen1"/>
         <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="seePageBuilderOnPage"/>
     </test>
 </tests>

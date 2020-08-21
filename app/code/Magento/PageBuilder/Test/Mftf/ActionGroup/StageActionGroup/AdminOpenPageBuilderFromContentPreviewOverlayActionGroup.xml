@@ -11,10 +11,13 @@
         <annotations>
             <description>Click Page Builder preview overlay to open Page Builder stage.</description>
         </annotations>
-        <waitForElementVisible selector="{{PageBuilderStage.stageOverlay}}" stepKey="waitForStageOverlay"/>
-        <click selector="{{PageBuilderStage.stageOverlay}}" stepKey="clickOnStageOverlayOnStage"/>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.stageOverlay}}" stepKey="waitForStageOverlay"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderStage.stageOverlay}}" stepKey="clickOnStageOverlayOnStage"/>
         <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderLayoutMenu"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderLayoutMenu"/>
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForPageBuilderFullScreen"/>
     </actionGroup>
 </actionGroups>

@@ -82,6 +82,8 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $data['config']['template'] = 'ui/form/field';
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/form/element/wysiwyg';
             $wysiwygConfigData = $stageConfig->getConfig();
+            $wysiwygConfigData['pagebuilder_button'] = true;
+            $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
 
             if ($overrideSnapshot) {
                 $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
@@ -91,7 +93,9 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             // Add Classes for Page Builder Stage
             if (isset($wysiwygConfigData['pagebuilder_content_snapshot'])
                 && $wysiwygConfigData['pagebuilder_content_snapshot']) {
-                $data['config']['additionalClasses'] = 'admin__field-wide admin__field-page-builder';
+                $data['config']['additionalClasses'] = [
+                    'admin__field-wide admin__field-page-builder' => true
+                ];
             }
 
             $data['config']['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?

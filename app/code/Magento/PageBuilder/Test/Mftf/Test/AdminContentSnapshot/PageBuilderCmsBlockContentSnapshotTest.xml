@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCmsBlockContentSnapshotTest" extends="PageBuilderCatalogCategoryContentSnapshotTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Content Snapshot"/>
+            <title value="CMS Block - Verify PageBuilder Content Snapshot"/>
+            <description value="This test is to ensure that the PageBuilder Content Snapshot appears on stage in Cms Block Admin Page and PageBuilder works in full-screen mode."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-contentSnapshot"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createPreReqCategory"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSBlockPage" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <remove keyForRemoval="expandContentSection"/>
+        </before>
+    </test>
+</tests>

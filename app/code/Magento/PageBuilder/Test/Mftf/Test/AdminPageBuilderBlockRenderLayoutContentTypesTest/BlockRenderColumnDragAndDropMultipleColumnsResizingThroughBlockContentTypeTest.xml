@@ -28,6 +28,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -54,6 +55,7 @@
             <argument name="containerTargetIndex" value="2"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>

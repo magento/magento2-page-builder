@@ -3,35 +3,44 @@
  * See COPYING.txt for license details.
  */
 
-define(['underscore'], function (_underscore) {
-    'use strict';
+define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-builder'],
+    function (_, EventBuilder) {
+        'use strict';
 
-    return function (target) {
-        var originalTarget = target.trigger,
-            isAdminAnalyticsEnabled;
+        return function (target) {
+            var originalTarget = target.trigger,
+                isAdminAnalyticsEnabled,
+                event;
 
-        /**
-         * Invokes custom code to track information regarding Page Builder usage
-         *
-         * @param {String} name
-         * @param {Array} args
-         */
+            /**
+             * Invokes custom code to track information regarding Page Builder usage
+             *
+             * @param {String} name
+             * @param {Array} args
+             */
 
-        target.trigger = function (name, args) {
-            originalTarget.apply(originalTarget, [name, args]);
-            isAdminAnalyticsEnabled =
-                !_underscore.isUndefined(window.digitalData) &&
-                !_underscore.isUndefined(window._satellite);
+            target.trigger = function (name, args) {
+                originalTarget.apply(originalTarget, [name, args]);
+                isAdminAnalyticsEnabled =
+                    !_.isUndefined(window.digitalData) &&
+                    !_.isUndefined(window._satellite);
 
-            if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
-                window.digitalData.page.url = window.location.href;
-                window.digitalData.page.attributes = {
-                    editedWithPageBuilder: 'true'
-                };
-                window._satellite.track('page');
-            }
+                if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
+                    window.digitalData.page.url = window.location.href;
+                    window.digitalData.page.attributes = {
+                        editedWithPageBuilder: 'true'
+                    };
+                    window._satellite.track('page');
+                }
+
+                event = EventBuilder.build(name, args);
+
+                if (isAdminAnalyticsEnabled && !_.isUndefined(window.digitalData.event) && !_.isUndefined(event)) {
+                    window.digitalData.event.push(event);
+                    window._satellite.track('event');
+                }
+            };
+
+            return target;
         };
-
-        return target;
-    };
-});
+    });

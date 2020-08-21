@@ -30,6 +30,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
@@ -66,6 +67,7 @@
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveBlock"/>
         <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
