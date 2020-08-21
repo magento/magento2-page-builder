@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCategoryDisablePageBuilderContentPreviewTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Category - Validate Toggling Page Builder Content Preview"/>
+            <description value="Ensures that Page Builder content staging can be enabled/disabled for Edit Category pages via the Enable Page Builder Content Preview flag."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-disable"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+                <argument name="Category" value="$$createCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandContentSection"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="resetPageBuilderContentPreview"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Verify (Enabled) Content Preview -->
+        <actionGroup ref="ValidatePageBuilderPreviewActionGroup" stepKey="ValidatePageBuilderPreview"/>
+        <!-- Verify (Disabled) Content Preview -->
+        <actionGroup ref="AdminSetPageBuilderContentPreviewActionGroup" stepKey="disablePageBuilderContentPreview">
+            <argument name="enablePageBuilderContentPreview" value="0"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandContentSection"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.stageSnapshot}}" stepKey="dontSeeStageSnapshot"/>
+        <actionGroup ref="ClickEditWithPageBuilderButtonActionGroup" stepKey="clickEditWithPageBuilderButtonActionGroup"/>
+    </test>
+</tests>
