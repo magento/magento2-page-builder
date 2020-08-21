@@ -17,6 +17,8 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
 {
     const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
 
+    private const IS_PAGEBUILDER_CONTENT_PREVIEW_ENABLED = 'cms/pagebuilder/enable_content_preview';
+
     /**
      * @var ScopeConfigInterface
      */
@@ -66,7 +68,19 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     public function isEnabled(): bool
     {
         return (bool)$this->scopeConfig->getValue(
-            \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
+            self::IS_PAGEBUILDER_ENABLED
+        );
+    }
+
+    /**
+     * Returns Configuration Setting for Page Builder Content Preview
+     *
+     * @return bool
+     */
+    public function isContentPreviewEnabled(): bool
+    {
+        return (bool) $this->scopeConfig->getValue(
+            self::IS_PAGEBUILDER_CONTENT_PREVIEW_ENABLED
         );
     }
 }
