@@ -130,22 +130,21 @@
         </actionGroup>
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateColumnWidth"/>
         <!-- Add Another Heading Content Type -->
-        <comment userInput="Add Heading Content Type" stepKey="commentAddInnerHeadingContentType"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingContentTypeIntoColumn">
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingContentTypeIntoColumn2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionInMediumColumn"/>
         <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionBottom('0')}}" stepKey="inputBoxBottomPositionInMediumColumn"/>
         <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionInMediumColumn"/>
-        <comment userInput="Assert toolbar did not overflow" stepKey="commentAssertToolbarNotOverflowInMediumColumn"/>
         <!-- Assert toolbar did not overflow in 3/12 column -->
         <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeInMediumColumn">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">$inputBoxTopPositionInMediumColumn</actualResult>
         </assertGreaterThanOrEqual>
         <!-- Check top of toolbar is below bottom of input box in 3/12 column -->
-        <comment userInput="Check top of toolbar is below bottom of input box in 3/12 column" stepKey="commentCheckToolbarBelowInputBoxInMediumColumn"/>
         <assertGreaterThanOrEqual stepKey="assertToolbarAboveInputBoxInMediumColumn">
             <expectedResult type="variable">$inputBoxBottomPositionInMediumColumn</expectedResult>
             <actualResult type="variable">$toolbarTopPositionInMediumColumn</actualResult>

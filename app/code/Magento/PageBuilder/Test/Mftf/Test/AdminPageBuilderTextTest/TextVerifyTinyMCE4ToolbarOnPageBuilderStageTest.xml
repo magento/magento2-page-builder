@@ -124,12 +124,13 @@
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmHTMLCodeRemoval"/>
+        <!-- Remove Text Content Type -->
         <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeTextContentType">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmTextRemoval"/>
-        <!-- Verify TinyMCE4 toolbar in 9/12 column -->
+        <!-- Create 9/12 column -->
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -141,21 +142,19 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
+        <!-- Assert toolbar did not overflow in 9/12 column -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextContentTypeIntoColumn">
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextContentTypeIntoColumn">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusAgainOnEditorArea"/>
-        <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4InColumnContentType"/>
-        <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntitiesInColumnContentType"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.undo}}" stepKey="seeUndoInColumnContentType"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.redo}}" stepKey="seeRedoInColumnContentType"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.fontSize}}" stepKey="seeFontsizeInColumnContentType"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.lineHeight}}" stepKey="seeLineHeightInColumnContentType"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.textColor}}" stepKey="seeTextColorInColumnContentType"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.backgroundColor}}" stepKey="seeBackgroundColorInColumnContentType"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="TextOnStage"/>
+        </actionGroup>
+        <actionGroup ref="AdminVerifyTinyMCEToolbarButtonsActionGroup" stepKey="verifyTinyMCE4InColumnContentType"/>
     </test>
 </tests>
