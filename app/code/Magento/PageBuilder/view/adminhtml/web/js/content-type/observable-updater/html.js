@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/utils/object"], function (_object) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_config, _directives, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -26,6 +26,11 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
 
     if (typeof value === "string" && !value.length && config.html.placeholder) {
       value = config.html.placeholder;
+    } // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
+
+
+    if (_config.getMode() !== "Preview" && typeof value === "string" && value.indexOf("{{media url=") !== -1) {
+      value = (0, _directives.replaceWithDataSrc)(value);
     }
 
     return value;

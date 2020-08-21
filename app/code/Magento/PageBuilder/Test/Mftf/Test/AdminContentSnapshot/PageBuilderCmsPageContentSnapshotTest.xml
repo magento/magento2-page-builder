@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCmsPageContentSnapshotTest" extends="PageBuilderCatalogCategoryContentSnapshotTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Content Snapshot"/>
+            <title value="CMS Page - Verify PageBuilder Content Snapshot"/>
+            <description value="This test is to ensure that the PageBuilder Content Snapshot appears on stage in Cms Page Admin Page and PageBuilder works in full-screen mode."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-contentSnapshot"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSPage" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandContentSection">
+                <argument name="sectionSelector" value="{{CmsNewPagePageContentSection.header}}"/>
+                <argument name="sectionDependentSelector" value="{{CmsNewPagePageContentSection.header}}._show"/>
+            </actionGroup>
+        </before>
+    </test>
+</tests>

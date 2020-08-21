@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextTinyMCE3OnTextContentTypeTest">
+    <test name="TextTinyMCE3OnTextContentTypeTest" deprecated="TinyMCE3 is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -18,6 +18,9 @@
             <testCaseId value="MC-3669"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="DEPRECATED">TinyMCE3 is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
@@ -50,7 +53,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForTinyMCE3"/>
+        <comment userInput="removing deprecated element" stepKey="waitForTinyMCE3"/>
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
         <!-- Verify inputed text is carried out to slideout -->
         <comment userInput="Verify inputed text is carried out to slideout" stepKey="comment1"/>
@@ -80,6 +83,7 @@
             <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
             <actualResult type="variable">actualData</actualResult>
         </assertStringContainsString>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <amOnPage url="" stepKey="goToBaseURL"/>
         <grabFromCurrentUrl stepKey="grabBaseURL"/>

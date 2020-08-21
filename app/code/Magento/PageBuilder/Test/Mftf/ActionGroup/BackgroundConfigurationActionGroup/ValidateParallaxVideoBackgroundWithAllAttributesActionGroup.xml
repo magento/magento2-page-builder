@@ -11,12 +11,15 @@
         <annotations>
             <description>Validates all video background attributes when all attributes are configured and parallax is enabled. Extends: validateVideoBackgroundWithAllAttributes</description>
         </annotations>
+        <arguments>
+            <argument name="expectedPosition" defaultValue="position: fixed;" type="string"/>
+        </arguments>
         <assertStringContainsString stepKey="assertVideoPosition">
-            <expectedResult type="string">position: fixed;</expectedResult>
+            <expectedResult type="string">{{expectedPosition}}</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
         </assertStringContainsString>
         <assertStringContainsString stepKey="assertImagePosition">
-            <expectedResult type="string">position: fixed;</expectedResult>
+            <expectedResult type="string">{{expectedPosition}}</expectedResult>
             <actualResult type="variable">$fallbackImageStyle</actualResult>
         </assertStringContainsString>
     </actionGroup>

@@ -5,7 +5,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _option, _titleOption, _registry, _sortable2, _object, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _config, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _option, _titleOption, _registry, _sortable2, _checkStageFullScreen, _object, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -47,6 +47,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
+      this.isSnapshot = _knockout.observable(false);
       this.mouseover = false;
       this.contentType = contentType;
       this.config = config;
@@ -58,6 +59,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         "visible": this.isEmpty,
         "empty-placeholder-background": this.isPlaceholderVisible
       });
+
+      if (_config.getConfig("pagebuilder_content_snapshot")) {
+        this.isSnapshot(!(0, _checkStageFullScreen)(this.contentType.stageId));
+      }
+
       this.bindEvents();
       this.populatePreviewData();
     }
@@ -503,6 +509,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this5 = this;
 
+      var fullScreenModeChangeAfterEvent = "stage:" + this.contentType.stageId + ":fullScreenModeChangeAfter";
       this.contentType.dataStore.subscribe(function (data) {
         _this5.updateObservables();
 
@@ -519,6 +526,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this5.isEmpty(!children.length);
         });
       }
+
+      _events.on(fullScreenModeChangeAfterEvent, this.toggleSnapshot.bind(this));
     }
     /**
      * After observables updated, allows to modify observables
@@ -652,6 +661,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         });
       });
+    }
+    /**
+     * Enable snapshot mode.
+     * @param args
+     */
+    ;
+
+    _proto.toggleSnapshot = function toggleSnapshot(args) {
+      if (_config.getConfig("pagebuilder_content_snapshot")) {
+        this.isSnapshot(!args.fullScreen);
+      }
     };
 
     _createClass(Preview, [{

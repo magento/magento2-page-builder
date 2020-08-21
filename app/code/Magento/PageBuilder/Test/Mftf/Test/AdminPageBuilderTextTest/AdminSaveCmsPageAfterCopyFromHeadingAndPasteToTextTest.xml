@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminSaveCmsPageAfterCopyFromHeadingAndPasteToTextTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Save page after copy and paste between heading and text elements"/>
+            <description value="Ensure cms page can be saved after copy text from one page builder element to another"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-35220"/>
+            <testCaseId value="MC-36666"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCmsPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCmsPage">
+                <argument name="CMSPage" value="$createCmsPage$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCmsPage" stepKey="deleteCmsPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Text and Heading -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Enter Heading Content -->
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="clickInsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Select all Heading content and copy, paste into Text -->
+        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText"/>
+        <waitForPageLoad stepKey="waitForTextSelect"/>
+        <pressKey selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="copyAllText"/>
+        <waitForPageLoad stepKey="waitForTextCopy"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeadingAfterCopy">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
+        <waitForPageLoad stepKey="waitForTextPaste"/>
+        <!-- Save page and verify copy, paste -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="SaveAndContinueEdit"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
+        <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForHeadingVisible"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}" stepKey="waitForTextVisible"/>
+    </test>
+</tests>
