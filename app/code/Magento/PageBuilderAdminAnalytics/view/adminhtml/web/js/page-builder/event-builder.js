@@ -7,6 +7,14 @@ define(['underscore'], function (_) {
     'use strict';
 
     return {
+
+        /**
+         * Sets up event attributes and action depending on name and args
+         *
+         * @param {String} name
+         * @param {Array} args
+         */
+
         build: function (name, args) {
             var arrayName = name.split(':'),
                 action = '',
@@ -16,10 +24,6 @@ define(['underscore'], function (_) {
             if (_.isUndefined(args)) {
                 return;
             }
-
-            /**
-             * Sets up event attributes and action depending on name and args
-             */
 
             switch (arrayName[arrayName.length - 1]) {
                 case 'duplicateAfter':

@@ -9,7 +9,8 @@ define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
 
         return function (target) {
             var originalTarget = target.trigger,
-                isAdminAnalyticsEnabled;
+                isAdminAnalyticsEnabled,
+                event;
 
             /**
              * Invokes custom code to track information regarding Page Builder usage
@@ -32,11 +33,9 @@ define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
                     window._satellite.track('page');
                 }
 
-                var event = EventBuilder.build(name, args);
+                event = EventBuilder.build(name, args);
 
-                if (isAdminAnalyticsEnabled &&
-                    !_.isUndefined(window.digitalData.event) &&
-                    !_.isUndefined(event)) {
+                if (isAdminAnalyticsEnabled && !_.isUndefined(window.digitalData.event) && !_.isUndefined(event)) {
                     window.digitalData.event.push(event);
                     window._satellite.track('event');
                 }
