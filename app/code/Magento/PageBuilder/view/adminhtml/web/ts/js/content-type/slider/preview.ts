@@ -573,7 +573,7 @@ export default class Preview extends PreviewCollection {
                 $(this.element).slick("setPosition");
                 this.checkWidth();
             }
-        }, 250);
+        }, 400);
     }
 
     /**

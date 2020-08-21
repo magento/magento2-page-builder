@@ -14,7 +14,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   /**
    * @api
    */
-  var Preview = /*#__PURE__*/function (_previewCollection2) {
+  var Preview =
+  /*#__PURE__*/
+  function (_previewCollection2) {
     "use strict";
 
     _inheritsLoose(Preview, _previewCollection2);
@@ -476,8 +478,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (this.element && this.element.children.length > 0) {
         try {
           (0, _jquery)(this.element).slick("unslick");
-        } catch (e) {// We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-        } // Dispose current subscription in order to prevent infinite loop
+        } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
+        // Dispose current subscription in order to prevent infinite loop
 
 
         if (this.childSubscribe) {
@@ -578,7 +580,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this6.checkWidth();
         }
-      }, 250);
+      }, 400);
     }
     /**
      * Check width and add class that marks element as small
