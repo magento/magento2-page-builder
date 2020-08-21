@@ -29,7 +29,7 @@ export default class Edit {
      */
     public open(): void {
         const contentTypeData = this.dataStore.getState();
-
+        events.trigger("contentType:editBefore", { contentType: this.instance } );
         events.trigger("form:renderAfter", {
             data: contentTypeData,
             appearances: this.instance.config.appearances,
