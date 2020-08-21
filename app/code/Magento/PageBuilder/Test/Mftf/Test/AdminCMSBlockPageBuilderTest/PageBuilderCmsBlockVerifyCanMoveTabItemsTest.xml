@@ -34,8 +34,8 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory" after="deleteCreatedProduct"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage" after="exitPageBuilderFullScreen"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage" after="seeTab2NameStageAfterSave"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
