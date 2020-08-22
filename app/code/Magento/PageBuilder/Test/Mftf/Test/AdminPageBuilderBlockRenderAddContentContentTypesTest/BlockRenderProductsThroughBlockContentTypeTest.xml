@@ -39,6 +39,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct1" stepKey="deleteCreatedProduct1"/>
@@ -72,9 +73,11 @@
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="3"/>
@@ -150,6 +153,7 @@
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage2">
             <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
         </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen1"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -157,9 +161,11 @@
             <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterEdit"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock2"/>
         <!-- Validate CMS Block Stage Again -->
         <comment userInput="Validate CMS Block Stage Again" stepKey="commentValidateCMSBlockStage2"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>

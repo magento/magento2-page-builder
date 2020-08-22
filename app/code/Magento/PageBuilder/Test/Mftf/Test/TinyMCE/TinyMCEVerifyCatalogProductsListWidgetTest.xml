@@ -33,6 +33,14 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+                <argument name="property" value="PageBuilderMarginsProperty_50"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
@@ -76,6 +84,7 @@
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
             <actualResult type="variable">grabComputedTextAlignCMSBlockStage</actualResult>
         </assertEquals>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">

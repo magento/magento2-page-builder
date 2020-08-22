@@ -310,6 +310,7 @@ export default class Preview implements PreviewInterface {
     public onOptionVisibilityToggle(): void {
         const display = this.contentType.dataStore.get<boolean>("display");
         this.contentType.dataStore.set("display", !display);
+        this.dispatchContentTypeVisibilityEvents(this.contentType, !display);
     }
 
     /**
@@ -494,6 +495,25 @@ export default class Preview implements PreviewInterface {
 
         events.trigger("contentType:duplicateAfter", duplicateEventParams);
         events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
+    }
+
+    /**
+     * Dispatch content type visibility events
+     *
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
+     * @param {boolean} visibility
+     */
+    protected dispatchContentTypeVisibilityEvents(
+        contentType: ContentTypeInterface | ContentTypeCollectionInterface,
+        visibility: boolean,
+    ) {
+        const visibilityEventParams = {
+            contentType,
+            visibility,
+        };
+
+        events.trigger("contentType:visibilityAfter", visibilityEventParams);
+        events.trigger(contentType.config.name + ":visibilityAfter", visibilityEventParams);
     }
 
     /**
