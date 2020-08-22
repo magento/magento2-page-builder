@@ -34,6 +34,10 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
     _proto.open = function open() {
       var contentTypeData = this.dataStore.getState();
 
+      _events.trigger("contentType:editBefore", {
+        contentType: this.instance
+      });
+
       _events.trigger("form:renderAfter", {
         data: contentTypeData,
         appearances: this.instance.config.appearances,

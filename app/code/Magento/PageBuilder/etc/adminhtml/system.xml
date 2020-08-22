@@ -18,6 +18,17 @@
                         <![CDATA[Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.<br /><br />For Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content.]]>
                     </comment>
                 </field>
+                <field id="enable_content_preview" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <label>Enable Page Builder Content Preview</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <frontend_model>Magento\PageBuilder\Block\Adminhtml\System\Config\EnableField</frontend_model>
+                    <comment>
+                        <![CDATA[Preview Page Builder content on product and category editing pages. Setting to "No" can improve performance in case several attributes are editable by Page Builder.]]>
+                    </comment>
+                </field>
                 <field id="google_maps_api_key" translate="label comment" type="text" sortOrder="2010" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Google Maps API Key</label>
                     <comment>

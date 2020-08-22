@@ -28,6 +28,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -82,9 +83,11 @@
             <argument name="property" value="PageBuilderImageTitleAttributeProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsImage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <waitForElementVisible selector="{{ImageOnStage.base('1')}}" stepKey="waitForImageCMSBlockStage"/>
         <see selector="{{ImageOnStage.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty.value}}" stepKey="seeImageCaptionCMSBlockStage"/>
         <seeElement selector="{{ImageOnStage.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltTextCMSBlockStage"/>

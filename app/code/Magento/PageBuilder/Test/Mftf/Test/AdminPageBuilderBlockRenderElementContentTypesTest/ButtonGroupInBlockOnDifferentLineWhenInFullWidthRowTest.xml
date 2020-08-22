@@ -37,6 +37,7 @@
         </after>
         <!-- Change row appearance to full-width -->
         <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearanceBlock"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStageBlock">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -69,13 +70,14 @@
             <expectedResult type="variable">yCoordinate1Block</expectedResult>
             <actualResult type="variable">yCoordinate2Block</actualResult>
         </assertNotEquals>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveAndCloseCMSBlockWithSplitButtonActionGroup" stepKey="saveCMSBlock"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStagePage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStagePage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContentPage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
