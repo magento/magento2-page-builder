@@ -25,7 +25,9 @@ define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
                     !_.isUndefined(window.digitalData) &&
                     !_.isUndefined(window._satellite);
 
-                if (name.indexOf('readyAfter') !== -1 && isAdminAnalyticsEnabled) {
+                if (name.indexOf('stage:fullScreenModeChangeAfter') !== -1 &&
+                    args.fullScreen && isAdminAnalyticsEnabled
+                ) {
                     window.digitalData.page.url = window.location.href;
                     window.digitalData.page.attributes = {
                         editedWithPageBuilder: 'true'
