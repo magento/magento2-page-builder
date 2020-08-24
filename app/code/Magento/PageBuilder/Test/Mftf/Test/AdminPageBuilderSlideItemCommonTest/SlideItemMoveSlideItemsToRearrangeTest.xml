@@ -92,6 +92,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
+        <waitForElementNotVisible selector="{{SlideOnBackend.base('2')}}" stepKey="dontSeeNextSlideAfterSave"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide1AfterSave"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave"/>
