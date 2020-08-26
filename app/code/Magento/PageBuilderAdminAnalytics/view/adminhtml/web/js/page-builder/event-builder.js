@@ -16,8 +16,7 @@ define(['underscore'], function (_) {
          */
 
         build: function (name, args) {
-            var arrayName = name.split(':'),
-                action = '',
+            var action = '',
                 eventAttributes = {},
                 event;
 
@@ -25,24 +24,24 @@ define(['underscore'], function (_) {
                 return;
             }
 
-            switch (arrayName[arrayName.length - 1]) {
-                case 'duplicateAfter':
+            switch (name) {
+                case 'contentType:duplicateAfter':
                     action = 'duplicate';
                     break;
 
-                case 'removeAfter':
+                case 'contentType:removeAfter':
                     action = 'remove';
                     break;
 
-                case 'createAfter':
+                case 'contentType:createAfter':
                     action = 'create';
                     break;
 
-                case 'editBefore':
+                case 'contentType:editBefore':
                     action = 'edit';
                     break;
 
-                case 'visibilityAfter':
+                case 'contentType:visibilityAfter':
                     action = args.visibility ? 'show' : 'hide';
                     break;
 
