@@ -12,6 +12,7 @@ import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
 import checkStageFullScreen from "../utils/check-stage-full-screen";
+import pageBuilderHeaderHeight from "../utils/pagebuilder-header-height";
 import WysiwygInterface from "./wysiwyg-interface";
 
 /**
@@ -203,7 +204,8 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
+        const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top
+                                         - pageBuilderHeaderHeight(this.stageId);
 
         if (!checkStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
             $inlineToolbar.css("transform", "translateY(-100%)");

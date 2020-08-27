@@ -114,5 +114,47 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <seeElement selector="{{TextOnStorefront.textInImportantStyle(PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnStorefront"/>
+        <!-- Remove HTML Code Content Type -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateBackToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeHTMLCodeContentType">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmHTMLCodeRemoval"/>
+        <!-- Remove Text Content Type -->
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeTextContentType">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmTextRemoval"/>
+        <!-- Create 9/12 column -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumnContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <!-- Assert toolbar did not overflow in 9/12 column -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="TextOnStage"/>
+        </actionGroup>
+        <actionGroup ref="AdminVerifyTinyMCEToolbarButtonsActionGroup" stepKey="verifyTinyMCE4InColumnContentType"/>
     </test>
 </tests>

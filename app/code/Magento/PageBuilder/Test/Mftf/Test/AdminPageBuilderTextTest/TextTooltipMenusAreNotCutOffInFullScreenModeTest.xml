@@ -57,5 +57,18 @@
         <comment userInput="inputBoxTopPositionAfterExitFullScreen" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
         <comment userInput="toolbarTopPositionAfterExitFullScreen" stepKey="toolbarTopPositionAfterExitFullScreen"/>
         <comment userInput="toolbarBottomPositionAfterExitFullScreen" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeHeadingContentType">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingContentTypeIntoColumn2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPositionInMediumColumn"/>
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="inputBoxBottomPositionInMediumColumn"/>
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPositionInMediumColumn"/>
     </test>
 </tests>

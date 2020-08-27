@@ -85,6 +85,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               _events.trigger("stage:interactionStop");
             }
           });
+
+          _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.onColumnResize.bind(_assertThisInitialized(_this), [true]));
         }, function () {
           return (0, _jquery)(element).find(".pagebuilder-slide").length === expectedChildren;
         });
@@ -578,7 +580,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this6.checkWidth();
         }
-      }, 250);
+      }, 400);
     }
     /**
      * Check width and add class that marks element as small

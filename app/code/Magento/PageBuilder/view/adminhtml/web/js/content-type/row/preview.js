@@ -3,6 +3,8 @@
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _events, _ResizeObserver, _underscore, _vimeoWrapper, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
@@ -14,9 +16,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_previewCollection2) {
+  var Preview = /*#__PURE__*/function (_previewCollection2) {
     "use strict";
 
     _inheritsLoose(Preview, _previewCollection2);
@@ -108,16 +108,28 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
         }
       });
 
+      _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.toggleFullScreen.bind(_assertThisInitialized(_this)));
+
       return _this;
+    }
+    /**
+     * Toggle fullscreen
+     */
+
+
+    var _proto = Preview.prototype;
+
+    _proto.toggleFullScreen = function toggleFullScreen() {
+      if ((0, _jquery)(this.element).hasClass("jarallax")) {
+        this.buildJarallax();
+      }
     }
     /**
      * Use the conditional remove to disable the option when the content type has a single child
      *
      * @returns {OptionsInterface}
      */
-
-
-    var _proto = Preview.prototype;
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);
