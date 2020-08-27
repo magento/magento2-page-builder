@@ -10,7 +10,7 @@
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
     <div class="pagebuilder-slide-wrapper"
-         ko-style="Object.assign(data.main.style(), data.wrapper.style())"
+         data-bind="pbStyles:Object.assign(data.main.style(), data.wrapper.style())"
          css="{'jarallax': data.wrapper.attributes()['data-background-type'] === 'video'}"
          event="mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor"
          attr="data.wrapper.attributes"
@@ -18,17 +18,17 @@
         <div if="data.video_overlay.attributes()['data-video-overlay-color']"
              class="video-overlay"
              attr="data.video_overlay.attributes"
-             ko-style="data.video_overlay.style" />
+             data-bind="pbStyles:data.video_overlay.style" />
         <scope args="getUploader().getUiComponent()">
             <render />
         </scope>
         <div class="pagebuilder-overlay pagebuilder-collage-overlay wysiwyg-container"
-             ko-style="data.overlay.style()"
+             data-bind="pbStyles:data.overlay.style()"
              event="mousedown: activateEditor">
             <div class="inline-wysiwyg"
                  if="isWysiwygSupported()"
                  attr="data.content.attributes"
-                 ko-style="data.content.style"
+                 data-bind="pbStyles:data.content.style"
                  css="data.content.css"
                  event="mousedown: stopEvent, click: activateEditor, dblclick: handleDoubleClick"
                  contenteditable="true"
@@ -37,7 +37,7 @@
             <div if="!data.content.html() && isWysiwygSupported()"
                  class="pagebuilder-empty-slide"
                  attr="data.content.attributes"
-                 ko-style="data.content.style"
+                 data-bind="pbStyles:data.content.style"
                  css="data.content.css"
                  translate="'Edit Slide Text'">
             </div>
@@ -51,7 +51,7 @@
                type="button"
                class="pagebuilder-slide-button"
                attr="data.button.attributes"
-               ko-style="data.button.style"
+               data-bind="pbStyles:data.button.style"
                css="data.button.css">
                 <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }"></span>
             </a>

@@ -3,16 +3,19 @@
  * See COPYING.txt for license details.
  */
 
+import csso from "csso";
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 import mageUtils from "mageUtils";
 import _ from "underscore";
+import "../../binding/master-style";
 import Config from "../../config";
 import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ContentTypeInterface from "../../content-type.types";
+import StyleRegistry, { deleteStyleRegistry, generateCss} from "../../content-type/style-registry";
 import decodeAllDataUrlsInString, { replaceWithSrc } from "../../utils/directives";
 import filterHtml from "../filter-html";
 import { TreeItem } from "./serialize";
@@ -26,7 +29,7 @@ let lastRenderId: string;
  * Debounce the render call, so we don't render until the final request
  */
 const debounceRender = _.debounce((message: {stageId: string, tree: TreeItem}, renderId: string) => {
-    render(message).then((output) => {
+    render(message, renderId).then((output) => {
         // Only post the most recent render back to the parent
         if (lastRenderId === renderId) {
             port.postMessage({
@@ -140,8 +143,10 @@ function countContentTypes(rootContainer: ContentTypeCollectionInterface, count?
  * Perform a render of the provided data
  *
  * @param message
+ * @param renderId
  */
-function render(message: {stageId: string, tree: TreeItem}) {
+function render(message: {stageId: string, tree: TreeItem}, renderId: string) {
+    const styleRegistry = new StyleRegistry(renderId);
     return new Promise((resolve, reject) => {
         createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
             const element = document.createElement("div");
@@ -159,6 +164,10 @@ function render(message: {stageId: string, tree: TreeItem}) {
             $.when(engine.waitForFinishRender(), renderFinished).then(() => {
                 observer.disconnect();
                 ko.cleanNode(element);
+                $(element).append(
+                    $("<style />").html(generateMasterCss(styleRegistry)),
+                );
+                deleteStyleRegistry(renderId);
                 const filtered: JQuery = filterHtml($(element));
                 const output = replaceWithSrc(decodeAllDataUrlsInString(filtered.html()));
                 resolve(output);
@@ -171,6 +180,9 @@ function render(message: {stageId: string, tree: TreeItem}) {
                         data: rootContainer.content,
                         name: rootContainer.content.template,
                     },
+                },
+                {
+                    id: renderId,
                 },
             );
         }).catch((error) => {
@@ -219,4 +231,13 @@ function createRenderTree(
             reject(error);
         });
     });
+}
+
+/**
+ * Generate the master format CSS
+ *
+ * @param registry
+ */
+function generateMasterCss(registry: StyleRegistry): string {
+    return csso.minify(generateCss(registry.getAllStyles())).css;
 }

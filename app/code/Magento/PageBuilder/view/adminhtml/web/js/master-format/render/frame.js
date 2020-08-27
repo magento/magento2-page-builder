@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
+define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/binding/master-style", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_csso, _jquery, _knockout, _engine, _mageUtils, _underscore, _masterStyle, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
   function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
   /**
@@ -18,7 +18,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
    */
 
   var debounceRender = _underscore.debounce(function (message, renderId) {
-    render(message).then(function (output) {
+    render(message, renderId).then(function (output) {
       // Only post the most recent render back to the parent
       if (lastRenderId === renderId) {
         port.postMessage({
@@ -141,10 +141,12 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
    * Perform a render of the provided data
    *
    * @param message
+   * @param renderId
    */
 
 
-  function render(message) {
+  function render(message, renderId) {
+    var styleRegistry = new _styleRegistry(renderId);
     return new Promise(function (resolve, reject) {
       createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
         var element = document.createElement("div");
@@ -169,6 +171,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
 
           _knockout.cleanNode(element);
 
+          (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCss(styleRegistry)));
+          (0, _styleRegistry.deleteStyleRegistry)(renderId);
           var filtered = (0, _filterHtml)((0, _jquery)(element));
           var output = (0, _directives.replaceWithSrc)((0, _directives)(filtered.html()));
           resolve(output);
@@ -179,6 +183,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
             data: rootContainer.content,
             name: rootContainer.content.template
           }
+        }, {
+          id: renderId
         });
       }).catch(function (error) {
         reject(error);
@@ -222,6 +228,16 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
         reject(error);
       });
     });
+  }
+  /**
+   * Generate the master format CSS
+   *
+   * @param registry
+   */
+
+
+  function generateMasterCss(registry) {
+    return _csso.minify((0, _styleRegistry.generateCss)(registry.getAllStyles())).css;
   }
 
   return Object.assign(listen, {

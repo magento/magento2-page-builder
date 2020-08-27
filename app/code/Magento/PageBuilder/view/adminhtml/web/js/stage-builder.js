@@ -18,7 +18,52 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
   function buildFromContent(stage, value) {
     var stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
+    convertToInlineStyles(stageDocument);
+    console.log(stageDocument);
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
+  }
+  /**
+   * Convert styles to block to inline styles.
+   *
+   * @param document
+   */
+
+
+  function convertToInlineStyles(document) {
+    var styleBlocks = document.getElementsByTagName("style");
+    var styles = {};
+
+    if (styleBlocks.length > 0) {
+      Array.from(styleBlocks).forEach(function (styleBlock) {
+        console.log(styleBlock);
+        var cssRules = styleBlock.sheet.cssRules;
+        Array.from(cssRules).forEach(function (rule) {
+          var selectors = rule.selectorText.split(",").map(function (selector) {
+            return selector.trim();
+          });
+          selectors.forEach(function (selector) {
+            if (!styles[selector]) {
+              styles[selector] = [];
+            }
+
+            styles[selector].push(rule.style);
+          });
+        });
+      });
+    }
+
+    _.each(styles, function (stylesArray, selector) {
+      var element = document.querySelector(selector);
+
+      _.each(stylesArray, function (style) {
+        console.log(element.style.cssText, style.cssText);
+        console.log(element.style.cssText + style.cssText);
+        element.setAttribute("style", element.style.cssText + style.cssText);
+        console.log(element);
+      });
+
+      element.classList.remove(selector.slice(1));
+    });
   }
   /**
    * Build an element and it's children into the stage

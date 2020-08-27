@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-tab-item" attr="Object.assign({}, {id: contentType.id}, data.main.attributes())" ko-style="data.main.style" css="Object.assign({'empty-container': contentType.children().length == 0}, data.main.css())">
-    <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+<div class="pagebuilder-content-type type-container pagebuilder-tab-item" attr="Object.assign({}, {id: contentType.id}, data.main.attributes())" data-bind="pbStyles:data.main.style" css="Object.assign({'empty-container': contentType.children().length == 0}, data.main.css())">
+    <div class="element-children content-type-container" each="contentType.getChildren()" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="pbStyles:data.container.style, sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
         <if args="$parent.isContainer()">
             <div class="pagebuilder-drop-indicator"></div>
         </if>

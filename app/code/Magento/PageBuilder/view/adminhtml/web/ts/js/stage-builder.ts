@@ -30,7 +30,45 @@ import {set} from "./utils/object";
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
+    convertToInlineStyles(stageDocument);
+    console.log(stageDocument);
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
+}
+
+/**
+ * Convert styles to block to inline styles.
+ *
+ * @param document
+ */
+function convertToInlineStyles(document: Document): void {
+    const styleBlocks = document.getElementsByTagName("style");
+    const styles: { [key: string]: CSSStyleDeclaration[] } = {};
+    if (styleBlocks.length > 0) {
+        Array.from(styleBlocks).forEach((styleBlock: HTMLStyleElement) => {
+            console.log(styleBlock);
+            const cssRules = (styleBlock.sheet as CSSStyleSheet).cssRules;
+            Array.from(cssRules).forEach((rule: CSSStyleRule) => {
+                const selectors = rule.selectorText.split(",").map((selector) => selector.trim());
+                selectors.forEach((selector) => {
+                    if (!styles[selector]) {
+                        styles[selector] = [];
+                    }
+                    styles[selector].push(rule.style);
+                });
+            });
+        });
+    }
+    _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
+        const element: HTMLElement = document.querySelector(selector);
+
+        _.each(stylesArray, (style: CSSStyleDeclaration) => {
+            console.log(element.style.cssText, style.cssText);
+            console.log(element.style.cssText + style.cssText);
+            element.setAttribute("style", element.style.cssText + style.cssText);
+            console.log(element);
+        });
+        element.classList.remove(selector.slice(1));
+    });
 }
 
 /**
