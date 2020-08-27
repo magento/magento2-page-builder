@@ -38,7 +38,6 @@ ko.bindingHandlers.pbStyles = {
             styleElement.setAttribute("data-selector", className);
             styleElement.innerHTML = generateCssBlock(className, styles);
             element.classList.add(className);
-            console.log(className, styleElement.innerHTML);
             element.append(styleElement);
         }
 

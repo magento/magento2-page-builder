@@ -19,7 +19,6 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
     var stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
     convertToInlineStyles(stageDocument);
-    console.log(stageDocument);
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
   }
   /**
@@ -35,7 +34,6 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
     if (styleBlocks.length > 0) {
       Array.from(styleBlocks).forEach(function (styleBlock) {
-        console.log(styleBlock);
         var cssRules = styleBlock.sheet.cssRules;
         Array.from(cssRules).forEach(function (rule) {
           var selectors = rule.selectorText.split(",").map(function (selector) {
@@ -56,10 +54,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       var element = document.querySelector(selector);
 
       _.each(stylesArray, function (style) {
-        console.log(element.style.cssText, style.cssText);
-        console.log(element.style.cssText + style.cssText);
         element.setAttribute("style", element.style.cssText + style.cssText);
-        console.log(element);
       });
 
       element.classList.remove(selector.slice(1));
