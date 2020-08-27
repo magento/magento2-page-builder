@@ -82,6 +82,14 @@ class Element implements ElementInterface
     /**
      * @inheritDoc
      */
+    public function removeAttribute($name): ?bool
+    {
+        return $this->element->removeAttribute($name);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setAttribute($name, $value): AttrInterface
     {
         return $this->objectManager->create(

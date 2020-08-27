@@ -46,6 +46,14 @@ interface ElementInterface
     public function getAttribute($name): ?string;
 
     /**
+     * Removes the Specified Attribute
+     *
+     * @param string $name
+     * @return bool|null
+     */
+    public function removeAttribute($name): ?bool;
+
+    /**
      * Sets the value of the specified attribute
      *
      * @param string $name
