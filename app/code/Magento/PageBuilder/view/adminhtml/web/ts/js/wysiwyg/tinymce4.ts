@@ -123,6 +123,26 @@ export default class Wysiwyg implements WysiwygInterface {
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
         events.on(`form:${this.contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
+
+        events.on(`stage:${this.stageId}:fullScreenModeChangeAfter`, this.toggleFullScreen.bind(this));
+    }
+
+    /**
+     * Hide TinyMce inline toolbar options after fullscreen exit
+     */
+    public toggleFullScreen()
+    {
+        const $editor = $(`#${this.elementId}`);
+        // wait for fullscreen to close
+        _.defer(() => {
+            if (!checkStageFullScreen(this.stageId) &&
+                this.config.adapter_config.mode === "inline" &&
+                $editor.hasClass('mce-edit-focus')
+            ) {
+                $editor.removeClass('mce-edit-focus');
+                this.onBlur();
+            }
+        });
     }
 
     /**
