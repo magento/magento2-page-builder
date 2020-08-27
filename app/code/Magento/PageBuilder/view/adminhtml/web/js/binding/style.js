@@ -45,7 +45,6 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
         styleElement.setAttribute("data-selector", className);
         styleElement.innerHTML = (0, _styleRegistry.generateCssBlock)(className, styles);
         element.classList.add(className);
-        console.log(className, styleElement.innerHTML);
         element.append(styleElement);
       }
     }
