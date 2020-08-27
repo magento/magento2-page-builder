@@ -104,8 +104,8 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       var $editor = (0, _jquery)("#" + this.elementId); // wait for fullscreen to close
 
       _underscore.defer(function () {
-        if (!(0, _checkStageFullScreen)(_this.stageId) && _this.config.adapter_config.mode === "inline" && $editor.hasClass('mce-edit-focus')) {
-          $editor.removeClass('mce-edit-focus');
+        if (!(0, _checkStageFullScreen)(_this.stageId) && _this.config.adapter_config.mode === "inline" && $editor.hasClass("mce-edit-focus")) {
+          $editor.removeClass("mce-edit-focus");
 
           _this.onBlur();
         }

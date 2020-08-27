@@ -137,9 +137,9 @@ export default class Wysiwyg implements WysiwygInterface {
         _.defer(() => {
             if (!checkStageFullScreen(this.stageId) &&
                 this.config.adapter_config.mode === "inline" &&
-                $editor.hasClass('mce-edit-focus')
+                $editor.hasClass("mce-edit-focus")
             ) {
-                $editor.removeClass('mce-edit-focus');
+                $editor.removeClass("mce-edit-focus");
                 this.onBlur();
             }
         });
