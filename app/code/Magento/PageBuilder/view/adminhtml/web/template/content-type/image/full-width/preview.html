@@ -7,7 +7,7 @@
 
 <div class="pagebuilder-content-type pagebuilder-image type-nested" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <figure attr="data.main.attributes" data-bind="pbStyles:Object.assign({}, data.main.style(), !data.desktop_image.attributes().src ? {} : {borderStyle: 'none'})" css="data.main.css">
+    <figure attr="data.main.attributes" ko-style="Object.assign({}, data.main.style(), !data.desktop_image.attributes().src ? {} : {borderStyle: 'none'})" css="data.main.css">
         <scope args="getUploader().getUiComponent()">
             <render />
         </scope>
@@ -15,12 +15,12 @@
              attr="data.desktop_image.attributes"
              class="preview-image"
              css="data.desktop_image.css"
-             data-bind="pbStyles:data.desktop_image.style" />
+             ko-style="data.desktop_image.style" />
         <figcaption if="data.caption.html()"
                     attr="data.caption.attributes"
                     css="data.caption.css"
                     html="data.caption.html"
-                    data-bind="pbStyles:data.caption.style">
+                    ko-style="data.caption.style">
         </figcaption>
     </figure>
 </div>

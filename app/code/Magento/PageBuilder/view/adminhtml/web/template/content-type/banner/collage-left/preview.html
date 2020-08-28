@@ -5,11 +5,11 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" data-bind="pbStyles:data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
     <div class="pagebuilder-banner-wrapper"
          attr="data.wrapper.attributes"
-         data-bind="pbStyles:data.wrapper.style"
+         ko-style="data.wrapper.style"
          css="Object.assign(data.wrapper.css(), {
             'jarallax': data.wrapper.attributes()['data-background-type'] == 'video'
             })"
@@ -18,16 +18,16 @@
         <div if="data.video_overlay.attributes()['data-video-overlay-color']"
              class="video-overlay"
              attr="data.video_overlay.attributes"
-             data-bind="pbStyles:data.video_overlay.style" />
+             ko-style="data.video_overlay.style" />
         <scope args="getUploader().getUiComponent()">
             <render />
         </scope>
-        <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" data-bind="pbStyles:data.overlay.style">
+        <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
             <div class="pagebuilder-collage-content" event="mousedown: activateEditor">
                 <div class="pagebuilder-banner-text-content">
                     <div if="isWysiwygSupported()"
                          class="inline-wysiwyg"
-                         data-bind="pbStyles:data.content.style"
+                         ko-style="data.content.style"
                          css="data.content.css"
                          attr="data.content.attributes"
                          afterRender="afterRenderWysiwyg"
@@ -42,7 +42,7 @@
                    class="pagebuilder-banner-button"
                    css="data.button.css"
                    attr="data.button.attributes"
-                   data-bind="pbStyles:data.button.style">
+                   ko-style="data.button.style">
                     <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }"></span>
                 </a>
             </div>
