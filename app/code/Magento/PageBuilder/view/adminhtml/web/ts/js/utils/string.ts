@@ -24,6 +24,6 @@ export function fromSnakeToCamelCase(currentString: string): string {
  *
  * @param currentString
  */
-export function fromCamelCaseToSnake(currentString: string): string {
+export function fromCamelCaseToDash(currentString: string): string {
     return currentString.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
 }

@@ -22,7 +22,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
   _knockout.default.bindingHandlers.style = {
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       if (isPageBuilderContext(bindingContext)) {
-        element.setAttribute("data-style-id", _mageUtils.default.uniqueid());
+        element.setAttribute(_styleRegistry.pbStyleAttribute, _mageUtils.default.uniqueid());
       }
     },
     update: function update(element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -30,8 +30,8 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
         var value = _knockout.default.utils.unwrapObservable(valueAccessor() || {});
 
         var styles = {};
-        var className = "style-" + element.getAttribute("data-style-id");
-        var existedStyleBlock = document.querySelector("[data-selector=\"" + className + "\"]");
+        var styleId = element.getAttribute(_styleRegistry.pbStyleAttribute);
+        var existedStyleBlock = document.querySelector("style[" + _styleRegistry.styleDataAttribute + "=\"" + styleId + "\"]");
 
         _knockout.default.utils.objectForEach(value, function (styleName, styleValue) {
           styleValue = _knockout.default.utils.unwrapObservable(styleValue);
@@ -51,10 +51,9 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
 
         if (!_underscore.default.isEmpty(styles)) {
           var styleElement = document.createElement("style");
-          styleElement.setAttribute("data-selector", className);
-          styleElement.innerHTML = (0, _styleRegistry.generateCssBlock)(className, styles);
-          element.classList.add(className);
-          element.append(styleElement);
+          styleElement.setAttribute(_styleRegistry.styleDataAttribute, styleId);
+          styleElement.innerHTML = (0, _styleRegistry.generateCssBlock)("[" + _styleRegistry.pbStyleAttribute + "=\"" + styleId + "\"]", styles);
+          element.parentElement.append(styleElement);
         }
       } else {
         originalStyle.update(element, valueAccessor, allBindings, viewModel, bindingContext);

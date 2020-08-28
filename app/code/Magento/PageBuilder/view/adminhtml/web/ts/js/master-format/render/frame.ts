@@ -239,5 +239,13 @@ function createRenderTree(
  * @param registry
  */
 function generateMasterCss(registry: StyleRegistry): string {
-    return csso.minify(generateCss(registry.getAllStyles())).css;
+    const scopes = Object.keys(registry.getAllStyles()).map((selector) => {
+        return [selector];
+    });
+
+    return csso.minify(generateCss(registry.getAllStyles()), {
+        usage: {
+            scopes,
+        },
+    }).css;
 }

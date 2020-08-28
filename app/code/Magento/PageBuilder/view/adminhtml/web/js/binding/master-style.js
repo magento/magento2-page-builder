@@ -33,11 +33,12 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
       });
 
       if (!_underscore.default.isEmpty(styles)) {
-        var className = "style-" + _mageUtils.default.uniqueid();
+        var id = _mageUtils.default.uniqueid();
 
+        var selector = "[" + _styleRegistry.pbStyleAttribute + "=\"" + id + "\"]";
         var registry = (0, _styleRegistry.getStyleRegistry)(bindingContext.$root.id);
-        registry.setStyles(className, styles);
-        element.classList.add(className);
+        registry.setStyles(selector, styles);
+        element.setAttribute(_styleRegistry.pbStyleAttribute, id);
       }
     }
   };

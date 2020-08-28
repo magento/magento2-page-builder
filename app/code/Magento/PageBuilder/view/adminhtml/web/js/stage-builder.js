@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/utils/object"], function (_translate, _events, _alert, _, _config, _contentTypeCollection, _contentTypeFactory, _appearanceConfig, _validator, _directives, _loader, _object) {
+define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/utils/object"], function (_translate, _events, _alert, _, _config, _contentTypeCollection, _contentTypeFactory, _appearanceConfig, _styleRegistry, _validator, _directives, _loader, _object) {
   function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
   /**
@@ -57,7 +57,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
         element.setAttribute("style", element.style.cssText + style.cssText);
       });
 
-      element.classList.remove(selector.slice(1));
+      element.removeAttribute(_styleRegistry.pbStyleAttribute);
     });
   }
   /**

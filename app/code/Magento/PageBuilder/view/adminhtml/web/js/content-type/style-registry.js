@@ -6,6 +6,8 @@ define(["underscore", "Magento_PageBuilder/js/utils/string"], function (_undersc
    * See COPYING.txt for license details.
    */
   var styleRegistries = {};
+  var pbStyleAttribute = "data-pb-style";
+  var styleDataAttribute = "data-style-id";
 
   var StyleRegistry =
   /*#__PURE__*/
@@ -20,28 +22,28 @@ define(["underscore", "Magento_PageBuilder/js/utils/string"], function (_undersc
       }
     }
     /**
-     * Update styles for className
+     * Update styles for selector
      *
-     * @param className
+     * @param selector
      * @param styles
      */
 
 
     var _proto = StyleRegistry.prototype;
 
-    _proto.setStyles = function setStyles(className, styles) {
-      this.styles[className] = styles;
+    _proto.setStyles = function setStyles(selector, styles) {
+      this.styles[selector] = styles;
     }
     /**
-     * Retrieve styles for a class name
+     * Retrieve styles for a selector
      *
-     * @param className
+     * @param selector
      */
     ;
 
-    _proto.getStyles = function getStyles(className) {
-      if (this.styles[className]) {
-        return this.styles[className];
+    _proto.getStyles = function getStyles(selector) {
+      if (this.styles[selector]) {
+        return this.styles[selector];
       }
 
       return {};
@@ -88,9 +90,9 @@ define(["underscore", "Magento_PageBuilder/js/utils/string"], function (_undersc
 
   function generateCss(styles) {
     var generatedCss = "";
-    Object.keys(styles).forEach(function (className) {
-      if (!_underscore.isEmpty(styles[className])) {
-        generatedCss += generateCssBlock(className, styles[className]);
+    Object.keys(styles).forEach(function (selector) {
+      if (!_underscore.isEmpty(styles[selector])) {
+        generatedCss += generateCssBlock(selector, styles[selector]);
       }
     });
     return generatedCss;
@@ -98,26 +100,28 @@ define(["underscore", "Magento_PageBuilder/js/utils/string"], function (_undersc
   /**
    * Generate styles from an object
    *
-   * @param className
+   * @param selector
    * @param styles
    */
 
 
-  function generateCssBlock(className, styles) {
+  function generateCssBlock(selector, styles) {
     var generatedStyles = "";
     Object.keys(styles).forEach(function (key) {
       if (!_underscore.isEmpty(styles[key])) {
-        generatedStyles += (0, _string.fromCamelCaseToSnake)(key) + ": " + styles[key] + "; ";
+        generatedStyles += (0, _string.fromCamelCaseToDash)(key) + ": " + styles[key] + "; ";
       }
     });
-    return "." + className + " { " + generatedStyles + " }";
+    return selector + " { " + generatedStyles + " }";
   }
 
   return Object.assign(StyleRegistry, {
     getStyleRegistry: getStyleRegistry,
     deleteStyleRegistry: deleteStyleRegistry,
     generateCss: generateCss,
-    generateCssBlock: generateCssBlock
+    generateCssBlock: generateCssBlock,
+    pbStyleAttribute: pbStyleAttribute,
+    styleDataAttribute: styleDataAttribute
   });
 });
 //# sourceMappingURL=style-registry.js.map

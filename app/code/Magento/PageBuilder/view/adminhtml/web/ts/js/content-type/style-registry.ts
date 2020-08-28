@@ -4,12 +4,14 @@
  */
 
 import _ from "underscore";
-import { fromCamelCaseToSnake } from "../utils/string";
+import { fromCamelCaseToDash } from "../utils/string";
 
 const styleRegistries: Record<string, StyleRegistry> = {};
 
 export type Styles = Record<string, Style>;
 export type Style = Record<string, any>;
+export const pbStyleAttribute: string = "data-pb-style";
+export const styleDataAttribute: string = "data-style-id";
 
 export default class StyleRegistry {
     private styles: Record<string, Style> = {};
@@ -21,23 +23,23 @@ export default class StyleRegistry {
     }
 
     /**
-     * Update styles for className
+     * Update styles for selector
      *
-     * @param className
+     * @param selector
      * @param styles
      */
-    public setStyles(className: string, styles: Style): void {
-        this.styles[className] = styles;
+    public setStyles(selector: string, styles: Style): void {
+        this.styles[selector] = styles;
     }
 
     /**
-     * Retrieve styles for a class name
+     * Retrieve styles for a selector
      *
-     * @param className
+     * @param selector
      */
-    public getStyles(className: string): Style {
-        if (this.styles[className]) {
-            return this.styles[className];
+    public getStyles(selector: string): Style {
+        if (this.styles[selector]) {
+            return this.styles[selector];
         }
 
         return {};
@@ -78,9 +80,9 @@ export function deleteStyleRegistry(id: string): void {
  */
 export function generateCss(styles: Styles) {
     let generatedCss = "";
-    Object.keys(styles).forEach((className: string) => {
-        if (!_.isEmpty(styles[className])) {
-            generatedCss += generateCssBlock(className, styles[className]);
+    Object.keys(styles).forEach((selector: string) => {
+        if (!_.isEmpty(styles[selector])) {
+            generatedCss += generateCssBlock(selector, styles[selector]);
         }
     });
     return generatedCss;
@@ -89,15 +91,17 @@ export function generateCss(styles: Styles) {
 /**
  * Generate styles from an object
  *
- * @param className
+ * @param selector
  * @param styles
  */
-export function generateCssBlock(className: string, styles: Style) {
+export function generateCssBlock(selector: string, styles: Style) {
     let generatedStyles = "";
+
     Object.keys(styles).forEach((key: string) => {
         if (!_.isEmpty(styles[key])) {
-            generatedStyles += `${fromCamelCaseToSnake(key)}: ${styles[key]}; `;
+            generatedStyles += `${fromCamelCaseToDash(key)}: ${styles[key]}; `;
         }
     });
-    return `.${className} { ${generatedStyles} }`;
+
+    return `${selector} { ${generatedStyles} }`;
 }

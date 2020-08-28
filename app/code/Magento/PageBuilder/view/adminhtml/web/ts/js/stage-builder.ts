@@ -14,6 +14,7 @@ import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-c
 import createContentType, {FieldDefaultsInterface} from "./content-type-factory";
 import ContentTypeInterface from "./content-type.types";
 import appearanceConfig from "./content-type/appearance-config";
+import { pbStyleAttribute } from "./content-type/style-registry";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
@@ -62,7 +63,7 @@ function convertToInlineStyles(document: Document): void {
         _.each(stylesArray, (style: CSSStyleDeclaration) => {
             element.setAttribute("style", element.style.cssText + style.cssText);
         });
-        element.classList.remove(selector.slice(1));
+        element.removeAttribute(pbStyleAttribute);
     });
 }
 

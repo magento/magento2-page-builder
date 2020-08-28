@@ -30,7 +30,7 @@ define([], function () {
    */
 
 
-  function fromCamelCaseToSnake(currentString) {
+  function fromCamelCaseToDash(currentString) {
     return currentString.replace(/[A-Z]/g, function (m) {
       return "-" + m.toLowerCase();
     });
@@ -38,7 +38,7 @@ define([], function () {
 
   return {
     fromSnakeToCamelCase: fromSnakeToCamelCase,
-    fromCamelCaseToSnake: fromCamelCaseToSnake
+    fromCamelCaseToDash: fromCamelCaseToDash
   };
 });
 //# sourceMappingURL=string.js.map

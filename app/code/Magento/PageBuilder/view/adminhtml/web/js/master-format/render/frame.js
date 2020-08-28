@@ -237,7 +237,14 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
 
 
   function generateMasterCss(registry) {
-    return _csso.minify((0, _styleRegistry.generateCss)(registry.getAllStyles())).css;
+    var scopes = Object.keys(registry.getAllStyles()).map(function (selector) {
+      return [selector];
+    });
+    return _csso.minify((0, _styleRegistry.generateCss)(registry.getAllStyles()), {
+      usage: {
+        scopes: scopes
+      }
+    }).css;
   }
 
   return Object.assign(listen, {

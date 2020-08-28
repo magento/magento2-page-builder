@@ -6,7 +6,7 @@
 import ko from "knockout";
 import utils from "mageUtils";
 import _ from "underscore";
-import {getStyleRegistry} from "../content-type/style-registry";
+import {getStyleRegistry, pbStyleAttribute} from "../content-type/style-registry";
 
 ko.bindingHandlers.style = {
     update: (element: HTMLElement, valueAccessor, allBindings, viewModel, bindingContext) => {
@@ -26,11 +26,12 @@ ko.bindingHandlers.style = {
         });
 
         if (!_.isEmpty(styles)) {
-            const className = "style-" + utils.uniqueid();
+            const id = utils.uniqueid();
+            const selector = `[${pbStyleAttribute}="${id}"]`;
             const registry = getStyleRegistry(bindingContext.$root.id);
 
-            registry.setStyles(className, styles);
-            element.classList.add(className);
+            registry.setStyles(selector, styles);
+            element.setAttribute(pbStyleAttribute, id);
         }
 
     },
