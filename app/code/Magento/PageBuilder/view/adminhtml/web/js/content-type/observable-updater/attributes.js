@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"], function (_config, _object) {
+define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"], function (_underscore, _config, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -50,7 +50,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"],
       } // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
 
 
-      if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && _config.getMode() !== "Preview") {
+      if (_config.getMode() !== "Preview" && attributeConfig.name === "src" && _underscore.isString(value) && !value.indexOf("{{media url=")) {
         attributeData["data-tmp-" + attributeConfig.name] = value; // @ts-ignore
 
         Object.defineProperty(attributeData, attributeConfig.name, {
