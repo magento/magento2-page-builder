@@ -7,19 +7,20 @@
 //  Default appearance styles
 //  _____________________________________________
 
+.pagebuilder-slide-wrapper {
+    background-color: @color-gray98;
+}
+
 .pagebuilder-slide {
     cursor: text;
     min-height: inherit;
-
-    .pagebuilder-slide-wrapper {
-        background-color: @color-gray98;
-    }
 
     .pagebuilder-empty-slide {
         color: @color-gray65-lighten;
         font-size: 14px;
         font-weight: lighter;
     }
+
     .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
         max-width: 540px;
     }
@@ -104,7 +105,7 @@
 //  __________________________________________________________
 
 .pagebuilder-slide-wrapper {
-    .pagebuilder-overlay {
+    .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
         padding: 30px;
     }
 }
@@ -112,6 +113,10 @@
 //
 //  Default appearance styles rendered through Block only
 //  _____________________________________________________
+
+.pagebuilder-slide-wrapper {
+    min-height: inherit;
+}
 
 [data-content-type='slide'] {
     min-height: inherit;
@@ -122,7 +127,6 @@
     }
 
     .pagebuilder-slide-wrapper {
-        min-height: inherit;
         overflow-wrap: break-word;
         word-wrap: break-word;
 
