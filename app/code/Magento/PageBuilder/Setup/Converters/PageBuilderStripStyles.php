@@ -10,10 +10,7 @@ namespace Magento\PageBuilder\Setup\Converters;
 
 use DOMDocument;
 use DOMElement;
-use DOMException;
-use DOMNode;
 use DOMXPath;
-use Exception;
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
 
 /**
@@ -73,11 +70,8 @@ class PageBuilderStripStyles implements DataConverterInterface
         $document = new DOMDocument();
         $document->loadHTML($value);
         $xpath = new DOMXPath($document);
-
-        // Query for Inline Styles
-        $nodes = $xpath->query('//*[@style]');
-
-        $styleMap = array();
+        $nodes = $xpath->query('//*[@style]'); // Query for Inline Styles
+        $styleMap = [];
 
         foreach ($nodes as $node) {
             /* @var DOMElement $node */
@@ -86,11 +80,7 @@ class PageBuilderStripStyles implements DataConverterInterface
             if ($styleAttr) {
                 $generatedDataAttribute = $this->generateDataAttribute();
                 $node->setAttribute('data-pb-style', $this->generateDataAttribute());
-
-                // Add for Internal Style Generation
-                $styleMap[$generatedDataAttribute] = $styleAttr;
-
-                // Strip Inline Styles
+                $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
                 $node->removeAttribute('style');
             }
         }
@@ -100,7 +90,6 @@ class PageBuilderStripStyles implements DataConverterInterface
             'style',
             $this->generateInternalStyles($styleMap)
         );
-        $style->setAttribute('type', 'text/css');
         $xpath->query('//body')[0]->appendChild($style); // @todo: Refactor
 
         // @todo: Refactor
