@@ -6,7 +6,10 @@
 import ko from "knockout";
 import utils from "mageUtils";
 import _ from "underscore";
+import Config from "../config";
 import {getStyleRegistry, pbStyleAttribute} from "../content-type/style-registry";
+
+const bodyId: string = Config.getConfig("bodyId");
 
 ko.bindingHandlers.style = {
     update: (element: HTMLElement, valueAccessor, allBindings, viewModel, bindingContext) => {
@@ -27,7 +30,7 @@ ko.bindingHandlers.style = {
 
         if (!_.isEmpty(styles)) {
             const id = utils.uniqueid();
-            const selector = `[${pbStyleAttribute}="${id}"]`;
+            const selector = `#${bodyId} [${pbStyleAttribute}="${id}"]`;
             const registry = getStyleRegistry(bindingContext.$root.id);
 
             registry.setStyles(selector, styles);

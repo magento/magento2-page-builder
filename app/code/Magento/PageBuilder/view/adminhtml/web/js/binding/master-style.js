@@ -1,11 +1,12 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-type/style-registry"], function (_knockout, _mageUtils, _underscore, _styleRegistry) {
+define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/style-registry"], function (_knockout, _mageUtils, _underscore, _config, _styleRegistry) {
   "use strict";
 
   _knockout = _interopRequireDefault(_knockout);
   _mageUtils = _interopRequireDefault(_mageUtils);
   _underscore = _interopRequireDefault(_underscore);
+  _config = _interopRequireDefault(_config);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13,6 +14,8 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+  var bodyId = _config.default.getConfig("bodyId");
+
   _knockout.default.bindingHandlers.style = {
     update: function update(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var value = _knockout.default.utils.unwrapObservable(valueAccessor() || {});
@@ -35,7 +38,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
       if (!_underscore.default.isEmpty(styles)) {
         var id = _mageUtils.default.uniqueid();
 
-        var selector = "[" + _styleRegistry.pbStyleAttribute + "=\"" + id + "\"]";
+        var selector = "#" + bodyId + " [" + _styleRegistry.pbStyleAttribute + "=\"" + id + "\"]";
         var registry = (0, _styleRegistry.getStyleRegistry)(bindingContext.$root.id);
         registry.setStyles(selector, styles);
         element.setAttribute(_styleRegistry.pbStyleAttribute, id);

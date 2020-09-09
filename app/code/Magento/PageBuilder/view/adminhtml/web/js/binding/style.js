@@ -1,11 +1,12 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-type/style-registry"], function (_knockout, _mageUtils, _underscore, _styleRegistry) {
+define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/style-registry"], function (_knockout, _mageUtils, _underscore, _config, _styleRegistry) {
   "use strict";
 
   _knockout = _interopRequireDefault(_knockout);
   _mageUtils = _interopRequireDefault(_mageUtils);
   _underscore = _interopRequireDefault(_underscore);
+  _config = _interopRequireDefault(_config);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14,6 +15,8 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
    * See COPYING.txt for license details.
    */
   var originalStyle = _knockout.default.bindingHandlers.style;
+
+  var bodyId = _config.default.getConfig("bodyId");
 
   function isPageBuilderContext(context) {
     return !!(context.stage && context.stage.pageBuilder);
@@ -52,7 +55,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/content-t
         if (!_underscore.default.isEmpty(styles)) {
           var styleElement = document.createElement("style");
           styleElement.setAttribute(_styleRegistry.styleDataAttribute, styleId);
-          styleElement.innerHTML = (0, _styleRegistry.generateCssBlock)("[" + _styleRegistry.pbStyleAttribute + "=\"" + styleId + "\"]", styles);
+          styleElement.innerHTML = (0, _styleRegistry.generateCssBlock)("#" + bodyId + " [" + _styleRegistry.pbStyleAttribute + "=\"" + styleId + "\"]", styles);
           element.parentElement.append(styleElement);
         }
       } else {

@@ -18,6 +18,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
   function buildFromContent(stage, value) {
     var stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
+    stageDocument.body.id = _config.getConfig("bodyId");
     convertToInlineStyles(stageDocument);
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
   }

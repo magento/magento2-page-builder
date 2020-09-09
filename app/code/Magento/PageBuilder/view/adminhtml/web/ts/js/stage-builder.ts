@@ -31,6 +31,7 @@ import {set} from "./utils/object";
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
+    stageDocument.body.id = Config.getConfig("bodyId");
     convertToInlineStyles(stageDocument);
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
 }
