@@ -33,7 +33,7 @@ class PageBuilderStripStylesTest extends \PHPUnit\Framework\TestCase
     {
         $converterPageBuilderStripStyles = $this->objectManager->create(PageBuilderStripStyles::class);
         $result = $converterPageBuilderStripStyles->convert($htmlString);
-        $this->assertEquals($result, $expectedResult);
+        $this->assertEquals($expectedResult, $result);
     }
 
     /**

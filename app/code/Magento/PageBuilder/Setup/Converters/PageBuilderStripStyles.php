@@ -8,9 +8,13 @@ declare(strict_types = 1);
 
 namespace Magento\PageBuilder\Setup\Converters;
 
+use DOMDocument;
+use DOMElement;
+use DOMException;
+use DOMNode;
+use DOMXPath;
+use Exception;
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
-use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
-use Magento\PageBuilder\Model\Dom\HtmlDocumentFactory;
 
 /**
  * ...
@@ -18,16 +22,47 @@ use Magento\PageBuilder\Model\Dom\HtmlDocumentFactory;
 class PageBuilderStripStyles implements DataConverterInterface
 {
     /**
-     * @var HtmlDocumentFactory
+     * @var DOMDocument
      */
-    private $htmlDocumentFactory;
+    private $domDocument;
 
     /**
-     * @param HtmlDocumentFactory $htmlDocumentFactory
+     * @param DOMDocument $domDocument
      */
-    public function __construct(HtmlDocumentFactory $htmlDocumentFactory)
+    public function __construct(DOMDocument $domDocument)
     {
-        $this->htmlDocumentFactory = $htmlDocumentFactory;
+        $this->domDocument = $domDocument;
+    }
+
+    /**
+     * Generates `mageUtils.uniqueid()` Naming Convention
+     *
+     * @param int $length
+     * @param string $prefix
+     * @return string
+     */
+    private function generateDataAttribute(int $length = 7, string $prefix = 'style-'): string
+    {
+        return $prefix . substr(strtoupper(uniqid()), 0, $length); // @todo: Fix RNGesus...
+    }
+
+    /**
+     * Converts Inline Styles to Internal Styles
+     *
+     * @param array $styleMap
+     * @return string
+     */
+    private function generateInternalStyles(array $styleMap): string
+    {
+        $output = '';
+
+        foreach ($styleMap as $selector => $styles) {
+            $output .= '[data-pb-style="' . $selector . '"] { ';
+            $output .= $styles;
+            $output .= ' }';
+        }
+
+        return $output;
     }
 
     /**
@@ -35,20 +70,46 @@ class PageBuilderStripStyles implements DataConverterInterface
      */
     public function convert($value)
     {
-        $document = $this->htmlDocumentFactory->create(['document' => $value]);
-        $queryPageBuilderElements = $document->querySelectorAll('[style]'); // @todo: Match Types
+        $document = new DOMDocument();
+        $document->loadHTML($value);
+        $xpath = new DOMXPath($document);
 
-        /** @var ElementInterface $element */
-        foreach ($queryPageBuilderElements as $element) {
-            $style = $element->getAttribute('style');
+        // Query for Inline Styles
+        $nodes = $xpath->query('//*[@style]');
 
-            if ($style) {
-                // @todo: Convert to Inline
+        $styleMap = array();
 
-                $element->removeAttribute('style');
+        foreach ($nodes as $node) {
+            /* @var DOMElement $node */
+            $styleAttr = $node->getAttribute('style');
+
+            if ($styleAttr) {
+                $generatedDataAttribute = $this->generateDataAttribute();
+                $node->setAttribute('data-pb-style', $this->generateDataAttribute());
+
+                // Add for Internal Style Generation
+                $styleMap[$generatedDataAttribute] = $styleAttr;
+
+                // Strip Inline Styles
+                $node->removeAttribute('style');
             }
         }
 
-        return $queryPageBuilderElements->count() > 0 ? $document->stripHtmlWrapperTags() : $value;
+        // Style Block Generation
+        $style = $document->createElement(
+            'style',
+            $this->generateInternalStyles($styleMap)
+        );
+        $style->setAttribute('type', 'text/css');
+        $xpath->query('//body')[0]->appendChild($style); // @todo: Refactor
+
+        // @todo: Refactor
+        preg_match(
+            '/<html><body>(.+)<\/body><\/html>$/si',
+            $document->saveHTML(),
+            $matches
+        );
+
+        return $matches && $nodes->count() > 0 ? $matches[1] : $value;
     }
 }
