@@ -92,7 +92,7 @@ export default class PageBuilder implements PageBuilderInterface {
      *
      * @param {StageToggleFullScreenParamsInterface} args
      */
-    public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
+    public toggleFullScreen(args: StageToggleFullScreenParamsInterface): boolean {
         if (args.animate === false) {
             this.isFullScreen(!this.isFullScreen());
             return;
@@ -186,6 +186,8 @@ export default class PageBuilder implements PageBuilderInterface {
                 this.previousPanelHeight = null;
             }, 350);
         }
+
+        return true;
     }
 
     /**
