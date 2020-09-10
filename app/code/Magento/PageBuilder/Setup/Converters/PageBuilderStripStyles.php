@@ -14,7 +14,7 @@ use DOMXPath;
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
 
 /**
- * ...
+ * Convert Inline Styles to Internal
  */
 class PageBuilderStripStyles implements DataConverterInterface
 {
@@ -35,12 +35,12 @@ class PageBuilderStripStyles implements DataConverterInterface
      * Generates `mageUtils.uniqueid()` Naming Convention
      *
      * @param int $length
-     * @param string $prefix
      * @return string
+     * @todo Refactor `$length` Param
      */
-    private function generateDataAttribute(int $length = 7, string $prefix = 'style-'): string
+    private function generateDataAttribute(int $length = 7): string
     {
-        return $prefix . substr(strtoupper(uniqid()), 0, $length); // @todo: Fix RNGesus...
+        return strtoupper(uniqid());
     }
 
     /**
@@ -54,9 +54,8 @@ class PageBuilderStripStyles implements DataConverterInterface
         $output = '';
 
         foreach ($styleMap as $selector => $styles) {
-            $output .= '[data-pb-style="' . $selector . '"] { ';
-            $output .= $styles;
-            $output .= ' }';
+            $output .= '[data-pb-style="' . $selector . '"]';
+            $output .= '{' . $styles . '}';
         }
 
         return $output;
@@ -70,6 +69,8 @@ class PageBuilderStripStyles implements DataConverterInterface
         $document = new DOMDocument();
         $document->loadHTML($value);
         $xpath = new DOMXPath($document);
+
+        $body = $document->documentElement->lastChild;
         $nodes = $xpath->query('//*[@style]'); // Query for Inline Styles
         $styleMap = [];
 
@@ -79,7 +80,7 @@ class PageBuilderStripStyles implements DataConverterInterface
 
             if ($styleAttr) {
                 $generatedDataAttribute = $this->generateDataAttribute();
-                $node->setAttribute('data-pb-style', $this->generateDataAttribute());
+                $node->setAttribute('data-pb-style', $generatedDataAttribute);
                 $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
                 $node->removeAttribute('style');
             }
@@ -90,7 +91,7 @@ class PageBuilderStripStyles implements DataConverterInterface
             'style',
             $this->generateInternalStyles($styleMap)
         );
-        $xpath->query('//body')[0]->appendChild($style); // @todo: Refactor
+        $body->appendChild($style);
 
         // @todo: Refactor
         preg_match(
