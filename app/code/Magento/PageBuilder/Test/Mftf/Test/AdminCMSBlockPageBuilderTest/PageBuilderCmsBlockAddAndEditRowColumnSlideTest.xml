@@ -64,10 +64,22 @@
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage" after="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="3" stepKey="see3RowsCMSPageStage" after="commentValidateCMSPageStage"/>
-        <seeElement selector="{{RowOnStorefront.backgroundColor('3', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowCMSPageStage" after="see3RowsCMSPageStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="see3RowsCMSPageStage">
+            <argument name="selector" value="{{RowOnStorefront.backgroundColorPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="see2ColumnsCMSPageStage" after="seeBackgroundColorRowCMSPageStage"/>
-        <seeElement selector="{{ColumnOnFrontend.backgroundColor('2', PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="seeBackgroundColorColumnCMSPageStage" after="see2ColumnsCMSPageStage"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlide1CMSPageStage" after="seeBackgroundColorColumnCMSPageStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="see2ColumnsCMSPageStage">
+            <argument name="selector" value="{{ColumnOnFrontend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_White.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="see2ColumnsCMSPageStage">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundColor('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"  after="seeBackgroundColorSlide1CMSPageStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="exitPageBuilderFullScreen2"/>
         <!-- Validate CMS Page Storefront -->
@@ -76,6 +88,10 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="3" stepKey="see2RowsStorefront"/>
-        <seeElement selector="{{RowOnStorefront.backgroundColor('3', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStorefront">
+            <argument name="selector" value="{{RowOnStorefront.backgroundColor('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
     </test>
 </tests>

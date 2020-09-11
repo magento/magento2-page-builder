@@ -114,14 +114,30 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="see2RowsStage"/>
-        <seeElement selector="{{RowOnStage.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStage">
+            <argument name="selector" value="{{RowOnStage.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="see2ColumnsStage"/>
-        <seeElement selector="{{ColumnOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="seeBackgroundColorColumnStage"/>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeBackgroundColorSlide2Stage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorColumnStage">
+            <argument name="selector" value="{{ColumnOnBackend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_White.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide2Stage">
+            <argument name="selector" value="{{SlideOnBackend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGB_Blue.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <actionGroup ref="switchSlide" stepKey="switchSlideStage">
             <argument name="slideIndex" value="1"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlide1Stage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide1Stage">
+            <argument name="selector" value="{{SlideOnBackend.backgroundColorPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -132,14 +148,30 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="see2RowsStageAfterSave"/>
-        <seeElement selector="{{RowOnStage.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStageAfterSave"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStageAfterSave">
+            <argument name="selector" value="{{RowOnStage.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="see2ColumnsStageAfterSave"/>
-        <seeElement selector="{{ColumnOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="seeBackgroundColorColumnStageAfterSave"/>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlide1StageAfterSave"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorColumnStageAfterSave">
+            <argument name="selector" value="{{ColumnOnBackend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_White.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide1StageAfterSave">
+            <argument name="selector" value="{{SlideOnBackend.backgroundColorPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <actionGroup ref="switchSlide" stepKey="switchSlideStageAfterSave">
             <argument name="slideIndex" value="2"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeBackgroundColorSlide2StageAfterSave"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide2StageAfterSave">
+            <argument name="selector" value="{{SlideOnBackend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGB_Blue.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -147,15 +179,31 @@
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="2" stepKey="see2RowsStorefront"/>
-        <seeElement selector="{{RowOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStorefront">
+            <argument name="selector" value="{{RowOnStorefront.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="see2ColumnsStorefront"/>
-        <seeElement selector="{{ColumnOnFrontend.backgroundColor('2', PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="seeBackgroundColorColumnStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlide1Storefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorColumnStorefront">
+            <argument name="selector" value="{{ColumnOnFrontend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_White.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide1Storefront">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundColorPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <actionGroup ref="switchSlide" stepKey="switchSlideStorefront">
             <argument name="sliderSection" value="SliderOnFrontend"/>
             <argument name="slideSection" value="SlideOnFrontend"/>
             <argument name="slideIndex" value="2"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeBackgroundColorSlide2Storefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide2Storefront">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundColorPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGB_Blue.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
     </test>
 </tests>
