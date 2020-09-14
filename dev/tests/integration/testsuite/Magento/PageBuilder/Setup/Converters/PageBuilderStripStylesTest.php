@@ -9,6 +9,7 @@ declare(strict_types = 1);
 namespace Magento\PageBuilder\Setup\Converters;
 
 use DOMDocument;
+use DOMElement;
 use DOMXPath;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
@@ -50,11 +51,32 @@ class PageBuilderStripStylesTest extends TestCase
 
         libxml_clear_errors();
 
-        // Check Inline Styles Were Removed
+        $getInternalStyles = false;
+        $nodesBefore = $xpathBefore->query(PageBuilderStripStyles::XPATH_SELECTOR);
+        $styleRules = [];
+
+        foreach ($nodesBefore as $node) {
+            /* @var DOMElement $node */
+            $styleAttr = $node->getAttribute('style');
+
+            if ($styleAttr) {
+                $getInternalStyles = $xpathAfter->query('//body/style[last()]')->item(0)->textContent;
+                $styleRules[] = $styleAttr;
+            }
+        }
+
+        // Assert Inline Styles Were Removed
         $this->assertEquals(0, count($xpathAfter->query(PageBuilderStripStyles::XPATH_SELECTOR)));
 
-        // Check Expected Internal Styles
+        // Assert Expected Internal Styles
         $this->assertEquals($expectedStyleTags, count($xpathAfter->query('//style')));
+
+        // Assert Converted Styles
+        if ($getInternalStyles) {
+            foreach ($styleRules as $styleRule) {
+                $this->assertStringContainsString($styleRule, $getInternalStyles);
+            }
+        }
     }
 
     /**
