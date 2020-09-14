@@ -34,11 +34,9 @@ class PageBuilderStripStyles implements DataConverterInterface
     /**
      * Generates `mageUtils.uniqueid()` Naming Convention
      *
-     * @param int $length
      * @return string
-     * @todo Refactor `$length` Param
      */
-    private function generateDataAttribute(int $length = 7): string
+    private function generateDataAttribute(): string
     {
         return strtoupper(uniqid());
     }
@@ -66,12 +64,14 @@ class PageBuilderStripStyles implements DataConverterInterface
      */
     public function convert($value)
     {
+        libxml_use_internal_errors(true);
         $document = new DOMDocument();
         $document->loadHTML($value);
         $xpath = new DOMXPath($document);
+        libxml_clear_errors();
 
         $body = $document->documentElement->lastChild;
-        $nodes = $xpath->query('//*[@style]'); // Query for Inline Styles
+        $nodes = $xpath->query('//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]'); // Query for Inline Styles
         $styleMap = [];
 
         foreach ($nodes as $node) {
