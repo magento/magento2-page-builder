@@ -18,6 +18,9 @@ use Magento\Framework\DB\DataConverter\DataConverterInterface;
  */
 class PageBuilderStripStyles implements DataConverterInterface
 {
+    const BODY_ID = 'html-body';
+    const DATA_ATTRIBUTE = 'data-pb-style';
+
     /**
      * @var DOMDocument
      */
@@ -52,7 +55,7 @@ class PageBuilderStripStyles implements DataConverterInterface
         $output = '';
 
         foreach ($styleMap as $selector => $styles) {
-            $output .= '[data-pb-style="' . $selector . '"]';
+            $output .= '#' . self::BODY_ID . ' [' . self::DATA_ATTRIBUTE . '="' . $selector . '"]';
             $output .= '{' . $styles . '}';
         }
 
@@ -80,7 +83,7 @@ class PageBuilderStripStyles implements DataConverterInterface
 
             if ($styleAttr) {
                 $generatedDataAttribute = $this->generateDataAttribute();
-                $node->setAttribute('data-pb-style', $generatedDataAttribute);
+                $node->setAttribute(self::DATA_ATTRIBUTE, $generatedDataAttribute);
                 $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
                 $node->removeAttribute('style');
             }
