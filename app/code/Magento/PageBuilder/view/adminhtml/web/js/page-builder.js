@@ -23,6 +23,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
       this.stageStyles = _knockout.observable({});
+      this.viewport = _knockout.observable("");
+      this.viewports = {};
+      this.viewportClasses = {};
       this.previousStyles = {};
 
       _config.setConfig(config);
@@ -31,6 +34,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       this.preloadTemplates(config);
       this.initialValue = initialValue;
+      this.initViewports(config);
       this.isFullScreen(config.isFullScreen);
       this.isSnapshot(!!config.pagebuilder_content_snapshot);
       this.isSnapshotTransition(false);
@@ -238,6 +242,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.saveAsTemplate = function saveAsTemplate() {
       return (0, _templateManager.saveAsTemplate)(this.stage);
+    };
+
+    _proto.toggleViewport = function toggleViewport(viewport) {
+      var previousViewport = this.viewport();
+      this.viewport(viewport);
+
+      _events.trigger("stage:" + this.id + ":viewportChangeAfter", {
+        viewport: viewport,
+        previousViewport: previousViewport
+      });
+
+      _underscore.each(this.viewportClasses, function (viewportClass) {
+        viewportClass(false);
+      });
+
+      this.viewportClasses[viewport + "-viewport"](true);
     }
     /**
      * Preload all templates into the window to reduce calls later in the app
@@ -259,6 +279,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _underscore.defer(function () {
         require(previewTemplates);
+      });
+    };
+
+    _proto.initViewports = function initViewports(config) {
+      var _this4 = this;
+
+      _underscore.each(config.viewports, function (viewport, name) {
+        if (viewport.stage) {
+          _this4.viewports[name] = viewport;
+        }
+      });
+
+      this.defaultViewport = _underscore.findKey(this.viewports, function (viewport) {
+        return viewport.default;
+      });
+      this.viewport(this.defaultViewport);
+
+      _underscore.each(this.viewports, function (viewport, name) {
+        _this4.viewportClasses[name + "-viewport"] = _knockout.observable(name === _this4.defaultViewport);
       });
     };
 

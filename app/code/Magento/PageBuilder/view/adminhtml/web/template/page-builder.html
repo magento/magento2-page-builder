@@ -5,11 +5,16 @@
  */
 -->
 <div class="pagebuilder-stage-wrapper"
-     css="'stage-full-screen': isFullScreen, 'stage-content-snapshot': isSnapshot, 'transition-out': isSnapshotTransition, 'stage-is-active': (!isSnapshot() || isFullScreen)"
+     css="Object.assign(
+        {'stage-full-screen': isFullScreen, 'stage-content-snapshot': isSnapshot, 'transition-out': isSnapshotTransition, 'stage-is-active': (!isSnapshot() || isFullScreen)},
+        viewportClasses)"
      ko-style="wrapperStyles">
     <div class="admin__field pagebuilder-header"
          css="visible: panel.isVisible(), 'transition-out': isSnapshotTransition()"
          if="!isSnapshot()">
+        <each args="data: Object.keys(viewports), as: 'name'">
+            <button type="button" translate="$parent.viewports[name].label" disable="name === $parent.viewport()" click="$parent.toggleViewport.bind($parent, name)"/>
+        </each>
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
         <i click="toggleFullScreen.bind($data, {animate:true})"

@@ -10,13 +10,13 @@ namespace Magento\PageBuilder\Component\Form\Element;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\PageBuilder\Model\View\File\Collector\PageBuilder;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\PageBuilder\Model\Stage\Config as Config;
+use Magento\Framework\View\ConfigInterface as ViewConfigInterface;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -39,6 +39,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
+     * @param ViewConfigInterface $viewConfig
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -54,8 +55,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         array $data = [],
         array $config = [],
         PageBuilderConfig $pageBuilderConfig = null,
-        bool $overrideSnapshot = false
+        bool $overrideSnapshot = false,
+        ViewConfigInterface $viewConfig = null
     ) {
+        $viewConfig = $viewConfig ?: ObjectManager::getInstance()->get(ViewConfigInterface::class);
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
 
         // If a dataType is present we're dealing with an attribute
@@ -84,6 +87,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $wysiwygConfigData = $stageConfig->getConfig();
             $wysiwygConfigData['pagebuilder_button'] = true;
             $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
+            $wysiwygConfigData['viewports'] = $viewConfig->getViewConfig()->getVarValue(
+                'Magento_PageBuilder',
+                'breakpoints'
+            );;
 
             if ($overrideSnapshot) {
                 $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
