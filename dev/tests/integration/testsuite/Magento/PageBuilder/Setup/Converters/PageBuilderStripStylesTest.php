@@ -51,10 +51,10 @@ class PageBuilderStripStylesTest extends TestCase
         libxml_clear_errors();
 
         // Check Inline Styles Were Removed
-        $this->assertEquals(0, sizeof($xpathAfter->query('//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]')));
+        $this->assertEquals(0, count($xpathAfter->query(PageBuilderStripStyles::XPATH_SELECTOR)));
 
         // Check Expected Internal Styles
-        $this->assertEquals($expectedStyleTags, sizeof($xpathAfter->query('//style')));
+        $this->assertEquals($expectedStyleTags, count($xpathAfter->query('//style')));
     }
 
     /**

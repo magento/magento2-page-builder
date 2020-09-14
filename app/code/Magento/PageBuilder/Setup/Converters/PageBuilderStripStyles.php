@@ -20,6 +20,7 @@ class PageBuilderStripStyles implements DataConverterInterface
 {
     const BODY_ID = 'html-body';
     const DATA_ATTRIBUTE = 'data-pb-style';
+    const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
 
     /**
      * @var DOMDocument
@@ -74,7 +75,7 @@ class PageBuilderStripStyles implements DataConverterInterface
         libxml_clear_errors();
 
         $body = $document->documentElement->lastChild;
-        $nodes = $xpath->query('//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]'); // Query for Inline Styles
+        $nodes = $xpath->query(self::XPATH_SELECTOR); // Query for Inline Styles
         $styleMap = [];
 
         foreach ($nodes as $node) {
