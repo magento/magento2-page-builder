@@ -75,7 +75,11 @@
         <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStage"/>
         <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Disabled.value)}}" stepKey="seeArrowsStage"/>
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
-        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinHeightStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow1Storefront">
+            <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -87,7 +91,11 @@
         <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStage2"/>
         <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Disabled.value)}}" stepKey="seeArrowsStage2"/>
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage2"/>
-        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinHeightStage2"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinHeightStage2">
+            <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -99,6 +107,9 @@
         <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Disabled.value)}}" stepKey="seeArrowsStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeHeightStorefront"/>
-    </test>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeHeightStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup></test>
 </tests>
