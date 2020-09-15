@@ -13,23 +13,22 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="lineColor" defaultValue="PageBuilderDividerLineColor_Default"/>
             <argument name="lineThickness" defaultValue="PageBuilderDividerLineThickness_Default"/>
-            <argument name="lineWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
-        </arguments>
+            <argument name="lineWidth" type="string"/>
+    </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerHr(index)}}', document.body).iterateNext()).borderColor" stepKey="grabColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderColor" stepKey="grabColorValue"/>
         <assertEquals stepKey="assertColorValue">
             <expectedResult type="string">{{lineColor.rgb}}</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerHr(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
         <assertEquals stepKey="assertThicknessValue">
             <expectedResult type="string">{{lineThickness.value}}px</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
-        <executeJS function="return document.evaluate('{{page.innerHrStyleId(index)}}', document.body).iterateNext().nodeValue" stepKey="grabDividerStyleId"/>
-        <executeJS function="return (document.querySelector(&quot;[data-style-id='{$grabDividerStyleId}'&quot;).innerText.indexOf(&quot;width: {{lineWidth.value}}&quot;) !== -1).toString()" stepKey="grabWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).width" stepKey="grabWidthValue"/>
         <assertEquals stepKey="assertWidthValue">
-            <expectedResult type="string">true</expectedResult>
+            <expectedResult type="string">{{lineWidth}}</expectedResult>
             <actualResult type="variable">grabWidthValue</actualResult>
         </assertEquals>
     </actionGroup>
