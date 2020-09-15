@@ -14,7 +14,7 @@ use Magento\PageBuilder\Setup\Converters\PageBuilderStripStyles;
 use Magento\PageBuilder\Setup\UpgradeContentHelper;
 
 /**
- * ...
+ * Patch Upgrade Mechanism for Converting Inline Styles to Internal
  */
 class UpgradePageBuilderStripStyles implements DataPatchInterface
 {
@@ -26,9 +26,8 @@ class UpgradePageBuilderStripStyles implements DataPatchInterface
     /**
      * @param UpgradeContentHelper $helper
      */
-    public function __construct(
-        UpgradeContentHelper $helper
-    ) {
+    public function __construct(UpgradeContentHelper $helper)
+    {
         $this->helper = $helper;
     }
 
@@ -48,7 +47,7 @@ class UpgradePageBuilderStripStyles implements DataPatchInterface
     /**
      * @inheritdoc
      */
-    public function getAliases()
+    public function getAliases(): array
     {
         return [];
     }
@@ -56,7 +55,7 @@ class UpgradePageBuilderStripStyles implements DataPatchInterface
     /**
      * @inheritdoc
      */
-    public static function getDependencies()
+    public static function getDependencies(): array
     {
         return [];
     }

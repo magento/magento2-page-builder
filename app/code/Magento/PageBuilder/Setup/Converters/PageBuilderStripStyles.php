@@ -66,7 +66,7 @@ class PageBuilderStripStyles implements DataConverterInterface
     /**
      * @inheritDoc
      */
-    public function convert($value)
+    public function convert($value): string
     {
         libxml_use_internal_errors(true);
         $document = new DOMDocument();
