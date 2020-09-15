@@ -7,7 +7,7 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateDividerGeneralAttributesActionGroup">
+    <actionGroup name="validateDividerGeneralAttributes">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -16,12 +16,12 @@
             <argument name="lineWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerWrapper(index)}}', document.body).iterateNext()).borderColor" stepKey="grabColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerHr(index)}}', document.body).iterateNext()).borderColor" stepKey="grabColorValue"/>
         <assertEquals stepKey="assertColorValue">
             <expectedResult type="string">{{lineColor.rgb}}</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerWrapper(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerHr(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
         <assertEquals stepKey="assertThicknessValue">
             <expectedResult type="string">{{lineThickness.value}}px</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
