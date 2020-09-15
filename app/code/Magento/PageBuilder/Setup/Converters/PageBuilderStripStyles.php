@@ -42,7 +42,7 @@ class PageBuilderStripStyles implements DataConverterInterface
      */
     private function generateDataAttribute(): string
     {
-        return strtoupper(uniqid());
+        return \strtoupper(\uniqid());
     }
 
     /**
@@ -68,11 +68,11 @@ class PageBuilderStripStyles implements DataConverterInterface
      */
     public function convert($value): string
     {
-        libxml_use_internal_errors(true);
+        \libxml_use_internal_errors(true);
         $document = new DOMDocument();
         $document->loadHTML($value);
         $xpath = new DOMXPath($document);
-        libxml_clear_errors();
+        \libxml_clear_errors();
 
         $body = $document->documentElement->lastChild;
         $nodes = $xpath->query(self::XPATH_SELECTOR); // Query for Inline Styles
@@ -98,7 +98,7 @@ class PageBuilderStripStyles implements DataConverterInterface
         $body->appendChild($style);
 
         // @todo: Refactor
-        preg_match(
+        \preg_match(
             '/<html><body>(.+)<\/body><\/html>$/si',
             $document->saveHTML(),
             $matches

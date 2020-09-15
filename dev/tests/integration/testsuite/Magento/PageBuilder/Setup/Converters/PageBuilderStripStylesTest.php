@@ -40,7 +40,7 @@ class PageBuilderStripStylesTest extends TestCase
         $convertPageBuilderStripStyles = $this->objectManager->create(PageBuilderStripStyles::class);
         $result = $convertPageBuilderStripStyles->convert($htmlString);
 
-        libxml_use_internal_errors(true);
+        \libxml_use_internal_errors(true);
 
         $docBefore = new DOMDocument();
         $docBefore->loadHTML($htmlString);
@@ -50,7 +50,7 @@ class PageBuilderStripStylesTest extends TestCase
         $docAfter->loadHTML($result);
         $xpathAfter = new DOMXPath($docAfter);
 
-        libxml_clear_errors();
+        \libxml_clear_errors();
 
         $getInternalStyles = false;
         $nodesBefore = $xpathBefore->query(PageBuilderStripStyles::XPATH_SELECTOR);
@@ -67,10 +67,10 @@ class PageBuilderStripStylesTest extends TestCase
         }
 
         // Assert Inline Styles Were Removed
-        $this->assertEquals(0, count($xpathAfter->query(PageBuilderStripStyles::XPATH_SELECTOR)));
+        $this->assertEquals(0, \count($xpathAfter->query(PageBuilderStripStyles::XPATH_SELECTOR)));
 
         // Assert Expected Internal Styles
-        $this->assertEquals($expectedStyleTags, count($xpathAfter->query('//style')));
+        $this->assertEquals($expectedStyleTags, \count($xpathAfter->query('//style')));
 
         // Assert Converted Styles
         if ($getInternalStyles) {
@@ -170,6 +170,7 @@ class PageBuilderStripStylesTest extends TestCase
         ];
         // phpcs:enable Generic.Files.LineLength.TooLong
     }
+
     /**
      * @return array
      */
