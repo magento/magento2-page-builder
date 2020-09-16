@@ -73,7 +73,12 @@
         <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
         <waitForElementVisible selector="{{MediaGallerySection.lastImageOrImageCopy(PageBuilderBackgroundImage_GIF.fileName, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="waitForLastImage"/>
-        <click selector="{{MediaGallerySection.lastImageOrImageCopy(PageBuilderBackgroundImage_GIF.fileName, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="selectImage"/>
+        <conditionalClick
+            selector="{{MediaGallerySection.lastImageOrImageCopy(PageBuilderBackgroundImage_GIF.fileName, PageBuilderBackgroundImage_GIF.extension)}}"
+            dependentSelector="{{MediaGallerySection.lastImageOrImageCopySelected(PageBuilderBackgroundImage_GIF.fileName, PageBuilderBackgroundImage_GIF.extension)}}"
+            visible="true"
+            stepKey="selectImage"
+        />
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
             <argument name="Image" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
