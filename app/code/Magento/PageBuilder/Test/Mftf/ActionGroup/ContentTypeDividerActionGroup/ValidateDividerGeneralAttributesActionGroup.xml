@@ -16,20 +16,23 @@
             <argument name="lineWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerHr(index)}}', document.body).iterateNext()).borderColor" stepKey="grabColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderTopColor" stepKey="grabColorValue"/>
         <assertEquals stepKey="assertColorValue">
             <expectedResult type="string">{{lineColor.rgb}}</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.innerHr(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
         <assertEquals stepKey="assertThicknessValue">
             <expectedResult type="string">{{lineThickness.value}}px</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
-        <executeJS function="return document.evaluate('{{page.innerHrStyleId(index)}}', document.body).iterateNext().nodeValue" stepKey="grabDividerStyleId"/>
-        <executeJS function="return (document.querySelector(&quot;[data-style-id='{$grabDividerStyleId}'&quot;).innerText.indexOf(&quot;width: {{lineWidth.value}}&quot;) !== -1).toString()" stepKey="grabWidthValue"/>
+        <executeJS function="return document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext().clientWidth" stepKey="grabDividerLineWrapperWidth"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext()).paddingLeft.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabDividerLineWrapperPaddingLeft"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext()).paddingRight.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabDividerLineWrapperPaddingRight"/>
+        <executeJS function="return (('{$grabDividerLineWrapperWidth}'- '{$grabDividerLineWrapperPaddingLeft}' - '{$grabDividerLineWrapperPaddingRight}') * {{lineWidth.decimalValue}}) + 'px'" stepKey="grabCalculatedWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).width" stepKey="grabWidthValue"/>
         <assertEquals stepKey="assertWidthValue">
-            <expectedResult type="string">true</expectedResult>
+            <expectedResult type="variable">grabCalculatedWidthValue</expectedResult>
             <actualResult type="variable">grabWidthValue</actualResult>
         </assertEquals>
     </actionGroup>
