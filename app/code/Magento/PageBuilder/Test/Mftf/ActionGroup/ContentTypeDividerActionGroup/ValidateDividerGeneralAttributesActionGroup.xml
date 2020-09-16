@@ -16,7 +16,7 @@
             <argument name="lineWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderColor" stepKey="grabColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderTopColor" stepKey="grabColorValue"/>
         <assertEquals stepKey="assertColorValue">
             <expectedResult type="string">{{lineColor.rgb}}</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
@@ -29,7 +29,7 @@
         <executeJS function="return document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext().clientWidth" stepKey="grabDividerLineWrapperWidth"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext()).paddingLeft.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabDividerLineWrapperPaddingLeft"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext()).paddingRight.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabDividerLineWrapperPaddingRight"/>
-        <executeJS function="return (('{$grabDividerLineWrapperWidth}'- '{$grabDividerLineWrapperPaddingLeft}' - '{$grabDividerLineWrapperPaddingRight}') * {{PageBuilderDividerLineWidth_50.decimalValue}}) + 'px'" stepKey="grabCalculatedWidthValue"/>
+        <executeJS function="return (('{$grabDividerLineWrapperWidth}'- '{$grabDividerLineWrapperPaddingLeft}' - '{$grabDividerLineWrapperPaddingRight}') * {{lineWidth.decimalValue}}) + 'px'" stepKey="grabCalculatedWidthValue"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).width" stepKey="grabWidthValue"/>
         <assertEquals stepKey="assertWidthValue">
             <expectedResult type="variable">grabCalculatedWidthValue</expectedResult>
