@@ -51,25 +51,22 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <executeJS function="return document.evaluate('{{DividerOnStage.innerWrapper('1')}}', document.body).iterateNext()" stepKey="grabDividerInnerWrapper"/>
-        <executeJS function="return (${grabDividerInnerWrapper}.clientWidth - window.getComputedStyle(${grabDividerInnerWrapper}).getPropertyValue('padding-left').replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(${grabDividerInnerWrapper}).getPropertyValue('padding-right').replace(&quot;px&quot;, &quot;&quot;)) * {{PageBuilderDividerLineWidth_50.decimalValue}} + 'px'" stepKey="grabCalculatedWidthValue"/>
         <actionGroup ref="validateDividerGeneralAttributes" stepKey="validateStage">
             <argument name="page" value="DividerOnStage"/>
             <argument name="lineColor" value="PageBuilderDividerLineColor_FF5733"/>
             <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
-            <argument name="lineWidth" value="{$grabCalculatedWidthValue}"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <executeJS function="return (${grabDividerInnerWrapper}.clientWidth - window.getComputedStyle(${grabDividerInnerWrapper}).getPropertyValue('padding-left').replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(${grabDividerInnerWrapper}).getPropertyValue('padding-right').replace(&quot;px&quot;, &quot;&quot;)) * {{PageBuilderDividerLineWidth_50.decimalValue}} + 'px'" stepKey="grabCalculatedWidthValue2"/>
         <actionGroup ref="validateDividerGeneralAttributes" stepKey="validateStage2">
             <argument name="page" value="DividerOnStage"/>
             <argument name="lineColor" value="PageBuilderDividerLineColor_FF5733"/>
             <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
-            <argument name="lineWidth" value="{$grabCalculatedWidthValue2}"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -90,13 +87,11 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{DividerOnStage.innerWrapper('1')}}&quot;, document.body).iterateNext()" stepKey="grabStorefrontDividerInnerWrapper"/>
-        <executeJS function="return (${grabStorefrontDividerInnerWrapper}.clientWidth - window.getComputedStyle(${grabStorefrontDividerInnerWrapper}).getPropertyValue('padding-left').replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(${grabStorefrontDividerInnerWrapper}).getPropertyValue('padding-right').replace(&quot;px&quot;, &quot;&quot;)) * {{PageBuilderDividerLineWidth_50.decimalValue}} + 'px'" stepKey="grabCalculatedWidthValue3"/>
         <actionGroup ref="validateDividerGeneralAttributes" stepKey="validateStorefront">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="lineColor" value="PageBuilderDividerLineColor_FF5733"/>
             <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
-            <argument name="lineWidth" value="{$grabCalculatedWidthValue3}"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
     </test>
 </tests>

@@ -12,10 +12,8 @@
         <element name="baseCSS" type="text" selector="[data-content-type=divider]"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
         <element name="lineElementCSS" type="text" selector="[data-content-type=divider] hr"/>
-        <element name="innerWrapper" type="text" selector="(//div[contains(@class,&quot;pagebuilder-divider&quot;)])[{{arg1}}]//div[@data-pb-style]" parameterized="true"/>
-        <element name="innerWrapperStyleId" type="text" selector="(//div[contains(@class,&quot;pagebuilder-divider&quot;)])[{{arg1}}]//div/@data-pb-style" parameterized="true"/>
+        <element name="lineWrapper" type="text" selector="(//div[contains(@class,&quot;pagebuilder-divider&quot;)])[{{arg1}}]//div[@data-pb-style]" parameterized="true"/>
         <element name="lineElement" type="text" selector="(//div[contains(@class,&quot;pagebuilder-divider&quot;)])[{{arg1}}]//div//hr[@data-pb-style]" parameterized="true"/>
-        <element name="lineElementStyleId" type="text" selector="(//div[contains(@class,&quot;pagebuilder-divider&quot;)])[{{arg1}}]//hr/@data-pb-style" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
