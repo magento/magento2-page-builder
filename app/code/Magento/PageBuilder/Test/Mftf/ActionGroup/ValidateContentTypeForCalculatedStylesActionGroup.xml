@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateContentTypeForCalculatedStyles">
+        <arguments>
+            <argument name="selector" defaultValue="" type="string"/>
+            <argument name="wrapperSelector" defaultValue="" type="string"/>
+            <argument name="expectedProperty" defaultValue="" type="string"/>
+            <argument name="cssProperty" defaultValue="backgroundColor" type="string"/>
+        </arguments>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{wrapperSelector}}', document.body).iterateNext()).{{cssProperty}}.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabWrapperProperty"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{selector}}', document.body).iterateNext()).{{cssProperty}}.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabSelectorProperty"/>
+        <executeJS function="return (Math.round(({$grabSelectorProperty} / {$grabWrapperProperty}) * 100) + '%')" stepKey="grabCalculatedWidthValue"/>
+        <assertEquals stepKey="propertyIsEqualsAsExpected">
+            <expectedResult type="string">{{expectedProperty}}</expectedResult>
+            <actualResult type="variable">grabCalculatedWidthValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

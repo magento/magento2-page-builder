@@ -73,9 +73,26 @@
         <!-- Verify Column in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1MinHeightApplied" >
+            <argument name="selector" value="{{ColumnOnFrontend.column1HeightPath}}"/>
+            <argument name="expectedProperty" value="500px"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1BackgroundColorApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.column1BackgroundColorPath}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeForCalculatedStyles" stepKey="seeColumn2DefaultWidthApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.column2BackgroundWidthPath}}"/>
+            <argument name="wrapperSelector" value="{{ColumnOnFrontend.column2BackgroundWrapperWidthPath}}"/>
+            <argument name="expectedProperty" value="50%"/>
+            <argument name="cssProperty" value="width"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn2HeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.column2HeightPath}}"/>
+            <argument name="expectedProperty" value="500px"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
     </test>
 </tests>
