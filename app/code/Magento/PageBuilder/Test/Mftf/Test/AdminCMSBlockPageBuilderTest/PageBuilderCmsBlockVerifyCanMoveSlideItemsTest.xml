@@ -27,7 +27,7 @@
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
-            <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct" before="logout"/>
@@ -35,10 +35,9 @@
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage1"/>
-        <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage1"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
-        <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage" after="seeSlideContentAfterSave2"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
@@ -58,8 +57,8 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" after="saveEditPanelSettingsAfterBlock"/>
-        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1" after="saveEditPanelSettingsAfterBlock"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="exitPageBuilderFullScreen1"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>

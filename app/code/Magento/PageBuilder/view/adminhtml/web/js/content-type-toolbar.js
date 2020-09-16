@@ -5,7 +5,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _checkStageFullScreen, _promiseDeferred) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/pagebuilder-header-height", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _checkStageFullScreen, _pagebuilderHeaderHeight, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -75,9 +75,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
     _proto.onFocusIn = function onFocusIn(context, event) {
       var currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
-      var toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options"); // Change toolbar orientation if overflow on full screen mode
+      var toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options");
+      var currentContentTypeTargetClientRectTop = currentContentTypeTarget[0].getBoundingClientRect().top - (0, _pagebuilderHeaderHeight)(context.contentType.stageId); // Change toolbar orientation if overflow on full screen mode
 
-      if ((0, _checkStageFullScreen)(context.contentType.stageId) && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
+      if ((0, _checkStageFullScreen)(context.contentType.stageId) && currentContentTypeTargetClientRectTop < toolbarOptions.outerHeight()) {
         context.toolbar.observer = new MutationObserver(function () {
           toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
         });

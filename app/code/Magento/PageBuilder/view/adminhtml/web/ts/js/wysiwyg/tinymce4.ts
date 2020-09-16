@@ -12,6 +12,7 @@ import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
 import checkStageFullScreen from "../utils/check-stage-full-screen";
+import pageBuilderHeaderHeight from "../utils/pagebuilder-header-height";
 import WysiwygInterface from "./wysiwyg-interface";
 
 /**
@@ -122,6 +123,26 @@ export default class Wysiwyg implements WysiwygInterface {
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
         events.on(`form:${this.contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
+
+        events.on(`stage:${this.stageId}:fullScreenModeChangeAfter`, this.toggleFullScreen.bind(this));
+    }
+
+    /**
+     * Hide TinyMce inline toolbar options after fullscreen exit
+     */
+    public toggleFullScreen()
+    {
+        const $editor = $(`#${this.elementId}`);
+        // wait for fullscreen to close
+        _.defer(() => {
+            if (!checkStageFullScreen(this.stageId) &&
+                this.config.adapter_config.mode === "inline" &&
+                $editor.hasClass("mce-edit-focus")
+            ) {
+                $editor.removeClass("mce-edit-focus");
+                this.onBlur();
+            }
+        });
     }
 
     /**
@@ -203,7 +224,8 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
+        const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top
+                                         - pageBuilderHeaderHeight(this.stageId);
 
         if (!checkStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
             $inlineToolbar.css("transform", "translateY(-100%)");

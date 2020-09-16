@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/pagebuilder-header-height"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen, _pagebuilderHeaderHeight) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -88,13 +88,33 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterChangeContent, this.onChangeContent.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
       _events2.on("form:" + this.contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
+
+      _events2.on("stage:" + this.stageId + ":fullScreenModeChangeAfter", this.toggleFullScreen.bind(this));
     }
     /**
-     * @returns {WysiwygInstanceInterface}
+     * Hide TinyMce inline toolbar options after fullscreen exit
      */
 
 
     var _proto = Wysiwyg.prototype;
+
+    _proto.toggleFullScreen = function toggleFullScreen() {
+      var _this = this;
+
+      var $editor = (0, _jquery)("#" + this.elementId); // wait for fullscreen to close
+
+      _underscore.defer(function () {
+        if (!(0, _checkStageFullScreen)(_this.stageId) && _this.config.adapter_config.mode === "inline" && $editor.hasClass("mce-edit-focus")) {
+          $editor.removeClass("mce-edit-focus");
+
+          _this.onBlur();
+        }
+      });
+    }
+    /**
+     * @returns {WysiwygInstanceInterface}
+     */
+    ;
 
     _proto.getAdapter = function getAdapter() {
       return this.wysiwygAdapter;
@@ -105,7 +125,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.onFocus = function onFocus() {
-      var _this = this;
+      var _this2 = this;
 
       this.getFixedToolbarContainer().addClass("pagebuilder-toolbar-active");
 
@@ -113,9 +133,9 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
 
       _underscore.defer(function () {
-        _this.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this.config.adapter_config.minToolbarWidth + "px");
+        _this2.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
 
-        _this.invertInlineEditorToAccommodateOffscreenToolbar();
+        _this2.invertInlineEditorToAccommodateOffscreenToolbar();
       });
     }
     /**
@@ -169,7 +189,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         return;
       }
 
-      var inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
+      var inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top - (0, _pagebuilderHeaderHeight)(this.stageId);
 
       if (!(0, _checkStageFullScreen)(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
         $inlineToolbar.css("transform", "translateY(-100%)");

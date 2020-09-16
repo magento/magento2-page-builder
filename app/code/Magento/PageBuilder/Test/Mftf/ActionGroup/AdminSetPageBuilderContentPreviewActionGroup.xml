@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminSetPageBuilderContentPreviewActionGroup">
+        <annotations>
+            <description>Sets "Enable Page Builder Content Preview" flag value.</description>
+        </annotations>
+        <arguments>
+            <argument name="enablePageBuilderContentPreview" defaultValue="1" type="string"/>
+        </arguments>
+        <magentoCLI command="config:set cms/pagebuilder/enable_content_preview {{enablePageBuilderContentPreview}}" stepKey="setConfig"/>
+        <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+    </actionGroup>
+</actionGroups>
