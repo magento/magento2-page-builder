@@ -19,13 +19,37 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
-        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
-        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
-        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
-        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <comment userInput="---merging to remove step---" stepKey="waitForAlignmentVisible"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.border(index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>
+        <assertEquals stepKey="waitForBorderVisible">
+            <expectedResult type="string">{{border.value}}</expectedResult>
+            <actualResult type="variable">grabBorderStyleValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderColor(index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderColor(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
+        <assertEquals stepKey="waitForBorderColorVisible">
+            <expectedResult type="variable">grabBorderColorValue</expectedResult>
+            <actualResult type="variable">grabColorValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderWidth(index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
+        <assertEquals stepKey="waitForBorderWidthVisible">
+            <expectedResult type="string">{{borderWidth.value}}</expectedResult>
+            <actualResult type="variable">grabBorderWidthValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderRadius(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
+        <assertEquals stepKey="waitForBorderRadiusVisible">
+            <expectedResult type="string">{{borderRadius.value}}</expectedResult>
+            <actualResult type="variable">grabBorderRadiusValue</actualResult>
+        </assertEquals>
         <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
-        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+        <assertEquals stepKey="waitForMarginVisible">
+            <expectedResult type="string">{{margin.value}}</expectedResult>
+            <actualResult type="variable">grabMarginValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
+        <assertEquals stepKey="waitForPaddingVisible">
+            <expectedResult type="string">{{padding.value}}</expectedResult>
+            <actualResult type="variable">grabPaddingValue</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>

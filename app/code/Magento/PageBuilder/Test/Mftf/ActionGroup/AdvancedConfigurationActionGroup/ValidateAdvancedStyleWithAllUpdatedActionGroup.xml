@@ -36,23 +36,23 @@
             <expectedResult type="string">{{borderColor.rgb}}</expectedResult>
             <actualResult type="variable">grabBorderColorValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderWidth(index)}}', document.body).iterateNext()).borderWidth" stepKey="grabBorderWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderWidth(index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
         <assertEquals stepKey="waitForBorderWidthVisible">
-            <expectedResult type="string">{{borderWidth.value}}px</expectedResult>
+            <expectedResult type="string">{{borderWidth.value}}</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderRadius(index)}}', document.body).iterateNext()).borderRadius" stepKey="grabBorderRadiusValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.borderRadius(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
         <assertEquals stepKey="waitForBorderRadiusVisible">
-            <expectedResult type="string">{{borderRadius.value}}px</expectedResult>
+            <expectedResult type="string">{{borderRadius.value}}</expectedResult>
             <actualResult type="variable">grabBorderRadiusValue</actualResult>
         </assertEquals>
         <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.margins(index)}}', document.body).iterateNext()).margin" stepKey="grabMarginValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.margins(index)}}', document.body).iterateNext()).margin.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
         <assertEquals stepKey="waitForMarginVisible">
             <expectedResult type="string">{{margin.value}}</expectedResult>
             <actualResult type="variable">grabMarginValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding" stepKey="grabPaddingValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
         <assertEquals stepKey="waitForPaddingVisible">
             <expectedResult type="string">{{padding.value}}</expectedResult>
             <actualResult type="variable">grabPaddingValue</actualResult>
