@@ -41,7 +41,6 @@
             <actualResult type="variable">grabBorderRadiusValue</actualResult>
         </assertEquals>
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.margins(index)}}', document.body).iterateNext()).margin.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
         <assertEquals stepKey="waitForMarginVisible">
             <expectedResult type="string">{{margin.value}}</expectedResult>
