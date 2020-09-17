@@ -41,12 +41,12 @@
             <actualResult type="variable">grabBorderRadiusValue</actualResult>
         </assertEquals>
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.margins(index)}}', document.body).iterateNext()).margin.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.margins(index)}}', document.body).iterateNext()).margin.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
         <assertEquals stepKey="waitForMarginVisible">
             <expectedResult type="string">{{margin.value}}</expectedResult>
             <actualResult type="variable">grabMarginValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
         <assertEquals stepKey="waitForPaddingVisible">
             <expectedResult type="string">{{padding.value}}</expectedResult>
             <actualResult type="variable">grabPaddingValue</actualResult>

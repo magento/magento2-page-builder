@@ -41,7 +41,7 @@
         </assertEquals>
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
         <comment userInput="---merging to remove step---" stepKey="waitForMarginVisible"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.padding(index)}}', document.body).iterateNext()).padding.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
         <assertEquals stepKey="waitForPaddingVisible">
             <expectedResult type="string">{{padding.value}}</expectedResult>
             <actualResult type="variable">grabPaddingValue</actualResult>
