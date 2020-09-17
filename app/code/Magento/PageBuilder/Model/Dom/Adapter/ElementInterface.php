@@ -7,11 +7,26 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom\Adapter;
 
+use Gt\Dom\Element as GtDomElement;
+
 /**
  * Interface for Element wrappers
  */
 interface ElementInterface
 {
+    /**
+     * Return original element.
+     * @return GtDomElement
+     */
+    public function getOriginalElement(): GtDomElement;
+
+    /**
+     * Adds new child at the end of the children
+     * @param ElementInterface $newnode
+     * @return  ElementInterface
+     */
+    public function appendChild(ElementInterface $element): ElementInterface;
+
     /**
      * Returns true if the element would be selected by the specified selector string; otherwise, returns false.
      *

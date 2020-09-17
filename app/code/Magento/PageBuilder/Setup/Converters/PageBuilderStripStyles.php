@@ -8,10 +8,9 @@ declare(strict_types = 1);
 
 namespace Magento\PageBuilder\Setup\Converters;
 
-use DOMDocument;
-use DOMElement;
-use DOMXPath;
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
+use Magento\PageBuilder\Model\Dom\HtmlDocumentFactory;
 
 /**
  * Convert Inline Styles to Internal
@@ -20,23 +19,23 @@ class PageBuilderStripStyles implements DataConverterInterface
 {
     const BODY_ID = 'html-body';
     const DATA_ATTRIBUTE = 'data-pb-style';
-    const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
+    const SELECTOR = '[style]';
 
     /**
-     * @var DOMDocument
+     * @var HtmlDocumentFactory
      */
-    private $domDocument;
+    private $htmlDocumentFactory;
 
     /**
-     * @param DOMDocument $domDocument
+     * @param HtmlDocumentFactory $htmlDocumentFactory
      */
-    public function __construct(DOMDocument $domDocument)
+    public function __construct(HtmlDocumentFactory $htmlDocumentFactory)
     {
-        $this->domDocument = $domDocument;
+        $this->htmlDocumentFactory = $htmlDocumentFactory;
     }
 
     /**
-     * Generates `mageUtils.uniqueid()` Naming Convention
+     * Selecting all elements that contains inline styles and convert them in style blocks
      *
      * @return string
      */
@@ -68,18 +67,13 @@ class PageBuilderStripStyles implements DataConverterInterface
      */
     public function convert($value): string
     {
-        \libxml_use_internal_errors(true);
-        $document = new DOMDocument();
-        $document->loadHTML($value);
-        $xpath = new DOMXPath($document);
-        \libxml_clear_errors();
-
-        $body = $document->documentElement->lastChild;
-        $nodes = $xpath->query(self::XPATH_SELECTOR); // Query for Inline Styles
+        $document = $this->htmlDocumentFactory->create([ 'document' => $value ]);
+        $nodes = $document->querySelectorAll(self::SELECTOR);
+        $body = $document->querySelector('body');
         $styleMap = [];
 
         foreach ($nodes as $node) {
-            /* @var DOMElement $node */
+            /* @var ElementInterface $node */
             $styleAttr = $node->getAttribute('style');
 
             if ($styleAttr) {
@@ -90,20 +84,17 @@ class PageBuilderStripStyles implements DataConverterInterface
             }
         }
 
-        // Style Block Generation
-        $style = $document->createElement(
-            'style',
-            $this->generateInternalStyles($styleMap)
-        );
-        $body->appendChild($style);
+        if (count($styleMap) > 0) {
+            // Style Block Generation
+            $style = $document->createElement(
+                'style',
+                $this->generateInternalStyles($styleMap)
+            );
+            $body->appendChild($style);
 
-        // @todo: Refactor
-        \preg_match(
-            '/<html><body>(.+)<\/body><\/html>$/si',
-            $document->saveHTML(),
-            $matches
-        );
-
-        return $matches && $nodes->count() > 0 ? $matches[1] : $value;
+            return $document->stripHtmlWrapperTags();
+        } else {
+            return $value;
+        }
     }
 }
