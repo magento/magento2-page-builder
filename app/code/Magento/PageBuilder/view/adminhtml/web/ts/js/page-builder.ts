@@ -44,6 +44,7 @@ export default class PageBuilder implements PageBuilderInterface {
     private snapshot: boolean;
 
     constructor(config: any, initialValue: string) {
+        console.error('New error');
         Config.setConfig(config);
         Config.setMode("Preview");
         this.preloadTemplates(config);
