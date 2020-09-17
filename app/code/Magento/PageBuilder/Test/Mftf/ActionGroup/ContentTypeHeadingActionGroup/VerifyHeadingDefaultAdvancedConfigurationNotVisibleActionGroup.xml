@@ -18,21 +18,34 @@
         </arguments>
         <waitForElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="waitForElement"/>
         <dontSeeElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="dontSeeElement"/>
-        <waitForElement selector="{{page.noAlignment(headingType.value, index)}}" stepKey="waitForAlignment"/>
-        <dontSeeElement selector="{{page.noAlignment(headingType.value, index)}}" stepKey="dontSeeAlignment"/>
-        <waitForElement selector="{{page.border(headingType.value, index, border.value)}}" stepKey="waitForBorder"/>
-        <dontSeeElement selector="{{page.border(headingType.value, index, border.value)}}" stepKey="dontSeeBorder"/>
-        <waitForElement selector="{{page.noBorderColor(headingType.value, index)}}" stepKey="waitForBorderColor"/>
-        <dontSeeElement selector="{{page.noBorderColor(headingType.value, index)}}" stepKey="dontSeeBorderColor"/>
-        <waitForElement selector="{{page.borderWidth(headingType.value, index, borderWidth.value)}}" stepKey="waitForBorderWidth"/>
-        <dontSeeElement selector="{{page.borderWidth(headingType.value, index, borderWidth.value)}}" stepKey="dontSeeBorderWidth"/>
-        <waitForElement selector="{{page.borderRadius(headingType.value, index, borderRadius.value)}}" stepKey="waitForBorderRadius"/>
-        <dontSeeElement selector="{{page.borderRadius(headingType.value, index, borderRadius.value)}}" stepKey="dontSeeBorderRadius"/>
+        <comment userInput="---merging to remove step---" stepKey="waitForAlignment"/>
+        <comment userInput="---merging to remove step---" stepKey="dontSeeAlignment"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderStyle" stepKey="waitForBorder"/>
+        <assertEquals stepKey="dontSeeBorder">
+            <expectedResult type="string">none</expectedResult>
+            <actualResult type="variable">waitForBorder</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderColor" stepKey="waitForBorderColor"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
+        <assertEquals stepKey="dontSeeBorderColor">
+            <expectedResult type="variable">waitForBorderColor</expectedResult>
+            <actualResult type="variable">grabColorValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="waitForBorderWidth"/>
+        <assertEquals stepKey="dontSeeBorderWidth">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">waitForBorderWidth</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="waitForBorderRadius"/>
+        <assertEquals stepKey="dontSeeBorderRadius">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">waitForBorderRadius</actualResult>
+        </assertEquals>
         <waitForElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="waitForCSSClasses"/>
         <dontSeeElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="dontSeeCSSClasses"/>
-        <waitForElement selector="{{page.noMargins(headingType.value, index)}}" stepKey="waitForMargin"/>
-        <dontSeeElement selector="{{page.noMargins(headingType.value, index)}}" stepKey="dontSeeMargin"/>
-        <waitForElement selector="{{page.noPadding(headingType.value, index)}}" stepKey="waitForPadding"/>
-        <dontSeeElement selector="{{page.noPadding(headingType.value, index)}}" stepKey="dontSeePadding"/>
+        <comment userInput="---merging to remove step---" stepKey="waitForMargin"/>
+        <comment userInput="---merging to remove step---" stepKey="dontSeeMargin"/>
+        <comment userInput="---merging to remove step---" stepKey="waitForPadding"/>
+        <comment userInput="---merging to remove step---" stepKey="dontSeePadding"/>
     </actionGroup>
 </actionGroups>
