@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminVerifyTinyMCEToolbarButtonsActionGroup">
+        <annotations>
+            <description>Validates that all of the Tiny MCE buttons are present in the specified Tiny MCE toolbar.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="WYSIWYGOnPageBuilderInline"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.toolbar}}" stepKey="waitForToolbar"/>
+        <seeElement selector="{{section.undo}}" stepKey="seeUndo"/>
+        <seeElement selector="{{section.redo}}" stepKey="seeRedo"/>
+        <seeElement selector="{{section.formatSelector}}" stepKey="seeFormatSelector"/>
+        <seeElement selector="{{section.fontSize}}" stepKey="seeFontSize"/>
+        <seeElement selector="{{section.lineHeight}}" stepKey="seeLineHeight"/>
+        <seeElement selector="{{section.textColor}}" stepKey="seeTextColor"/>
+        <seeElement selector="{{section.backgroundColor}}" stepKey="seeBackgroundColor"/>
+        <seeElement selector="{{section.bold}}" stepKey="seeBold"/>
+        <seeElement selector="{{section.italic}}" stepKey="seeItalic"/>
+        <seeElement selector="{{section.underline}}" stepKey="seeUnderline"/>
+        <seeElement selector="{{section.alignLeft}}" stepKey="seeAlignLeft"/>
+        <seeElement selector="{{section.alignCenter}}" stepKey="seeAlignCenter"/>
+        <seeElement selector="{{section.alignRight}}" stepKey="seeAlignRight"/>
+        <seeElement selector="{{section.numberedList}}" stepKey="seeNumberedList"/>
+        <seeElement selector="{{section.bulletList}}" stepKey="seeBulletList"/>
+        <seeElement selector="{{section.insertLink}}" stepKey="seeInsertLink"/>
+        <seeElement selector="{{section.imageSelector}}" stepKey="seeImageSelector"/>
+        <seeElement selector="{{section.table}}" stepKey="seeTable"/>
+        <seeElement selector="{{section.specialCharacter}}" stepKey="seeSpecialCharacter"/>
+        <seeElement selector="{{section.insertWidget}}" stepKey="seeInsertWidget"/>
+        <seeElement selector="{{section.insertVariable}}" stepKey="seeInsertVariable"/>
+    </actionGroup>
+</actionGroups>

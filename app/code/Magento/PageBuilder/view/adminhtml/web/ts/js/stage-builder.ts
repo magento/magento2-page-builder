@@ -14,6 +14,7 @@ import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-c
 import createContentType, {FieldDefaultsInterface} from "./content-type-factory";
 import ContentTypeInterface from "./content-type.types";
 import appearanceConfig from "./content-type/appearance-config";
+import { pbStyleAttribute } from "./content-type/style-registry";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
@@ -30,7 +31,41 @@ import {set} from "./utils/object";
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
+    stageDocument.body.id = Config.getConfig("bodyId");
+    convertToInlineStyles(stageDocument);
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
+}
+
+/**
+ * Convert styles to block to inline styles.
+ *
+ * @param document
+ */
+function convertToInlineStyles(document: Document): void {
+    const styleBlocks = document.getElementsByTagName("style");
+    const styles: { [key: string]: CSSStyleDeclaration[] } = {};
+    if (styleBlocks.length > 0) {
+        Array.from(styleBlocks).forEach((styleBlock: HTMLStyleElement) => {
+            const cssRules = (styleBlock.sheet as CSSStyleSheet).cssRules;
+            Array.from(cssRules).forEach((rule: CSSStyleRule) => {
+                const selectors = rule.selectorText.split(",").map((selector) => selector.trim());
+                selectors.forEach((selector) => {
+                    if (!styles[selector]) {
+                        styles[selector] = [];
+                    }
+                    styles[selector].push(rule.style);
+                });
+            });
+        });
+    }
+    _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
+        const element: HTMLElement = document.querySelector(selector);
+
+        _.each(stylesArray, (style: CSSStyleDeclaration) => {
+            element.setAttribute("style", element.style.cssText + style.cssText);
+        });
+        element.removeAttribute(pbStyleAttribute);
+    });
 }
 
 /**

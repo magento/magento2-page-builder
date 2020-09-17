@@ -11,6 +11,7 @@ import Preview from "./content-type/preview";
 import {PreviewCollectionInterface} from "./content-type/preview-collection.types";
 import {PreviewInterface} from "./content-type/preview.types";
 import checkStageFullScreen from "./utils/check-stage-full-screen";
+import pageBuilderHeaderHeight from "./utils/pagebuilder-header-height";
 import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 /**
@@ -78,9 +79,11 @@ export default class Toolbar {
     public onFocusIn(context: ContentTypeToolbarPreviewInterface, event: Event): void {
         const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
         const toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options");
+        const currentContentTypeTargetClientRectTop = currentContentTypeTarget[0].getBoundingClientRect().top
+                                                      - pageBuilderHeaderHeight(context.contentType.stageId);
         // Change toolbar orientation if overflow on full screen mode
         if (checkStageFullScreen(context.contentType.stageId)
-            && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()
+            && currentContentTypeTargetClientRectTop < toolbarOptions.outerHeight()
         ) {
             context.toolbar.observer = new MutationObserver(() => {
                 toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
