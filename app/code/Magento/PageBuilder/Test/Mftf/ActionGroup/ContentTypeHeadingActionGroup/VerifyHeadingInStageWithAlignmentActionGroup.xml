@@ -15,7 +15,11 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <waitForElementVisible selector="{{HeadingOnStage.alignment(headingType.value, index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{HeadingOnStage.headingElement(headingType.value, index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
+        <assertEquals stepKey="waitForAlignmentVisible">
+            <expectedResult type="string">{{alignment.value}}</expectedResult>
+            <actualResult type="variable">grabAlignmentValue</actualResult>
+        </assertEquals>
         <waitForElement selector="{{HeadingOnStage.headingType(headingType.value, index)}}" stepKey="waitForHeadingStyle"/>
         <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStageHeadingText"/>
     </actionGroup>
