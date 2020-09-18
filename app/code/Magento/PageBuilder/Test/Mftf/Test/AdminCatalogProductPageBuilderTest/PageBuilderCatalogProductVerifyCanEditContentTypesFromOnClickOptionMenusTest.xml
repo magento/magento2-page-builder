@@ -60,7 +60,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlideStage">
-            <argument name="selector" value="{{SlideOnBackend.backgroundColor('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -74,7 +74,7 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlideStageAfterSave">
-            <argument name="selector" value="{{SlideOnBackend.backgroundColor('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -93,7 +93,7 @@
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlideStorefront">
-            <argument name="selector" value="{{SlideOnFrontend.backgroundColor('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.backgroundElement('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>

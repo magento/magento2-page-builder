@@ -67,13 +67,26 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStage">
+            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeElementInDOM selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonInDOMStage"/>
         <dontSeeElement selector="{{SlideOnBackend.button('1')}}" stepKey="dontSeeButtonStage"/>
-        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTransparentOverlayStage">
+            <argument name="selector" value="{{SlideOnBackend.transparentOverlayPath('1')}}"/>
+            <argument name="expectedProperty" value="rgba(0, 0, 0, 0)"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnBackend.base('1')}}" stepKey="moveMouseOverSlideStage"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStage"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeOverlayOnHoverStage">
+            <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -82,13 +95,26 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTransparentOverlayStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
+            <argument name="expectedProperty" value="rgba(0, 0, 0, 0)"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefront"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefront"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeOverlayOnHoverStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromSlide"/>
         <!-- Click slide anchor -->
         <comment userInput="Click slide anchor" stepKey="clickSlideAnchorStorefront"/>
@@ -102,13 +128,26 @@
         </actionGroup>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTransparentOverlayStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
+            <argument name="expectedProperty" value="rgba(0, 0, 0, 0)"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeOverlayOnHoverStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Click mobile slide anchor -->
         <comment userInput="Click mobile slide anchor" stepKey="clickMobileSlideAnchorStorefront"/>
         <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
