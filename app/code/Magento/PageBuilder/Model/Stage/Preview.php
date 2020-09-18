@@ -95,7 +95,16 @@ class Preview
         $this->isPreview = true;
 
         if (!$storeId) {
-            $storeId = $this->storeManager->getDefaultStoreView()->getId();
+            $store = $this->storeManager->getDefaultStoreView();
+            if ($store) {
+                $storeId = $store->getId();
+            } else {
+                $stores = $this->storeManager->getStores();
+                if (count($stores)) {
+                    $store = array_shift($stores);
+                    $storeId = $store->getId();
+                }
+            }
         }
         $this->emulation->startEnvironmentEmulation($storeId);
 
