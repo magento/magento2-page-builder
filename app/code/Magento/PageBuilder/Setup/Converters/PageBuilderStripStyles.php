@@ -17,9 +17,9 @@ use Magento\PageBuilder\Model\Dom\HtmlDocumentFactory;
  */
 class PageBuilderStripStyles implements DataConverterInterface
 {
-    const BODY_ID = 'html-body';
-    const DATA_ATTRIBUTE = 'data-pb-style';
-    const SELECTOR = '[style]';
+    private const BODY_ID = 'html-body';
+    private const DATA_ATTRIBUTE = 'data-pb-style';
+    private const SELECTOR = '[style]';
 
     /**
      * @var HtmlDocumentFactory
@@ -35,7 +35,7 @@ class PageBuilderStripStyles implements DataConverterInterface
     }
 
     /**
-     * Selecting all elements that contains inline styles and convert them in style blocks
+     * Generates `mageUtils.uniqueid()` Naming Convention
      *
      * @return string
      */
@@ -68,33 +68,38 @@ class PageBuilderStripStyles implements DataConverterInterface
     public function convert($value): string
     {
         $document = $this->htmlDocumentFactory->create([ 'document' => $value ]);
-        $nodes = $document->querySelectorAll(self::SELECTOR);
         $body = $document->querySelector('body');
-        $styleMap = [];
+        $nodes = $document->querySelectorAll(self::SELECTOR);
 
-        foreach ($nodes as $node) {
-            /* @var ElementInterface $node */
-            $styleAttr = $node->getAttribute('style');
+        if ($nodes->count() > 0) {
+            $styleMap = [];
 
-            if ($styleAttr) {
-                $generatedDataAttribute = $this->generateDataAttribute();
-                $node->setAttribute(self::DATA_ATTRIBUTE, $generatedDataAttribute);
-                $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
-                $node->removeAttribute('style');
+            foreach ($nodes as $node) {
+                /* @var ElementInterface $node */
+                $styleAttr = $node->getAttribute('style');
+
+                if ($styleAttr) {
+                    $generatedDataAttribute = $this->generateDataAttribute();
+                    $node->setAttribute(self::DATA_ATTRIBUTE, $generatedDataAttribute);
+                    $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
+                    $node->removeAttribute('style');
+                }
+            }
+
+            if (count($styleMap) > 0) {
+                // Style Block Generation
+                $style = $document->createElement(
+                    'style',
+                    $this->generateInternalStyles($styleMap)
+                );
+                $body->appendChild($style);
+
+                return $document->stripHtmlWrapperTags();
+            } else {
+                return $value;
             }
         }
 
-        if (count($styleMap) > 0) {
-            // Style Block Generation
-            $style = $document->createElement(
-                'style',
-                $this->generateInternalStyles($styleMap)
-            );
-            $body->appendChild($style);
-
-            return $document->stripHtmlWrapperTags();
-        } else {
-            return $value;
-        }
+        return $value;
     }
 }

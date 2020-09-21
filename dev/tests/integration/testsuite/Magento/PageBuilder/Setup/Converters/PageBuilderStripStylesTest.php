@@ -17,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 class PageBuilderStripStylesTest extends TestCase
 {
+    private const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
+
     /**
      * @var ObjectManagerInterface
      */
@@ -53,7 +55,7 @@ class PageBuilderStripStylesTest extends TestCase
         \libxml_clear_errors();
 
         $getInternalStyles = false;
-        $nodesBefore = $xpathBefore->query(PageBuilderStripStyles::XPATH_SELECTOR);
+        $nodesBefore = $xpathBefore->query(self::XPATH_SELECTOR);
         $styleRules = [];
 
         foreach ($nodesBefore as $node) {
@@ -67,7 +69,7 @@ class PageBuilderStripStylesTest extends TestCase
         }
 
         // Assert Inline Styles Were Removed
-        $this->assertEquals(0, \count($xpathAfter->query(PageBuilderStripStyles::XPATH_SELECTOR)));
+        $this->assertEquals(0, \count($xpathAfter->query(self::XPATH_SELECTOR)));
 
         // Assert Expected Internal Styles
         $this->assertEquals($expectedStyleTags, \count($xpathAfter->query('//style')));
