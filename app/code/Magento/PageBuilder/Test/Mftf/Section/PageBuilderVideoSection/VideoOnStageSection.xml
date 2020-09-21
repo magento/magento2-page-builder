@@ -30,7 +30,7 @@
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="advancedConfigurationPath" parameterized="true" selector="(//div[contains(@class,&quot;pagebuilder-video-wrapper&quot;)])[{{arg1}}]"/>
+        <element name="advancedConfigurationPath" type="text" parameterized="true" selector="(//div[contains(@class,&quot;pagebuilder-video-wrapper&quot;)])[{{arg1}}]"/>
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@style, 'text-align: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[not(contains(@style,'text-align:'))]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>

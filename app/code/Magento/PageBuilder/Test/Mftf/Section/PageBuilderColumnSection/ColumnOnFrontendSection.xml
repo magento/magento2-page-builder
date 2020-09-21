@@ -55,14 +55,15 @@
         <element name="minHeight" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <!-- Background Configuration -->
-        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="backgroundSize" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="backgroundColor" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="backgroundImage" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="backgroundMobileImage" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="backgroundElement" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundMobileImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
     </section>
 </sections>
