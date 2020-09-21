@@ -97,7 +97,7 @@ class PageBuilderStripStylesTest extends TestCase
             [
                 // Basic CMS Content with Inline Style
                 '<h1 style="color: #101020;">Magento, an Adobe Company</h1>',
-                0
+                1
             ],
             [
                 // Basic CMS Content with Existing Style
@@ -107,12 +107,12 @@ class PageBuilderStripStylesTest extends TestCase
             [
                 // Basic CMS Content with Inline/Existing Style
                 '<h1 style="color: #101020;">Magento, an Adobe Company</h1><style>h1 { background-color: #dadada; }</style>',
-                1
+                2
             ],
             [
                 // Basic CMS Content with Inline/Existing Style (Unclosed)
                 '<h1 style="color: #101020;">Magento, an Adobe Company<style>h1 { background-color: #dadada; }</style>',
-                1
+                2
             ],
             [
                 // Row
@@ -126,7 +126,7 @@ class PageBuilderStripStylesTest extends TestCase
             ],
             [
                 // Text
-                '<div data-content-type="row" data-appearance="contained" data-element="main"><div data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-background-type="image" data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true" data-video-fallback-src="" data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px;"><div class="elephant news" data-content-type="text" data-appearance="default" data-element="main" style="text-align: left; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px 15px;">Text</div></div></div>',
+                '<div data-content-type="row" data-appearance="contained" data-element="main"><div data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-background-type="image" data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true" data-video-fallback-src="" data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px;"><div data-content-type="text" data-appearance="default" data-element="main" style="text-align: left; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px 15px;">Text</div></div></div>',
                 1
             ],
             [
@@ -182,7 +182,7 @@ class PageBuilderStripStylesTest extends TestCase
         return [
             [
                 // Text (Raw)
-                '<div class="elephant news" data-content-type="text" data-appearance="default" data-element="main" style="text-align: left; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px 15px;">Text</div>',
+                '<div data-content-type="text" data-appearance="default" data-element="main" style="text-align: left; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px 15px;">Text</div>',
                 1
             ],
             [

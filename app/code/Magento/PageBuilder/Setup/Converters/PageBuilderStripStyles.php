@@ -19,7 +19,7 @@ class PageBuilderStripStyles implements DataConverterInterface
 {
     private const BODY_ID = 'html-body';
     private const DATA_ATTRIBUTE = 'data-pb-style';
-    private const SELECTOR = '[style]';
+    private const QUERY_SELECTOR = '[style]';
 
     /**
      * @var HtmlDocumentFactory
@@ -69,7 +69,7 @@ class PageBuilderStripStyles implements DataConverterInterface
     {
         $document = $this->htmlDocumentFactory->create([ 'document' => $value ]);
         $body = $document->querySelector('body');
-        $nodes = $document->querySelectorAll(self::SELECTOR);
+        $nodes = $document->querySelectorAll(self::QUERY_SELECTOR);
 
         if ($nodes->count() > 0) {
             $styleMap = [];
