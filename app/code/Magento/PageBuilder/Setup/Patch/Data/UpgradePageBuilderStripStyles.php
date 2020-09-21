@@ -37,7 +37,7 @@ class UpgradePageBuilderStripStyles implements DataPatchInterface
      * @return void
      * @throws FieldDataConversionException
      */
-    public function apply()
+    public function apply(): void
     {
         $this->helper->upgrade([
             PageBuilderStripStyles::class

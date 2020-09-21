@@ -18,9 +18,9 @@ use Magento\Framework\DB\DataConverter\DataConverterInterface;
  */
 class PageBuilderStripStyles implements DataConverterInterface
 {
-    const BODY_ID = 'html-body';
-    const DATA_ATTRIBUTE = 'data-pb-style';
-    const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
+    public const BODY_ID = 'html-body';
+    public const DATA_ATTRIBUTE = 'data-pb-style';
+    public const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
 
     /**
      * @var DOMDocument
@@ -76,34 +76,38 @@ class PageBuilderStripStyles implements DataConverterInterface
 
         $body = $document->documentElement->lastChild;
         $nodes = $xpath->query(self::XPATH_SELECTOR); // Query for Inline Styles
-        $styleMap = [];
 
-        foreach ($nodes as $node) {
-            /* @var DOMElement $node */
-            $styleAttr = $node->getAttribute('style');
+        if ($nodes->count() > 0) {
+            $styleMap = [];
 
-            if ($styleAttr) {
-                $generatedDataAttribute = $this->generateDataAttribute();
-                $node->setAttribute(self::DATA_ATTRIBUTE, $generatedDataAttribute);
-                $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
-                $node->removeAttribute('style');
+            foreach ($nodes as $node) {
+                /* @var DOMElement $node */
+                $styleAttr = $node->getAttribute('style');
+
+                if ($styleAttr) {
+                    $generatedDataAttribute = $this->generateDataAttribute();
+                    $node->setAttribute(self::DATA_ATTRIBUTE, $generatedDataAttribute);
+                    $styleMap[$generatedDataAttribute] = $styleAttr; // Amend Array for Internal Style Generation
+                    $node->removeAttribute('style');
+                }
             }
+
+            // Style Block Generation
+            $style = $document->createElement(
+                'style',
+                $this->generateInternalStyles($styleMap)
+            );
+            $body->appendChild($style);
+
+            \preg_match(
+                '/<html><body>(.+)<\/body><\/html>$/si',
+                $document->saveHTML(),
+                $matches
+            );
+
+            return $matches ? $matches[1] : $value;
         }
 
-        // Style Block Generation
-        $style = $document->createElement(
-            'style',
-            $this->generateInternalStyles($styleMap)
-        );
-        $body->appendChild($style);
-
-        // @todo: Refactor
-        \preg_match(
-            '/<html><body>(.+)<\/body><\/html>$/si',
-            $document->saveHTML(),
-            $matches
-        );
-
-        return $matches && $nodes->count() > 0 ? $matches[1] : $value;
+        return $value;
     }
 }
