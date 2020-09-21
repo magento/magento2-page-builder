@@ -97,13 +97,17 @@ export default class Preview extends PreviewCollection {
                     },
                 );
                 // @ts-ignore
-                this.element.jarallax.video.on("started", () => {
+                if (this.element.jarallax && this.element.jarallax.video) {
                     // @ts-ignore
-                    if (this.element.jarallax.$video) {
+                    this.element.jarallax.video.on("started", () => {
                         // @ts-ignore
-                        this.element.jarallax.$video.style.visibility = "visible";
-                    }
-                });
+                        if (this.element.jarallax.$video) {
+                            // @ts-ignore
+                            this.element.jarallax.$video.style.visibility = "visible";
+                        }
+                    });
+                }
+
             });
         }
 
