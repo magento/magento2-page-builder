@@ -21,7 +21,7 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
-        <assertEquals stepKey="assertAlignment">
+        <assertEquals stepKey="assertDefaultAlignment">
             <expectedResult type="string">{{defaultAlignment}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>

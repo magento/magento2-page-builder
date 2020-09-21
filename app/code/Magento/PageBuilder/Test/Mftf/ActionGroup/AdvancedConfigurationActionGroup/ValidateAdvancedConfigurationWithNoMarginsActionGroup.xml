@@ -6,15 +6,15 @@
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateAdvancedConfigurationWithNoAlignment">
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateAdvancedConfigurationWithNoMargins">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="defaultAlignment" type="string" defaultValue="left"/>
+            <argument name="defaultMargin" type="string" defaultValue="0 0 0 0"/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -25,30 +25,30 @@
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>
-        <assertEquals stepKey="assertBorderStyleVisible">
+        <assertEquals stepKey="assertBorderVisible">
             <expectedResult type="string">{{border.value}}</expectedResult>
             <actualResult type="variable">grabBorderStyleValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
-        <assertEquals stepKey="assertBorderColorVisible">
+        <assertEquals stepKey="assertNoBorderColorVisible">
             <expectedResult type="variable">grabBorderColorValue</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
-        <assertEquals stepKey="assertBorderWidthVisible">
+        <assertEquals stepKey="waitForBorderWidthVisible">
             <expectedResult type="string">{{borderWidth.value}}</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
-        <assertEquals stepKey="assertBorderRadiusVisible">
+        <assertEquals stepKey="waitForBorderRadiusVisible">
             <expectedResult type="string">{{borderRadius.value}}</expectedResult>
             <actualResult type="variable">grabBorderRadiusValue</actualResult>
         </assertEquals>
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).margin.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
-        <assertEquals stepKey="assertMarginVisible">
-            <expectedResult type="string">{{margin.value}}</expectedResult>
+        <assertEquals stepKey="assertNoMarginVisible">
+            <expectedResult type="string">{{defaultMargin}}</expectedResult>
             <actualResult type="variable">grabMarginValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).padding.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>

@@ -7,15 +7,15 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateAdvancedConfigurationWithNoAlignment">
+    <actionGroup name="validateAdvancedConfigurationWithNoPadding">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="defaultAlignment" type="string" defaultValue="left"/>
+            <argument name="defaultPadding" type="string" defaultValue="0 0 0 0"/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
@@ -31,7 +31,7 @@
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
-        <assertEquals stepKey="assertBorderColorVisible">
+        <assertEquals stepKey="assertNoBorderColorVisible">
             <expectedResult type="variable">grabBorderColorValue</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
@@ -52,8 +52,8 @@
             <actualResult type="variable">grabMarginValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).padding.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
-        <assertEquals stepKey="assertPaddingVisible">
-            <expectedResult type="string">{{padding.value}}</expectedResult>
+        <assertEquals stepKey="assertNoPaddingVisible">
+            <expectedResult type="string">{{defaultPadding}}</expectedResult>
             <actualResult type="variable">grabPaddingValue</actualResult>
         </assertEquals>
     </actionGroup>
