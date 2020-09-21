@@ -13,6 +13,7 @@ use Magento\Framework\App\State;
 use Magento\Framework\View\Design\Theme\ThemeProviderInterface;
 use Magento\Framework\View\DesignInterface;
 use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
@@ -112,7 +113,7 @@ class Preview
             function () use ($callback) {
                 $themeId = $this->scopeConfig->getValue(
                     'design/theme/theme_id',
-                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                    ScopeInterface::SCOPE_STORE
                 );
                 $theme = $this->themeProvider->getThemeById($themeId);
                 $this->design->setDesignTheme($theme, $this->getPreviewArea());
@@ -150,12 +151,12 @@ class Preview
         $storeId = null;
         $store = $this->storeManager->getDefaultStoreView();
         if ($store) {
-            $storeId = $store->getId();
+            $storeId = (int) $store->getId();
         } else {
             $stores = $this->storeManager->getStores();
             if (count($stores)) {
                 $store = array_shift($stores);
-                $storeId = $store->getId();
+                $storeId = (int) $store->getId();
             }
         }
 
