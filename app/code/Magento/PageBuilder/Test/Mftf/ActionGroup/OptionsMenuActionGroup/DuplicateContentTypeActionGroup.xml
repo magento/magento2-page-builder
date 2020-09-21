@@ -14,10 +14,12 @@
             <argument name="contentTypeXCoordinate" defaultValue="null" type="string"/>
             <argument name="contentTypeYCoordinate" defaultValue="null" type="string"/>
         </arguments>
+        <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseToSearchPanel"/>
         <waitForElement selector="{{PageBuilderStage.contentTypeTotalInStage(contentType.role)}}" stepKey="waitForAllContentTypes"/>
         <executeJS function="return document.querySelectorAll('{{PageBuilderStage.contentTypeTotalInStage(contentType.role)}}').length+1" stepKey="expectedContentTypeCount"/>
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <executeJS function="return ['row', 'column'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.role}}'.toUpperCase()+'&quot;)]' : ['tabs'].include('{{contentType.role}}') ? '//ul[@data-element=&quot;navigation&quot;]' : '';" stepKey="contentTypeLabelSelector" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}{$contentTypeLabelSelector}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="waitForDuplicate"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="clickDuplicateContentType"/>
