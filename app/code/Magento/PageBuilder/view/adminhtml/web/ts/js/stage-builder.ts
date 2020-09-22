@@ -56,6 +56,7 @@ function convertToInlineStyles(document: Document): void {
                     styles[selector].push(rule.style);
                 });
             });
+            styleBlock.remove();
         });
     }
     _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {

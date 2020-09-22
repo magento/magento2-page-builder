@@ -48,6 +48,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
             styles[selector].push(rule.style);
           });
         });
+        styleBlock.remove();
       });
     }
 
