@@ -25,7 +25,7 @@ interface ElementInterface
      * Adds new child at the end of the children.
      *
      * @param ElementInterface $element
-     * @return  ElementInterface
+     * @return ElementInterface
      */
     public function appendChild(ElementInterface $element): ElementInterface;
 
