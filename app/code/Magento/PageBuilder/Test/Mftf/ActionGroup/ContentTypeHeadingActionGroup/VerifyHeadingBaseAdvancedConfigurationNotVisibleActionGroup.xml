@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyHeadingBaseAdvancedConfigurationNotVisible">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="defaultAlignment" defaultValue="start" type="string"/>
+            <argument name="defaultPadding" defaultValue="0" type="string"/>
+            <argument name="defaultMargin" defaultValue="25 0 20" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="waitForElement"/>
+        <dontSeeElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="dontSeeElement"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
+        <assertEquals stepKey="assertDefaultAlignmentVisible">
+            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+            <actualResult type="variable">grabAlignmentValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>
+        <assertEquals stepKey="assertNoBorderStyleVisible">
+            <expectedResult type="string">none</expectedResult>
+            <actualResult type="variable">grabBorderStyleValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
+        <assertEquals stepKey="assertNoBorderColorVisible">
+            <expectedResult type="variable">grabBorderColorValue</expectedResult>
+            <actualResult type="variable">grabColorValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
+        <assertEquals stepKey="assertNoBorderWidthVisible">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">grabBorderWidthValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
+        <assertEquals stepKey="assertNoBorderRadiusVisible">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">grabBorderRadiusValue</actualResult>
+        </assertEquals>
+        <waitForElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="waitForCSSClasses"/>
+        <dontSeeElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="dontSeeCSSClasses"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).margin.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
+        <assertEquals stepKey="assertDefaultMarginVisible">
+            <expectedResult type="string">{{defaultMargin}}</expectedResult>
+            <actualResult type="variable">grabMarginValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).padding.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
+        <assertEquals stepKey="assertDefaultPaddingVisible">
+            <expectedResult type="string">{{defaultPadding}}</expectedResult>
+            <actualResult type="variable">grabPaddingValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>
