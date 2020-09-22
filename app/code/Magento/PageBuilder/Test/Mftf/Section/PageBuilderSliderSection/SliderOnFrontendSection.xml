@@ -10,8 +10,8 @@
     <section name="SliderOnFrontend">
         <element name="all" type="button" selector="div[data-content-type=slider]"/>
         <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
-        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'display: none')]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'display: none'))]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'display: none')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'display: none'))]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="slideNavigationDot" type="button" selector="((//div[@data-content-type='slider'])[{{sliderIndex}}]//ul[@class='slick-dots']//button)[{{navigationDotIndex}}]" parameterized="true"/>
         <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
         <element name="previousSlideArrowDisabled" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev') and contains(@class,'slick-disabled')]" parameterized="true"/>
