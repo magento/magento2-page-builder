@@ -13,7 +13,7 @@
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="defaultAlignment" defaultValue="start" type="string"/>
             <argument name="defaultPadding" defaultValue="0" type="string"/>
@@ -28,7 +28,7 @@
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>
         <assertEquals stepKey="assertNoBorderStyleVisible">
-            <expectedResult type="string">none</expectedResult>
+            <expectedResult type="string">{{border.value}}</expectedResult>
             <actualResult type="variable">grabBorderStyleValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
@@ -39,12 +39,12 @@
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
         <assertEquals stepKey="assertNoBorderWidthVisible">
-            <expectedResult type="string">0</expectedResult>
+            <expectedResult type="string">{{borderWidth.value}}</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
         <assertEquals stepKey="assertNoBorderRadiusVisible">
-            <expectedResult type="string">0</expectedResult>
+            <expectedResult type="string">{{borderRadius.value}}</expectedResult>
             <actualResult type="variable">grabBorderRadiusValue</actualResult>
         </assertEquals>
         <waitForElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="waitForCSSClasses"/>
