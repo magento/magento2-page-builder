@@ -60,7 +60,6 @@ class Element implements ElementInterface
         );
     }
 
-
     /**
      * @inheritDoc
      */

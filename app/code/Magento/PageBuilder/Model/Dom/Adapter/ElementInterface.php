@@ -16,13 +16,15 @@ interface ElementInterface
 {
     /**
      * Return original element.
+     *
      * @return GtDomElement
      */
     public function getOriginalElement(): GtDomElement;
 
     /**
-     * Adds new child at the end of the children
-     * @param ElementInterface $newnode
+     * Adds new child at the end of the children.
+     *
+     * @param ElementInterface $element
      * @return  ElementInterface
      */
     public function appendChild(ElementInterface $element): ElementInterface;
