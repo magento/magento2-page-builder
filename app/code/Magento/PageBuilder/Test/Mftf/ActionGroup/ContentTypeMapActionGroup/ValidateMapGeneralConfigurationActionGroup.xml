@@ -6,8 +6,8 @@
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateMapSettings" deprecated="Styles are not inline, use validateMapGeneralConfiguration">
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMapGeneralConfiguration">
         <arguments>
             <argument name="page"/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
@@ -16,7 +16,11 @@
         </arguments>
         <comment userInput="validateMapSettings" stepKey="comment"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForHeight"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.heightPath(index)}}', document.body).iterateNext()).height.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabHeightValue"/>
+        <assertEquals stepKey="assertHeightValue">
+            <expectedResult type="string">{{height.value}}</expectedResult>
+            <actualResult type="variable">grabHeightValue</actualResult>
+        </assertEquals>
         <waitForElementVisible selector="{{page.showControls(index, showControls.value)}}" stepKey="waitForShowControls"/>
     </actionGroup>
 </actionGroups>
