@@ -49,12 +49,12 @@
         </assertEquals>
         <waitForElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="waitForCSSClasses"/>
         <dontSeeElement selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="dontSeeCSSClasses"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).margin.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabMarginValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).margin.replace(/px/g, &quot;&quot;)" stepKey="grabMarginValue"/>
         <assertEquals stepKey="assertDefaultMarginVisible">
             <expectedResult type="string">{{defaultMargin}}</expectedResult>
             <actualResult type="variable">grabMarginValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).padding.replaceAll(&quot;px&quot;, &quot;&quot;)" stepKey="grabPaddingValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).padding.replace(/px/g, &quot;&quot;)" stepKey="grabPaddingValue"/>
         <assertEquals stepKey="assertDefaultPaddingVisible">
             <expectedResult type="string">{{defaultPadding}}</expectedResult>
             <actualResult type="variable">grabPaddingValue</actualResult>
