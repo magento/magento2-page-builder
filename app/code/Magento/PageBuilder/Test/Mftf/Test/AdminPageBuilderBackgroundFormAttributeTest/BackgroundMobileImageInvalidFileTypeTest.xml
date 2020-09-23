@@ -56,7 +56,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Stage: Check No Background Mobile Image -->
         <comment userInput="Stage: Check No Background Mobile Image" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateStage">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <!-- Set Valid After Invalid Background Mobile Image -->
@@ -79,7 +79,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check No Background Mobile Image -->
         <comment userInput="Stage: Check No Background Mobile Image" stepKey="commentStageCheck2"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -90,8 +90,9 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Default"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_JPG"/>
         </actionGroup>
     </test>
