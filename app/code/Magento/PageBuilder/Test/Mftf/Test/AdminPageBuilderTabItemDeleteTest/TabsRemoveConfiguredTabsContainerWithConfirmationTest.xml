@@ -44,7 +44,11 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify in Admin Preview-->
-        <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredAdmin"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsNavAlignedCenteredAdmin">
+            <argument name="selector" value="{{TabsOnStage.tabsNavigation}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentCenter.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
         <comment userInput="When I delete customized Tabs container from the stage" stepKey="AC2"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement2"/>
         <comment userInput="Removal confirmation modal displayed when removing customized Tabs container" stepKey="AC3"/>
