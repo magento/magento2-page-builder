@@ -75,7 +75,11 @@
         </actionGroup>
         <waitForElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonGroup"/>
-        <seeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForHiddenElement">
+            <argument name="selector" value="{{ButtonGroupOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <waitForElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemNotVisible"/>
         <dontSeeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="dontSeeButtonItem"/>
         <dontSeeElement selector="{{ButtonItemOnStorefront.base('2')}}" stepKey="dontSeeButtonItem2"/>
@@ -96,7 +100,11 @@
         <switchToNextTab stepKey="switchBackToStorefront"/>
         <reloadPage stepKey="reloadStorefront"/>
         <waitForPageLoad stepKey="waitForStorefrontReload"/>
-        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="dontSeeHiddenElement">
+            <argument name="selector" value="{{ButtonGroupOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="block"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <seeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible"/>
         <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible"/>
         <seeElement selector="{{ButtonItemOnStorefront.base('2')}}" stepKey="waitForButtonItem2Visible"/>

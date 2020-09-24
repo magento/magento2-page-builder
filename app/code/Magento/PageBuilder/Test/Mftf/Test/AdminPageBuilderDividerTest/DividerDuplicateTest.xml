@@ -97,11 +97,11 @@
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateDivider" stepKey="validateStage2">
+        <actionGroup ref="validateDividerGeneralAttributes" stepKey="validateStage2">
             <argument name="page" value="DividerOnStage"/>
-            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
-            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
-            <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedConfigurationAllOptions" stepKey="validateAllAdvancedStage">
@@ -161,11 +161,11 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageBeforeSave"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateDivider" stepKey="validateStageAfterSave">
+        <actionGroup ref="validateDividerGeneralAttributes" stepKey="validateStageAfterSave">
             <argument name="page" value="DividerOnStage"/>
-            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
-            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
-            <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedConfigurationAllOptions" stepKey="validateAllAdvancedStage2">
@@ -227,13 +227,21 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <!-- Validate content type is enabled in Storefront -->
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
-        <waitForElementVisible selector="{{DividerOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
-        <waitForElementVisible selector="{{DividerOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
-        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForContentTypeShownStorefront1">
+            <argument name="selector" value="{{DividerOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="block"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForContentTypeShownStorefront2">
+            <argument name="selector" value="{{DividerOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="block"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerGeneralAttributes" stepKey="validateStorefront">
             <argument name="page" value="DividerOnStorefront"/>
-            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
-            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
-            <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedConfigurationAllOptions" stepKey="validateAllAdvancedStorefront">
