@@ -41,7 +41,7 @@
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
         <assertEquals stepKey="assertBorderRadiusVisible">
-            <expectedResult type="string">0px</expectedResult>
+            <expectedResult type="string">0</expectedResult>
             <actualResult type="variable">grabBorderRadiusValue</actualResult>
         </assertEquals>
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>

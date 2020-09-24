@@ -35,8 +35,8 @@
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
-        <assertEquals stepKey="assertNoBorderWidthVisible">
-            <expectedResult type="string">0</expectedResult>
+        <assertEquals stepKey="assertDefaultBorderWidthVisible">
+            <expectedResult type="string">3</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
