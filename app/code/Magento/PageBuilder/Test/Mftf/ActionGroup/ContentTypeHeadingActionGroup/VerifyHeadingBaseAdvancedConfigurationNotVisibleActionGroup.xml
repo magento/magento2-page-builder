@@ -15,7 +15,7 @@
             <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="defaultAlignment" defaultValue="start" type="string"/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="defaultPadding" defaultValue="0" type="string"/>
             <argument name="defaultMargin" defaultValue="25 0 20" type="string"/>
         </arguments>
@@ -23,7 +23,7 @@
         <dontSeeElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="dontSeeElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
         <assertEquals stepKey="assertDefaultAlignmentVisible">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>

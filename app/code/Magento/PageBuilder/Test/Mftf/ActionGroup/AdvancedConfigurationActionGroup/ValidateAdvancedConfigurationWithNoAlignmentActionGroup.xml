@@ -10,7 +10,7 @@
     <actionGroup name="validateAdvancedConfigurationWithNoAlignment">
         <arguments>
             <argument name="page" defaultValue=""/>
-            <argument name="defaultAlignment" type="string" defaultValue="left"/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
@@ -21,7 +21,7 @@
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
         <assertEquals stepKey="assertDefaultAlignmentVisible">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>

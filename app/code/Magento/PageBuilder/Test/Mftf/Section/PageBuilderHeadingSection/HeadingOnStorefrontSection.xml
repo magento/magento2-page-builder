@@ -11,8 +11,8 @@
         <element name="base" type="text" selector="(//*[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
         <element name="baseByTagName" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
         <element name="baseJs" type="text" selector="document.querySelectorAll('[data-content-type=\'heading\']')[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true" deprecated="Frontend styles are not inline, use headingElement"/>
+        <element name="notHidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true" deprecated="Frontend styles are not inline, use headingElement"/>
         <element name="headingNoText" type="button" selector="(//{{arg1}}[@data-content-type='heading' and .=''])[{{arg2}}]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[@data-content-type='heading' and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingType" type="button" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
