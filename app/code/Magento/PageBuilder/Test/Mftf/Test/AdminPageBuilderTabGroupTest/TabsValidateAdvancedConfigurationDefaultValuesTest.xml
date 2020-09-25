@@ -75,7 +75,30 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemDefault(PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="waitForDefaultBorderStyleTab"/>
-        <waitForElementVisible selector="{{TabsOnStage.tabsContentDefault(PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="waitForDefaultBorderStyleTabs"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForDefaultBorderStyleTab">
+            <argument name="selector" value="{{TabOnStage.tabHeaderItem('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForDefaultBorderWidthStyleTab">
+            <argument name="selector" value="{{TabOnStage.tabHeaderItem('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForDefaultBorderStyleTabs">
+            <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForDefaultBorderWidthStyleTabs">
+            <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForDefaultMinHeightStyleTabs">
+            <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
     </test>
 </tests>

@@ -10,6 +10,8 @@
     <section name="VideoOnStage">
         <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
         <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
+        <element name="main" type="text" selector="(//div[@data-content-type=&quot;video&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="inner" type="text" selector="(//div[contains(@class,&quot;pagebuilder-video-inner&quot;)])[{{arg1}}]" parameterized="true"/>
         <!-- Empty Video -->
         <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//video" parameterized="true"/>
         <element name="video" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{videoIndex}}]//video" parameterized="true"/>
