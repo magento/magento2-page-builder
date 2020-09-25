@@ -24,7 +24,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.wrapperStyles = _knockout.observable({});
       this.stageStyles = _knockout.observable({});
       this.previousStyles = {};
-      console.error('New error');
 
       _config.setConfig(config);
 
