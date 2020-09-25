@@ -10,6 +10,9 @@
     <section name="TabsOnFrontend">
         <element name="base" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="[data-content-type=tabs]"/>
+        <element name="tabsContent" type="button" selector="//div[@data-content-type=&quot;tabs&quot;]//div[@class=&quot;tabs-content&quot;]"/>
+        <element name="advancedConfigurationPath" type="button" selector="//div[@data-content-type=&quot;tabs&quot;][{{arg1}}]//div[@class=&quot;tabs-content&quot;]"  parameterized="true"/>
+        <element name="cssClasses" type="button" selector="(//div[@data-content-type=&quot;tabs&quot;])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="tabsMinHeight" type="button" selector="//div[@data-content-type='tabs']//div[@class='tabs-content'][contains(@style, 'min-height: {{arg1}}px')]" parameterized="true"/>

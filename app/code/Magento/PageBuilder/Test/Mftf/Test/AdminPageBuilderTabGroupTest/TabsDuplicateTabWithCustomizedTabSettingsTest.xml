@@ -81,8 +81,16 @@
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStorefront.backgroundColor('2', 'rgb(204, 204, 204)')}}" stepKey="validateBackgroundColor"/>
-        <seeElement selector="{{TabOnStorefront.minHeight('2', '200')}}" stepKey="validateMinHeightInStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateBackgroundColor">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateMinHeightInStorefront">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <see userInput="{{PageBuilderTabNameRandom1.value}} copy" selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="validateCopiedTabInStorefront"/>
     </test>
 </tests>

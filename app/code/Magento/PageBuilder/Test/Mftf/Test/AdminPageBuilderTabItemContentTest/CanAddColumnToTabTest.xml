@@ -73,25 +73,25 @@
         <!-- Verify Column in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1MinHeightApplied" >
-            <argument name="selector" value="{{ColumnOnFrontend.column1Height}}"/>
-            <argument name="expectedProperty" value="500px"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1BackgroundColorApplied">
-            <argument name="selector" value="{{ColumnOnFrontend.column1BackgroundColor}}"/>
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeForCalculatedStyles" stepKey="seeColumn2DefaultWidthApplied">
-            <argument name="selector" value="{{ColumnOnFrontend.column2BackgroundWidth}}"/>
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
             <argument name="wrapperSelector" value="{{ColumnOnFrontend.column2BackgroundWrapperWidthPath}}"/>
             <argument name="expectedProperty" value="50%"/>
             <argument name="cssProperty" value="width"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn2HeightApplied">
-            <argument name="selector" value="{{ColumnOnFrontend.column2Height}}"/>
-            <argument name="expectedProperty" value="500px"/>
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
     </test>

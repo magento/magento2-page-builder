@@ -41,7 +41,7 @@
             <expectedResult type="string">{{borderWidth.value}}</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).borderRadius.replace(/px/g, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
         <assertEquals stepKey="assertBorderRadius">
             <expectedResult type="string">{{borderRadius.value}}</expectedResult>
             <actualResult type="variable">grabBorderRadiusValue</actualResult>

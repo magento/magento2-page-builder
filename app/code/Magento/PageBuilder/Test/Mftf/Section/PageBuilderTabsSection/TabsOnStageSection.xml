@@ -13,9 +13,11 @@
         <element name="hidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
+        <element name="cssClasses" type="button" selector="//div[contains(@class,&quot;pagebuilder-tabs&quot;)][{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="tabsNavigation" type="button" selector="(//div[contains(@class,&quot;pagebuilder-tabs&quot;)]//descendant::*[contains(@class,&quot;tabs-navigation&quot;)])"/>
         <element name="tabsNavAligned" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
         <element name="tabsContent" type="button" selector="//div[contains(@class,&quot;pagebuilder-tabs&quot;)]//div[contains(@class,&quot;tabs-content&quot;)]"/>
+        <element name="advancedConfigurationPath" type="button" selector="//div[contains(@class,&quot;pagebuilder-tabs&quot;)]//div[contains(@class,&quot;tabs-content&quot;)]"/>
         <element name="tabsContentCSS" type="button" selector="div.pagebuilder-content-type.pagebuilder-tabs .tabs-content"/>
         <element name="tabsContentDefault" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')][@style='border-width: 1px; border-radius: {{arg1}}px; min-height: 300px;'])" parameterized="true"/>
         <element name="tabsContentAdvancedStyles" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')][contains(@style, 'border-style: solid;')][contains(@style,'border-color: rgb(0, 0, 0);')][contains(@style, 'border-width: 10px;')][contains(@style, 'border-radius: 12px;')][contains(@style, 'min-height: 300px;')])"/>

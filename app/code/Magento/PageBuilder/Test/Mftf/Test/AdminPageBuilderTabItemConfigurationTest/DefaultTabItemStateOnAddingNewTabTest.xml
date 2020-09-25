@@ -66,8 +66,9 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="Tab 2" stepKey="seeTab2DefaultTitleAdmin"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab2BackgroundAttributesWithNoImageOrColor">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateTab2BackgroundAttributesWithNoImageOrColor">
             <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Default"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
@@ -78,20 +79,41 @@
         <!-- View default Tabs with empty first Tab on stage -->
         <comment userInput="View default Tabs with empty first Tab on stage" stepKey="AC7"/>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleAdmin1"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab1BackgroundAttributesWithNoImageOrColor">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateTab1BackgroundAttributesWithNoImageOrColor">
             <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
         <!-- User sees tab default min height to be 300 px on stage -->
         <comment userInput="User sees tab default min height to be 300 px on stage" stepKey="AC8"/>
-        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabMinHeightAdmin1">
+            <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <!-- User sees tab preview takes 100% container width -->
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC9"/>
         <!--assert computed styles matching expected depends on MQE-818 -->
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC10"/>
-        <seeElement selector="{{TabOnStage.tabContentBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeTab1BorderWidth"/>
-        <seeElement selector="{{TabOnStage.tabContentBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeTab1BorderRadius"/>
-        <seeElement selector="{{TabOnStage.tabContentMargin('1', PageBuilderMarginsPropertyTabDefault.value)}}" stepKey="seeTab1Margins"/>
-        <seeElement selector="{{TabOnStage.tabContentPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeTab1Padding"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab1BorderWidth">
+            <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab1BorderRadius">
+            <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab1Margins">
+            <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyTabDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab1Padding">
+            <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Validate Default Values on Edit Tab for initial tab -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
@@ -176,8 +198,9 @@
         <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateStorefront">
             <argument name="section" value="TabOnStorefront"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
     </test>
 </tests>
