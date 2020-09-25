@@ -18,7 +18,8 @@
         <!-- Hiding content type -->
         <comment userInput="Hiding content type" stepKey="commentHideContentType"/>
         <waitForElementVisible selector="{{section.base(targetIndex)}}" stepKey="waitForContentType"/>
-        <moveMouseOver selector="{{section.base(targetIndex)}}" x="{{x}}" y="{{y}}" stepKey="moveMouseOverContentType"/>
+        <executeJS function="return ['row', 'column'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.role}}'.toUpperCase()+'&quot;)]' : '';" stepKey="contentTypeLabelSelector" />
+        <moveMouseOver selector="{{section.base(targetIndex)}}{$contentTypeLabelSelector}" x="{{x}}" y="{{y}}" stepKey="moveMouseOverContentType"/>
         <waitForPageLoad stepKey="waitForMouseOver"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="hideContentType"/>
