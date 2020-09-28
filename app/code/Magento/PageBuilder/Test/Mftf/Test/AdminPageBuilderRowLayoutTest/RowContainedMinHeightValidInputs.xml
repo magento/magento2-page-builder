@@ -79,19 +79,19 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Validate Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStage"/>
-        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStage"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeFirstMinHeightStage"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStage"/>
         <assertEquals stepKey="assertFirstMinHeightStage">
             <actualResult type="variable">firstMinHeightStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <seeElement selector="{{RowOnStage.minHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStage"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeSecondMinHeightStage"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStage"/>
         <assertEquals stepKey="assertSecondMinHeightStage">
             <actualResult type="variable">secondMinHeightStage</actualResult>
             <expectedResult type="variable">viewportHeightStage</expectedResult>
         </assertEquals>
-        <seeElement selector="{{RowOnStage.minHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStage"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeThirdMinHeightStage"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStage"/>
         <executeJS function="return Math.abs({$viewportHeightStage} - 200)" stepKey="expectedThirdHeightStage"/>
         <assertEquals stepKey="assertThirdMinHeightStage">
@@ -105,19 +105,19 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
-        <seeElement selector="{{RowOnStorefront.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeFirstMinHeightStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
         <assertEquals stepKey="assertFirstMinHeightStorefront">
             <actualResult type="variable">firstMinHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <seeElement selector="{{RowOnStorefront.minHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeSecondMinHeightStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
         <assertEquals stepKey="assertSecondMinHeightStorefront">
             <actualResult type="variable">secondMinHeightStorefront</actualResult>
             <expectedResult type="variable">viewportHeightStorefront</expectedResult>
         </assertEquals>
-        <seeElement selector="{{RowOnStorefront.minHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeThirdMinHeightStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
         <executeJS function="return Math.abs({$viewportHeightStorefront} - 200)" stepKey="expectedThirdHeightStorefront"/>
         <assertEquals stepKey="assertThirdMinHeightStorefront">

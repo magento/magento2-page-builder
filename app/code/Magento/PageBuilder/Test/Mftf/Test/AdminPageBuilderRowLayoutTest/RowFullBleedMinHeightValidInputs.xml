@@ -24,11 +24,11 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
-        <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeFirstMinHeightStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
-        <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeSecondMinHeightStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
-        <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
+        <comment userInput="Row min-height value checked below" stepKey="seeThirdMinHeightStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
     </test>
 </tests>

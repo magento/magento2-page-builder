@@ -7,44 +7,40 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateBackgroundConfigurationWithNoImageOrColor">
+    <actionGroup name="validateBackgroundConfigurationWithNoImage">
         <arguments>
             <argument name="section"/>
+            <argument name="backgroundColor"/>
             <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
             <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
             <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <comment userInput="validateBackgroundConfigurationWithNoImageOrColor" stepKey="comment"/>
+        <comment userInput="validateBackgroundConfigurationWithNoImage" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
-        <assertEquals stepKey="assertNoBackgroundColor">
-            <expectedResult type="string">{{PageBuilderBackgroundColor_Transparent.rgb}}</expectedResult>
+        <assertEquals stepKey="assertBackgroundColor">
+            <expectedResult type="string">{{backgroundColor.rgb}}</expectedResult>
             <actualResult type="variable">grabBackgroundColorValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundImage" stepKey="grabBackgroundImageValue"/>
-        <assertEquals stepKey="assertNoBackgroundImage">
-            <expectedResult type="string">{{PageBuilderBackgroundImage_None.value}}</expectedResult>
-            <actualResult type="variable">grabBackgroundImageValue</actualResult>
-        </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundPosition" stepKey="grabBackgroundPositionValue"/>
-        <assertEquals stepKey="assertBackgroundPositionValue">
+        <assertEquals stepKey="assertBackgroundPosition">
             <expectedResult type="string">{{backgroundPosition.computedStyleValue}}</expectedResult>
             <actualResult type="variable">grabBackgroundPositionValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundSize" stepKey="grabBackgroundSizeValue"/>
-        <assertEquals stepKey="assertBackgroundSizeValue">
+        <assertEquals stepKey="assertBackgroundSize">
             <expectedResult type="string">{{backgroundSize.value}}</expectedResult>
             <actualResult type="variable">grabBackgroundSizeValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundRepeat" stepKey="grabBackgroundRepeatValue"/>
-        <assertEquals stepKey="assertBackgroundRepeatValue">
+        <assertEquals stepKey="assertBackgroundRepeat">
             <expectedResult type="string">{{backgroundRepeat.value}}</expectedResult>
             <actualResult type="variable">grabBackgroundRepeatValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundAttachment" stepKey="grabBackgroundAttachmentValue"/>
-        <assertEquals stepKey="assertBackgroundAttachmentValue">
+        <assertEquals stepKey="assertBackgroundAttachment">
             <expectedResult type="string">{{backgroundAttachment.value}}</expectedResult>
             <actualResult type="variable">grabBackgroundAttachmentValue</actualResult>
         </assertEquals>

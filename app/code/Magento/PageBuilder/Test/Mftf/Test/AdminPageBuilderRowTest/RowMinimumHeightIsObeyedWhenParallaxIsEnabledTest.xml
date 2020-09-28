@@ -42,7 +42,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Get value of assigned min height on element -->
-        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="assignedHeight"/>
         <assertEquals stepKey="assertEqualToEnteredValue">
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300.value}}</expectedResult>
             <actualResult type="variable">$assignedHeight</actualResult>
@@ -55,7 +55,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Get value of assigned min height on element -->
-        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight2"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="assignedHeight2"/>
         <assertEquals stepKey="assertEqualToEnteredValue2">
             <expectedResult type="string">{{PageBuilderMinHeightProperty_500.value}}</expectedResult>
             <actualResult type="variable">$assignedHeight2</actualResult>
