@@ -26,7 +26,9 @@
         <element name="appearanceFullWidthCSS" type="text" selector="[data-content-type=row][data-appearance=full-width]"/>
         <element name="minHeight" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}};')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
+        <element name="verticalAlignContainerPath" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/div[@data-pb-style]" parameterized="true"/>
         <!-- Background Configuration -->
+        <element name="backgroundPath" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/div" parameterized="true"/>
         <element name="backgroundElement" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/div" parameterized="true"/>
         <element name="backgroundType" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{index}}]/div[@data-background-type='{{backgroundType}}']"/>
         <element name="backgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
@@ -43,6 +45,7 @@
         <element name="parallaxState" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[@data-parallax-speed='{{arg2}}']" parameterized="true"/>
         <element name="parallaxBackgroundImage" type="button" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/descendant::div[contains(@id,&quot;jarallax-container&quot;)]/div[contains(@style,&quot;background-image: url(&quot;) and contains(@style,&quot;{{arg2}}&quot;) and contains(@style,&quot;{{arg3}}&quot;)]" parameterized="true"/>
+        <element name="parallaxBackgroundImagePath" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/descendant::div[contains(@id,&quot;jarallax-container&quot;)]/div" parameterized="true"/>
         <element name="parallaxJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('[id*=jarallax-container] &gt; div')" parameterized="true"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]"/>
@@ -56,7 +59,7 @@
         <element name="videoBackgroundFallbackImageSource" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//img[contains(@src,'{{fileName}}')]"/>
         <element name="videoBackgroundNoFallbackImage" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//div"/>
         <!-- Advanced Configuration -->
-        <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/div" parameterized="true"/>
+        <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/div[@data-pb-style]" parameterized="true"/>
         <element name="alignment" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="border" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
