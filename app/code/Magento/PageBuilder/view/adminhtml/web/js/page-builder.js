@@ -179,6 +179,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this3.previousPanelHeight = null;
         }, 350);
       }
+
+      return true;
     }
     /**
      * Change window scroll base on full screen mode.
