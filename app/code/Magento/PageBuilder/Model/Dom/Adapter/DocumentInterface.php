@@ -30,6 +30,15 @@ interface DocumentInterface
     public function createDocumentFragment(): DocumentFragmentInterface;
 
     /**
+     * Create new document element
+     *
+     * @param string $name
+     * @param string $value [optional]
+     * @return ElementInterface
+     */
+    public function createElement(string $name, string $value = null);
+
+    /**
      * Returns the first element matching the specified selector.
      *
      * @param string $selector
