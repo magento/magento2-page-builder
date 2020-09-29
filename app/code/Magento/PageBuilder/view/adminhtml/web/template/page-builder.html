@@ -13,7 +13,7 @@
          css="visible: panel.isVisible(), 'transition-out': isSnapshotTransition()"
          if="!isSnapshot()">
         <each args="data: Object.keys(viewports), as: 'name'">
-            <button type="button" translate="$parent.viewports[name].label" disable="name === $parent.viewport()" click="$parent.toggleViewport.bind($parent, name)"/>
+            <button type="button" class="page-builder-viewport" translate="$parent.viewports[name].label" disable="name === $parent.viewport()" click="$parent.toggleViewport.bind($parent, name)"/>
         </each>
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
