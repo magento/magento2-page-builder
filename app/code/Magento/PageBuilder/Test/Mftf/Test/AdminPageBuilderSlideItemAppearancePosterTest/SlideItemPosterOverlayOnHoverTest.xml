@@ -27,6 +27,7 @@
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <closeTab stepKey="closeOpenedTab"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -65,7 +66,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTransparentOverlayStage">
             <argument name="selector" value="{{SlideOnBackend.transparentOverlayPath('1')}}"/>
-            <argument name="expectedProperty" value="rgba(0, 0, 0, 0)"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <moveMouseOver selector="{{SlideOnBackend.base('1')}}" stepKey="moveMouseOverSlideStage"/>
@@ -90,7 +91,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTransparentOverlayStorefront">
             <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
-            <argument name="expectedProperty" value="rgba(0, 0, 0, 0)"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefront"/>
@@ -104,6 +105,10 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFrontMobile">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <waitForPageLoad time="30" stepKey="waitForResizeStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefrontMobile">
@@ -111,10 +116,9 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="0" y="-1" stepKey="moveMouseAwayFromSlideMobile"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTransparentOverlayStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
-            <argument name="expectedProperty" value="rgba(0, 0, 0, 0)"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>

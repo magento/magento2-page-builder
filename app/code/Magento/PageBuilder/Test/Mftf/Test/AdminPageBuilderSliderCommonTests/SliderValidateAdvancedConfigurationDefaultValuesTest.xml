@@ -71,26 +71,82 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{SliderOnStage.noAlignment('1')}}" stepKey="seeAlignmentStage"/>
-        <seeElement selector="{{SliderOnStage.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage"/>
-        <seeElement selector="{{SliderOnStage.noBorderColor('1')}}" stepKey="seeBorderColorStage"/>
-        <seeElement selector="{{SliderOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage"/>
-        <seeElement selector="{{SliderOnStage.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage"/>
-        <seeElement selector="{{SliderOnStage.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyDefault.value)}}" stepKey="seePaddingStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyNone.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{SliderOnStage.advancedConfigurationPath('1')}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <assertEquals stepKey="seeBorderColorStage">
+            <expectedResult type="string">{{PageBuilderAdvancedBorderColorTransparent.rgb}}</expectedResult>
+            <actualResult type="variable">grabBorderColorValue</actualResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMarginsStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seePaddingStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{SliderOnStage.noAlignment('1')}}" stepKey="seeAlignmentStage2"/>
-        <seeElement selector="{{SliderOnStage.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage2"/>
-        <seeElement selector="{{SliderOnStage.noBorderColor('1')}}" stepKey="seeBorderColorStage2"/>
-        <seeElement selector="{{SliderOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage2"/>
-        <seeElement selector="{{SliderOnStage.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage2"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentStage2">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStage2">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyNone.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{SliderOnStage.advancedConfigurationPath('1')}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValueAfterSave"/>
+        <assertEquals stepKey="seeBorderColorStage2">
+            <expectedResult type="string">{{PageBuilderAdvancedBorderColorTransparent.rgb}}</expectedResult>
+            <actualResult type="variable">grabBorderColorValueAfterSave</actualResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStage2">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStage2">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
         <seeElement selector="{{SliderOnStage.cssClasses('1', PageBuilderSliderAdvancedCssClasses_Default.value)}}" stepKey="seeCssClassesStage2"/>
-        <seeElement selector="{{SliderOnStage.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyDefault.value)}}" stepKey="seePaddingStage2"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMarginsStage2">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seePaddingStage2">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -126,13 +182,42 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <seeElement selector="{{SliderOnFrontend.noAlignment('1')}}" stepKey="seeAlignmentStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.noBorderColor('1')}}" stepKey="seeBorderColorStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyStart.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyNone.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{SliderOnFrontend.advancedConfigurationPath('1')}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValueStorefront"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{SliderOnFrontend.advancedConfigurationPath('1')}}', document.body).iterateNext()).color" stepKey="grabColorValueStorefront"/>
+        <assertEquals stepKey="seeBorderColorStorefront">
+            <expectedResult type="variable">grabBorderColorValueStorefront</expectedResult>
+            <actualResult type="variable">grabColorValueStorefront</actualResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
         <seeElement selector="{{SliderOnFrontend.cssClasses('1', PageBuilderSliderAdvancedCssClasses_Default.value)}}" stepKey="seeCSSClassesStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.padding('1', PageBuilderPaddingPropertyDefault.value)}}" stepKey="seePaddingStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMarginsStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seePaddingStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
     </test>
 </tests>
