@@ -141,7 +141,7 @@
         <seeElement selector="{{SliderOnStage.showDots('2', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinHeightStage">
             <argument name="selector" value="{{SliderOnStage.minHeightPath('2')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Stage: Advanced Settings -->
@@ -216,7 +216,7 @@
         <seeElement selector="{{SliderOnStage.showDots('2', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage2"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinHeightStage2">
             <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Stage After Save: Advanced Settings -->
@@ -325,8 +325,16 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <seeElement selector="{{SliderOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
-        <seeElement selector="{{SliderOnFrontend.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+        <actionGroup ref="NotValidateContentTypeStyles" stepKey="waitForContentTypeShownStorefront1">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="notExpectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
+        <actionGroup ref="NotValidateContentTypeStyles" stepKey="waitForContentTypeShownStorefront2">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('2')}}"/>
+            <argument name="notExpectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <seeElement selector="{{SliderOnFrontend.autoPlay('2', PageBuilderSliderAutoPlay_Enabled.value)}}" stepKey="seeAutoPlayStorefront"/>
         <seeElement selector="{{SliderOnFrontend.autoPlaySpeed('2', PageBuilderSliderAutoPlaySpeed_50000.value)}}" stepKey="seeAutoPlaySpeedStorefront"/>
         <seeElement selector="{{SliderOnFrontend.fade('2', PageBuilderSliderFade_Enabled.value)}}" stepKey="seeFadeStorefront"/>
@@ -335,7 +343,7 @@
         <seeElement selector="{{SliderOnFrontend.showDots('2', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.minHeightPath('2')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Storefront: Advanced Settings -->
