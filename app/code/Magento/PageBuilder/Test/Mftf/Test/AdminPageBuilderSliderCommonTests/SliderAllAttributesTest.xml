@@ -128,16 +128,48 @@
         <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopStage"/>
         <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStage"/>
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
-        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_100px.value)}}" stepKey="seeMinHeightStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinHeightStage">
+            <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <!-- Validate Stage: Slider Adv Settings -->
         <comment userInput="Validate Stage: Slider Adv Settings" stepKey="commentValidateSliderAdvSettingsStage"/>
-        <seeElement selector="{{SliderOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seeAlignmentLeftStage"/>
-        <seeElement selector="{{SliderOnStage.border('1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeBorderStage"/>
-        <seeElement selector="{{SliderOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage"/>
-        <seeElement selector="{{SliderOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage"/>
-        <seeElement selector="{{SliderOnStage.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStyleStage"/>
-        <seeElement selector="{{SliderOnStage.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeSliderMarginsStage"/>
-        <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeSliderPaddingStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentLeftStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDotted.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderColorStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStyleStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSliderMarginsStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSliderPaddingStage">
+            <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Validate Stage: Slide 1 -->
         <comment userInput="Validate Stage: Slide 1" stepKey="commentValidateSlide1Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Stage"/>
@@ -159,17 +191,49 @@
         <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_100px.value)}}" stepKey="seeHeightStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeHeightStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <!-- Validate Storefront: Slider Adv Settings -->
         <comment userInput="Validate Storefront: Slider Adv Settings" stepKey="commentValidateSliderAdvSettingsStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seeAlignmentLeftStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.border('1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeBorderStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStyleStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentLeftStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDotted.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderColorStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStyleStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
         <seeElement selector="{{SliderOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeSliderMarginsStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.padding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeSliderPaddingStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSliderMarginsStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSliderPaddingStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Validate Storefront: Slide 1 -->
         <comment userInput="Validate Storefront: Slide 1" stepKey="commentValidateSlide1Storefront"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Storefront"/>

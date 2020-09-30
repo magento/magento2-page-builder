@@ -74,16 +74,13 @@
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
+        <seeElement selector="{{SlideOnBackend.backgroundPath('2')}}" stepKey="seeSlideItem2OnStageBeforeMoving"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorForSlideItem2OnStageBeforeMoving">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('2')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeBackgroundColorForSlideItem1OnStageBeforeMoving">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
-            <argument name="notExpectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
-            <argument name="cssProperty" value="backgroundColor"/>
-        </actionGroup>
+        <dontSeeElement selector="{{SlideOnBackend.backgroundPath('1')}}" stepKey="dontSeeBackgroundColorForSlideItem1OnStageBeforeMoving"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -121,16 +118,13 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
+        <seeElement selector="{{SlideOnBackend.backgroundPath('2')}}" stepKey="seeSlideItem2OnStageAfterMoving"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorForSlideItem2OnStageAfterMoving">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('2')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterMoving">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
-            <argument name="notExpectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
-            <argument name="cssProperty" value="backgroundColor"/>
-        </actionGroup>
+        <dontSeeElement selector="{{SlideOnBackend.backgroundPath('1')}}" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterMoving"/>
         <!-- Change appearance of row and re-evaluate -->
         <comment userInput="Change appearance of row and re-evaluate" stepKey="commentChangeAppearanceOfRowAndReevaluate"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus2"/>
@@ -142,15 +136,11 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow1"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorForSlideItem2OnStageAfterChangingRowAppearance">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('2')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterChangingRowAppearance">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
-            <argument name="notExpectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
-            <argument name="cssProperty" value="backgroundColor"/>
-        </actionGroup>
+        <dontSeeElement selector="{{SlideOnBackend.backgroundPath('1')}}" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterChangingRowAppearance"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>

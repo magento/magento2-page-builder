@@ -57,7 +57,7 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStage">
-            <argument name="selector" value="{{SlideOnBackend.backgroundElement('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -73,7 +73,7 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefront">
-            <argument name="selector" value="{{SlideOnFrontend.backgroundElement('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -86,7 +86,7 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefrontMobile">
-            <argument name="selector" value="{{SlideOnFrontend.backgroundElement('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>

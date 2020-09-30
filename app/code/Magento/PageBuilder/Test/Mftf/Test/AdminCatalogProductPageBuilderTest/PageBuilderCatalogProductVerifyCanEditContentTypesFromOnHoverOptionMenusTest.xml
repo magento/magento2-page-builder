@@ -51,7 +51,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStage">
-            <argument name="selector" value="{{RowOnStage.backgroundElement('1')}}"/>
+            <argument name="selector" value="{{RowOnStage.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -65,7 +65,7 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStageAfterSave">
-            <argument name="selector" value="{{RowOnStage.backgroundElement('1')}}"/>
+            <argument name="selector" value="{{RowOnStage.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -84,7 +84,7 @@
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStorefront">
-            <argument name="selector" value="{{RowOnStorefront.backgroundElement('1')}}"/>
+            <argument name="selector" value="{{RowOnStorefront.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
