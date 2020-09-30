@@ -66,13 +66,44 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgImage)}}" stepKey="seeFirstColumnBgImage"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgPosition)}}" stepKey="seeFirstColumnBgPosition"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgSize)}}" stepKey="seeFirstColumnBgSize"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnAlignmentBottom">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentBottom}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnMinHeight">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnBgColor">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageConfiguration" stepKey="seeFirstColumnBgImage">
+            <argument name="section" value="ColumnOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnBgPosition">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_TopLeft.computedStyleValue}}"/>
+            <argument name="cssProperty" value="backgroundPosition"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnBgSize">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundSize_Contain.value}}"/>
+            <argument name="cssProperty" value="backgroundSize"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnBgRepeat">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundRepeat_Enabled.value}}"/>
+            <argument name="cssProperty" value="backgroundRepeat"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstColumnBgAttachment">
+            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundAttachment_Fixed.value}}"/>
+            <argument name="cssProperty" value="backgroundAttachment"/>
+        </actionGroup>
     </test>
 </tests>

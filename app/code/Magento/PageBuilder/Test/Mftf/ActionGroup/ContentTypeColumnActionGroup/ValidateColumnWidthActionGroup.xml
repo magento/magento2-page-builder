@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateColumnWidth">
+        <annotations>
+            <description>Validates that Column Width is calculated properly</description>
+        </annotations>
+        <arguments>
+            <argument name="index" type="string" defaultValue="1"/>
+            <argument name="parentIndex" type="string" defaultValue="1"/>
+            <argument name="columnWidth" defaultValue="PageBuilderColumnWidthHalf"/>
+        </arguments>
+        <executeJS function="return Math.round(window.getComputedStyle(document.evaluate('{{ColumnOnBackend.columnConfigurationPath(index)}}', document.body).iterateNext()).width.replace(/px/g, &quot;&quot;))" stepKey="grabColumnWidthValue"/>
+        <executeJS function="return Math.round(window.getComputedStyle(document.evaluate('{{ColumnOnBackend.columnGroupPath(parentIndex)}}', document.body).iterateNext()).width.replace(/px/g, &quot;&quot;) * {{columnWidth.floatValue}})" stepKey="grabCalculatedColumnWidthValue"/>
+        <assertEquals stepKey="assertColumnWidthValue">
+            <expectedResult type="variable">grabColumnWidthValue</expectedResult>
+            <actualResult type="variable">grabCalculatedColumnWidthValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

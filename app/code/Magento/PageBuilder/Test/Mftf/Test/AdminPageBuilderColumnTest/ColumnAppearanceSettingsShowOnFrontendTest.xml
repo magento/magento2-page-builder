@@ -77,11 +77,31 @@
         <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn1AlignmentApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentBottom}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <comment userInput="Min-height Validation Calculated Above" stepKey="seeColumn1HeightApplied"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn2AlignmentApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentCenter}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn2MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumn3AppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentFull}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
     </test>
 </tests>

@@ -15,6 +15,7 @@
         <element name="allColumnGroups" type="block" selector=".pagebuilder-column-group"/>
         <element name="allColumns" type="block" selector="(//div[@data-content-type='column'])"/>
         <element name="columnX" type="block" selector="[data-content-type=column]:nth-child({{arg1}})" parameterized="true"/>
+        <element name="columnConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="columnStyle" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="column1Height" type="button" selector="(//div[@data-content-type='column'])[1][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1HeightFull" type="button" selector="(//div[@data-content-type='column'])[1][contains(@style, 'align-self: stretch;')]"/>
@@ -52,10 +53,8 @@
         <element name="columnPadding" type="button" selector="[data-content-type='column']:first-child[style*='padding: 5px;']"/>
         <element name="columnClass" type="button" selector="[data-content-type='column']:first-child.first-class.second-class.third-class"/>
         <element name="appearance" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
-        <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
-        <element name="minHeightPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
-        <element name="verticalAlignContainerPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundPath" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
