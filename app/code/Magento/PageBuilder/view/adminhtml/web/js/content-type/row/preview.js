@@ -85,13 +85,16 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
               videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
             }); // @ts-ignore
 
-            _this.element.jarallax.video.on("started", function () {
+            if (_this.element.jarallax && _this.element.jarallax.video) {
               // @ts-ignore
-              if (_this.element.jarallax.$video) {
+              _this.element.jarallax.video.on("started", function () {
                 // @ts-ignore
-                _this.element.jarallax.$video.style.visibility = "visible";
-              }
-            });
+                if (_this.element.jarallax.$video) {
+                  // @ts-ignore
+                  _this.element.jarallax.$video.style.visibility = "visible";
+                }
+              });
+            }
           });
         }
       }, 50);

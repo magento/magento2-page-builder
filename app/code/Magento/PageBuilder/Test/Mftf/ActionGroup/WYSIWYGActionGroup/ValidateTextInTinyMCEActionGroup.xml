@@ -14,6 +14,7 @@
         </arguments>
         <comment userInput="Validating Text In Tiny MCE" stepKey="commentValidateTextTinyMCE"/>
         <waitForElementVisible selector="#{{section.tinyMCEIFrame}}" stepKey="waitForIFrame"/>
+        <scrollTo selector="#{{section.tinyMCEIFrame}}" x="0" y="-80" stepKey="scrollToIFrame" />
         <switchToIFrame selector="{{section.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <see selector="body" userInput="{{property.value}}" stepKey="seeText"/>
         <switchToIFrame stepKey="exitIFrame"/>

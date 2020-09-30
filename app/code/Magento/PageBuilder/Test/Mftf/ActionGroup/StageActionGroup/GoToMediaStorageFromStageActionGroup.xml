@@ -15,6 +15,7 @@
             <argument name="y" defaultValue="null" type="string"/>
         </arguments>
         <comment userInput="Hover over content type in stage and click Select From Gallery button" stepKey="commentHover"/>
+        <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverImageContentTypeStage"/>
         <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryBtn2"/>
         <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGalleryBtn1"/>
