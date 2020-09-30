@@ -12,18 +12,16 @@
     <div class="admin__field pagebuilder-header"
          css="visible: panel.isVisible(), 'transition-out': isSnapshotTransition()"
          if="!isSnapshot()">
-        <span class="with-tooltip">
-            <each args="data: Object.keys(viewports), as: 'name'">
-                <span class="tooltip">
-                    <button type="button" translate="$parent.viewports[name].label" disable="name === $parent.viewport()" click="$parent.toggleViewport.bind($parent, name)"/>
-                    <span class="tooltip-content">
-                        <span translate="$parent.viewports[name].label"/>
-                        <span translate="'View your content for '"/><text args="name"/>
-                        <span translate="'Width'"/>: <text args="Object.values($parent.viewports[name].conditions)[0]"/>
-                    </span>
+        <each args="data: Object.keys(viewports), as: 'name'">
+            <span class="tooltip">
+                <button type="button" translate="$parent.viewports[name].label" disable="name === $parent.viewport()" click="$parent.toggleViewport.bind($parent, name)"/>
+                <span class="tooltip-content">
+                    <span class="tooltip-label" translate="$parent.viewports[name].label"/><br/>
+                    <span translate="'View your content for '"/><text args="name"/><br/>
+                    <span translate="'Width'"/>: <text args="Object.values($parent.viewports[name].conditions)[0]"/>
                 </span>
-            </each>
-        </span>
+            </span>
+        </each>
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
         <i click="toggleFullScreen.bind($data, {animate:true})"
