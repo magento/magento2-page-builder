@@ -13,6 +13,7 @@
         <element name="baseCSS" type="text" selector="[data-content-type=row]"/>
         <element name="baseJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('div')" parameterized="true"/>
         <element name="innerCSS" type="text" selector="[data-content-type=row] [data-element=inner]"/>
+        <element name="inner" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]//div[@data-element=&quot;inner&quot;]" parameterized="true"/>
         <element name="main" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
