@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="BlockRenderDividerThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -62,9 +61,17 @@
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSBlockStage"/>
-        <seeElement selector="{{DividerOnStage.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSBlockStage"/>
-        <seeElement selector="{{DividerOnStage.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSBlockStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerColorCMSBlockStage">
+            <argument name="selector" value="{{DividerOnStage.lineElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderDividerLineColor_Yellow.rgb}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerThicknessCMSBlockStage">
+            <argument name="selector" value="{{DividerOnStage.lineElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderDividerLineThickness_10.value}}"/>
+            <argument name="cssProperty" value="borderTopWidth"/>
+        </actionGroup>
+        <comment userInput="Deprecated: See validateDividerWidthCMSBlockStage" stepKey="seeDividerWidthCMSBlockStage"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
@@ -90,9 +97,17 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStage"/>
-        <seeElement selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSPageStage"/>
-        <seeElement selector="{{DividerOnStorefront.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSPageStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerColorCMSPageStage">
+            <argument name="selector" value="{{DividerOnStorefront.lineElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderDividerLineColor_Yellow.rgb}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerThicknessCMSPageStage">
+            <argument name="selector" value="{{DividerOnStorefront.lineElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderDividerLineThickness_10.value}}"/>
+            <argument name="cssProperty" value="borderTopWidth"/>
+        </actionGroup>
+        <comment userInput="Deprecated: See validateDividerWidthCMSPageStage" stepKey="seeDividerWidthCMSPageStage"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
@@ -105,9 +120,17 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStorefront"/>
-        <seeElement selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSPageStorefront"/>
-        <seeElement selector="{{DividerOnStorefront.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSPageStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerColorCMSPageStorefront">
+            <argument name="selector" value="{{DividerOnStorefront.lineElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderDividerLineColor_Yellow.rgb}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerThicknessCMSPageStorefront">
+            <argument name="selector" value="{{DividerOnStorefront.lineElement('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderDividerLineThickness_10.value}}"/>
+            <argument name="cssProperty" value="borderTopWidth"/>
+        </actionGroup>
+        <comment userInput="Deprecated: See validateDividerWidthCMSPageStorefront" stepKey="seeDividerWidthCMSPageStorefront"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>

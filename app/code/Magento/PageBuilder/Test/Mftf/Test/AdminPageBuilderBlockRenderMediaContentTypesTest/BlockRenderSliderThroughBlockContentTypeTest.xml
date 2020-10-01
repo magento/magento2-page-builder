@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="BlockRenderSliderThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -115,7 +114,7 @@
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinHeightCMSBlockStage">
             <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide1CMSBlockStage">
@@ -173,7 +172,11 @@
         <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSPageStage"/>
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStage"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStage"/>
-        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeHeightCMSPageStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeHeightCMSPageStage">
+            <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide1CMSPageStage">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
@@ -192,7 +195,11 @@
         <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSPageStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeHeightCMSPageStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeHeightCMSPageStorefront">
+            <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide1CMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>

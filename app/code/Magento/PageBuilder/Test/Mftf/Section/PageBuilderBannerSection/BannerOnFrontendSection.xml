@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="base" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="[data-content-type=banner]"/>
@@ -24,8 +23,10 @@
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
         <element name="appearancePosterCSS" type="button" selector="[data-content-type=banner][data-appearance=poster]"/>
-        <element name="posterMinimumHeight" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
-        <element name="collageMinimumHeight" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="poster" type="text" selector="(//div[@data-content-type=&quot;banner&quot;])[{{bannerIndex}}]//div[@data-element=&quot;overlay&quot;]" parameterized="true"/>
+        <element name="posterMinimumHeight" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="collage" type="text" selector="(//div[@data-content-type=&quot;banner&quot;])[{{bannerIndex}}]//div[@data-element=&quot;wrapper&quot;]" parameterized="true"/>
+        <element name="collageMinimumHeight" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Background Configuration -->
         <element name="backgroundType" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-background-type='{{backgroundType}}']" parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{backgroundPosition}};')]" parameterized="true"/>
@@ -56,6 +57,7 @@
         <element name="showOverlay" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][@data-show-overlay='{{showOverlay}}']" parameterized="true"/>
         <element name="overlayBackgroundColor" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: {{overlayBackgroundColor}};')]" parameterized="true"/>
         <element name="transparentOverlay" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="contentPath" type="text" selector="(//div[@data-content-type=&quot;banner&quot;])[{{bannerIndex}}]//div[@data-element=&quot;wrapper&quot;]//div[@data-element=&quot;overlay&quot;]" parameterized="true"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]" parameterized="true"/>
         <element name="videoBackgroundVideoElement" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//video" parameterized="true"/>

@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnBackend">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{bannerIndex}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector=".pagebuilder-banner.pagebuilder-content-type"/>
@@ -30,8 +29,10 @@
         <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{bannerIndex}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
-        <element name="posterMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
-        <element name="collageMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="poster" type="text" selector="(//div[contains(@class,&quot;pagebuilder-banner&quot;) and @data-element=&quot;main&quot;])[{{bannerIndex}}]//div[@data-element=&quot;overlay&quot;]" parameterized="true"/>
+        <element name="posterMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="collage" type="text" selector="(//div[contains(@class,&quot;pagebuilder-banner&quot;) and @data-element=&quot;main&quot;])[{{bannerIndex}}]//div[@data-element=&quot;wrapper&quot;]" parameterized="true"/>
+        <element name="collageMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Background Configuration -->
         <element name="backgroundType" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][@data-background-type='{{backgroundType}}']" parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{backgroundPosition}};')]" parameterized="true"/>
@@ -58,8 +59,8 @@
         <element name="buttonType" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//a[contains(@class,'{{buttonType}}')]" parameterized="true"/>
         <element name="buttonText" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//a//span[.='{{buttonText}}']" parameterized="true"/>
         <element name="showOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}][@data-show-overlay='{{showOverlay}}']" parameterized="true"/>
-        <element name="overlayBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'background-color: {{overlayBackgroundColor}};')]" parameterized="true"/>
-        <element name="transparentOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="overlayBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'background-color: {{overlayBackgroundColor}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="transparentOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="contentPath" type="button" selector="(//div[contains(@class,&quot;pagebuilder-banner&quot;) and @data-element=&quot;main&quot;])[{{bannerIndex}}]//div[@data-element=&quot;overlay&quot;]" parameterized="true"/>
         <element name="inlineWYSIWYGEditorWithTag" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[contains(@class,'inline-wysiwyg')]//{{tag}}" parameterized="true"/>
         <!-- Video Background -->
