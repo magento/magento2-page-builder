@@ -53,7 +53,11 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify in Admin Preview-->
-        <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentRight.value)}}" stepKey="seeTabsNavAlignedRightAdmin"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsNavAlignedRightAdmin">
+            <argument name="selector" value="{{TabsOnStage.tabsNavigation}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentRight.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
         <!-- Verify in Storefront-->
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
@@ -61,6 +65,10 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
-        <waitForElementVisible selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentRight.value)}}" stepKey="seeTabsNavAlignedRightStorefront"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsNavAlignedRightStorefront">
+            <argument name="selector" value="{{TabsOnFrontend.tabsNavigation}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentRight.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
     </test>
 </tests>
