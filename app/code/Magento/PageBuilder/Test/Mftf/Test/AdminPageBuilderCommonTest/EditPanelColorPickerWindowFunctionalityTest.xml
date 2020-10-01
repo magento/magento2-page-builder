@@ -75,7 +75,8 @@
         <!-- Validate Hex Input Field -->
         <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
         <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
-        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField"/>
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="clickOffInputField"/>
+
         <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
         <!-- Validate Apply Button -->
         <comment userInput="Validate Apply Button" stepKey="commentApplyButton"/>
@@ -90,7 +91,8 @@
             <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
         </actionGroup>
         <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Hex_White.value}}" stepKey="inputColorInInputField2"/>
-        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField2"/>
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="clickOffInputField2"/>
+
         <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
         <click selector="{{ColorPicker.cancelBtn}}" stepKey="clickCancelButton"/>
         <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone2"/>
