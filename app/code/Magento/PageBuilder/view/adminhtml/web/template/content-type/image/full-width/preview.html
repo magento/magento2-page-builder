@@ -11,11 +11,20 @@
         <scope args="getUploader().getUiComponent()">
             <render />
         </scope>
-        <img if="data.desktop_image.attributes().src"
-             attr="data.desktop_image.attributes"
-             class="preview-image"
-             css="data.desktop_image.css"
-             ko-style="data.desktop_image.style" />
+        <div class="pagebuilder-desktop-image">
+            <img if="data.desktop_image.attributes().src"
+                 attr="data.desktop_image.attributes"
+                 class="preview-image"
+                 css="data.desktop_image.css"
+                 ko-style="data.desktop_image.style" />
+        </div>
+        <div class="pagebuilder-mobile-image">
+            <img if="data.mobile_image.attributes().src"
+                 attr="data.mobile_image.attributes"
+                 class="preview-image"
+                 css="data.mobile_image.css"
+                 ko-style="data.mobile_image.style" />
+        </div>
         <figcaption if="data.caption.html()"
                     attr="data.caption.attributes"
                     css="data.caption.css"
