@@ -301,6 +301,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
 
+    _createClass(PageBuilder, [{
+      key: "viewportTemplate",
+      get: function get() {
+          return "Magento_PageBuilder/viewport/switcher";
+      }
+    }]);
+
     return PageBuilder;
   }();
 
