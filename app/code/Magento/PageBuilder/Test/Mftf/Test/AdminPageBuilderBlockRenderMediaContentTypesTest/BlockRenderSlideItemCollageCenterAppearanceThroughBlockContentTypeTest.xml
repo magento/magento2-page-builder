@@ -29,7 +29,12 @@
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinimumHeightCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.collageMinimumHeightPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStage"/>
