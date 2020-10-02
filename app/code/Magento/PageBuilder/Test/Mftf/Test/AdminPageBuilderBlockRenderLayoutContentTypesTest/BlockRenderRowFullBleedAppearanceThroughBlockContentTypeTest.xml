@@ -29,7 +29,7 @@
         <comment userInput="---merging to remove step---" stepKey="enterParallaxBackgroundSpeed"/>
         <!-- Validate CMS Block Stage -->
         <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
-        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundCMSBlockStage">
+        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -49,7 +49,7 @@
             <argument name="section" value="RowOnStorefront"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateRowBackgroundCMSPageStage">
+        <actionGroup ref="validateBackgroundConfigurationWithNoImage" stepKey="validateRowBackgroundCMSPageStage">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -65,10 +65,10 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStage">
+        <actionGroup ref="validateLayoutConfigurationWithAllUpdated" stepKey="validateRowLayoutCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Validate CMS Page Storefront -->
@@ -77,7 +77,7 @@
             <argument name="section" value="RowOnStorefront"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateRowBackgroundCMSPageStorefront">
+        <actionGroup ref="validateBackgroundConfigurationWithNoImage" stepKey="validateRowBackgroundCMSPageStorefront">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -93,10 +93,10 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStorefront">
+        <actionGroup ref="validateLayoutConfigurationWithAllUpdated" stepKey="validateRowLayoutCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Validate CMS Page Storefront Mobile -->
