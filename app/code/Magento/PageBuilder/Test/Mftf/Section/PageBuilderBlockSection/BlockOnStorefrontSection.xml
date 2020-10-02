@@ -9,6 +9,7 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BlockOnStorefront">
         <element name="ancestor" type="text" selector="[ancestor::div[@data-content-type='block']]"/>
+        <element name="ancestorPath" type="text" selector="[ancestor::div[@data-content-type=&quot;block&quot;]]"/>
         <element name="html" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}]//a[contains(@class,'pagebuilder-button-primary')]" parameterized="true"/>
         <element name="base" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}]" parameterized="true"/>
         <element name="baseCSS" type="text" selector="[data-content-type=block]"/>
