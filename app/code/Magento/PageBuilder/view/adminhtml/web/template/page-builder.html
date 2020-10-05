@@ -13,15 +13,7 @@
          css="visible: panel.isVisible(), 'transition-out': isSnapshotTransition()"
          if="!isSnapshot()">
         <span class="viewport-buttons">
-            <each args="data: Object.keys(viewports), as: 'name'">
-                <button type="button"
-                        class="page-builder-viewport"
-                        css="$parent.viewports[name].button"
-                        disable="name === $parent.viewport()"
-                        click="$parent.toggleViewport.bind($parent, name)">
-                    <img data-bind="attr:{src: require.toUrl($parent.viewports[name].icon)}" draggable="false" aria-hidden="true"/>
-                </button>
-            </each>
+              <render args="viewportTemplate"/>
         </span>
         <span class="template-buttons">
             <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>

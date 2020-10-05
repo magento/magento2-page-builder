@@ -223,6 +223,10 @@ export default class PageBuilder implements PageBuilderInterface {
         return this.template;
     }
 
+    get viewportTemplate(): string {
+        return "Magento_PageBuilder/viewport/switcher";
+    }
+
     /**
      * Toggle template manager
      */
