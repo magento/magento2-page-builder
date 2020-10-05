@@ -512,6 +512,26 @@ export default class Preview extends BasePreview {
         events.on(`image:${this.contentType.id}:uploadAfter`, () => {
             this.contentType.dataStore.set("background_type", "image");
         });
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, () => {
+            const style = this.wrapper.getAttribute("style") ||
+                this.wrapper.getAttribute("data-jarallax-original-styles");
+            let backgroundImage;
+
+            if (!$(".desktop-viewport").length) {
+                backgroundImage = this.contentType.dataStore.get("background_image");
+            }
+            if (!$(".mobile-viewport").length) {
+                backgroundImage = this.contentType.dataStore.get("mobile_image");
+            }
+
+            jarallax(this.wrapper, "destroy");
+            this.wrapper.setAttribute("style", style);
+            // @ts-ignore
+            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
+                // @ts-ignore
+                this.wrapper.style.backgroundImage = `url(${backgroundImage[0].url})`;
+            }
+        });
     }
 
     /**

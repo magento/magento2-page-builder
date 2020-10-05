@@ -456,6 +456,24 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
         _this8.contentType.dataStore.set("background_type", "image");
       });
+
+      _events.on("stage:" + _this8.contentType.stageId + ":viewportChangeAfter", function () {
+          var style = _this8.wrapper.getAttribute("style") || _this8.wrapper.getAttribute("data-jarallax-original-styles"),
+              backgroundImage;
+
+          if (!(0, _jquery)(".desktop-viewport").length) {
+              backgroundImage = _this8.contentType.dataStore.get("background_image");
+          }
+          if (!(0, _jquery)(".mobile-viewport").length) {
+              backgroundImage = _this8.contentType.dataStore.get("mobile_image");
+          }
+
+          jarallax(_this8.wrapper, "destroy");
+          _this8.wrapper.setAttribute("style", style);
+          if (_this8.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
+              _this8.wrapper.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          }
+      });
     }
     /**
      * Change uploader controls visibility
