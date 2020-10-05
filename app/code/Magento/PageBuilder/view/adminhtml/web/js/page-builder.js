@@ -296,6 +296,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
       this.viewport(this.defaultViewport);
 
+      _config.setConfig({
+        viewport: this.defaultViewport
+      });
+
       _underscore.each(this.viewports, function (viewport, name) {
         _this4.viewportClasses[name + "-viewport"] = _knockout.observable(name === _this4.defaultViewport);
       });

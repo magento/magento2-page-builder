@@ -288,6 +288,9 @@ export default class PageBuilder implements PageBuilderInterface {
             return viewport.default;
         });
         this.viewport(this.defaultViewport);
+        Config.setConfig({
+            viewport: this.defaultViewport,
+        } as ConfigInterface);
         _.each(this.viewports, (viewport: {[key: string]: any}, name: string) => {
             this.viewportClasses[`${name}-viewport`] = ko.observable(name === this.defaultViewport);
         });
