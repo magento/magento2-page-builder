@@ -11,8 +11,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Catalog Category"/>
-            <title value="Category description should be properly displayed with a selected appearance type"/>
-            <description value="Validate the proper value of Category description top-level row's data-appearance on storefront"/>
+            <title value="Validate Category Description Row Appearance"/>
+            <description value="Validates the proper value of Category description top-level row's data-appearance on storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-35402"/>
             <testCaseId value="MC-37710"/>
@@ -33,6 +33,7 @@
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
+        <!-- Set Category Description Row to Full-Width -->
         <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -41,26 +42,28 @@
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <!-- Add Heading to Row -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <!-- Set Category Layout and Save -->
         <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
         <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <!-- Validate Storefront Category Description Row Appearance -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$createPreReqCategory.name$.html"/>
         </actionGroup>
-        <actionGroup ref="validateCategoryDescriptionAppearanceStorefrontActionGroup" stepKey="validateDataAppearance">
+        <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance">
             <argument name="dataAppearance" value="full-width"/>
         </actionGroup>
     </test>
