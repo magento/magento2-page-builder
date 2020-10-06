@@ -9,6 +9,7 @@ namespace Magento\PageBuilder\Component\Form\Element;
 
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
@@ -30,6 +31,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      *
      * @param ContextInterface $context
      * @param FormFactory $formFactory
+     * @param Repository $assetRepo
      * @param ConfigInterface $wysiwygConfig
      * @param CategoryAttributeRepositoryInterface $attrRepository
      * @param PageBuilderState $pageBuilderState
@@ -48,6 +50,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
     public function __construct(
         ContextInterface $context,
         FormFactory $formFactory,
+        Repository $assetRepo,
         ConfigInterface $wysiwygConfig,
         CategoryAttributeRepositoryInterface $attrRepository,
         PageBuilderState $pageBuilderState,
@@ -91,6 +94,12 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $wysiwygConfigData['viewports'] = $viewConfig->getViewConfig()->getVarValue(
                 'Magento_PageBuilder',
                 'breakpoints'
+            );
+            $wysiwygConfigData['viewports']['desktop']['icon'] = $assetRepo->getUrl(
+                $wysiwygConfigData['viewports']['desktop']['icon']
+            );
+            $wysiwygConfigData['viewports']['mobile']['icon'] = $assetRepo->getUrl(
+                $wysiwygConfigData['viewports']['mobile']['icon']
             );
 
             if ($overrideSnapshot) {

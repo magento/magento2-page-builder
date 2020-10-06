@@ -531,7 +531,7 @@ export default class Preview extends BasePreview {
             this.contentType.dataStore.set("background_type", "image");
         });
         events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
-            if (this.contentType.dataStore.get("background_type") === "video") {
+            if (this.contentType.dataStore.get("background_type") !== "video") {
                 this.buildJarallax();
             }
         });

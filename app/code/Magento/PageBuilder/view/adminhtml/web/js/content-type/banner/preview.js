@@ -471,7 +471,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       });
 
       _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
-        if (_this8.contentType.dataStore.get("background_type") === "video") {
+        if (_this8.contentType.dataStore.get("background_type") !== "video") {
           _this8.buildJarallax();
         }
       });
