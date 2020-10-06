@@ -28,6 +28,10 @@
 
     &.pagebuilder-content-type-active:hover:not(.no-system-border) {
         .pagebuilder-system-border-hover;
+
+        &.pagebuilder-content-type-affordance {
+            box-shadow: 0 0 0 1px @color-pagebuilder-light-silver;
+        }
     }
 
     &.type-container {
@@ -180,6 +184,24 @@
         visibility: hidden;
         width: 100%;
         z-index: 20;
+    }
+}
+
+.pagebuilder-content-type-affordance {
+    border: 15px solid @color-gray98;
+    box-shadow: 0 0 0 1px rgba(197, 197, 197, 0.34); //#ebebeb
+    padding: 0;
+
+    > .pagebuilder-content-type.type-container.pagebuilder-row {
+        box-shadow: none;
+    }
+
+    > .pagebuilder-display-label {
+        background-color: @color-gray98;
+        color: @color-pagebuilder-silver;
+        line-height: 13px;
+        padding: 1px 0 0;
+        transform: translate(-50%, -15px);
     }
 }
 
