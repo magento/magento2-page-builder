@@ -42,6 +42,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param ViewConfigInterface $viewConfig
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function __construct(
@@ -90,7 +91,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $wysiwygConfigData['viewports'] = $viewConfig->getViewConfig()->getVarValue(
                 'Magento_PageBuilder',
                 'breakpoints'
-            );;
+            );
 
             if ($overrideSnapshot) {
                 $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
