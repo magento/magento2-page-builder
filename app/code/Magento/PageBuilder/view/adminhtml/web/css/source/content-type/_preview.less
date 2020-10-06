@@ -192,6 +192,10 @@
     box-shadow: 0 0 0 1px rgba(197, 197, 197, 0.34); //#ebebeb
     padding: 0;
 
+    &:before {
+        display: none;
+    }
+
     > .pagebuilder-content-type.type-container.pagebuilder-row {
         box-shadow: none;
     }
@@ -202,6 +206,12 @@
         line-height: 13px;
         padding: 1px 0 0;
         transform: translate(-50%, -15px);
+    }
+
+    &.pagebuilder-content-type-hidden {
+        > .pagebuilder-display-label {
+            z-index: initial;
+        }
     }
 }
 
