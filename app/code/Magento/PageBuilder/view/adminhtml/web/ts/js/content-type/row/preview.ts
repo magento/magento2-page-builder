@@ -209,4 +209,37 @@ export default class Preview extends PreviewCollection {
             jarallax(this.element, "destroy");
         }
     }
+
+    /**
+     * Return selected element styles
+     *
+     * @param {String} element
+     * @param {Array} styleProperties
+     */
+    public getStyle(element: String, styleProperties: Array<string>) {
+        let stylesObject = (element === 'main' ? this.data.main.style() : this.data.inner.style());
+
+        return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
+    }
+
+
+    /**
+     * Return element styles without selected
+     *
+     * @param {String} element
+     * @param {Array} styleProperties
+     */
+    public getStyleWithout(element: String, styleProperties: Array<string>) {
+        let stylesObject = (element === 'main' ? this.data.main.style() : this.data.inner.style());
+
+        return Object.keys(stylesObject)
+            .filter(key => !styleProperties.includes(key))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: stylesObject[key]
+                };
+            }, {});
+    }
+
 }
