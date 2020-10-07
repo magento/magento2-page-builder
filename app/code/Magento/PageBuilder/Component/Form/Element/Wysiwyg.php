@@ -27,11 +27,15 @@ use Magento\Framework\View\ConfigInterface as ViewConfigInterface;
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
     /**
+     * @var Repository
+     */
+    private $assetRepo;
+
+    /**
      * WYSIWYG Constructor
      *
      * @param ContextInterface $context
      * @param FormFactory $formFactory
-     * @param Repository $assetRepo
      * @param ConfigInterface $wysiwygConfig
      * @param CategoryAttributeRepositoryInterface $attrRepository
      * @param PageBuilderState $pageBuilderState
@@ -42,6 +46,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
      * @param ViewConfigInterface $viewConfig
+     * @param Repository $assetRepo
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -50,7 +55,6 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
     public function __construct(
         ContextInterface $context,
         FormFactory $formFactory,
-        Repository $assetRepo,
         ConfigInterface $wysiwygConfig,
         CategoryAttributeRepositoryInterface $attrRepository,
         PageBuilderState $pageBuilderState,
@@ -60,9 +64,11 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         array $config = [],
         PageBuilderConfig $pageBuilderConfig = null,
         bool $overrideSnapshot = false,
-        ViewConfigInterface $viewConfig = null
+        ViewConfigInterface $viewConfig = null,
+        Repository $assetRepo = null
     ) {
         $viewConfig = $viewConfig ?: ObjectManager::getInstance()->get(ViewConfigInterface::class);
+        $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
 
         // If a dataType is present we're dealing with an attribute
@@ -95,12 +101,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
                 'Magento_PageBuilder',
                 'breakpoints'
             );
-            $wysiwygConfigData['viewports']['desktop']['icon'] = $assetRepo->getUrl(
-                $wysiwygConfigData['viewports']['desktop']['icon']
-            );
-            $wysiwygConfigData['viewports']['mobile']['icon'] = $assetRepo->getUrl(
-                $wysiwygConfigData['viewports']['mobile']['icon']
-            );
+            $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
 
             if ($overrideSnapshot) {
                 $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
@@ -124,5 +125,23 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         }
 
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+    }
+
+    /**
+     * Process viewport icon paths
+     *
+     * @param array $wysiwygConfigData
+     * @return array
+     */
+    private function processBreakpointsIcons(array $wysiwygConfigData): array
+    {
+        if ($wysiwygConfigData && isset($wysiwygConfigData['viewports'])) {
+            foreach ($wysiwygConfigData['viewports'] as $breakpoint => $attributes) {
+                if (isset($attributes['icon'])) {
+                    $wysiwygConfigData['viewports'][$breakpoint]['icon'] = $this->assetRepo->getUrl($attributes['icon']);
+                }
+            }
+        }
+        return $wysiwygConfigData;
     }
 }

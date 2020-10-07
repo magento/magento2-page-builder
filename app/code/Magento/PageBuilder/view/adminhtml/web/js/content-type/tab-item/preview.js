@@ -5,7 +5,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection", "underscore", "Magento_PageBuilder/js/events"], function (_jquery, _knockout, _conditionalRemoveOption, _previewCollection, _underscore, _events) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _conditionalRemoveOption, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -30,52 +30,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
 
       _this = _previewCollection2.call.apply(_previewCollection2, [this].concat(args)) || this;
       _this.fieldsToIgnoreOnRemove = ["tab_name"];
-      _this.buildJarallax = _underscore.debounce(function () {
-          // Destroy all instances of the plugin prior
-          try {
-              // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-              var style = _this.wrapper.getAttribute("style") || _this.wrapper.getAttribute("data-jarallax-original-styles");
-
-              var backgroundImage = _this.getBackgroundImage();
-
-              jarallax(_this.wrapper, "destroy");
-
-              _this.wrapper.setAttribute("style", style);
-
-              if (_this.contentType.dataStore.get("background_type") !== "video" && _this.wrapper.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
-                  _this.wrapper.style.backgroundImage = backgroundImage;
-              }
-          } catch (e) {// Failure of destroying is acceptable
-          }
-
-          if (_this.wrapper && _this.wrapper.dataset.backgroundType === "video" && _this.wrapper.dataset.videoSrc.length) {
-              _underscore.defer(function () {
-                  // Build Parallax on elements with the correct class
-                  var viewportElement = (0, _jquery)("<div/>").addClass("jarallax-viewport-element");
-                  (0, _jquery)(_this.wrapper).append((0, _jquery)(".jarallax-viewport-element", _this.wrapper).length ? "" : viewportElement);
-                  jarallax(_this.wrapper, {
-                      videoSrc: _this.wrapper.dataset.videoSrc,
-                      imgSrc: _this.wrapper.dataset.videoFallbackSrc,
-                      videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
-                      speed: 1,
-                      videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
-                      elementInViewport: (0, _jquery)(".jarallax-viewport-element", _this.wrapper),
-                      videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
-                  }); // @ts-ignore
-
-                  if (_this.wrapper.jarallax && _this.wrapper.jarallax.video) {
-                      // @ts-ignore
-                      _this.wrapper.jarallax.video.on("started", function () {
-                          // @ts-ignore
-                          if (_this.wrapper.jarallax && _this.wrapper.jarallax.$video) {
-                              // @ts-ignore
-                              _this.wrapper.jarallax.$video.style.visibility = "visible";
-                          }
-                      });
-                  }
-              });
-          }
-      }, 50);
 
       return _this;
     }
@@ -172,22 +126,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
         preview: this
       }));
       return options;
-    }
-    /**
-     * @inheritDoc
-     */
-    ;
-
-    _proto.bindEvents = function bindEvents() {
-        var _this = this;
-
-        _previewCollection2.prototype.bindEvents.call(this);
-
-        _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
-            if (_this.contentType.dataStore.get("background_type") !== "video") {
-                _this.buildJarallax();
-            }
-        });
     };
 
     return Preview;

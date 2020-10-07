@@ -9,18 +9,11 @@ import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import PreviewCollection from "../preview-collection";
 import TabsPreview from "../tabs/preview";
-import _ from "underscore";
-import events from "Magento_PageBuilder/js/events";
 
 /**
  * @api
  */
 export default class Preview extends PreviewCollection {
-    /**
-     * The element the text content type is bound to
-     */
-    private wrapper: HTMLElement;
-
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
@@ -28,63 +21,6 @@ export default class Preview extends PreviewCollection {
      * @type {[string]}
      */
     protected fieldsToIgnoreOnRemove: string[] = ["tab_name"];
-
-    /**
-     * Debounce and defer the init of Jarallax
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-    private buildJarallax = _.debounce(() => {
-        // Destroy all instances of the plugin prior
-        try {
-            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.wrapper.getAttribute("style") ||
-                this.wrapper.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = this.getBackgroundImage();
-            jarallax(this.wrapper, "destroy");
-            this.wrapper.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" &&
-                this.wrapper.style.backgroundImage !== backgroundImage &&
-                backgroundImage !== "none"
-            ) {
-                this.wrapper.style.backgroundImage = backgroundImage;
-            }
-        } catch (e) {
-            // Failure of destroying is acceptable
-        }
-
-        if (this.wrapper &&
-            (this.wrapper.dataset.backgroundType as string) === "video" &&
-            (this.wrapper.dataset.videoSrc as string).length
-        ) {
-            _.defer(() => {
-                // Build Parallax on elements with the correct class
-                jarallax(
-                    this.wrapper,
-                    {
-                        videoSrc: this.wrapper.dataset.videoSrc as string,
-                        imgSrc: this.wrapper.dataset.videoFallbackSrc as string,
-                        videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
-                        speed: 1,
-                        videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
-                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
-                    },
-                );
-                // @ts-ignore
-                if (this.wrapper.jarallax && this.wrapper.jarallax.video) {
-                    // @ts-ignore
-                    this.wrapper.jarallax.video.on("started", () => {
-                        // @ts-ignore
-                        if (this.wrapper.jarallax && this.wrapper.jarallax.$video) {
-                            // @ts-ignore
-                            this.wrapper.jarallax.$video.style.visibility = "visible";
-                        }
-                    });
-                }
-            });
-        }
-
-    }, 50);
 
     /**
      * Get background image url base on the viewport.
@@ -180,18 +116,5 @@ export default class Preview extends PreviewCollection {
             preview: this,
         });
         return options;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected bindEvents() {
-        super.bindEvents();
-
-        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
-            if (this.contentType.dataStore.get("background_type") !== "video") {
-                this.buildJarallax();
-            }
-        });
     }
 }

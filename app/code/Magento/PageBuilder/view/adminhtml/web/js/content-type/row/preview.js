@@ -116,7 +116,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.toggleFullScreen.bind(_assertThisInitialized(_this)));
 
       _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function (args) {
-          if (_this.contentType.dataStore.get("background_type") !== "video") {
+          if (_this.contentType.dataStore.get("background_type") === "video") {
               _this.buildJarallax();
           }
       });
