@@ -96,7 +96,7 @@
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedConfigurationAllOptions" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStage">
             <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -152,7 +152,7 @@
         <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
         <waitForElementVisible selector="{{TextOnStage.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
         <waitForElementVisible selector="{{TextOnStage.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
-        <actionGroup ref="validateAdvancedConfigurationAllOptions" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -207,7 +207,7 @@
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <waitForElementVisible selector="{{TextOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
-        <actionGroup ref="validateAdvancedConfigurationAllOptions" stepKey="validateAllAdvancedStorefront2">
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefront2">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>

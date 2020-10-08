@@ -7,7 +7,10 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="ValidateVideoAdvancedConfigurationAllOptionsActionGroup" extends="validateAdvancedConfigurationAllOptions">
+    <actionGroup name="ValidateVideoAdvancedConfigurationAllOptionsActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+        <annotations>
+            <description>Validates advanced Video options</description>
+        </annotations>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.main(index)}}', document.body).iterateNext()).margin.replace(/px/g, &quot;&quot;)" stepKey="grabMarginValue"/>
     </actionGroup>
 </actionGroups>

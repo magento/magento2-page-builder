@@ -142,7 +142,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource4"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="assertImageHasFullWidthStyle">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="assertImageHasFullWidthStyle">
             <argument name="selector" value="{{ImageOnStorefront.advancedConfigurationImagePath('1')}}"/>
             <argument name="expectedProperty" value="100%"/>
             <argument name="cssProperty" value="maxWidth"/>
@@ -157,7 +157,7 @@
         <resizeWindow width="767" height="1024" stepKey="resizeWindowToMobile"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageElement('1')}}" stepKey="dontSeeMainImageOnMobile"/>
         <seeElement selector="{{ImageOnStorefront.imageElement('2')}}" stepKey="seeMobileImageElementOnMobile"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="assertMobileImageHasFullWidthStyle">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="assertMobileImageHasFullWidthStyle">
             <argument name="selector" value="{{ImageOnStorefront.advancedConfigurationMobileImagePath('1')}}"/>
             <argument name="expectedProperty" value="100%"/>
             <argument name="cssProperty" value="maxWidth"/>

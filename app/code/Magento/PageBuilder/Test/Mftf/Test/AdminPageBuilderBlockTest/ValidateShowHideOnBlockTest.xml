@@ -65,7 +65,7 @@
         </actionGroup>
         <waitForElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForHiddenElement">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{BlockOnStorefront.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>
@@ -87,7 +87,7 @@
         <switchToNextTab stepKey="switchBackToStorefront"/>
         <reloadPage stepKey="reloadStorefront"/>
         <waitForPageLoad stepKey="waitForStorefrontReload"/>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeHiddenElement">
+        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeHiddenElement">
             <argument name="selector" value="{{BlockOnStorefront.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>

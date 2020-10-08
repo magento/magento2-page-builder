@@ -51,17 +51,17 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBorderVisible">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBorderVisible">
             <argument name="selector" value="{{RowOnStage.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBorderColorVisible">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBorderColorVisible">
             <argument name="selector" value="{{RowOnStage.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBorderWidthVisible">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBorderWidthVisible">
             <argument name="selector" value="{{RowOnStage.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
@@ -76,34 +76,34 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible1"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBorderVisible1">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBorderVisible1">
             <argument name="selector" value="{{RowOnStage.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBorderColorVisible1">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBorderColorVisible1">
             <argument name="selector" value="{{RowOnStage.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBorderWidthVisible1">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBorderWidthVisible1">
             <argument name="selector" value="{{RowOnStage.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
         <!-- Verify the border is not on the outside of the contained row -->
         <comment userInput="Verify the border is not on the outside of the contained row" stepKey="commentVerifyBorder"/>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeBorderOnOutside">
+        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeBorderOnOutside">
             <argument name="selector" value="{{RowOnStage_Contained_Invalid.advancedConfigurationPath('1')}}"/>
             <argument name="notExpectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeBorderColorOnOutside">
+        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeBorderColorOnOutside">
             <argument name="selector" value="{{RowOnStage_Contained_Invalid.advancedConfigurationPath('1')}}"/>
             <argument name="notExpectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeBorderWidthOnOutside">
+        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeBorderWidthOnOutside">
             <argument name="selector" value="{{RowOnStage_Contained_Invalid.advancedConfigurationPath('1')}}"/>
             <argument name="notExpectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>

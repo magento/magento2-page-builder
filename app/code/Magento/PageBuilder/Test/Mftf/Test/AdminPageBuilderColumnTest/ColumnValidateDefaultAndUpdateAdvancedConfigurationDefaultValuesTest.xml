@@ -117,37 +117,37 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{ColumnOnBackend.column}}" stepKey="waitForBackEndColumn"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seetextAlignStyleOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seetextAlignStyleOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumnBorderStyleOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeColumnBorderStyleOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDotted.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumnBorderColorOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeColumnBorderColorOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_ffffff.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumnBorderWidthOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeColumnBorderWidthOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumnBorderRadiusStyleOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeColumnBorderRadiusStyleOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumnMarginStyleOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeColumnMarginStyleOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedMarginsAndPaddingProperty.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeColumnPaddingStyleOnStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeColumnPaddingStyleOnStage">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedMarginsAndPaddingProperty.value}}"/>
             <argument name="cssProperty" value="padding"/>
@@ -158,7 +158,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seetextAlignStyleOnStageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seetextAlignStyleOnStageAfterSave">
             <argument name="selector" value="{{ColumnOnBackend.advancedConfigurationPath('1', '1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
             <argument name="cssProperty" value="textAlign"/>

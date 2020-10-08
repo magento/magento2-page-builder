@@ -64,7 +64,7 @@
         </actionGroup>
         <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="waitForHiddenElement">
+        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{BannerOnFrontend.bannerPath('1')}}"/>
             <argument name="notExpectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>
@@ -86,7 +86,7 @@
         <switchToNextTab stepKey="switchBackToStorefront"/>
         <reloadPage stepKey="reloadStorefront"/>
         <waitForPageLoad stepKey="waitForStorefrontReload"/>
-        <actionGroup ref="NotValidateContentTypeStyles" stepKey="dontSeeHiddenElement">
+        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeHiddenElement">
             <argument name="selector" value="{{BannerOnFrontend.bannerPath('1')}}"/>
             <argument name="notExpectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>

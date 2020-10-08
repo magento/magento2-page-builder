@@ -6,7 +6,7 @@
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateAllBackgroundAttributesActionGroup">
+    <actionGroup name="ValidateAllBackgroundAttributesActionGroup">
         <annotations>
             <description>Validate all content type background styles</description>
         </annotations>
@@ -20,7 +20,7 @@
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <comment userInput="validateAllBackgroundAttributes" stepKey="comment"/>
+        <comment userInput="ValidateAllBackgroundAttributesActionGroup" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
         <assertEquals stepKey="assertBackgroundColor">

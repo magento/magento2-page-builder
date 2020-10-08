@@ -7,7 +7,10 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateBackgroundConfigurationWithNoImageOrColor">
+    <actionGroup name="ValidateBackgroundConfigurationWithNoImageOrColorActionGroup">
+        <annotations>
+            <description>Validate background configuration (excl. images or color)</description>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
@@ -16,7 +19,7 @@
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <comment userInput="validateBackgroundConfigurationWithNoImageOrColor" stepKey="comment"/>
+        <comment userInput="ValidateBackgroundConfigurationWithNoImageOrColorActionGroup" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
         <assertEquals stepKey="assertNoBackgroundColor">
