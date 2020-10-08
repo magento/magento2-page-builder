@@ -30,7 +30,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
 
       _this = _previewCollection2.call.apply(_previewCollection2, [this].concat(args)) || this;
       _this.fieldsToIgnoreOnRemove = ["tab_name"];
-
       return _this;
     }
 
@@ -42,18 +41,19 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
      * @returns {string}
      */
     _proto.getBackgroundImage = function getBackgroundImage() {
-        var mobileImage = this.contentType.dataStore.get("mobile_image");
-        var desktopImage = this.contentType.dataStore.get("background_image");
-        var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
-        return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
-    };
-
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
     /**
      * Force the focus on the clicked tab header
      *
      * @param {number} index
      * @param {JQueryEventObject} event
      */
+    ;
+
     _proto.onClick = function onClick(index, event) {
       (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
       event.stopPropagation();

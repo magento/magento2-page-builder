@@ -41,7 +41,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       _events.trigger("form:renderAfter", {
         data: contentTypeData,
         appearances: this.instance.config.appearances,
-        defaultNamespace: this.instance.config.form,
+        defaultNamespace: this.getDefaultNamespaceForm(),
         id: this.instance.id,
         namespace: this.getFormNamespace(contentTypeData),
         title: this.instance.config.label
@@ -68,11 +68,34 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
     ;
 
     _proto.getFormNamespace = function getFormNamespace(contentTypeData) {
-      var appearance = this.dataStore.get("appearance");
-      var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
+      var viewport = this.instance.preview.viewport();
+      var currentAppearance = this.dataStore.get("appearance");
+      var appearance = this.instance.config.appearances[currentAppearance];
+      var breakpoints = appearance.breakpoints;
+      var formNamespace = this.getDefaultNamespaceForm(); // Use the default form unless a custom one is defined
 
-      if (!_underscore.isUndefined(this.instance.config.appearances[appearance].form)) {
-        formNamespace = this.instance.config.appearances[appearance].form;
+      if (breakpoints && breakpoints[viewport] && breakpoints[viewport].form) {
+        formNamespace = breakpoints[viewport].form;
+      } else if (!_underscore.isUndefined(appearance.form)) {
+        formNamespace = appearance.form;
+      }
+
+      return formNamespace;
+    }
+    /**
+     * Determine the form default namespace based on the currently set appearance and breakpoint
+     *
+     * @returns {string}
+     */
+    ;
+
+    _proto.getDefaultNamespaceForm = function getDefaultNamespaceForm() {
+      var viewport = this.instance.preview.viewport();
+      var breakpoints = this.instance.config.breakpoints;
+      var formNamespace = this.instance.config.form;
+
+      if (breakpoints && breakpoints[viewport] && breakpoints[viewport].form) {
+        formNamespace = breakpoints[viewport].form;
       }
 
       return formNamespace;

@@ -35,10 +35,11 @@ class UiComponentConfig
      * Retrieve fields for UI Component
      *
      * @param string $componentName
+     * @param string|null $breakpoint
      *
      * @return array
      */
-    public function getFields($componentName) : array
+    public function getFields($componentName, $breakpoint = null) : array
     {
         $componentConfig = $this->configFactory->create(
             ['componentName' => $componentName]
@@ -46,11 +47,18 @@ class UiComponentConfig
 
         $fields = $this->iterateComponents(
             $componentConfig,
-            function ($item, $key) {
+            function ($item, $key) use ($breakpoint) {
+                $itemConfig = isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']) ?
+                    $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'] : [];
                 // Determine if this item has a formElement key
-                if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])
-                    && !(isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentDisabled'])
-                        && $item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentDisabled'] === true)
+                if (isset($itemConfig['formElement'])
+                    && !(isset($itemConfig['componentDisabled']) && $itemConfig['componentDisabled'] === true)
+                    && (!$breakpoint || (
+                        $breakpoint &&
+                        isset($itemConfig['breakpoints']) &&
+                        isset($itemConfig['breakpoints'][$breakpoint]) &&
+                        $itemConfig['breakpoints'][$breakpoint]
+                    ))
                 ) {
                     $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
                     // If the field has a dataScope use that for the key instead of the name

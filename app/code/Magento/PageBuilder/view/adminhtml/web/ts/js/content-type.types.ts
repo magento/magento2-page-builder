@@ -16,6 +16,7 @@ export default interface ContentTypeInterface<P extends Preview = Preview, M ext
     config: ContentTypeConfigInterface;
     element: JQuery;
     dataStore: DataStore;
+    dataStores: {[key: string]: DataStore};
     preview: P;
     content: M;
     dropped: boolean;

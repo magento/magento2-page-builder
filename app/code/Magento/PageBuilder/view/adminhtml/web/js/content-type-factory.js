@@ -17,13 +17,17 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
    * @returns {Promise<ContentTypeInterface>}
    * @api
    */
-  function createContentType(config, parentContentType, stageId, data, childrenLength) {
+  function createContentType(config, parentContentType, stageId, data, childrenLength, viewportsData) {
     if (data === void 0) {
       data = {};
     }
 
     if (childrenLength === void 0) {
       childrenLength = 0;
+    }
+
+    if (viewportsData === void 0) {
+      viewportsData = {};
     }
 
     return new Promise(function (resolve, reject) {
@@ -35,9 +39,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
           viewFactory(_contentType, config).then(function (viewComponent) {
             var viewName = _config.getMode() === "Preview" ? "preview" : "content";
             _contentType[viewName] = viewComponent;
-
-            _contentType.dataStore.setState(prepareData(config, data));
-
+            assignDataToDataStores(_contentType, config, data, viewportsData);
             resolve(_contentType);
           }).catch(function (error) {
             reject(error);
@@ -67,6 +69,32 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       console.error(error);
       return null;
     });
+  }
+
+  function assignDataToDataStores(contentType, config, data, viewportsData) {
+    var defaultData = prepareData(config, data);
+
+    var defaultViewport = _config.getConfig("defaultViewport");
+
+    _underscore.each(config.breakpoints, function (breakpoint, name) {
+      var viewportData = {};
+      var viewportConfig = breakpoint.fields ? _underscore.extend({}, breakpoint, {
+        name: config.name
+      }) : {};
+
+      if (!_underscore.isEmpty(viewportConfig)) {
+        viewportsData[name] = viewportsData[name] || {};
+        viewportData = prepareData(viewportConfig, viewportsData[name]);
+      }
+
+      contentType.dataStores[name].setState(_underscore.extend({}, defaultData, viewportData));
+    });
+
+    if (!_underscore.isEmpty(config.breakpoints)) {
+      contentType.dataStores[defaultViewport].setState(defaultData);
+    }
+
+    contentType.dataStore.setState(defaultData);
   }
   /**
    * Merge defaults and content type data

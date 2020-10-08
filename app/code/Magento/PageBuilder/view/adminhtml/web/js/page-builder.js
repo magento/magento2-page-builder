@@ -251,9 +251,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleViewport = function toggleViewport(viewport) {
       var previousViewport = this.viewport();
       this.viewport(viewport);
+
       _config.setConfig({
-          viewport: viewport
+        viewport: viewport
       });
+
       _events.trigger("stage:" + this.id + ":viewportChangeAfter", {
         viewport: viewport,
         previousViewport: previousViewport
@@ -291,15 +293,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.initViewports = function initViewports(config) {
       var _this4 = this;
 
-      _underscore.each(config.viewports, function (viewport, name) {
-        if (viewport.stage) {
-          _this4.viewports[name] = viewport;
-        }
-      });
-
-      this.defaultViewport = _underscore.findKey(this.viewports, function (viewport) {
-        return viewport.default;
-      });
+      this.viewports = config.viewports;
+      this.defaultViewport = config.defaultViewport;
       this.viewport(this.defaultViewport);
 
       _config.setConfig({

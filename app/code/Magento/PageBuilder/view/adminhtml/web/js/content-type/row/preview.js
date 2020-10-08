@@ -51,8 +51,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
 
           _this.element.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.wrapper.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
-              _this.wrapper.style.backgroundImage = backgroundImage;
+          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.element.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
+            _this.element.style.backgroundImage = backgroundImage;
           }
         } catch (e) {// Failure of destroying is acceptable
         }
@@ -116,31 +116,32 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.toggleFullScreen.bind(_assertThisInitialized(_this)));
 
       _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function (args) {
-          if (_this.contentType.dataStore.get("background_type") === "video") {
-              _this.buildJarallax();
-          }
+        if (_this.contentType.dataStore.get("background_type") === "video") {
+          _this.buildJarallax();
+        }
       });
 
       return _this;
     }
     /**
-     * Toggle fullscreen
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
      */
 
 
     var _proto = Preview.prototype;
 
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
     /**
-       * Get background image url base on the viewport.
-       *
-       * @returns {string}
-       */
-      _proto.getBackgroundImage = function getBackgroundImage() {
-          var mobileImage = this.contentType.dataStore.get("mobile_image");
-          var desktopImage = this.contentType.dataStore.get("background_image");
-          var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
-          return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
-    };
+     * Toggle fullscreen
+     */
+    ;
 
     _proto.toggleFullScreen = function toggleFullScreen() {
       if ((0, _jquery)(this.element).hasClass("jarallax")) {

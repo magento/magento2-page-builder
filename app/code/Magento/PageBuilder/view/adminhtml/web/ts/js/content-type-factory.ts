@@ -8,7 +8,10 @@ import _ from "underscore";
 import Config from "./config";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
-import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";
+import ContentTypeConfigInterface, {
+    ConfigFieldInterface,
+    ContentTypeConfigBreakpointInterface,
+} from "./content-type-config.types";
 import ContentTypeInterface from "./content-type.types";
 import {ContentTypeMountEventParamsInterface} from "./content-type/content-type-events.types";
 import Master from "./content-type/master";
@@ -41,6 +44,7 @@ export default function createContentType(
     stageId: string,
     data: object = {},
     childrenLength: number = 0,
+    viewportsData: object = {},
 ): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
     return new Promise(
         (resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void,
@@ -57,9 +61,7 @@ export default function createContentType(
                 viewFactory(contentType, config).then((viewComponent) => {
                     const viewName = Config.getMode() === "Preview" ? "preview" : "content";
                     contentType[viewName] = viewComponent;
-                    contentType.dataStore.setState(
-                        prepareData(config, data),
-                    );
+                    assignDataToDataStores(contentType, config, data, viewportsData);
                     resolve(contentType);
                 }).catch((error) => {
                     reject(error);
@@ -82,6 +84,33 @@ export default function createContentType(
         console.error(error);
         return null;
     });
+}
+
+function assignDataToDataStores(
+    contentType: ContentTypeInterface,
+    config: ContentTypeConfigInterface,
+    data: {[key: string]: any},
+    viewportsData: {[key: string]: any},
+) {
+    const defaultData = prepareData(config, data);
+    const defaultViewport = Config.getConfig("defaultViewport");
+
+    _.each(config.breakpoints, (breakpoint: ContentTypeConfigBreakpointInterface, name: string) => {
+        let viewportData = {};
+        const viewportConfig = breakpoint.fields ? _.extend({}, breakpoint, {name: config.name}) : {};
+
+        if (!_.isEmpty(viewportConfig)) {
+            viewportsData[name] = viewportsData[name] || {};
+            viewportData = prepareData(viewportConfig, viewportsData[name]);
+        }
+        contentType.dataStores[name].setState(_.extend({}, defaultData, viewportData));
+    });
+
+    if (!_.isEmpty(config.breakpoints)) {
+        contentType.dataStores[defaultViewport].setState(defaultData);
+    }
+
+    contentType.dataStore.setState(defaultData);
 }
 
 /**

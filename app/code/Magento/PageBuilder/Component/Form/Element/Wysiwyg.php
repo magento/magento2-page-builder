@@ -64,10 +64,8 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         array $config = [],
         PageBuilderConfig $pageBuilderConfig = null,
         bool $overrideSnapshot = false,
-        ViewConfigInterface $viewConfig = null,
         Repository $assetRepo = null
     ) {
-        $viewConfig = $viewConfig ?: ObjectManager::getInstance()->get(ViewConfigInterface::class);
         $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
 
@@ -97,10 +95,6 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $wysiwygConfigData = $stageConfig->getConfig();
             $wysiwygConfigData['pagebuilder_button'] = true;
             $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
-            $wysiwygConfigData['viewports'] = $viewConfig->getViewConfig()->getVarValue(
-                'Magento_PageBuilder',
-                'breakpoints'
-            );
             $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
 
             if ($overrideSnapshot) {
