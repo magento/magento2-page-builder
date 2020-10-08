@@ -29,7 +29,9 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="enterParallaxBackgroundSpeed"/>
         <!-- Validate CMS Block Stage -->
-        <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSBlockStage">
+            <argument name="affordanceValue" value="{{PageBuilderRowAffordanceWidth.value}}"/>
+        </actionGroup>
         <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
@@ -49,6 +51,7 @@
         <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSPageStage">
             <argument name="section" value="RowOnStorefront"/>
             <argument name="rowIndex" value="2"/>
+            <argument name="affordanceValue" value="{{PageBuilderRowAffordanceWidth.value}}"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateRowBackgroundCMSPageStage">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
