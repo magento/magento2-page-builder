@@ -35,6 +35,7 @@ type ViewFactory = (
  * @param {string} stageId
  * @param {object} data
  * @param {number} childrenLength
+ * * @param {object} viewportsData
  * @returns {Promise<ContentTypeInterface>}
  * @api
  */
@@ -93,11 +94,11 @@ function assignDataToDataStores(
     viewportsData: {[key: string]: any},
 ) {
     const defaultData = prepareData(config, data);
-    const defaultViewport = Config.getConfig("defaultViewport");
 
-    _.each(config.breakpoints, (breakpoint: ContentTypeConfigBreakpointInterface, name: string) => {
+    _.each(Config.getConfig("viewports"), (viewport: ContentTypeConfigBreakpointInterface, name: string) => {
         let viewportData = {};
-        const viewportConfig = breakpoint.fields ? _.extend({}, breakpoint, {name: config.name}) : {};
+        const breakpoint = config.breakpoints[name];
+        const viewportConfig = breakpoint && breakpoint.fields ? _.extend({}, breakpoint, {name: config.name}) : {};
 
         if (!_.isEmpty(viewportConfig)) {
             viewportsData[name] = viewportsData[name] || {};
@@ -105,10 +106,6 @@ function assignDataToDataStores(
         }
         contentType.dataStores[name].setState(_.extend({}, defaultData, viewportData));
     });
-
-    if (!_.isEmpty(config.breakpoints)) {
-        contentType.dataStores[defaultViewport].setState(defaultData);
-    }
 
     contentType.dataStore.setState(defaultData);
 }

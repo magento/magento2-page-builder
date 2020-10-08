@@ -146,7 +146,12 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
 
 
   function render(message, renderId) {
-    var styleRegistry = new _styleRegistry(renderId);
+    var styleRegistries = {};
+
+    _underscore.each(_config.getConfig("viewports"), function (viewport, name) {
+      styleRegistries[name] = new _styleRegistry(name + renderId);
+    });
+
     return new Promise(function (resolve, reject) {
       createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
         var element = document.createElement("div");
@@ -171,8 +176,12 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
 
           _knockout.cleanNode(element);
 
-          (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCss(styleRegistry)));
-          (0, _styleRegistry.deleteStyleRegistry)(renderId);
+          (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCssForViewports(styleRegistries)));
+
+          _underscore.each(styleRegistries, function (value, name) {
+            return (0, _styleRegistry.deleteStyleRegistry)(name + renderId);
+          });
+
           var filtered = (0, _filterHtml)((0, _jquery)(element));
           var output = (0, _directives.replaceWithSrc)((0, _directives)(filtered.html()));
           resolve(output);
@@ -206,7 +215,7 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
     }
 
     return new Promise(function (resolve, reject) {
-      (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null).then(function (contentType) {
+      (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null, tree.viewportsData).then(function (contentType) {
         // Ensure  we retain the original tree ID's
         contentType.id = tree.id;
 
@@ -245,6 +254,24 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
         scopes: scopes
       }
     }).css;
+  }
+
+  function generateMasterCssForViewports(registries) {
+    var result = "";
+
+    _underscore.each(registries, function (registry, name) {
+      var css = generateMasterCss(registry);
+
+      var media = _config.getConfig("viewports")[name].media;
+
+      if (media && css) {
+        result += "@media " + media + " { " + css + " }";
+      } else {
+        result += css;
+      }
+    });
+
+    return result;
   }
 
   return Object.assign(listen, {

@@ -146,7 +146,11 @@ function countContentTypes(rootContainer: ContentTypeCollectionInterface, count?
  * @param renderId
  */
 function render(message: {stageId: string, tree: TreeItem}, renderId: string) {
-    const styleRegistry = new StyleRegistry(renderId);
+    const styleRegistries: {[key: string]: StyleRegistry} = {};
+    _.each(Config.getConfig("viewports"), (viewport, name: string) => {
+        styleRegistries[name] = new StyleRegistry(name + renderId);
+    });
+
     return new Promise((resolve, reject) => {
         createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
             const element = document.createElement("div");
@@ -165,9 +169,9 @@ function render(message: {stageId: string, tree: TreeItem}, renderId: string) {
                 observer.disconnect();
                 ko.cleanNode(element);
                 $(element).append(
-                    $("<style />").html(generateMasterCss(styleRegistry)),
+                    $("<style />").html(generateMasterCssForViewports(styleRegistries)),
                 );
-                deleteStyleRegistry(renderId);
+                _.each(styleRegistries, (value: StyleRegistry, name: string) => deleteStyleRegistry(name + renderId));
                 const filtered: JQuery = filterHtml($(element));
                 const output = replaceWithSrc(decodeAllDataUrlsInString(filtered.html()));
                 resolve(output);
@@ -210,6 +214,7 @@ function createRenderTree(
             stageId,
             tree.data,
             parent !== null ? tree.children.length : null,
+            tree.viewportsData,
         ).then((contentType: ContentTypeCollectionInterface) => {
             // Ensure  we retain the original tree ID's
             contentType.id = tree.id;
@@ -248,4 +253,21 @@ function generateMasterCss(registry: StyleRegistry): string {
             scopes,
         },
     }).css;
+}
+
+function generateMasterCssForViewports(registries: {[key: string]: StyleRegistry}): string {
+    let result = "";
+
+    _.each(registries, (registry, name) => {
+        const css = generateMasterCss(registry);
+        const media = Config.getConfig("viewports")[name].media;
+
+        if (media && css) {
+            result += `@media ${media} { ${css} }`;
+        } else {
+            result += css;
+        }
+    });
+
+    return result;
 }

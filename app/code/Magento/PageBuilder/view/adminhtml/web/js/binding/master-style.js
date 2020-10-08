@@ -16,31 +16,50 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/config", 
    */
   var bodyId = _config.default.getConfig("bodyId");
 
+  var getStyles = function getStyles(styleObject) {
+    var styles = {};
+
+    _knockout.default.utils.objectForEach(styleObject, function (styleName, styleValue) {
+      styleValue = _knockout.default.utils.unwrapObservable(styleValue);
+
+      if (styleValue === null || styleValue === undefined || styleValue === false) {
+        // Empty string removes the value, whereas null/undefined have no effect
+        styleValue = "";
+      }
+
+      if (styleValue) {
+        styles[styleName] = styleValue;
+      }
+    });
+
+    return styles;
+  };
+
   _knockout.default.bindingHandlers.style = {
     update: function update(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var value = _knockout.default.utils.unwrapObservable(valueAccessor() || {});
 
-      var styles = {};
+      var viewportKeys = _underscore.default.keys(_config.default.getConfig("viewports"));
 
-      _knockout.default.utils.objectForEach(value, function (styleName, styleValue) {
-        styleValue = _knockout.default.utils.unwrapObservable(styleValue);
+      var commonStyles = getStyles(_underscore.default.omit(value, viewportKeys));
+      var viewportStyles = {};
 
-        if (styleValue === null || styleValue === undefined || styleValue === false) {
-          // Empty string removes the value, whereas null/undefined have no effect
-          styleValue = "";
-        }
-
-        if (styleValue) {
-          styles[styleName] = styleValue;
-        }
+      _underscore.default.each(viewportKeys, function (name) {
+        viewportStyles[name] = _underscore.default.extend(getStyles(value[name]), commonStyles);
       });
 
-      if (!_underscore.default.isEmpty(styles)) {
+      if (_underscore.default.findKey(viewportStyles, function (styles) {
+        return !_underscore.default.isEmpty(styles);
+      })) {
         var id = _mageUtils.default.uniqueid();
 
         var selector = "#" + bodyId + " [" + _styleRegistry.pbStyleAttribute + "=\"" + id + "\"]";
-        var registry = (0, _styleRegistry.getStyleRegistry)(bindingContext.$root.id);
-        registry.setStyles(selector, styles);
+
+        _underscore.default.each(viewportKeys, function (name) {
+          var registry = (0, _styleRegistry.getStyleRegistry)(name + bindingContext.$root.id);
+          registry.setStyles(selector, viewportStyles[name]);
+        });
+
         element.setAttribute(_styleRegistry.pbStyleAttribute, id);
       }
     }

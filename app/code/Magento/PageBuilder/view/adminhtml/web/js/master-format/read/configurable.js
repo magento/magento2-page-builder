@@ -42,9 +42,12 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
           var propertyReaderPool = loadedComponents[0],
               converterPool = loadedComponents[1],
               massConverterPool = loadedComponents[2];
+
+          var viewports = _config.getConfig("viewports");
+
           var data = {};
 
-          for (var _i = 0, _Object$keys = Object.keys(config.elements); _i < _Object$keys.length; _i++) {
+          var _loop = function _loop() {
             var elementName = _Object$keys[_i];
             var elementConfig = config.elements[elementName];
 
@@ -52,31 +55,44 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
 
 
             if (currentElement === null || currentElement === undefined) {
-              continue;
+              return "continue";
             }
 
-            if (elementConfig.style.length) {
-              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
-            }
+            _underscore.each(viewports, function (viewportObj, viewport) {
+              currentElement.setAttribute("style", currentElement.getAttribute("data-" + viewport + "-style"));
 
-            if (elementConfig.attributes.length) {
-              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
-            }
+              if (elementConfig.style.length) {
+                data[viewport] = _this.readStyle(elementConfig.style, currentElement, data[viewport], propertyReaderPool, converterPool);
+              }
 
-            if (undefined !== elementConfig.html.var) {
-              data = _this.readHtml(elementConfig, currentElement, data, converterPool);
-            }
+              if (elementConfig.attributes.length) {
+                data[viewport] = _this.readAttributes(elementConfig.attributes, currentElement, data[viewport], propertyReaderPool, converterPool);
+              }
 
-            if (undefined !== elementConfig.tag.var) {
-              data = _this.readHtmlTag(elementConfig, currentElement, data);
-            }
+              if (undefined !== elementConfig.html.var) {
+                data[viewport] = _this.readHtml(elementConfig, currentElement, data[viewport], converterPool);
+              }
 
-            if (undefined !== elementConfig.css.var) {
-              data = _this.readCss(elementConfig, currentElement, data);
-            }
+              if (undefined !== elementConfig.tag.var) {
+                data[viewport] = _this.readHtmlTag(elementConfig, currentElement, data[viewport]);
+              }
+
+              if (undefined !== elementConfig.css.var) {
+                data[viewport] = _this.readCss(elementConfig, currentElement, data[viewport]);
+              }
+            });
+          };
+
+          for (var _i = 0, _Object$keys = Object.keys(config.elements); _i < _Object$keys.length; _i++) {
+            var _ret = _loop();
+
+            if (_ret === "continue") continue;
           }
 
-          data = _this.convertData(config, data, massConverterPool);
+          _underscore.each(viewports, function (viewportObj, viewport) {
+            data[viewport] = _this.convertData(config, data[viewport], massConverterPool);
+          });
+
           resolve(data);
         }).catch(function (error) {
           console.error(error);

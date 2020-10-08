@@ -62,15 +62,38 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
         events.trigger(this.config.name + ":removeAfter", params);
     }
 
+    /**
+     * Get viewport fields keys.
+     *
+     * @param {string} viewport
+     * @param {DataObject} data
+     */
+    public getViewportFields(viewport: string, data: DataObject): string[] {
+        const viewportConfig = this.config.breakpoints[viewport];
+
+        if (!viewportConfig) {
+            return [];
+        }
+        const appearance = data.appearance + "-appearance";
+        const fields = viewportConfig.fields[appearance] || viewportConfig.fields.default;
+
+        return _.keys(fields);
+    }
+
     protected bindEvents() {
         const eventName: string = this.config.name + ":" + this.id + ":updateAfter";
         const paramObj: any = {};
         paramObj[this.id] = this;
         this.dataStore.subscribe(
             (state: DataObject) => {
-                if (!_.isEmpty(this.dataStores)) {
-                    const viewport = Config.getConfig("viewport") || Config.getConfig("defaultViewport");
-                    this.dataStores[viewport].setState(state);
+                const defaultViewport = Config.getConfig("defaultViewport");
+                const viewport = Config.getConfig("viewport") || defaultViewport;
+
+                this.dataStores[viewport].setState(state);
+
+                if (viewport !== defaultViewport) {
+                    const viewportFields = this.getViewportFields(viewport, state);
+                    this.dataStores[defaultViewport].setState(_.omit(state, viewportFields));
                 }
                 return events.trigger(
                     eventName,
@@ -93,48 +116,24 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
      * @param {Object} args
      */
     private onViewportSwitch(args: {viewport: string, previousViewport: string}) {
-        if (this.dataStores[args.viewport]) {
-            const currentViewportState = this.dataStores[args.viewport].getState();
-            const previousViewportState = this.dataStore.getState();
-            const viewportFields = this.getViewportFields(args.viewport, currentViewportState);
-            const previousViewportFields = this.getViewportFields(args.previousViewport, previousViewportState);
+        const defaultViewport = Config.getConfig("defaultViewport");
+        const currentViewportState = this.dataStores[args.viewport].getState();
+        const defaultViewportState = this.dataStores[defaultViewport].getState();
+        const viewportFields = this.getViewportFields(args.viewport, currentViewportState);
 
-            // Filter viewport specific data for states
-            this.dataStore.setState(_.extend(
-                currentViewportState,
-                _.omit(previousViewportState, previousViewportFields),
-                _.pick(currentViewportState, viewportFields),
-            ));
-        }
-    }
-
-    /**
-     * Get viewport fields keys.
-     *
-     * @param {string} viewport
-     * @param {DataObject} data
-     */
-    private getViewportFields(viewport: string, data: DataObject): string[] {
-        const viewportConfig = this.config.breakpoints[viewport];
-
-        if (!viewportConfig) {
-            return [];
-        }
-        const appearance = data.appearance + "-appearance";
-        const fields = viewportConfig.fields[appearance] || viewportConfig.fields.default;
-
-        return _.keys(fields);
+        // Filter viewport specific data for states
+        this.dataStore.setState(_.extend(
+            defaultViewportState,
+            _.pick(currentViewportState, viewportFields),
+        ));
     }
 
     /**
      * Init data store for each viewport.
      */
     private initDataStores() {
-        if (!_.isEmpty(this.config.breakpoints)) {
-            _.each(this.config.breakpoints, (value, name: string) => {
-                this.dataStores[name] = new DataStore();
-            });
-            this.dataStores[Config.getConfig("defaultViewport")] = new DataStore();
-        }
+        _.each(Config.getConfig("viewports"), (value, name: string) => {
+            this.dataStores[name] = new DataStore();
+        });
     }
 }

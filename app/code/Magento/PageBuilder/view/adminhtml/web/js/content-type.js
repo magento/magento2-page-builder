@@ -45,46 +45,6 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
       _events.trigger("contentType:removeAfter", params);
 
       _events.trigger(this.config.name + ":removeAfter", params);
-    };
-
-    _proto.bindEvents = function bindEvents() {
-      var _this = this;
-
-      var eventName = this.config.name + ":" + this.id + ":updateAfter";
-      var paramObj = {};
-      paramObj[this.id] = this;
-      this.dataStore.subscribe(function (state) {
-        if (!_underscore.isEmpty(_this.dataStores)) {
-          var viewport = _config.getConfig("viewport") || _config.getConfig("defaultViewport");
-
-          _this.dataStores[viewport].setState(state);
-        }
-
-        return _events.trigger(eventName, paramObj);
-      });
-      this.dataStore.subscribe(function () {
-        return _events.trigger("stage:updateAfter", {
-          stageId: _this.stageId
-        });
-      });
-
-      _events.on("stage:" + this.stageId + ":viewportChangeAfter", this.onViewportSwitch.bind(this));
-    }
-    /**
-     * Change data stores on viewport change.
-     * @param {Object} args
-     */
-    ;
-
-    _proto.onViewportSwitch = function onViewportSwitch(args) {
-      if (this.dataStores[args.viewport]) {
-        var currentViewportState = this.dataStores[args.viewport].getState();
-        var previousViewportState = this.dataStore.getState();
-        var viewportFields = this.getViewportFields(args.viewport, currentViewportState);
-        var previousViewportFields = this.getViewportFields(args.previousViewport, previousViewportState); // Filter viewport specific data for states
-
-        this.dataStore.setState(_underscore.extend(currentViewportState, _underscore.omit(previousViewportState, previousViewportFields), _underscore.pick(currentViewportState, viewportFields)));
-      }
     }
     /**
      * Get viewport fields keys.
@@ -104,6 +64,51 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
       var appearance = data.appearance + "-appearance";
       var fields = viewportConfig.fields[appearance] || viewportConfig.fields.default;
       return _underscore.keys(fields);
+    };
+
+    _proto.bindEvents = function bindEvents() {
+      var _this = this;
+
+      var eventName = this.config.name + ":" + this.id + ":updateAfter";
+      var paramObj = {};
+      paramObj[this.id] = this;
+      this.dataStore.subscribe(function (state) {
+        var defaultViewport = _config.getConfig("defaultViewport");
+
+        var viewport = _config.getConfig("viewport") || defaultViewport;
+
+        _this.dataStores[viewport].setState(state);
+
+        if (viewport !== defaultViewport) {
+          var viewportFields = _this.getViewportFields(viewport, state);
+
+          _this.dataStores[defaultViewport].setState(_underscore.omit(state, viewportFields));
+        }
+
+        return _events.trigger(eventName, paramObj);
+      });
+      this.dataStore.subscribe(function () {
+        return _events.trigger("stage:updateAfter", {
+          stageId: _this.stageId
+        });
+      });
+
+      _events.on("stage:" + this.stageId + ":viewportChangeAfter", this.onViewportSwitch.bind(this));
+    }
+    /**
+     * Change data stores on viewport change.
+     * @param {Object} args
+     */
+    ;
+
+    _proto.onViewportSwitch = function onViewportSwitch(args) {
+      var defaultViewport = _config.getConfig("defaultViewport");
+
+      var currentViewportState = this.dataStores[args.viewport].getState();
+      var defaultViewportState = this.dataStores[defaultViewport].getState();
+      var viewportFields = this.getViewportFields(args.viewport, currentViewportState); // Filter viewport specific data for states
+
+      this.dataStore.setState(_underscore.extend(defaultViewportState, _underscore.pick(currentViewportState, viewportFields)));
     }
     /**
      * Init data store for each viewport.
@@ -113,13 +118,9 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
     _proto.initDataStores = function initDataStores() {
       var _this2 = this;
 
-      if (!_underscore.isEmpty(this.config.breakpoints)) {
-        _underscore.each(this.config.breakpoints, function (value, name) {
-          _this2.dataStores[name] = new _dataStore();
-        });
-
-        this.dataStores[_config.getConfig("defaultViewport")] = new _dataStore();
-      }
+      _underscore.each(_config.getConfig("viewports"), function (value, name) {
+        _this2.dataStores[name] = new _dataStore();
+      });
     };
 
     return ContentType;

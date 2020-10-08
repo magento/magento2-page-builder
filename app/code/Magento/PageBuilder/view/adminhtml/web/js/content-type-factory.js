@@ -14,6 +14,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
    * @param {string} stageId
    * @param {object} data
    * @param {number} childrenLength
+   * * @param {object} viewportsData
    * @returns {Promise<ContentTypeInterface>}
    * @api
    */
@@ -74,11 +75,10 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
   function assignDataToDataStores(contentType, config, data, viewportsData) {
     var defaultData = prepareData(config, data);
 
-    var defaultViewport = _config.getConfig("defaultViewport");
-
-    _underscore.each(config.breakpoints, function (breakpoint, name) {
+    _underscore.each(_config.getConfig("viewports"), function (viewport, name) {
       var viewportData = {};
-      var viewportConfig = breakpoint.fields ? _underscore.extend({}, breakpoint, {
+      var breakpoint = config.breakpoints[name];
+      var viewportConfig = breakpoint && breakpoint.fields ? _underscore.extend({}, breakpoint, {
         name: config.name
       }) : {};
 
@@ -89,10 +89,6 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
       contentType.dataStores[name].setState(_underscore.extend({}, defaultData, viewportData));
     });
-
-    if (!_underscore.isEmpty(config.breakpoints)) {
-      contentType.dataStores[defaultViewport].setState(defaultData);
-    }
 
     contentType.dataStore.setState(defaultData);
   }
