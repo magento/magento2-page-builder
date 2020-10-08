@@ -191,13 +191,13 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
     /**
      * Return selected element styles
      *
-     * @param {String} element
+     * @param {Object} element
      * @param {Array} styleProperties
      */
     ;
 
     _proto.getStyle = function getStyle(element, styleProperties) {
-      var stylesObject = element === 'main' ? this.data.main.style() : this.data.inner.style();
+      var stylesObject = element.style();
       return styleProperties.reduce(function (obj, key) {
         var _extends2;
 
@@ -207,13 +207,13 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
     /**
      * Return element styles without selected
      *
-     * @param {String} element
+     * @param {Object} element
      * @param {Array} styleProperties
      */
     ;
 
     _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
-      var stylesObject = element === 'main' ? this.data.main.style() : this.data.inner.style();
+      var stylesObject = element.style();
       return Object.keys(stylesObject).filter(function (key) {
         return !styleProperties.includes(key);
       }).reduce(function (obj, key) {

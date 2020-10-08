@@ -9,11 +9,11 @@
      ko-style="data.main.style"
      css="data.main.css">
     <div class="pagebuilder-content-type pagebuilder-content-type-affordance"
-         ko-style="getStyle('inner', ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+         ko-style="getStyle(data.inner, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
          event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
         <div class="pagebuilder-content-type no-system-border type-container pagebuilder-row children-min-height"
              attr="data.inner.attributes"
-             ko-style="getStyleWithout('inner', ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+             ko-style="getStyleWithout(data.inner, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
              css="Object.assign(data.inner.css(), {
                 'empty-container': contentType.children().length == 0,
                 'jarallax': data.inner.attributes()['data-enable-parallax'] == 1 || data.inner.attributes()['data-background-type'] == 'video'

@@ -213,24 +213,23 @@ export default class Preview extends PreviewCollection {
     /**
      * Return selected element styles
      *
-     * @param {String} element
+     * @param {Object} element
      * @param {Array} styleProperties
      */
-    public getStyle(element: String, styleProperties: Array<string>) {
-        let stylesObject = (element === 'main' ? this.data.main.style() : this.data.inner.style());
+    public getStyle(element: {[key: string]: any}, styleProperties: Array<string>) {
+        let stylesObject = element.style();
 
         return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
     }
 
-
     /**
      * Return element styles without selected
      *
-     * @param {String} element
+     * @param {Object} element
      * @param {Array} styleProperties
      */
-    public getStyleWithout(element: String, styleProperties: Array<string>) {
-        let stylesObject = (element === 'main' ? this.data.main.style() : this.data.inner.style());
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: Array<string>) {
+        let stylesObject = element.style();
 
         return Object.keys(stylesObject)
             .filter(key => !styleProperties.includes(key))
@@ -241,5 +240,4 @@ export default class Preview extends PreviewCollection {
                 };
             }, {});
     }
-
 }

@@ -6,11 +6,11 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-content-type-affordance"
-     ko-style="getStyle('main', ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+     ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <div class="pagebuilder-content-type type-container no-system-border pagebuilder-row children-min-height"
          attr="data.main.attributes"
-         ko-style="getStyleWithout('main', ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+         ko-style="getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
          css="Object.assign(data.main.css(), {
             'empty-container': contentType.children().length == 0,
             'jarallax': data.main.attributes()['data-enable-parallax'] == 1 || data.main.attributes()['data-background-type'] == 'video'
