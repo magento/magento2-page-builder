@@ -12,6 +12,7 @@ import alertDialog from "Magento_Ui/js/modal/alert";
 import utils from "mageUtils";
 import _ from "underscore";
 import {isAllowed, resources} from "./acl";
+import "./binding/style";
 import Config from "./config";
 import ConfigInterface from "./config.types";
 import ContentTypeCollectionInterface from "./content-type-collection";
