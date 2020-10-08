@@ -85,7 +85,7 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
                 {stageId: this.stageId},
             ),
         );
-        events.on(`stage:${this.stageId}:viewportChangeAfter`, this.onViewportSwitch);
+        events.on(`stage:${this.stageId}:viewportChangeAfter`, this.onViewportSwitch.bind(this));
     }
 
     /**

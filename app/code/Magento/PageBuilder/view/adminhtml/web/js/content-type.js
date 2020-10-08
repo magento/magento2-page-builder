@@ -68,7 +68,7 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
         });
       });
 
-      _events.on("stage:" + this.stageId + ":viewportChangeAfter", this.onViewportSwitch);
+      _events.on("stage:" + this.stageId + ":viewportChangeAfter", this.onViewportSwitch.bind(this));
     }
     /**
      * Change data stores on viewport change.
