@@ -138,7 +138,9 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         if ($wysiwygConfigData && isset($wysiwygConfigData['viewports'])) {
             foreach ($wysiwygConfigData['viewports'] as $breakpoint => $attributes) {
                 if (isset($attributes['icon'])) {
-                    $wysiwygConfigData['viewports'][$breakpoint]['icon'] = $this->assetRepo->getUrl($attributes['icon']);
+                    $wysiwygConfigData['viewports'][$breakpoint]['icon'] = $this->assetRepo->getUrl(
+                        $attributes['icon']
+                    );
                 }
             }
         }

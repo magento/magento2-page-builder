@@ -42,7 +42,7 @@
         <element name="backgroundColorElement" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color:')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
         <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{backgroundImage}}')]" parameterized="true"/>
-        <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-image: none')]" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=banner] div.inline-wysiwyg')[{{contentIndex}} - 1]" parameterized="true"/>
         <element name="textArea" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{bannerIndex}}]//textarea[contains(@class,'inline-wysiwyg-textarea')]" parameterized="true"/>
