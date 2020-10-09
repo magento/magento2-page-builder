@@ -32,6 +32,7 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
+import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 
 /**
  * @api
@@ -467,8 +468,11 @@ export default class Preview extends PreviewCollection {
             this.gridSizeHistory = new Map();
             this.recordGridResize(this.gridSize());
             // inline tooltip out of bounds
+            let tooltipClientRectTop = tooltip[0].getBoundingClientRect().top
+                                     - pageBuilderHeaderHeight(this.contentType.stageId);
+
             if (checkStageFullScreen(this.contentType.stageId)
-                && 0 > tooltip[0].getBoundingClientRect().top
+                && tooltip[0].getBoundingClientRect().height > tooltipClientRectTop
             ) {
                 this.gridToolTipOverFlow(true);
             }
