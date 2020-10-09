@@ -34,7 +34,10 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" visible="false" stepKey="clickMobileViewport"/>
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
+            <argument name="viewportButton" value="mobile-switcher"/>
+            <argument name="viewportStage" value="mobile-viewport"/>
+        </actionGroup>
         <!-- Assert mobile viewport -->
         <seeElement selector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" stepKey="assertMobileViewport"/>
         <!-- Assert column resize handle is not visible -->

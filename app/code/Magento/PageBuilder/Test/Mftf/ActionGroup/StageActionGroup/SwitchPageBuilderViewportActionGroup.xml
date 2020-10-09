@@ -13,10 +13,11 @@
         </annotations>
         <arguments>
             <argument name="viewportButton" type="string"/>
+            <argument name="viewportStage" type="string"/>
         </arguments>
         <conditionalClick selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton(viewportButton)}}"
-                          dependentSelector="{{PageBuilderStage.stageWrapperFullScreen}}"
-                          visible="true"
+                          dependentSelector="{{PageBuilderViewportSwitcherSection.viewportStage(viewportStage)}}"
+                          visible="false"
                           stepKey="clickViewportSwitcherButton"/>
     </actionGroup>
 </actionGroups>

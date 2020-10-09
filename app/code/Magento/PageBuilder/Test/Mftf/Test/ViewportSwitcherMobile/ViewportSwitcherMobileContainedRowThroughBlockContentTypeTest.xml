@@ -60,7 +60,10 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
         <!-- Validate CMS Block Stage in Mobile Viewport -->
-        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" visible="false" stepKey="clickMobileViewport"/>
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportBlock">
+            <argument name="viewportButton" value="mobile-switcher"/>
+            <argument name="viewportStage" value="mobile-viewport"/>
+        </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStageMobile"/>
         <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSBlockStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageMobile"/>
@@ -98,7 +101,10 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
         <!-- Validate CMS Page Stage on Mobile Viewport -->
-        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" visible="false" stepKey="clickMobileViewportInCmsPage"/>
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile-switcher"/>
+            <argument name="viewportStage" value="mobile-viewport"/>
+        </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStageMobile"/>
         <seeElement selector="{{RowOnStorefront.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>

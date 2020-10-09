@@ -46,7 +46,10 @@
         <see userInput="View your content for mobile" stepKey="verifyMobileTooltipContent"/>
         <see userInput="Width: 768px" stepKey="verifyMobileTooltipContent2"/>
         <!-- Verify viewport area -->
-        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.desktopViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.desktopViewportStage}}" visible="false" stepKey="clickOnDesktopViewport"/>
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToDesktopViewport">
+            <argument name="viewportButton" value="desktop-switcher"/>
+            <argument name="viewportStage" value="desktop-viewport"/>
+        </actionGroup>
         <seeElement selector="{{PageBuilderViewportSwitcherSection.desktopViewportStage}}" stepKey="verifyDesktopViewport"/>
         <conditionalClick selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" visible="false" stepKey="clickMobileViewport"/>
         <seeElement selector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" stepKey="verifyMobileViewport"/>
