@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderViewportSwitcherSection">
+        <!-- Viewport Switcher Buttons -->
+        <element name="desktopViewportSwitcherButton" type="button" selector="//span[@class='viewport-buttons']//span[@class='tooltip']//button[contains(@class, 'page-builder-viewport') and contains(@class, 'desktop-switcher')]"/>
+        <element name="mobileViewportSwitcherButton" type="button" selector="//span[@class='viewport-buttons']//span[@class='tooltip']//button[contains(@class, 'page-builder-viewport') and contains(@class, 'mobile-switcher')]"/>
+        <!-- Viewport Switcher Icons -->
+        <element name="desktopViewportSwitcherIcon" type="text" selector="//span[@class='viewport-buttons']//span[@class='tooltip']//button[contains(@class, 'page-builder-viewport') and contains(@class, 'desktop-switcher')]//img[contains(@src, 'switcher-desktop.svg')]"/>
+        <element name="mobileViewportSwitcherIcon" type="text" selector="//span[@class='viewport-buttons']//span[@class='tooltip']//button[contains(@class, 'page-builder-viewport') and contains(@class, 'mobile-switcher')]//img[contains(@src, 'switcher-mobile.svg')]"/>
+        <!-- Viewport Switcher Tooltip -->
+        <element name="viewportTooltipLabel" type="text" parameterized="true" selector="//span[@class='tooltip']//span[@class='tooltip-content']//span[@class='tooltip-label' and text()='{{viewport}}']"/>
+        <!-- Viewport Stages -->
+        <element name="desktopViewportStage" type="block" selector="//div[contains(@class,'stage-is-active') and contains(@class, 'desktop-viewport')]"/>
+        <element name="mobileViewportStage" type="block" selector="//div[contains(@class,'stage-is-active') and contains(@class, 'mobile-viewport')]"/>
+    </section>
+</sections>

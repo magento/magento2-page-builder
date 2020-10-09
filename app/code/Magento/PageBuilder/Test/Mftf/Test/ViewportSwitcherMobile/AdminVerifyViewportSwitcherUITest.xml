@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminVerifyViewportSwitcherUITest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Viewport Switcher: verify each new viewport icon, each new tooltip text, and viewport area of desktop and mobile"/>
+            <description value="verify each new viewport icon, each new tooltip text, and viewport area of desktop and mobile."/>
+            <severity value="MAJOR"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Verify viewport switcher icons -->
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.desktopViewportSwitcherIcon}}" stepKey="verifyDesktopViewportIconIsVisible"/>
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherIcon}}" stepKey="verifyMobileViewportIconIsVisible"/>
+        <!-- Verify viewport tooltip label and description -->
+        <moveMouseOver selector="{{PageBuilderViewportSwitcherSection.desktopViewportSwitcherButton}}" stepKey="mouseOverDesktopViewportButton"/>
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('Desktop')}}" stepKey="verifyDesktopTooltipLabel"/>
+        <see userInput="View your content for desktop" stepKey="verifyDesktopTooltipContent"/>
+        <see userInput="Width: 1024px" stepKey="verifyDesktopTooltipContent2"/>
+
+        <moveMouseOver selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" stepKey="mouseOverMobileViewportButton"/>
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('Mobile')}}" stepKey="verifyMobileTooltipLabel"/>
+        <see userInput="View your content for mobile" stepKey="verifyMobileTooltipContent"/>
+        <see userInput="Width: 768px" stepKey="verifyMobileTooltipContent2"/>
+        <!-- Verify viewport area -->
+        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.desktopViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.desktopViewportStage}}" visible="false" stepKey="clickOnDesktopViewport"/>
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.desktopViewportStage}}" stepKey="verifyDesktopViewport"/>
+        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" visible="false" stepKey="clickMobileViewport"/>
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" stepKey="verifyMobileViewport"/>
+    </test>
+</tests>

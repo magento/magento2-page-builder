@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminViewportSwitcherMobileVerifyCannotResizeColumnsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Viewport Switcher: Resizing column in mobile viewport."/>
+            <description value="A user should not be able to resize a columns in mobile viewport."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2717"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.mobileViewportSwitcherButton}}" dependentSelector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" visible="false" stepKey="clickMobileViewport"/>
+        <!-- Assert mobile viewport -->
+        <seeElement selector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" stepKey="assertMobileViewport"/>
+        <!-- Assert column resize handle is not visible -->
+        <dontSeeElement selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="columnResizeHandleNotVisible"/>
+        <!-- Assert grid size not visible -->
+        <dontSeeElement selector="{{ColumnOnBackend.gridSizeButton('1')}}" stepKey="columnGridSizeNotVisible"/>
+    </test>
+</tests>
