@@ -166,7 +166,7 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForDivider"/>
         <!-- Validate Product Short Description Stage -->
         <comment userInput="Validate Product Short Description Stage" stepKey="commentValidateShortProductDescriptionStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerColorStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeDividerColorStage">
             <argument name="selector" value="{{DividerOnStage.lineElement('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderDividerLineColor_FF5733.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
@@ -201,7 +201,7 @@
             <argument name="attributeCode" value="short_description"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerColorStageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeDividerColorStageAfterSave">
             <argument name="selector" value="{{DividerOnStage.lineElement('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderDividerLineColor_FF5733.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
@@ -219,7 +219,7 @@
         <!-- Validate Storefront: Product Short Description -->
         <comment userInput="Validate Storefront: Product Short Description" stepKey="commentValidateStorefrontProductShortDescription"/>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productShortDescription}}" stepKey="scrollToProductShortDescription"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeDividerColorStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeDividerColorStorefront">
             <argument name="selector" value="{{DividerOnStorefront.lineElement('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderDividerLineColor_FF5733.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>

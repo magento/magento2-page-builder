@@ -86,7 +86,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Right Alignment On Stage - Before Save -->
         <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeImageAlignmentRightBeforeSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeImageAlignmentRightBeforeSave">
             <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
@@ -101,7 +101,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <!-- Verify Right Alignment On Stage - After Save -->
         <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeImageAlignmentRightAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeImageAlignmentRightAfterSave">
             <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
@@ -116,7 +116,7 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeImageAlignmentRightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeImageAlignmentRightStorefront">
             <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
             <argument name="cssProperty" value="textAlign"/>

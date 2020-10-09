@@ -25,7 +25,7 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstMinHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightCMSBlockStage">
             <argument name="selector" value="{{BannerOnBackend.collage('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -33,7 +33,7 @@
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstMinHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightCMSPageStage">
             <argument name="selector" value="{{BannerOnFrontend.collage('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -41,7 +41,7 @@
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightStorefront">
             <argument name="selector" value="{{BannerOnFrontend.collage('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>

@@ -53,7 +53,7 @@
         <comment userInput="Validate first slide" stepKey="checkFilledData"/>
         <click stepKey="unfocusNavigation" selector="{{PageBuilderPanel.searchPanel}}"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlide1BackgroundColor">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlide1BackgroundColor">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -65,7 +65,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideDuplicatedContent"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlideDuplicatedBackground">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlideDuplicatedBackground">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -75,7 +75,7 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
         <waitForPageLoad stepKey="waitForSlideNavigation"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlide1BackgroundAfterAdd">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlide1BackgroundAfterAdd">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -88,7 +88,7 @@
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterDelete"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlideBackgroundAfterDelete">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlideBackgroundAfterDelete">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -113,7 +113,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeNewSlideDuplicatedContent"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeNewSlideDuplicatedBackground">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeNewSlideDuplicatedBackground">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -123,7 +123,7 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu2"/>
         <waitForPageLoad stepKey="waitForSlideNavigation2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd1"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlide1BackgroundAfterAdd1">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlide1BackgroundAfterAdd1">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -136,7 +136,7 @@
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal1"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterDelete1"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlideBackgroundAfterDelete1">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlideBackgroundAfterDelete1">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -149,7 +149,7 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterHide"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlideBackgroundColorAfterHide">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlideBackgroundColorAfterHide">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -159,7 +159,7 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterHideShow"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSlideBackgroundColorAfterHideShow">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSlideBackgroundColorAfterHideShow">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

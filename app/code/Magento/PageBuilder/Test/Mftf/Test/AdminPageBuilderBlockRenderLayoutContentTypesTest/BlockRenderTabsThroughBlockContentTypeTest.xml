@@ -141,18 +141,18 @@
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSBlockStage"/>
         <waitForElement selector="{{DividerOnStage.base('1')}}" stepKey="waitForDividerCMSBlockStage"/>
         <dontSeeElement selector="{{DividerOnStage.base('1')}}" stepKey="dontSeeDividerCMSBlockStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsMinHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsMinHeightCMSBlockStage">
             <argument name="selector" value="{{TabsOnStage.tabsContentPath}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsNavAlignedCenterCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsNavAlignedCenterCMSBlockStage">
             <argument name="selector" value="{{TabsOnStage.tabsNavigation('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
         <actionGroup ref="validateTabHeadersAlignedCenter" stepKey="validateTabHeadersAlignedCenterCMSBlockStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab2BackgroundColorCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab2BackgroundColorCMSBlockStage">
             <argument name="selector" value="{{TabOnStage.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGB_Blue.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -167,7 +167,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleCMSBlockStage"/>
-        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateTab1BackgroundAttributesCMSBlockStage">
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateTab1BackgroundAttributesCMSBlockStage">
             <argument name="section" value="TabOnStage"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
@@ -225,12 +225,12 @@
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSPageStage"/>
         <waitForElement selector="{{DividerOnStorefront.base('1')}}" stepKey="waitForDividerCMSPageStage"/>
         <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsMinHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsMinHeightCMSPageStage">
             <argument name="selector" value="{{TabsOnFrontend.tabsContentPath}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsNavAlignedCenterCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsNavAlignedCenterCMSPageStage">
             <argument name="selector" value="{{TabsOnFrontend.tabsNavigation('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
@@ -239,7 +239,7 @@
             <argument name="tabGroupSection" value="TabsOnFrontend"/>
             <argument name="tabItemSection" value="TabOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab2BackgroundColorCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab2BackgroundColorCMSPageStage">
             <argument name="selector" value="{{TabOnStorefront.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGB_Blue.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -263,12 +263,12 @@
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSPageStorefront"/>
         <waitForElement selector="{{DividerOnStorefront.base('1')}}" stepKey="waitForDividerCMSPageStorefront"/>
         <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerCMSPageStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsMinHeightCMSPageStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsMinHeightCMSPageStorefront">
             <argument name="selector" value="{{TabsOnFrontend.tabsContentPath}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTabsNavAlignedCenterCMSPageStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsNavAlignedCenterCMSPageStorefront">
             <argument name="selector" value="{{TabsOnFrontend.tabsNavigation('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
@@ -277,7 +277,7 @@
             <argument name="tabGroupSection" value="TabsOnFrontend"/>
             <argument name="tabItemSection" value="TabOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeTab2BackgroundColorCMSPageStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab2BackgroundColorCMSPageStorefront">
             <argument name="selector" value="{{TabOnStorefront.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGB_Blue.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

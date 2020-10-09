@@ -50,7 +50,7 @@
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
         <!-- Not using action group due to open issue for inconsistent background color on Stage in DOM before page save: MAGETWO-90694 -->
         <waitForElementVisible selector="{{BannerOnBackend.base('1')}}" stepKey="waitForBanner"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBackgroundColor">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBackgroundColor">
             <argument name="selector" value="{{BannerOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGBa_Blue.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -60,7 +60,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateAllBackgroundAttributesActionGroup" stepKey="validateStage2">
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
@@ -82,7 +82,7 @@
         </actionGroup>
         <!-- Not using action group due to open issue for inconsistent background color on Storefront in DOM: MAGETWO-90694 -->
         <waitForElementVisible selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForBanner2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForBackgroundColor2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForBackgroundColor2">
             <argument name="selector" value="{{BannerOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_RGBa_Blue.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

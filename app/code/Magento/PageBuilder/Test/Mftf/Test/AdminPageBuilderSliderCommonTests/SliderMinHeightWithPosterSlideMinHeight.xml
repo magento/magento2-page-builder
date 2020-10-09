@@ -137,12 +137,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideEditPanelSettings4"/>
         <!-- Validate Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSliderMinHeightStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSliderMinHeightStage">
             <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSlideHeightStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSlideHeightStage">
             <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -158,7 +158,7 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
         <comment userInput="Second Slider min-height value calculated below" stepKey="seeSecondSliderMinHeightStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSecondSlideHeightStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSecondSlideHeightStage">
             <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -205,12 +205,12 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSliderMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSliderMinHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSlideHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSlideHeightStorefront">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>

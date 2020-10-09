@@ -63,12 +63,12 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateAllLayoutStageBeforeSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateAllLayoutStageBeforeSave">
             <argument name="selector" value="{{TabOnStage.container('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabVerticalAlignmentPropertyTop.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateMinHeightStageBeforeSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateMinHeightStageBeforeSave">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -78,12 +78,12 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateAllLayoutStageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateAllLayoutStageAfterSave">
             <argument name="selector" value="{{TabOnStage.container('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabVerticalAlignmentPropertyTop.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateMinHeightStageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateMinHeightStageAfterSave">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -93,12 +93,12 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateAllLayoutStageStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateAllLayoutStageStorefront">
             <argument name="selector" value="{{TabOnStorefront.container('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabVerticalAlignmentPropertyTop.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="validateMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateMinHeightStorefront">
             <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>

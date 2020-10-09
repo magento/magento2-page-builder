@@ -56,7 +56,7 @@
         </actionGroup>
         <waitForElement selector="{{DividerOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="waitForHiddenElement">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{DividerOnStorefront.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>
@@ -78,7 +78,7 @@
         <switchToNextTab stepKey="switchBackToStorefront"/>
         <reloadPage stepKey="reloadStorefront"/>
         <waitForPageLoad stepKey="waitForStorefrontReload"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="dontSeeHiddenElement">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="dontSeeHiddenElement">
             <argument name="selector" value="{{DividerOnStorefront.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="block"/>
             <argument name="cssProperty" value="display"/>

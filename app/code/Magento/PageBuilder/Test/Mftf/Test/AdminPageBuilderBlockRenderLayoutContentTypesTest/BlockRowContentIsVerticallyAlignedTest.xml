@@ -69,12 +69,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeRowMinHeightBeforeSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeRowMinHeightBeforeSave">
             <argument name="selector" value="({{RowOnStorefront.inner('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeRowVerticalAlignmentBottomBeforeSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeRowVerticalAlignmentBottomBeforeSave">
             <argument name="selector" value="({{RowOnStorefront.inner('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderVerticalAlignmentPropertyBottom.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
@@ -90,12 +90,12 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeRowMinHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeRowMinHeightAfterSave">
             <argument name="selector" value="({{RowOnStorefront.inner('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeRowVerticalAlignmentBottomAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeRowVerticalAlignmentBottomAfterSave">
             <argument name="selector" value="({{RowOnStorefront.inner('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderVerticalAlignmentPropertyBottom.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
@@ -111,12 +111,12 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeRowMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeRowMinHeightStorefront">
             <argument name="selector" value="({{RowOnStorefront.inner('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeRowVerticalAlignmentBottomStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeRowVerticalAlignmentBottomStorefront">
             <argument name="selector" value="({{RowOnStorefront.inner('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderVerticalAlignmentPropertyBottom.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>

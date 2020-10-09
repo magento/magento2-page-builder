@@ -140,12 +140,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsSlide4"/>
         <!-- Validate CMS Block Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSliderMinHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSliderMinHeightCMSBlockStage">
             <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSlideHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSlideHeightCMSBlockStage">
             <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -161,7 +161,7 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
         <comment userInput="Second Slider min-height value calculated below" stepKey="seeSecondSliderMinHeightCMSBlockStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSecondSlideHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSecondSlideHeightCMSBlockStage">
             <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -188,7 +188,7 @@
             <actualResult type="variable">thirdSlideMinHeightCMSBlockStage</actualResult>
             <expectedResult type="variable">viewportHeightCMSBlockStage</expectedResult>
         </assertEquals>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFourthSliderMinHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFourthSliderMinHeightCMSBlockStage">
             <argument name="selector" value="{{SliderOnStage.minHeightPath('4')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -227,12 +227,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSliderMinHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSliderMinHeightCMSPageStage">
             <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSlideHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSlideHeightCMSPageStage">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -248,7 +248,7 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
         <comment userInput="Second Slide min-height value calculated below" stepKey="seeSecondSliderMinHeightCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSecondSlideHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSecondSlideHeightCMSPageStage">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -275,7 +275,7 @@
             <actualResult type="variable">thirdSlideMinHeightCMSPageStage</actualResult>
             <expectedResult type="variable">viewportHeightCMSPageStage</expectedResult>
         </assertEquals>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFourthSliderMinHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFourthSliderMinHeightCMSPageStage">
             <argument name="selector" value="{{SliderOnFrontend.minHeightPath('4')}}"/>
             <argument name="expectedProperty" value="auto"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -299,12 +299,12 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSliderMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSliderMinHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFirstSlideHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstSlideHeightStorefront">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -320,7 +320,7 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
         <comment userInput="Second Slider min-height value calculated below" stepKey="seeSecondSliderMinHeightStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeSecondSlideHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeSecondSlideHeightStorefront">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -347,7 +347,7 @@
             <actualResult type="variable">thirdSlideMinHeightStorefront</actualResult>
             <expectedResult type="variable">viewportHeightStorefront</expectedResult>
         </assertEquals>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeFourthSliderMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFourthSliderMinHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.minHeightPath('4')}}"/>
             <argument name="expectedProperty" value="auto"/>
             <argument name="cssProperty" value="minHeight"/>

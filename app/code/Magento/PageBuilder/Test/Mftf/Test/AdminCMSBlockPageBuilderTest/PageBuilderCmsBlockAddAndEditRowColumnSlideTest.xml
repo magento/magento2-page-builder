@@ -64,18 +64,18 @@
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage" after="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="3" stepKey="see3RowsCMSPageStage" after="commentValidateCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowCMSPageStage" after="see3RowsCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRowCMSPageStage" after="see3RowsCMSPageStage">
             <argument name="selector" value="{{RowOnStorefront.backgroundPath('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="see2ColumnsCMSPageStage" after="seeBackgroundColorRowCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorColumnCMSPageStage" after="see2ColumnsCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorColumnCMSPageStage" after="see2ColumnsCMSPageStage">
             <argument name="selector" value="{{ColumnOnFrontend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_White.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlide1CMSPageStage" after="seeBackgroundColorColumnCMSPageStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorSlide1CMSPageStage" after="seeBackgroundColorColumnCMSPageStage">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -88,7 +88,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="3" stepKey="see2RowsStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRowStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRowStorefront">
             <argument name="selector" value="{{RowOnStorefront.backgroundPath('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

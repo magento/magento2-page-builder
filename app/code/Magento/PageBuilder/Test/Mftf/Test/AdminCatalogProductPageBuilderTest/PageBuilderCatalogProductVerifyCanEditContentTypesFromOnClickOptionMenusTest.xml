@@ -59,7 +59,7 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForSlide"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlideStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorSlideStage">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -73,7 +73,7 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlideStageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorSlideStageAfterSave">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -92,7 +92,7 @@
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorSlideStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorSlideStorefront">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

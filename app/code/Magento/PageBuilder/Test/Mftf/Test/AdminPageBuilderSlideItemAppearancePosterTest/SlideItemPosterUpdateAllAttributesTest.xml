@@ -145,30 +145,30 @@
         <comment userInput="Validate Stage: Appearance" stepKey="commentValidateAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinimumHeightStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightStage">
             <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Stage: Background -->
         <comment userInput="Validate Stage: Background" stepKey="commentValidateBackgroundStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorStage">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <comment userInput="Background Image validation in actionGroup below" stepKey="seeBackgroundImageStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundSizeStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundSizeStage">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundSize_Contain.value}}"/>
             <argument name="cssProperty" value="backgroundSize"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundPositionStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundPositionStage">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_Center.computedStyleValue}}"/>
             <argument name="cssProperty" value="backgroundPosition"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundRepeatStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundRepeatStage">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundRepeat_Enabled.styleValue}}"/>
             <argument name="cssProperty" value="backgroundRepeat"/>
@@ -184,45 +184,45 @@
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeOverlayColorAndTransparencyStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayColorAndTransparencyStage">
             <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <!-- Validate Stage: Advanced -->
         <comment userInput="Validate Stage: Advanced" stepKey="commentValidateAdvancedStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeAlignmentStage">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderStage">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderColorStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderColorStage">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderWidthStage">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderRadiusStage">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMarginsStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStage">
             <argument name="selector" value="{{SlideOnBackend.posterMarginsPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seePaddingStage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStage">
             <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
@@ -234,30 +234,30 @@
         <comment userInput="Validate Stage After Save: Appearance" stepKey="commentValidateAppearanceStage2"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStage2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinimumHeightStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightStage2">
             <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Stage After Save: Background -->
         <comment userInput="Validate Stage After Save: Background" stepKey="commentValidateBackgroundStage2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorStage2">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <comment userInput="Background Image validation in actionGroup below" stepKey="seeBackgroundImageStage2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundSizeStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundSizeStage2">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundSize_Contain.value}}"/>
             <argument name="cssProperty" value="backgroundSize"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundPositionStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundPositionStage2">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_Center.computedStyleValue}}"/>
             <argument name="cssProperty" value="backgroundPosition"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundRepeatStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundRepeatStage2">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundRepeat_Enabled.styleValue}}"/>
             <argument name="cssProperty" value="backgroundRepeat"/>
@@ -273,45 +273,45 @@
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStage2"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeOverlayColorAndTransparencyStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayColorAndTransparencyStage2">
             <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <!-- Validate Stage After Save: Advanced -->
         <comment userInput="Validate Stage After Save: Advanced" stepKey="commentValidateAdvancedStage2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeAlignmentStage2">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderStage2">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderColorStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderColorStage2">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderWidthStage2">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderRadiusStage2">
             <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage2"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMarginsStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStage2">
             <argument name="selector" value="{{SlideOnBackend.posterMarginsPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seePaddingStage2">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStage2">
             <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
@@ -406,29 +406,29 @@
         <comment userInput="Validate Storefront: Appearance" stepKey="commentValidateAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMinimumHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightStorefront">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Storefront: Background -->
         <comment userInput="Validate Storefront: Background" stepKey="commentValidateBackgroundStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorStorefront">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundSizeStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundSizeStorefront">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundSize_Contain.value}}"/>
             <argument name="cssProperty" value="backgroundSize"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundPositionStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundPositionStorefront">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_Center.computedStyleValue}}"/>
             <argument name="cssProperty" value="backgroundPosition"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundRepeatStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundRepeatStorefront">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundRepeat_Enabled.styleValue}}"/>
             <argument name="cssProperty" value="backgroundRepeat"/>
@@ -445,45 +445,45 @@
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeOverlayColorAndTransparencyStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayColorAndTransparencyStorefront">
             <argument name="selector" value="{{SlideOnFrontend.overlayBackgroundColorPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <!-- Validate Storefront: Advanced -->
         <comment userInput="Validate Storefront: Advanced" stepKey="commentValidateAdvancedStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeAlignmentStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeAlignmentStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderColorStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderColorStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderWidthStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderWidthStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBorderRadiusStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderRadiusStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMarginsStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStorefront">
             <argument name="selector" value="{{SlideOnFrontend.marginsPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seePaddingStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStorefront">
             <argument name="selector" value="{{SlideOnFrontend.posterPaddingPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
@@ -495,14 +495,14 @@
         <comment userInput="Validate Storefront Mobile: Appearance" stepKey="commentValidateAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeMobileAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeMobileSlideNameStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileMinimumHeightStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileMinimumHeightStorefront">
             <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <!-- Validate Storefront Mobile: Background -->
         <comment userInput="Validate Storefront Mobile Background" stepKey="commentValidateBackgroundStorefrontMobile"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorStorefrontMobile">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -511,17 +511,17 @@
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundSizeStorefrontMobile">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundSizeStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundSize_Contain.value}}"/>
             <argument name="cssProperty" value="backgroundSize"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundPositionStorefrontMobile">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundPositionStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_Center.computedStyleValue}}"/>
             <argument name="cssProperty" value="backgroundPosition"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundRepeatStorefrontMobile">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundRepeatStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundRepeat_Enabled.styleValue}}"/>
             <argument name="cssProperty" value="backgroundRepeat"/>
@@ -533,45 +533,45 @@
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeMobileButtonTypeStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeMobileButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeMobileOverlayStateStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileOverlayColorAndTransparencyStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileOverlayColorAndTransparencyStorefront">
             <argument name="selector" value="{{SlideOnFrontend.overlayBackgroundColorPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <!-- Validate Storefront Mobile: Advanced -->
         <comment userInput="Validate Storefront Mobile: Advanced" stepKey="commentValidateAdvancedStorefrontMobile"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileAlignmentStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileAlignmentStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileBorderStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileBorderStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileBorderColorStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileBorderColorStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileBorderWidthStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileBorderWidthStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileBorderRadiusStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileBorderRadiusStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty12.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeMobileCSSClassesStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobileMarginsStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileMarginsStorefront">
             <argument name="selector" value="{{SlideOnFrontend.marginsPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeMobilePaddingStorefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobilePaddingStorefront">
             <argument name="selector" value="{{SlideOnFrontend.posterPaddingPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>

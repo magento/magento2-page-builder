@@ -54,12 +54,12 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="see2RowsStage"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow1Stage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRow1Stage">
             <argument name="selector" value="{{RowOnStage.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow2Stage">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRow2Stage">
             <argument name="selector" value="{{RowOnStage.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -84,12 +84,12 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="see2RowsStageAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow1StageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRow1StageAfterSave">
             <argument name="selector" value="{{RowOnStage.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow2StageAfterSave">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRow2StageAfterSave">
             <argument name="selector" value="{{RowOnStage.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -101,12 +101,12 @@
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="2" stepKey="see2RowsStorefront"/>
-        <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow1Storefront">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRow1Storefront">
             <argument name="selector" value="{{RowOnStorefront.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-       <actionGroup ref="ValidateContentTypeStyles" stepKey="seeBackgroundColorRow2Storefront">
+       <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRow2Storefront">
             <argument name="selector" value="{{RowOnStorefront.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
