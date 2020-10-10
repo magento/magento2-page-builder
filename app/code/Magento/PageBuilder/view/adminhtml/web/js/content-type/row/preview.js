@@ -51,8 +51,11 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
 
           _this.element.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.wrapper.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
-              _this.wrapper.style.backgroundImage = backgroundImage;
+          if (_this.contentType.dataStore.get("background_type") !== "video"
+              && _this.element.style.backgroundImage !== backgroundImage
+              && backgroundImage !== "none"
+          ) {
+              _this.element.style.backgroundImage = backgroundImage;
           }
         } catch (e) {// Failure of destroying is acceptable
         }

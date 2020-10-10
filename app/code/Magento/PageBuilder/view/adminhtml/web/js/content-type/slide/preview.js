@@ -47,7 +47,10 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
 
           _this.wrapper.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.wrapper.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
+          if (_this.contentType.dataStore.get("background_type") !== "video"
+              && _this.wrapper.style.backgroundImage !== backgroundImage
+              && backgroundImage !== "none"
+          ) {
               _this.wrapper.style.backgroundImage = backgroundImage;
           }
         } catch (e) {// Failure of destroying is acceptable
