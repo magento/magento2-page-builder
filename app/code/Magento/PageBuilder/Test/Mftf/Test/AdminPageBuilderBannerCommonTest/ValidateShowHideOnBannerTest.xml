@@ -64,9 +64,9 @@
         </actionGroup>
         <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{BannerOnFrontend.bannerPath('1')}}"/>
-            <argument name="notExpectedProperty" value="none"/>
+            <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>
         </actionGroup>
         <!-- Set content to visible in admin -->
