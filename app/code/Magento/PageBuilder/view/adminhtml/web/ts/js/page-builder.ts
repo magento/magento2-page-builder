@@ -256,7 +256,7 @@ export default class PageBuilder implements PageBuilderInterface {
 
         this.viewport(viewport);
         Config.setConfig({
-            viewport: this.defaultViewport,
+            viewport,
         } as ConfigInterface);
         events.trigger(`stage:${this.id}:viewportChangeAfter`, {
             viewport,

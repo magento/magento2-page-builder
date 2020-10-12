@@ -251,9 +251,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleViewport = function toggleViewport(viewport) {
       var previousViewport = this.viewport();
       this.viewport(viewport);
+
       _config.setConfig({
-          viewport: viewport
+        viewport: viewport
       });
+
       _events.trigger("stage:" + this.id + ":viewportChangeAfter", {
         viewport: viewport,
         previousViewport: previousViewport
