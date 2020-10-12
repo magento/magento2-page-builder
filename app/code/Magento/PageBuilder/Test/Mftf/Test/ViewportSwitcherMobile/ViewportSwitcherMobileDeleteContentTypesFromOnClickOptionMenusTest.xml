@@ -7,18 +7,18 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ViewportSwitcherMobileAddChildContentTypesFromOnHoverOptionMenusTest">
+    <test name="ViewportSwitcherMobileDeleteContentTypesFromOnClickOptionMenusTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Viewport Switcher"/>
-            <title value="Verify That User Can Add Child Content Types From On-Hover Option Menus in mobile viewport"/>
-            <description value="This test is intended to ensure that users can add child content types from the on-hover option menus within the PageBuilder stage on mobile viewport for Product Description."/>
+            <stories value="Catalog Products"/>
+            <title value="Verify That User Can Delete Content Types From On-Click Option Menus On Mobile Viewport"/>
+            <description value="This test is intended to ensure that users can delete content types from the on-click option menus within the PageBuilder stage for Product Description on mobile viewport."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-3329"/>
-            <testCaseId value="MC-13669"/>
+            <testCaseId value="MC-13672"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
-            <group value="pagebuilder-add"/>
+            <group value="pagebuilder-delete"/>
             <group value="pagebuilder-catalog-product"/>
         </annotations>
         <before>
@@ -32,12 +32,9 @@
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
-            <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
-                <argument name="viewportButton" value="mobile-switcher"/>
-                <argument name="viewportStage" value="mobile-viewport"/>
-            </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
             <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
@@ -52,11 +49,10 @@
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStage"/>
-        <!-- Add 2nd Button -->
-        <comment userInput="Add 2nd Button" stepKey="commentAddSecondButton"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        <!-- Duplicate Button Item -->
+        <comment userInput="Duplicate Button Item" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateButtonItem">
+            <argument name="section" value="ButtonItemOnStage"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStage"/>
         <!-- Save Product -->
@@ -67,13 +63,33 @@
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Switch To Mobile Viewport -->
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterSave">
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
+            <argument name="viewportButton" value="mobile-switcher"/>
+            <argument name="viewportStage" value="mobile-viewport"/>
+        </actionGroup>
+        <!-- Delete Button Item -->
+        <comment userInput="Delete Button Item" stepKey="commentDeleteButtonItem"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonItem">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStage"/>
+        <!-- Save Product After Delete -->
+        <comment userInput="Save Product After Delete" stepKey="commentSaveProductAfterDelete"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterDelete"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProductAfterDelete"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProductAfterDelete"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterDelete"/>
+        <!-- Switch To Mobile Viewport After Delete -->
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterDelete">
             <argument name="viewportButton" value="mobile-switcher"/>
             <argument name="viewportStage" value="mobile-viewport"/>
         </actionGroup>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
@@ -81,6 +97,6 @@
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
-        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonItemsStorefront"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="1" stepKey="see1ButtonItemStorefront"/>
     </test>
 </tests>
