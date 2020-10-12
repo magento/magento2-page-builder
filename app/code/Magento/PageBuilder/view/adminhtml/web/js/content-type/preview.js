@@ -44,6 +44,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.appearance = _knockout.observable();
       this.isPlaceholderVisible = _knockout.observable(true);
       this.isEmpty = _knockout.observable(true);
+      this.viewport = _knockout.observable("");
       this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
@@ -64,6 +65,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.isSnapshot(!(0, _checkStageFullScreen)(this.contentType.stageId));
       }
 
+      this.viewport(_config.getConfig("viewport"));
       this.bindEvents();
       this.populatePreviewData();
     }
@@ -528,6 +530,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       _events.on(fullScreenModeChangeAfterEvent, this.toggleSnapshot.bind(this));
+
+      _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
+        _this5.viewport(args.viewport);
+      });
     }
     /**
      * After observables updated, allows to modify observables

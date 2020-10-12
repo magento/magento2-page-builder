@@ -40,14 +40,17 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
           // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
           var style = _this.wrapper.getAttribute("style") || _this.wrapper.getAttribute("data-jarallax-original-styles");
 
-          var backgroundImage = _this.contentType.dataStore.get("background_image");
+          var backgroundImage = _this.getBackgroundImage();
 
           jarallax(_this.wrapper, "destroy");
 
           _this.wrapper.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
-            _this.wrapper.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          if (_this.contentType.dataStore.get("background_type") !== "video"
+              && _this.wrapper.style.backgroundImage !== backgroundImage
+              && backgroundImage !== "none"
+          ) {
+            _this.wrapper.style.backgroundImage = backgroundImage;
           }
         } catch (e) {// Failure of destroying is acceptable
         }
@@ -83,10 +86,23 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
     var _proto = Preview.prototype;
 
     /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
+    /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
+    ;
+
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _preview2.prototype.retrieveOptions.call(this);
 
@@ -455,6 +471,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
 
       _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
         _this8.contentType.dataStore.set("background_type", "image");
+      });
+
+      _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
+        if (_this8.contentType.dataStore.get("background_type") === "video") {
+          _this8.buildJarallax();
+        }
       });
     }
     /**

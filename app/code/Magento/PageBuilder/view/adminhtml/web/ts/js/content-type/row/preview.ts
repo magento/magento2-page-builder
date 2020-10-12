@@ -39,11 +39,14 @@ export default class Preview extends PreviewCollection {
             // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
             const style = this.element.getAttribute("style") ||
                 this.element.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
+            const backgroundImage = this.getBackgroundImage();
             jarallax(this.element, "destroy");
             this.element.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
-                this.element.style.backgroundImage = `url(${backgroundImage[0].url})`;
+            if (this.contentType.dataStore.get("background_type") as string !== "video" &&
+                this.element.style.backgroundImage !== backgroundImage &&
+                backgroundImage !== "none"
+            ) {
+                this.element.style.backgroundImage = backgroundImage;
             }
         } catch (e) {
             // Failure of destroying is acceptable
@@ -140,6 +143,26 @@ export default class Preview extends PreviewCollection {
             `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
             this.toggleFullScreen.bind(this),
         );
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
+            if (this.contentType.dataStore.get("background_type") === "video") {
+                this.buildJarallax();
+            }
+        });
+    }
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
     }
 
     /**
