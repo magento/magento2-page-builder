@@ -70,27 +70,85 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.noAlignment('1')}}" stepKey="seeAlignmentStage"/>
-        <seeElement selector="{{BannerOnBackend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage"/>
-        <seeElement selector="{{BannerOnBackend.noBorderColor('1')}}" stepKey="seeBorderColorStage"/>
-        <seeElement selector="{{BannerOnBackend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage"/>
-        <seeElement selector="{{BannerOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeAlignmentStage">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderStage">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyNone.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{BannerOnBackend.advancedConfigurationPath('1')}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{BannerOnBackend.advancedConfigurationPath('1')}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <assertEquals stepKey="seeBorderColorStage">
+            <expectedResult type="variable">grabColorValue</expectedResult>
+            <actualResult type="variable">grabBorderColorValue</actualResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderWidthStage">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderRadiusStage">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
         <seeElement selector="{{BannerOnBackend.noCssClasses('1')}}" stepKey="seeCSSClassesStage"/>
-        <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStage"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStage">
+            <argument name="selector" value="{{BannerOnBackend.bannerPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStage">
+            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{BannerOnBackend.noAlignment('1')}}" stepKey="seeAlignmentStage2"/>
-        <seeElement selector="{{BannerOnBackend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage2"/>
-        <seeElement selector="{{BannerOnBackend.noBorderColor('1')}}" stepKey="seeBorderColorStage2"/>
-        <seeElement selector="{{BannerOnBackend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage2"/>
-        <seeElement selector="{{BannerOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage2"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeAlignmentStage2">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderStage2">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyNone.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{BannerOnBackend.advancedConfigurationPath('1')}}', document.body).iterateNext()).color" stepKey="grabColorValueAfterSave"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{BannerOnBackend.advancedConfigurationPath('1')}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValueAfterSave"/>
+        <assertEquals stepKey="seeBorderColorStage2">
+            <expectedResult type="variable">grabColorValueAfterSave</expectedResult>
+            <actualResult type="variable">grabBorderColorValueAfterSave</actualResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderWidthStage2">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBorderRadiusStage2">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
         <seeElement selector="{{BannerOnBackend.noCssClasses('1')}}" stepKey="seeCSSClassesStage2"/>
-        <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStage2"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStage2">
+            <argument name="selector" value="{{BannerOnBackend.bannerPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStage2">
+            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -125,13 +183,42 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.noAlignment('1')}}" stepKey="seeInDOMAlignmentStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeInDOMBorderStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.noBorderColor('1')}}" stepKey="seeInDOMBorderColorStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeInDOMBorderWidthStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeInDOMBorderRadiusStorefront"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeInDOMAlignmentStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyStart.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeInDOMBorderStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderPropertyNone.value}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{BannerOnFrontend.advancedConfigurationPath('1')}}', document.body).iterateNext()).color" stepKey="grabColorValueStorefront"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{BannerOnFrontend.advancedConfigurationPath('1')}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValueStorefront"/>
+        <assertEquals stepKey="seeInDOMBorderColorStorefront">
+            <expectedResult type="variable">grabColorValueStorefront</expectedResult>
+            <actualResult type="variable">grabBorderColorValueStorefront</actualResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeInDOMBorderWidthStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeInDOMBorderRadiusStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
         <seeElementInDOM selector="{{BannerOnFrontend.noCssClasses('1')}}" stepKey="seeInDOMCSSClassesStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeInDOMMarginsStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMPaddingStorefront"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeInDOMMarginsStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.bannerPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeInDOMPaddingStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
     </test>
 </tests>

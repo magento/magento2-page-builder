@@ -44,7 +44,11 @@
         <!-- Validate Stage: Poster -->
         <comment userInput="Validate Stage: Poster" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent"/>
-        <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForPoster"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForPoster">
+            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay"/>
         <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStage"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStage"/>
@@ -61,7 +65,11 @@
         <!-- Validate Storefront: Poster -->
         <comment userInput="Validate Storefront: Poster" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend1"/>
-        <seeElement selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterInFrontEnd"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePosterInFrontEnd">
+            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeePosterMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend1"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInFrontend1"/>
@@ -86,7 +94,11 @@
         <!-- Validate Stage: Collage Left -->
         <comment userInput="Validate Stage: Collage Left" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent2"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForCollageLeft"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForCollageLeft">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay2"/>
         <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton1"/>
         <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner1"/>
@@ -100,7 +112,11 @@
         <!-- Validate Storefront: Collage Left -->
         <comment userInput="Validate Storefront: Collage Left" stepKey="commentValidateStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend2"/>
-        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeCollageLeftInFrontEnd"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeCollageLeftInFrontEnd">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend2"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInInFrontend2"/>
@@ -125,7 +141,11 @@
         <!-- Validate Stage: Collage Center -->
         <comment userInput="Validate Stage: Collage Center" stepKey="commentValidateStage3"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent3"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForCollageCenter"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForCollageCenter">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay3"/>
         <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton3"/>
         <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner2"/>
@@ -139,7 +159,11 @@
         <!-- Validate Storefront: Collage Center -->
         <comment userInput="Validate Storefront: Collage Center" stepKey="commentValidateStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend3"/>
-        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeCollageCenterInFrontEnd"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeCollageCenterInFrontEnd">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageCenterMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend3"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInFrontend3"/>
@@ -164,7 +188,11 @@
         <!-- Validate Stage: Collage Right -->
         <comment userInput="Validate Stage: Collage Right" stepKey="commentValidateStage4"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent4"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForCollageRight"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForCollageRight">
+            <argument name="selector" value="{{BannerOnBackend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay4"/>
         <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton4"/>
         <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner3"/>
@@ -178,7 +206,11 @@
         <!-- Validate Storefront: Collage Right -->
         <comment userInput="Validate Storefront: Collage Right" stepKey="commentValidateStorefront4"/>
         <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend4"/>
-        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeCollageRightInFrontEnd"/>
+        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeCollageRightInFrontEnd">
+            <argument name="selector" value="{{BannerOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageRightMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend4"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInFrontend4"/>
