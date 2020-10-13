@@ -30,10 +30,23 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
 
       _this = _previewCollection2.call.apply(_previewCollection2, [this].concat(args)) || this;
       _this.fieldsToIgnoreOnRemove = ["tab_name"];
+
       return _this;
     }
 
     var _proto = Preview.prototype;
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    _proto.getBackgroundImage = function getBackgroundImage() {
+        var mobileImage = this.contentType.dataStore.get("mobile_image");
+        var desktopImage = this.contentType.dataStore.get("background_image");
+        var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+        return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    };
 
     /**
      * Force the focus on the clicked tab header

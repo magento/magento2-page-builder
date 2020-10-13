@@ -106,11 +106,14 @@ export default class Preview extends BasePreview {
             // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
             const style = this.wrapper.getAttribute("style") ||
                 this.wrapper.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
+            const backgroundImage = this.getBackgroundImage();
             jarallax(this.wrapper, "destroy");
             this.wrapper.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
-                this.wrapper.style.backgroundImage = `url(${backgroundImage[0].url})`;
+            if (this.contentType.dataStore.get("background_type") as string !== "video" &&
+                this.wrapper.style.backgroundImage !== backgroundImage &&
+                backgroundImage !== "none"
+            ) {
+                this.wrapper.style.backgroundImage = backgroundImage;
             }
         } catch (e) {
             // Failure of destroying is acceptable
@@ -148,6 +151,21 @@ export default class Preview extends BasePreview {
         }
 
     }, 50);
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
+    }
 
     /**
      * Return an array of options
@@ -511,6 +529,11 @@ export default class Preview extends BasePreview {
         }.bind(this));
         events.on(`image:${this.contentType.id}:uploadAfter`, () => {
             this.contentType.dataStore.set("background_type", "image");
+        });
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
+            if (this.contentType.dataStore.get("background_type") === "video") {
+                this.buildJarallax();
+            }
         });
     }
 

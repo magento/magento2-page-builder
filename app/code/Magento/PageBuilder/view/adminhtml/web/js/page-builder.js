@@ -1,5 +1,10 @@
 /*eslint-disable */
 /* jscs:disable */
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "Magento_Ui/js/modal/alert", "mageUtils", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _translate, _events, _loader, _alert, _mageUtils, _underscore, _acl, _config, _contentTypeFactory, _panel, _stage, _templateManager) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -216,12 +221,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
-    }
+    };
+
     /**
      * Toggle template manager
      */
-    ;
-
     _proto.toggleTemplateManger = function toggleTemplateManger() {
       if (!(0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY)) {
         (0, _alert)({
@@ -247,6 +251,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleViewport = function toggleViewport(viewport) {
       var previousViewport = this.viewport();
       this.viewport(viewport);
+
+      _config.setConfig({
+        viewport: viewport
+      });
 
       _events.trigger("stage:" + this.id + ":viewportChangeAfter", {
         viewport: viewport,
@@ -296,6 +304,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
       this.viewport(this.defaultViewport);
 
+      _config.setConfig({
+        viewport: this.defaultViewport
+      });
+
       _underscore.each(this.viewports, function (viewport, name) {
         _this4.viewportClasses[name + "-viewport"] = _knockout.observable(name === _this4.defaultViewport);
       });
@@ -304,7 +316,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _createClass(PageBuilder, [{
       key: "viewportTemplate",
       get: function get() {
-          return "Magento_PageBuilder/viewport/switcher";
+        return "Magento_PageBuilder/viewport/switcher";
       }
     }]);
 

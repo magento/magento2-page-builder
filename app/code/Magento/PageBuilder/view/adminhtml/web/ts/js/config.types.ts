@@ -16,6 +16,7 @@ export default interface ConfigInterface {
     column_grid_max: string;
     can_use_inline_editing_on_stage: boolean;
     widgets: WidgetsInterface;
+    viewport: string;
 }
 
 export type Mode = "Preview" | "Master";

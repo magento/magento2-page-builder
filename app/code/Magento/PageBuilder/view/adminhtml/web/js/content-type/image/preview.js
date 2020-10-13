@@ -93,6 +93,17 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
       this.getUploader().getUiComponent()(function (uploader) {
         uploader.visibleControls = !_this2.isSnapshot();
       });
+    }
+    /**
+     * Get viewport image data
+     */
+    ;
+
+    _proto.getViewportImageData = function getViewportImageData() {
+        var _this3 = this;
+        var desktopImageData = _this3.data.desktop_image;
+        var mobileImageData = _this3.data.mobile_image;
+        return _this3.viewport() === "mobile" && typeof mobileImageData !== "undefined" ? mobileImageData : desktopImageData
     };
 
     return Preview;

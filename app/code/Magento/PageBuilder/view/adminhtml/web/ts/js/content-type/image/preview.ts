@@ -86,4 +86,13 @@ export default class Preview extends BasePreview {
             uploader.visibleControls = !this.isSnapshot();
         });
     }
+
+    /**
+     * Get viewport image data
+     */
+    public getViewportImageData() {
+        const desktopImageData = this.data.desktop_image;
+        const mobileImageData = this.data.mobile_image;
+        return this.viewport() === "mobile" && typeof mobileImageData !== "undefined" ? mobileImageData : desktopImageData
+    }
 }
