@@ -26,6 +26,16 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       return parseInt(this.columnGroup.dataStore.get("grid_size").toString(), 10);
     }
     /**
+     * Get the previous grid size for this columnGroup
+     *
+     * @returns {number}
+     */
+    ;
+
+    _proto.getPreviousGridSize = function getPreviousGridSize() {
+      return parseInt(this.columnGroup.dataStore.getPreviousState().grid_size.toString(), 10);
+    }
+    /**
      * Get the smallest column width possible
      *
      * @param {number} gridSize

@@ -25,6 +25,15 @@ export default class Resize {
     }
 
     /**
+     * Get the previous grid size for this columnGroup
+     *
+     * @returns {number}
+     */
+    public getPreviousGridSize(): number {
+        return parseInt(this.columnGroup.dataStore.getPreviousState().grid_size.toString(), 10);
+    }
+
+    /**
      * Get the smallest column width possible
      *
      * @param {number} gridSize

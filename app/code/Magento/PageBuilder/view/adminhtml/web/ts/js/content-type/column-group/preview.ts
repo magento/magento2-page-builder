@@ -52,11 +52,14 @@ export default class Preview extends PreviewCollection {
     public gridSize: KnockoutObservable<number> = ko.observable();
     public gridSizeInput: KnockoutObservable<number> = ko.observable();
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
-    public gridSizeError: KnockoutObservable<string> = ko.observable();
     public gridSizeMax: KnockoutObservable<number> = ko.observable(getMaxGridSize());
-    public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
     public gridChange: KnockoutObservable<boolean> = ko.observable(false);
+    /** @deprecated */
     public gridToolTipOverFlow: KnockoutObservable<boolean> = ko.observable(false);
+    /** @deprecated */
+    public gridSizeError: KnockoutObservable<string> = ko.observable();
+    /** @deprecated */
+    public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
     private dropPlaceholder: JQuery;
     private movePlaceholder: JQuery;
     private groupElement: JQuery;
@@ -126,6 +129,13 @@ export default class Preview extends PreviewCollection {
             // Does the events parent match the previews column group?
             if (args.columnGroup.id === this.contentType.id) {
                 this.bindDraggable(args.column);
+            }
+        });
+
+        events.on("form:" + this.contentType.id + ":saveAfter", (data: DataObject) => {
+            if (data.grid_size !== this.gridSizeInput()) {
+                this.gridSizeInput(parseFloat(data.grid_size));
+                this.resizeGrid(parseFloat(data.grid_size));
             }
         });
 
@@ -387,8 +397,16 @@ export default class Preview extends PreviewCollection {
         });
     }
 
+    /** @inheritdoc */
+    public openEdit(): void {
+        super.openEdit();
+        this.recordGridResize(this.gridSize());
+    }
+
     /**
      * Update the grid size on enter or blur of the input
+     *
+     * @deprecated
      */
     public updateGridSize() {
         if (!$.isNumeric(this.gridSizeInput())) {
@@ -398,27 +416,7 @@ export default class Preview extends PreviewCollection {
         const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
         if (newGridSize || newGridSize === 0) {
             if (newGridSize !== this.resizeUtils.getGridSize()) {
-                try {
-                    resizeGrid(
-                        this.contentType,
-                        newGridSize,
-                        this.gridSizeHistory,
-                    );
-                    this.recordGridResize(newGridSize);
-                    this.gridSizeError(null);
-
-                    // Make the grid "flash" on successful change
-                    this.gridChange(true);
-                    _.delay(() => {
-                        this.gridChange(false);
-                    }, 1000);
-                } catch (e) {
-                    if (e instanceof GridSizeError) {
-                        this.gridSizeError(e.message);
-                    } else {
-                        throw e;
-                    }
-                }
+                this.resizeGrid(newGridSize);
             } else {
                 this.gridSizeError(null);
             }
@@ -430,6 +428,7 @@ export default class Preview extends PreviewCollection {
      *
      * @param {Preview} context
      * @param {KeyboardEvent} event
+     * @deprecated
      */
     public onGridInputKeyUp(context: Preview, event: KeyboardEvent) {
         if (event.which === 13 || event.keyCode === 13) {
@@ -439,6 +438,8 @@ export default class Preview extends PreviewCollection {
 
     /**
      * On grid input blur, update the grid size
+     *
+     * @deprecated
      */
     public onGridInputBlur() {
         this.updateGridSize();
@@ -446,6 +447,8 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Hide grid size panel on focus out
+     *
+     * @deprecated
      */
     public closeGridForm(): void {
         this.updateGridSize();
@@ -460,6 +463,8 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Show grid size panel on click and start interaction
+     *
+     * @deprecated
      */
     public openGridForm(): void {
         const tooltip = $(this.wrapperElement).find("[role='tooltip']");
@@ -487,11 +492,41 @@ export default class Preview extends PreviewCollection {
      * Handle a click on the document closing the grid form
      *
      * @param {Event} event
+     * @deprecated
      */
     private onDocumentClick = (event: JQueryEventObject) => {
         // Verify the click event wasn't within our form
         if (!$.contains($(this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], $(event.target)[0])) {
             this.closeGridForm();
+        }
+    }
+
+    /**
+     * Resize grid.
+     *
+     * @param gridSize
+     */
+    private resizeGrid(gridSize: number): void {
+        try {
+            resizeGrid(
+                this.contentType,
+                gridSize,
+                this.gridSizeHistory,
+            );
+            this.recordGridResize(gridSize);
+            this.gridSizeError(null);
+
+            // Make the grid "flash" on successful change
+            this.gridChange(true);
+            _.delay(() => {
+                this.gridChange(false);
+            }, 1000);
+        } catch (e) {
+            if (e instanceof GridSizeError) {
+                this.gridSizeError(e.message);
+            } else {
+                throw e;
+            }
         }
     }
 

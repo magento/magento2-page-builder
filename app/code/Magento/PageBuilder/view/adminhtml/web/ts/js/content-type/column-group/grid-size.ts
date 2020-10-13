@@ -46,7 +46,7 @@ export function resizeGrid(
     newGridSize: number,
     gridSizeHistory: Map<number, number[]>,
 ) {
-    if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
+    if (newGridSize === columnGroup.preview.getResizeUtils().getPreviousGridSize()) {
         return;
     }
 
@@ -78,7 +78,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
 
     // Validate that the operation will be successful
     const numCols = columnGroup.getChildren()().length;
-    const currentGridSize = columnGroup.preview.getResizeUtils().getGridSize();
+    const currentGridSize = columnGroup.preview.getResizeUtils().getPreviousGridSize();
     if (newGridSize < currentGridSize && numCols > newGridSize) {
         let numEmptyColumns = 0;
         columnGroup.getChildren()().forEach(
@@ -140,7 +140,7 @@ function redistributeColumnWidths(
     }
 
     const resizeUtils = columnGroup.preview.getResizeUtils();
-    const existingGridSize = resizeUtils.getGridSize();
+    const existingGridSize = resizeUtils.getPreviousGridSize();
     const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
         Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
     );
@@ -149,7 +149,10 @@ function redistributeColumnWidths(
     let remainingWidth: number = 0;
     columnGroup.getChildren()().forEach(
         (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
-            const existingWidth = resizeUtils.getColumnWidth(column);
+            const existingWidth = resizeUtils.getAcceptedColumnWidth(
+                column.dataStore.get("width").toString(),
+                existingGridSize,
+            );
             const fractionColumnWidth = Math.round(existingWidth / (100 / existingGridSize));
             /**
              * Determine if the grid & column are directly compatible with the new defined grid size, this will directly
