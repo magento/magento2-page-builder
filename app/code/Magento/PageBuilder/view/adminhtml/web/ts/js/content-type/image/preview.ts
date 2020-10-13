@@ -54,6 +54,16 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Get viewport image data
+     */
+    public getViewportImageData() {
+        const desktopImageData = this.data.desktop_image;
+        const mobileImageData = this.data.mobile_image;
+        return this.viewport() === "mobile" && typeof mobileImageData !== "undefined"
+            ? mobileImageData : desktopImageData;
+    }
+
+    /**
      * @inheritDoc
      */
     protected bindEvents() {
@@ -85,14 +95,5 @@ export default class Preview extends BasePreview {
         this.getUploader().getUiComponent()((uploader: any) => {
             uploader.visibleControls = !this.isSnapshot();
         });
-    }
-
-    /**
-     * Get viewport image data
-     */
-    public getViewportImageData() {
-        const desktopImageData = this.data.desktop_image;
-        const mobileImageData = this.data.mobile_image;
-        return this.viewport() === "mobile" && typeof mobileImageData !== "undefined" ? mobileImageData : desktopImageData
     }
 }
