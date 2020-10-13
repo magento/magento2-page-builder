@@ -29,5 +29,10 @@
         </assertEquals>
         <remove keyForRemoval="waitForCSSClassesVisible"/>
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible" after="assertBorderRadius"/>
+        <remove keyForRemoval="assertMargin"/>
+        <assertEquals stepKey="assertNoMargins" after="grabMarginValue">
+            <expectedResult type="string">{{defaultMargin}}</expectedResult>
+            <actualResult type="variable">grabMarginValue</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>

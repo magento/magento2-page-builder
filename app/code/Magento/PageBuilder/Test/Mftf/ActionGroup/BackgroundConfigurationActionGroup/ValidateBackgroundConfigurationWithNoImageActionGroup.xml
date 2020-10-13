@@ -6,45 +6,20 @@
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="ValidateBackgroundConfigurationWithNoImageActionGroup">
+    <actionGroup name="ValidateBackgroundConfigurationWithNoImageActionGroup" extends="ValidateAllBackgroundAttributesActionGroup">
         <annotations>
             <description>Validate background configuration (excl. images)</description>
         </annotations>
         <arguments>
-            <argument name="section"/>
-            <argument name="backgroundColor"/>
-            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
-            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
-            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
-            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
-            <argument name="index" defaultValue="1" type="string"/>
+             <argument name="backgroundColor"/>
+            <argument name="backgroundImage" defaultValue=""/>
         </arguments>
-        <comment userInput="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="comment"/>
-        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
-        <assertEquals stepKey="assertBackgroundColor">
-            <expectedResult type="string">{{backgroundColor.rgb}}</expectedResult>
-            <actualResult type="variable">grabBackgroundColorValue</actualResult>
-        </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundPosition" stepKey="grabBackgroundPositionValue"/>
-        <assertEquals stepKey="assertBackgroundPosition">
-            <expectedResult type="string">{{backgroundPosition.computedStyleValue}}</expectedResult>
-            <actualResult type="variable">grabBackgroundPositionValue</actualResult>
-        </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundSize" stepKey="grabBackgroundSizeValue"/>
-        <assertEquals stepKey="assertBackgroundSize">
-            <expectedResult type="string">{{backgroundSize.value}}</expectedResult>
-            <actualResult type="variable">grabBackgroundSizeValue</actualResult>
-        </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundRepeat" stepKey="grabBackgroundRepeatValue"/>
-        <assertEquals stepKey="assertBackgroundRepeat">
-            <expectedResult type="string">{{backgroundRepeat.value}}</expectedResult>
-            <actualResult type="variable">grabBackgroundRepeatValue</actualResult>
-        </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundAttachment" stepKey="grabBackgroundAttachmentValue"/>
-        <assertEquals stepKey="assertBackgroundAttachment">
-            <expectedResult type="string">{{backgroundAttachment.value}}</expectedResult>
-            <actualResult type="variable">grabBackgroundAttachmentValue</actualResult>
-        </assertEquals>
+        <remove keyForRemoval="comment"/>
+        <comment userInput="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="comment" before="waitForBaseElement"/>
+        <remove keyForRemoval="backgroundImageRawValue"/>
+        <remove keyForRemoval="backgroundImageValue"/>
+        <remove keyForRemoval="regexFilePath"/>
+        <remove keyForRemoval="actualImageResult"/>
+        <remove keyForRemoval="assertBackgroundImageContainsFileInformation"/>
     </actionGroup>
 </actionGroups>
