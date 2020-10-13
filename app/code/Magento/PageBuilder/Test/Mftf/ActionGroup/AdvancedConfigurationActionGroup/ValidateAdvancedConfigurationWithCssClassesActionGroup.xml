@@ -9,16 +9,16 @@
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAdvancedConfigurationWithCssClassesActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validate Css classes property."/>
+            <description value="Validate Css  classes property."/>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0.value"/>
             <argument name="cssClasses" defaultValue="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </arguments>
         <remove keyForRemoval="assertAlignment"/>
         <assertEquals stepKey="assertDefaultAlignmentVisible" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
+            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>

@@ -8,23 +8,22 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAllBackgroundAttributesActionGroup">
         <annotations>
-            <description>Validate all content type background styles</description>
+            <description>Validate all content type background  styles</description>
         </annotations>
         <arguments>
             <argument name="section"/>
-            <argument name="backgroundColor" defaultValue="PageBuilderStageBackgroundColor_Default"/>
+            <argument name="backgroundColor" defaultValue="PageBuilderStageBackgroundColor_Default.rgb"/>
             <argument name="backgroundImage" defaultValue="PageBuilderBackgroundImage_Default"/>
-            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
-            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
-            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
-            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default.computedStyleValue"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default.value"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default.value"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default.value"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <comment userInput="ValidateAllBackgroundAttributesActionGroup" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
         <assertEquals stepKey="assertBackgroundColor">
-            <expectedResult type="string">{{backgroundColor.rgb}}</expectedResult>
+            <expectedResult type="string">{{backgroundColor}}</expectedResult>
             <actualResult type="variable">grabBackgroundColorValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundImage" stepKey="backgroundImageRawValue"/>
@@ -38,22 +37,22 @@
         </assertTrue>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundPosition" stepKey="grabBackgroundPositionValue"/>
         <assertEquals stepKey="assertBackgroundPosition">
-            <expectedResult type="string">{{backgroundPosition.computedStyleValue}}</expectedResult>
+            <expectedResult type="string">{{backgroundPosition}}</expectedResult>
             <actualResult type="variable">grabBackgroundPositionValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundSize" stepKey="grabBackgroundSizeValue"/>
         <assertEquals stepKey="assertBackgroundSize">
-            <expectedResult type="string">{{backgroundSize.value}}</expectedResult>
+            <expectedResult type="string">{{backgroundSize}}</expectedResult>
             <actualResult type="variable">grabBackgroundSizeValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundRepeat" stepKey="grabBackgroundRepeatValue"/>
         <assertEquals stepKey="assertBackgroundRepeat">
-            <expectedResult type="string">{{backgroundRepeat.value}}</expectedResult>
+            <expectedResult type="string">{{backgroundRepeat}}</expectedResult>
             <actualResult type="variable">grabBackgroundRepeatValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundAttachment" stepKey="grabBackgroundAttachmentValue"/>
         <assertEquals stepKey="assertBackgroundAttachment">
-            <expectedResult type="string">{{backgroundAttachment.value}}</expectedResult>
+            <expectedResult type="string">{{backgroundAttachment}}</expectedResult>
             <actualResult type="variable">grabBackgroundAttachmentValue</actualResult>
         </assertEquals>
     </actionGroup>
