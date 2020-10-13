@@ -58,9 +58,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return empty;
       });
       _this.gridSize = _knockout.observable();
+      _this.gridSizeInput = _knockout.observable();
       _this.gridSizeArray = _knockout.observableArray([]);
       _this.gridSizeMax = _knockout.observable((0, _gridSize.getMaxGridSize)());
-      _this.gridSizeInput = _knockout.observable();
       _this.gridChange = _knockout.observable(false);
       _this.gridToolTipOverFlow = _knockout.observable(false);
       _this.gridSizeError = _knockout.observable();
