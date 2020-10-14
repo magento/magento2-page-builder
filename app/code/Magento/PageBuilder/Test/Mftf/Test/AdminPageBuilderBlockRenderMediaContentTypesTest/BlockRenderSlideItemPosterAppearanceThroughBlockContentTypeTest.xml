@@ -157,6 +157,7 @@
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
+        <waitForPageLoad time="30" stepKey="waitForOverlayTransitionStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverCMSBlockStage">
             <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
