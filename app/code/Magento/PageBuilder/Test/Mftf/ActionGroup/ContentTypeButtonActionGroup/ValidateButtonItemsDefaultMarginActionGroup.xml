@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /**
-  * Copyright © Magento, Inc.  All rights reserved.
+  * Copyright © Magento, Inc. All rights reserved.
   * See COPYING.txt for license details.
   */
 -->
@@ -12,6 +12,7 @@
             <argument name="buttonItemPage"/>
             <argument name="buttonIndex" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="Validate default margin" stepKey="comment"/>
         <executeJS function="return window.getComputedStyle({{buttonItemPage.jsButtonSelector(buttonIndex)}}).margin.replace(/px/g, &quot;&quot;)" stepKey="getDefaultMarginValueStage"/>
         <assertEquals stepKey="checkDefaultMarginValueStage">
             <expectedResult type="string">{{PageBuilderMarginsPropertyButtonItemDefault.value}}</expectedResult>
