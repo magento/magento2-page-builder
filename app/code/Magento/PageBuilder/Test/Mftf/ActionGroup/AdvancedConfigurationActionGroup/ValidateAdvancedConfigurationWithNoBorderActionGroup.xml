@@ -9,14 +9,14 @@
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAdvancedConfigurationWithNoBorderActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validate options without border style value."/>
+            <description value="Validate options  without border style value."/>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
         </arguments>
         <remove keyForRemoval="assertAlignment"/>
         <assertEquals stepKey="assertDefaultAlignment" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
+            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <remove keyForRemoval="assertBorderStyle"/>

@@ -9,14 +9,13 @@
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateBackgroundImageConfigurationActionGroup">
         <annotations>
-            <description>Validate Background Image</description>
+            <description>Validate  Background Image</description>
         </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage" defaultValue="PageBuilderBackgroundImage_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <comment userInput="ValidateBackgroundImageConfigurationActionGroup" stepKey="comment"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundImage" stepKey="backgroundImageRawValue"/>
         <!-- Return the string value of background-image -->
         <executeJS function="return '{{backgroundImage.value}}' ? '{$backgroundImageRawValue}'.match(/(?&lt;=(url\((&quot;|\'))).+(?=(&quot;|\')\))/)[0] : ''" stepKey="backgroundImageValue"/>

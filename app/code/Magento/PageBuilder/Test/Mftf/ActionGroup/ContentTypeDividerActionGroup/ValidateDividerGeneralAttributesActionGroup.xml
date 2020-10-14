@@ -9,24 +9,24 @@
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateDividerGeneralAttributesActionGroup">
         <annotations>
-            <description>Validate Devider general attributes</description>
+            <description>Validate  Devider general attributes</description>
         </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="lineColor" defaultValue="PageBuilderDividerLineColor_Default"/>
-            <argument name="lineThickness" defaultValue="PageBuilderDividerLineThickness_Default"/>
+            <argument name="lineColor" defaultValue="PageBuilderDividerLineColor_Default.rgb"/>
+            <argument name="lineThickness" defaultValue="PageBuilderDividerLineThickness_Default.value"/>
             <argument name="lineWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderTopColor" stepKey="grabColorValue"/>
         <assertEquals stepKey="assertColorValue">
-            <expectedResult type="string">{{lineColor.rgb}}</expectedResult>
+            <expectedResult type="string">{{lineColor}}</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.lineElement(index)}}', document.body).iterateNext()).borderTopWidth" stepKey="grabBorderWidthValue"/>
         <assertEquals stepKey="assertThicknessValue">
-            <expectedResult type="string">{{lineThickness.value}}px</expectedResult>
+            <expectedResult type="string">{{lineThickness}}px</expectedResult>
             <actualResult type="variable">grabBorderWidthValue</actualResult>
         </assertEquals>
         <executeJS function="return document.evaluate('{{page.lineWrapper(index)}}', document.body).iterateNext().clientWidth" stepKey="grabDividerLineWrapperWidth"/>
