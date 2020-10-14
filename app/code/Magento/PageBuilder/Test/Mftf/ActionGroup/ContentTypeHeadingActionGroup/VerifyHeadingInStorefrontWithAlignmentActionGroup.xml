@@ -2,25 +2,19 @@
 <!--
  /**
   * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
+  * See COPYING.txt for license  details.
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="verifyHeadingInStorefrontWithAlignment">
+    <actionGroup name="verifyHeadingInStorefrontWithAlignment" extends="verifyHeadingInStorefront">
         <arguments>
-            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
-            <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
-            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{HeadingOnStorefront.headingElement(headingType.value, index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
-        <assertEquals stepKey="waitForAlignmentVisible">
-            <expectedResult type="string">{{alignment.value}}</expectedResult>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
+         </arguments>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{HeadingOnStorefront.headingElement(headingType.value, index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue" after="waitForAnimation"/>
+        <assertEquals stepKey="waitForAlignmentVisible" after="grabAlignmentValue">
+            <expectedResult type="string">{{alignment}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingType(headingType.value, index)}}" stepKey="waitForStorefrontHeadingStyle"/>
-        <seeElement selector="{{HeadingOnStorefront.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStorefrontHeadingText"/>
     </actionGroup>
 </actionGroups>

@@ -8,23 +8,23 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateLayoutConfigurationWithAllUpdatedActionGroup">
         <annotations>
-            <description>Validates Layout configuration</description>
+            <description>Validates Layout  configuration</description>
         </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="minHeight" defaultValue="PageBuilderMinHeightProperty_Empty"/>
-            <argument name="verticalAlign" defaultValue="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="minHeight" defaultValue="PageBuilderMinHeightProperty_Empty.value"/>
+            <argument name="verticalAlign" defaultValue="PageBuilderVerticalAlignmentPropertyCenter.value"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForContentType"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.minHeightPath(index)}}', document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="grabMinHeightValue"/>
         <assertEquals stepKey="assertMinHeightVisible">
-            <expectedResult type="string">{{minHeight.value}}</expectedResult>
+            <expectedResult type="string">{{minHeight}}</expectedResult>
             <actualResult type="variable">grabMinHeightValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.verticalAlignContainerPath(index)}}', document.body).iterateNext()).justifyContent" stepKey="grabVerticalAlignValue"/>
         <assertEquals stepKey="verticalAlignVisible">
-            <expectedResult type="string">{{verticalAlign.value}}</expectedResult>
+            <expectedResult type="string">{{verticalAlign}}</expectedResult>
             <actualResult type="variable">grabVerticalAlignValue</actualResult>
         </assertEquals>
     </actionGroup>

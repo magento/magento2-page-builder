@@ -8,14 +8,12 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateBackgroundConfigurationWithNoImageActionGroup" extends="ValidateAllBackgroundAttributesActionGroup">
         <annotations>
-            <description>Validate background configuration (excl. images)</description>
+            <description>Validate  background configuration (excl. images)</description>
         </annotations>
         <arguments>
-             <argument name="backgroundColor"/>
+             <argument name="backgroundColor" defaultValue=""/>
             <argument name="backgroundImage" defaultValue=""/>
         </arguments>
-        <remove keyForRemoval="comment"/>
-        <comment userInput="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="comment" before="waitForBaseElement"/>
         <remove keyForRemoval="backgroundImageRawValue"/>
         <remove keyForRemoval="backgroundImageValue"/>
         <remove keyForRemoval="regexFilePath"/>

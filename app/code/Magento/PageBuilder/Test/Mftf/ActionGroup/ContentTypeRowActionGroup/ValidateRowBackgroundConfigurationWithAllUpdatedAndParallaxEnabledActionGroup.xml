@@ -9,7 +9,7 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateRowBackgroundConfigurationWithAllUpdatedAndParallaxEnabledActionGroup">
         <annotations>
-            <description>Validates row Background configuration with enabled parallax</description>
+            <description>Validates  row Background configuration with enabled parallax</description>
         </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
@@ -21,7 +21,6 @@
             <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Disabled"/>
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Scroll"/>
         </arguments>
-        <comment userInput="validateRowBackgroundConfigurationWithAllUpdatedAndParallaxEnabled" stepKey="comment"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
         <assertEquals stepKey="assertBackgroundColor">
