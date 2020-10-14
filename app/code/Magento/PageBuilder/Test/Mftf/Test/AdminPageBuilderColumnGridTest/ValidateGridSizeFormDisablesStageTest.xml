@@ -51,7 +51,8 @@
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeLabelByText(PageBuilderRowContentType.role, 'ROW')}}" x="0" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
     </test>
