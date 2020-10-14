@@ -7,26 +7,25 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-        <actionGroup name="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+    <actionGroup name="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validate all  options without alignment property."/>
+            <description value="Validate Advanced Configuration without Alignment, Css classes and Border"/>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0.value"/>
+            <argument name="page" defaultValue=""/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
         </arguments>
-        <remove keyForRemoval="assertAlignment"/>
-        <assertEquals stepKey="assertDefaultAlignmentVisible" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+        <assertEquals stepKey="assertAlignment">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>
-        <remove keyForRemoval="assertBorderColor"/>
-        <assertEquals stepKey="assertBorderColorVisible" after="grabColorValue">
+        <assertEquals stepKey="assertBorderColor">
             <expectedResult type="variable">grabBorderColorValue</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
-        <remove keyForRemoval="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible" after="assertBorderRadius"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
     </actionGroup>
 </actionGroups>

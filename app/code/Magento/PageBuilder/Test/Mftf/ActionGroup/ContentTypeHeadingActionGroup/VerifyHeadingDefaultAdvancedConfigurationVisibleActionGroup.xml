@@ -9,16 +9,16 @@
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="VerifyHeadingDefaultAdvancedConfigurationVisibleActionGroup" extends="VerifyHeadingAdvancedConfigurationWithAllOptionsUpdatedActionGroup">
         <annotations>
-            <description>Verifies heading  with visible properties</description>
+            <description>Validate that in Heading Advanced Configuration default values were set</description>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyStart.value"/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="defaultPadding" defaultValue="0" type="string"/>
             <argument name="defaultMargin" defaultValue="25 0 20" type="string"/>
         </arguments>
         <remove keyForRemoval="assertAlignmentVisible"/>
         <assertEquals stepKey="assertDefaultAlignmentVisible" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.headingElement(headingType.value, index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>

@@ -9,17 +9,17 @@
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAdvancedConfigurationWithBorderColorActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validate Border color  value."/>
+            <description value="Validates Advanced configuration without Alignment and Css classes"/>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
+            <argument name="page" defaultValue=""/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
         </arguments>
-        <remove keyForRemoval="assertAlignment"/>
-        <assertEquals stepKey="assertDefaultAlignment" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+        <assertEquals stepKey="assertAlignment">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
-        <remove keyForRemoval="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible" after="assertBorderRadius"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
     </actionGroup>
 </actionGroups>

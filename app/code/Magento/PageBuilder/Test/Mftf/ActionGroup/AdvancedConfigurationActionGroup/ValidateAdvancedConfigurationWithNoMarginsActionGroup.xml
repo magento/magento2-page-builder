@@ -9,16 +9,15 @@
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAdvancedConfigurationWithNoMarginsActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validate options without  margins."/>
+            <description value="Validates styles from Advanced configuration without margin"/>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="defaultMargin" type="string" defaultValue="0"/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0.value"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
         </arguments>
-        <remove keyForRemoval="assertAlignment"/>
-        <assertEquals stepKey="assertDefaultAlignmentVisible" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+        <assertEquals stepKey="assertAlignment">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>
@@ -27,10 +26,8 @@
             <expectedResult type="variable">grabBorderColorValue</expectedResult>
             <actualResult type="variable">grabColorValue</actualResult>
         </assertEquals>
-        <remove keyForRemoval="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible" after="assertBorderRadius"/>
         <remove keyForRemoval="assertMargin"/>
-        <assertEquals stepKey="assertNoMargins" after="grabMarginValue">
+        <assertEquals stepKey="assertDefaultContentTypeMargins" after="grabMarginValue">
             <expectedResult type="string">{{defaultMargin}}</expectedResult>
             <actualResult type="variable">grabMarginValue</actualResult>
         </assertEquals>

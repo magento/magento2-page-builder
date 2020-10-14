@@ -9,7 +9,7 @@
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAdvancedConfigurationWithAlignmentActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validate alignment property."/>
+            <description value="Validates styles from Advanced configuration in without border and css classes"/>
         </annotations>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>
         <remove keyForRemoval="assertBorderColor"/>

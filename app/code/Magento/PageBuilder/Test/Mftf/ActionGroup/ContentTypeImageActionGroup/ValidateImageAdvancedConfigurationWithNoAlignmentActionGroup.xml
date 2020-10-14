@@ -9,31 +9,26 @@
     xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateImageAdvancedConfigurationWithNoAlignmentActionGroup" extends="ValidateImageAdvancedConfigurationActionGroup">
         <annotations>
-            <description>Validates  image (excl. alignment)</description>
+            <description>Validates default values for Image Advanced configuration</description>
         </annotations>
         <arguments>
-            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft.value"/>
-            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone.value"/>
-            <argument name="borderColor" defaultValue=""/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0.value"/>
+            <argument name="page" defaultValue=""/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="cssClasses" defaultValue=""/>
-            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault.value"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault.value"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
         </arguments>
-        <remove keyForRemoval="assertAlignment"/>
-        <assertEquals stepKey="assertAlignment" after="grabAlignmentValue">
-            <expectedResult type="string">{{defaultAlignment}}</expectedResult>
+        <assertEquals stepKey="assertAlignment">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
             <actualResult type="variable">grabAlignmentValue</actualResult>
         </assertEquals>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationImagePath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>
-        <remove keyForRemoval="assertBorderColor"/>
-        <assertEquals stepKey="assertNoBorderColorVisible" after="grabColorValue">
-            <expectedResult type="variable">grabBorderColorValue</expectedResult>
-            <actualResult type="variable">grabColorValue</actualResult>
+        <assertEquals stepKey="assertBorderColor">
+            <expectedResult type="variable">grabColorValue</expectedResult>
+            <actualResult type="variable">grabBorderColorValue</actualResult>
         </assertEquals>
-        <remove keyForRemoval="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible" after="assertBorderRadius"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationFigurePath(index)}}', document.body).iterateNext()).margin.replace(/px/g, &quot;&quot;)" stepKey="grabMarginValue"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
     </actionGroup>
 </actionGroups>
