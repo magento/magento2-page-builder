@@ -25,7 +25,7 @@
         <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
         <executeJS function="return '{{image.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
         <assertRegExp stepKey="assertImageContainsFileInformation">
-            <expectedResult type="string">/{$regexBaseURL}\/pub\/media.*{$regexFilePath}.*\/{{image.fileName}}(_\d+)?\.{{image.extension}}/</expectedResult>
+            <expectedResult type="string">/{$regexBaseURL}\/media.*{$regexFilePath}.*\/{{image.fileName}}(_\d+)?\.{{image.extension}}/</expectedResult>
             <actualResult type="variable">$contentTypeSrc</actualResult>
         </assertRegExp>
     </actionGroup>
