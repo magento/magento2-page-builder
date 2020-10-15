@@ -62,8 +62,9 @@
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
-        <!-- Switch To Mobile Viewport -->
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
+        <!-- Switch To Mobile Viewport After Save -->
+        <comment userInput="Switch To Mobile Viewport After Save" stepKey="commentSwitchToMobileViewportAfterSave"/>
+        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterSave">
             <argument name="viewportButton" value="mobile-switcher"/>
             <argument name="viewportStage" value="mobile-viewport"/>
         </actionGroup>
@@ -83,6 +84,7 @@
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterDelete"/>
         <!-- Switch To Mobile Viewport After Delete -->
+        <comment userInput="Switch To Mobile Viewport After Delete" stepKey="commentSwitchToMobileViewportAfterDelete"/>
         <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterDelete">
             <argument name="viewportButton" value="mobile-switcher"/>
             <argument name="viewportStage" value="mobile-viewport"/>
