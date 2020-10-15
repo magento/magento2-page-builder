@@ -121,7 +121,7 @@
             <argument name="page" value="BannerOnBackend"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightCMSBlockStage">
-            <argument name="selector" value="{{BannerOnBackend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -145,7 +145,7 @@
         <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
         <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayCMSBlockStage">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -155,7 +155,7 @@
         <waitForElementVisible selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
         <waitForElementVisible selector="{{BannerOnBackend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverCMSBlockStage">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -197,7 +197,7 @@
             <argument name="page" value="BannerOnFrontend"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightCMSPageStage">
-            <argument name="selector" value="{{BannerOnFrontend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -221,7 +221,7 @@
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStage"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayCMSPageStage">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -249,7 +249,7 @@
             <argument name="page" value="BannerOnFrontend"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightCMSPageStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -273,7 +273,7 @@
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefront"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayCMSPageStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -283,7 +283,7 @@
         <waitForElementVisible selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefront"/>
         <waitForElementVisible selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -324,7 +324,7 @@
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayCMSPageStorefrontMobile">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -332,7 +332,7 @@
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefrontMobile"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>

@@ -137,7 +137,7 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightStage">
-            <argument name="selector" value="{{BannerOnBackend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -159,7 +159,7 @@
         <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStage"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeOverlayStateStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayBackgroundColor">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -190,12 +190,12 @@
         </actionGroup>
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStage">
-            <argument name="selector" value="{{BannerOnBackend.bannerPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStage">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
@@ -206,7 +206,7 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightStage2">
-            <argument name="selector" value="{{BannerOnBackend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -228,7 +228,7 @@
         <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStage2"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeOverlayStateStage2"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayBackgroundColor2">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -259,12 +259,12 @@
         </actionGroup>
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage2"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStage2">
-            <argument name="selector" value="{{BannerOnBackend.bannerPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStage2">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
@@ -355,7 +355,7 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMinimumHeightStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -378,7 +378,7 @@
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeOverlayStateStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayBackgroundStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -409,12 +409,12 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMarginsStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.bannerPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePaddingStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
@@ -423,7 +423,7 @@
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeMobileAppearanceStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileMinimumHeightStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.poster('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -440,7 +440,7 @@
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeMobileButtonTextStorefront"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeMobileOverlayStateStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileOverlayBackgroundStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -471,12 +471,12 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeMobileCSSClassesStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobileMarginsStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.bannerPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeMobilePaddingStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyUnique.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>

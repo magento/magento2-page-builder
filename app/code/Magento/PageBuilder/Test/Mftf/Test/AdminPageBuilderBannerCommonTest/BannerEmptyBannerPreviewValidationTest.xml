@@ -45,7 +45,7 @@
         <comment userInput="Validate Stage: Poster" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForPoster">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
@@ -66,7 +66,7 @@
         <comment userInput="Validate Storefront: Poster" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend1"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seePosterInFrontEnd">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>

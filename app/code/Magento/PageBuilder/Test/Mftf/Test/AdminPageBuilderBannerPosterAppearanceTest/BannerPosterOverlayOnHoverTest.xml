@@ -63,7 +63,7 @@
         <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerStage"/>
         <waitForPageLoad time="30" stepKey="waitForTransitionStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayBackgroundColor">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -78,7 +78,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayBackgroundColorStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -90,7 +90,7 @@
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayBackgroundColorStorefrontMobile">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>

@@ -76,7 +76,7 @@
         <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMStage"/>
         <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayStage">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -84,7 +84,7 @@
         <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
         <waitForPageLoad time="30" stepKey="waitForTransitionStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverStage">
-            <argument name="selector" value="{{BannerOnBackend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -104,7 +104,7 @@
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -112,7 +112,7 @@
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverStorefront">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -137,7 +137,7 @@
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTransparentOverlayStorefrontMobile">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -145,7 +145,7 @@
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeOverlayOnHoverStorefrontMobile">
-            <argument name="selector" value="{{BannerOnFrontend.contentPath('1')}}"/>
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
