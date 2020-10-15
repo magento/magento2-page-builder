@@ -8,13 +8,14 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ColumnOnBackend">
-        <element name="base" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=column]')[{{arg1}} - 1]" parameterized="true"/>
         <element name="baseCSS" type="text" selector="[data-content-type=column][data-element=main]"/>
+        <element name="elementChildren" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]/div[contains(@class,&quot;element-children&quot;)]" parameterized="true"/>
         <element name="columnConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="columnChildrenConfigurationPath" type="text" selector="(//div[contains(@class, &quot;pagebuilder-column-group&quot;)])[{{arg1}}]/descendant::div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-column&quot;)][{{arg2}}]//div[contains(@class, &quot;element-children&quot;)]" parameterized="true"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
-        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-column')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; background-size: {{arg7}}; background-repeat: {{arg8}}; background-attachment: {{arg9}}; align-self: {{arg10}};']" parameterized="true"/>
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-column')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; background-size: {{arg7}}; background-repeat: {{arg8}}; background-attachment: {{arg9}}; align-self: {{arg10}};']" parameterized="true" deprecated="Styles are not inline"/>
         <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
         <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]" parameterized="true"/>
         <element name="columnGroupPath" type="text" selector="(//div[contains(@class, &quot;pagebuilder-column-group&quot;)])[{{arg1}}]" parameterized="true"/>
@@ -37,9 +38,7 @@
         <element name="gridSizeError" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'admin__field-error') and contains(text(), '{{arg2}}')]" parameterized="true"/>
         <element name="appearance" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
-        <element name="minHeightPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}]/div[contains(@class,'column-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
-        <element name="verticalAlignContainerPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]/div[contains(@class,&quot;column-container&quot;)]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundPath" type="text" selector="(//div[contains(@class,&quot;pagebuilder-column&quot;) and contains(@class,&quot;pagebuilder-content-type&quot;)])[{{arg1}}]" parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>

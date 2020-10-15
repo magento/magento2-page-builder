@@ -18,12 +18,12 @@
             <argument name="verticalAlign" defaultValue="PageBuilderVerticalAlignmentPropertyCenter"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForContentType"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.minHeightPath(index)}}', document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="grabMinHeightValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="grabMinHeightValue"/>
         <assertEquals stepKey="assertMinHeightVisible">
             <expectedResult type="string">{{minHeight.value}}</expectedResult>
             <actualResult type="variable">grabMinHeightValue</actualResult>
         </assertEquals>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.verticalAlignContainerPath(index)}}', document.body).iterateNext()).justifyContent" stepKey="grabVerticalAlignValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.elementChildren(index)}}', document.body).iterateNext()).justifyContent" stepKey="grabVerticalAlignValue"/>
         <assertEquals stepKey="verticalAlignVisible">
             <expectedResult type="string">{{verticalAlign.value}}</expectedResult>
             <actualResult type="variable">grabVerticalAlignValue</actualResult>

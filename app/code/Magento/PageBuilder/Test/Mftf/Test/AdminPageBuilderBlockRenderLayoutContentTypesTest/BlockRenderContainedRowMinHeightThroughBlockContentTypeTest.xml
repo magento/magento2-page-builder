@@ -82,7 +82,7 @@
         <!-- Validate CMS Block Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightCMSBlockStage">
-            <argument name="selector" value="{{RowOnStage.minHeightPath('1')}}"/>
+            <argument name="selector" value="{{RowOnStage.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -127,7 +127,7 @@
         <!-- Validate CMS Page Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStage"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightCMSPageStage">
-            <argument name="selector" value="{{RowOnStorefront.minHeightPath('2')}}"/>
+            <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -157,7 +157,7 @@
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
         <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightStorefront">
-            <argument name="selector" value="{{RowOnStorefront.minHeightPath('2')}}"/>
+            <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
