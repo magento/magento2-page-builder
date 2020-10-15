@@ -87,7 +87,7 @@
         <!-- Verify Right Alignment On Stage - Before Save -->
         <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeImageAlignmentRightBeforeSave">
-            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
+            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestor}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
@@ -102,7 +102,7 @@
         <!-- Verify Right Alignment On Stage - After Save -->
         <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeImageAlignmentRightAfterSave">
-            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
+            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestor}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
@@ -117,7 +117,7 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeImageAlignmentRightStorefront">
-            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestorPath}})[1]"/>
+            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestor}})[1]"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
