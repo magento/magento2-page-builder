@@ -86,19 +86,19 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate('{{RowOnStage.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
         <assertEquals stepKey="assertFirstMinHeightCMSBlockStage">
             <actualResult type="variable">firstMinHeightCMSBlockStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Second Row min-height value validation below" stepKey="seeSecondMinHeightCMSBlockStage"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStage"/>
+        <comment userInput="BIC workaround" stepKey="seeSecondMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate('{{RowOnStage.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStage"/>
         <assertEquals stepKey="assertSecondMinHeightCMSBlockStage">
             <actualResult type="variable">secondMinHeightCMSBlockStage</actualResult>
             <expectedResult type="variable">viewportHeightCMSBlockStage</expectedResult>
         </assertEquals>
-        <comment userInput="Third Row min-height value validation below" stepKey="seeThirdMinHeightCMSBlockStage"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStage"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate('{{RowOnStage.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStage"/>
         <executeJS function="return Math.abs({$viewportHeightCMSBlockStage} - 200)" stepKey="expectedThirdHeightCMSBlockStage"/>
         <assertEquals stepKey="assertThirdMinHeightCMSBlockStage">
             <actualResult type="variable">thirdMinHeightCMSBlockStage</actualResult>
@@ -131,19 +131,19 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate('{{RowOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
         <assertEquals stepKey="assertFirstMinHeightCMSPageStage">
             <actualResult type="variable">firstMinHeightCMSPageStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Second Row min-height value validation below" stepKey="seeSecondMinHeightCMSPageStage"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="seeSecondMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate('{{RowOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStage"/>
         <assertEquals stepKey="assertSecondMinHeightCMSPageStage">
             <actualResult type="variable">secondMinHeightCMSPageStage</actualResult>
             <expectedResult type="variable">viewportHeightCMSPageStage</expectedResult>
         </assertEquals>
-        <comment userInput="Third Row min-height value validation below" stepKey="seeThirdMinHeightCMSPageStage"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('4')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate('{{RowOnStorefront.base('4')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStage"/>
         <executeJS function="return Math.abs({$viewportHeightCMSPageStage} - 200)" stepKey="expectedThirdHeightCMSPageStage"/>
         <assertEquals stepKey="assertThirdMinHeightCMSPageStage">
             <actualResult type="variable">thirdMinHeightCMSPageStage</actualResult>
@@ -161,19 +161,19 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{RowOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
         <assertEquals stepKey="assertFirstMinHeightStorefront">
             <actualResult type="variable">firstMinHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Second Row min-height value validation below" stepKey="seeSecondMinHeightStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeSecondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{RowOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
         <assertEquals stepKey="assertSecondMinHeightStorefront">
             <actualResult type="variable">secondMinHeightStorefront</actualResult>
             <expectedResult type="variable">viewportHeightStorefront</expectedResult>
         </assertEquals>
-        <comment userInput="Third Row min-height value validation below" stepKey="seeThirdMinHeightStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('4')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{RowOnStorefront.base('4')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
         <executeJS function="return Math.abs({$viewportHeightStorefront} - 200)" stepKey="expectedThirdHeightStorefront"/>
         <assertEquals stepKey="assertThirdMinHeightStorefront">
             <actualResult type="variable">thirdMinHeightStorefront</actualResult>
