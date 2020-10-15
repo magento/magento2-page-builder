@@ -53,7 +53,7 @@
         <comment userInput="Validate Stage Overlay and Padding" stepKey="commentValidateOverlayPadding"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayColorAndTransparencyStage">
-            <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -79,7 +79,7 @@
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage2"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayColorAndTransparencyStage2">
-            <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -101,7 +101,7 @@
         <comment userInput="Validate Stage Overlay and Padding after appearance change" stepKey="commentValidateOverlayPadding2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage3"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayColorAndTransparencyStage3">
-            <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>

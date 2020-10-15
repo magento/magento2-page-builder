@@ -126,7 +126,7 @@
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStage">
-            <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -149,7 +149,7 @@
         <seeElementInDOM selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
         <dontSeeElement selector="{{SlideOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSBlockStage">
-            <argument name="selector" value="{{SlideOnBackend.transparentOverlayPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -159,7 +159,7 @@
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
         <waitForPageLoad time="30" stepKey="waitForOverlayTransitionStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSBlockStage">
-            <argument name="selector" value="{{SlideOnBackend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -201,7 +201,7 @@
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStage">
-            <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -224,7 +224,7 @@
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStage"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStage">
-            <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -253,7 +253,7 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefront">
-            <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -276,7 +276,7 @@
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefront"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStorefront">
-            <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -286,7 +286,7 @@
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
         <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefront">
-            <argument name="selector" value="{{SlideOnFrontend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -328,14 +328,14 @@
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStorefrontMobile">
-            <argument name="selector" value="{{SlideOnFrontend.transparentOverlayPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideCMSPageStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile">
-            <argument name="selector" value="{{SlideOnFrontend.overlayBackgroundColorPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>

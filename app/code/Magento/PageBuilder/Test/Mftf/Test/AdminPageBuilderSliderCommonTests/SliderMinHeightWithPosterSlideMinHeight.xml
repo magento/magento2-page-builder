@@ -143,7 +143,7 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstSlideHeightStage">
-            <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -157,9 +157,9 @@
             <actualResult type="variable">firstSlideMinHeightStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Second Slider min-height value calculated below" stepKey="seeSecondSliderMinHeightStage"/>
+        <comment userInput="BIC workaround" stepKey="seeSecondSliderMinHeightStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondSlideHeightStage">
-            <argument name="selector" value="{{SlideOnBackend.posterMinimumHeightPath('2')}}"/>
+            <argument name="selector" value="{{SlideOnBackend.wrapper('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -173,8 +173,8 @@
             <actualResult type="variable">secondSlideMinHeightStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Third Slider min-height value calculated below" stepKey="seeThirdSliderMinHeightStage"/>
-        <comment userInput="Third Slide min-height value calculated below" stepKey="seeThirdSlideHeightStage"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdSliderMinHeightStage"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdSlideHeightStage"/>
         <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdSliderMinHeightStage"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdSlideMinHeightStage"/>
         <assertEquals stepKey="assertThirdSliderMinHeightStage">
@@ -185,8 +185,8 @@
             <actualResult type="variable">thirdSlideMinHeightStage</actualResult>
             <expectedResult type="variable">viewportHeightStage</expectedResult>
         </assertEquals>
-        <comment userInput="Fourth Slider min-height value calculated below" stepKey="seeFourthSliderMinHeightStage"/>
-        <comment userInput="Fourth Slide min-height value calculated below" stepKey="seeFourthSlideHeightStage"/>
+        <comment userInput="BIC workaround" stepKey="seeFourthSliderMinHeightStage"/>
+        <comment userInput="BIC workaround" stepKey="seeFourthSlideHeightStage"/>
         <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[3].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="fourthSliderMinHeightStage"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[3].getBoundingClientRect().height" stepKey="fourSlideMinHeightStage"/>
         <executeJS function="return Math.abs({$viewportHeightStage} - 200)" stepKey="expectedFourthHeightStage"/>
@@ -211,7 +211,7 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstSlideHeightStorefront">
-            <argument name="selector" value="{{SlideOnFrontend.minimumHeightPath('1')}}"/>
+            <argument name="selector" value="{{SlideOnFrontend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -225,8 +225,8 @@
             <actualResult type="variable">firstSlideMinHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Second Slider on Storefront min-height value calculated below" stepKey="seeSecondSliderMinHeightStorefront"/>
-        <comment userInput="Second Slide on Storefront min-height value calculated below" stepKey="seeSecondSlideHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeSecondSliderMinHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeSecondSlideHeightStorefront"/>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondSliderMinHeightStorefront"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[1].getBoundingClientRect().height" stepKey="secondSlideMinHeightStorefront"/>
         <assertEquals stepKey="assertSecondSliderMinHeightStorefront">
@@ -237,8 +237,8 @@
             <actualResult type="variable">secondSlideMinHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <comment userInput="Third Slider on Storefront min-height value calculated below" stepKey="seeThirdSliderMinHeightStorefront"/>
-        <comment userInput="Third Slide on Storefront min-height value calculated below" stepKey="seeThirdSlideHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdSliderMinHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeThirdSlideHeightStorefront"/>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdSliderMinHeightStorefront"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdSlideMinHeightStorefront"/>
         <assertEquals stepKey="assertThirdSliderMinHeightStorefront">
@@ -249,8 +249,8 @@
             <actualResult type="variable">thirdSlideMinHeightStorefront</actualResult>
             <expectedResult type="variable">viewportHeightStorefront</expectedResult>
         </assertEquals>
-        <comment userInput="Fourth Slider on Storefront min-height value calculated below" stepKey="seeFourthSliderMinHeightStorefront"/>
-        <comment userInput="Fourth Slide on Storefront min-height value calculated below" stepKey="seeFourthSlideHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeFourthSliderMinHeightStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeFourthSlideHeightStorefront"/>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[3].getBoundingClientRect().height" stepKey="fourthSliderMinHeightStorefront"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[3].getBoundingClientRect().height" stepKey="fourthSlideMinHeightStorefront"/>
         <executeJS function="return Math.abs({$viewportHeightStorefront} - 200)" stepKey="expectedFourthHeightStorefront"/>
