@@ -398,12 +398,12 @@
         </actionGroup>
         <!-- Validate content type is enabled in Storefront -->
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
-        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="waitForContentTypeShownStorefront1">
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="waitForContentTypeShownStorefront1">
             <argument name="selector" value="{{BannerOnFrontend.base('1')}}"/>
             <argument name="notExpectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="waitForContentTypeShownStorefront2">
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="waitForContentTypeShownStorefront2">
             <argument name="selector" value="{{BannerOnFrontend.base('2')}}"/>
             <argument name="notExpectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>

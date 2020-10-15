@@ -93,17 +93,17 @@
         </actionGroup>
         <!-- Verify the border is not on the outside of the contained row -->
         <comment userInput="Verify the border is not on the outside of the contained row" stepKey="commentVerifyBorder"/>
-        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeBorderOnOutside">
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeBorderOnOutside">
             <argument name="selector" value="{{RowOnStage_Contained_Invalid.advancedConfigurationPath('1')}}"/>
             <argument name="notExpectedProperty" value="{{PageBuilderAdvancedBorderPropertyDouble.value}}"/>
             <argument name="cssProperty" value="borderStyle"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeBorderColorOnOutside">
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeBorderColorOnOutside">
             <argument name="selector" value="{{RowOnStage_Contained_Invalid.advancedConfigurationPath('1')}}"/>
             <argument name="notExpectedProperty" value="{{PageBuilderAdvancedBorderColorProperty_green.rgb}}"/>
             <argument name="cssProperty" value="borderColor"/>
         </actionGroup>
-        <actionGroup ref="NotValidateContentTypeStylesActionGroup" stepKey="dontSeeBorderWidthOnOutside">
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeBorderWidthOnOutside">
             <argument name="selector" value="{{RowOnStage_Contained_Invalid.advancedConfigurationPath('1')}}"/>
             <argument name="notExpectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
