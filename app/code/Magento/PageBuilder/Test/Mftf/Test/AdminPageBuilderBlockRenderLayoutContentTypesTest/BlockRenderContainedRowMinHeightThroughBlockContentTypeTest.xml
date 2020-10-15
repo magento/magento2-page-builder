@@ -81,7 +81,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Validate CMS Block Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightCMSBlockStage">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStage">
             <argument name="selector" value="{{RowOnStage.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -126,7 +126,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStage"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightCMSPageStage">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStage">
             <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -156,7 +156,7 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
             <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>

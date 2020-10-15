@@ -60,7 +60,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateCenterLayoutStylesBeforeSave">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateCenterLayoutStylesBeforeSave">
             <argument name="selector" value="{{TabOnStage.container('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabVerticalAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
@@ -70,7 +70,7 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateCenterLayoutStylesAfterSave">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateCenterLayoutStylesAfterSave">
             <argument name="selector" value="{{TabOnStage.container('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabVerticalAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>
@@ -80,7 +80,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="validateCenterLayoutStylesOnStorefront">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateCenterLayoutStylesOnStorefront">
             <argument name="selector" value="{{TabOnStorefront.container('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabVerticalAlignmentPropertyCenter.value}}"/>
             <argument name="cssProperty" value="justifyContent"/>

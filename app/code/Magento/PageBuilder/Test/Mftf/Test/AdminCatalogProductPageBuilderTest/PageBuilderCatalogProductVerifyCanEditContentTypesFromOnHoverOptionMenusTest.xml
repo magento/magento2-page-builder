@@ -50,7 +50,7 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForRow"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRowStage">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorRowStage">
             <argument name="selector" value="{{RowOnStage.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -64,7 +64,7 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRowStageAfterSave">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorRowStageAfterSave">
             <argument name="selector" value="{{RowOnStage.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -83,7 +83,7 @@
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorRowStorefront">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorRowStorefront">
             <argument name="selector" value="{{RowOnStorefront.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

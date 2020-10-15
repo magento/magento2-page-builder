@@ -75,7 +75,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.backgroundPath('2')}}" stepKey="seeSlideItem2OnStageBeforeMoving"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorForSlideItem2OnStageBeforeMoving">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorForSlideItem2OnStageBeforeMoving">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -119,7 +119,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.backgroundPath('2')}}" stepKey="seeSlideItem2OnStageAfterMoving"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorForSlideItem2OnStageAfterMoving">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorForSlideItem2OnStageAfterMoving">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
@@ -135,7 +135,7 @@
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow1"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeBackgroundColorForSlideItem2OnStageAfterChangingRowAppearance">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorForSlideItem2OnStageAfterChangingRowAppearance">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>

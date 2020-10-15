@@ -65,7 +65,7 @@
         </actionGroup>
         <waitForElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{BlockOnStorefront.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>

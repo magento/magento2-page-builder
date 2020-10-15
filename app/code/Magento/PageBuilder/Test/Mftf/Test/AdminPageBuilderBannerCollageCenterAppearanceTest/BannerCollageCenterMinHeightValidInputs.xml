@@ -23,7 +23,7 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightStage">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStage">
             <argument name="selector" value="{{BannerOnBackend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -31,7 +31,7 @@
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStage"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeFirstMinHeightStorefront">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
             <argument name="selector" value="{{BannerOnFrontend.wrapper('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>

@@ -64,7 +64,7 @@
         </actionGroup>
         <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{BannerOnFrontend.base('1')}}"/>
             <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>

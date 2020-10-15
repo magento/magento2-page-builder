@@ -58,7 +58,7 @@
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeStorage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="dontSeeImageNameOnPreview1">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="dontSeeImageNameOnPreview1">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundImage_None.value}}"/>
             <argument name="cssProperty" value="backgroundImage"/>
@@ -85,7 +85,7 @@
         <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
         <seeElementInDOM selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySliderOnStage"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="dontSeeImageInrMainImageSource1">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="dontSeeImageInrMainImageSource1">
             <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundImage_None.value}}"/>
             <argument name="cssProperty" value="backgroundImage"/>

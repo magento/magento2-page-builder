@@ -53,7 +53,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify in Admin Preview-->
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsNavAlignedCenteredAdmin">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsNavAlignedCenteredAdmin">
             <argument name="selector" value="{{TabsOnStage.tabsNavigation}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
@@ -65,7 +65,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabsNavAlignedCenteredStorefront">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsNavAlignedCenteredStorefront">
             <argument name="selector" value="{{TabsOnFrontend.tabsNavigation}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsAlignmentCenter.value}}"/>
             <argument name="cssProperty" value="textAlign"/>
