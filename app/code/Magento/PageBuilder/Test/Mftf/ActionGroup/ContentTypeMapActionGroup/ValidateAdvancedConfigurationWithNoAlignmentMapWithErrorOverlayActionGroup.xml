@@ -11,8 +11,8 @@
         <annotations>
             <description>Validates Map with error overlay (excl. alignment)</description>
         </annotations>
+        <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement" after="waitForElement"/>
         <waitForElement selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClasses"/>
         <dontSeeElement selector="{{page.noCssClasses(index)}}" stepKey="dontSeeCSSClasses"/>
-        <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
 </actionGroups>

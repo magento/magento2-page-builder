@@ -23,7 +23,6 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElement selector="{{page.base(index)}}" stepKey="waitForElement"/>
-        <dontSeeElement selector="{{page.base(index)}}" stepKey="dontSeeElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
         <assertEquals stepKey="assertDefaultAlignmentVisible">
             <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
