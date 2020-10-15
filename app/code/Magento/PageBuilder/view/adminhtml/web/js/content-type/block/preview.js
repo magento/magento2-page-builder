@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _hideShowOption, _object, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "mageUtils", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _mageUtils, _config, _hideShowOption, _object, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -165,10 +165,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
         _this2.displayLabel(response.data[labelKey] ? response.data[labelKey] : _this2.config.label);
 
+        var content = "";
+
         if (response.data.content) {
           _this2.showBlockPreview(true);
 
-          _this2.data.main.html(response.data.content);
+          content = _this2.processBackgroundImages(response.data.content);
+
+          _this2.data.main.html(content);
 
           _this2.initializeWidgets(_this2.element);
         } else if (response.data.error) {
@@ -179,7 +183,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
         _this2.lastBlockId = parseInt(identifier.toString(), 10);
         _this2.lastTemplate = data.template.toString();
-        _this2.lastRenderedHtml = response.data.content;
+        _this2.lastRenderedHtml = content;
       }).fail(function () {
         _this2.showBlockPreview(false);
 
@@ -196,6 +200,50 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
     _proto.showBlockPreview = function showBlockPreview(isShow) {
       this.displayingBlockPreview(isShow);
+    }
+    /**
+     * Generate styles for background images.
+     *
+     * @param {string} content
+     * @return string
+     */
+    ;
+
+    _proto.processBackgroundImages = function processBackgroundImages(content) {
+      var document = new DOMParser().parseFromString(content, "text/html");
+      var elements = document.querySelectorAll("[data-background-images]");
+      var styleBlock = document.createElement("style");
+
+      var viewports = _config.getConfig("viewports");
+
+      elements.forEach(function (element) {
+        var rawAttrValue = element.getAttribute("data-background-images").replace(/\\(.)/mg, "$1");
+        var attrValue = JSON.parse(rawAttrValue);
+
+        var elementClass = "background-image-" + _mageUtils.uniqueid(13);
+
+        var rules = "";
+        Object.keys(attrValue).forEach(function (imageName) {
+          var imageUrl = attrValue[imageName];
+          var viewportName = imageName.replace("_image", "");
+
+          if (viewports[viewportName].stage && imageUrl) {
+            rules += "." + viewportName + "-viewport ." + elementClass + " {\n                            background-image: url(\"" + imageUrl + "\");\n                        }";
+          }
+        });
+
+        if (rules.length) {
+          styleBlock.append(rules);
+          element.classList.add(elementClass);
+        }
+      });
+
+      if (elements.length && styleBlock.innerText.length) {
+        document.body.append(styleBlock);
+        content = document.body.innerHTML;
+      }
+
+      return content;
     };
 
     return Preview;
