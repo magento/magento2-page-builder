@@ -7,38 +7,47 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage;
 
+use Magento\Framework\App\Area;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\State;
+use Magento\Framework\View\Design\Theme\ThemeProviderInterface;
+use Magento\Framework\View\DesignInterface;
+use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
+
 /**
  * Handle placing Magento into Page Builder Preview mode and emulating the store front
  */
 class Preview
 {
     /**
-     * @var \Magento\Store\Model\App\Emulation
+     * @var Emulation
      */
     private $emulation;
 
     /**
-     * @var \Magento\Framework\App\State
+     * @var State
      */
     private $appState;
 
     /**
-     * @var \Magento\Framework\View\DesignInterface
+     * @var DesignInterface
      */
     private $design;
 
     /**
-     * @var \Magento\Framework\View\Design\Theme\ThemeProviderInterface
+     * @var ThemeProviderInterface
      */
     private $themeProvider;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     private $storeManager;
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     private $scopeConfig;
 
@@ -49,20 +58,20 @@ class Preview
 
     /**
      * Preview constructor.
-     * @param \Magento\Store\Model\App\Emulation $emulation
-     * @param \Magento\Framework\App\State $appState
-     * @param \Magento\Framework\View\DesignInterface $design
-     * @param \Magento\Framework\View\Design\Theme\ThemeProviderInterface $themeProvider
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param Emulation $emulation
+     * @param State $appState
+     * @param DesignInterface $design
+     * @param ThemeProviderInterface $themeProvider
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        \Magento\Store\Model\App\Emulation $emulation,
-        \Magento\Framework\App\State $appState,
-        \Magento\Framework\View\DesignInterface $design,
-        \Magento\Framework\View\Design\Theme\ThemeProviderInterface $themeProvider,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        Emulation $emulation,
+        State $appState,
+        DesignInterface $design,
+        ThemeProviderInterface $themeProvider,
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->emulation = $emulation;
         $this->appState = $appState;
@@ -79,7 +88,7 @@ class Preview
      */
     public function getPreviewArea() : string
     {
-        return \Magento\Framework\App\Area::AREA_FRONTEND;
+        return Area::AREA_FRONTEND;
     }
 
     /**
@@ -95,7 +104,7 @@ class Preview
         $this->isPreview = true;
 
         if (!$storeId) {
-            $storeId = $this->storeManager->getDefaultStoreView()->getId();
+            $storeId = $this->getStoreId();
         }
         $this->emulation->startEnvironmentEmulation($storeId);
 
@@ -104,7 +113,7 @@ class Preview
             function () use ($callback) {
                 $themeId = $this->scopeConfig->getValue(
                     'design/theme/theme_id',
-                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                    ScopeInterface::SCOPE_STORE
                 );
                 $theme = $this->themeProvider->getThemeById($themeId);
                 $this->design->setDesignTheme($theme, $this->getPreviewArea());
@@ -130,5 +139,27 @@ class Preview
     public function isPreviewMode() : bool
     {
         return $this->isPreview;
+    }
+
+    /**
+     * Returns store id by default store view or store id from the available store if default store view is null
+     *
+     * @return int|null
+     */
+    private function getStoreId(): ?int
+    {
+        $storeId = null;
+        $store = $this->storeManager->getDefaultStoreView();
+        if ($store) {
+            $storeId = (int) $store->getId();
+        } else {
+            $stores = $this->storeManager->getStores();
+            if (count($stores)) {
+                $store = array_shift($stores);
+                $storeId = (int) $store->getId();
+            }
+        }
+
+        return $storeId;
     }
 }
