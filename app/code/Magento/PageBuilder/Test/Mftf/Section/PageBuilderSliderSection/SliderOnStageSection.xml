@@ -9,7 +9,7 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="SliderOnStage">
         <element name="all" type="button" selector="div[data-content-type=slider]"/>
-        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type=&quot;slider&quot;])[{{sliderIndex}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="div.pagebuilder-content-type.pagebuilder-slider"/>
         <element name="containerCSS" type="text" selector="[data-content-type=slider] &gt; .slider-container"/>
         <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
@@ -30,7 +30,6 @@
         <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-dots='{{showDots}}']" parameterized="true"/>
         <element name="minHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'min-height: {{minHeight}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'min-height:'))]" parameterized="true" deprecated="Styles are not inline"/>
-        <element name="minHeightPath" type="button" selector="(//div[@data-content-type=&quot;slider&quot;]/div[contains(@class,&quot;slider-container&quot;)])[{{sliderContainerIndex}}]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;slider&quot;]/div[contains(@class,&quot;slider-container&quot;)])[{{sliderContainerIndex}}]" parameterized="true"/>
         <element name="alignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'text-align: {{alignment}};')]" parameterized="true" deprecated="Styles are not inline"/>

@@ -138,7 +138,7 @@
         <!-- Validate Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstSliderMinHeightStage">
-            <argument name="selector" value="{{SliderOnStage.minHeightPath('1')}}"/>
+            <argument name="selector" value="{{SliderOnStage.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -206,7 +206,7 @@
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstSliderMinHeightStorefront">
-            <argument name="selector" value="{{SliderOnFrontend.minHeightPath('1')}}"/>
+            <argument name="selector" value="{{SliderOnFrontend.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>

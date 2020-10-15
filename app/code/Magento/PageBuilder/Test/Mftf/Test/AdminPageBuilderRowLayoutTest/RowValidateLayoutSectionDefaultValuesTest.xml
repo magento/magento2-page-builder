@@ -58,7 +58,7 @@
         <comment userInput="Verify min height not used and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
         <waitForElement selector="{{RowOnStage.base('1')}}" stepKey="waitForFirstRowMinHeightStyle"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="dontSeeFirstRowMinHeightStyle">
-            <argument name="selector" value="{{RowOnStage.minHeightPath('1')}}"/>
+            <argument name="selector" value="{{RowOnStage.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
@@ -74,7 +74,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElement selector="{{RowOnStage.base('1')}}" stepKey="waitForRowAfterSave"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstRowMinHeightAfterSave">
-            <argument name="selector" value="{{RowOnStage.minHeightPath('1')}}"/>
+            <argument name="selector" value="{{RowOnStage.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
