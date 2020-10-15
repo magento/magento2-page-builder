@@ -85,7 +85,7 @@
         </actionGroup>
         <!-- User sees tab default min height to be 300 px on stage -->
         <comment userInput="User sees tab default min height to be 300 px on stage" stepKey="AC8"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabMinHeightAdmin1">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabMinHeightAdmin1">
             <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -94,22 +94,22 @@
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC9"/>
         <!--assert computed styles matching expected depends on MQE-818 -->
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC10"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab1BorderWidth">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1BorderWidth">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab1BorderRadius">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1BorderRadius">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab1Margins">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1Margins">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyTabDefault.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab1Padding">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1Padding">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
             <argument name="cssProperty" value="padding"/>

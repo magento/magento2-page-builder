@@ -67,7 +67,7 @@
         </actionGroup>
         <waitForElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{TextOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="waitForHiddenElement">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForHiddenElement">
             <argument name="selector" value="{{TextOnStorefront.base('1')}}"/>
             <argument name="expectedProperty" value="none"/>
             <argument name="cssProperty" value="display"/>

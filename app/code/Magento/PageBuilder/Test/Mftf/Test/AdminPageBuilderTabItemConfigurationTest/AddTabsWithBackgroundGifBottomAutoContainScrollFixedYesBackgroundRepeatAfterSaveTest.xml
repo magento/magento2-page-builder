@@ -130,7 +130,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTabMinHeightAdmin1">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabMinHeightAdmin1">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
@@ -192,7 +192,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <actionGroup ref="ValidateContentTypeStylesActionGroup" stepKey="seeTab1MinHeight">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1MinHeight">
             <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
