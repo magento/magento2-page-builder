@@ -47,11 +47,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
 
           _this.wrapper.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video"
-              && _this.wrapper.style.backgroundImage !== backgroundImage
-              && backgroundImage !== "none"
-          ) {
-              _this.wrapper.style.backgroundImage = backgroundImage;
+          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.wrapper.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
+            _this.wrapper.style.backgroundImage = backgroundImage;
           }
         } catch (e) {// Failure of destroying is acceptable
         }
@@ -95,15 +92,16 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
      * @returns {string}
      */
     _proto.getBackgroundImage = function getBackgroundImage() {
-        var mobileImage = this.contentType.dataStore.get("mobile_image");
-        var desktopImage = this.contentType.dataStore.get("background_image");
-        var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
-        return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
-    };
-
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
     /**
      * @param {HTMLElement} element
      */
+    ;
+
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       var _this2 = this;
 
@@ -509,9 +507,9 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       });
 
       _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
-          if (_this8.contentType.dataStore.get("background_type") === "video") {
-              _this8.buildJarallax();
-          }
+        if (_this8.contentType.dataStore.get("background_type") === "video") {
+          _this8.buildJarallax();
+        }
       });
     }
     /**
