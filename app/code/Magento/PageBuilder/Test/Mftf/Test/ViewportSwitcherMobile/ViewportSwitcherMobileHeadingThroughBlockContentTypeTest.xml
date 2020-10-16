@@ -13,13 +13,12 @@
             <stories value="Viewport Switcher"/>
             <title value="Viewport Switcher - Render Heading Through Block Content Type"/>
             <description value="Verify that users are able to successfully render and use the Heading content type through the Block content type."/>
-            <severity value="BLOCKER"/>
-            <testCaseId value="MC-13783"/>
-            <useCaseId value="MC-13769"/>
+            <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
@@ -29,6 +28,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -36,7 +39,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Heading -->
-        <comment userInput="Add Heading" stepKey="commentAddHeading"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -47,7 +49,6 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Heading -->
-        <comment userInput="Edit Heading" stepKey="commentEditHeading"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -58,28 +59,30 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHeading"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
-        <!-- Validate CMS Block Stage -->
-        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSBlockStage"/>
-        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSBlockStage"/>
+
         <!-- Validate CMS Block Stage Mobile -->
-        <comment userInput="Validate CMS Block Stage Mobile" stepKey="commentValidateCMSBlockStageMobile"/>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreenBlock"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportBlock">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenMobile"/>
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSBlockStageMobile"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSBlockStageMobile"/>
+
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewport" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSBlockStage"/>
+        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSBlockStage"/>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
-        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewport" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -93,31 +96,28 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
-        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSPageStage"/>
-        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSPageStage"/>
 
-        <!-- Validate CMS Page Stage Mobile -->
-        <comment userInput="Validate CMS Page Stage Mobile" stepKey="commentValidateCMSPageStageMobile"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportPage">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
+        <!-- Validate CMS Page Stage Mobile Viewport -->
         <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSPageStageMobile"/>
         <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSPageStageMobile"/>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewport" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSPageStage"/>
+        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSPageStage"/>
 
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSPageStorefront"/>
         <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSPageStorefront"/>
         <!-- Validate CMS Page Storefront Mobile -->
-        <comment userInput="Validate CMS Page Storefront - Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefrontMobile">
             <argument name="page" value="$$createCMSPage.identifier$$"/>

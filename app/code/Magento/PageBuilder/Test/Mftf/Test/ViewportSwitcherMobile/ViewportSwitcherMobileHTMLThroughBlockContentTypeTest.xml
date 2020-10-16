@@ -14,12 +14,11 @@
             <title value="Viewport Switcher - Render HTML Through Block Content Type"/>
             <description value="Verify that users are able to successfully render and use the HTML content type through the Block content type."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-14806"/>
-            <useCaseId value="MC-13769"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-html"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
@@ -29,6 +28,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -43,7 +46,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add HTML -->
-        <comment userInput="Add HTML" stepKey="commentAddHTML"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
@@ -51,7 +53,6 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <!-- Edit HTML -->
-        <comment userInput="Edit HTML" stepKey="commentEditHTML"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuHtml">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
@@ -59,7 +60,6 @@
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <!-- Add media directives -->
-        <comment userInput="Add media directives" stepKey="commentAddMediaDirectives"/>
         <actionGroup ref="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" stepKey="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled">
             <argument name="widget" value="PageBuilderTextArea_WidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPage.identifier$$"/>
@@ -81,33 +81,8 @@
             <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
-        <!-- Validate CMS Block Stage After Save -->
-        <comment userInput="Validate CMS Block Stage After Save" stepKey="commentValidateCMSBlockStageAfterSave"/>
-        <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSave"/>
-        <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStageAfterSave"/>
-        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeAfterSave"/>
-        <assertStringContainsString stepKey="assertWidgetOnStageAfterSave">
-            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
-        </assertStringContainsString>
-        <assertStringContainsString stepKey="assertImageOnStageAfterSave">
-            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
-        </assertStringContainsString>
-        <assertStringContainsString stepKey="assertVariableOnStageAfterSave">
-            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
-        </assertStringContainsString>
-        <!-- Validate CMS Block Stage After Save - Mobile -->
-        <comment userInput="Validate CMS Block Stage After Save - Mobile" stepKey="commentValidateCMSBlockStageAfterSaveMobile"/>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreenBlock"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportBlock">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenMobile"/>
+
+        <!-- Validate CMS Block Stage After Save - Mobile Viewport -->
         <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSaveMobile"/>
         <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStageAfterSaveMobile"/>
         <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeAfterSaveMobile"/>
@@ -123,12 +98,39 @@
             <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeAfterSaveMobile</actualResult>
         </assertStringContainsString>
+
+        <!-- Validate CMS Block Stage After Save Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewport" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSave"/>
+        <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStageAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeAfterSave"/>
+        <assertStringContainsString stepKey="assertWidgetOnStageAfterSave">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertImageOnStageAfterSave">
+            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVariableOnStageAfterSave">
+            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
+        </assertStringContainsString>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
-        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewport" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -142,29 +144,8 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
-        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStage"/>
-        <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSPageStage"/>
-        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeCMSPageStage"/>
-        <assertStringContainsString stepKey="assertWidgetOnStageCMSPageStage">
-            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
-        </assertStringContainsString>
-        <assertStringContainsString stepKey="assertImageOnStageCMSPageStage">
-            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
-        </assertStringContainsString>
-        <assertStringContainsString stepKey="assertVariableOnStageCMSPageStage">
-            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
-        </assertStringContainsString>
-        <!-- Validate CMS Page Stage Mobile -->
-        <comment userInput="Validate CMS Page Stage Mobile" stepKey="commentValidateCMSPageStageMobile"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportPage">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
+
+        <!-- Validate CMS Page Stage Mobile Viewport -->
         <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStageMobile"/>
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSPageStageMobile"/>
         <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeCMSPageStageMobile"/>
@@ -181,10 +162,30 @@
             <actualResult type="variable">actualTextFromHtmlCodeCMSPageStageMobile</actualResult>
         </assertStringContainsString>
 
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewport" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStage"/>
+        <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSPageStage"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeCMSPageStage"/>
+        <assertStringContainsString stepKey="assertWidgetOnStageCMSPageStage">
+            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertImageOnStageCMSPageStage">
+            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVariableOnStageCMSPageStage">
+            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
+        </assertStringContainsString>
+
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -204,12 +205,10 @@
             <actualResult type="variable">actualTextStorefront</actualResult>
         </assertStringContainsString>
         <!-- Click Page Link Widget Storefront -->
-        <comment userInput="Click Page Link Widget Storefront" stepKey="clickClickPageLinkWidgetStorefront"/>
         <click selector="{{HtmlOnStorefront.widgetLink('1', _ENV.MAGENTO_BASE_URL, $$createCMSPage.identifier$$)}}" stepKey="clickWidgetStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
         <!-- Validate CMS Page Storefront Mobile -->
-        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefrontMobile">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
@@ -230,7 +229,6 @@
             <actualResult type="variable">actualTextStorefrontMobile</actualResult>
         </assertStringContainsString>
         <!-- Click Page Link Widget Storefront Mobile -->
-        <comment userInput="Click Page Link Widget Storefront" stepKey="clickClickPageLinkWidgetStorefrontMobile"/>
         <click selector="{{HtmlOnStorefront.widgetLink('1', _ENV.MAGENTO_BASE_URL, $$createCMSPage.identifier$$)}}" stepKey="clickWidgetStorefrontMobile"/>
         <waitForPageLoad stepKey="waitForPageLoadMobile"/>
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefrontMobile"/>

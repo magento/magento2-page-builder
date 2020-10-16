@@ -14,9 +14,8 @@
             <title value="Validate Contained Row Min Height Through Block Content Type in Mobile Viewport"/>
             <description value="Verify that a contained row's minimum height attribute renders correctly through the Block content type in mobile viewport."/>
             <severity value="CRITICAL"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -26,6 +25,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -51,24 +54,25 @@
             <argument name="property" value="PageBuilderPadding_0"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate CMS Block Stage -->
-        <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
-        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSBlockStage"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
-        <assertEquals stepKey="assertFirstMinHeightCMSBlockStage">
-            <actualResult type="variable">firstMinHeightCMSBlockStage</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
-        </assertEquals>
         <!-- Validate CMS Block Stage in Mobile Viewport -->
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportBlock">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStageMobile"/>
         <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSBlockStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageMobile"/>
         <assertEquals stepKey="assertFirstMinHeightCMSBlockStageMobile">
             <actualResult type="variable">firstMinHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Block Stage in Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
+        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
+        <assertEquals stepKey="assertFirstMinHeightCMSBlockStage">
+            <actualResult type="variable">firstMinHeightCMSBlockStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
 
@@ -92,24 +96,26 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
-        <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStage"/>
-        <seeElement selector="{{RowOnStorefront.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStage"/>
-        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
-        <assertEquals stepKey="assertFirstMinHeightCMSPageStage">
-            <actualResult type="variable">firstMinHeightCMSPageStage</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
-        </assertEquals>
+
         <!-- Validate CMS Page Stage on Mobile Viewport -->
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportPage">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStageMobile"/>
         <seeElement selector="{{RowOnStorefront.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
         <assertEquals stepKey="assertFirstMinHeightCMSPageStageMobile">
             <actualResult type="variable">firstMinHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Page Stage -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStage"/>
+        <seeElement selector="{{RowOnStorefront.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
+        <assertEquals stepKey="assertFirstMinHeightCMSPageStage">
+            <actualResult type="variable">firstMinHeightCMSPageStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
 

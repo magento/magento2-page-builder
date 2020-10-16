@@ -14,12 +14,11 @@
             <title value="Viewport Switcher - Render Tabs Through Block Content Type"/>
             <description value="Verify that users are able to successfully render and use the Tabs content type through the Block content type."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-3742"/>
-            <useCaseId value="MC-1405"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
@@ -29,6 +28,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -47,7 +50,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Tabs -->
-        <comment userInput="Add Tabs" stepKey="commentAddTabs"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -58,7 +60,6 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Edit Tab Group -->
-        <comment userInput="Edit Tab Group" stepKey="commentEditTabs"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuTabs">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -73,7 +74,6 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTabs"/>
         <!-- Edit Tab 1 -->
-        <comment userInput="Edit Tab 1" stepKey="commentEditTab1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelTab1">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
@@ -110,7 +110,6 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTab1"/>
         <!-- Add Divider To Tab 1 -->
-        <comment userInput="Add Divider To Tab 1" stepKey="commentAddDividerToTab1"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelDividerMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
@@ -120,7 +119,6 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Edit Tab 2 -->
-        <comment userInput="Edit Tab 2" stepKey="commentEditTab2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelTab2">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
@@ -132,73 +130,7 @@
             <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTab2"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
-        <!-- Validate CMS Block Stage -->
-        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSBlockStage"/>
-        <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSBlockStage"/>
-        <waitForElement selector="{{DividerOnStage.base('1')}}" stepKey="waitForDividerCMSBlockStage"/>
-        <dontSeeElement selector="{{DividerOnStage.base('1')}}" stepKey="dontSeeDividerCMSBlockStage"/>
-        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeTabsMinHeightCMSBlockStage"/>
-        <seeElement selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenterCMSBlockStage"/>
-        <actionGroup ref="validateTabHeadersAlignedCenter" stepKey="validateTabHeadersAlignedCenterCMSBlockStage"/>
-        <seeElement selector="{{TabOnStage.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeTab2BackgroundColorCMSBlockStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSBlockStage">
-            <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <actionGroup ref="switchTabs" stepKey="switchTabsCMSBlockStage">
-            <argument name="section" value="TabOnStage"/>
-            <argument name="from" value="2"/>
-            <argument name="to" value="1"/>
-        </actionGroup>
-        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleCMSBlockStage"/>
-        <actionGroup ref="validateBackgroundAttributes" stepKey="validateTab1BackgroundAttributesCMSBlockStage">
-            <argument name="section" value="TabOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
-            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateTab1BackgroundImageCMSBlockStage">
-            <argument name="section" value="TabOnStage"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSBlockStage">
-            <argument name="page" value="TabOnStage"/>
-            <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
-            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
-        </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSBlockStage">
-            <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
-            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <seeElement selector="{{DividerOnStage.base('1')}}" stepKey="seeDividerCMSBlockStage"/>
-        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
-            <argument name="page" value="DividerOnStage"/>
-        </actionGroup>
         <!-- Validate CMS Block Stage Mobile -->
-        <comment userInput="Validate CMS Block Stage Mobile" stepKey="commentValidateCMSBlockStageMobile"/>
-        <actionGroup ref="switchTabs" stepKey="switchTabsCMSBlockStageAgain">
-            <argument name="section" value="TabOnStage"/>
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
-        </actionGroup>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportBlock">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
         <seeElement selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSBlockStageMobile"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSBlockStageMobile"/>
         <waitForElement selector="{{DividerOnStage.base('1')}}" stepKey="waitForDividerCMSBlockStageMobile"/>
@@ -250,12 +182,79 @@
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStageMobile">
             <argument name="page" value="DividerOnStage"/>
         </actionGroup>
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="switchTabs" stepKey="switchTabsCMSBlockStageAgain">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="1"/>
+            <argument name="to" value="2"/>
+        </actionGroup>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeElement selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSBlockStage"/>
+        <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSBlockStage"/>
+        <waitForElement selector="{{DividerOnStage.base('1')}}" stepKey="waitForDividerCMSBlockStage"/>
+        <dontSeeElement selector="{{DividerOnStage.base('1')}}" stepKey="dontSeeDividerCMSBlockStage"/>
+        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeTabsMinHeightCMSBlockStage"/>
+        <seeElement selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenterCMSBlockStage"/>
+        <actionGroup ref="validateTabHeadersAlignedCenter" stepKey="validateTabHeadersAlignedCenterCMSBlockStage"/>
+        <seeElement selector="{{TabOnStage.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeTab2BackgroundColorCMSBlockStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSBlockStage">
+            <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="switchTabs" stepKey="switchTabsCMSBlockStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="2"/>
+            <argument name="to" value="1"/>
+        </actionGroup>
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleCMSBlockStage"/>
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateTab1BackgroundAttributesCMSBlockStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateTab1BackgroundImageCMSBlockStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSBlockStage">
+            <argument name="page" value="TabOnStage"/>
+            <argument name="index" value="1"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSBlockStage">
+            <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{DividerOnStage.base('1')}}" stepKey="seeDividerCMSBlockStage"/>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
+            <argument name="page" value="DividerOnStage"/>
+        </actionGroup>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
-        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -269,32 +268,7 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
-        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSPageStage"/>
-        <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSPageStage"/>
-        <waitForElement selector="{{DividerOnStorefront.base('1')}}" stepKey="waitForDividerCMSPageStage"/>
-        <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerCMSPageStage"/>
-        <seeElement selector="{{TabsOnFrontend.tabsContentMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeTabsMinHeightCMSPageStage"/>
-        <seeElement selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenterCMSPageStage"/>
-        <actionGroup ref="validateTabHeadersAlignedCenter" stepKey="validateTabHeadersAlignedCenterCMSPageStage">
-            <argument name="tabGroupSection" value="TabsOnFrontend"/>
-            <argument name="tabItemSection" value="TabOnStorefront"/>
-        </actionGroup>
-        <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeTab2BackgroundColorCMSPageStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSPageStage">
-            <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderTabMinHeight0Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <!-- Validate CMS Page Stage Mobile -->
-        <comment userInput="Validate CMS Page Stage Mobile" stepKey="commentValidateCMSPageStageMobile"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportPage1">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
+        <!-- Validate CMS Page Stage Mobile Viewport -->
         <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSPageStageMobile"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSPageStageMobile"/>
         <waitForElement selector="{{DividerOnStorefront.base('1')}}" stepKey="waitForDividerCMSPageStageMobile"/>
@@ -313,10 +287,32 @@
             <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <!-- Validate CMS Page Stage Desktop -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSPageStage"/>
+        <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab2TitleCMSPageStage"/>
+        <waitForElement selector="{{DividerOnStorefront.base('1')}}" stepKey="waitForDividerCMSPageStage"/>
+        <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerCMSPageStage"/>
+        <seeElement selector="{{TabsOnFrontend.tabsContentMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeTabsMinHeightCMSPageStage"/>
+        <seeElement selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenterCMSPageStage"/>
+        <actionGroup ref="validateTabHeadersAlignedCenter" stepKey="validateTabHeadersAlignedCenterCMSPageStage">
+            <argument name="tabGroupSection" value="TabsOnFrontend"/>
+            <argument name="tabItemSection" value="TabOnStorefront"/>
+        </actionGroup>
+        <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeTab2BackgroundColorCMSPageStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSPageStage">
+            <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabMinHeight0Property.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -380,7 +376,6 @@
             <argument name="page" value="DividerOnStorefront"/>
         </actionGroup>
         <!-- Validate CMS Page Storefront Mobile -->
-        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefrontMobile"/>
         <actionGroup ref="validateTabHeadersAlignedCenter" stepKey="validateTabHeadersAlignedCenterCMSPageStorefrontMobile">
             <argument name="tabGroupSection" value="TabsOnFrontend"/>
@@ -419,7 +414,6 @@
         </actionGroup>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
         <!-- Change Default Tab -->
-        <comment userInput="Change Default Tab" stepKey="commentChangeDefaultTab"/>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
         </actionGroup>
@@ -442,58 +436,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTabs2"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock2"/>
-        <!-- Validate CMS Page Stage Again -->
-        <comment userInput="Validate CMS Page Stage Again" stepKey="commentValidateCMSPageStageAgain"/>
+        <!-- Validate CMS Page Stage Mobile Again -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleCMSPageStage2"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateTab1BackgroundAttributesCMSPageStage2">
-            <argument name="section" value="TabOnStorefront"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
-            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateTab1BackgroundImageCMSPageStage2">
-            <argument name="section" value="TabOnStorefront"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSPageStage2">
-            <argument name="page" value="TabOnStorefront"/>
-            <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
-            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
-        </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSPageStage2">
-            <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStage2">
-            <argument name="container" value="TabOnStorefront"/>
-            <argument name="content" value="DividerOnStorefront"/>
-            <argument name="containerIndex" value="1"/>
-            <argument name="contentIndex" value="1"/>
-        </actionGroup>
-        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="seeDividerCMSPageStage2"/>
-        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage2">
-            <argument name="page" value="DividerOnStorefront"/>
-            <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_Default.value}}*2"/>
-        </actionGroup>
-
-        <!-- Validate CMS Page Stage Mobile Again -->
-        <comment userInput="Validate CMS Page Stage Mobile Again" stepKey="commentValidateCMSPageStageAgainMobile"/>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportMobilePage2">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
-        </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen3"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleCMSPageStage2Mobile"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateTab1BackgroundAttributesCMSPageStage2Mobile">
             <argument name="section" value="TabOnStorefront"/>
@@ -529,6 +475,51 @@
         </actionGroup>
         <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="seeDividerCMSPageStage2Mobile"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage2Mobile">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_Default.value}}*2"/>
+        </actionGroup>
+        <!-- Validate CMS Page Stage Again -->
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage2">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen3"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleCMSPageStage2"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateTab1BackgroundAttributesCMSPageStage2">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateTab1BackgroundImageCMSPageStage2">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSPageStage2">
+            <argument name="page" value="TabOnStorefront"/>
+            <argument name="index" value="1"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSPageStage2">
+            <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStage2">
+            <argument name="container" value="TabOnStorefront"/>
+            <argument name="content" value="DividerOnStorefront"/>
+            <argument name="containerIndex" value="1"/>
+            <argument name="contentIndex" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="seeDividerCMSPageStage2"/>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage2">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_Default.value}}*2"/>
         </actionGroup>
