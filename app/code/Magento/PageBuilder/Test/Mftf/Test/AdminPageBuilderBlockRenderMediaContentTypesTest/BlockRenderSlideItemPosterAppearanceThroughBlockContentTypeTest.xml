@@ -332,6 +332,7 @@
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideCMSPageStorefrontMobile"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
