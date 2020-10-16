@@ -99,18 +99,21 @@
         <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
 
         <!-- Validate CMS Block Stage Mobile Viewport -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSBlockStageMobile"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStageMobile"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStageMobile"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStageMobile"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStageMobile"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStageMobile"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
 
         <!-- Validate CMS Block Stage Desktop Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
@@ -118,7 +121,6 @@
         <seeElement selector="{{TextOnStage.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
 
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
