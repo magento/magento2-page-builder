@@ -14,12 +14,11 @@
             <title value="Verify That User Can Edit Content Types From On-Click Option Menus On Mobile Viewport"/>
             <description value="This test is intended to ensure that users can edit content types from the on-click option menus within the PageBuilder stage for Product Description on mobile viewport."/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MC-3329"/>
-            <testCaseId value="MC-13670"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-edit"/>
             <group value="pagebuilder-catalog-product"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
@@ -32,9 +31,9 @@
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
-            <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
-                <argument name="viewportButton" value="mobile-switcher"/>
-                <argument name="viewportStage" value="mobile-viewport"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
             </actionGroup>
         </before>
         <after>
@@ -45,7 +44,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Slider -->
-        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -54,7 +52,6 @@
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Edit Slide Item -->
-        <comment userInput="Edit Slide Item" stepKey="commentEditSlide"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlide">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -63,26 +60,20 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForSlide"/>
         <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStage"/>
         <!-- Save Product -->
-        <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
-        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Switch To Mobile Viewport After Save -->
-        <comment userInput="Switch To Mobile Viewport After Save" stepKey="commentSwitchToMobileViewportAfterSave"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterSave">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStageAfterSave"/>
         <!-- Validate Edit Panel After Save -->
-        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlideAfterSave">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -90,7 +81,6 @@
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>

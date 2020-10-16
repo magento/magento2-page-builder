@@ -7,54 +7,132 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ViewportSwitcherMobileMoveButtonItemsTest" extends="ButtonItemMoveButtonStackedAppearanceTest">
+    <test name="ViewportSwitcherMobileMoveButtonItemsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
             <title value="Verify That User Can Move Button Items On Mobile Viewport"/>
             <description value="This test is intended to ensure that users can move button items within the PageBuilder stage for Category Description on mobile viewport."/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MC-3330"/>
-            <testCaseId value="MC-14831"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-move"/>
             <group value="pagebuilder-catalog-category"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
-            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
-            <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
-                <argument name="viewportButton" value="mobile-switcher"/>
-                <argument name="viewportStage" value="mobile-viewport"/>
+            <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
             </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Select Stacked Appearance -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType3">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_Third"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="moveButton" stepKey="moveButton">
+            <argument name="buttonIndexToMove" value="1"/>
+            <argument name="buttonIndexToMoveTo" value="3"/>
+        </actionGroup>
+        <!-- Validate Stage -->
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageFirstButtons">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageSecondButtons">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="firstButtonIndex" value="2"/>
+            <argument name="secondButtonIndex" value="3"/>
+        </actionGroup>
         <!-- Save Category -->
-        <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
         <!-- Switch To Mobile Viewport After Save -->
-        <comment userInput="Switch To Mobile Viewport After Save" stepKey="commentSwitchToMobileViewportAfterSave"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterSave" after="switchToPageBuilderStage">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile" before="navigateToStoreFront"/>
+        <!-- Validate Stage After Save -->
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage1"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage3"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageFirstButtons2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageSecondButtons2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="firstButtonIndex" value="2"/>
+            <argument name="secondButtonIndex" value="3"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
-        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription"/>
+        <!-- Validate Storefront -->
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Storefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Storefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Storefront"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefrontFirstButtons">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefrontSecondButtons">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
+            <argument name="firstButtonIndex" value="2"/>
+            <argument name="secondButtonIndex" value="3"/>
+        </actionGroup>
     </test>
 </tests>
