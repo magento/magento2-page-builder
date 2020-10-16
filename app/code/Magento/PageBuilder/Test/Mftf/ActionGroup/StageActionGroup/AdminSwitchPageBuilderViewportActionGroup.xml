@@ -7,17 +7,19 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="SwitchPageBuilderViewport">
+    <actionGroup name="AdminSwitchPageBuilderViewportActionGroup">
         <annotations>
-            <description>Switch to different viewports</description>
+            <description>Switches the Page Builder stage in admin to the specified viewport</description>
         </annotations>
         <arguments>
-            <argument name="viewportButton" type="string"/>
-            <argument name="viewportStage" type="string"/>
+            <argument name="viewportButton" defaultValue="desktop-switcher" type="string"/>
+            <argument name="viewportStage" defaultValue="desktop-viewport" type="string"/>
         </arguments>
+        <waitForElement selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton(viewportButton)}}" stepKey="waitForElementViewportButton"/>
         <conditionalClick selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton(viewportButton)}}"
                           dependentSelector="{{PageBuilderViewportSwitcherSection.viewportStage(viewportStage)}}"
                           visible="false"
                           stepKey="clickViewportSwitcherButton"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportStage(viewportStage)}}" stepKey="waitForElementViewportStage"/>
     </actionGroup>
 </actionGroups>
