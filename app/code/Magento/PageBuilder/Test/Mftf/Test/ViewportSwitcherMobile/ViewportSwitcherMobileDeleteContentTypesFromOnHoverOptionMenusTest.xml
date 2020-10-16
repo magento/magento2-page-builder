@@ -14,12 +14,11 @@
             <title value="Verify That User Can Delete Content Types From On-Hover Option Menus On Mobile Viewport"/>
             <description value="This test is intended to ensure that users can delete content types from the on-hover option menus within the PageBuilder stage for Product Description on mobile viewport."/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MC-3329"/>
-            <testCaseId value="MC-13668"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
             <group value="pagebuilder-delete"/>
             <group value="pagebuilder-catalog-product"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
@@ -32,6 +31,10 @@
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -41,7 +44,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Divider to Row -->
-        <comment userInput="Add Divider to Row" stepKey="commentAddDividerToRow"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
@@ -51,42 +53,34 @@
         </actionGroup>
         <seeElement selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderDividerContentType.role, '1')}}" stepKey="seeDividerInStage"/>
         <!-- Save Product -->
-        <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
-        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Switch To Mobile Viewport After Save -->
-        <comment userInput="Switch To Mobile Viewport After Save" stepKey="commentSwitchToMobileViewportAfterSave"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterSave">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <!-- Delete Divider -->
-        <comment userInput="Delete Divider" stepKey="commentDeleteDivider"/>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderDividerContentType.role, '1')}}" stepKey="dontSeeDividerInStage"/>
         <!-- Save Product After Delete -->
-        <comment userInput="Save Product After Delete" stepKey="commentSaveProductAfterDelete"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterDelete"/>
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProductAfterDelete"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProductAfterDelete"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterDelete"/>
         <!-- Switch To Mobile Viewport After Delete -->
-        <comment userInput="Switch To Mobile Viewport After Delete" stepKey="commentSwitchToMobileViewportAfterDelete"/>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewportAfterDelete">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterDelete">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderDividerContentType.role, '1')}}" stepKey="dontSeeDividerInStageAfterSave"/>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
