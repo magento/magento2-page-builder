@@ -30,14 +30,14 @@
         <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherIcon('mobile')}}" stepKey="verifyMobileViewportIconIsVisible"/>
         <!-- Verify desktop viewport tooltip label and description -->
         <moveMouseOver selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton('desktop')}}" stepKey="mouseOverDesktopViewportButton"/>
-        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('Desktop')}}" stepKey="verifyDesktopTooltipLabel"/>
-        <waitForText userInput="View your content for desktop" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent}}" stepKey="verifyDesktopTooltipContent"/>
-        <waitForText userInput="Width: 1024px" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent}}" stepKey="verifyDesktopTooltipContent2"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('1', 'Desktop')}}" stepKey="verifyDesktopTooltipLabel"/>
+        <waitForText userInput="View your content for desktop" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('1')}}" stepKey="verifyDesktopTooltipContent"/>
+        <waitForText userInput="Width: 1024px" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('1')}}" stepKey="verifyDesktopTooltipContent2"/>
         <!-- Verify mobile viewport tooltip label and description -->
         <moveMouseOver selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton('mobile')}}" stepKey="mouseOverMobileViewportButton"/>
-        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('Mobile')}}" stepKey="verifyMobileTooltipLabel"/>
-        <waitForText userInput="View your content for mobile" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent}}" stepKey="verifyMobileTooltipContent"/>
-        <waitForText userInput="Width: 768px" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent}}" stepKey="verifyMobileTooltipContent2"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('2', 'Mobile')}}" stepKey="verifyMobileTooltipLabel"/>
+        <waitForText userInput="View your content for mobile" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('2')}}" stepKey="verifyMobileTooltipContent"/>
+        <waitForText userInput="Width: 768px" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('2')}}" stepKey="verifyMobileTooltipContent2"/>
         <!-- Verify Desktop Viewport Area -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewport">
             <argument name="viewportButton"/>

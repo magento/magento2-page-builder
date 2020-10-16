@@ -11,14 +11,13 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Viewport Switcher: Resizing column in mobile viewport."/>
-            <description value="A user should not be able to resize a columns in mobile viewport."/>
+            <title value="Verify Cannot Resize Columns in Mobile Viewport"/>
+            <description value="Verify that users cannot resize columns or change the column grid size in admin when in the mobile viewport."/>
             <severity value="MAJOR"/>
-            <useCaseId value="MC-950"/>
-            <testCaseId value="MC-2717"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -34,12 +33,15 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="SwitchPageBuilderViewport" stepKey="switchToMobileViewport">
-            <argument name="viewportButton" value="mobile-switcher"/>
-            <argument name="viewportStage" value="mobile-viewport"/>
+        <moveMouseOver selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="hoverToResizeHandle"/>
+        <!-- Assert column resize handle is visible -->
+        <waitForElementVisible selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="columnResizeHandleVisible"/>
+        <!-- Assert grid size visible -->
+        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeButton('1')}}" stepKey="columnGridSizeVisible"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <!-- Assert mobile viewport -->
-        <seeElement selector="{{PageBuilderViewportSwitcherSection.mobileViewportStage}}" stepKey="assertMobileViewport"/>
         <!-- Assert column resize handle is not visible -->
         <dontSeeElement selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="columnResizeHandleNotVisible"/>
         <!-- Assert grid size not visible -->
