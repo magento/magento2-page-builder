@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ViewportSwitcherTabsThroughBlockContentTypeTest">
+    <test name="ViewportSwitcherMobileTabsThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
@@ -437,9 +437,14 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTabs2"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock2"/>
-        <!-- Validate CMS Page Stage Mobile Again -->
+        <!-- Validate CMS Page Stage Mobile Viewport Again -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage2">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleCMSPageStage2Mobile"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateTab1BackgroundAttributesCMSPageStage2Mobile">
@@ -479,13 +484,11 @@
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_Default.value}}*2"/>
         </actionGroup>
-        <!-- Validate CMS Page Stage Again -->
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
+        <!-- Validate CMS Page Stage Desktop Viewport Again -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage2">
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen3"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleCMSPageStage2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateTab1BackgroundAttributesCMSPageStage2">
             <argument name="section" value="TabOnStorefront"/>
