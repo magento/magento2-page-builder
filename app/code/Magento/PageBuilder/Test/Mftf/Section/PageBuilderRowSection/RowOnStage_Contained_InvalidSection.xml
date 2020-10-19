@@ -8,8 +8,9 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="RowOnStage_Contained_Invalid">
-        <element name="border" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
     </section>
 </sections>

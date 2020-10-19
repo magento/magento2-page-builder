@@ -52,9 +52,21 @@
         <!-- Validate Stage Overlay and Padding -->
         <comment userInput="Validate Stage Overlay and Padding" stepKey="commentValidateOverlayPadding"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding"/>
-        <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayColorAndTransparencyStage">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seePosterPadding">
+            <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeCollagePadding">
+            <argument name="selector" value="{{SlideOnBackend.collagePaddingPath('1')}}"/>
+            <argument name="notExpectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Change Appearance to Collage Left -->
         <comment userInput="Change Appearance to Collage Left" stepKey="commentChangeAppearanceCollageLeft"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
@@ -65,8 +77,17 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage2"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
-        <dontSeeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeDefaultPosterPadding"/>
+
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayColorAndTransparencyStage2">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeDefaultPosterPadding">
+            <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
+            <argument name="notExpectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Change Appearance back to Poster -->
         <comment userInput="Change Appearance back to Poster" stepKey="commentChangeAppearanceBackToPoster"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
@@ -79,8 +100,20 @@
         <!-- Validate Stage Overlay and Padding after appearance change -->
         <comment userInput="Validate Stage Overlay and Padding after appearance change" stepKey="commentValidateOverlayPadding2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage3"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage3"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding2"/>
-        <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayColorAndTransparencyStage3">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seePosterPadding2">
+            <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeCollagePadding2">
+            <argument name="selector" value="{{SlideOnBackend.collagePaddingPath('1')}}"/>
+            <argument name="notExpectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
     </test>
 </tests>

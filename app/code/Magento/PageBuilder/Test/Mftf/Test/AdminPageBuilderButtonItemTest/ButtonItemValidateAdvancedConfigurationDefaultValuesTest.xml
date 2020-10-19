@@ -72,31 +72,79 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{ButtonItemOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorder('1')}}" stepKey="seeNoBorderStage"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorderColor('1')}}" stepKey="seeNoBorderColorStage"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStage"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStage"/>
-        <seeElement selector="{{ButtonItemOnStage.noMargins('1')}}" stepKey="seeNoMarginsStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeAlignmentStage">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderStage">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderStyleValue}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderColorStage">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderColorValue}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderWidthStage">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderWidthValue}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderRadiusStage">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderRadiusValue}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <comment userInput="Default Margins validation in actionGroup below" stepKey="seeNoMarginsStage"/>
         <actionGroup ref="validateButtonItemsDefaultMargin" stepKey="validateDefaultMarginValueStage">
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStage.noPadding('1')}}" stepKey="seeNoPaddingStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoPaddingStage">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.paddingValue}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorder('1')}}" stepKey="seeNoBorderStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorderColor('1')}}" stepKey="seeNoBorderColorStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.noMargins('1')}}" stepKey="seeNoMarginsStage2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeAlignmentStage2">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderStage2">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderStyleValue}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderColorStage2">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderColorValue}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderWidthStage2">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderWidthValue}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderRadiusStage2">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderRadiusValue}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <comment userInput="Default Margins validation in actionGroup below" stepKey="seeNoMarginsStage2"/>
         <actionGroup ref="validateButtonItemsDefaultMargin" stepKey="validateDefaultMarginValueStage2">
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStage.noPadding('1')}}" stepKey="seeNoPaddingStage2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoPaddingStage2">
+            <argument name="selector" value="{{ButtonItemOnStage.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.paddingValue}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
@@ -132,15 +180,39 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorder('1')}}" stepKey="seeNoBorderStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderColor('1')}}" stepKey="seeNoBorderColorStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noMargins('1')}}" stepKey="seeNoMarginsStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeAlignmentStorefront">
+            <argument name="selector" value="{{ButtonItemOnStorefrontEmptyLink.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyCenter.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderColor">
+            <argument name="selector" value="{{ButtonItemOnStorefrontEmptyLink.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderStyleValue}}"/>
+            <argument name="cssProperty" value="borderStyle"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderColorStorefront">
+            <argument name="selector" value="{{ButtonItemOnStorefrontEmptyLink.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderColorValue}}"/>
+            <argument name="cssProperty" value="borderColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderWidthStorefront">
+            <argument name="selector" value="{{ButtonItemOnStorefrontEmptyLink.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderWidthValue}}"/>
+            <argument name="cssProperty" value="borderWidth"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoBorderRadiusStorefront">
+            <argument name="selector" value="{{ButtonItemOnStorefrontEmptyLink.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.borderRadiusValue}}"/>
+            <argument name="cssProperty" value="borderRadius"/>
+        </actionGroup>
+        <comment userInput="Default Margins validation in actionGroup below" stepKey="seeNoMarginsStorefront"/>
         <actionGroup ref="validateButtonItemsDefaultMargin" stepKey="validateDefaultMarginValueStorefront">
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noPadding('1')}}" stepKey="seeNoPaddingStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeNoPaddingStorefront">
+            <argument name="selector" value="{{ButtonItemOnStorefrontEmptyLink.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderButtonPrimary_StyleAttributes.paddingValue}}"/>
+            <argument name="cssProperty" value="padding"/>
+        </actionGroup>
     </test>
 </tests>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateImageAdvancedConfigurationActionGroup">
+        <annotations>
+            <description>Validates Image content type Advanced configuration</description>
+        </annotations>
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" defaultValue="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" defaultValue="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" defaultValue="PageBuilderMarginsPropertyUnique"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationFigurePath(index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
+        <assertEquals stepKey="assertAlignment">
+            <expectedResult type="string">{{alignment.value}}</expectedResult>
+            <actualResult type="variable">grabAlignmentValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationImagePath(index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>
+        <assertEquals stepKey="assertBorderStyle">
+            <expectedResult type="string">{{border.value}}</expectedResult>
+            <actualResult type="variable">grabBorderStyleValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationImagePath(index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <assertEquals stepKey="assertBorderColor">
+            <expectedResult type="string">{{borderColor.rgb}}</expectedResult>
+            <actualResult type="variable">grabBorderColorValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationImagePath(index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
+        <assertEquals stepKey="assertBorderWidth">
+            <expectedResult type="string">{{borderWidth.value}}</expectedResult>
+            <actualResult type="variable">grabBorderWidthValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationImagePath(index)}}', document.body).iterateNext()).borderRadius.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
+        <assertEquals stepKey="assertBorderRadius">
+            <expectedResult type="string">{{borderRadius.value}}</expectedResult>
+            <actualResult type="variable">grabBorderRadiusValue</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationFigurePath(index)}}', document.body).iterateNext()).margin.replace(/px/g, &quot;&quot;)" stepKey="grabMarginValue"/>
+        <assertEquals stepKey="assertMargin">
+            <expectedResult type="string">{{margin.value}}</expectedResult>
+            <actualResult type="variable">grabMarginValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationFigurePath(index)}}', document.body).iterateNext()).padding.replace(/px/g, &quot;&quot;)" stepKey="grabPaddingValue"/>
+        <assertEquals stepKey="assertPadding">
+            <expectedResult type="string">{{padding.value}}</expectedResult>
+            <actualResult type="variable">grabPaddingValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

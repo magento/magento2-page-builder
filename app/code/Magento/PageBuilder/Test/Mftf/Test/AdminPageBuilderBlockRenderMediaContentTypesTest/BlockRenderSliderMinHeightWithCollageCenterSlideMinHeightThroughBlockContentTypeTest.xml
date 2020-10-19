@@ -26,9 +26,15 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceSlide1">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <waitForElementVisible selector="{{SlideOnBackend.noCollageMinimumHeight('1')}}" stepKey="seeFirstSlideHeightCMSBlockStage"/>
-        <waitForElementVisible selector="{{SlideOnBackend.collageMinimumHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeSecondSlideHeightCMSBlockStage"/>
-        <waitForElementVisible selector="{{SlideOnBackend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeThirdSlideHeightCMSBlockStage"/>
-        <waitForElementVisible selector="{{SlideOnBackend.collageMinimumHeight('4', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeFourthSlideHeightCMSBlockStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstSlideHeightCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondSlideHeightCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.wrapper('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
     </test>
 </tests>

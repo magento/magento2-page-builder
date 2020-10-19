@@ -86,7 +86,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Right Alignment On Stage - Before Save -->
         <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
-        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightBeforeSave"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeImageAlignmentRightBeforeSave">
+            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestor}})[1]"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockBeforeSave">
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
@@ -97,7 +101,11 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <!-- Verify Right Alignment On Stage - After Save -->
         <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
-        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightAfterSave"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeImageAlignmentRightAfterSave">
+            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestor}})[1]"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockAfterSave">
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
@@ -108,7 +116,11 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeImageAlignmentRightStorefront">
+            <argument name="selector" value="({{ImageOnStorefront.advancedConfigurationFigurePath('1')}}{{BlockOnStorefront.ancestor}})[1]"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedAlignmentPropertyRight.value}}"/>
+            <argument name="cssProperty" value="textAlign"/>
+        </actionGroup>
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockStorefront">
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
