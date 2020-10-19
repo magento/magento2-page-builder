@@ -53,7 +53,7 @@ define([
                 imgSize: '100%',
                 speed: 1
             });
-            el.remove();
+            document.body.removeChild(el);
         });
     });
 });
