@@ -169,7 +169,6 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -185,7 +184,6 @@
             <argument name="image" value="PageBuilderImageProperty_JPG"/>
         </actionGroup>
         <!-- Validate CMS Page Storefront Mobile -->
-        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefrontMobile"/>
         <seeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="seeMobileImageCMSPageStorefrontMobile"/>
