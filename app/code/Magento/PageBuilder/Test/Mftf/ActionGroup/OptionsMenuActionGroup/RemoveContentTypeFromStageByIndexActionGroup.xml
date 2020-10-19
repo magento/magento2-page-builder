@@ -18,7 +18,8 @@
         <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStageVisible"/>
         <moveMouseOver stepKey="moveMouseOverSearch" selector="{{PageBuilderPanel.searchPanel}}" />
         <executeJS function="return ['row', 'column'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.role}}'.toUpperCase()+'&quot;)]' : ['tabs'].include('{{contentType.role}}') ? '//ul[@data-element=&quot;navigation&quot;]' : '';" stepKey="contentTypeLabelSelector" />
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}{$contentTypeLabelSelector}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
+        <executeJS function="return ['row'].include('{{contentType.role}}') ? '(//div[contains(@class, &quot;pagebuilder-content-type-affordance&quot;) and contains(@class, &quot;pagebuilder-affordance-{{contentType.role}}&quot;)])[{{contentTypeIndex}}]' : '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{contentType.role}}&quot;)])[{{contentTypeIndex}}]';" stepKey="contentTypeByIndexSelector" />
+        <moveMouseOver selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForOptionsAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForOptions"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveByIndex(contentType.role, contentTypeNumber)}}" stepKey="clickRemoveContentType"/>

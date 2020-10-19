@@ -30,14 +30,14 @@
         </after>
         <!-- Validate Row Box Shadow -->
         <comment userInput="Validate Row Box-Shadow" stepKey="commentValidateRowBoxShadow"/>
-        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-row-affordance'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowBoxShadowStyle"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-affordance-row'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultRowBoxShadowStyle" message="pass">
             <expectedResult type="string">{{PageBuilderBoxShadowProperty_Affordance.value}}</expectedResult>
             <actualResult type="variable">getDefaultRowBoxShadowStyle</actualResult>
         </assertEquals>
         <moveMouseOver selector="{{RowOnStage.base('1')}}" stepKey="moveMouseOverRow"/>
         <waitForPageLoad stepKey="waitForRowHoverAnimation"/>
-        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-row-affordance'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowHoverBoxShadowStyle"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-affordance-row'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowHoverBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultRowHoverBoxShadowStyle" message="pass">
             <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Affordance.value}}</expectedResult>
             <actualResult type="variable">getDefaultRowHoverBoxShadowStyle</actualResult>

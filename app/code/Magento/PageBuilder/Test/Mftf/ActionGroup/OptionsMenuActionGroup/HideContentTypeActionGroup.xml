@@ -19,7 +19,8 @@
         <comment userInput="Hiding content type" stepKey="commentHideContentType"/>
         <waitForElementVisible selector="{{section.base(targetIndex)}}" stepKey="waitForContentType"/>
         <executeJS function="return ['row', 'column'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.role}}'.toUpperCase()+'&quot;)]' : '';" stepKey="contentTypeLabelSelector" />
-        <moveMouseOver selector="{{section.base(targetIndex)}}{$contentTypeLabelSelector}" x="{{x}}" y="{{y}}" stepKey="moveMouseOverContentType"/>
+        <executeJS function="return ['row'].include('{{contentType.role}}') ? '(//div[contains(@class, &quot;pagebuilder-content-type-affordance&quot;) and contains(@class, &quot;pagebuilder-affordance-{{contentType.role}}&quot;)])[{{targetIndex}}]' : '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{contentType.role}}&quot;)])[{{targetIndex}}]';" stepKey="contentTypeByIndexSelector" />
+        <moveMouseOver selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" x="{{x}}" y="{{y}}" stepKey="moveMouseOverContentType"/>
         <waitForPageLoad stepKey="waitForMouseOver"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="hideContentType"/>
