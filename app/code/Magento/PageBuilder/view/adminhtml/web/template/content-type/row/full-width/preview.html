@@ -5,9 +5,11 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-content-type-affordance pagebuilder-row-affordance"
+<div class="pagebuilder-content-type pagebuilder-content-type-affordance pagebuilder-affordance-row"
      ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <div class="pagebuilder-display-label"
+         text="function () { return displayLabel().toUpperCase(); }()"></div>
     <div class="pagebuilder-content-type pagebuilder-row type-container no-system-border children-min-height"
          attr="data.main.attributes"
          ko-style="getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
@@ -30,8 +32,6 @@
                 <div class="pagebuilder-drop-indicator"></div>
             </if>
         </div>
-        <div class="pagebuilder-display-label"
-             text="function () { return displayLabel().toUpperCase(); }()"></div>
         <div class="pagebuilder-empty-container empty-placeholder"
              css="placeholderCss()"
              translate="'Drag content types or columns here'"/>

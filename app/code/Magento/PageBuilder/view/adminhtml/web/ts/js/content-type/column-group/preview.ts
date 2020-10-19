@@ -27,12 +27,12 @@ import Resize, {
 } from "../column/resize";
 import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
+import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
-import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 
 /**
  * @api
@@ -468,7 +468,7 @@ export default class Preview extends PreviewCollection {
             this.gridSizeHistory = new Map();
             this.recordGridResize(this.gridSize());
             // inline tooltip out of bounds
-            let tooltipClientRectTop = tooltip[0].getBoundingClientRect().top
+            const tooltipClientRectTop = tooltip[0].getBoundingClientRect().top
                                      - pageBuilderHeaderHeight(this.contentType.stageId);
 
             if (checkStageFullScreen(this.contentType.stageId)

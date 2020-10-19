@@ -213,11 +213,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Return selected element styles
      *
-     * @param {Object} element
-     * @param {Array} styleProperties
+     * @param element
+     * @param styleProperties
      */
-    public getStyle(element: {[key: string]: any}, styleProperties: Array<string>) {
-        let stylesObject = element.style();
+    public getStyle(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
 
         return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
     }
@@ -225,18 +225,18 @@ export default class Preview extends PreviewCollection {
     /**
      * Return element styles without selected
      *
-     * @param {Object} element
-     * @param {Array} styleProperties
+     * @param element
+     * @param styleProperties
      */
-    public getStyleWithout(element: {[key: string]: any}, styleProperties: Array<string>) {
-        let stylesObject = element.style();
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
 
         return Object.keys(stylesObject)
-            .filter(key => !styleProperties.includes(key))
+            .filter((key) => !styleProperties.includes(key))
             .reduce((obj, key) => {
                 return {
                     ...obj,
-                    [key]: stylesObject[key]
+                    [key]: stylesObject[key],
                 };
             }, {});
     }

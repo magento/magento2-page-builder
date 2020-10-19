@@ -191,8 +191,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
     /**
      * Return selected element styles
      *
-     * @param {Object} element
-     * @param {Array} styleProperties
+     * @param element
+     * @param styleProperties
      */
     ;
 
@@ -207,8 +207,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
     /**
      * Return element styles without selected
      *
-     * @param {Object} element
-     * @param {Array} styleProperties
+     * @param element
+     * @param styleProperties
      */
     ;
 
