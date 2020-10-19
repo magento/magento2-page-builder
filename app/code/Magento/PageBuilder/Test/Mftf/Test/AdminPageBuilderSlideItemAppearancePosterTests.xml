@@ -113,7 +113,7 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
-    <test name="SlideItemPosterTinyMCE3InlineEdit" extends="SlideItemPosterCanInlineEditContent">
+    <test name="SlideItemPosterTinyMCE3InlineEdit" extends="SlideItemPosterCanInlineEditContent" deprecated="This version of TinyMCE is no longer supported">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -125,6 +125,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemPoster"/>
+            <skip>
+                <issueId value="DEPRECATED">This version of TinyMCE is no longer supported</issueId>
+            </skip>
         </annotations>
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>
