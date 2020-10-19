@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileEditTabNameByClickingOnHeaderInStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Tab Configuration: Ability To Edit Tab Name Inline On the Stage By Clicking On Tab Header On Mobile Viewport"/>
+            <description value="Ability to edit Tab Name inline on the stage by clicking on tab header on mobile viewport"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEdit"/>
+        <!-- Edit tab name inline on stage -->
+        <pressKey selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE, \Facebook\WebDriver\WebDriverKeys::BACKSPACE, \Facebook\WebDriver\WebDriverKeys::BACKSPACE, \Facebook\WebDriver\WebDriverKeys::BACKSPACE, \Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearTabTitleField" />
+        <pressKey selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="enterTabTitle"/>
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin"/>
+        <!-- Check new tab name saved in form -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCustomTabNameOnForm">
+            <argument name="property" value="PageBuilderTabNameRandom1"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdminAgain"/>
+        <!-- Verify in storefront -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <!-- User sees Tab 1 with custom tab name on Storefront -->
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
+    </test>
+</tests>
