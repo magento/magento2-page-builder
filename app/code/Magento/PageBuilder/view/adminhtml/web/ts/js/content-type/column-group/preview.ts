@@ -18,6 +18,7 @@ import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
 import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
+import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
@@ -27,7 +28,6 @@ import Resize, {
 } from "../column/resize";
 import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
-import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
