@@ -6,21 +6,20 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BlockRenderProductsThroughBlockContentTypeTest">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileProductsThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block Content"/>
+            <stories value="Viewport Switcher"/>
             <title value="Render Products Through Block Content Type"/>
             <description value="Verify that users are able to successfully render and use the products content type through the Block content type."/>
-            <severity value="BLOCKER"/>
-            <testCaseId value="MC-14878"/>
-            <useCaseId value="MC-13769"/>
+            <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-products"/>
             <group value="pagebuilder-productsGrid"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -40,6 +39,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createProduct1" stepKey="deleteCreatedProduct1"/>
@@ -51,7 +54,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Products -->
-        <comment userInput="Add Products" stepKey="commentAddProducts"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -59,7 +61,6 @@
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Edit Products -->
-        <comment userInput="Edit Products" stepKey="commentEditProducts"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -73,11 +74,8 @@
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
-        <!-- Validate CMS Block Stage -->
-        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+
+        <!-- Validate CMS Block Stage Mobile Viewport -->
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="3"/>
@@ -85,12 +83,30 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSBlockStage">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStageMobile">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSBlockStageMobile">
+            <argument name="page" value="ProductsOnStage"/>
+        </actionGroup>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
-        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -104,8 +120,7 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
-        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <!-- Validate CMS Page Stage Mobile Viewport -->
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="3"/>
@@ -113,10 +128,24 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStage">
             <argument name="page" value="ProductsOnStorefront"/>
         </actionGroup>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStageDesktop">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStageDesktop">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
         <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -151,11 +180,54 @@
         <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefrontMobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForReload"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefrontMobile">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStorefrontMobile">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsCMSPageStorefrontMobile">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2Mobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsCMSPageStorefrontMobile">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront3Mobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefrontMobile">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage3"/>
+        <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefrontMobile">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage4"/>
+        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefrontMobile">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
         <!-- Edit Number Of Products To Display -->
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage2">
             <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen1"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportBlock1">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -163,30 +235,62 @@
             <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts2"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterEdit"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock2"/>
-        <!-- Validate CMS Block Stage Again -->
-        <comment userInput="Validate CMS Block Stage Again" stepKey="commentValidateCMSBlockStage2"/>
-        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen2"/>
+
+        <!-- Validate CMS Block Stage Again Mobile Viewport -->
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
+
+        <!-- Validate CMS Block Stage Again Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock2">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage2Desktop">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterEdit"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock2"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <!-- Validate CMS Page Stage Again -->
-        <comment userInput="Validate CMS Page Stage Again" stepKey="commentValidateCMSPageStage2"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen3"/>
+
+        <!-- Validate CMS Page Stage Again Mobile Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage1">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
+
+        <!-- Validate CMS Page Stage Again Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage1">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage2Desktop">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+
         <!-- Validate CMS Page Storefront Again -->
-        <comment userInput="Validate CMS Page Storefront Again" stepKey="commentValidateCMSPageStorefront2"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront4">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+
+        <!-- Validate CMS Page Storefront Again Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefrontMobile2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
