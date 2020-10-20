@@ -6,21 +6,22 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="HeadingCssResponsiveStylingTest">
+    <test name="AdvancedConfigurationCssResponsiveStylingTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Heading"/>
+            <stories value="Advanced Configuration"/>
             <title value="Heading - CSS Responsive Styling"/>
             <description value="Internal (or external) CSS should be able to use media queries to override Page Builder styles that would previously have been inlined."/>
-            <severity value="AVERAGE"/>
+            <severity value="MAJOR"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-advancedConfig"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
-                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            <actionGroup ref="AdminOpenCmsPageActionGroup" stepKey="goToCMSPage">
+                <argument name="page_id" value="$$createCMSPage.id$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="waitForPageBuilderDisplay"/>
         </before>

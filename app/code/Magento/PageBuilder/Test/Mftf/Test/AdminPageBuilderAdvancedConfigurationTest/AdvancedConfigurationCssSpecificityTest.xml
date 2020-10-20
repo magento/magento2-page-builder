@@ -6,21 +6,22 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="HeadingCssSpecificityTest">
+    <test name="AdvancedConfigurationCssSpecificityTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Heading"/>
+            <stories value="Advanced Configuration"/>
             <title value="Heading - CSS Specificity"/>
             <description value="Internal (or external) CSS should be able to override Page Builder defined styles that would previously have been inlined."/>
-            <severity value="AVERAGE"/>
+            <severity value="MAJOR"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-advancedConfig"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
-                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            <actionGroup ref="AdminOpenCmsPageActionGroup" stepKey="goToCMSPage">
+                <argument name="page_id" value="$$createCMSPage.id$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="waitForPageBuilderDisplay"/>
         </before>
@@ -57,7 +58,7 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
-            <argument name="property" value="PageBuilderHtmlPropertyCssSpecificityBefore"/>
+            <argument name="property" value="PageBuilderHtmlPropertyCssSpecificityWithoutBodyId"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Verify in Stage -->
@@ -76,8 +77,8 @@
             <argument name="cssProperty" value="textAlign"/>
         </actionGroup>
         <!-- Edit HTML Code -->
-        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        <actionGroup ref="AdminOpenCmsPageActionGroup" stepKey="goToCMSPage">
+            <argument name="page_id" value="$$createCMSPage.id$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="waitForPageBuilderDisplay"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
@@ -87,13 +88,15 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent2">
-            <argument name="property" value="PageBuilderHtmlPropertyCssSpecificityAfter"/>
+            <argument name="property" value="PageBuilderHtmlPropertyCssSpecificityWithBodyId"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Verify in Storefront -->
-        <magentoCLI command="cache:clean full_page" stepKey="flushCache"/>
+        <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
+            <argument name="tags" value="full_page"/>
+        </actionGroup>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
