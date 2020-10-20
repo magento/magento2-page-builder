@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileHeadingEditTypeH1StageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Stage Edit - Heading Type H1 On Mobile Viewport"/>
+            <description value="Edit Heading Type field to value H1 on stage and view the rendered content type in stage and storefront on mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Add A Row For Each Alignment Type -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Add Alignment: Default -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
+        <click selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H1.toolbar)}}" stepKey="clickHeadingType1"/>
+        <waitForPageLoad stepKey="waitForAnimationAlign1" time="30"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1',PageBuilderHeadingAlignmentProperty_left.toolbar)}}" stepKey="dontSeeLeftAlignmentSelected"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1',PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1',PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
+        <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
+            <argument name="index" value="2"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
+            <argument name="index" value="3"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
+            <argument name="index" value="4"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_right"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Default -->
+        <waitForElementVisible selector="{{HeadingOnStage.noAlignment(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForNoAlignment"/>
+        <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForHeadingStyle"/>
+        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeStageHeadingText"/>
+        <!-- Stage: Check Alignment: Left -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageLeft">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Center -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageCenter">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Right -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageRight">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Validate Default heading -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Validate Left heading -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Center heading -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Validate Right heading -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Switch To Mobile Viewport After Save -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Default -->
+        <waitForElementVisible selector="{{HeadingOnStage.noAlignment(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForNoAlignmentAfterSave"/>
+        <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForHeadingStyleAfterSave"/>
+        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeStageHeadingTextAfterSave"/>
+        <!-- Stage: Check Alignment: Left -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageLeftAfterSave">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Center -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageCenterAfterSave">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Right -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageRightAfterSave">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForAlignmentVisible"/>
+        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeStorefrontHeadingText"/>
+        <actionGroup ref="verifyHeadingInStorefrontWithAlignment" stepKey="verifyHeadingInStorefront2">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="verifyHeadingInStorefrontWithAlignment" stepKey="verifyHeadingInStorefront3">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="verifyHeadingInStorefrontWithAlignment" stepKey="verifyHeadingInStorefront4">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+</tests>
