@@ -40,7 +40,11 @@
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <!-- Assert column resize handle is not visible -->
-        <dontSeeElement selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="columnResizeHandleNotVisible"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnResizeHandle}}')).getPropertyValue('display')" stepKey="grabComputedDisplayPropertyCMSPageStage"/>
+        <assertEquals stepKey="assertColumnResizeHandleNotVisible">
+            <expectedResult type="string">none</expectedResult>
+            <actualResult type="variable">grabComputedDisplayPropertyCMSPageStage</actualResult>
+        </assertEquals>
         <!-- Assert grid size not visible -->
         <dontSeeElement selector="{{ColumnOnBackend.gridSizeButton('1')}}" stepKey="columnGridSizeNotVisible"/>
     </test>
