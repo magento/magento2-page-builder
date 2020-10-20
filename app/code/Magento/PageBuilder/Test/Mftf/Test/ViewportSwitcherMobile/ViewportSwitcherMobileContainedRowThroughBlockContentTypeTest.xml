@@ -101,7 +101,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
 
-        <!-- Validate CMS Page Stage on Mobile Viewport -->
+        <!-- Validate CMS Page Stage Mobile Viewport -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStageMobile"/>
         <seeElement selector="{{RowOnStorefront.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
@@ -110,7 +110,7 @@
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
 
-        <!-- Validate CMS Page Stage -->
+        <!-- Validate CMS Page Stage Desktop Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>

@@ -24,11 +24,11 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <!-- Validate CMS Page Stage on Mobile Viewport -->
+        <!-- Validate CMS Page Stage Mobile Viewport -->
         <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
 
-        <!-- Validate CMS Page Stage -->
+        <!-- Validate CMS Page Stage Desktop Viewport -->
         <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightCMSPageStage"/>
         <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
 
