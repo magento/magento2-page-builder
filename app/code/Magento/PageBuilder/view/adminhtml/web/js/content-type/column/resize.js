@@ -33,7 +33,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     ;
 
     _proto.getPreviousGridSize = function getPreviousGridSize() {
-      return parseInt(this.columnGroup.dataStore.getPreviousState().grid_size.toString(), 10);
+      return this.columnGroup.dataStore.getPreviousState().grid_size ? parseInt(this.columnGroup.dataStore.getPreviousState().grid_size.toString(), 10) : this.getGridSize();
     }
     /**
      * Get the smallest column width possible
@@ -57,7 +57,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     ;
 
     _proto.getAcceptedColumnWidth = function getAcceptedColumnWidth(width, gridSize) {
-      gridSize = gridSize || this.getGridSize();
+      gridSize = gridSize || this.getPreviousGridSize();
       var newWidth = 0;
 
       for (var i = gridSize; i > 0; i--) {

@@ -12,6 +12,7 @@ import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
@@ -488,6 +489,15 @@ export default class Preview extends PreviewCollection {
         }
     }
 
+    /** @inheritDoc */
+    protected retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        delete options.duplicate;
+
+        return options;
+    }
+
     /**
      * Handle a click on the document closing the grid form
      *
@@ -910,7 +920,7 @@ export default class Preview extends PreviewCollection {
 
             const currentX = event.pageX - groupPosition.left;
             this.dropPosition = this.dropPositions.find((position) => {
-                return currentX > position.left && currentX < position.right && position.canShrink;
+                return currentX > position.left && currentX <= position.right && position.canShrink;
             });
 
             if (this.dropPosition) {

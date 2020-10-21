@@ -30,6 +30,7 @@ class GridSize extends UiField
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
+     * @param ScopeConfigInterface $scopeConfig
      * @param array $components
      * @param array $data
      */

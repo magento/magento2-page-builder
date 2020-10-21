@@ -495,6 +495,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _events.trigger("stage:childFocusStart");
       }
     }
+    /** @inheritDoc */
+    ;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
+
+      delete options.duplicate;
+      return options;
+    }
     /**
      * Handle a click on the document closing the grid form
      *
@@ -890,7 +899,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         var currentX = event.pageX - groupPosition.left;
         this.dropPosition = this.dropPositions.find(function (position) {
-          return currentX > position.left && currentX < position.right && position.canShrink;
+          return currentX > position.left && currentX <= position.right && position.canShrink;
         });
 
         if (this.dropPosition) {

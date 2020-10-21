@@ -35,13 +35,22 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <comment userInput="Validate default grid size on initial drop" stepKey="commentValidateInitial"/>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSize"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultGridSize">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_Default"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <comment userInput="Validate default grid size after save" stepKey="commentValidateAfterSave"/>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeFormAfterSave"/>
-        <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeFormAfterSave">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultGridSizeAfterSave">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_Default"/>
+        </actionGroup>
     </test>
 </tests>

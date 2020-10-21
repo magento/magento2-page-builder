@@ -33,9 +33,13 @@
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo14">
-            <argument name="gridSize" value="14"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="updateGridSizeTo14">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_14"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid14"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid14"/>
         <!-- Validate first column unchanged -->

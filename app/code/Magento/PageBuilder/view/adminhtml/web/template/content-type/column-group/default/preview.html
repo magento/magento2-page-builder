@@ -5,8 +5,12 @@
  */
 -->
 
-<div class="pagebuilder-column-group"
-     css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}"
+<div class="pagebuilder-content-type pagebuilder-column-group pagebuilder-columns"
+     attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="Object.assign(data.main.css(),
+        {'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}
+        )"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template"></render>
     <div class="resize-grid" each="gridSizeArray">
@@ -16,8 +20,10 @@
     <div class="drop-placeholder" afterRender="function (element) { bindDropPlaceholder.call($data, element); }"></div>
     <div class="move-placeholder" afterRender="function (element) { bindMovePlaceholder.call($data, element); }"></div>
     <div class="element-children"
-         each="$parent.getChildren()"
+         each="contentType.getChildren()"
          afterRender="function (element) { bindInteractions.call($data, element); }">
         <render args="{name: preview.template, data: preview}"/>
     </div>
+    <div class="pagebuilder-display-label"
+         text="function () { return displayLabel().toUpperCase(); }()"></div>
 </div>

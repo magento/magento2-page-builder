@@ -30,7 +30,9 @@ export default class Resize {
      * @returns {number}
      */
     public getPreviousGridSize(): number {
-        return parseInt(this.columnGroup.dataStore.getPreviousState().grid_size.toString(), 10);
+        return this.columnGroup.dataStore.getPreviousState().grid_size ?
+            parseInt(this.columnGroup.dataStore.getPreviousState().grid_size.toString(), 10) :
+            this.getGridSize();
     }
 
     /**
@@ -54,7 +56,7 @@ export default class Resize {
      * @returns {number}
      */
     public getAcceptedColumnWidth(width: string, gridSize?: number): number {
-        gridSize = gridSize || this.getGridSize();
+        gridSize = gridSize || this.getPreviousGridSize();
         let newWidth = 0;
         for (let i = gridSize; i > 0; i--) {
             const percentage = parseFloat((100 / gridSize * i).toFixed(
