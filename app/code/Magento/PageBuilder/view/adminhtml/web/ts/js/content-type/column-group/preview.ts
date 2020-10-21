@@ -400,6 +400,7 @@ export default class Preview extends PreviewCollection {
 
     /** @inheritdoc */
     public openEdit(): void {
+        this.contentType.dataStore.set("not_empty_columns_number", this.getNotEmptyColumnsNumber());
         super.openEdit();
         this.recordGridResize(this.gridSize());
     }
@@ -1101,6 +1102,23 @@ export default class Preview extends PreviewCollection {
                 });
             this.gridSizeHistory.set(newGridSize, columnWidths);
         }
+    }
+
+    /**
+     * Get not empty columns number.
+     *
+     * @return {number}
+     */
+    private getNotEmptyColumnsNumber(): number {
+        const numCols = this.contentType.getChildren()().length;
+        let numEmptyColumns = 0;
+        this.contentType.getChildren()().forEach(
+            (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                if (column.getChildren()().length === 0) {
+                    numEmptyColumns++;
+                }
+            });
+        return numCols - numEmptyColumns;
     }
 }
 

@@ -37,7 +37,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
+<!--        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>-->
         <!-- Validate column options dont display -->
         <comment userInput="Validate column options dont display" stepKey="commentColumnOptionsHidden"/>
         <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn"/>
@@ -53,7 +53,7 @@
         <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '2')}}" stepKey="dontSeeRowOptions"/>
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm"/>
+<!--        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm"/>-->
         <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeLabelByText(PageBuilderRowContentType.role, 'ROW')}}" x="0" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>

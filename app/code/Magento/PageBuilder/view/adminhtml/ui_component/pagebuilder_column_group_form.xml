@@ -84,10 +84,18 @@
                 <additionalClasses>
                     <class name="admin__field-small">true</class>
                 </additionalClasses>
+                <imports>
+                    <link name="validation.validate-greater-than-current">${ $.provider }:data.not_empty_columns_number</link>
+                </imports>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
-                    <rule name="less-than-equals-to" xsi:type="number">16</rule>
+                    <rule name="validate-greater-than-one" xsi:type="boolean">true</rule>
+                    <rule name="validate-default-grid-size" xsi:type="number">16</rule>
+                    <rule name="validate-greater-than-current" xsi:type="boolean">true</rule>
                 </validation>
+                <tooltip>
+                    <description translate="true">Grid size determines the maximum number of columns available. Select a value between 2 and ${ $.validation['validate-default-grid-size'] }</description>
+                </tooltip>
             </settings>
         </field>
         <field name="min_height" sortOrder="20" formElement="input">

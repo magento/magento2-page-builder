@@ -31,11 +31,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSizeOverMax">
-            <argument name="gridSize" value="50"/>
-            <argument name="index" value="1"/>
-            <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterGridSizeOverMax">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateGridSizeOverMax">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_50"/>
         </actionGroup>
     </test>
 </tests>

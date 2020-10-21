@@ -292,6 +292,36 @@ define([
             $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
         );
 
+        validator.addRule(
+            'validate-greater-than-one',
+            function (value) {
+                return !(value <= 1);
+            },
+            $.mage.__('The minimum grid size supported is 2.')
+        );
+
+        validator.addRule(
+            'validate-default-grid-size',
+            function (value, maxGridSize) {
+                this.deafultGridSizeMessage = $.mage.__('The maximum grid size supported is ') + maxGridSize + '.';
+
+                return !(parseInt(value, 10) > parseInt(maxGridSize, 10)
+                );
+            },
+            function () {
+                return this.deafultGridSizeMessage;
+            }
+        );
+
+        validator.addRule(
+            'validate-greater-than-current',
+            function (value, currentTotalValue) {
+                return !(parseInt(value, 10) < parseInt(currentTotalValue, 10)
+                );
+            },
+            $.mage.__('Grid size cannot be smaller than the current total amount of columns, minus any empty columns.')
+        );
+
         validateObjectField(validator, 'validate-number');
         validateObjectField(validator, 'less-than-equals-to');
         validateObjectField(validator, 'greater-than-equals-to');

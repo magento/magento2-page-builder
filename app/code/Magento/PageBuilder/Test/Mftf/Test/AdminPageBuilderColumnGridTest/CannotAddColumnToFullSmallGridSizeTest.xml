@@ -31,10 +31,13 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo2">
-            <argument name="gridSize" value="2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
         </actionGroup>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="updateGridSizeTo2">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeGridSizeForm"/>
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumn1Visible"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="mouseOverColumn1"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptionsMenu"/>

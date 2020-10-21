@@ -31,10 +31,13 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo3">
-            <argument name="gridSize" value="3"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
         </actionGroup>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="updateGridSizeTo3">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_3"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeGridSizeForm"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>

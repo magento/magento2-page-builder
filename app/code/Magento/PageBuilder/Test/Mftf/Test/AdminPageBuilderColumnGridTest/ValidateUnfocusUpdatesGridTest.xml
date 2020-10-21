@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ValidateUnfocusUpdatesGridTest">
+    <test name="ValidateUnfocusUpdatesGridTest" deprecated="Grid size control has been moved in content type settings form">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
+            <skip>
+                <issueId value="PB-500"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -31,9 +34,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
+<!--        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>-->
         <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking"/>
+<!--        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking"/>-->
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
     </test>

@@ -56,7 +56,7 @@ class GridSize extends UiField
         parent::prepare();
         $config = $this->getData('config');
         $config['default'] = $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT);
-        $config['validation']['less-than-equals-to'] = $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX);
+        $config['validation']['validate-default-grid-size'] = $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX);
         $this->setData('config', $config);
     }
 }

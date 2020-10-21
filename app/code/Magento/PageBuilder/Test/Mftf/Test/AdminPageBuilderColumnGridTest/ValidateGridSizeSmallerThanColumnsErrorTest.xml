@@ -31,9 +31,13 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo4">
-            <argument name="gridSize" value="4"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="updateGridSizeTo4">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_4"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeGridSizeForm"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="addColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -66,11 +70,15 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
-            <argument name="gridSize" value="3"/>
-            <argument name="index" value="1"/>
-            <argument name="errorMessage" value="PageBuilderGridSize.smallerThanTotalColumnsErrorMessage"/>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm2">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidGridSize">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_3"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateGridSizeUnderMin">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_3"/>
         </actionGroup>
     </test>
 </tests>

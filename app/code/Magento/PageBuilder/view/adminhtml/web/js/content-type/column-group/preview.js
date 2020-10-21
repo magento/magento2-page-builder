@@ -391,6 +391,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.openEdit = function openEdit() {
+      this.contentType.dataStore.set("not_empty_columns_number", this.getNotEmptyColumnsNumber());
+
       _previewCollection2.prototype.openEdit.call(this);
 
       this.recordGridResize(this.gridSize());
@@ -1070,6 +1072,23 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         });
         this.gridSizeHistory.set(newGridSize, columnWidths);
       }
+    }
+    /**
+     * Get not empty columns number.
+     *
+     * @return {number}
+     */
+    ;
+
+    _proto.getNotEmptyColumnsNumber = function getNotEmptyColumnsNumber() {
+      var numCols = this.contentType.getChildren()().length;
+      var numEmptyColumns = 0;
+      this.contentType.getChildren()().forEach(function (column) {
+        if (column.getChildren()().length === 0) {
+          numEmptyColumns++;
+        }
+      });
+      return numCols - numEmptyColumns;
     };
 
     return Preview;
