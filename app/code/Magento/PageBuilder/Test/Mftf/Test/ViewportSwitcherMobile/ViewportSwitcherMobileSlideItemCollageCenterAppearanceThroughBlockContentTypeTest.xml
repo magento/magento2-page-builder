@@ -25,6 +25,7 @@
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <!-- Validate CMS Block Stage Mobile Viewport -->
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStage" before="widthOfWrapperMinusPaddingCMSPageBackendMobile"/>
         <executeJS function="return Math.abs({{SlideOnBackend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageBackendMobile" before="validateOverlayPositionCMSPageBackendMobile"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageBackendMobile">
             <argument name="page" value="SlideOnBackend"/>
