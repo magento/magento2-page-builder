@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="HeadingOnStorefront">
         <element name="base" type="text" selector="(//*[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
         <element name="baseByTagName" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
@@ -25,8 +24,8 @@
         <element name="noBorderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'border-color:'))]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="borderWidth" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-width: {{arg3}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="borderRadius" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-radius: {{arg3}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
-        <element name="cssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@class,'{{arg3}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(@class)]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//{{arg1}}[@data-content-type=&quot;heading&quot;])[{{arg2}}][contains(@class,&quot;{{arg3}}&quot;)]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//{{arg1}}[@data-content-type=&quot;heading&quot;])[{{arg2}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'margin: {{arg3}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="noMargins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'margin:'))]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="padding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'padding: {{arg3}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
