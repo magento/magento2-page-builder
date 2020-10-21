@@ -75,6 +75,13 @@ export default class Preview extends BasePreview {
                 }
             }
         });
+
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
+            const viewports = Config.getConfig("breakpoints");
+            this.slidesToShow = parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
+            this.destroySlider();
+            this.initSlider();
+        });
     }
 
     /**
@@ -166,6 +173,10 @@ export default class Preview extends BasePreview {
         if (this.element && this.appearance() === "carousel") {
             $(this.element.children).slick(this.buildSlickConfig());
         }
+    }
+
+    protected destroySlider(): void {
+        $(this.element.children).slick('unslick');
     }
 
     /**

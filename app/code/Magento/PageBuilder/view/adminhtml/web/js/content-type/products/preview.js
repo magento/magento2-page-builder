@@ -57,6 +57,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
+      _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
+        var viewports = _config.getConfig("viewports");
+        _this.slidesToShow = Number.parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
+        _this.destroySlider();
+        _this.initSlider();
+      });
+
       return _this;
     }
     /**
@@ -155,6 +162,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (this.element && this.appearance() === "carousel") {
         (0, _jquery)(this.element.children).slick(this.buildSlickConfig());
       }
+    }
+    /**
+     * Destroy slider
+     */
+    ;
+
+    _proto.destroySlider = function destroySlider() {
+      (0, _jquery)(this.element.children).slick('unslick');
     }
     /**
      * Build the slick config object
