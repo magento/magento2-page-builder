@@ -15,7 +15,12 @@
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="adminLogout"/>
         </after>
     </test>
-     <test name="AdminAddImageToCMSPageTinyMCE3Test">
+     <test name="AdminAddImageToCMSPageTinyMCE3Test" deprecated="This version of TinyMCE is no longer supported">
+         <annotations>
+             <skip>
+                 <issueId value="DEPRECATED">This version of TinyMCE is no longer supported</issueId>
+             </skip>
+         </annotations>
          <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" before="loginAsAdmin"/>
          </before>

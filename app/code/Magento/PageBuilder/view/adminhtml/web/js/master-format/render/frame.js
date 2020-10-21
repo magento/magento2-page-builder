@@ -1,6 +1,8 @@
 /*eslint-disable */
 /* jscs:disable */
 define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
+  function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -168,7 +170,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
           _knockout.cleanNode(element);
 
           var filtered = (0, _filterHtml)((0, _jquery)(element));
-          var output = (0, _directives)(filtered.html());
+          var output = (0, _directives.replaceWithSrc)((0, _directives)(filtered.html()));
           resolve(output);
         });
 
