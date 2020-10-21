@@ -116,57 +116,7 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
-        <!-- Validate CMS Block Stage on Viewport DesMobile -->
-        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForValidateBlock">
-            <argument name="viewportButton" value="mobile"/>
-            <argument name="viewportStage" value="mobile"/>
-        </actionGroup>
-        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
-        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSBlockStage">
-            <argument name="page" value="SlideOnBackend"/>
-        </actionGroup>
-        <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStage"/>
-        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
-        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSBlockStage">
-            <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
-        </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSBlockStage">
-            <argument name="section" value="SlideOnBackend"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
-            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
-        </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageCMSBlockStage">
-            <argument name="section" value="SlideOnBackend"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
-        </actionGroup>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
-        <seeElementInDOM selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
-        <dontSeeElement selector="{{SlideOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStage"/>
-        <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStage"/>
-        <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
-        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
-        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
-            <expectedResult type="int">5</expectedResult>
-            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
-        </assertLessThanOrEqual>
-        <executeJS function="return window.getComputedStyle({{SlideOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSBlockStage"/>
-        <assertEquals stepKey="assertDefaultComputedTextAlignCMSBlockStage">
-            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
-            <actualResult type="variable">grabDefaultComputedTextAlignCMSBlockStage</actualResult>
-        </assertEquals>
-        <!-- Validate CMS Block Stage Mobile -->
+        <!-- Validate CMS Block Stage Mobile Viewport-->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForValidateBlock">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
