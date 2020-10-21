@@ -43,8 +43,16 @@
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySlideStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideName"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeight"/>
-        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeight">
+            <argument name="selector" value="{{SlideOnBackend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparencyOverlayStage">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Validate Stage: No Tooltip -->
         <comment userInput="Validate Stage: No Tooltip" stepKey="commentNoTooltipStage"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
@@ -66,16 +74,32 @@
         <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparencyOverlayStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSource"/>
         <!-- Validate Storefront: Slide Item Defaults -->
         <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparencyOverlayStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSourceMobile"/>
     </test>
 </tests>

@@ -76,13 +76,13 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor3"/>
         <!-- Stage: Check Padding: Empty -->
         <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageEmpty">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoPaddingActionGroup" stepKey="validateStageEmpty">
             <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Padding: Unique -->
         <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStageUnique">
             <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
@@ -94,13 +94,13 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Padding: Empty -->
         <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageEmpty2">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoPaddingActionGroup" stepKey="validateStageEmpty2">
             <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Padding: Unique -->
         <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique2"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique2">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStageUnique2">
             <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
@@ -110,14 +110,16 @@
         </actionGroup>
         <!-- Storefront: Check Padding: Empty -->
         <comment userInput="Storefront: Check Padding: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoPaddingActionGroup" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
+            <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Padding: Unique -->
         <comment userInput="Storefront: Check Padding: Unique" stepKey="commentStorefrontCheckUnique"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontUnique">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStorefrontUnique">
             <argument name="page" value="TextOnStorefront"/>
+            <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>

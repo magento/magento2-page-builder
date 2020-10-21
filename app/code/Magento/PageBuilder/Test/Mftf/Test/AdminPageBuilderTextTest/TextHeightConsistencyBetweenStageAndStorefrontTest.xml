@@ -51,7 +51,7 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad stepKey="waitForStorefront"/>
         <waitForElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextOnStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{TextOnStorefront.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStorefrontHeight"/>
+        <executeJS function="return document.evaluate('{{TextOnStorefront.base('1'))}}', document.body).iterateNext().offsetHeight;" stepKey="getTextOnStorefrontHeight"/>
         <executeJS function="return Math.abs({$getTextOnStageHeight} - {$getTextOnStorefrontHeight})" stepKey="getStageAndStorefrontHeightDifference"/>
         <assertLessThanOrEqual stepKey="assertStageAndStorefrontHeightAreClose">
             <expectedResult type="int">2</expectedResult>

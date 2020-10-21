@@ -85,7 +85,11 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeSlide1LinkURL"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColor"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSlideBackgroundColor">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
     </test>
 </tests>
