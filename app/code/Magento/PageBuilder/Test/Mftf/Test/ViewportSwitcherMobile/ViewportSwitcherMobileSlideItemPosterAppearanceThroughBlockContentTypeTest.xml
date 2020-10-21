@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ViewportSwitcherMobileBlockRenderSlideItemPosterAppearanceThroughBlockContentTypeTest">
+    <test name="ViewportSwitcherMobileSlideItemPosterAppearanceThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
@@ -188,7 +188,7 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
+        <!-- Validate CMS Page Stage Mobile Viewport-->
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStage"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
             <argument name="page" value="SlideOnFrontend"/>
