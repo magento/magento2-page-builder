@@ -252,6 +252,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var previousViewport = this.viewport();
       this.viewport(viewport);
 
+      _underscore.each(this.viewportClasses, function (viewportClass) {
+        viewportClass(false);
+      });
+
+      this.viewportClasses[viewport + "-viewport"](true);
+
       _config.setConfig({
         viewport: viewport
       });
@@ -260,12 +266,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         viewport: viewport,
         previousViewport: previousViewport
       });
-
-      _underscore.each(this.viewportClasses, function (viewportClass) {
-        viewportClass(false);
-      });
-
-      this.viewportClasses[viewport + "-viewport"](true);
     }
     /**
      * Preload all templates into the window to reduce calls later in the app

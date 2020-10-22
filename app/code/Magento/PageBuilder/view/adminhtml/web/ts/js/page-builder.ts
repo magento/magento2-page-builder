@@ -255,6 +255,10 @@ export default class PageBuilder implements PageBuilderInterface {
         const previousViewport = this.viewport();
 
         this.viewport(viewport);
+        _.each(this.viewportClasses, (viewportClass) => {
+            viewportClass(false);
+        });
+        this.viewportClasses[`${viewport}-viewport`](true);
         Config.setConfig({
             viewport,
         } as ConfigInterface);
@@ -262,10 +266,6 @@ export default class PageBuilder implements PageBuilderInterface {
             viewport,
             previousViewport,
         });
-        _.each(this.viewportClasses, (viewportClass) => {
-            viewportClass(false);
-        });
-        this.viewportClasses[`${viewport}-viewport`](true);
     }
 
     /**

@@ -77,10 +77,12 @@ export default class Preview extends BasePreview {
         });
 
         events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
-            const viewports = Config.getConfig("breakpoints");
-            this.slidesToShow = parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
-            this.destroySlider();
-            this.initSlider();
+            const viewports = Config.getConfig("viewports");
+            if (this.element && this.appearance() === "carousel") {
+                this.slidesToShow = parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
+                this.destroySlider();
+                this.initSlider();
+            }
         });
     }
 

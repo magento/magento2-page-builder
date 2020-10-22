@@ -59,9 +59,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
         var viewports = _config.getConfig("viewports");
-        _this.slidesToShow = Number.parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
-        _this.destroySlider();
-        _this.initSlider();
+          if (_this.element && _this.appearance() === "carousel") {
+              _this.slidesToShow = Number.parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
+              _this.destroySlider();
+              _this.initSlider();
+          }
       });
 
       return _this;
