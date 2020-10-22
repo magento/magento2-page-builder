@@ -71,32 +71,53 @@
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+        <!-- Validate Stage After Page Save Desktop Viewport -->
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave1"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1TextStageAfterSave1"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton2TextStageAfterSave1"/>
+        <!-- Validate Edit Panel For Duplicate -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForButtonItem21">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnEditPanel1">
+            <argument name="property" value="PageBuilderButtonItemText_Common"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel1"/>
         <!-- Switch To Mobile Viewport After Save -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <!-- Validate Stage After Save -->
-        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1TextStageAfterSave"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton2TextStageAfterSave"/>
+        <!-- Validate Stage After Save Mobile Viewport -->
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1TextStageAfterSave2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton2TextStageAfterSave2"/>
         <!-- Validate Edit Panel For Duplicate -->
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForButtonItem2">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForButtonItem22">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnEditPanel">
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnEditPanel2">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
-        <!-- Validate Storefront -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
+        <!-- Validate Storefront Desktop -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront1">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
-        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
-        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonItemsStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1TextStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('2', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton2TextStorefront"/>
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription1"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonItemsStorefront1"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1TextStorefront1"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('2', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton2TextStorefront1"/>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront2">
+            <argument name="page" value="$$createProduct.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription2"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonItemsStorefront2"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1TextStorefront2"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('2', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton2TextStorefront2"/>
     </test>
 </tests>
