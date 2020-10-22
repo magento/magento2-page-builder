@@ -837,7 +837,7 @@ export default class Preview extends PreviewCollection {
             } else {
                 // If we're moving to another column group we utilise the existing drop placeholder
                 this.movePosition = this.dropPositions.find((position) => {
-                    return currentX > position.left && currentX < position.right && position.canShrink;
+                    return currentX > position.left && currentX <= position.right && position.canShrink;
                 });
 
                 if (this.movePosition) {
