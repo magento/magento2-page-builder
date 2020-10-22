@@ -75,6 +75,7 @@ export default class Preview extends BasePreview {
             widgetInitializer({
                 config: Config.getConfig("widgets"),
                 breakpoints: Config.getConfig("breakpoints"),
+                currentViewport: Config.getConfig("viewport"),
             }, element);
         }
     }

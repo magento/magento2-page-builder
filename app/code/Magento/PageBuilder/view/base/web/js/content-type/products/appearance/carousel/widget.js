@@ -9,9 +9,8 @@ define([
     'matchMedia',
     'Magento_PageBuilder/js/utils/breakpoints',
     'Magento_PageBuilder/js/events',
-    'Magento_PageBuilder/js/config',
     'slick'
-], function ($, _, mediaCheck, breakpointsUtils, events, pageBuilderConfig) {
+], function ($, _, mediaCheck, breakpointsUtils, events) {
     'use strict';
 
     /**
@@ -59,7 +58,7 @@ define([
         var $element = $(element),
             $carouselElement = $($element.children()),
             stageId = $($element).parents('[data-role="pagebuilder-stage"]').attr('id'),
-            currentViewport = pageBuilderConfig.getConfig("viewport"),
+            currentViewport = config.currentViewport,
             slickConfig = {
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
