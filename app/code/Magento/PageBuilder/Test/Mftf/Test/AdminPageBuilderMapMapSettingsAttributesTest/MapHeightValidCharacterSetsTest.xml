@@ -85,7 +85,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage"/>
-        <seeElement selector="{{MapOnStage.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1Stage"/>
+        <seeElement selector="{{MapOnStage.height('1'}}" stepKey="seeHeightMap1Stage"/>
         <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="actualStageMap1Height"/>
         <executeJS function="return Math.abs({$actualStageMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="actualStageMap1HeightDifference"/>
         <assertLessThanOrEqual stepKey="assertStageMap1Height">

@@ -9,7 +9,7 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="SliderOnStage">
         <element name="all" type="button" selector="div[data-content-type=slider]"/>
-        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type=&quot;slider&quot;])[{{sliderIndex}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="div.pagebuilder-content-type.pagebuilder-slider"/>
         <element name="containerCSS" type="text" selector="[data-content-type=slider] &gt; .slider-container"/>
         <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
@@ -28,18 +28,19 @@
         <element name="infiniteLoop" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-infinite-loop='{{infiniteLoop}}']" parameterized="true"/>
         <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-arrows='{{showArrows}}']" parameterized="true"/>
         <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-dots='{{showDots}}']" parameterized="true"/>
-        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
-        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'min-height: {{minHeight}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'min-height:'))]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;slider&quot;]/div[contains(@class,&quot;slider-container&quot;)])[{{sliderContainerIndex}}]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'text-align: {{alignment}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'text-align:'))]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-style: {{border}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-color: {{borderColor}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'border-color:'))]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="cssClasses" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'padding: {{padding}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
     </section>
 </sections>

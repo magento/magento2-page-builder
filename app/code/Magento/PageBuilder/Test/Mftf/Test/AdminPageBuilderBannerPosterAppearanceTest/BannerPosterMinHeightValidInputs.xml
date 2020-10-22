@@ -81,20 +81,24 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Validate Stage -->
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStage"/>
-        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStage"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStage">
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStage"/>
         <assertEquals stepKey="assertFirstMinHeightStage">
             <actualResult type="variable">firstMinHeightStage</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStage"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.overlay('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStage"/>
+        <comment userInput="Second Banner min-height value checked below" stepKey="seeSecondMinHeightStage"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStage"/>
         <assertEquals stepKey="assertSecondMinHeightStage">
             <actualResult type="variable">secondMinHeightStage</actualResult>
             <expectedResult type="variable">viewportHeightStage</expectedResult>
         </assertEquals>
-        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStage"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.overlay('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStage"/>
+        <comment userInput="Third Banner min-height value checked below" stepKey="seeThirdMinHeightStage"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStage"/>
         <executeJS function="return Math.abs({$viewportHeightStage} - 200)" stepKey="expectedThirdHeightStage"/>
         <assertEquals stepKey="assertThirdMinHeightStage">
             <actualResult type="variable">thirdMinHeightStage</actualResult>
@@ -107,20 +111,24 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
         <assertEquals stepKey="assertFirstMinHeightStorefront">
             <actualResult type="variable">firstMinHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertEquals>
-        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.overlay('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <comment userInput="Second Banner on Storefront min-height value checked below" stepKey="seeSecondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
         <assertEquals stepKey="assertSecondMinHeightStorefront">
             <actualResult type="variable">secondMinHeightStorefront</actualResult>
             <expectedResult type="variable">viewportHeightStorefront</expectedResult>
         </assertEquals>
-        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.overlay('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
+        <comment userInput="Third Banner on Storefront min-height value checked below" stepKey="seeThirdMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
         <executeJS function="return Math.abs({$viewportHeightStorefront} - 200)" stepKey="expectedThirdHeightStorefront"/>
         <assertEquals stepKey="assertThirdMinHeightStorefront">
             <actualResult type="variable">thirdMinHeightStorefront</actualResult>
