@@ -91,15 +91,51 @@
         <openNewTab stepKey="openNewTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront1"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}" stepKey="seeColumn1AppearanceApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}" stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}" stepKey="seeColumn2AppearanceApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}" stepKey="seeColumn2BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}" stepKey="seeColumn3AppearanceApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}" stepKey="seeColumn3BackgroundColorApplied"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1AppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentBottom}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1BackgroundColorApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Peacock.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2AppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentCenter}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2BackgroundColorApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Salmon.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn3MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn3AppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentFull}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn3BackgroundColorApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_DarkGrey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -123,14 +159,50 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront2"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}" stepKey="seeColumn1AppearanceApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}" stepKey="seeColumn1BackgroundColorApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}" stepKey="seeColumn2AppearanceApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}" stepKey="seeColumn2BackgroundColorApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}" stepKey="seeColumn3AppearanceApplied2"/>
-        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}" stepKey="seeColumn3BackgroundColorApplied2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1MinHeightApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1AppearanceApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentBottom}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1BackgroundColorApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Peacock.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2MinHeightApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2AppearanceApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentCenter}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2BackgroundColorApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Salmon.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn3MinHeightApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn3AppearanceApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentFull}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn3BackgroundColorApplied2">
+            <argument name="selector" value="{{ColumnOnFrontend.columnConfigurationPath('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_DarkGrey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
     </test>
 </tests>

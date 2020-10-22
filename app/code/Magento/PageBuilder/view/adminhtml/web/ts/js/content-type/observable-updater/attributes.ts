@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import Config from "../../config";
 import {ContentTypeConfigAppearanceElementInterface} from "../../content-type-config.types";
 import ConverterPool from "../../converter/converter-pool";
@@ -43,7 +44,11 @@ export default function generate(
         }
 
         // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
-        if (attributeConfig.name === "src" && !value.indexOf("{{media url=") && Config.getMode() !== "Preview") {
+        if (Config.getMode() !== "Preview"
+            && attributeConfig.name === "src"
+            && _.isString(value)
+            && !value.indexOf("{{media url=")
+        ) {
             attributeData["data-tmp-" + attributeConfig.name] = value;
             // @ts-ignore
             Object.defineProperty(attributeData, attributeConfig.name, { get() { return value; } });

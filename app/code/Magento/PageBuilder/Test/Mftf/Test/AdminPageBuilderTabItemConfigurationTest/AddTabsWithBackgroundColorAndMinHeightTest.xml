@@ -94,11 +94,23 @@
         <comment userInput="Tab 2 that was just edited is displayed on stage after edit panel save with custom name" stepKey="AC7"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabBackgroundPositionAdmin2">
+            <argument name="selector" value="{{TabOnStage.tabContent('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_TopLeft.computedStyleValue}}"/>
+            <argument name="cssProperty" value="backgroundPosition"/>
+        </actionGroup>
         <comment userInput="User sees Tab 2 Admin Preview updated with custom background color" stepKey="AC8"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTabBackgroundColorAdmin2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabBackgroundColorAdmin2">
+            <argument name="selector" value="{{TabOnStage.tabContent('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <comment userInput="User sees Tab 2 Admin Preview updated with custom minimum height" stepKey="AC9"/>
-        <seeElement selector="{{TabOnStage.minHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTabMinHeightAdmin2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabMinHeightAdmin2">
+            <argument name="selector" value="{{TabOnStage.tabContent('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight600Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <comment userInput="Switch tabs and other tab becomes hidden" stepKey="AC10"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
@@ -106,10 +118,18 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="User sees Tab 1 Admin Preview updated with custom background color" stepKey="AC11"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundColor('1', PageBuilderBackgroundColor_Pink.rgb)}}" stepKey="seeTabBackgroundColorAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabBackgroundColorAdmin1">
+            <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabBackgroundPositionAdmin1">
+            <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_TopLeft.computedStyleValue}}"/>
+            <argument name="cssProperty" value="backgroundPosition"/>
+        </actionGroup>
         <comment userInput="User sees Tab 1 Admin Preview updated with custom minimum height" stepKey="AC12"/>
-        <seeElement selector="{{TabOnStage.minHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+
         <comment userInput="User navigates to the storefront and sees changes applied" stepKey="AC13"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -128,8 +148,16 @@
         <comment userInput="User sees Tab 1 with background color and min height on Storefront" stepKey="AC14"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderBackgroundColor_Pink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
-        <seeElement selector="{{TabOnStorefront.minHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1BackgroundColor">
+            <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1MinHeight">
+            <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -137,8 +165,16 @@
         </actionGroup>
         <comment userInput="User sees Tab 2 with background color and min height on Storefront" stepKey="AC15"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTab2BackgroundColor"/>
-        <seeElement selector="{{TabOnStorefront.minHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab2BackgroundColor">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab2MinHeight">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight600Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <comment userInput="User sees Tab 2 with height that equals min-height including padding" stepKey="verifyMinHeight"/>
         <executeJS function="return document.querySelector('{{TabOnStorefront.tabContent('2')}}').offsetHeight" stepKey="tab2Height"/>
         <assertEquals stepKey="assertTabMinHeight">

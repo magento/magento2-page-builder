@@ -5,9 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-
-<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
     <!-- Background Color -->
     <entity name="PageBuilderBackgroundColor_Default" type="pagebuilder_background_color_property">
         <data key="name">Background Color</data>
@@ -15,8 +13,20 @@
         <data key="fieldName">background_color</data>
         <data key="value"/>
         <data key="rgba">rgba(0, 0, 0, 0)</data>
+        <data key="rgb">rgba(0, 0, 0, 0)</data>
         <data key="colorSwatchColor">rgba(0, 0, 0, 0)</data>
         <data key="colorWheelDefault">rgb(255, 0, 0)</data>
+        <data key="placeholderText">No Color</data>
+    </entity>
+    <entity name="PageBuilderStageBackgroundColor_Default" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value"/>
+        <data key="rgba">rgba(250, 250, 250, 1)</data>
+        <data key="rgb">rgb(250, 250, 250)</data>
+        <data key="colorSwatchColor">rgba(250, 250, 250, 1)</data>
+        <data key="colorWheelDefault">rgb(250, 250, 250)</data>
         <data key="placeholderText">No Color</data>
     </entity>
     <entity name="PageBuilderBackgroundColor_Empty" type="pagebuilder_background_color_property">
@@ -25,6 +35,37 @@
         <data key="fieldName">background_color</data>
         <data key="value"/>
         <data key="stageValue">rgb(250, 250, 250)</data>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_Transparent" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value"/>
+        <data key="rgb">rgba(0, 0, 0, 0)</data>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_Peacock" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">#087e8b</data>
+        <data key="rgb">rgb(8, 126, 139)</data>
+        <data key="hex">#087e8b</data>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_Salmon" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">#ff5a5f</data>
+        <data key="rgb">rgb(255, 90, 95)</data>
+        <data key="hex">#ff5a5f</data>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_DarkGrey" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">#3c3c3c</data>
+        <data key="rgb">rgb(60, 60, 60)</data>
+        <data key="hex">#3c3c3c</data>
     </entity>
     <entity name="PageBuilderBackgroundColor_Hex_Grey" type="pagebuilder_row_background_color_property">
         <data key="name">Background Color</data>
@@ -173,6 +214,15 @@
         <data key="section">background</data>
         <data key="fieldName">background_image</data>
         <data key="value"/>
+        <data key="fileName"/>
+        <data key="extension"/>
+        <data key="path"/>
+    </entity>
+    <entity name="PageBuilderBackgroundImage_None" type="pagebuilder_background_image_property">
+        <data key="name">Background Image</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_image</data>
+        <data key="value">none</data>
     </entity>
     <entity name="PageBuilderBackgroundImage_JPG" type="pagebuilder_background_image_property">
         <data key="name">Background Image</data>
@@ -331,6 +381,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Top Left</data>
         <data key="styleValue">left top</data>
+        <data key="computedStyleValue">0% 0%</data>
         <data key="optionsList">[Top Left, Top Center, Top Right, Center Left, Center, Center Right, Bottom Left, Bottom Center, Bottom Right]</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_TopLeft" type="pagebuilder_background_position_property">
@@ -339,6 +390,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Top Left</data>
         <data key="styleValue">left top</data>
+        <data key="computedStyleValue">0% 0%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_TopCenter" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -346,6 +398,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Top Center</data>
         <data key="styleValue">center top</data>
+        <data key="computedStyleValue">50% 0%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_TopRight" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -353,6 +406,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Top Right</data>
         <data key="styleValue">right top</data>
+        <data key="computedStyleValue">100% 0%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_CenterLeft" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -360,6 +414,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Center Left</data>
         <data key="styleValue">left center</data>
+        <data key="computedStyleValue">0% 50%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_Center" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -367,6 +422,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Center</data>
         <data key="styleValue">center center</data>
+        <data key="computedStyleValue">50% 50%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_CenterRight" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -374,6 +430,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Center Right</data>
         <data key="styleValue">right center</data>
+        <data key="computedStyleValue">100% 50%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_BottomLeft" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -381,6 +438,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Bottom Left</data>
         <data key="styleValue">left bottom</data>
+        <data key="computedStyleValue">0% 100%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_BottomCenter" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -388,6 +446,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Bottom Center</data>
         <data key="styleValue">center bottom</data>
+        <data key="computedStyleValue">50% 100%</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_BottomRight" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -395,6 +454,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Bottom Right</data>
         <data key="styleValue">right bottom</data>
+        <data key="computedStyleValue">100% 100%</data>
     </entity>
     <!-- Background Repeat -->
     <entity name="PageBuilderBackgroundRepeat_Default" type="pagebuilder_background_repeat_property">

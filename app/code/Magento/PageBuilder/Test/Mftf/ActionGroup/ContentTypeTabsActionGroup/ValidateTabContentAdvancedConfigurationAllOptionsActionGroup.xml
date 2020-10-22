@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+        <annotations>
+            <description>Validates Tab content</description>
+        </annotations>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).textAlign" stepKey="grabAlignmentValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).borderStyle" stepKey="grabBorderStyleValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).borderWidth.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabBorderWidthValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).borderRadius.replace(/px/g, &quot;&quot;)" stepKey="grabBorderRadiusValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).margin.replace(/px/g, &quot;&quot;)" stepKey="grabMarginValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).padding.replace(/px/g, &quot;&quot;)" stepKey="grabPaddingValue"/>
+    </actionGroup>
+</actionGroups>

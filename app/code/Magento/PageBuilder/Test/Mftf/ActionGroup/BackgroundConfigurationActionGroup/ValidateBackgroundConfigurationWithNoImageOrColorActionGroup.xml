@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateBackgroundConfigurationWithNoImageOrColorActionGroup" extends="ValidateAllBackgroundAttributesActionGroup">
+        <annotations>
+            <description>Validate Background configuration without image and color</description>
+        </annotations>
+        <arguments>
+            <argument name="backgroundColor" defaultValue=""/>
+            <argument name="backgroundImage" defaultValue=""/>
+        </arguments>
+        <remove keyForRemoval="assertBackgroundColor"/>
+        <assertEquals stepKey="assertNoBackgroundColor" after="grabBackgroundColorValue">
+            <expectedResult type="string">{{PageBuilderBackgroundColor_Transparent.rgb}}</expectedResult>
+            <actualResult type="variable">grabBackgroundColorValue</actualResult>
+        </assertEquals>
+        <remove keyForRemoval="backgroundImageRawValue"/>
+        <remove keyForRemoval="backgroundImageValue"/>
+        <remove keyForRemoval="regexFilePath"/>
+        <remove keyForRemoval="actualImageResult"/>
+        <remove keyForRemoval="assertBackgroundImageContainsFileInformation"/>
+    </actionGroup>
+</actionGroups>
