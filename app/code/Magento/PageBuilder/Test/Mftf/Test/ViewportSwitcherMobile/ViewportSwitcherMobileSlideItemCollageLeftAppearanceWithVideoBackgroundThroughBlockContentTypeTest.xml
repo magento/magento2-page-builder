@@ -11,8 +11,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Render Slide Item CollageL eft Appearance with Video Background Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render the collage left slide content type with a video background through the Block content type."/>
+            <title value="Mobile Viewport: Render Slide Item CollageL eft Appearance with Video Background Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render the collage left slide content type with a video background through the Block content type in the mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
@@ -31,6 +31,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -139,6 +143,10 @@
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageMobile"/>
         <!-- Edit Row On CMS Page -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForEditRor">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRowCMSPage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
