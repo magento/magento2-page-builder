@@ -11,8 +11,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Render Slide Item CollageL eft Appearance with Video Background Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render the collage left slide content type with a video background through the Block content type."/>
+            <title value="Mobile Viewport: Render Slide Item CollageL eft Appearance with Video Background Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render the collage left slide content type with a video background through the Block content type in the mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
@@ -31,6 +31,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -91,6 +95,26 @@
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage on Viewport mobile -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSBlockStageMobile">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="doubleClickToInlineEditWYSIWYGFromStage" stepKey="inlineEditMobile">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButtonMobile">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentCMSBlockStageMobile"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextCMSBlockStageMobile"/>
         <!-- Validate Stage on Viewport Desktop -->
         <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSBlockStage">
             <argument name="section" value="SlideOnBackend"/>
@@ -106,39 +130,19 @@
             <argument name="contentType" value="PageBuilderSlideContentType"/>
             <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
-        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
-            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
-        </actionGroup>
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentCMSBlockStage"/>
         <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextCMSBlockStage"/>
-        <!-- Validate Stage on Viewport mobile -->
-        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForValidateStage">
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Edit Row On CMS Page -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForEditRor">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSBlockStageMobile">
-            <argument name="section" value="SlideOnBackend"/>
-            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
-            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
-            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
-            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
-            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
-        </actionGroup>
-        <actionGroup ref="doubleClickToInlineEditWYSIWYGFromStage" stepKey="inlineEditMobile">
-            <argument name="contentType" value="PageBuilderSlideContentType"/>
-            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentCMSBlockStageMobile"/>
-        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextCMSBlockStageMobile"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSaveMobile"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlockMobile"/>
-        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageMobile">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageMobile"/>
-        <!-- Edit Row On CMS Page -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRowCMSPage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
