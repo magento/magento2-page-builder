@@ -190,6 +190,9 @@ export default class Preview extends BasePreview {
     private buildSlickConfig() {
         const attributes = this.data.main.attributes();
         const productCount = $(this.widgetUnsanitizedHtml()).find(this.productItemSelector).length;
+        const viewports = Config.getConfig("viewports");
+        const currentViewport = this.viewport();
+        const carouselMode = attributes["data-carousel-mode"];
         const config: {[key: string]: any} = {
             slidesToShow: this.slidesToShow,
             slidesToScroll: this.slidesToShow,
@@ -199,7 +202,13 @@ export default class Preview extends BasePreview {
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
 
-        if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
+        const slidesToShow = viewports[currentViewport].options.products[carouselMode] ?
+            viewports[currentViewport].options.products[carouselMode].slidesToShow :
+            viewports[currentViewport].options.products.default.slidesToShow;
+
+        config.slidesToShow = parseFloat(slidesToShow);
+
+        if (attributes["data-carousel-mode"] === "continuous" && productCount > config.slidesToShow) {
             config.centerPadding = attributes["data-center-padding"];
             config.centerMode = true;
             $(this.element).addClass(this.centerModeClass);

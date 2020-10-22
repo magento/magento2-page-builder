@@ -184,6 +184,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.buildSlickConfig = function buildSlickConfig() {
       var attributes = this.data.main.attributes();
       var productCount = (0, _jquery)(this.widgetUnsanitizedHtml()).find(this.productItemSelector).length;
+      var viewports = _config.getConfig("viewports");
+      var currentViewport = this.viewport();
+      var carouselMode = attributes["data-carousel-mode"];
       var config = {
         slidesToShow: this.slidesToShow,
         slidesToScroll: this.slidesToShow,
@@ -193,7 +196,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         autoplaySpeed: parseFloat(attributes["data-autoplay-speed"])
       };
 
-      if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
+      var slidesToShow = viewports[currentViewport].options.products[carouselMode] ?
+          viewports[currentViewport].options.products[carouselMode].slidesToShow :
+          viewports[currentViewport].options.products.default.slidesToShow;
+
+      config.slidesToShow = Number.parseFloat(slidesToShow);
+
+      if (attributes["data-carousel-mode"] === "continuous" && productCount > config.slidesToShow) {
         config.centerPadding = attributes["data-center-padding"];
         config.centerMode = true;
         (0, _jquery)(this.element).addClass(this.centerModeClass);
