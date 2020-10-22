@@ -11,8 +11,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Render Products Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render and use the products content type through the Block content type."/>
+            <title value="Mobile Viewport: Render Products Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the products content type through the Block content type in the mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
@@ -22,7 +22,6 @@
             <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
-            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -35,6 +34,7 @@
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -45,6 +45,7 @@
             </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createProduct1" stepKey="deleteCreatedProduct1"/>
             <deleteData createDataKey="createProduct2" stepKey="deleteCreatedProduct2"/>
             <deleteData createDataKey="createProduct3" stepKey="deleteCreatedProduct3"/>
@@ -172,11 +173,11 @@
         <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage1"/>
+        <scrollTo selector="{{ProductsOnStorefront.productAddToCompareByProductName($$createProduct2.name$$)}}" stepKey="scrollToAddToCompare"/>
         <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage2"/>
+        <scrollTo selector="{{ProductsOnStorefront.productAddToWishListByProductName($$createProduct2.name$$)}}" stepKey="scrollToAddToWishList"/>
         <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
@@ -210,11 +211,11 @@
         <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefrontMobile">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage3"/>
+        <scrollTo selector="{{ProductsOnStorefront.productAddToCompareByProductName($$createProduct2.name$$)}}" stepKey="scrollToAddToCompareMobile"/>
         <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefrontMobile">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage4"/>
+        <scrollTo selector="{{ProductsOnStorefront.productAddToWishListByProductName($$createProduct2.name$$)}}" stepKey="scrollToAddToWishListMobile"/>
         <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefrontMobile">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>

@@ -143,11 +143,11 @@
         <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage1"/>
+        <scrollTo selector="{{ProductsOnStorefront.productAddToCompareByProductName($$createProduct2.name$$)}}" stepKey="scrollToAddToCompare"/>
         <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage2"/>
+        <scrollTo selector="{{ProductsOnStorefront.productAddToWishListByProductName($$createProduct2.name$$)}}" stepKey="scrollToAddToWishList"/>
         <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>

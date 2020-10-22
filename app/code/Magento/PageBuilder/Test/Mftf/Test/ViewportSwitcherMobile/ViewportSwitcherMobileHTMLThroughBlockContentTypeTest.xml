@@ -11,8 +11,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Viewport Switcher - Render HTML Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render and use the HTML content type through the Block content type."/>
+            <title value="Mobile Viewport: Render HTML Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the HTML content type through the Block content type in the mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
@@ -34,6 +34,7 @@
             </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>

@@ -11,8 +11,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Render Banner Collage Left Appearance with Video Background Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render the banner content type collage left appearance with a video background through the Block content type."/>
+            <title value="Mobile Viewport: Render Banner Collage Left Appearance with Video Background Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render the banner content type collage left appearance with a video background through the Block content type in the mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
@@ -37,6 +37,7 @@
             </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -183,6 +184,10 @@
         <waitForElementVisible selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="waitForButtonTextCMSPageStage"/>
 
         <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
         <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSPageStageDesktop">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
