@@ -11,7 +11,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Verify That User Can Delete Content Types From On-Click Option Menus On Mobile Viewport"/>
+            <title value="Mobile Viewport: Verify That User Can Delete Content Types From On-Click Option Menus"/>
             <description value="This test is intended to ensure that users can delete content types from the on-click option menus within the PageBuilder stage for Product Description on mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -78,19 +78,24 @@
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProductAfterDelete"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterDelete"/>
-        <!-- Switch To Mobile Viewport After Delete -->
+        <!-- Validate Stage After Save Desktop Viewport -->
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStageAfterSave"/>
+        <!-- Validate Stage After Save Mobile Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterDelete">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <!-- Validate Stage After Save -->
-        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStageAfterSave"/>
-        <!-- Validate Storefront -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStageAfterSave2"/>
+        <!-- Navigate To Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
+        <!-- Validate Storefront Desktop -->
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="1" stepKey="see1ButtonItemStorefront"/>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription2"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="1" stepKey="see1ButtonItemStorefront2"/>
     </test>
 </tests>

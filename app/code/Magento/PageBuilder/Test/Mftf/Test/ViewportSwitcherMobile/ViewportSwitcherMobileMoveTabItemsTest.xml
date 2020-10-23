@@ -11,7 +11,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Verify That User Can Move Tab Items On Mobile Viewport"/>
+            <title value="Mobile Viewport: Verify That User Can Move Tab Items"/>
             <description value="This test is intended to ensure that users can move tab items within the PageBuilder stage for Category Description on mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -65,21 +65,28 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
-        <!-- Switch To Mobile Viewport After Save -->
+        <!-- Validate Stage After Save Desktop Viewport -->
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab1NameStageAfterSave"/>
+        <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab2NameStageAfterSave"/>
+        <!-- Validate Stage After Save Mobile Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <!-- Validate Stage After Save -->
-        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab1NameStageAfterSave"/>
-        <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab2NameStageAfterSave"/>
-        <!-- Validate Storefront -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab1NameStageAfterSave2"/>
+        <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab2NameStageAfterSave2"/>
+        <!-- Navigate To Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
+        <!-- Validate Storefront Desktop -->
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab1NameStorefront"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab2NameStorefront"/>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription2"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName2Default.value}}" stepKey="seeTab1NameStorefront2"/>
+        <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab2NameStorefront2"/>
     </test>
 </tests>

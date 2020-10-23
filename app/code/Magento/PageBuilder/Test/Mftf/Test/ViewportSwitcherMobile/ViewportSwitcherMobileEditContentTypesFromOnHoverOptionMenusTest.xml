@@ -11,7 +11,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Verify That User Can Edit Content Types From On-Hover Option Menus On Mobile Viewport"/>
+            <title value="Mobile Viewport: Verify That User Can Edit Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can edit content types from the on-hover option menus within the PageBuilder stage for Product Description on mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -58,12 +58,7 @@
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
-        <!-- Switch To Mobile Viewport After Save -->
-        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
-            <argument name="viewportButton" value="mobile"/>
-            <argument name="viewportStage" value="mobile"/>
-        </actionGroup>
-        <!-- Validate Stage After Save -->
+        <!-- Validate Stage After Save Desktop Viewport -->
         <seeElement selector="{{RowOnStage.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStageAfterSave"/>
         <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuForRowAfterSave">
@@ -72,12 +67,31 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorOnEditPanel">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <!-- Validate Storefront -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage After Save Mobile Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <seeElement selector="{{RowOnStage.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStageAfterSave2"/>
+        <!-- Validate Edit Panel After Save -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuForRowAfterSave2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorOnEditPanel2">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!-- Navigate To Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
+        <!-- Validate Storefront Desktop -->
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
         <seeElement selector="{{RowOnStorefront.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStorefront"/>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription2"/>
+        <seeElement selector="{{RowOnStorefront.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStorefront2"/>
     </test>
 </tests>
