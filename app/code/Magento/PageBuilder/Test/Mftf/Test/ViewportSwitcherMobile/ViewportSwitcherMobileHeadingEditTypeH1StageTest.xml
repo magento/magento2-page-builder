@@ -11,7 +11,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Stage Edit - Heading Type H1 On Mobile Viewport"/>
+            <title value="Mobile Viewport: Inline Edit Heading Content Type"/>
             <description value="Edit Heading Type field to value H1 on stage and view the rendered content type in stage and storefront on mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -100,7 +100,6 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="4"/>
         </actionGroup>
-        <!-- Stage: Check Alignment: Default -->
         <waitForElementVisible selector="{{HeadingOnStage.noAlignment(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForNoAlignment"/>
         <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForHeadingStyle"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeStageHeadingText"/>
