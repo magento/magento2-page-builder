@@ -130,12 +130,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage1"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection2"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage2"/>
-        <!-- Switch To Mobile Viewport After Save and Sorting -->
-        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSaveSort">
-            <argument name="viewportButton" value="mobile"/>
-            <argument name="viewportStage" value="mobile"/>
-        </actionGroup>
-        <!-- Validate Stage After Saving -->
+        <!-- Validate Stage After Save Desktop Viewport -->
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide3ContentAfterSave2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave2"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSave"/>
@@ -145,17 +140,41 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDot2"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave2"/>
-        <!-- Validate Storefront -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen3"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection3"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage3"/>
+        <!-- Validate Stage After Save Mobile Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSaveSort">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide3ContentAfterSave3"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave3"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSave2"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide3.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName3InTooltipAfterSave3"/>
+        <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave3"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave3"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDot3"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave3"/>
+        <!-- Navigate To Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
+        <!-- Validate Storefront Desktop -->
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription"/>
         <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="waitForSlide1"/>
         <see userInput="{{PageBuilderSlideItemContent_Slide3.value}}" selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="clickNextSlideOnSlider"/>
-        <waitForPageLoad stepKey="waitForPageLoad5"/>
         <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="waitForSlide2"/>
         <see userInput="{{PageBuilderSlideItemContent_Slide1.value}}" selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="seeSlide2ContentDisplayed"/>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="waitForSlide2Again"/>
+        <see userInput="{{PageBuilderSlideItemContent_Slide1.value}}" selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="seeSlide2ContentDisplayed2"/>
+        <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickNextSlideOnSlider2"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="waitForSlide1Again"/>
+        <see userInput="{{PageBuilderSlideItemContent_Slide3.value}}" selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="seeSlide1ContentDisplayed2"/>
     </test>
 </tests>
