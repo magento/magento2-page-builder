@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateAdvancedConfigurationWithNoPaddingActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+        <annotations>
+            <description value="Validates styles from Advanced configuration without padding"/>
+        </annotations>
+        <arguments>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="defaultPadding" type="string" defaultValue="0"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+        </arguments>
+        <remove keyForRemoval="assertAlignment"/>
+        <assertEquals stepKey="assertDefaultAlignmentVisible" after="grabAlignmentValue">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
+            <actualResult type="variable">grabAlignmentValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>
+        <remove keyForRemoval="assertBorderColor"/>
+        <assertEquals stepKey="assertNoBorderColorVisible" after="grabColorValue">
+            <expectedResult type="variable">grabBorderColorValue</expectedResult>
+            <actualResult type="variable">grabColorValue</actualResult>
+        </assertEquals>
+        <remove keyForRemoval="waitForCSSClassesVisible"/>
+        <remove keyForRemoval="assertPadding"/>
+        <assertEquals stepKey="assertNoPaddingVisible" after="grabPaddingValue">
+            <expectedResult type="string">{{defaultPadding}}</expectedResult>
+            <actualResult type="variable">grabPaddingValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

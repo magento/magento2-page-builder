@@ -10,6 +10,8 @@
     <section name="VideoOnStage">
         <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
         <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
+        <element name="main" type="text" selector="(//div[@data-content-type=&quot;video&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="inner" type="text" selector="(//div[contains(@class,&quot;pagebuilder-video-inner&quot;)])[{{arg1}}]" parameterized="true"/>
         <!-- Empty Video -->
         <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//video" parameterized="true"/>
         <element name="video" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{videoIndex}}]//video" parameterized="true"/>
@@ -30,16 +32,17 @@
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@style, 'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="advancedConfigurationPath" type="text" parameterized="true" selector="(//div[contains(@class,&quot;pagebuilder-video-wrapper&quot;)])[{{arg1}}]"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@style, 'text-align: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[not(contains(@style,'text-align:'))]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true" deprecated="Styles are not inline"/>
     </section>
 </sections>
