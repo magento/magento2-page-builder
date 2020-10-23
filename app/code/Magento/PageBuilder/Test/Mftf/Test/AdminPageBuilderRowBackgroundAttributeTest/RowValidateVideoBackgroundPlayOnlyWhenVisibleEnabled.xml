@@ -73,6 +73,11 @@
             <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <actionGroup ref="ScrollToActionGroup" stepKey="scrollRow4StageBeforeSave">
+            <argument name="cssSelector" value="{{RowOnStage.affordanceCSS}}"/>
+            <argument name="index" value="4"/>
+            <argument name="verticalOffset" value="-100"/>
+        </actionGroup>
         <!-- Stage: Validate Video is Playing -->
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage1">
             <argument name="section" value="RowOnStage"/>
@@ -89,8 +94,9 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="ScrollToActionGroup" stepKey="scrollRow4Stage">
-            <argument name="cssSelector" value="{{RowOnStage.baseCSS}}"/>
+            <argument name="cssSelector" value="{{RowOnStage.affordanceCSS}}"/>
             <argument name="index" value="4"/>
+            <argument name="verticalOffset" value="-100"/>
         </actionGroup>
         <!-- Stage: Validate Video is Playing -->
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage2">

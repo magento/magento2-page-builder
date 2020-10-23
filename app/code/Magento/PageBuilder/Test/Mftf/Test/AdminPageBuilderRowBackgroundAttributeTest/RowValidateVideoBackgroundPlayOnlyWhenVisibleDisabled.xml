@@ -86,6 +86,11 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Validate Stage -->
+        <actionGroup ref="ScrollToActionGroup" stepKey="scrollRow4StageBeforeSave">
+            <argument name="cssSelector" value="{{RowOnStage.affordanceCSS}}"/>
+            <argument name="index" value="4"/>
+            <argument name="verticalOffset" value="-100"/>
+        </actionGroup>
         <wait time="5" stepKey="waitForVideoCompleteStage"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoFinishedPlayingStage1">
             <argument name="section" value="RowOnStage"/>
@@ -112,7 +117,11 @@
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
             <argument name="index" value="4"/>
         </actionGroup>
-        <scrollTo selector="{{RowOnStage.base('4')}}" stepKey="scrollRow4Stage"/>
+        <actionGroup ref="ScrollToActionGroup" stepKey="scrollRow4Stage">
+            <argument name="cssSelector" value="{{RowOnStage.affordanceCSS}}"/>
+            <argument name="index" value="4"/>
+            <argument name="verticalOffset" value="-100"/>
+        </actionGroup>
         <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStage3">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>

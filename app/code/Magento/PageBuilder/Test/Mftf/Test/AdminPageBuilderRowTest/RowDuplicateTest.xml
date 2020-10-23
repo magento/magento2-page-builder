@@ -167,9 +167,14 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
             <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateMarginStage">
+            <argument name="selector" value="{{RowOnStage.affordance('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
+            <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
@@ -278,9 +283,14 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
             <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateMarginStage2">
+            <argument name="selector" value="{{RowOnStage.affordance('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyUnique.value}}"/>
+            <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
@@ -356,8 +366,16 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <!-- Validate content type is enabled in Storefront -->
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
-        <waitForElementVisible selector="{{RowOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
-        <waitForElementVisible selector="{{RowOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="waitForContentTypeShownStorefront1">
+            <argument name="selector" value="{{RowOnStorefront.main('1')}}"/>
+            <argument name="notExpectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="waitForContentTypeShownStorefront2">
+            <argument name="selector" value="{{RowOnStorefront.main('2')}}"/>
+            <argument name="notExpectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <actionGroup ref="ValidateRowBackgroundConfigurationWithAllUpdatedAndParallaxEnabledActionGroup" stepKey="validateDuplicateOnStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
