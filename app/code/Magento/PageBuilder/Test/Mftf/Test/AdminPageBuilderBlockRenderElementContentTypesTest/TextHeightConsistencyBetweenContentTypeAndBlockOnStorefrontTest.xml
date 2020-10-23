@@ -91,7 +91,7 @@
         </actionGroup>
         <waitForPageLoad stepKey="waitForStorefront"/>
         <waitForElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextOnStorefront"/>
-        <executeJS function="return document.evaluate(&quot;{{TextOnStorefront.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStorefrontHeight"/>
+        <executeJS function="return document.evaluate('{{TextOnStorefront.base('1'))}}', document.body).iterateNext().offsetHeight;" stepKey="getTextOnStorefrontHeight"/>
         <executeJS function="return document.evaluate(&quot;{{BlockOnStorefront.text('1', '1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getBlockTextOnStorefrontHeight"/>
         <assertEquals stepKey="assertStageAndStorefrontHeightAreClose">
             <expectedResult type="variable">getTextOnStorefrontHeight</expectedResult>

@@ -146,7 +146,17 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <comment userInput="Verify tab 1 on stage" stepKey="AC3"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tab1ContentAdvancedStyles}}" stepKey="seeTab1ContentAdvancedStylesInAdminPreview"/>
+        <actionGroup ref="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" stepKey="seeTab1ContentAdvancedStylesInAdminPreview">
+            <argument name="page" value="TabOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderTabContentAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            <argument name="padding" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
@@ -154,36 +164,87 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on stage" stepKey="AC4"/>
         <waitForPageLoad stepKey="waitForPageLoadAdmin" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tab2ContentAdvancedStyles}}" stepKey="seeTab2ContentAdvancedStylesInAdminPreview"/>
+        <actionGroup ref="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" stepKey="seeTab2ContentAdvancedStylesInAdminPreview">
+            <argument name="page" value="TabOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin2">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="3"/>
         </actionGroup>
         <!-- Verify Tab 3 on Stage -->
-        <waitForElementVisible selector="{{TabOnStage.tab3ContentAdvancedStyles}}" stepKey="seeTab3ContentAdvancedStylesInAdminPreview"/>
+        <actionGroup ref="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" stepKey="seeTab3ContentAdvancedStylesInAdminPreview">
+            <argument name="page" value="TabOnStage"/>
+            <argument name="index" value="3"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="borderRadius" value="PageBuilderTabContentAdvancedBorderRadiusProperty500"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
         <!-- Verify in Storefront -->
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('1', PageBuilderAdvancedAlignmentPropertyCenter.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft, PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft)}}" stepKey="seeTabContentAdvancedStylesInStorefront1"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('1', PageBuilderAdvancedBorderPropertySolid.value, PageBuilderAdvancedBorderColorProperty.rgb, PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront1"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeTabContentClassInStorefront1"/>
+        <actionGroup ref="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" stepKey="seeTabContentAdvancedStylesInStorefront1">
+            <argument name="page" value="TabOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            <argument name="padding" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="seeTabContentAdvancedStylesBorderInStorefront1"/>
+        <comment userInput="BIC workaround" stepKey="seeTabContentClassInStorefront1"/>
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <waitForElementVisible selector="{{TabOnStorefront.container('2')}}" stepKey="seeNewTabContent"/>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('2', PageBuilderAdvancedAlignmentPropertyRight.value, PageBuilderMarginsPropertyUnique.value, PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorderEmpty('2', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rgb)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('2', PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="seeTabContentClassInStorefront2"/>
+        <actionGroup ref="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2">
+            <argument name="page" value="TabOnStorefront"/>
+            <argument name="index" value="2"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderTabContentAdvancedBorderWidthProperty3"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
+        <comment userInput="BIC workaround" stepKey="seeTabContentClassInStorefront2"/>
         <click selector="{{TabOnStorefront.tabHeader('3')}}" stepKey="switchToTab2"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage2"/>
         <waitForElementVisible selector="{{TabOnStorefront.container('3')}}" stepKey="seeNewTabContent2"/>
         <!-- Verify Tab 3 on Storefront -->
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('3', PageBuilderAdvancedAlignmentPropertyRight.value, PageBuilderMarginsPropertyUnique.value, PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront3"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('3', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rgb, PageBuilderAdvancedBorderWidthProperty500.value, PageBuilderAdvancedBorderRadiusProperty500.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront3"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('3', PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="seeTabContentClassInStorefront3"/>
+        <actionGroup ref="ValidateTabContentAdvancedConfigurationAllOptionsActionGroup" stepKey="seeTabHeaderItemAdvancedStylesInStorefront3">
+            <argument name="page" value="TabOnStorefront"/>
+            <argument name="index" value="3"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="seeTabContentAdvancedStylesBorderInStorefront3"/>
+        <comment userInput="BIC workaround" stepKey="seeTabContentClassInStorefront3"/>
     </test>
 </tests>

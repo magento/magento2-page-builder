@@ -62,9 +62,15 @@
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSBlockStage"/>
-        <seeElement selector="{{DividerOnStage.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSBlockStage"/>
-        <seeElement selector="{{DividerOnStage.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSBlockStage"/>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSBlockStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="seeDividerThicknessCMSBlockStage"/>
+        <comment userInput="BIC workaround" stepKey="seeDividerWidthCMSBlockStage"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
@@ -90,9 +96,15 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStage"/>
-        <seeElement selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSPageStage"/>
-        <seeElement selector="{{DividerOnStorefront.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSPageStage"/>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSPageStage">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="seeDividerThicknessCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="seeDividerWidthCMSPageStage"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
@@ -105,9 +117,15 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStorefront"/>
-        <seeElement selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSPageStorefront"/>
-        <seeElement selector="{{DividerOnStorefront.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSPageStorefront"/>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSPageStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="seeDividerThicknessCMSPageStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeDividerWidthCMSPageStorefront"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
