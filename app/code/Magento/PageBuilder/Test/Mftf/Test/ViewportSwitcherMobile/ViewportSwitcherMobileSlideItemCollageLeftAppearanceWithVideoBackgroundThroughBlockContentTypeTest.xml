@@ -116,6 +116,10 @@
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentCMSBlockStageMobile"/>
         <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextCMSBlockStageMobile"/>
         <!-- Validate Stage on Viewport Desktop -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewport">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
         <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSBlockStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
@@ -139,7 +143,7 @@
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Edit Row On CMS Page -->
-        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForEditRor">
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForEditRow">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
@@ -168,6 +172,10 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage on Viewport Desktop-->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportCMSPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
         <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSPageStage">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
