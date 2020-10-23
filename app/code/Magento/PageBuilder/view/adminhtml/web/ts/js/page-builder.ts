@@ -255,6 +255,9 @@ export default class PageBuilder implements PageBuilderInterface {
         const previousViewport = this.viewport();
 
         this.viewport(viewport);
+        Config.setConfig({
+            viewport,
+        } as ConfigInterface);
         events.trigger(`stage:${this.id}:viewportChangeAfter`, {
             viewport,
             previousViewport,
@@ -292,6 +295,9 @@ export default class PageBuilder implements PageBuilderInterface {
             return viewport.default;
         });
         this.viewport(this.defaultViewport);
+        Config.setConfig({
+            viewport: this.defaultViewport,
+        } as ConfigInterface);
         _.each(this.viewports, (viewport: {[key: string]: any}, name: string) => {
             this.viewportClasses[`${name}-viewport`] = ko.observable(name === this.defaultViewport);
         });

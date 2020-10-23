@@ -1,5 +1,12 @@
 /*eslint-disable */
 /* jscs:disable */
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } it = o[Symbol.iterator](); return it.next.bind(it); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (_consoleLogger, _knockout, _appearanceConfig, _attributes, _css, _html, _style) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -131,19 +138,8 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
     ;
 
     _proto.convertData = function convertData(data, convertersConfig) {
-      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
-
-        if (_isArray) {
-          if (_i2 >= _iterator.length) break;
-          _ref = _iterator[_i2++];
-        } else {
-          _i2 = _iterator.next();
-          if (_i2.done) break;
-          _ref = _i2.value;
-        }
-
-        var converterConfig = _ref;
+      for (var _iterator = _createForOfIteratorHelperLoose(convertersConfig), _step; !(_step = _iterator()).done;) {
+        var converterConfig = _step.value;
         this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
       }
 

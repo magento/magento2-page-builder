@@ -45,14 +45,14 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
           // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
           var style = _this.element.getAttribute("style") || _this.element.getAttribute("data-jarallax-original-styles");
 
-          var backgroundImage = _this.contentType.dataStore.get("background_image");
+          var backgroundImage = _this.getBackgroundImage();
 
           jarallax(_this.element, "destroy");
 
           _this.element.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
-            _this.element.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.element.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
+            _this.element.style.backgroundImage = backgroundImage;
           }
         } catch (e) {// Failure of destroying is acceptable
         }
@@ -115,14 +115,33 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
 
       _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.toggleFullScreen.bind(_assertThisInitialized(_this)));
 
+      _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function (args) {
+        if (_this.contentType.dataStore.get("background_type") === "video") {
+          _this.buildJarallax();
+        }
+      });
+
       return _this;
     }
     /**
-     * Toggle fullscreen
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
      */
 
 
     var _proto = Preview.prototype;
+
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
+    /**
+     * Toggle fullscreen
+     */
+    ;
 
     _proto.toggleFullScreen = function toggleFullScreen() {
       if ((0, _jquery)(this.element).hasClass("jarallax")) {

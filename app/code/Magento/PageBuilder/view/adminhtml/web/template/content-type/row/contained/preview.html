@@ -10,7 +10,7 @@
      css="data.main.css">
     <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
          attr="data.inner.attributes"
-         ko-style="data.inner.style"
+         ko-style="Object.assign({}, data.inner.style(), {backgroundImage: getBackgroundImage()})"
          css="Object.assign(data.inner.css(), {
             'empty-container': contentType.children().length == 0,
             'jarallax': data.inner.attributes()['data-enable-parallax'] == 1 || data.inner.attributes()['data-background-type'] == 'video'

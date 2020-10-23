@@ -6,7 +6,13 @@
 -->
 <each args="data: Object.keys(viewports), as: 'name'">
     <span class="tooltip">
-        <button type="button" translate="$parent.viewports[name].label" disable="name === $parent.viewport()" click="$parent.toggleViewport.bind($parent, name)"/>
+        <button type="button"
+                class="page-builder-viewport"
+                css="$parent.viewports[name].class"
+                disable="name === $parent.viewport()"
+                click="$parent.toggleViewport.bind($parent, name)">
+            <img data-bind="attr:{src: $parent.viewports[name].icon}" draggable="false" aria-hidden="true"/>
+        </button>
         <span class="tooltip-content">
             <span class="tooltip-label" translate="$parent.viewports[name].label"/><br/>
             <span translate="'View your content for '"/><text args="name"/><br/>

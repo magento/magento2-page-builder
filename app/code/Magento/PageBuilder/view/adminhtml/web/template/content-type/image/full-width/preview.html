@@ -11,11 +11,11 @@
         <scope args="getUploader().getUiComponent()">
             <render />
         </scope>
-        <img if="data.desktop_image.attributes().src"
-             attr="data.desktop_image.attributes"
+        <img if="getViewportImageData().attributes().src"
+             attr="getViewportImageData().attributes"
              class="preview-image"
-             css="data.desktop_image.css"
-             ko-style="data.desktop_image.style" />
+             css="getViewportImageData().css"
+             ko-style="getViewportImageData().style" />
         <figcaption if="data.caption.html()"
                     attr="data.caption.attributes"
                     css="data.caption.css"
