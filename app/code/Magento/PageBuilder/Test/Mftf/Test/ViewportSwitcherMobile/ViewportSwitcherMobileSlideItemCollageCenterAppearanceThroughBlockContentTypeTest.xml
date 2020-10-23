@@ -25,33 +25,46 @@
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <!-- Validate CMS Block Stage Mobile Viewport -->
-        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStage" before="widthOfWrapperMinusPaddingCMSPageBackendMobile"/>
-        <executeJS function="return Math.abs({{SlideOnBackend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageBackendMobile" before="validateOverlayPositionCMSPageBackendMobile"/>
-        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageBackendMobile">
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStageMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStageMobile">
             <argument name="page" value="SlideOnBackend"/>
-            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageBackendMobile}"/>
         </actionGroup>
-
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSBlockStageMobile"/>
+        <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSBlockStageMobile"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageMobile}-{$overlayLeftPositionCMSBlockStageMobile}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageMobile"/>
+        <!-- Validate CMS Block Stage Desktop Viewport-->
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
-        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStage"/>
-        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStage">
+        <!-- Validate CMS Page Stage Mobile Viewport-->
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStageMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStageMobile">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
-
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageMobile}-{$overlayLeftPositionCMSPageStageMobile}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageMobile"/>
+        <!-- Validate CMS Block Stage Desktop Viewport after Save-->
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStageAfterSave"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStageAfterSave">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageAfterSave}-{$overlayLeftPositionCMSPageStageAfterSave}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageAfterSave"/>
+        <!-- Validate CMS Page Storefront -->
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefront">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
-
         <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
-        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStorefrontMobile"/>
+        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSBlockStageFrontend" before="validateOverlayPositionCMSPageStorefrontMobile"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
             <argument name="page" value="SlideOnFrontend"/>
-            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSBlockStageFrontend}"/>
         </actionGroup>
-    </test>
+        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSPageStorefrontMobile"/>
+     </test>
 </tests>
