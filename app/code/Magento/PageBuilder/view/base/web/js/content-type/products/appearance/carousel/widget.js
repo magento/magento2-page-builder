@@ -14,7 +14,7 @@ define([
     'use strict';
 
     /**
-     * Initialize slider.
+     * Build slick
      *
      * @param {jQuery} $carouselElement
      * @param {Object} config
@@ -31,6 +31,13 @@ define([
         $carouselElement.slick(config);
     }
 
+    /**
+     * Initialize slider.
+     *
+     * @param $element
+     * @param slickConfig
+     * @param breakpoint
+     */
     function initSlider($element, slickConfig, breakpoint) {
         var productCount = $element.find('.product-item').length,
             $carouselElement = $($element.children()),
@@ -59,6 +66,7 @@ define([
             $carouselElement = $($element.children()),
             stageId = $($element).parents('[data-role="pagebuilder-stage"]').attr('id'),
             currentViewport = config.currentViewport,
+            currentBreakpoint = config.breakpoints[currentViewport],
             slickConfig = {
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
@@ -79,8 +87,7 @@ define([
 
         //initialize slider when content type is added in mobile viewport
         if (currentViewport === 'mobile') {
-            var breakpoint = config.breakpoints[currentViewport];
-            initSlider($element, slickConfig, breakpoint);
+            initSlider($element, slickConfig, currentBreakpoint);
         }
 
         // Redraw slide after content type gets redrawn
