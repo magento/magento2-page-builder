@@ -55,7 +55,9 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save Desktop Viewport -->
         <!-- Verify On Hover Upload Button Work-->
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
