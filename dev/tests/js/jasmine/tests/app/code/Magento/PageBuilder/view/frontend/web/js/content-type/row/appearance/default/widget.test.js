@@ -44,6 +44,7 @@ define([
             el.style.backgroundSize = '100%';
             el.setAttribute('data-parallax-speed', 1);
 
+            document.body.appendChild(el);
             rowWidgetInitializer(undefined, el);
 
             expect(window.jarallax).toHaveBeenCalledWith(el, {
@@ -52,6 +53,7 @@ define([
                 imgSize: '100%',
                 speed: 1
             });
+            document.body.removeChild(el);
         });
     });
 });

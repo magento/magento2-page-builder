@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationCssResponsiveStylingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Heading - CSS Responsive Styling"/>
+            <description value="Internal (or external) CSS should be able to use media queries to override Page Builder styles that would previously have been inlined."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminOpenCmsPageActionGroup" stepKey="goToCMSPage">
+                <argument name="page_id" value="$$createCMSPage.id$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="waitForPageBuilderDisplay"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openPageBuilderEditPanel">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyCssResponsiveStyling"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage2">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openPageBuilderEditPanel2">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
+            <argument name="property" value="PageBuilderHtmlPropertyCssResponsiveStyling"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Verify in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify in Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Testing for Viewport: Extra Small -->
+        <resizeWindow width="575" height="1000" stepKey="resizeWindowToExtraSmall"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateContentTypesStyleEqualsExpectedStyleForExtraSmall">
+            <argument name="selector" value="{{HeadingOnStorefront.cssClasses(PageBuilderHeadingTypeDefaultProperty.value, '1', PageBuilderAdvancedCssClassesPropertyCssResponsiveStyling.value)}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedTextColorProperty_CadetBlue.rgb}}"/>
+            <argument name="cssProperty" value="color"/>
+        </actionGroup>
+        <!-- Testing for Viewport: Small -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToSmall"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateContentTypesStyleEqualsExpectedStyleForSmall">
+            <argument name="selector" value="{{HeadingOnStorefront.cssClasses(PageBuilderHeadingTypeDefaultProperty.value, '1', PageBuilderAdvancedCssClassesPropertyCssResponsiveStyling.value)}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedTextColorProperty_CornflowerBlue.rgb}}"/>
+            <argument name="cssProperty" value="color"/>
+        </actionGroup>
+        <!-- Testing for Viewport: Medium -->
+        <resizeWindow width="991" height="1000" stepKey="resizeWindowToMedium"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateContentTypesStyleEqualsExpectedStyleForMedium">
+            <argument name="selector" value="{{HeadingOnStorefront.cssClasses(PageBuilderHeadingTypeDefaultProperty.value, '1', PageBuilderAdvancedCssClassesPropertyCssResponsiveStyling.value)}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedTextColorProperty_DarkOrchid.rgb}}"/>
+            <argument name="cssProperty" value="color"/>
+        </actionGroup>
+        <!-- Testing for Viewport: Large -->
+        <resizeWindow width="1199" height="1000" stepKey="resizeWindowToLarge"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateContentTypesStyleEqualsExpectedStyleForLarge">
+            <argument name="selector" value="{{HeadingOnStorefront.cssClasses(PageBuilderHeadingTypeDefaultProperty.value, '1', PageBuilderAdvancedCssClassesPropertyCssResponsiveStyling.value)}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedTextColorProperty_DeepPink.rgb}}"/>
+            <argument name="cssProperty" value="color"/>
+        </actionGroup>
+        <!-- Testing for Viewport: Extra Large -->
+        <resizeWindow width="1440" height="1000" stepKey="resizeWindowToExtraLarge"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateContentTypesStyleEqualsExpectedStyleForExtraLarge">
+            <argument name="selector" value="{{HeadingOnStorefront.cssClasses(PageBuilderHeadingTypeDefaultProperty.value, '1', PageBuilderAdvancedCssClassesPropertyCssResponsiveStyling.value)}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedTextColorProperty_MidnightBlue.rgb}}"/>
+            <argument name="cssProperty" value="color"/>
+        </actionGroup>
+    </test>
+</tests>

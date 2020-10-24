@@ -78,7 +78,8 @@ define(["underscore"], function (_underscore) {
   }();
 
   Config.config = {
-    dataContentTypeAttributeName: "data-content-type"
+    dataContentTypeAttributeName: "data-content-type",
+    bodyId: "html-body"
   };
   return Config;
 });
