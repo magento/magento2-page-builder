@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateLayoutConfigurationWithAllUpdatedActionGroup">
+        <annotations>
+            <description>Validate Layout configuration values</description>
+        </annotations>
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="minHeight" defaultValue="PageBuilderMinHeightProperty_Empty"/>
+            <argument name="verticalAlign" defaultValue="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForContentType"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.base(index)}}', document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="grabMinHeightValue"/>
+        <assertEquals stepKey="assertMinHeightVisible">
+            <expectedResult type="string">{{minHeight.value}}</expectedResult>
+            <actualResult type="variable">grabMinHeightValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.elementChildren(index)}}', document.body).iterateNext()).justifyContent" stepKey="grabVerticalAlignValue"/>
+        <assertEquals stepKey="verticalAlignVisible">
+            <expectedResult type="string">{{verticalAlign.value}}</expectedResult>
+            <actualResult type="variable">grabVerticalAlignValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

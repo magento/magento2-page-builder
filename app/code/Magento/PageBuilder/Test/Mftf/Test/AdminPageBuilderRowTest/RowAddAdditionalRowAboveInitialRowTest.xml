@@ -46,13 +46,13 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
         <comment userInput="Stage: Check Background Color is present for existing row" stepKey="commentStageCheckBackground"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage">
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNewRowNoColor">
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageOrColorActionGroup" stepKey="validateNewRowNoColor">
             <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>

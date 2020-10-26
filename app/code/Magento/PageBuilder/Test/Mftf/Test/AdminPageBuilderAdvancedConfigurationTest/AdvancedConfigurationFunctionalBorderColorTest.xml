@@ -167,14 +167,15 @@
         <click selector="{{EditPanelForm.editFormClose}}" stepKey="clickCloseButton"/>
         <!-- Stage: Check Border Color: Empty -->
         <comment userInput="Stage: Check Border Color: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStageEmpty">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Plaintext -->
         <comment userInput="Stage: Check Border Color: Plaintext" stepKey="commentStageCheckPlaintext"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStagePlaintext">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStagePlaintext">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -182,7 +183,7 @@
         </actionGroup>
         <!-- Stage: Check Border Color: Hex -->
         <comment userInput="Stage: Check Border Color: Hex" stepKey="commentStageCheckHex"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageHex">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStageHex">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
@@ -190,7 +191,7 @@
         </actionGroup>
         <!-- Stage: Check Border Color: RGB -->
         <comment userInput="Stage: Check Border Color: RGB" stepKey="commentStageCheckRGB"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageRGB">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStageRGB">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
@@ -204,14 +205,15 @@
 
         <!-- Stage: Check Border Color: Empty -->
         <comment userInput="Stage: Check Border Color: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty2">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStageEmpty2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Plaintext -->
         <comment userInput="Stage: Check Border Color: Plaintext" stepKey="commentStageCheckPlaintext2"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStagePlaintext2">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStagePlaintext2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -219,7 +221,7 @@
         </actionGroup>
         <!-- Stage: Check Border Color: Hex -->
         <comment userInput="Stage: Check Border Color: Hex" stepKey="commentStageCheckHex2"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageHex2">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStageHex2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
@@ -227,7 +229,7 @@
         </actionGroup>
         <!-- Stage: Check Border Color: RGB -->
         <comment userInput="Stage: Check Border Color: RGB" stepKey="commentStageCheckRGB2"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageRGB2">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStageRGB2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
@@ -242,31 +244,36 @@
 
         <!-- Storefront: Check Border Color: Empty -->
         <comment userInput="Storefront: Check Border Color: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
+            <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: Plaintext -->
         <comment userInput="Storefront: Check Border Color: Plaintext" stepKey="commentStorefrontCheckPlaintext"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStorefrontPlaintext">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStorefrontPlaintext">
             <argument name="page" value="TextOnStorefront"/>
+            <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: Hex -->
         <comment userInput="Storefront: Check Border Color: Hex" stepKey="commentStorefrontCheckHex"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStorefrontHex">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStorefrontHex">
             <argument name="page" value="TextOnStorefront"/>
+            <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: RGB -->
         <comment userInput="Storefront: Check Border Color: RGB" stepKey="commentStorefrontCheckRGB"/>
-        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStorefrontRGB">
+        <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStorefrontRGB">
             <argument name="page" value="TextOnStorefront"/>
+            <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyStart"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
             <argument name="index" value="4"/>

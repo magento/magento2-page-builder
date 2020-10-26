@@ -24,9 +24,15 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceSlide1">
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
-        <waitForElementVisible selector="{{SlideOnBackend.noCollageMinimumHeight('1')}}" stepKey="seeFirstSlideHeightStage"/>
-        <waitForElementVisible selector="{{SlideOnBackend.collageMinimumHeight('2', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeSecondSlideHeightStage"/>
-        <waitForElementVisible selector="{{SlideOnBackend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeThirdSlideHeightStage"/>
-        <waitForElementVisible selector="{{SlideOnBackend.collageMinimumHeight('4', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeFourthSlideHeightStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstSlideHeightStage">
+            <argument name="selector" value="{{SlideOnBackend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondSlideHeightStage">
+            <argument name="selector" value="{{SlideOnBackend.wrapper('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
     </test>
 </tests>

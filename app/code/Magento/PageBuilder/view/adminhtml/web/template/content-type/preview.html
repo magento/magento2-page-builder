@@ -13,11 +13,14 @@
             <span repeat="8" attr="'data-repeat-index': $index"/>
         </span>
     </div>
-    <div class="pagebuilder-canvas"
-         css="active: !loading()"
-         afterRender="afterRenderDeferred.resolve">
-        <with args="rootContainer">
-            <render args="{ name: preview.template, data: preview }" />
-        </with>
-    </div>
+<!--  Assign stage to children context  -->
+    <each args="data: [$data], as: 'stage'">
+        <div class="pagebuilder-canvas"
+             css="active: !loading()"
+             afterRender="afterRenderDeferred.resolve">
+            <with args="rootContainer">
+                <render args="{ name: preview.template, data: preview }" />
+            </with>
+        </div>
+    </each>
 </div>
