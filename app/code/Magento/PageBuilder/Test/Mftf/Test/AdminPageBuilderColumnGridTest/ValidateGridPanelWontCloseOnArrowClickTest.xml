@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ValidateGridPanelWontCloseOnArrowClickTest">
+    <test name="ValidateGridPanelWontCloseOnArrowClickTest" deprecated="Grid size control has been moved in content type settings form">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
+            <skip>
+                <issueId value="PB-500"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -31,7 +34,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-<!--        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>-->
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
         <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
         <seeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="verifyPanelStillOpen"/>
     </test>

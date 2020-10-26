@@ -35,8 +35,12 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-<!--        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>-->
-        <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
-        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
+        </actionGroup>
+        <comment userInput="Remove click on panel" stepKey="clickWithinPanel"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="verifyTooltip">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_3"/>
+        </actionGroup>
     </test>
 </tests>

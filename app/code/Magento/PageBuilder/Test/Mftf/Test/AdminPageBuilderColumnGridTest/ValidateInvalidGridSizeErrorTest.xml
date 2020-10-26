@@ -31,29 +31,35 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-<!--        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>-->
-<!--        <actionGroup ref="updateGridSizeInvalid" stepKey="enterNegativeGridSize">-->
-<!--            <argument name="gridSize" value="-50"/>-->
-<!--            <argument name="index" value="1"/>-->
-<!--            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>-->
-<!--        </actionGroup>-->
-<!--        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize1">-->
-<!--            <argument name="gridSize" value="1"/>-->
-<!--            <argument name="index" value="1"/>-->
-<!--            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>-->
-<!--        </actionGroup>-->
-<!--        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize0">-->
-<!--            <argument name="gridSize" value="0"/>-->
-<!--            <argument name="index" value="1"/>-->
-<!--            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>-->
-<!--        </actionGroup>-->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openGridSizeForm">
+            <argument name="contentType" value="PageBuilderColumnsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNegativeGridSize">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_Minus50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateNegativeGridSize">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_Minus50"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterGridSize1">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateGridSize1">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterGridSize0">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_0"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateGridSize0">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_0"/>
+        </actionGroup>
         <!-- Check validation occurs when entering as text -->
         <comment userInput="Check validation occurs when entering as text" stepKey="commentValidateStringInput"/>
-        <executeJS function="document.evaluate(&quot;{{ColumnOnBackend.gridSizeInput('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.setAttribute('type', 'text')" stepKey="changeInputToText"/>
-<!--        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSizeString">-->
-<!--            <argument name="gridSize" value="InvalidString"/>-->
-<!--            <argument name="index" value="1"/>-->
-<!--            <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>-->
-<!--        </actionGroup>-->
+        <comment userInput="Remove input type changing" stepKey="changeInputToText"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidGridSizeString">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_Text"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateGridSizeString">
+            <argument name="property" value="PageBuilderColumnsGridSizeProperty_Text"/>
+        </actionGroup>
     </test>
 </tests>

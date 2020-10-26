@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ValidateGridSizeFormDisablesStageAfterTabItemOptionsTest">
+    <test name="ValidateGridSizeFormDisablesStageAfterTabItemOptionsTest" deprecated="Grid size control has been moved in content type settings form">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -20,6 +20,9 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
             <group value="pagebuilder-tabs"/>
+            <skip>
+                <issueId value="PB-500"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -48,7 +51,7 @@
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-<!--        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>-->
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
         <!-- Validate column options don't display -->
         <comment userInput="Validate column options don't display" stepKey="commentColumnOptionsHidden"/>
         <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn"/>
@@ -64,7 +67,7 @@
         <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '3')}}" stepKey="dontSeeRowOptions"/>
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
-<!--        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm"/>-->
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm"/>
         <actionGroup ref="ScrollToActionGroup" stepKey="scrollToTop">
             <argument name="cssSelector" value="{{RowOnStage.baseCSS}}"/>
             <argument name="index" value="1"/>
