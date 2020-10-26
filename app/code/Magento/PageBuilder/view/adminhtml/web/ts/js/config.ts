@@ -66,6 +66,7 @@ export default class Config {
 
     private static config: any = {
         dataContentTypeAttributeName: "data-content-type",
+        bodyId: "html-body",
     };
     private static mode: Mode;
 }

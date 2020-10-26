@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateAdvancedConfigurationWithNoBorderWidthActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+        <annotations>
+            <description value="Validate Advanced configuration without border width"/>
+        </annotations>
+        <arguments>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </arguments>
+        <remove keyForRemoval="assertAlignment"/>
+        <assertEquals stepKey="assertDefaultAlignmentVisible" after="grabAlignmentValue">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
+            <actualResult type="variable">grabAlignmentValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.advancedConfigurationPath(index)}}', document.body).iterateNext()).color" stepKey="grabColorValue" after="grabBorderColorValue"/>
+        <remove keyForRemoval="grabBorderWidthValue"/>
+        <remove keyForRemoval="assertBorderColor"/>
+        <assertEquals stepKey="assertNoBorderColorVisible" after="grabColorValue">
+            <expectedResult type="variable">grabBorderColorValue</expectedResult>
+            <actualResult type="variable">grabColorValue</actualResult>
+        </assertEquals>
+        <remove keyForRemoval="assertBorderWidth"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+    </actionGroup>
+</actionGroups>

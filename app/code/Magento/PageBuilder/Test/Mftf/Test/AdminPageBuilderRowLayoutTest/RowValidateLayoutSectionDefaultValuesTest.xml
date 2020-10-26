@@ -57,16 +57,32 @@
         <!-- Verify Min Height Not Used and Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height not used and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
         <waitForElement selector="{{RowOnStage.base('1')}}" stepKey="waitForFirstRowMinHeightStyle"/>
-        <dontSeeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="dontSeeFirstRowMinHeightStyle"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstRowVerticalAlignmentTop"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="dontSeeFirstRowMinHeightStyle">
+            <argument name="selector" value="{{RowOnStage.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstRowVerticalAlignmentTop">
+            <argument name="selector" value="{{RowOnStage.rowChildrenPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderVerticalAlignmentPropertyTop.value}}"/>
+            <argument name="cssProperty" value="justifyContent"/>
+        </actionGroup>
         <!-- Verify Min Height Not Used and Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height not used and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElement selector="{{RowOnStage.base('1')}}" stepKey="waitForRowAfterSave"/>
-        <dontSeeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeFirstRowMinHeightAfterSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstRowVerticalAlignmentTopAfterSave"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstRowMinHeightAfterSave">
+            <argument name="selector" value="{{RowOnStage.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstRowVerticalAlignmentTopAfterSave">
+            <argument name="selector" value="{{RowOnStage.rowChildrenPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderVerticalAlignmentPropertyTop.value}}"/>
+            <argument name="cssProperty" value="justifyContent"/>
+        </actionGroup>
         <!-- Verify Min Height Not Used and Vertical Alignment In Form - After Save -->
         <comment userInput="Verify min height and vertical alignment in form after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentInFormAfterSave"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstRowAfterSave">
@@ -90,7 +106,15 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <waitForElement selector="{{RowOnStorefront.base('1')}}" stepKey="waitForRowOnStage"/>
-        <dontSeeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500px.style)}}" stepKey="seeRow1MinHeightApplied"/>
-        <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeRow1MinHeightApplied">
+            <argument name="selector" value="{{RowOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeRow1VerticalAlignmentTopApplied">
+            <argument name="selector" value="{{RowOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderVerticalAlignmentPropertyTop.value}}"/>
+            <argument name="cssProperty" value="justifyContent"/>
+        </actionGroup>
     </test>
 </tests>

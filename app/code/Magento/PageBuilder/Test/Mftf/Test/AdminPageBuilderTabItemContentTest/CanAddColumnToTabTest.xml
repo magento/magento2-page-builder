@@ -73,9 +73,24 @@
         <!-- Verify Column in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1MinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn1BackgroundColorApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="ValidateColumnWidthActionGroup" stepKey="seeFirstColumnWidthDistributed">
+            <argument name="index" value="2"/>
+            <argument name="section" value="ColumnOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2HeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
     </test>
 </tests>

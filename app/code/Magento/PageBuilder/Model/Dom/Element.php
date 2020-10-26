@@ -44,6 +44,25 @@ class Element implements ElementInterface
     /**
      * @inheritDoc
      */
+    public function getOriginalElement(): GtDomElement
+    {
+        return $this->element;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function appendChild(ElementInterface $element): ElementInterface
+    {
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->element->appendChild($element->getOriginalElement()) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function matches(string $selectors): bool
     {
         return $this->element->matches($selectors);
@@ -77,6 +96,14 @@ class Element implements ElementInterface
     public function getAttribute($name): ?string
     {
         return $this->element->getAttribute($name);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeAttribute($name): ?bool
+    {
+        return $this->element->removeAttribute($name);
     }
 
     /**

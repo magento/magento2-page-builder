@@ -65,6 +65,17 @@ class Document implements DocumentInterface
     /**
      * @inheritDoc
      */
+    public function createElement(string $name, string $value = null): ElementInterface
+    {
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->document->createElement($name, $value) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function querySelector(string $selector): ElementInterface
     {
         return $this->objectManager->create(
