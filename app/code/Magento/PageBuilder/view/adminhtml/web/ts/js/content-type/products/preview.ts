@@ -178,7 +178,7 @@ export default class Preview extends BasePreview {
     }
 
     protected destroySlider(): void {
-        $(this.element.children).slick('unslick');
+        $(this.element.children).slick("unslick");
     }
 
     /**
