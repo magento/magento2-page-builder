@@ -34,9 +34,9 @@ define([
     /**
      * Initialize slider.
      *
-     * @param $element
-     * @param slickConfig
-     * @param breakpoint
+     * @param {jQuery} $element
+     * @param {Object} slickConfig
+     * @param {Object} breakpoint
      */
     function initSlider($element, slickConfig, breakpoint) {
         var productCount = $element.find('.product-item').length,
@@ -99,6 +99,7 @@ define([
 
         events.on('stage:' + stageId + ':viewportChangeAfter', function (args) {
             var breakpoint = config.breakpoints[args.viewport];
+
             initSlider($element, slickConfig, breakpoint);
         });
     };
