@@ -128,21 +128,22 @@
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStageMobile"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStageMobile"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStageMobile"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSBlockStageMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSBlockStageMobile">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSBlockStageMobile">
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundAttributesCMSBlockStageMobile">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
-        </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageCMSBlockStageMobile">
-            <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStageMobile"/>
@@ -178,21 +179,22 @@
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStage"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSBlockStage">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSBlockStage">
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundAttributesCMSBlockStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
-        </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageCMSBlockStage">
-            <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
@@ -243,7 +245,11 @@
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStageMobile">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSPageStageMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStageMobile">
+            <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStageMobile">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
@@ -285,7 +291,11 @@
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStageAfterSave">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSPageStageAfterSave"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStageAfterSave">
+            <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStageAfterSave">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
@@ -329,7 +339,11 @@
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
@@ -381,7 +395,11 @@
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSPageStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStorefrontMobile">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
