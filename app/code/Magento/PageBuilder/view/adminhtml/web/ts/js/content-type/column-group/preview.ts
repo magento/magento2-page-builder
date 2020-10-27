@@ -879,7 +879,7 @@ export default class Preview extends PreviewCollection {
 
             const currentX = event.pageX - groupPosition.left;
             this.dropPosition = this.dropPositions.find((position) => {
-                return currentX > position.left && currentX < position.right && position.canShrink;
+                return currentX > position.left && currentX <= position.right && position.canShrink;
             });
 
             if (this.dropPosition) {
