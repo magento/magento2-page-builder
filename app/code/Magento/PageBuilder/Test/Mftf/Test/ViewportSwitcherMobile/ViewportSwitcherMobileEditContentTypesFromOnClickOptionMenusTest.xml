@@ -60,14 +60,22 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForSlide"/>
         <!-- Validate Stage -->
-        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorSlideStage">
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Save Product -->
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save Desktop Viewport -->
-        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStageAfterSave"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorSlideStageAfterSave">
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlideAfterSave">
             <argument name="section" value="SlideOnBackend"/>
@@ -81,7 +89,11 @@
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStageAfterSave2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorSlideStageAfterSave2">
+            <argument name="selector" value="{{SlideOnBackend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForSlideAfterSave2">
             <argument name="section" value="SlideOnBackend"/>
@@ -94,12 +106,19 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
-        <!-- Validate Storefront Desktop -->
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStorefront"/>
+        <!-- Validate Storefront Desktop -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorSlideStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <!-- Validate Storefront Mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription2"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorSlideStorefront2"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorSlideStorefront2">
+            <argument name="selector" value="{{SlideOnFrontend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
     </test>
 </tests>
