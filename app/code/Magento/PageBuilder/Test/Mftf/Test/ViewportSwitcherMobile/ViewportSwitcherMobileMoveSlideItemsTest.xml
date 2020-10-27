@@ -21,8 +21,8 @@
             <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
-            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
