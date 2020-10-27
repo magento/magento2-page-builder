@@ -11,13 +11,13 @@
             <description>Verifies the size of the affordance on Container content types.</description>
         </annotations>
         <arguments>
-            <argument name="affordanceSize" defaultValue="{{PageBuilderRowAffordanceWidth.borderWidth}}" type="string"/>
+            <argument name="expectedAffordanceSize" defaultValue="{{PageBuilderRowAffordanceWidth.borderWidth}}" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="section" defaultValue="RowOnStage"/>
         </arguments>
-        <waitForElementVisible selector="{{section.affordance(index)}}" stepKey="waitForElementVisible"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{section.affordanceJS(index)}}).borderWidth, 10)" stepKey="executeJS"/>
-        <assertEquals stepKey="assertEquals">
+        <waitForElementVisible selector="{{section.affordance(index)}}" stepKey="waitForAffordanceVisible"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{section.affordanceJS(index)}}).borderWidth, 10)" stepKey="actualAffordanceSize"/>
+        <assertEquals stepKey="assertActualAffordanceSizeEqualsExpected">
             <expectedResult type="int">{{affordanceSize}}</expectedResult>
             <actualResult type="variable">executeJS</actualResult>
         </assertEquals>
