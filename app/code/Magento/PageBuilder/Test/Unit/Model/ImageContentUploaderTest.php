@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Test\Unit\Model;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\WriteInterface;
 use Magento\PageBuilder\Model\ImageContentUploader;
@@ -74,7 +75,7 @@ class ImageContentUploaderTest extends TestCase
      */
     public function testUploadWithException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(LocalizedException::class);
         $this->expectExceptionMessage('There was an error during file content upload.');
 
         $fileName = 'fileName.file';
