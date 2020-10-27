@@ -1,6 +1,8 @@
 /*eslint-disable */
 /* jscs:disable */
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -477,6 +479,40 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         _events.trigger("stage:childFocusStart");
       }
+    }
+    /**
+     * Return Selected Element Styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyle = function getStyle(element, styleProperties) {
+      var stylesObject = element.style();
+      return styleProperties.reduce(function (obj, key) {
+        var _extends2;
+
+        return _extends({}, obj, (_extends2 = {}, _extends2[key] = stylesObject[key], _extends2));
+      }, {});
+    }
+    /**
+     * Return Selected Element Styles Without Selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
+      var stylesObject = element.style();
+      return Object.keys(stylesObject).filter(function (key) {
+        return !styleProperties.includes(key);
+      }).reduce(function (obj, key) {
+        var _extends3;
+
+        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
+      }, {});
     }
     /**
      * Handle a click on the document closing the grid form
