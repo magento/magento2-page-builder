@@ -143,20 +143,31 @@
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStageMobile"/>
         <seeElementInDOM selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStageMobile"/>
         <dontSeeElement selector="{{SlideOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStageMobile"/>
-        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStageMobile"/>
+        <!--<seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStageMobile"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSBlockStageMobile">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSBlockStageMobile"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStageMobile"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStageMobile"/>
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStageMobile"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStageMobile"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionMobile"/>
+        <!--<seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStageMobile"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSBlockStageMobile">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStageMobile"/>
-        <executeJS function="return document.evaluate({{SlideOnBackend.button('1')}}, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStageMobile"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStageMobile"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageMobile}-{$overlayLeftPositionCMSBlockStageMobile}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageMobile"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStageMobile">
             <expectedResult type="int">5</expectedResult>
@@ -194,20 +205,31 @@
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
         <seeElementInDOM selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
         <dontSeeElement selector="{{SlideOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStage"/>
+        <!--<seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStage"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStage"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionDesktop"/>
+        <!--<seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStage"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
-        <executeJS function="return document.evaluate({{SlideOnBackend.button('1')}}, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
             <expectedResult type="int">5</expectedResult>
@@ -254,14 +276,23 @@
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStageMobile">
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundAttributesCMSPageStageMobile">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
+        <!--<actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStageMobile">-->
+            <!--<argument name="section" value="SlideOnFrontend"/>-->
+            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>-->
+            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
+            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>-->
+            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
+            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>-->
+        <!--</actionGroup>-->
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageMobile">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
@@ -269,9 +300,14 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStageMobile"/>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStageMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStageMobile"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStageMobile"/>
+        <!--<seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStageMobile"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStageMobile">
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStageMobile"/>
-        <executeJS function="return document.evaluate({{SlideOnFrontend.button('1')}}, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageMobile"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageMobile"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageMobile}-{$overlayLeftPositionCMSPageStageMobile}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageMobile"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStageMobile">
             <expectedResult type="int">5</expectedResult>
@@ -300,13 +336,22 @@
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStageAfterSave">
+        <!--<actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStageAfterSave">-->
+            <!--<argument name="section" value="SlideOnFrontend"/>-->
+            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>-->
+            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
+            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>-->
+            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
+            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>-->
+        <!--</actionGroup>-->
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundAttributesCMSPageStageAfterSave">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageAfterSave">
             <argument name="section" value="SlideOnFrontend"/>
@@ -315,9 +360,14 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStageAfterSave"/>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStageAfterSave"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStageAfterSave"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStageAfterSave"/>
+        <!--<seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStageAfterSave"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStageAfterSave">
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStageAfterSave"/>
-        <executeJS function="return document.evaluate({{SlideOnFrontend.button('1')}}, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageAfterSave"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageAfterSave"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageAfterSave}-{$overlayLeftPositionCMSPageStageAfterSave}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageAfterSave"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStageAfterSave">
             <expectedResult type="int">5</expectedResult>
@@ -348,13 +398,22 @@
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStorefront">
+        <!--<actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStorefront">-->
+            <!--<argument name="section" value="SlideOnFrontend"/>-->
+            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>-->
+            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
+            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>-->
+            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
+            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>-->
+        <!--</actionGroup>-->
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundAttributesCMSPageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
@@ -363,14 +422,25 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStorefront"/>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefront"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefront"/>
+        <!--<seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefront"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStorefront">
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefront"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefront"/>
+        <!--<seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefront"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefront">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefront"/>
-        <executeJS function="return document.evaluate({{SlideOnFrontend.button('1')}}, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefront">
             <expectedResult type="int">5</expectedResult>
@@ -397,20 +467,29 @@
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefrontMobile">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStorefrontMobile">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStorefrontMobile">
+        <!--<actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStorefrontMobile">-->
+            <!--<argument name="section" value="SlideOnFrontend"/>-->
+            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>-->
+            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
+            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>-->
+            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
+            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>-->
+        <!--</actionGroup>-->
+        <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundAttributesCMSPageStorefrontMobile">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
             <argument name="section" value="SlideOnFrontend"/>
@@ -419,14 +498,25 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStorefrontMobile"/>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefrontMobile"/>
+        <!--<seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefrontMobile"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStorefrontMobile">
+            <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSPageStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile"/>
+        <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefrontMobile"/>
+        <!--<seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile"/>-->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile">
+            <argument name="selector" value="{{SlideOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderSlideItemOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefrontMobile"/>
-        <executeJS function="return document.evaluate({{SlideOnFrontend.button('1')}}, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefrontMobile"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefrontMobile"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefrontMobile"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefrontMobile">
             <expectedResult type="int">5</expectedResult>
