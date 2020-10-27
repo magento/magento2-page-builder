@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\MediaStorage\Helper\File\Storage;
 use Magento\MediaStorage\Helper\File\Storage\Database;
 use Magento\MediaStorage\Model\File\Uploader;
@@ -68,7 +69,7 @@ class ImageContentUploader extends Uploader
     {
         $this->_file = $this->decodeContent($fileName, $fileData);
         if (!$this->systemTmpDirectory->isExist($this->_file['tmp_name'])) {
-            throw new \InvalidArgumentException('There was an error during file content upload.');
+            new LocalizedException(__('There was an error during file content upload.'));
         }
         $this->_fileExists = true;
         $this->_uploadType = self::SINGLE_STYLE;
@@ -88,7 +89,7 @@ class ImageContentUploader extends Uploader
      */
     private function decodeContent($fileName, $fileData): array
     {
-        $tmpFileName = $this->getTmpFileName();
+        $tmpFileName = uniqid($this->filePrefix, true);
         $fileSize = $this->systemTmpDirectory->writeFile($tmpFileName, base64_decode($fileData));
 
         return [
@@ -98,15 +99,5 @@ class ImageContentUploader extends Uploader
             'error' => 0,
             'size' => $fileSize,
         ];
-    }
-
-    /**
-     * Generate temporary file name
-     *
-     * @return string
-     */
-    private function getTmpFileName(): string
-    {
-        return uniqid($this->filePrefix, true);
     }
 }
