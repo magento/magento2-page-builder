@@ -402,6 +402,7 @@ export default class Preview extends PreviewCollection {
     public openEdit(): void {
         this.contentType.dataStore.set("not_empty_columns_number", this.getNotEmptyColumnsNumber());
         super.openEdit();
+        this.gridSizeHistory = new Map();
         this.recordGridResize(this.gridSize());
     }
 

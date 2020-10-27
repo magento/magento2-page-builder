@@ -389,6 +389,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _previewCollection2.prototype.openEdit.call(this);
 
+      this.gridSizeHistory = new Map();
       this.recordGridResize(this.gridSize());
     }
     /**
