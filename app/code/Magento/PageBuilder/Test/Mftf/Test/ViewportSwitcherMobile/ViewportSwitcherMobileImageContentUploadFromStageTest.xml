@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileImageContentUploadFromStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Upload Image From Stage"/>
+            <description value="A user should be able to use the on hover upload buttons for Image on the stage."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
+                <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{PageBuilderMobileImagePropertyGif.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Image -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMobile">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStageMobile">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Edit Image -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuImageMobile">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageMobile">
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageMobile">
+            <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsImageMobile"/>
+        <!-- Verify On Hover Upload Button Work on Viewport mobile-->
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtonsMobile">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+        <!-- Verify Edit Panel on Viewport mobile-->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMobile">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOutMobile">
+            <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsMobile"/>
+        <!-- Verify On Hover Upload Button Work on Viewport desktop -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewport">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtonsDesktop">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+        <!-- Verify Edit Panel on Viewport desktop-->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageDesktop">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOutDesktop">
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsDesktop"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDesktop"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageDesktop"/>
+        <!-- Validate Storefront on Vewport desktop-->
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoadStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefront"/>
+        <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeDesktopImageCMSPageStorefront"/>
+        <actionGroup ref="validateImage" stepKey="validateImageCMSPageStorefront">
+            <argument name="section" value="ImageOnStorefront"/>
+            <argument name="image" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <!-- Validate Storefront on Vewport mobile-->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefrontMobile"/>
+        <seeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="seeMobileImageCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateImage" stepKey="validateImageCMSPageStorefrontMobile">
+            <argument name="section" value="ImageOnStorefront"/>
+            <argument name="image" value="PageBuilderMobileImagePropertyGif"/>
+        </actionGroup>
+    </test>
+</tests>
