@@ -29,12 +29,6 @@
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStageMobile">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <!--<seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightCMSBlockStageMobile"/>-->
-        <!--<actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStageMobile">-->
-            <!--<argument name="selector" value="{{SlideOnBackend.posterAdvancedConfigurationPath('1')}}"/>-->
-            <!--<argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>-->
-            <!--<argument name="cssProperty" value="minHeight"/>-->
-        <!--</actionGroup>-->
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSBlockStageMobile"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageMobile}-{$overlayLeftPositionCMSBlockStageMobile}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageMobile"/>
         <!-- Validate CMS Block Stage Desktop Viewport-->
