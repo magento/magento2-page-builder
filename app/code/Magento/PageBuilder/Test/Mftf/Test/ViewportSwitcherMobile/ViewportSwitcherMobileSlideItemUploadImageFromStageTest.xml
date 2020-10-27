@@ -54,7 +54,6 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save Desktop Viewport -->
-        <!-- Verify On Hover Upload Button Work-->
          <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderSlideContentType"/>
         </actionGroup>
@@ -63,7 +62,7 @@
         </actionGroup>
         <attachFile selector="{{PageBuilderStage.uploadImageInput('1')}}" userInput="{{PageBuilderImageProperty_JPG.value}}" stepKey="attachImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStage">
+        <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -83,14 +82,13 @@
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <!-- Verify On Hover Upload Button Work-->
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <attachFile selector="{{PageBuilderStage.uploadImageInput('1')}}" userInput="{{PageBuilderImageProperty_JPG.value}}" stepKey="attachImageFromLocalToStage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStage2">
+        <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageStage2">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
