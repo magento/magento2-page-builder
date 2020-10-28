@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderViewportSwitcherSection">
+        <!-- Viewport Switcher Buttons -->
+        <element name="viewportSwitcherButton" type="button" selector="//span[@class='viewport-buttons']//span[@class='tooltip']//button[contains(@class, 'page-builder-viewport') and contains(@class, '{{viewport}}-switcher')]" parameterized="true"/>
+        <!-- Viewport Switcher Icons -->
+        <element name="viewportSwitcherIcon" parameterized="true" type="text" selector="//span[@class='viewport-buttons']//span[@class='tooltip']//button[contains(@class, 'page-builder-viewport') and contains(@class, '{{viewport}}-switcher')]//img[contains(@src, 'switcher-{{viewport}}.svg')]"/>
+        <!-- Viewport Switcher Tooltip -->
+        <element name="viewportTooltipLabel" type="text" parameterized="true" selector="//span[@class='tooltip'][{{index}}]//span[@class='tooltip-content']//span[@class='tooltip-label' and text()='{{viewport}}']"/>
+        <element name="viewportTooltipContent" type="text" parameterized="true" selector="//span[@class='tooltip'][{{index}}]//span[@class='tooltip-content']"/>
+        <!-- Viewport Stages -->
+        <element name="viewportStage" type="block" parameterized="true" selector="//div[contains(@class,'stage-is-active') and contains(@class, '{{viewport}}-viewport')]"/>
+    </section>
+</sections>

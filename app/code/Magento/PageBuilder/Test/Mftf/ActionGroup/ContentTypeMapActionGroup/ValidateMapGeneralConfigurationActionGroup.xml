@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateMapGeneralConfigurationActionGroup">
+        <annotations>
+            <description>Validates Map General configuration</description>
+        </annotations>
+        <arguments>
+            <argument name="page"/>
+            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="showControls" defaultValue="PageBuilderMapShowControls_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="ValidateMapSettingsActionGroup" stepKey="comment"/>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.heightPath(index)}}', document.body).iterateNext()).height.replace(&quot;px&quot;, &quot;&quot;)" stepKey="grabHeightValue"/>
+        <assertEquals stepKey="assertHeightValue">
+            <expectedResult type="string">{{height.value}}</expectedResult>
+            <actualResult type="variable">grabHeightValue</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{page.showControls(index, showControls.value)}}" stepKey="waitForShowControls"/>
+    </actionGroup>
+</actionGroups>

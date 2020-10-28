@@ -36,18 +36,7 @@ export default class Preview extends PreviewCollection {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
-            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.element.getAttribute("style") ||
-                this.element.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = this.getBackgroundImage();
             jarallax(this.element, "destroy");
-            this.element.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" &&
-                this.element.style.backgroundImage !== backgroundImage &&
-                backgroundImage !== "none"
-            ) {
-                this.element.style.backgroundImage = backgroundImage;
-            }
         } catch (e) {
             // Failure of destroying is acceptable
         }
@@ -144,9 +133,7 @@ export default class Preview extends PreviewCollection {
             this.toggleFullScreen.bind(this),
         );
         events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
-            if (this.contentType.dataStore.get("background_type") === "video") {
-                this.buildJarallax();
-            }
+            this.buildJarallax();
         });
     }
 

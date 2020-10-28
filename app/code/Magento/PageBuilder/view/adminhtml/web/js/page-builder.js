@@ -1,10 +1,5 @@
 /*eslint-disable */
 /* jscs:disable */
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "Magento_Ui/js/modal/alert", "mageUtils", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/binding/style", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _translate, _events, _loader, _alert, _mageUtils, _underscore, _acl, _style, _config, _contentTypeFactory, _panel, _stage, _templateManager) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -252,6 +247,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var previousViewport = this.viewport();
       this.viewport(viewport);
 
+      _underscore.each(this.viewportClasses, function (viewportClass) {
+        viewportClass(false);
+      });
+
+      this.viewportClasses[viewport + "-viewport"](true);
+
       _config.setConfig({
         viewport: viewport
       });
@@ -260,12 +261,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         viewport: viewport,
         previousViewport: previousViewport
       });
-
-      _underscore.each(this.viewportClasses, function (viewportClass) {
-        viewportClass(false);
-      });
-
-      this.viewportClasses[viewport + "-viewport"](true);
     }
     /**
      * Preload all templates into the window to reduce calls later in the app

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileDividerThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Render Divider Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the Divider content type through the Block content type in the mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Divider -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Edit Divider -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuDivider">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Yellow"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setDividerLineWidth">
+            <argument name="property" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsDivider"/>
+
+        <!-- Validate CMS Block Stage on Mobile Viewport -->
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSBlockStageMobile">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStageMobile">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+
+        <!-- Validate CMS Block Stage -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSBlockStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+
+        <!-- Add Block to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSPageStageMobile">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStageMobile">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_10.value}}*2"/>
+        </actionGroup>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSPageStage">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_10.value}}*2"/>
+        </actionGroup>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSPageStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="seeDividerColorCMSPageStorefrontMobile">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="lineThickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="lineWidth" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefrontMobile">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+    </test>
+</tests>

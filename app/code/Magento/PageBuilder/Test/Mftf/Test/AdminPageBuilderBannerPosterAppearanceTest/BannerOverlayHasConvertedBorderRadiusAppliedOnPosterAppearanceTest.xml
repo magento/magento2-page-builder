@@ -65,7 +65,7 @@
         <!-- Validate Stage where border radius > border width -->
         <comment userInput="Validate Stage where border radius greater than border width" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay"/>
-        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius"/>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate('{{BannerOnBackend.overlay('1')}}',document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius"/>
         <executeJS function="return Math.max(0, parseInt({{PageBuilderAdvancedBorderRadiusProperty12.value}}, 10) - parseInt({{PageBuilderAdvancedBorderWidthProperty10.value}}, 10))" stepKey="expectedOverlayBorderRadius"/>
         <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
             <expectedResult type="variable">$expectedOverlayBorderRadius</expectedResult>
@@ -79,7 +79,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront"/>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate('{{BannerOnFrontend.overlay('1')}}',document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront"/>
         <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
             <expectedResult type="variable">$expectedOverlayBorderRadius</expectedResult>
             <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
@@ -100,7 +100,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage on where border radius <= border width -->
         <comment userInput="Validate Stage where border radius less than or equal to border width" stepKey="commentValidateStagePoster"/>
-        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius2"/>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate('{{BannerOnBackend.overlay('1')}}',document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius2"/>
         <executeJS function="return Math.max(0, parseInt({{PageBuilderAdvancedBorderRadiusProperty1.value}}, 10) - parseInt({{PageBuilderAdvancedBorderWidthProperty10.value}}, 10))" stepKey="expectedOverlayBorderRadius2"/>
         <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
             <expectedResult type="variable">$expectedOverlayBorderRadius2</expectedResult>
@@ -114,7 +114,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront2"/>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate('{{BannerOnFrontend.overlay('1')}}',document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront2"/>
         <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
             <expectedResult type="int">$expectedOverlayBorderRadius2</expectedResult>
             <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>

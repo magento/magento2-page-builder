@@ -42,18 +42,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
-          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-          var style = _this.element.getAttribute("style") || _this.element.getAttribute("data-jarallax-original-styles");
-
-          var backgroundImage = _this.getBackgroundImage();
-
           jarallax(_this.element, "destroy");
-
-          _this.element.setAttribute("style", style);
-
-          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.element.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
-            _this.element.style.backgroundImage = backgroundImage;
-          }
         } catch (e) {// Failure of destroying is acceptable
         }
 
@@ -116,9 +105,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.toggleFullScreen.bind(_assertThisInitialized(_this)));
 
       _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function (args) {
-        if (_this.contentType.dataStore.get("background_type") === "video") {
-          _this.buildJarallax();
-        }
+        _this.buildJarallax();
       });
 
       return _this;
