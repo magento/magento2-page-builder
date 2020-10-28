@@ -102,7 +102,9 @@
         <!-- Validate Stage -->
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
         <waitForElementNotVisible selector="{{SlideOnBackend.base('2')}}" stepKey="dontSeeNextSlideAfterSave"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide1AfterSave"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave"/>
@@ -117,7 +119,9 @@
         <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Validate Stage After Sorting -->
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide1ContentAfterSort"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSort"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusNavigationAfterSort">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSort"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide3.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName3InTooltipAfterSort"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDot"/>
@@ -132,7 +136,9 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save Desktop Viewport -->
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide3ContentAfterSave2"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave2"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusNavigationAfterSave2">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSave"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide3.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName3InTooltipAfterSave2"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave2"/>
@@ -150,7 +156,9 @@
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide3ContentAfterSave3"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave3"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusNavigationAfterSave3">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSave2"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide3.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName3InTooltipAfterSave3"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave3"/>
