@@ -31,6 +31,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
+        <!-- Configure CMS Block -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -70,6 +71,7 @@
         <seeNumberOfElements selector="{{RowOnStage.affordanceCSS}}" userInput="3" stepKey="seeNumberOfAffordance"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Configure CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
@@ -96,6 +98,6 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefrontForCreatedPage">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{RowOnStorefront.affordanceCSS}}" stepKey="dontSeeAffordanceInDOM"/>
+        <dontSeeElementInDOM selector="{{RowOnStage.affordanceCSS}}" stepKey="dontSeeAffordanceInDOM"/>
     </test>
 </tests>
