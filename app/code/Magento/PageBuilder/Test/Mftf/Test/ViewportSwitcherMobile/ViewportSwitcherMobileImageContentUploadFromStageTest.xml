@@ -98,8 +98,10 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsDesktop"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDesktop"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageDesktop"/>
-        <!-- Validate Storefront on Vewport desktop-->
-        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
+        <!-- Validate Storefront on Viewport desktop-->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
+        </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoadStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefront"/>
         <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeDesktopImageCMSPageStorefront"/>
