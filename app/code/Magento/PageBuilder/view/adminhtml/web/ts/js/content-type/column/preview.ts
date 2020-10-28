@@ -302,4 +302,35 @@ export default class Preview extends PreviewCollection {
             this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
         }
     }
+    
+        /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyle(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
+    }
+
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return Object.keys(stylesObject)
+            .filter((key) => !styleProperties.includes(key))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: stylesObject[key],
+                };
+            }, {});
+    }
 }
