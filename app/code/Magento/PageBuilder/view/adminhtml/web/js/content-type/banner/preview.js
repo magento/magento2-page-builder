@@ -37,18 +37,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
-          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-          var style = _this.wrapper.getAttribute("style") || _this.wrapper.getAttribute("data-jarallax-original-styles");
-
-          var backgroundImage = _this.getBackgroundImage();
-
           jarallax(_this.wrapper, "destroy");
-
-          _this.wrapper.setAttribute("style", style);
-
-          if (_this.contentType.dataStore.get("background_type") !== "video" && _this.wrapper.style.backgroundImage !== backgroundImage && backgroundImage !== "none") {
-            _this.wrapper.style.backgroundImage = backgroundImage;
-          }
         } catch (e) {// Failure of destroying is acceptable
         }
 
@@ -471,9 +460,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       });
 
       _events.on("stage:" + this.contentType.stageId + ":viewportChangeAfter", function (args) {
-        if (_this8.contentType.dataStore.get("background_type") === "video") {
-          _this8.buildJarallax();
-        }
+        _this8.buildJarallax();
       });
     }
     /**

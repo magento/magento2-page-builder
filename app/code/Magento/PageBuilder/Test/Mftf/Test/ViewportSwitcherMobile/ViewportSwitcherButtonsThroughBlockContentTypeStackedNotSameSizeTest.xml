@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileButtonsThroughBlockContentTypeStackedNotSameSizeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Render Buttons Through Block Content Type: Stacked and Not Same Size"/>
+            <description value="Verify that users are able to successfully render and use the Buttons content type (stacked and not same size) through the Block content type in the mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Buttons -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <!-- Edit Button Group -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuButtons">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearanceOption">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSizeOption">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsButtons"/>
+        <!-- Edit Button Item -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStageButtonItem">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
+            <argument name="property" value="PageBuilderButtonItemText_First"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButtonLinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsButtonItem"/>
+        <!-- Add 2nd Button Item -->
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="stackedEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+
+        <!-- Validate CMS Block Stage Mobile Viewport -->
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonsCMSBlockStage"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSBlockStage">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSBlockStage">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSBlockStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSBlockStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewport">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonsCMSBlockStageDesktop"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSBlockStageDesktop">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSBlockStageDesktop">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSBlockStageDesktop">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSBlockStageDesktop">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Add Block to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStage"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSPageStage">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSPageStage">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSPageStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStageDesktop"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSPageStageDesktop">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSPageStageDesktop">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStageDesktop">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSPageStageDesktop">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- Validate CMS Page Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStorefront"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSPageStorefront">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSPageStorefront">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSPageStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="clickButtonCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderButtonItemLink_NotSecure.value}}" stepKey="seeThatUrlIsChangedToButtonUrl"/>
+
+        <!-- Validate CMS Page Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefrontMobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSPageStorefrontMobile">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSPageStorefrontMobile">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+            <argument name="url" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStorefrontMobile">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSPageStorefrontMobile">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="clickButtonCMSPageStorefrontMobile"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefrontMobile"/>
+        <seeCurrentUrlEquals url="{{PageBuilderButtonItemLink_NotSecure.value}}" stepKey="seeThatUrlIsChangedToButtonUrlMobile"/>
+    </test>
+</tests>

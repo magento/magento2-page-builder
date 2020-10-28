@@ -14,7 +14,7 @@ define([
     'use strict';
 
     /**
-     * Initialize slider.
+     * Build slick
      *
      * @param {jQuery} $carouselElement
      * @param {Object} config
@@ -31,12 +31,42 @@ define([
         $carouselElement.slick(config);
     }
 
+    /**
+     * Initialize slider.
+     *
+     * @param {jQuery} $element
+     * @param {Object} slickConfig
+     * @param {Object} breakpoint
+     */
+    function initSlider($element, slickConfig, breakpoint) {
+        var productCount = $element.find('.product-item').length,
+            $carouselElement = $($element.children()),
+            centerModeClass = 'center-mode',
+            carouselMode = $element.data('carousel-mode'),
+            slidesToShow = breakpoint.options.products[carouselMode] ?
+                breakpoint.options.products[carouselMode].slidesToShow :
+                breakpoint.options.products.default.slidesToShow;
+
+        slickConfig.slidesToShow = parseFloat(slidesToShow);
+
+        if (carouselMode === 'continuous' && productCount > slickConfig.slidesToShow) {
+            $element.addClass(centerModeClass);
+            slickConfig.centerPadding = $element.data('center-padding');
+            slickConfig.centerMode = true;
+        } else {
+            $element.removeClass(centerModeClass);
+            slickConfig.infinite = $element.data('infinite-loop');
+        }
+
+        buildSlick($carouselElement, slickConfig);
+    }
+
     return function (config, element) {
         var $element = $(element),
             $carouselElement = $($element.children()),
-            productCount = $(element).find('.product-item').length,
-            centerModeClass = 'center-mode',
-            carouselMode = $element.data('carousel-mode'),
+            stageId = $($element).parents('[data-role="pagebuilder-stage"]').attr('id'),
+            currentViewport = config.currentViewport,
+            currentBreakpoint = config.breakpoints[currentViewport],
             slickConfig = {
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
@@ -50,31 +80,27 @@ define([
 
                 /** @inheritdoc */
                 entry: function () {
-                    var slidesToShow = breakpoint.options.products[carouselMode] ?
-                        breakpoint.options.products[carouselMode].slidesToShow :
-                        breakpoint.options.products.default.slidesToShow;
-
-                    slickConfig.slidesToShow = parseFloat(slidesToShow);
-
-                    if (carouselMode === 'continuous' && productCount > slickConfig.slidesToShow) {
-                        $element.addClass(centerModeClass);
-                        slickConfig.centerPadding = $element.data('center-padding');
-                        slickConfig.centerMode = true;
-                    } else {
-                        $element.removeClass(centerModeClass);
-                        slickConfig.infinite = $element.data('infinite-loop');
-                    }
-
-                    buildSlick($carouselElement, slickConfig);
+                    initSlider($element, slickConfig, breakpoint);
                 }
             });
         });
+
+        //initialize slider when content type is added in mobile viewport
+        if (currentViewport === 'mobile') {
+            initSlider($element, slickConfig, currentBreakpoint);
+        }
 
         // Redraw slide after content type gets redrawn
         events.on('contentType:redrawAfter', function (args) {
             if ($carouselElement.closest(args.element).length) {
                 $carouselElement.slick('setPosition');
             }
+        });
+
+        events.on('stage:' + stageId + ':viewportChangeAfter', function (args) {
+            var breakpoint = config.breakpoints[args.viewport];
+
+            initSlider($element, slickConfig, breakpoint);
         });
     };
 });

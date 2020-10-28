@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import widgetInitializer from "Magento_PageBuilder/js/widget-initializer";
+import mageUtils from "mageUtils";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config.types";
@@ -74,6 +75,7 @@ export default class Preview extends BasePreview {
             widgetInitializer({
                 config: Config.getConfig("widgets"),
                 breakpoints: Config.getConfig("breakpoints"),
+                currentViewport: Config.getConfig("viewport"),
             }, element);
         }
     }
@@ -164,10 +166,11 @@ export default class Preview extends BasePreview {
 
                 // Update the stage content type label with the real block title if provided
                 this.displayLabel(response.data[labelKey] ? response.data[labelKey] : this.config.label);
-
+                let content: string = "";
                 if (response.data.content) {
                     this.showBlockPreview(true);
-                    this.data.main.html(response.data.content);
+                    content = this.processBackgroundImages(response.data.content);
+                    this.data.main.html(content);
                     this.initializeWidgets(this.element);
                 } else if (response.data.error) {
                     this.showBlockPreview(false);
@@ -176,7 +179,7 @@ export default class Preview extends BasePreview {
 
                 this.lastBlockId = parseInt(identifier.toString(), 10);
                 this.lastTemplate = data.template.toString();
-                this.lastRenderedHtml = response.data.content;
+                this.lastRenderedHtml = content;
             })
             .fail(() => {
                 this.showBlockPreview(false);
@@ -193,5 +196,48 @@ export default class Preview extends BasePreview {
      */
     private showBlockPreview(isShow: boolean) {
         this.displayingBlockPreview(isShow);
+    }
+
+    /**
+     * Generate styles for background images.
+     *
+     * @param {string} content
+     * @return string
+     */
+    private processBackgroundImages(content: string): string {
+        const document = new DOMParser().parseFromString(content, "text/html");
+        const elements = document.querySelectorAll("[data-background-images]");
+        const styleBlock = document.createElement("style");
+        const viewports = Config.getConfig("viewports");
+
+        elements.forEach((element) => {
+            const rawAttrValue = element.getAttribute("data-background-images").replace(/\\(.)/mg, "$1");
+            const attrValue = JSON.parse(rawAttrValue);
+            const elementClass = `background-image-${ mageUtils.uniqueid(13) }`;
+            let rules = "";
+
+            Object.keys(attrValue).forEach((imageName: string) => {
+                const imageUrl = attrValue[imageName];
+                const viewportName = imageName.replace("_image", "");
+
+                if (viewports[viewportName].stage && imageUrl) {
+                    rules += `.${ viewportName }-viewport .${elementClass} {
+                            background-image: url("${ imageUrl }");
+                        }`;
+
+                }
+            });
+            if (rules.length) {
+                styleBlock.append(rules);
+                element.classList.add(elementClass);
+            }
+        });
+
+        if (elements.length && styleBlock.innerText.length) {
+            document.body.append(styleBlock);
+            content = document.body.innerHTML;
+        }
+
+        return content;
     }
 }
