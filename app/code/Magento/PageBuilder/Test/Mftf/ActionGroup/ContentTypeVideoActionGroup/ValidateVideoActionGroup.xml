@@ -19,7 +19,11 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.inner(index)}}', document.body).iterateNext()).maxWidth.replace(/px/g, &quot;&quot;)" stepKey="fetchedMaxWidth"/>
+        <assertEquals stepKey="waitForWidth">
+            <expectedResult type="string">{{width.value}}</expectedResult>
+            <actualResult type="variable">fetchedMaxWidth</actualResult>
+        </assertEquals>
         <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
         <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>

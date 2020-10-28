@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateRowBackgroundConfigurationWithAllUpdatedAndParallaxEnabledActionGroup">
+        <annotations>
+            <description>Validates Row Background configuration with enabled parallax</description>
+        </annotations>
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="backgroundColor" defaultValue=""/>
+            <argument name="backgroundImage" defaultValue=""/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Cover"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Disabled"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Scroll"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
+        <assertEquals stepKey="assertBackgroundColor">
+            <expectedResult type="string">{{backgroundColor.rgb}}</expectedResult>
+            <actualResult type="variable">grabBackgroundColorValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.parallaxBackgroundImagePath(index)}}', document.body).iterateNext()).backgroundImage" stepKey="backgroundImageRawValue"/>
+        <!-- Return the string value of background-image -->
+        <executeJS function="return '{{backgroundImage.value}}' ? '{$backgroundImageRawValue}'.match(/(?&lt;=(url\((&quot;|\'))).+(?=(&quot;|\')\))/)[0] : ''" stepKey="backgroundImageValue"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <executeJS function="return '{{backgroundImage.value}}' ? !!'{$backgroundImageValue}'.match(/.*\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundImage.fileName}}(_\d+)?\.{{backgroundImage.extension}}/)[0] : '{$backgroundImageRawValue}' === 'none'" stepKey="actualImageResult"/>
+        <assertTrue stepKey="assertBackgroundImageContainsFileInformation">
+            <actualResult type="variable">actualImageResult</actualResult>
+        </assertTrue>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.backgroundPath(index)}}', document.body).iterateNext()).backgroundPosition" stepKey="grabBackgroundPositionValue"/>
+        <assertEquals stepKey="assertBackgroundPosition">
+            <expectedResult type="string">{{backgroundPosition.computedStyleValue}}</expectedResult>
+            <actualResult type="variable">grabBackgroundPositionValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.backgroundPath(index)}}', document.body).iterateNext()).backgroundSize" stepKey="grabBackgroundSizeValue"/>
+        <assertEquals stepKey="assertBackgroundSize">
+            <expectedResult type="string">{{backgroundSize.value}}</expectedResult>
+            <actualResult type="variable">grabBackgroundSizeValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.backgroundPath(index)}}', document.body).iterateNext()).backgroundRepeat" stepKey="grabBackgroundRepeatValue"/>
+        <assertEquals stepKey="assertBackgroundRepeat">
+            <expectedResult type="string">{{backgroundRepeat.value}}</expectedResult>
+            <actualResult type="variable">grabBackgroundRepeatValue</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{page.backgroundPath(index)}}', document.body).iterateNext()).backgroundAttachment" stepKey="grabBackgroundAttachmentValue"/>
+        <assertEquals stepKey="assertBackgroundAttachment">
+            <expectedResult type="string">{{backgroundAttachment.value}}</expectedResult>
+            <actualResult type="variable">grabBackgroundAttachmentValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

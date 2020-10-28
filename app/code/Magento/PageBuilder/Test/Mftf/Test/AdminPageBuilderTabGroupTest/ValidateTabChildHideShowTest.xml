@@ -74,7 +74,11 @@
         </actionGroup>
         <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
-        <seeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForHiddenElement">
+            <argument name="selector" value="{{HeadingOnStorefront.headingElement(PageBuilderHeadingTypeProperty_H2.value, '1')}}"/>
+            <argument name="expectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <!-- Set content to visible in admin -->
         <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin"/>
@@ -92,7 +96,11 @@
         <switchToNextTab stepKey="switchBackToStorefront"/>
         <reloadPage stepKey="reloadStorefront"/>
         <waitForPageLoad stepKey="waitForStorefrontReload"/>
-        <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="dontSeeHiddenElement">
+            <argument name="selector" value="{{HeadingOnStorefront.headingElement(PageBuilderHeadingTypeProperty_H2.value, '1')}}"/>
+            <argument name="expectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible"/>
     </test>
 </tests>

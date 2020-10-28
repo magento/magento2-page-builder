@@ -33,5 +33,11 @@
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="dontSeeHiddenElement">
+            <argument name="selector" value="{{ButtonGroupOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="flex"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
     </test>
 </tests>

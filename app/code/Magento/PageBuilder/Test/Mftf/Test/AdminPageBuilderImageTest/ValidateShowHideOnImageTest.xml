@@ -66,7 +66,11 @@
         </actionGroup>
         <waitForElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
         <dontSeeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForHiddenElement">
+            <argument name="selector" value="{{ImageOnStorefront.advancedConfigurationFigurePath('1')}}"/>
+            <argument name="expectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <!-- Set content to visible in admin -->
         <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin"/>
@@ -84,7 +88,11 @@
         <switchToNextTab stepKey="switchBackToStorefront"/>
         <reloadPage stepKey="reloadStorefront"/>
         <waitForPageLoad stepKey="waitForStorefrontReload"/>
-        <dontSeeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="dontSeeHiddenElement">
+            <argument name="selector" value="{{ImageOnStorefront.advancedConfigurationFigurePath('1')}}"/>
+            <argument name="expectedProperty" value="block"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
         <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible"/>
     </test>
 </tests>

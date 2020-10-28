@@ -24,8 +24,8 @@
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
-        <waitForElement selector="{{section.backgroundColorElement(index)}}" stepKey="waitForVideoBackgroundColor"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{section.backgroundColorElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).backgroundColor" stepKey="backgroundColor"/>
+        <waitForElement selector="{{section.backgroundPath(index)}}" stepKey="waitForVideoBackgroundColor"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).backgroundColor" stepKey="backgroundColor"/>
         <assertEquals stepKey="assertBackgroundColor">
             <expectedResult type="string">{{backgroundColor}}</expectedResult>
             <actualResult type="variable">$backgroundColor</actualResult>
