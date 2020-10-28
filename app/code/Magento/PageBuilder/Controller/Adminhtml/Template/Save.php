@@ -10,11 +10,11 @@ namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Api\ImageContent;
 use Magento\Framework\Api\ImageContentFactory;
 use Magento\Framework\Api\ImageContentValidator;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
@@ -25,7 +25,6 @@ use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Image\AdapterFactory;
-use Magento\PageBuilder\Model\ImageContentUploader;
 
 /**
  * Save a template within template manager
@@ -63,19 +62,16 @@ class Save extends Action implements HttpPostActionInterface
 
     /**
      * @var ImageContentValidator
-     * @deprecated
      */
     private $imageContentValidator;
 
     /**
      * @var ImageContentFactory
-     * @deprecated
      */
     private $imageContentFactory;
 
     /**
      * @var Database
-     * @deprecated
      */
     private $mediaStorage;
 
@@ -83,11 +79,6 @@ class Save extends Action implements HttpPostActionInterface
      * @var AdapterFactory
      */
     private $imageAdapterFactory;
-    
-    /**
-     * @var ImageContentUploader
-     */
-    private $contentUploader;
 
     /**
      * @param Context $context
@@ -100,7 +91,6 @@ class Save extends Action implements HttpPostActionInterface
      * @param ImageContentFactory $imageContentFactory
      * @param Database $mediaStorage
      * @param AdapterFactory $imageAdapterFactory
-     * @param ImageContentUploader|null $contentUploader
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -113,8 +103,7 @@ class Save extends Action implements HttpPostActionInterface
         ImageContentValidator $imageContentValidator,
         ImageContentFactory $imageContentFactory,
         Database $mediaStorage,
-        AdapterFactory $imageAdapterFactory,
-        ImageContentUploader $contentUploader = null
+        AdapterFactory $imageAdapterFactory
     ) {
         parent::__construct($context);
 
@@ -127,7 +116,6 @@ class Save extends Action implements HttpPostActionInterface
         $this->imageContentFactory = $imageContentFactory;
         $this->mediaStorage = $mediaStorage;
         $this->imageAdapterFactory = $imageAdapterFactory;
-        $this->contentUploader = $contentUploader ?? ObjectManager::getInstance()->get(ImageContentUploader::class);
     }
 
     /**
@@ -230,36 +218,54 @@ class Save extends Action implements HttpPostActionInterface
      * @return string
      * @throws LocalizedException
      * @throws \Magento\Framework\Exception\FileSystemException
-     * @throws \Exception
+     * @throws \Magento\Framework\Exception\InputException
      */
     private function storePreviewImage(RequestInterface $request) : ?string
     {
         $mediaDir = $this->filesystem
             ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
         $fileName = preg_replace("/[^A-Za-z0-9]/", '', str_replace(
-            ' ',
-            '-',
-            strtolower($request->getParam(TemplateInterface::KEY_NAME))
-        )) . uniqid() . '.jpg';
-        $fileDirectoryPath = $mediaDir->getAbsolutePath('.template-manager');
+                ' ',
+                '-',
+                strtolower($request->getParam(TemplateInterface::KEY_NAME))
+            )) . uniqid() . '.jpg';
+        $filePath = '.template-manager' . DIRECTORY_SEPARATOR . $fileName;
 
         // Prepare the image data
         $imgData = str_replace(' ', '+', $request->getParam('previewImage'));
         $imgData = substr($imgData, strpos($imgData, ",") + 1);
-        
-        $uploadedImage = $this->contentUploader->upload($fileName, $imgData, $fileDirectoryPath);
-        $filePath = $fileDirectoryPath . $uploadedImage;
-        $relativeFilePath = $mediaDir->getRelativePath($filePath);
-        if ($relativeFilePath === null) {
-            throw new LocalizedException(__('Unable to retrieve image.'));
-        }
-        $thumbPath = str_replace('.jpg', '-thumb.jpg', $relativeFilePath);
-        $thumbAbsolutePath = $mediaDir->getAbsolutePath() . $thumbPath;
-        $imageFactory = $this->imageAdapterFactory->create();
-        $imageFactory->open($filePath);
-        $imageFactory->resize(350);
-        $imageFactory->save($thumbAbsolutePath);
+        // phpcs:ignore
+        $decodedImage = base64_decode($imgData);
 
-        return $relativeFilePath;
+        $imageProperties = getimagesizefromstring($decodedImage);
+        if (!$imageProperties) {
+            throw new LocalizedException(__('Unable to get properties from image.'));
+        }
+
+        /* @var ImageContent $imageContent */
+        $imageContent = $this->imageContentFactory->create();
+        $imageContent->setBase64EncodedData($imgData);
+        $imageContent->setName($fileName);
+        $imageContent->setType($imageProperties['mime']);
+
+        if ($this->imageContentValidator->isValid($imageContent)) {
+            $absolutePath = $mediaDir->getAbsolutePath() . $filePath;
+            // Write the file to the directory
+            $mediaDir->getDriver()->filePutContents($absolutePath, $decodedImage);
+            // Generate a thumbnail, called -thumb next to the image for usage in the grid
+            $thumbPath = str_replace('.jpg', '-thumb.jpg', $filePath);
+            $thumbAbsolutePath = $mediaDir->getAbsolutePath() . $thumbPath;
+            $imageFactory = $this->imageAdapterFactory->create();
+            $imageFactory->open($absolutePath);
+            $imageFactory->resize(350);
+            $imageFactory->save($thumbAbsolutePath);
+            $this->mediaStorage->saveFile($filePath);
+            $this->mediaStorage->saveFile($thumbPath);
+
+            // Store the preview image within the new entity
+            return $filePath;
+        }
+
+        return null;
     }
 }
