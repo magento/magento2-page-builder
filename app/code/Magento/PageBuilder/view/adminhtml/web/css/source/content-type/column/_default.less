@@ -17,24 +17,16 @@
         min-height: initial;
         padding: 0;
     }
-}
-
-.pagebuilder-content-type.pagebuilder-column {
-    min-height: inherit;
-    width: 100%;
-
-    &.empty-container {
-        min-height: 300px;
-    }
 
     .pagebuilder-column-resize-handle {
         background: @color-pagebuilder-light-blue;
         bottom: 0;
         cursor: col-resize;
+        height: calc(~"100% + 30px");
         opacity: 0;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: -15px;
+        top: -15px;
         transition: .5s opacity;
         width: 15px;
         z-index: 28;
@@ -75,6 +67,15 @@
             border: 1px solid @text-color;
         }
     }
+}
+
+.pagebuilder-content-type.pagebuilder-column {
+    min-height: inherit;
+    width: 100%;
+
+    &.empty-container {
+        min-height: 300px;
+    }
 
     &.active {
         opacity: .5;
@@ -84,9 +85,9 @@
 }
 
 .pagebuilder-content-type-hidden .pagebuilder-column-resize-handle,
-.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-column .pagebuilder-column-resize-handle {
+.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-affordance-column .pagebuilder-column-resize-handle {
     display: none;
 }
-.pagebuilder-stage .pagebuilder-column-group.resizing .pagebuilder-content-type.pagebuilder-column .pagebuilder-column-resize-handle {
+.pagebuilder-stage .pagebuilder-column-group.resizing .pagebuilder-content-type.pagebuilder-affordance-column .pagebuilder-column-resize-handle {
     display: block;
 }

@@ -6,16 +6,12 @@
 -->
 <div class="pagebuilder-affordance-column pagebuilder-content-type pagebuilder-content-type-affordance"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-     ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width'])">
+     ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight'])"
+     afterRender="initColumn">
     <div class="pagebuilder-content-type type-container no-system-border pagebuilder-column children-min-height"
          attr="data.main.attributes"
-         ko-style="getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width'])"
-         css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})"
-         afterRender="initColumn">
-        <div class="pagebuilder-column-resize-handle"
-             afterRender="bindResizeHandle"
-             data-bind="visible: $index() < $parent.parentContentType.children().length - 1"></div>
-        <div class="pagebuilder-resizing" css="{active: resizing}"></div>
+         ko-style="getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight'])"
+         css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})">
         <render args="getOptions().template"></render>
         <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
             <if args="$parent.isContainer()">
@@ -32,6 +28,10 @@
             <div class="pagebuilder-drop-indicator"></div>
         </div>
     </div>
+    <div class="pagebuilder-column-resize-handle"
+         afterRender="bindResizeHandle"
+         data-bind="visible: $index() < $parent.parentContentType.children().length - 1"></div>
+    <div class="pagebuilder-resizing" css="{active: resizing}"></div>
     <div class="pagebuilder-display-label"
          text="displayLabel().toUpperCase()"/>
 </div>
