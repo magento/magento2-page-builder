@@ -228,27 +228,36 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
     var rootContentTypeConfig = _config.getContentTypeConfig(stageConfig.root_content_type);
 
-    var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
+    var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type); // @ts-ignore
 
-    if (rootContentTypeConfig) {
-      return (0, _contentTypeFactory)(rootContentTypeConfig, rootContainer, stage.id).then(function (rootContentType) {
+
+    var promise = Promise.resolve();
+
+    if (stageConfig.root_content_type && stageConfig.root_content_type !== "none") {
+      promise = (0, _contentTypeFactory)(rootContentTypeConfig, rootContainer, stage.id);
+      promise.then(function (rootContentType) {
         if (!rootContentType) {
           return Promise.reject("Unable to create initial " + stageConfig.root_content_type + " content type " + " within stage.");
         }
 
         rootContainer.addChild(rootContentType);
-
-        if (htmlDisplayContentTypeConfig && initialValue) {
-          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, rootContainer, stage.id, {
-            html: initialValue
-          }).then(function (text) {
-            rootContentType.addChild(text);
-          });
-        }
       });
     }
 
-    return Promise.resolve();
+    promise.then(function (rootContentType) {
+      if (htmlDisplayContentTypeConfig && initialValue) {
+        return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, rootContainer, stage.id, {
+          html: initialValue
+        }).then(function (html) {
+          if (rootContentType) {
+            rootContentType.addChild(html);
+          } else {
+            rootContainer.addChild(html);
+          }
+        });
+      }
+    });
+    return promise;
   }
   /**
    * Build a stage with the provided content type, content observable and initial value

@@ -171,7 +171,12 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
 
           _knockout.cleanNode(element);
 
-          (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCss(styleRegistry)));
+          var styles = generateMasterCss(styleRegistry);
+
+          if (styles) {
+            (0, _jquery)(element).append((0, _jquery)("<style/>").html(styles));
+          }
+
           (0, _styleRegistry.deleteStyleRegistry)(renderId);
           var filtered = (0, _filterHtml)((0, _jquery)(element));
           var output = (0, _directives.replaceWithSrc)((0, _directives)(filtered.html()));

@@ -164,9 +164,10 @@ function render(message: {stageId: string, tree: TreeItem}, renderId: string) {
             $.when(engine.waitForFinishRender(), renderFinished).then(() => {
                 observer.disconnect();
                 ko.cleanNode(element);
-                $(element).append(
-                    $("<style />").html(generateMasterCss(styleRegistry)),
-                );
+                const styles = generateMasterCss(styleRegistry);
+                if (styles) {
+                    $(element).append($("<style/>").html(styles));
+                }
                 deleteStyleRegistry(renderId);
                 const filtered: JQuery = filterHtml($(element));
                 const output = replaceWithSrc(decodeAllDataUrlsInString(filtered.html()));

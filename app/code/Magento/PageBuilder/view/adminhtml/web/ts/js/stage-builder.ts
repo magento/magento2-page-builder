@@ -236,32 +236,39 @@ function buildEmpty(stage: Stage, initialValue: string) {
     const rootContainer = stage.rootContainer;
     const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
+    // @ts-ignore
+    let promise = Promise.resolve() as Promise<ContentTypeInterface | ContentTypeCollectionInterface>;
 
-    if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, rootContainer, stage.id)
-            .then((rootContentType: ContentTypeCollectionInterface) => {
-                if (!rootContentType) {
-                    return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +
-                        ` within stage.`);
-                }
-                rootContainer.addChild(rootContentType);
-
-                if (htmlDisplayContentTypeConfig && initialValue) {
-                    return createContentType(
-                        htmlDisplayContentTypeConfig,
-                        rootContainer,
-                        stage.id,
-                        {
-                            html: initialValue,
-                        },
-                    ).then((text: ContentTypeInterface) => {
-                        rootContentType.addChild(text);
-                    });
+    if (stageConfig.root_content_type && stageConfig.root_content_type !== "none") {
+        promise = createContentType(rootContentTypeConfig, rootContainer, stage.id);
+        promise.then((rootContentType: ContentTypeCollectionInterface) => {
+            if (!rootContentType) {
+                return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +
+                    ` within stage.`);
+            }
+            rootContainer.addChild(rootContentType);
+        });
+    }
+    promise.then((rootContentType: ContentTypeCollectionInterface) => {
+        if (htmlDisplayContentTypeConfig && initialValue) {
+            return createContentType(
+                htmlDisplayContentTypeConfig,
+                rootContainer,
+                stage.id,
+                {
+                    html: initialValue,
+                },
+            ).then((html: ContentTypeInterface) => {
+                if (rootContentType) {
+                    rootContentType.addChild(html);
+                } else {
+                    rootContainer.addChild(html)
                 }
             });
-    }
+        }
+    });
 
-    return Promise.resolve();
+    return promise;
 }
 
 /**
