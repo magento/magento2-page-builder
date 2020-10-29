@@ -18,8 +18,8 @@
         <waitForElementVisible selector="{{section.affordance(index)}}" stepKey="waitForAffordanceVisible"/>
         <executeJS function="return parseInt(window.getComputedStyle({{section.affordanceJS(index)}}).borderWidth, 10)" stepKey="actualAffordanceSize"/>
         <assertEquals stepKey="assertActualAffordanceSizeEqualsExpected">
-            <expectedResult type="int">{{affordanceSize}}</expectedResult>
-            <actualResult type="variable">executeJS</actualResult>
+            <expectedResult type="int">{{expectedAffordanceSize}}</expectedResult>
+            <actualResult type="variable">actualAffordanceSize</actualResult>
         </assertEquals>
     </actionGroup>
 </actionGroups>
