@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateAdvancedConfigurationWithBorderColorActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+        <annotations>
+            <description value="Validates Advanced configuration without Alignment and Css classes"/>
+        </annotations>
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="defaultAlignment" defaultValue="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+        </arguments>
+        <assertEquals stepKey="assertAlignment">
+            <expectedResult type="string">{{defaultAlignment.value}}</expectedResult>
+            <actualResult type="variable">grabAlignmentValue</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+    </actionGroup>
+</actionGroups>

@@ -11,7 +11,8 @@ define([
 
     return function (config, element) {
         var $element = $(element),
-            parallaxSpeed = null;
+            parallaxSpeed = null,
+            elementStyle = null;
 
         if ($element.data('appearance') === 'contained') {
             $element = $(element).find('[data-element="inner"]');
@@ -31,11 +32,12 @@ define([
         $element.attr('data-jarallax', '');
 
         parallaxSpeed = parseFloat($element.data('parallaxSpeed'));
+        elementStyle = window.getComputedStyle($element[0]);
 
         window.jarallax($element[0], {
-            imgPosition: $element[0].style.backgroundPosition || '50% 50%',
-            imgRepeat: $element[0].style.backgroundRepeat || 'no-repeat',
-            imgSize: $element[0].style.backgroundSize || 'cover',
+            imgPosition: elementStyle.backgroundPosition || '50% 50%',
+            imgRepeat: elementStyle.backgroundRepeat || 'no-repeat',
+            imgSize: elementStyle.backgroundSize || 'cover',
             speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
         });
     };

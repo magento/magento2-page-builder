@@ -59,9 +59,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{DividerOnStage.base('1')}}" stepKey="waitForElementVisible"/>
-        <waitForElementVisible selector="{{DividerOnStage.noColor('1')}}" stepKey="waitForColorVisible"/>
-        <waitForElementVisible selector="{{DividerOnStage.noThickness('1')}}" stepKey="waitForThicknessVisible"/>
-        <waitForElementVisible selector="{{DividerOnStage.noWidth('1')}}" stepKey="waitForWidthVisible"/>
+        <actionGroup ref="ValidateDividerGeneralAttributesActionGroup" stepKey="waitForElementVisible">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="lineColor" value="PageBuilderDividerLineColor_Empty"/>
+        </actionGroup>
+        <comment userInput="---merging to remove step---" stepKey="waitForColorVisible"/>
+        <comment userInput="---merging to remove step---" stepKey="waitForThicknessVisible"/>
+        <comment userInput="---merging to remove step---" stepKey="waitForWidthVisible"/>
     </test>
 </tests>

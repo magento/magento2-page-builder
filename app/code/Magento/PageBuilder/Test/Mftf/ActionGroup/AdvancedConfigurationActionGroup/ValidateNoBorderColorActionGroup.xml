@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateNoBorderColorActionGroup">
+        <annotations>
+            <description>Validates that Border Color is the same as Color - No border color has been set on Content Type</description>
+        </annotations>
+        <arguments>
+            <argument name="selector" type="string"/>
+        </arguments>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{selector}}', document.body).iterateNext()).borderColor" stepKey="grabBorderColorValue"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{selector}}', document.body).iterateNext()).color" stepKey="grabColorValue"/>
+        <assertEquals stepKey="noBorderColorValueVisible">
+            <expectedResult type="variable">grabBorderColorValue</expectedResult>
+            <actualResult type="variable">grabColorValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>
