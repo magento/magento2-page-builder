@@ -7,15 +7,27 @@
 //  Default appearance styles
 //  _____________________________________________
 
-.pagebuilder-content-type.pagebuilder-affordance-column {
+.pagebuilder-content-type.children-min-height.pagebuilder-column {
     display: flex;
     margin-right: 1px;
 
-    > .pagebuilder-column > .element-children {
+    .pagebuilder-column-inner > .element-children {
         flex: 1;
         max-width: 100%;
         min-height: initial;
         padding: 0;
+    }
+}
+
+.pagebuilder-column-inner {
+    width: 100%;
+}
+
+.pagebuilder-content-type.pagebuilder-column {
+    min-height: inherit;
+
+    &.empty-container {
+        min-height: 300px;
     }
 
     .pagebuilder-column-resize-handle {
@@ -67,15 +79,6 @@
             border: 1px solid @text-color;
         }
     }
-}
-
-.pagebuilder-content-type.pagebuilder-column {
-    min-height: inherit;
-    width: 100%;
-
-    &.empty-container {
-        min-height: 300px;
-    }
 
     &.active {
         opacity: .5;
@@ -85,9 +88,9 @@
 }
 
 .pagebuilder-content-type-hidden .pagebuilder-column-resize-handle,
-.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-affordance-column .pagebuilder-column-resize-handle {
+.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-column .pagebuilder-column-resize-handle {
     display: none;
 }
-.pagebuilder-stage .pagebuilder-column-group.resizing .pagebuilder-content-type.pagebuilder-affordance-column .pagebuilder-column-resize-handle {
+.pagebuilder-stage .pagebuilder-column-group.resizing .pagebuilder-content-type.pagebuilder-column .pagebuilder-column-resize-handle {
     display: block;
 }

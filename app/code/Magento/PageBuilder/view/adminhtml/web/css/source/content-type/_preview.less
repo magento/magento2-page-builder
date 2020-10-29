@@ -36,6 +36,10 @@
 
     &.type-container {
         box-shadow: 0 0 0 1px rgba(153, 153, 153, .3);
+
+        &.pagebuilder-content-type-affordance {
+            box-shadow: @pagebuilder-affordance-box-shadow;
+        }
     }
 
     .pagebuilder-empty-container {
@@ -192,12 +196,11 @@
     box-shadow: @pagebuilder-affordance-box-shadow; // #ebebeb
     padding: 0;
 
-    &:before {
+    &:not(.pagebuilder-column):before {
         display: none;
     }
 
-    > .pagebuilder-content-type.type-container.pagebuilder-row,
-    > .pagebuilder-content-type.type-container.pagebuilder-column {
+    > .pagebuilder-content-type.type-container.pagebuilder-row {
         box-shadow: none;
     }
 
