@@ -12,6 +12,7 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="gridSize" defaultValue="12" type="string"/>
         </arguments>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusColumnOptions"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible"/>
         <click selector="{{ColumnOnBackend.gridSizeButton(index)}}" stepKey="clickGridSizeButton"/>
         <waitForPageLoad stepKey="waitForAnimation"/>
