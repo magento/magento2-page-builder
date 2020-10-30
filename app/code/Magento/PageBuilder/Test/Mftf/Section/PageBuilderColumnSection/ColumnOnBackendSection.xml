@@ -9,9 +9,9 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ColumnOnBackend">
         <element name="base" type="button" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
-        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=column]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('.pagebuilder-column-inner')[{{arg1}} - 1]" parameterized="true"/>
         <element name="baseCSS" type="text" selector="[data-content-type=column][data-element=main]"/>
-        <element name="elementChildren" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]/div[contains(@class,&quot;element-children&quot;)]" parameterized="true"/>
+        <element name="elementChildren" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]/div[contains(@class,&quot;pagebuilder-column-inner&quot;)]/div[contains(@class,&quot;element-children&quot;)]" parameterized="true"/>
         <element name="columnConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="columnChildrenConfigurationPath" type="text" selector="(//div[contains(@class, &quot;pagebuilder-column-group&quot;)])[{{arg1}}]/descendant::div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-column&quot;)][{{arg2}}]//div[contains(@class, &quot;element-children&quot;)]" parameterized="true"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>

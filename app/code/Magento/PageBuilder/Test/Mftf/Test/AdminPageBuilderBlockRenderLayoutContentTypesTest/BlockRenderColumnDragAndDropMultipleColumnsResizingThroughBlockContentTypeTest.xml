@@ -64,10 +64,10 @@
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="findAfterLabelColumn2CMSBlockStage"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('3','4/12')}}" stepKey="findAfterLabelColumn3CMSBlockStage"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('4','6/12')}}" stepKey="findAfterLabelColumn4CMSBlockStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthCMSBlockStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthCMSBlockStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthCMSBlockStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnFourWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').offsetWidth" stepKey="columnThreeWidthCMSBlockStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').offsetWidth" stepKey="columnFourWidthCMSBlockStage"/>
         <executeJS function="return Math.round({$columnTwoWidthCMSBlockStage}/{$columnOneWidthCMSBlockStage})" stepKey="columnRatioCMSBlockStage"/>
         <assertEquals stepKey="assertRatioIsCorrectCMSBlockStage">
             <expectedResult type="int">1</expectedResult>
@@ -112,10 +112,10 @@
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsCMSPageStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthCMSPageStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthCMSPageStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthCMSPageStage"/>
-        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').offsetWidth" stepKey="columnOneWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').offsetWidth" stepKey="columnThreeWidthCMSPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').offsetWidth" stepKey="columnFourWidthCMSPageStage"/>
         <executeJS function="return Math.round({$columnTwoWidthCMSPageStage}/{$columnOneWidthCMSPageStage})" stepKey="columnRatioCMSPageStage"/>
         <assertEquals stepKey="assertRatioIsCorrectCMSPageStage">
             <expectedResult type="int">1</expectedResult>

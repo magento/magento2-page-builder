@@ -13,12 +13,13 @@
             <argument name="columnIndex" defaultValue="1" type="string"/>
             <argument name="columnGroupIndex" defaultValue="1" type="string"/>
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
+            <argument name="affordanceValue" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="validateColumnAppearanceFullHeight" stepKey="comment"/>
         <waitForElementVisible selector="{{section.columnGroup(columnGroupIndex)}}" stepKey="waitForColumnGroup"/>
         <waitForElementVisible selector="{{section.base(columnIndex)}}" stepKey="waitForColumn"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_FullHeight.value)}}" stepKey="seeColumnAppearance"/>
-        <executeJS function="return document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].clientHeight" stepKey="columnGroupHeight"/>
+        <executeJS function="return document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].clientHeight - {{affordanceValue}}" stepKey="columnGroupHeight"/>
         <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight" stepKey="individualColumnHeight"/>
         <executeJS function="return Math.round(Math.abs({$columnGroupHeight}-{$individualColumnHeight}))" stepKey="heightDifference"/>
         <assertLessThan stepKey="assertColumnHeightEqualToColumnGroupHeight">
