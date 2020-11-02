@@ -64,7 +64,6 @@ define([
     return function (config, element) {
         var $element = $(element),
             $carouselElement = $($element.children()),
-            stageId = $($element).parents('[data-role="pagebuilder-stage"]').attr('id'),
             currentViewport = config.currentViewport,
             currentBreakpoint = config.breakpoints[currentViewport],
             slickConfig = {
@@ -97,7 +96,7 @@ define([
             }
         });
 
-        events.on('stage:' + stageId + ':viewportChangeAfter', function (args) {
+        events.on('stage:viewportChangeAfter', function (args) {
             var breakpoint = config.breakpoints[args.viewport];
 
             initSlider($element, slickConfig, breakpoint);

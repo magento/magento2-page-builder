@@ -267,6 +267,10 @@ export default class PageBuilder implements PageBuilderInterface {
             viewport,
             previousViewport,
         });
+        events.trigger(`stage:viewportChangeAfter`, {
+            viewport,
+            previousViewport,
+        });
     }
 
     /**

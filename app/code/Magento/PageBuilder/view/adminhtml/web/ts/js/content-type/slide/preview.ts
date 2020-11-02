@@ -101,18 +101,7 @@ export default class Preview extends BasePreview {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
-            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.wrapper.getAttribute("style") ||
-                this.wrapper.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = this.getBackgroundImage();
             jarallax(this.wrapper, "destroy");
-            this.wrapper.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" &&
-                this.wrapper.style.backgroundImage !== backgroundImage &&
-                backgroundImage !== "none"
-            ) {
-                this.wrapper.style.backgroundImage = backgroundImage;
-            }
         } catch (e) {
             // Failure of destroying is acceptable
         }
