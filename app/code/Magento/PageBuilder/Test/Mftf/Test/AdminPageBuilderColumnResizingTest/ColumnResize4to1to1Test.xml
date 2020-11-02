@@ -69,9 +69,9 @@
         <comment userInput="Verify Column Number and Size" stepKey="context3"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns"/>
         <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').offsetWidth" stepKey="columnThreeWidth"/>
         <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
         <assertEquals stepKey="assertRatioIsCorrect">
             <expectedResult type="int">4</expectedResult>
@@ -89,9 +89,9 @@
         <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns2"/>
         <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers2"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').offsetWidth" stepKey="columnThreeWidth2"/>
         <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio3"/>
         <assertEquals stepKey="assertRatioIsCorrect3">
             <expectedResult type="int">4</expectedResult>

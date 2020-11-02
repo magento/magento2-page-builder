@@ -14,12 +14,13 @@
             <argument name="columnIndex" defaultValue="1" type="string"/>
             <argument name="columnGroupIndex" defaultValue="1" type="string"/>
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
+            <argument name="affordanceValue" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="validateColumnAppearanceTopAligned" stepKey="comment"/>
         <waitForElementVisible selector="{{section.columnGroup(columnGroupIndex)}}" stepKey="waitForColumnGroup"/>
         <waitForElementVisible selector="{{section.base(columnIndex)}}" stepKey="waitForColumn"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Top.value)}}" stepKey="seeColumnAppearance"/>
-        <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight" stepKey="individualColumnHeight"/>
+        <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight + {{affordanceValue}}" stepKey="individualColumnHeight"/>
         <executeJS function="return Math.round(Math.abs({$individualColumnHeight}-{{height.value}}))" stepKey="heightDifference"/>
         <!-- Validate height of column -->
         <assertLessThanOrEqual stepKey="assertContentHeightAcceptable">
