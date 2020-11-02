@@ -111,10 +111,11 @@
         <dontSeeElementInDOM selector="{{RowOnStage.affordanceCSS}}" stepKey="dontSeeAffordanceInDOM"/>
         <executeJS function="return window.innerWidth;" stepKey="viewportWidth"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearanceContainedCSS}}" stepKey="waitForRowContainedVisible"/>
-        <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceContainedCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowContainedSize"/>
+        <executeJS function="return (parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceContainedCSS}}').getBoundingClientRect().width, 10) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;))" stepKey="actualRowContainedSize"/>
+        <executeJS function="return (1280 - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;))" stepKey="calculatedRowContainedSize"/>
         <assertEquals stepKey="assertRowContainedEqualsExpected">
             <expectedResult type="variable">actualRowContainedSize</expectedResult>
-            <actualResult type="variable">actualRowContainedSize</actualResult>
+            <actualResult type="variable">calculatedRowContainedSize</actualResult>
         </assertEquals>
         <waitForElementVisible selector="{{RowOnStorefront.appearanceFullWidthCSS}}" stepKey="waitForRowFullWidthVisible"/>
         <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceFullWidthCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowFullWidthSize"/>
