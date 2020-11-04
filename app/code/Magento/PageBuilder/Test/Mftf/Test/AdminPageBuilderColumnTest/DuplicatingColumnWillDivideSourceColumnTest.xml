@@ -49,9 +49,9 @@
         <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <!-- Check all columns have the same width -->
         <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').offsetWidth" stepKey="columnThreeWidth"/>
         <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
         <assertEquals stepKey="assertRatioIsCorrect">
             <expectedResult type="int">1</expectedResult>
@@ -70,8 +70,8 @@
         </actionGroup>
         <!-- Assert original 1st and 3rd column are unaffected -->
         <comment userInput="Assert duplication was successful" stepKey="commentAssertDuplicateSuccess"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthAfterDuplicate"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidthAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').offsetWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
         <assertEquals stepKey="assertColumnOneWidthUnaffected">
             <expectedResult type="variable">columnOneWidth</expectedResult>
             <actualResult type="variable">columnOneWidthAfterDuplicate</actualResult>
@@ -82,8 +82,8 @@
         </assertEquals>
         <!-- Assert source and duplicated column are the same width -->
         <comment userInput="Assert source and duplicate column as same width" stepKey="commentAssertDuplicateAndSourceWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoAfterDuplicate"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').offsetWidth" stepKey="columnThreeAfterDuplicate"/>
         <executeJS function="return Math.round({$columnTwoAfterDuplicate}/{$columnThreeAfterDuplicate})" stepKey="columnAfterDuplicateRatio"/>
         <assertEquals stepKey="assertDuplicatedRatioIsCorrect">
             <expectedResult type="int">1</expectedResult>
