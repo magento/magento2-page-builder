@@ -91,8 +91,10 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForSlideContentLoad"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
-        <waitForElementNotVisible selector="{{SlideOnBackend.base('2')}}" stepKey="dontSeeNextSlideAfterSave"/>
+        <dontSeeElement selector="{{SliderOnStage.activeSlideNavigationDotWithParams('1', '2')}}" stepKey="dontSeeSecondSlideActiveDot"/>
+        <dontSeeElement selector="{{SlideOnBackend.base('2')}}" stepKey="dontSeeSecondSlideAfterSave"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide1AfterSave"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave"/>
