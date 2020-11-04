@@ -70,7 +70,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage1">
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage1">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
             <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
@@ -92,7 +92,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollBanner1Stage"/>
-        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage2">
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
             <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
@@ -130,7 +130,7 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStorefront">
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
             <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
