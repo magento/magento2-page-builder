@@ -213,10 +213,10 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{RowOnStage.affordanceCSS}}" stepKey="dontSeeRowAffordanceInDOM"/>
         <dontSeeElementInDOM selector="{{ColumnOnBackend.affordanceCSS}}" stepKey="dontSeeColumnAffordanceInDOM"/>
-        <executeJS function="return window.innerWidth;" stepKey="viewportWidth"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('body')).width.replace(&quot;px&quot;, &quot;&quot;)" stepKey="viewportWidth"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearanceContainedCSS}}" stepKey="waitForRowContainedVisible"/>
         <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceContainedCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowContainedSize"/>
-        <executeJS function="return (window.innerWidth - window.getComputedStyle(document.querySelector('{{RowOnStorefront.baseCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.baseCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;))" stepKey="calculatedRowContainedSize"/>
+        <executeJS function="return ({$viewportWidth} - window.getComputedStyle(document.querySelector('{{RowOnStorefront.baseCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.baseCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;))" stepKey="calculatedRowContainedSize"/>
         <assertEquals stepKey="assertRowContainedEqualsExpected">
             <expectedResult type="variable">calculatedRowContainedSize</expectedResult>
             <actualResult type="variable">actualRowContainedSize</actualResult>
