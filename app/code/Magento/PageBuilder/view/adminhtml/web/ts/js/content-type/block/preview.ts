@@ -235,7 +235,7 @@ export default class Preview extends BasePreview {
 
         if (elements.length && styleBlock.innerText.length) {
             document.body.append(styleBlock);
-            content = document.body.innerHTML;
+            content = document.head.innerHTML + document.body.innerHTML;
         }
 
         return content;

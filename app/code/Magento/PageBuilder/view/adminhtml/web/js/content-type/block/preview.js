@@ -241,7 +241,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
       if (elements.length && styleBlock.innerText.length) {
         document.body.append(styleBlock);
-        content = document.body.innerHTML;
+        content = document.head.innerHTML + document.body.innerHTML;
       }
 
       return content;

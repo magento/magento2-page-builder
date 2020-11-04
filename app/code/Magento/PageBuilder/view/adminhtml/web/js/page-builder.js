@@ -266,6 +266,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         viewport: viewport,
         previousViewport: previousViewport
       });
+
+      _events.trigger("stage:viewportChangeAfter", {
+        viewport: viewport,
+        previousViewport: previousViewport
+      });
     }
     /**
      * Preload all templates into the window to reduce calls later in the app
