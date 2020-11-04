@@ -8,7 +8,7 @@ import mageUtils from "mageUtils";
 import _ from "underscore";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
-import ContentTypeConfigInterface from "./content-type-config.types";
+import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";
 import ContentTypeInterface from "./content-type.types";
 import Master from "./content-type/master";
 import Preview from "./content-type/preview";
@@ -63,21 +63,40 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
     }
 
     /**
-     * Get viewport fields keys.
+     * Get viewport fields.
      *
      * @param {string} viewport
      * @param {DataObject} data
      */
-    public getViewportFields(viewport: string, data: DataObject): string[] {
+    public getViewportFields(viewport: string, data: DataObject): ConfigFieldInterface {
         const viewportConfig = this.config.breakpoints[viewport];
 
         if (!viewportConfig) {
-            return [];
+            return {};
         }
-        const appearance = data.appearance + "-appearance";
-        const fields = viewportConfig.fields[appearance] || viewportConfig.fields.default;
+        return viewportConfig.fields[data.appearance + "-appearance"] || viewportConfig.fields.default;
+    }
 
-        return _.keys(fields);
+    /**
+     * Get viewport fields that is different from default.
+     *
+     * @param {string} viewport
+     * @param {DataObject} data
+     */
+    public getDiffViewportFields(viewport: string, data: DataObject): ConfigFieldInterface {
+        const fields = this.getViewportFields(viewport, data);
+        const defaultData = this.dataStores[Config.getConfig("defaultViewport")].getState();
+        const excludedFields: string[] = [];
+
+        _.each(fields, (field, key) => {
+            const comparison = mageUtils.compare(data[key], defaultData[key]);
+            const isEmpty = !_.find(comparison.changes, (change) => !_.isEmpty(change.oldValue));
+            if (comparison.equal || isEmpty) {
+                excludedFields.push(key);
+            }
+        });
+
+        return _.omit(fields, excludedFields);
     }
 
     protected bindEvents() {
@@ -89,12 +108,24 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
                 const defaultViewport = Config.getConfig("defaultViewport");
                 const viewport = Config.getConfig("viewport") || defaultViewport;
 
-                this.dataStores[viewport].setState(state);
-
                 if (viewport !== defaultViewport) {
-                    const viewportFields = this.getViewportFields(viewport, state);
-                    this.dataStores[defaultViewport].setState(_.omit(state, viewportFields));
+                    const viewportFields = _.keys(this.getDiffViewportFields(viewport, state));
+                    this.dataStores[defaultViewport].setState(
+                        _.extend(
+                            this.dataStores[defaultViewport].getState(),
+                            _.omit(state, viewportFields),
+                        ),
+                    );
+                    this.dataStores[viewport].setState(
+                        _.extend(
+                            this.dataStores[viewport].getState(),
+                            _.pick(state, viewportFields),
+                        ),
+                    );
+                } else {
+                    this.dataStores[viewport].setState(state);
                 }
+
                 return events.trigger(
                     eventName,
                     paramObj,
@@ -119,10 +150,11 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
         const defaultViewport = Config.getConfig("defaultViewport");
         const currentViewportState = this.dataStores[args.viewport].getState();
         const defaultViewportState = this.dataStores[defaultViewport].getState();
-        const viewportFields = this.getViewportFields(args.viewport, currentViewportState);
+        const viewportFields = _.keys(this.getDiffViewportFields(args.viewport, currentViewportState));
 
         // Filter viewport specific data for states
         this.dataStore.setState(_.extend(
+            {},
             defaultViewportState,
             _.pick(currentViewportState, viewportFields),
         ));

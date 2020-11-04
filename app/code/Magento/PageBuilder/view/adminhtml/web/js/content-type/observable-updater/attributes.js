@@ -1,12 +1,5 @@
 /*eslint-disable */
 /* jscs:disable */
-
-function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } it = o[Symbol.iterator](); return it.next.bind(it); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object"], function (_underscore, _config, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -25,8 +18,17 @@ define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/u
   function generate(elementName, config, data, converterResolver, converterPool) {
     var attributeData = {};
 
-    var _loop = function _loop() {
-      var attributeConfig = _step.value;
+    var _loop2 = function _loop2() {
+      if (_isArray) {
+        if (_i >= _iterator.length) return "break";
+        _ref = _iterator[_i++];
+      } else {
+        _i = _iterator.next();
+        if (_i.done) return "break";
+        _ref = _i.value;
+      }
+
+      var attributeConfig = _ref;
 
       if ("read" === attributeConfig.persistence_mode) {
         return "continue";
@@ -61,10 +63,18 @@ define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/u
       }
     };
 
-    for (var _iterator = _createForOfIteratorHelperLoose(config.attributes), _step; !(_step = _iterator()).done;) {
-      var _ret = _loop();
+    _loop: for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      var _ref;
 
-      if (_ret === "continue") continue;
+      var _ret = _loop2();
+
+      switch (_ret) {
+        case "break":
+          break _loop;
+
+        case "continue":
+          continue;
+      }
     }
 
     attributeData["data-element"] = elementName;

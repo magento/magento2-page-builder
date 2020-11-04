@@ -4,7 +4,9 @@
  */
 
 import events from "Magento_PageBuilder/js/events";
+import utils from "mageUtils";
 import _ from "underscore";
+import Config from "../config";
 import ContentTypeInterface from "../content-type.types";
 import DataStore, {DataObject} from "../data-store";
 
@@ -20,6 +22,22 @@ export default class Edit {
         this.instance = instance;
         this.dataStore = dataStore;
         events.on("form:" + this.instance.id + ":saveAfter", (data: DataObject) => {
+            const viewport = Config.getConfig("viewport");
+            const defaultViewport = Config.getConfig("defaultViewport");
+            // set value to dataStore from default viewport if it is empty
+            if (defaultViewport !== viewport) {
+                _.each(this.instance.getViewportFields(viewport, data), (value, key) => {
+                    const isEmpty = !_.find(
+                        utils.compare(data[key], this.instance.dataStores[defaultViewport].get(key)).changes,
+                        (change) => !_.isEmpty(change.oldValue),
+                    );
+                    if (isEmpty) {
+                        this.instance.dataStores[viewport].set(key, data[key]);
+                        data[key] = this.instance.dataStores[defaultViewport].get(key);
+                    }
+                });
+
+            }
             this.dataStore.setState(this.filterData(data));
         });
     }
@@ -29,6 +47,16 @@ export default class Edit {
      */
     public open(): void {
         const contentTypeData = this.dataStore.getState();
+        const viewport = Config.getConfig("viewport");
+        const defaultViewport = Config.getConfig("defaultViewport");
+        // set empty value if it the same in default viewport
+        if (defaultViewport !== viewport) {
+            _.each(this.instance.getViewportFields(viewport, contentTypeData), (value, key) => {
+                if (utils.compare(contentTypeData[key], this.instance.dataStores.desktop.get(key)).equal) {
+                    contentTypeData[key] = undefined;
+                }
+            });
+        }
         events.trigger("contentType:editBefore", { contentType: this.instance } );
         events.trigger("form:renderAfter", {
             data: contentTypeData,

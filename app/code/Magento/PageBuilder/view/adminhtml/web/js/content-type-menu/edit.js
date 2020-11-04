@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _underscore) {
+define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config"], function (_events, _mageUtils, _underscore, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -21,6 +21,25 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       this.dataStore = dataStore;
 
       _events.on("form:" + this.instance.id + ":saveAfter", function (data) {
+        var viewport = _config.getConfig("viewport");
+
+        var defaultViewport = _config.getConfig("defaultViewport"); // set value to dataStore from default viewport if it is empty
+
+
+        if (defaultViewport !== viewport) {
+          _underscore.each(_this.instance.getViewportFields(viewport, data), function (value, key) {
+            var isEmpty = !_underscore.find(_mageUtils.compare(data[key], _this.instance.dataStores[defaultViewport].get(key)).changes, function (change) {
+              return !_underscore.isEmpty(change.oldValue);
+            });
+
+            if (isEmpty) {
+              _this.instance.dataStores[viewport].set(key, data[key]);
+
+              data[key] = _this.instance.dataStores[defaultViewport].get(key);
+            }
+          });
+        }
+
         _this.dataStore.setState(_this.filterData(data));
       });
     }
@@ -32,7 +51,22 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
     var _proto = Edit.prototype;
 
     _proto.open = function open() {
+      var _this2 = this;
+
       var contentTypeData = this.dataStore.getState();
+
+      var viewport = _config.getConfig("viewport");
+
+      var defaultViewport = _config.getConfig("defaultViewport"); // set empty value if it the same in default viewport
+
+
+      if (defaultViewport !== viewport) {
+        _underscore.each(this.instance.getViewportFields(viewport, contentTypeData), function (value, key) {
+          if (_mageUtils.compare(contentTypeData[key], _this2.instance.dataStores.desktop.get(key)).equal) {
+            contentTypeData[key] = undefined;
+          }
+        });
+      }
 
       _events.trigger("contentType:editBefore", {
         contentType: this.instance

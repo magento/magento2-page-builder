@@ -47,7 +47,7 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
       _events.trigger(this.config.name + ":removeAfter", params);
     }
     /**
-     * Get viewport fields keys.
+     * Get viewport fields.
      *
      * @param {string} viewport
      * @param {DataObject} data
@@ -58,12 +58,39 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
       var viewportConfig = this.config.breakpoints[viewport];
 
       if (!viewportConfig) {
-        return [];
+        return {};
       }
 
-      var appearance = data.appearance + "-appearance";
-      var fields = viewportConfig.fields[appearance] || viewportConfig.fields.default;
-      return _underscore.keys(fields);
+      return viewportConfig.fields[data.appearance + "-appearance"] || viewportConfig.fields.default;
+    }
+    /**
+     * Get viewport fields that is different from default.
+     *
+     * @param {string} viewport
+     * @param {DataObject} data
+     */
+    ;
+
+    _proto.getDiffViewportFields = function getDiffViewportFields(viewport, data) {
+      var fields = this.getViewportFields(viewport, data);
+
+      var defaultData = this.dataStores[_config.getConfig("defaultViewport")].getState();
+
+      var excludedFields = [];
+
+      _underscore.each(fields, function (field, key) {
+        var comparison = _mageUtils.compare(data[key], defaultData[key]);
+
+        var isEmpty = !_underscore.find(comparison.changes, function (change) {
+          return !_underscore.isEmpty(change.oldValue);
+        });
+
+        if (comparison.equal || isEmpty) {
+          excludedFields.push(key);
+        }
+      });
+
+      return _underscore.omit(fields, excludedFields);
     };
 
     _proto.bindEvents = function bindEvents() {
@@ -77,12 +104,14 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
 
         var viewport = _config.getConfig("viewport") || defaultViewport;
 
-        _this.dataStores[viewport].setState(state);
-
         if (viewport !== defaultViewport) {
-          var viewportFields = _this.getViewportFields(viewport, state);
+          var viewportFields = _underscore.keys(_this.getDiffViewportFields(viewport, state));
 
-          _this.dataStores[defaultViewport].setState(_underscore.omit(state, viewportFields));
+          _this.dataStores[defaultViewport].setState(_underscore.extend(_this.dataStores[defaultViewport].getState(), _underscore.omit(state, viewportFields)));
+
+          _this.dataStores[viewport].setState(_underscore.extend(_this.dataStores[viewport].getState(), _underscore.pick(state, viewportFields)));
+        } else {
+          _this.dataStores[viewport].setState(state);
         }
 
         return _events.trigger(eventName, paramObj);
@@ -106,9 +135,11 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
 
       var currentViewportState = this.dataStores[args.viewport].getState();
       var defaultViewportState = this.dataStores[defaultViewport].getState();
-      var viewportFields = this.getViewportFields(args.viewport, currentViewportState); // Filter viewport specific data for states
 
-      this.dataStore.setState(_underscore.extend(defaultViewportState, _underscore.pick(currentViewportState, viewportFields)));
+      var viewportFields = _underscore.keys(this.getDiffViewportFields(args.viewport, currentViewportState)); // Filter viewport specific data for states
+
+
+      this.dataStore.setState(_underscore.extend({}, defaultViewportState, _underscore.pick(currentViewportState, viewportFields)));
     }
     /**
      * Init data store for each viewport.

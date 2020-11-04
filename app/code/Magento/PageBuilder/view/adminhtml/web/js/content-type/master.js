@@ -116,7 +116,7 @@ define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/u
 
       _underscore.each(this.contentType.dataStores, function (dataStore, name) {
         if (_config.getConfig("defaultViewport") !== name) {
-          var dataStoreFields = _this2.contentType.getViewportFields(name, dataStore.getState());
+          var dataStoreFields = _underscore.keys(_this2.contentType.getDiffViewportFields(name, dataStore.getState()));
 
           result[name] = _underscore.pick(dataStore.getState(), dataStoreFields);
         } else {

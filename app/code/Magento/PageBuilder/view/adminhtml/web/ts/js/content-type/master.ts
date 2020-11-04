@@ -116,7 +116,7 @@ export default class Master {
 
         _.each(this.contentType.dataStores, (dataStore: DataStore, name: string) => {
             if (Config.getConfig("defaultViewport") !== name) {
-                const dataStoreFields = this.contentType.getViewportFields(name, dataStore.getState());
+                const dataStoreFields = _.keys(this.contentType.getDiffViewportFields(name, dataStore.getState()));
 
                 result[name] = _.pick(dataStore.getState(), dataStoreFields);
             } else {

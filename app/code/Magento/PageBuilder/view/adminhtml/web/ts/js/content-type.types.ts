@@ -4,7 +4,7 @@
  */
 
 import ContentTypeCollectionInterface from "./content-type-collection.types";
-import ContentTypeConfigInterface from "./content-type-config.types";
+import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";
 import Master from "./content-type/master";
 import Preview from "./content-type/preview";
 import DataStore, {DataObject} from "./data-store";
@@ -29,5 +29,6 @@ export default interface ContentTypeInterface<P extends Preview = Preview, M ext
     /**
      * Get viewport fields.
      */
-    getViewportFields(viewport: string, data: DataObject): string[];
+    getViewportFields(viewport: string, data: DataObject): ConfigFieldInterface;
+    getDiffViewportFields(viewport: string, data: DataObject): ConfigFieldInterface;
 }
