@@ -72,14 +72,16 @@
         <comment userInput="Assert duplication was successful" stepKey="commentAssertDuplicateSuccess"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidthAfterDuplicate"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').offsetWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
-        <assertEquals stepKey="assertColumnOneWidthUnaffected">
-            <expectedResult type="variable">columnOneWidth</expectedResult>
-            <actualResult type="variable">columnOneWidthAfterDuplicate</actualResult>
-        </assertEquals>
-        <assertEquals stepKey="assertColumnThreeWidthUnaffected">
-            <expectedResult type="variable">columnThreeWidth</expectedResult>
-            <actualResult type="variable">columnOriginalThreeWidthAfterDuplicate</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$columnOneWidth}-{$columnOneWidthAfterDuplicate})" stepKey="columnOneWidthDifference"/>
+        <assertLessThanOrEqual stepKey="assertColumnOneWidthUnaffected">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnOneWidthDifference</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return Math.abs({$columnThreeWidth}-{$columnOriginalThreeWidthAfterDuplicate})" stepKey="columnThreeWidthDifference"/>
+        <assertLessThanOrEqual stepKey="assertColumnThreeWidthUnaffected">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnThreeWidthDifference</actualResult>
+        </assertLessThanOrEqual>
         <!-- Assert source and duplicated column are the same width -->
         <comment userInput="Assert source and duplicate column as same width" stepKey="commentAssertDuplicateAndSourceWidth"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoAfterDuplicate"/>
