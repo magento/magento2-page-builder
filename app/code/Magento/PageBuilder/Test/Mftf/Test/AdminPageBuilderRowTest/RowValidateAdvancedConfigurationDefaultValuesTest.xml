@@ -34,6 +34,10 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
+        <!-- Add Min-height Value -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -57,12 +61,12 @@
             <actualResult type="variable">getCssClasses</actualResult>
         </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingProperty10"/>
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="ValidateAdvancedConfigurationWithBorderColorActionGroup" stepKey="validateStage">
@@ -72,12 +76,12 @@
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorTransparent"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateMarginStage">
             <argument name="selector" value="{{RowOnStage.affordance('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyRowDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyRowStage.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -92,12 +96,12 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateMarginStageAfterSave">
             <argument name="selector" value="{{RowOnStage.affordance('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyRowDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyRowStage.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -126,10 +130,10 @@
             <actualResult type="variable">getCssClasses2</actualResult>
         </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
-            <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingProperty10"/>
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -142,8 +146,8 @@
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyRowDefault"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
