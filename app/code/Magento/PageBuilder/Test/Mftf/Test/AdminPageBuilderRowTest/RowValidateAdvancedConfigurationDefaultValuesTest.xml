@@ -71,9 +71,14 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorTransparent"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyRowDefault"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateMarginStage">
+            <argument name="selector" value="{{RowOnStage.affordance('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyRowDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -86,9 +91,14 @@
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorTransparent"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyRowDefault"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="validateMarginStageAfterSave">
+            <argument name="selector" value="{{RowOnStage.affordance('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyRowDefault.value}}"/>
+            <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>

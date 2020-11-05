@@ -193,6 +193,40 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       if (this.element) {
         jarallax(this.element, "destroy");
       }
+    }
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyle = function getStyle(element, styleProperties) {
+      var stylesObject = element.style();
+      return styleProperties.reduce(function (obj, key) {
+        var _extends2;
+
+        return _extends({}, obj, (_extends2 = {}, _extends2[key] = stylesObject[key], _extends2));
+      }, {});
+    }
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
+      var stylesObject = element.style();
+      return Object.keys(stylesObject).filter(function (key) {
+        return !styleProperties.includes(key);
+      }).reduce(function (obj, key) {
+        var _extends3;
+
+        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
+      }, {});
     };
 
     return Preview;

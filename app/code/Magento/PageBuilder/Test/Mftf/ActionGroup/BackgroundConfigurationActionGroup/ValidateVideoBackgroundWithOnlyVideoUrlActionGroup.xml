@@ -18,10 +18,15 @@
             <argument name="lazyLoad" defaultValue="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
             <argument name="playOnlyWhenVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="defaultBackgroundColor" defaultValue="PageBuilderBackgroundColor_Default"/>
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
-        <dontSeeElementInDOM selector="{{section.backgroundColorElement(index)}}" stepKey="dontSeeBackgroundColorInDOM"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
+        <assertEquals stepKey="dontSeeBackgroundColorInDOM">
+            <expectedResult type="string">{{defaultBackgroundColor.rgb}}</expectedResult>
+            <actualResult type="variable">grabBackgroundColorValue</actualResult>
+        </assertEquals>
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
