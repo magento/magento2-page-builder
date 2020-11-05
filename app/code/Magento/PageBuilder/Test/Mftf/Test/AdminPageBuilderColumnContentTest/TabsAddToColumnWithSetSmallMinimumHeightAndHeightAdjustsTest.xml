@@ -53,7 +53,7 @@
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
-        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
+        <executeJS function="return Math.round({$actualStageInitialColumnHeight})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndColumns</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
@@ -74,7 +74,7 @@
         </assertGreaterThanOrEqual>
         <comment userInput="Validate Row Height adjusts to Tabs inside Column" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
-        <executeJS function="return Math.round({$actualStageColumnHeightWithTabs}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
+        <executeJS function="return Math.round({$actualStageColumnHeightWithTabs})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>

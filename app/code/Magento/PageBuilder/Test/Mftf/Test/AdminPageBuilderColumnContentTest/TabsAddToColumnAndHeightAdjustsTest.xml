@@ -47,7 +47,7 @@
         </assertEquals>
         <comment userInput="Validate Row Height adjusts to Tabs inside Column" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
-        <executeJS function="return Math.round({$actualStageColumnHeightWithTabs}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
+        <executeJS function="return Math.round({$actualStageColumnHeightWithTabs})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>

@@ -54,7 +54,7 @@
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
         <comment userInput="Validate Row Height adjusts to Slider Height on Stage" stepKey="commentValidateRowHeightAdjustToSlider"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
-        <executeJS function="return Math.round({$actualStageInitialSliderHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
+        <executeJS function="return Math.round({$actualStageInitialSliderHeight})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToSliderHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndSlider</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithSlider</actualResult>
