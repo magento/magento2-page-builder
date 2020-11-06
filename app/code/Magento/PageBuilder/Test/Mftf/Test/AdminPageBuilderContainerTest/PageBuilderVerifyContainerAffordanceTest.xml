@@ -204,7 +204,7 @@
         <!-- Validate Stage for CMS Page -->
         <actionGroup ref="VerifyAffordanceSizeActionGroup" stepKey="verifyAffordanceSizeActionGroup4"/>
         <seeNumberOfElements selector="{{RowOnStage.affordanceCSS}}" userInput="1" stepKey="seeNumberOfRowAffordance2"/>
-        <dontSeeElement selector="{{ColumnOnBackend.affordanceCSS}}" stepKey="dontSeeColumnAffordance"/>
+        <dontSeeElementInDOM selector="{{ColumnOnBackend.affordanceCSS}}" stepKey="dontSeeColumnAffordanceInDOM"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -212,7 +212,7 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{RowOnStage.affordanceCSS}}" stepKey="dontSeeRowAffordanceInDOM"/>
-        <dontSeeElementInDOM selector="{{ColumnOnBackend.affordanceCSS}}" stepKey="dontSeeColumnAffordanceInDOM"/>
+        <dontSeeElementInDOM selector="{{ColumnOnBackend.affordanceCSS}}" stepKey="dontSeeColumnAffordanceInDOM2"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('body')).width.replace(&quot;px&quot;, &quot;&quot;)" stepKey="viewportWidth"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearanceContainedCSS}}" stepKey="waitForRowContainedVisible"/>
         <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceContainedCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowContainedSize"/>
