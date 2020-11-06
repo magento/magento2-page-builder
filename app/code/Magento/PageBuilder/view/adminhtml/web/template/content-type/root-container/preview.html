@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-root-container children-min-height"
-     css="'empty-container': contentType.children().length == 0">
+<div class="pagebuilder-content-type type-container pagebuilder-root-container"
+     css="'empty-container': contentType.children().length == 0, 'children-min-height': contentType.children().length == 0">
     <div class="element-children content-type-container" each="contentType.getChildren()" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
         <if args="$parent.isContainer()">
             <div class="pagebuilder-drop-indicator"></div>
@@ -17,5 +17,5 @@
         </if>
     </div>
     <div class="pagebuilder-empty-container empty-placeholder empty-placeholder-background" css="visible: contentType.children().length == 0"
-         translate="'Drag content types or columns here'"/>
+         translate="'Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here'"/>
 </div>

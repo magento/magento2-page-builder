@@ -140,7 +140,7 @@
         }
 
         .pagebuilder-stage {
-            margin-left: 150px;
+            margin-left: 160px;
         }
     }
 }
@@ -317,17 +317,19 @@
                 0% {
                     background-color: transparent;
                 }
-                100% {
+                50% {
                     background-color: @color-white;
+                }
+                100% {
+                    background-color: @color-gray-middle1;
                 }
             });
             .animation(fade-in @pagebuilder-animation);
-            background-color: @color-white;
 
             &.transition-out {
                 .keyframes(fade-out; {
                     0% {
-                        background-color: @color-white;
+                        background-color: @color-gray-middle1;
                     }
                     50% {
                         background-color: @color-white;
@@ -337,13 +339,20 @@
                     }
                 });
                 .animation(fade-out @pagebuilder-animation);
+
+                .pagebuilder-stage {
+                    background-color: transparent;
+                    min-height: unset;
+                }
             }
 
             .pagebuilder-stage {
+                background-color: @color-white;
+                min-height: 100%;
                 left: 0;
                 position: relative;
                 top: 0;
-                width: calc(~'100% - 150px');
+                width: calc(~'100% - 170px');
             }
         }
     }
