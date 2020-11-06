@@ -45,6 +45,8 @@ export default class Configurable implements ReadInterface {
                 const [propertyReaderPool, converterPool, massConverterPool] = loadedComponents;
                 const viewports = Config.getConfig("viewports");
                 const data: {[key: string]: any} = {};
+
+                _.each(viewports, (viewport, name) => data[name] = {});
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
                     const currentElement = this.findElementByName(element, elementName);

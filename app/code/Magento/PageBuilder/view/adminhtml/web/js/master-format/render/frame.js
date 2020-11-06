@@ -38,12 +38,14 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
 
     _config.setConfig(config);
 
-    _config.setMode("Master");
+    _config.setMode("Master"); // Override assign with extend to prevent deep object overriding.
+
+
+    Object.assign = _mageUtils.extend;
     /**
      * Create a listener within our iframe so we can observe messages from the parent, once we receive a port on the
      * MessageChannel we utilise that for all communication.
      */
-
 
     window.addEventListener("message", function (event) {
       if (event.ports && event.ports.length) {
