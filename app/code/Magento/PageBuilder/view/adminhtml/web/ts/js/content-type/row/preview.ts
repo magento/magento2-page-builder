@@ -36,15 +36,7 @@ export default class Preview extends PreviewCollection {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
-            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.element.getAttribute("style") ||
-                this.element.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
             jarallax(this.element, "destroy");
-            this.element.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
-                this.element.style.backgroundImage = `url(${backgroundImage[0].url})`;
-            }
         } catch (e) {
             // Failure of destroying is acceptable
         }
@@ -140,6 +132,24 @@ export default class Preview extends PreviewCollection {
             `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
             this.toggleFullScreen.bind(this),
         );
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
+            this.buildJarallax();
+        });
+    }
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
     }
 
     /**
@@ -208,5 +218,36 @@ export default class Preview extends PreviewCollection {
         if (this.element) {
             jarallax(this.element, "destroy");
         }
+    }
+
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyle(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
+    }
+
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return Object.keys(stylesObject)
+            .filter((key) => !styleProperties.includes(key))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: stylesObject[key],
+                };
+            }, {});
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="VerifyAffordanceSizeActionGroup">
+        <annotations>
+            <description>Verifies the size of the affordance on Container content types.</description>
+        </annotations>
+        <arguments>
+            <argument name="expectedAffordanceSize" defaultValue="{{PageBuilderRowAffordanceWidth.borderWidth}}" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="section" defaultValue="RowOnStage"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.affordance(index)}}" stepKey="waitForAffordanceVisible"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{section.affordanceJS(index)}}).borderWidth, 10)" stepKey="actualAffordanceSize"/>
+        <assertEquals stepKey="assertActualAffordanceSizeEqualsExpected">
+            <expectedResult type="int">{{expectedAffordanceSize}}</expectedResult>
+            <actualResult type="variable">actualAffordanceSize</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>
