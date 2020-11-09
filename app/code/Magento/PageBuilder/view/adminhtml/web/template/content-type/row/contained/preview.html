@@ -8,33 +8,36 @@
 <div attr="data.main.attributes"
      ko-style="data.main.style"
      css="data.main.css">
-    <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
-         attr="data.inner.attributes"
-         ko-style="Object.assign({}, data.inner.style(), {backgroundImage: getBackgroundImage()})"
-         css="Object.assign(data.inner.css(), {
-            'empty-container': contentType.children().length == 0,
-            'jarallax': data.inner.attributes()['data-enable-parallax'] == 1 || data.inner.attributes()['data-background-type'] == 'video'
-            })"
-         event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-         afterRender="initParallax">
-        <div if="data.video_overlay.attributes()['data-video-overlay-color']"
-             class="video-overlay"
-             attr="data.video_overlay.attributes"
-             ko-style="data.video_overlay.style" />
-        <render args="getOptions().template"/>
-        <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
-            <if args="$parent.isContainer()">
-                <div class="pagebuilder-drop-indicator"></div>
-            </if>
-            <div class="pagebuilder-content-type-wrapper" template="{ name: preview.template, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }" css="{'pagebuilder-content-type-hidden': !preview.display()}"></div>
-            <if args="$parent.isContainer() && $index() === $parent.contentType.getChildren()().length - 1">
-                <div class="pagebuilder-drop-indicator"></div>
-            </if>
+    <div class="pagebuilder-affordance-row pagebuilder-content-type pagebuilder-content-type-affordance"
+         ko-style="getStyle(data.inner, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+         event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+        <div class="pagebuilder-content-type no-system-border type-container pagebuilder-row children-min-height"
+             attr="data.inner.attributes"
+             ko-style="Object.assign({}, getStyleWithout(data.inner, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight']), {backgroundImage: getBackgroundImage()})"
+             css="Object.assign(data.inner.css(), {
+                'empty-container': contentType.children().length == 0,
+                'jarallax': data.inner.attributes()['data-enable-parallax'] == 1 || data.inner.attributes()['data-background-type'] == 'video'
+                })"
+             afterRender="initParallax">
+            <div if="data.video_overlay.attributes()['data-video-overlay-color']"
+                 class="video-overlay"
+                 attr="data.video_overlay.attributes"
+                 ko-style="data.video_overlay.style" />
+            <render args="getOptions().template"/>
+            <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+                <if args="$parent.isContainer()">
+                    <div class="pagebuilder-drop-indicator"></div>
+                </if>
+                <div class="pagebuilder-content-type-wrapper" template="{ name: preview.template, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }" css="{'pagebuilder-content-type-hidden': !preview.display()}"></div>
+                <if args="$parent.isContainer() && $index() === $parent.contentType.getChildren()().length - 1">
+                    <div class="pagebuilder-drop-indicator"></div>
+                </if>
+            </div>
+            <div class="pagebuilder-empty-container empty-placeholder"
+                 css="placeholderCss()"
+                 translate="'Drag content types or columns here'"/>
         </div>
         <div class="pagebuilder-display-label"
-             text="function () { return displayLabel().toUpperCase(); }()"></div>
-        <div class="pagebuilder-empty-container empty-placeholder"
-             css="placeholderCss()"
-             translate="'Drag content types or columns here'"/>
+             text="function () { return displayLabel().toUpperCase(); }()"/>
     </div>
 </div>
