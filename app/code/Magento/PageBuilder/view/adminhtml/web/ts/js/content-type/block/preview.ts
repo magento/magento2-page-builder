@@ -8,11 +8,13 @@ import ko from "knockout";
 import $t from "mage/translate";
 import widgetInitializer from "Magento_PageBuilder/js/widget-initializer";
 import mageUtils from "mageUtils";
+import _ from "underscore";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import { pbStyleAttribute } from "../../content-type/style-registry";
 import {DataObject} from "../../data-store";
 import {get} from "../../utils/object";
 import ObservableUpdater from "../observable-updater";
@@ -169,7 +171,7 @@ export default class Preview extends BasePreview {
                 let content: string = "";
                 if (response.data.content) {
                     this.showBlockPreview(true);
-                    content = this.processBackgroundImages(response.data.content);
+                    content = this.processContent(response.data.content);
                     this.data.main.html(content);
                     this.initializeWidgets(this.element);
                 } else if (response.data.error) {
@@ -196,6 +198,19 @@ export default class Preview extends BasePreview {
      */
     private showBlockPreview(isShow: boolean) {
         this.displayingBlockPreview(isShow);
+    }
+
+    /**
+     * Adapt content to view it on stage.
+     *
+     * @param content
+     */
+    private processContent(content: string): string {
+        let processedContent = this.processBackgroundImages(content);
+
+        processedContent = this.processBreakpointStyles(processedContent);
+
+        return processedContent;
     }
 
     /**
@@ -235,6 +250,46 @@ export default class Preview extends BasePreview {
 
         if (elements.length && styleBlock.innerText.length) {
             document.body.append(styleBlock);
+            content = document.head.innerHTML + document.body.innerHTML;
+        }
+
+        return content;
+    }
+
+    /**
+     * Replace media queries with viewport classes.
+     *
+     * @param {string} content
+     * @return string
+     */
+    private processBreakpointStyles(content: string): string {
+        const document = new DOMParser().parseFromString(content, "text/html");
+        const styleBlocks = document.querySelectorAll("style");
+        const mediaStyleBlock = document.createElement("style");
+        const viewports = Config.getConfig("viewports");
+
+        styleBlocks.forEach((styleBlock: HTMLStyleElement) => {
+            const cssRules = (styleBlock.sheet as CSSStyleSheet).cssRules;
+
+            Array.from(cssRules).forEach((rule: CSSMediaRule) => {
+                const mediaScope = rule instanceof CSSMediaRule && _.findKey(viewports, (viewport: any) => {
+                    return rule.conditionText === viewport.media;
+                });
+
+                if (mediaScope) {
+                    Array.from(rule.cssRules).forEach((mediaRule: CSSStyleRule, index: number) => {
+                        if (mediaRule.selectorText.indexOf(pbStyleAttribute) !== -1) {
+                            const selector = mediaRule.selectorText.replace(" ", ` .${ mediaScope}-viewport `);
+
+                            mediaStyleBlock.append(`${ selector } {${ mediaRule.style.cssText }}`);
+                        }
+                    });
+                }
+            });
+        });
+
+        if (mediaStyleBlock.innerText.length) {
+            document.body.append(mediaStyleBlock);
             content = document.head.innerHTML + document.body.innerHTML;
         }
 
