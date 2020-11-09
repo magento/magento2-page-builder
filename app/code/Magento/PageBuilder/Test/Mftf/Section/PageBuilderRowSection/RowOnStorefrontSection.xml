@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="RowOnStorefront">
         <element name="allRows" type="text" selector="div[data-content-type='row']"/>
         <element name="base" type="text" selector="(//div[@data-content-type=&quot;row&quot;])[{{arg1}}]/div" parameterized="true"/>
@@ -24,8 +23,8 @@
         <element name="rowChildContentWidthJS" type="text" selector="document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1].querySelectorAll('[data-content-type={{arg2}}]')[{{arg3}} - 1].clientWidth" parameterized="true"/>
         <element name="appearance" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="appearanceContainedCSS" type="text" selector="[data-content-type=row][data-appearance=contained]"/>
-        <element name="appearanceFullBleedCSS" type="text" selector="[data-content-type=row][data-appearance=full-bleed]"/>
         <element name="appearanceFullWidthCSS" type="text" selector="[data-content-type=row][data-appearance=full-width]"/>
+        <element name="appearanceFullBleedCSS" type="text" selector="[data-content-type=row][data-appearance=full-bleed]"/>
         <element name="minHeight" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Background Configuration -->
