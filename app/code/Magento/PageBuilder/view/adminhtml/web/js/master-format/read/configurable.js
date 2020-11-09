@@ -40,6 +40,10 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
 
           var data = {};
 
+          _underscore.each(viewports, function (viewport, name) {
+            return data[name] = {};
+          });
+
           var _loop = function _loop() {
             var elementName = _Object$keys[_i];
             var elementConfig = config.elements[elementName];
