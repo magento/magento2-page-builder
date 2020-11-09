@@ -48,6 +48,8 @@ export default function listen(config: ConfigInterface) {
 
     Config.setConfig(config);
     Config.setMode("Master");
+    // Override assign with extend to prevent deep object overriding.
+    Object.assign = mageUtils.extend;
 
     /**
      * Create a listener within our iframe so we can observe messages from the parent, once we receive a port on the
