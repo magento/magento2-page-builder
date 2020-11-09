@@ -18,6 +18,7 @@ import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
 import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
+import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
@@ -467,8 +468,11 @@ export default class Preview extends PreviewCollection {
             this.gridSizeHistory = new Map();
             this.recordGridResize(this.gridSize());
             // inline tooltip out of bounds
+            const tooltipClientRectTop = tooltip[0].getBoundingClientRect().top
+                                     - pageBuilderHeaderHeight(this.contentType.stageId);
+
             if (checkStageFullScreen(this.contentType.stageId)
-                && 0 > tooltip[0].getBoundingClientRect().top
+                && tooltip[0].getBoundingClientRect().height > tooltipClientRectTop
             ) {
                 this.gridToolTipOverFlow(true);
             }
@@ -833,7 +837,7 @@ export default class Preview extends PreviewCollection {
             } else {
                 // If we're moving to another column group we utilise the existing drop placeholder
                 this.movePosition = this.dropPositions.find((position) => {
-                    return currentX > position.left && currentX < position.right && position.canShrink;
+                    return currentX > position.left && currentX <= position.right && position.canShrink;
                 });
 
                 if (this.movePosition) {
@@ -875,7 +879,7 @@ export default class Preview extends PreviewCollection {
 
             const currentX = event.pageX - groupPosition.left;
             this.dropPosition = this.dropPositions.find((position) => {
-                return currentX > position.left && currentX < position.right && position.canShrink;
+                return currentX > position.left && currentX <= position.right && position.canShrink;
             });
 
             if (this.dropPosition) {

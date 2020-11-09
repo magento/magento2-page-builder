@@ -1,17 +1,11 @@
 /*eslint-disable */
 /* jscs:disable */
 
-function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } it = o[Symbol.iterator](); return it.next.bind(it); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/utils/pagebuilder-header-height", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _pagebuilderHeaderHeight, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
   function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
   /**
@@ -465,7 +459,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.gridSizeHistory = new Map();
         this.recordGridResize(this.gridSize()); // inline tooltip out of bounds
 
-        if ((0, _checkStageFullScreen)(this.contentType.stageId) && 0 > tooltip[0].getBoundingClientRect().top) {
+        var tooltipClientRectTop = tooltip[0].getBoundingClientRect().top - (0, _pagebuilderHeaderHeight)(this.contentType.stageId);
+
+        if ((0, _checkStageFullScreen)(this.contentType.stageId) && tooltip[0].getBoundingClientRect().height > tooltipClientRectTop) {
           this.gridToolTipOverFlow(true);
         }
 
@@ -811,7 +807,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           // If we're moving to another column group we utilise the existing drop placeholder
           this.movePosition = this.dropPositions.find(function (position) {
-            return currentX > position.left && currentX < position.right && position.canShrink;
+            return currentX > position.left && currentX <= position.right && position.canShrink;
           });
 
           if (this.movePosition) {
@@ -848,7 +844,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         var currentX = event.pageX - groupPosition.left;
         this.dropPosition = this.dropPositions.find(function (position) {
-          return currentX > position.left && currentX < position.right && position.canShrink;
+          return currentX > position.left && currentX <= position.right && position.canShrink;
         });
 
         if (this.dropPosition) {
@@ -959,8 +955,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       for (var _i = totalChildColumns; _i > 0; _i--) {
         var potentialWidth = Math.floor(formattedAvailableWidth / _i);
 
-        for (var _iterator = _createForOfIteratorHelperLoose(allowedColumnWidths), _step; !(_step = _iterator()).done;) {
-          var width = _step.value;
+        for (var _iterator = allowedColumnWidths, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          var _ref2;
+
+          if (_isArray) {
+            if (_i2 >= _iterator.length) break;
+            _ref2 = _iterator[_i2++];
+          } else {
+            _i2 = _iterator.next();
+            if (_i2.done) break;
+            _ref2 = _i2.value;
+          }
+
+          var width = _ref2;
 
           if (potentialWidth === Math.floor(width)) {
             spreadAcross = _i;
@@ -975,15 +982,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       } // Let's spread the width across the columns
 
 
-      for (var _i2 = 1; _i2 <= spreadAcross; _i2++) {
+      for (var _i3 = 1; _i3 <= spreadAcross; _i3++) {
         var columnToModify = void 0; // As the original column has been removed from the array, check the new index for a column
 
         if (removedIndex <= this.contentType.children().length && typeof this.contentType.children()[removedIndex] !== "undefined") {
           columnToModify = this.contentType.children()[removedIndex];
         }
 
-        if (!columnToModify && removedIndex - _i2 >= 0 && typeof this.contentType.children()[removedIndex - _i2] !== "undefined") {
-          columnToModify = this.contentType.children()[removedIndex - _i2];
+        if (!columnToModify && removedIndex - _i3 >= 0 && typeof this.contentType.children()[removedIndex - _i3] !== "undefined") {
+          columnToModify = this.contentType.children()[removedIndex - _i3];
         }
 
         if (columnToModify) {

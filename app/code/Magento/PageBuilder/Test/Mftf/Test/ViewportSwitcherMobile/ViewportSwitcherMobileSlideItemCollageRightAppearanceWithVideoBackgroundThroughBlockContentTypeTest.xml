@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileSlideItemCollageRightAppearanceWithVideoBackgroundThroughBlockContentTypeTest" extends="ViewportSwitcherMobileSlideItemCollageLeftAppearanceWithVideoBackgroundThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Render Slide Item Collage Right Appearance with Video Background Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render the collage right slide content type with a video background through the Block content type in the mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageRight"/>
+            <group value="pagebuilder-video-background"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+    </test>
+</tests>

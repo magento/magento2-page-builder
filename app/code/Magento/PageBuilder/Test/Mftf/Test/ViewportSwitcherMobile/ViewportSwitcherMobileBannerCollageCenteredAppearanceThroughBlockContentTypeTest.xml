@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileBannerCollageCenteredAppearanceThroughBlockContentTypeTest" extends="ViewportSwitcherMobileBannerPosterAppearanceThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Render Banner Collage Centered Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the banner content type collage centered appearance through the Block content type in the mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCentered"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+
+        <!-- Validate CMS Block Stage Mobile Viewport -->
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <executeJS function="return Math.abs({{BannerOnBackend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSBlockStage" before="validateOverlayPositionCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSBlockStage}"/>
+        </actionGroup>
+
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStage">
+            <argument name="selector" value="{{BannerOnBackend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStageDesktop"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStageDesktop">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{BannerOnBackend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerCMSBlockStageDesktop"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageDesktop"/>
+
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStage" before="validateOverlayPositionCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStage}"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStage">
+            <argument name="selector" value="{{BannerOnFrontend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStageDesktop"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStageDesktop">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{BannerOnFrontend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageDesktop"/>
+
+        <!-- Validate CMS Page Storefront -->
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.wrapper('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+
+        <!-- Validate CMS Page Storefront Mobile -->
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+</tests>

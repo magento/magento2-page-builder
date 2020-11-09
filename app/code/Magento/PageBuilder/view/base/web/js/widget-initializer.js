@@ -21,11 +21,13 @@ define([
      * @param {HTMLElement} el
      * @param {Array} data
      * @param {Object} breakpoints
+     * @param {Object} currentViewport
      */
-    function initializeWidget(el, data, breakpoints) {
+    function initializeWidget(el, data, breakpoints, currentViewport) {
         _.each(data, function (config, component) {
             config = config || {};
             config.breakpoints = breakpoints;
+            config.currentViewport = currentViewport;
             mage.applyFor(el, config, component);
         });
     }
@@ -42,7 +44,7 @@ define([
                     }
 
                     if ($element.length) {
-                        initializeWidget($element, componentConfiguration, data.breakpoints);
+                        initializeWidget($element, componentConfiguration, data.breakpoints, data.currentViewport);
                     }
                 }
             );
