@@ -47,6 +47,7 @@ export default class Preview implements PreviewInterface {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
+    public viewport: KnockoutObservable<string> = ko.observable("");
 
     /**
      * Provide preview data as an object which can be queried
@@ -95,7 +96,7 @@ export default class Preview implements PreviewInterface {
         if (Config.getConfig("pagebuilder_content_snapshot")) {
             this.isSnapshot(!checkStageFullScreen(this.contentType.stageId));
         }
-
+        this.viewport(Config.getConfig("viewport"));
         this.bindEvents();
         this.populatePreviewData();
     }
@@ -540,6 +541,9 @@ export default class Preview implements PreviewInterface {
         }
 
         events.on(fullScreenModeChangeAfterEvent, this.toggleSnapshot.bind(this));
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
+            this.viewport(args.viewport);
+        });
     }
 
     /**

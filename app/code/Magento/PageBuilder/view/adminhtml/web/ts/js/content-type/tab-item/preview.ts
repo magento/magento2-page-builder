@@ -23,6 +23,21 @@ export default class Preview extends PreviewCollection {
     protected fieldsToIgnoreOnRemove: string[] = ["tab_name"];
 
     /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
+    }
+
+    /**
      * Force the focus on the clicked tab header
      *
      * @param {number} index
