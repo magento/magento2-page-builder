@@ -55,5 +55,21 @@
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{HeadingOnStage.base('1')}}" stepKey="dontSeeHeading"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionButtons">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStage.base('1')}}" stepKey="dontSeeButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{DividerOnStage.allDividers}}" stepKey="dontSeeDivider"/>
     </test>
 </tests>
