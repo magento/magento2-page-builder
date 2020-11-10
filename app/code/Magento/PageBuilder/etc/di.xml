@@ -26,14 +26,25 @@
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\TextInterface" type="Magento\PageBuilder\Model\Dom\Text" />
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\TokenListInterface" type="Magento\PageBuilder\Model\Dom\TokenList" />
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\XmlDocumentInterface" type="Magento\PageBuilder\Model\Dom\XmlDocument" />
+    <virtualType name="Magento\PageBuilder\Model\Cache\Type\EditorConfig" type="Magento\Framework\Cache\Frontend\Decorator\TagScope">
+        <arguments>
+            <argument name="frontend" xsi:type="object">Magento\Framework\App\Cache\Type\Config</argument>
+            <argument name="tag" xsi:type="string">PB_EDITOR_CONFIG</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\PageBuilder\Model\EditorConfigCacheCleaner">
+        <arguments>
+            <argument name="cache" xsi:type="object">Magento\PageBuilder\Model\Cache\Type\EditorConfig</argument>
+        </arguments>
+    </type>
     <type name="Magento\PageBuilder\Model\Stage\Config">
         <arguments>
-            <argument name="cache" xsi:type="object">Magento\Framework\App\Cache\Type\Config</argument>
+            <argument name="cache" xsi:type="object">Magento\PageBuilder\Model\Cache\Type\EditorConfig</argument>
         </arguments>
     </type>
     <type name="Magento\PageBuilder\Block\WysiwygSetup">
         <arguments>
-            <argument name="cache" xsi:type="object">Magento\Framework\App\Cache\Type\Config</argument>
+            <argument name="cache" xsi:type="object">Magento\PageBuilder\Model\Cache\Type\EditorConfig</argument>
         </arguments>
     </type>
     <type name="Magento\PageBuilder\Model\Stage\Config\UiComponentConfig">
