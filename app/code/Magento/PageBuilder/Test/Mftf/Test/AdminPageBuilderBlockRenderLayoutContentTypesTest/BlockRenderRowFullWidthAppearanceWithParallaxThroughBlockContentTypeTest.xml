@@ -26,11 +26,14 @@
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <!-- Validate CMS Block Stage -->
-        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateRowAppearanceCMSBlockStage">
+            <argument name="affordanceValue" value="{{PageBuilderRowAffordanceWidth.value}}"/>
+        </actionGroup>
         <!-- Validate CMS Page Stage -->
         <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSPageStage">
             <argument name="section" value="RowOnStorefront"/>
             <argument name="rowIndex" value="2"/>
+            <argument name="affordanceValue" value="{{PageBuilderRowAffordanceWidth.value}}"/>
         </actionGroup>
         <actionGroup ref="ValidateRowBackgroundConfigurationWithAllUpdatedAndParallaxEnabledActionGroup" stepKey="validateRowBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
