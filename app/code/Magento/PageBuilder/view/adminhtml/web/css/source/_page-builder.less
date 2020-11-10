@@ -67,6 +67,7 @@
     -moz-transition: .35s ease-in-out;
     -webkit-transition: .35s ease-in-out;
     background: @color-white;
+    height: 100%;
     position: relative;
     transition: .35s ease-in-out;
 
@@ -169,7 +170,7 @@
         }
 
         .pagebuilder-stage {
-            margin-left: 160px;
+            margin-left: 150px;
         }
     }
 }
@@ -289,6 +290,9 @@
     .pagebuilder-canvas {
         -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+        background-color: @color-white;
+        margin: 0 10px;
+        min-height: 100%;
         opacity: 0;
         padding-bottom: 120px;
         transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
@@ -346,14 +350,12 @@
                 0% {
                     background-color: transparent;
                 }
-                50% {
-                    background-color: @color-white;
-                }
                 100% {
                     background-color: @color-gray-middle1;
                 }
             });
             .animation(fade-in @pagebuilder-animation);
+            background-color: @color-gray-middle1;
 
             &.transition-out {
                 .keyframes(fade-out; {
@@ -368,20 +370,14 @@
                     }
                 });
                 .animation(fade-out @pagebuilder-animation);
-
-                .pagebuilder-stage {
-                    background-color: transparent;
-                    min-height: unset;
-                }
             }
 
             .pagebuilder-stage {
-                background-color: @color-white;
-                min-height: 100%;
+                height: inherit;
                 left: 0;
                 position: relative;
                 top: 0;
-                width: calc(~'100% - 170px');
+                width: calc(~'100% - 150px');
             }
         }
     }
