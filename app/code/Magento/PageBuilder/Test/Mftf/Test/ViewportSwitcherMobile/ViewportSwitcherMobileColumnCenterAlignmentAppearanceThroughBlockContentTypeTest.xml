@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ViewportSwitcherMobileColumnCenterAlignmentAppearanceThroughBlockContentTypeTest" extends="ViewportSwitcherMobileColumnFullHeightAppearanceThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -23,6 +22,7 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearanceColumn1">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
+
         <!-- Validate CMS Block Stage Mobile Viewport -->
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStageMobile">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
@@ -32,6 +32,7 @@
 
         <!-- Validate CMS Block Stage Desktop Viewport -->
         <actionGroup ref="validateColumnAppearanceCenterAligned" stepKey="validateColumn1AppearanceCMSBlockStage">
+            <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">
