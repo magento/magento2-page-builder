@@ -57,6 +57,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
+      _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function (args) {
+        var viewports = _config.getConfig("viewports");
+
+        if (_this.element && _this.appearance() === "carousel") {
+          _this.slidesToShow = parseFloat(viewports[args.viewport].options.products.default.slidesToShow);
+
+          _this.destroySlider();
+
+          _this.initSlider();
+        }
+      });
+
       return _this;
     }
     /**
@@ -155,6 +167,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (this.element && this.appearance() === "carousel") {
         (0, _jquery)(this.element.children).slick(this.buildSlickConfig());
       }
+    };
+
+    _proto.destroySlider = function destroySlider() {
+      (0, _jquery)(this.element.children).slick("unslick");
     }
     /**
      * Build the slick config object
@@ -167,6 +183,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.buildSlickConfig = function buildSlickConfig() {
       var attributes = this.data.main.attributes();
       var productCount = (0, _jquery)(this.widgetUnsanitizedHtml()).find(this.productItemSelector).length;
+
+      var viewports = _config.getConfig("viewports");
+
+      var currentViewport = this.viewport();
+      var carouselMode = attributes["data-carousel-mode"];
       var config = {
         slidesToShow: this.slidesToShow,
         slidesToScroll: this.slidesToShow,
@@ -175,8 +196,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         autoplay: attributes["data-autoplay"] === "true",
         autoplaySpeed: parseFloat(attributes["data-autoplay-speed"])
       };
+      var slidesToShow = viewports[currentViewport].options.products[carouselMode] ? viewports[currentViewport].options.products[carouselMode].slidesToShow : viewports[currentViewport].options.products.default.slidesToShow;
+      config.slidesToShow = parseFloat(slidesToShow);
 
-      if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
+      if (attributes["data-carousel-mode"] === "continuous" && productCount > config.slidesToShow) {
         config.centerPadding = attributes["data-center-padding"];
         config.centerMode = true;
         (0, _jquery)(this.element).addClass(this.centerModeClass);

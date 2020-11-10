@@ -17,10 +17,11 @@
             <argument name="childContentTypeIndex" defaultValue="1" type="string"/>
             <argument name="padding" defaultValue="PageBuilderPaddingPropertyRowDefault"/>
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
+            <argument name="affordanceValue" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
-        <executeJS function="return {{pageOrStageWidthJS}}" stepKey="pageOrStageWidth"/>
+        <executeJS function="return {{pageOrStageWidthJS}} - {{affordanceValue}}" stepKey="pageOrStageWidth"/>
         <executeJS function="return {{section.rowWidthJS(rowIndex)}}" stepKey="rowWidth"/>
         <executeJS function="return parseInt({{section.rowChildContentWidthJS(rowIndex, childContentType.role, childContentTypeIndex)}} + {{padding.paddingLeft}} + {{padding.paddingRight}} + ({{childContentTypeBorder.value}}*2))" stepKey="rowChildElementWidth"/>
         <executeJS function="return Math.abs({$pageOrStageWidth} - {$rowWidth})" stepKey="pageMinusRowWidth"/>

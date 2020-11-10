@@ -40,18 +40,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
-          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-          var style = _this.element.getAttribute("style") || _this.element.getAttribute("data-jarallax-original-styles");
-
-          var backgroundImage = _this.contentType.dataStore.get("background_image");
-
           jarallax(_this.element, "destroy");
-
-          _this.element.setAttribute("style", style);
-
-          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
-            _this.element.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
-          }
         } catch (e) {// Failure of destroying is acceptable
         }
 
@@ -113,14 +102,31 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
 
       _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.toggleFullScreen.bind(_assertThisInitialized(_this)));
 
+      _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function (args) {
+        _this.buildJarallax();
+      });
+
       return _this;
     }
     /**
-     * Toggle fullscreen
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
      */
 
 
     var _proto = Preview.prototype;
+
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
+    /**
+     * Toggle fullscreen
+     */
+    ;
 
     _proto.toggleFullScreen = function toggleFullScreen() {
       if ((0, _jquery)(this.element).hasClass("jarallax")) {
@@ -182,6 +188,40 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
       if (this.element) {
         jarallax(this.element, "destroy");
       }
+    }
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyle = function getStyle(element, styleProperties) {
+      var stylesObject = element.style();
+      return styleProperties.reduce(function (obj, key) {
+        var _extends2;
+
+        return _extends({}, obj, (_extends2 = {}, _extends2[key] = stylesObject[key], _extends2));
+      }, {});
+    }
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
+      var stylesObject = element.style();
+      return Object.keys(stylesObject).filter(function (key) {
+        return !styleProperties.includes(key);
+      }).reduce(function (obj, key) {
+        var _extends3;
+
+        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
+      }, {});
     };
 
     return Preview;

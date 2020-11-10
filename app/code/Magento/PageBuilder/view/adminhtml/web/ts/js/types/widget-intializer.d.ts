@@ -4,6 +4,7 @@
  */
 
 interface WidgetIntializerConfigInterface {
+    currentViewport: any;
     config: any;
     breakpoints: any;
 }
