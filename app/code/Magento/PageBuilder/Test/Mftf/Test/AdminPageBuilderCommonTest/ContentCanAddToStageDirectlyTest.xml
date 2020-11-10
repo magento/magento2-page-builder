@@ -71,5 +71,42 @@
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{DividerOnStage.allDividers}}" stepKey="dontSeeDivider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionHtml">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHTMLIntoStage">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionVideo">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{VideoOnStage.base('1')}}" stepKey="dontSeeVideo"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="dontSeeImage"/>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{MapOnStage.base('1')}}" stepKey="dontSeeMap"/>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{SliderOnStage.all}}" stepKey="dontSeeSlider"/>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{BannerOnBackend.base('1')}}" stepKey="dontSeeBanner"/>
     </test>
 </tests>
