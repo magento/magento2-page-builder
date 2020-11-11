@@ -6,6 +6,9 @@
 namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Filesystem;
 
 /**
  * Class Upload
@@ -18,6 +21,7 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
 
     /**
      * @var \Magento\Framework\Filesystem\DirectoryList
+     * @deprecad use $mediaDirectory instead
      */
     private $directoryList;
 
@@ -42,6 +46,11 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
     private $cmsWysiwygImages;
 
     /**
+     * @var Filesystem\Directory\WriteInterface
+     */
+    private $mediaDirectory;
+
+    /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
@@ -50,6 +59,8 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
      * @param \Magento\Framework\File\UploaderFactory $uploaderFactory
      * @param \Magento\Framework\Filesystem\DirectoryList $directoryList
      * @param \Magento\Cms\Helper\Wysiwyg\Images $cmsWysiwygImages
+     * @param Filesystem|null $filesystem
+     * @throws \Magento\Framework\Exception\FileSystemException
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -57,7 +68,8 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\File\UploaderFactory $uploaderFactory,
         \Magento\Framework\Filesystem\DirectoryList $directoryList,
-        \Magento\Cms\Helper\Wysiwyg\Images $cmsWysiwygImages
+        \Magento\Cms\Helper\Wysiwyg\Images $cmsWysiwygImages,
+        Filesystem $filesystem = null
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
@@ -65,6 +77,8 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
         $this->uploaderFactory = $uploaderFactory;
         $this->directoryList = $directoryList;
         $this->cmsWysiwygImages = $cmsWysiwygImages;
+        $filesystem = $filesystem ?? ObjectManager::getInstance()->create(Filesystem::class);
+        $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
     }
 
     /**
@@ -120,6 +134,6 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
      */
     private function getUploadDir()
     {
-        return $this->directoryList->getPath('media') . DIRECTORY_SEPARATOR . self::UPLOAD_DIR;
+        return $this->mediaDirectory->getAbsolutePath(self::UPLOAD_DIR);
     }
 }

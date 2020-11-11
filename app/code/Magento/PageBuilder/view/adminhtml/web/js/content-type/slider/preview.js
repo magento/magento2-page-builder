@@ -87,6 +87,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
 
           _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", _this.onColumnResize.bind(_assertThisInitialized(_this), [true]));
+
+          _events.on("stage:" + _this.contentType.stageId + ":viewportChangeAfter", function () {
+            if (_this.element) {
+              (0, _jquery)(_this.element).slick("setPosition");
+
+              _this.checkWidth();
+            }
+          });
         }, function () {
           return (0, _jquery)(element).find(".pagebuilder-slide").length === expectedChildren;
         });

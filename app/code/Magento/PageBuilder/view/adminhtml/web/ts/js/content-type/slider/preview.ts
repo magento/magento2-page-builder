@@ -126,6 +126,12 @@ export default class Preview extends PreviewCollection {
                         `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
                         this.onColumnResize.bind(this, [true]),
                     );
+                    events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, () => {
+                        if (this.element) {
+                            $(this.element).slick("setPosition");
+                            this.checkWidth();
+                        }
+                    });
                 },
                 () => $(element).find(".pagebuilder-slide").length === expectedChildren,
             );

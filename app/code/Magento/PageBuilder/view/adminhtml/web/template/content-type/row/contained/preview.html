@@ -13,7 +13,7 @@
          event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
         <div class="pagebuilder-content-type no-system-border type-container pagebuilder-row children-min-height"
              attr="data.inner.attributes"
-             ko-style="getStyleWithout(data.inner, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+             ko-style="Object.assign({}, getStyleWithout(data.inner, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight']), {backgroundImage: getBackgroundImage()})"
              css="Object.assign(data.inner.css(), {
                 'empty-container': contentType.children().length == 0,
                 'jarallax': data.inner.attributes()['data-enable-parallax'] == 1 || data.inner.attributes()['data-background-type'] == 'video'
