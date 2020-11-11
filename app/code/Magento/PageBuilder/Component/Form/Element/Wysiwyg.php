@@ -9,14 +9,15 @@ namespace Magento\PageBuilder\Component\Form\Element;
 
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\PageBuilder\Model\View\File\Collector\PageBuilder;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\PageBuilder\Model\Stage\Config as Config;
+use Magento\Framework\View\ConfigInterface as ViewConfigInterface;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -25,6 +26,11 @@ use Magento\PageBuilder\Model\Stage\Config as Config;
  */
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
+    /**
+     * @var Repository
+     */
+    private $assetRepo;
+
     /**
      * WYSIWYG Constructor
      *
@@ -39,8 +45,11 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
+     * @param ViewConfigInterface $viewConfig
+     * @param Repository $assetRepo
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function __construct(
@@ -54,8 +63,12 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         array $data = [],
         array $config = [],
         PageBuilderConfig $pageBuilderConfig = null,
-        bool $overrideSnapshot = false
+        bool $overrideSnapshot = false,
+        ViewConfigInterface $viewConfig = null,
+        Repository $assetRepo = null
     ) {
+        $viewConfig = $viewConfig ?: ObjectManager::getInstance()->get(ViewConfigInterface::class);
+        $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
 
         // If a dataType is present we're dealing with an attribute
@@ -84,6 +97,11 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $wysiwygConfigData = $stageConfig->getConfig();
             $wysiwygConfigData['pagebuilder_button'] = true;
             $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
+            $wysiwygConfigData['viewports'] = $viewConfig->getViewConfig()->getVarValue(
+                'Magento_PageBuilder',
+                'breakpoints'
+            );
+            $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
 
             if ($overrideSnapshot) {
                 $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
@@ -107,5 +125,25 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         }
 
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+    }
+
+    /**
+     * Process viewport icon paths
+     *
+     * @param array $wysiwygConfigData
+     * @return array
+     */
+    private function processBreakpointsIcons(array $wysiwygConfigData): array
+    {
+        if ($wysiwygConfigData && isset($wysiwygConfigData['viewports'])) {
+            foreach ($wysiwygConfigData['viewports'] as $breakpoint => $attributes) {
+                if (isset($attributes['icon'])) {
+                    $wysiwygConfigData['viewports'][$breakpoint]['icon'] = $this->assetRepo->getUrl(
+                        $attributes['icon']
+                    );
+                }
+            }
+        }
+        return $wysiwygConfigData;
     }
 }

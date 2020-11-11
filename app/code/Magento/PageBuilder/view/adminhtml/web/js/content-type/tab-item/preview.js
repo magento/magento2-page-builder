@@ -36,11 +36,24 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
     var _proto = Preview.prototype;
 
     /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
+    /**
      * Force the focus on the clicked tab header
      *
      * @param {number} index
      * @param {JQueryEventObject} event
      */
+    ;
+
     _proto.onClick = function onClick(index, event) {
       (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
       event.stopPropagation();
