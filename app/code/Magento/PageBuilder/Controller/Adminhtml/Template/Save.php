@@ -222,14 +222,11 @@ class Save extends Action implements HttpPostActionInterface
      */
     private function storePreviewImage(RequestInterface $request) : ?string
     {
-        $mediaDir = $this->filesystem
-            ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
         $fileName = preg_replace("/[^A-Za-z0-9]/", '', str_replace(
-            ' ',
-            '-',
-            strtolower($request->getParam(TemplateInterface::KEY_NAME))
-        )) . uniqid() . '.jpg';
-        $filePath = '.template-manager' . DIRECTORY_SEPARATOR . $fileName;
+                ' ',
+                '-',
+                strtolower($request->getParam(TemplateInterface::KEY_NAME))
+            )) . uniqid() . '.jpg';
 
         // Prepare the image data
         $imgData = str_replace(' ', '+', $request->getParam('previewImage'));
@@ -249,25 +246,25 @@ class Save extends Action implements HttpPostActionInterface
         $imageContent->setType($imageProperties['mime']);
 
         if ($this->imageContentValidator->isValid($imageContent)) {
+            $mediaDirWrite = $this->filesystem
+                ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+            $directory = $mediaDirWrite->getAbsolutePath('.template-manager');
+            $mediaDirWrite->create($directory);
+            $fileAbsolutePath = $directory . $fileName;
             // Write the file to the directory
-            $mediaDir->writeFile(
-                $filePath,
-                $decodedImage
-            );
-
+            $mediaDirWrite->getDriver()->filePutContents($fileAbsolutePath, $decodedImage);
             // Generate a thumbnail, called -thumb next to the image for usage in the grid
-            $absolutePath = $mediaDir->getAbsolutePath() . $filePath;
-            $thumbPath = str_replace('.jpg', '-thumb.jpg', $filePath);
-            $thumbAbsolutePath = $mediaDir->getAbsolutePath() . $thumbPath;
+            $thumbPath = str_replace('.jpg', '-thumb.jpg', $fileName);
+            $thumbAbsolutePath = $directory . $thumbPath;
             $imageFactory = $this->imageAdapterFactory->create();
-            $imageFactory->open($absolutePath);
+            $imageFactory->open($fileAbsolutePath);
             $imageFactory->resize(350);
             $imageFactory->save($thumbAbsolutePath);
-            $this->mediaStorage->saveFile($filePath);
-            $this->mediaStorage->saveFile($thumbPath);
+            $this->mediaStorage->saveFile($fileAbsolutePath);
+            $this->mediaStorage->saveFile($thumbAbsolutePath);
 
             // Store the preview image within the new entity
-            return $filePath;
+            return $mediaDirWrite->getRelativePath($fileAbsolutePath);
         }
 
         return null;
