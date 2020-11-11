@@ -12,8 +12,8 @@
             <argument name="block"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderBlockContentType.role, index)}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderBlockContentType.role, index)}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForElementVisible selector="{{BlockOnStage.title(index, block.title)}}" stepKey="wait"/>
         <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>

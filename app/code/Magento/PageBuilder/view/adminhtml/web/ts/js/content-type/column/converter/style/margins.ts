@@ -4,10 +4,10 @@
  */
 
 import _ from "underscore";
+import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
 import {DataObjectMargins} from "../../../../property/margins";
 import {get} from "../../../../utils/object";
-import ConverterInterface from "../../../../converter/converter-interface";
 
 export default class Margins implements ConverterInterface {
     /**

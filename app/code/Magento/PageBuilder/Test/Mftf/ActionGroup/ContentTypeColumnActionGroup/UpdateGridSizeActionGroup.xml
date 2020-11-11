@@ -5,13 +5,13 @@
   * See COPYING.txt for license details.
   */
 -->
-<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="updateGridSize">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="gridSize" defaultValue="12" type="string"/>
         </arguments>
+        <waitForElementVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchPanelVisible"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusColumnOptions"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible"/>
         <click selector="{{ColumnOnBackend.gridSizeButton(index)}}" stepKey="clickGridSizeButton"/>

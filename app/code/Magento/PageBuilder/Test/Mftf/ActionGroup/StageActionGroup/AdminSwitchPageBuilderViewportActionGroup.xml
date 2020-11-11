@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminSwitchPageBuilderViewportActionGroup">
+        <annotations>
+            <description>Switches the Page Builder stage in admin to the specified viewport</description>
+        </annotations>
+        <arguments>
+            <argument name="viewportButton" defaultValue="desktop" type="string"/>
+            <argument name="viewportStage" defaultValue="desktop" type="string"/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton(viewportButton)}}" stepKey="waitForElementViewportButton"/>
+        <conditionalClick selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton(viewportButton)}}"
+                          dependentSelector="{{PageBuilderViewportSwitcherSection.viewportStage(viewportStage)}}"
+                          visible="false"
+                          stepKey="clickViewportSwitcherButton"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportStage(viewportStage)}}" stepKey="waitForElementViewportStage"/>
+    </actionGroup>
+</actionGroups>
