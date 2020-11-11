@@ -49,16 +49,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this.contentType.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_this)), "width");
 
-      _this.contentType.parentContentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_this)), "grid_size");
+      _this.contentType.parentContentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_this)), "grid_size"); // Update the column number for the column
+
+
+      _this.contentType.parentContentType.children.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_this)));
 
       return _this;
     }
     /**
-     * Bind events
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
      */
 
 
     var _proto = Preview.prototype;
+
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
+    /**
+     * Bind events
+     */
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
@@ -95,6 +111,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         element: (0, _jquery)(element),
         columnGroup: this.contentType.parentContentType
       });
+
+      this.updateDisplayLabel();
     }
     /**
      * Return an array of options
@@ -238,7 +256,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
         var gridSize = this.contentType.parentContentType.preview.gridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
-        this.displayLabel((0, _translate)("Column") + " " + newLabel);
+        var columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
+        var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
+        this.displayLabel((0, _translate)("Column") + " " + columnNumber + "(" + newLabel + ")");
       }
     }
     /**
@@ -260,6 +280,40 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var roundedWidth = Math.ceil(parseFloat(this.contentType.dataStore.get("width").toString()) / 10) * 10;
       this.element.addClass("column-width-" + roundedWidth);
+    }
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyle = function getStyle(element, styleProperties) {
+      var stylesObject = element.style();
+      return styleProperties.reduce(function (obj, key) {
+        var _extends2;
+
+        return _extends({}, obj, (_extends2 = {}, _extends2[key] = stylesObject[key], _extends2));
+      }, {});
+    }
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
+      var stylesObject = element.style();
+      return Object.keys(stylesObject).filter(function (key) {
+        return !styleProperties.includes(key);
+      }).reduce(function (obj, key) {
+        var _extends3;
+
+        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
+      }, {});
     }
     /**
      * Fire the mount event for content types
@@ -297,40 +351,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           width: newWidth
         });
       }
-    }
-    /**
-    * Return selected element styles
-    *
-    * @param element
-    * @param styleProperties
-    */
-    ;
-
-    _proto.getStyle = function getStyle(element, styleProperties) {
-      var stylesObject = element.style();
-      return styleProperties.reduce(function (obj, key) {
-        var _extends2;
-
-        return _extends({}, obj, (_extends2 = {}, _extends2[key] = stylesObject[key], _extends2));
-      }, {});
-    }
-    /**
-     * Return element styles without selected
-     *
-     * @param element
-     * @param styleProperties
-     */
-    ;
-
-    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
-      var stylesObject = element.style();
-      return Object.keys(stylesObject).filter(function (key) {
-        return !styleProperties.includes(key);
-      }).reduce(function (obj, key) {
-        var _extends3;
-
-        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
-      }, {});
     };
 
     return Preview;

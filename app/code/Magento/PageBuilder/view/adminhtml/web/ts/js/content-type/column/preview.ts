@@ -54,6 +54,24 @@ export default class Preview extends PreviewCollection {
         this.contentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
         this.contentType.dataStore.subscribe(this.triggerChildren.bind(this), "width");
         this.contentType.parentContentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
+
+        // Update the column number for the column
+        this.contentType.parentContentType.children.subscribe(this.updateDisplayLabel.bind(this));
+    }
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
     }
 
     /**
@@ -90,6 +108,7 @@ export default class Preview extends PreviewCollection {
             element: $(element),
             columnGroup: this.contentType.parentContentType,
         });
+        this.updateDisplayLabel();
     }
 
     /**
@@ -256,7 +275,9 @@ export default class Preview extends PreviewCollection {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
             const gridSize = (this.contentType.parentContentType.preview as ColumnGroupPreview).gridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
-            this.displayLabel(`${$t("Column")} ${newLabel}`);
+            const columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
+            const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
+            this.displayLabel(`${$t("Column")} ${columnNumber}(${newLabel})`);
         }
     }
 
@@ -281,29 +302,6 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Fire the mount event for content types
-     *
-     * @param {ContentTypeInterface[]} contentTypes
-     */
-    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
-        contentTypes.forEach((contentType) => {
-            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
-            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
-        });
-    }
-
-    /**
-     * Delegate trigger call on children elements.
-     */
-    private triggerChildren() {
-        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
-            const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-
-            this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
-        }
-    }
-    
-        /**
      * Return selected element styles
      *
      * @param element
@@ -332,5 +330,28 @@ export default class Preview extends PreviewCollection {
                     [key]: stylesObject[key],
                 };
             }, {});
+    }
+
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
+        contentTypes.forEach((contentType) => {
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
+        });
+    }
+
+    /**
+     * Delegate trigger call on children elements.
+     */
+    private triggerChildren() {
+        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
+
+            this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
+        }
     }
 }

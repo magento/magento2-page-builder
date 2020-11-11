@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileHeadingEditTypeH1StageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Inline Edit Heading Content Type"/>
+            <description value="Edit Heading Type field to value H1 on stage and view the rendered content type in stage and storefront on mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Heading -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Enter Text On Stage -->
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_right"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Stage Mobile Viewport -->
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageRight">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <!-- Validate Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport2">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
+        <actionGroup ref="verifyHeadingInStageWithAlignment" stepKey="verifyHeadingInStageRight2">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Navigate To Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Validate Storefront Desktop -->
+        <actionGroup ref="verifyHeadingInStorefrontWithAlignment" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="verifyHeadingInStorefrontWithAlignment" stepKey="verifyHeadingInStorefront2">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+    </test>
+</tests>
