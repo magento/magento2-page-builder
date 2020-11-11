@@ -161,11 +161,12 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{ColumnOnBackend.base('1')}}', document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="grabMinHeightValueCmsBlockStage"/>
-        <assertEquals stepKey="assertMinHeightInCmsBlockStageDesktop">
-            <expectedResult type="string">auto</expectedResult>
-            <actualResult type="variable">grabMinHeightValueCmsBlockStage</actualResult>
-        </assertEquals>
+        <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSBlockStage">
+            <argument name="page" value="ColumnOnBackend"/>
+            <argument name="index" value="1"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_Auto"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300.value}}"/>
@@ -277,6 +278,7 @@
         </actionGroup>
         <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSPageStorefront">
             <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_85"/>
         </actionGroup>
         <actionGroup ref="ValidateBackgroundConfigurationWithNoImageActionGroup" stepKey="validateBackgroundCMSPageStorefront">
             <argument name="section" value="ColumnOnFrontend"/>
@@ -293,14 +295,15 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <executeJS function="return window.getComputedStyle(document.evaluate('{{ColumnOnFrontend.base('1')}}', document.body).iterateNext()).minHeight.replace(/px/g, &quot;&quot;)" stepKey="grabMinHeightValueCmsPageStorefront"/>
-        <assertEquals stepKey="assertMinHeightInCmsPageStorefront">
-            <expectedResult type="string">auto</expectedResult>
-            <actualResult type="variable">grabMinHeightValueCmsPageStorefront</actualResult>
-        </assertEquals>
+        <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSPageStorefront">
+            <argument name="page" value="ColumnOnFrontend"/>
+            <argument name="index" value="1"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_Auto"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStorefront">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_85.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStorefront">
