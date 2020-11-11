@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminVerifyViewportSwitcherUITest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Verify Viewport Icons, Tooltips, and Viewport Areas"/>
+            <description value="Verify that the Page Builder admin stage has the correct viewport icons, tooltips, and viewport areas for desktop and mobile."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
+        </after>
+        <!-- Verify viewport switcher icons -->
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherIcon('desktop')}}" stepKey="verifyDesktopViewportIconIsVisible"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherIcon('mobile')}}" stepKey="verifyMobileViewportIconIsVisible"/>
+        <!-- Verify desktop viewport tooltip label and description -->
+        <moveMouseOver selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton('desktop')}}" stepKey="mouseOverDesktopViewportButton"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('1', 'Desktop')}}" stepKey="verifyDesktopTooltipLabel"/>
+        <waitForText userInput="View your content for desktop" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('1')}}" stepKey="verifyDesktopTooltipContent"/>
+        <waitForText userInput="Width: 1024px" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('1')}}" stepKey="verifyDesktopTooltipContent2"/>
+        <!-- Verify mobile viewport tooltip label and description -->
+        <moveMouseOver selector="{{PageBuilderViewportSwitcherSection.viewportSwitcherButton('mobile')}}" stepKey="mouseOverMobileViewportButton"/>
+        <waitForElementVisible selector="{{PageBuilderViewportSwitcherSection.viewportTooltipLabel('2', 'Mobile')}}" stepKey="verifyMobileTooltipLabel"/>
+        <waitForText userInput="View your content for mobile" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('2')}}" stepKey="verifyMobileTooltipContent"/>
+        <waitForText userInput="Width: 768px" selector="{{PageBuilderViewportSwitcherSection.viewportTooltipContent('2')}}" stepKey="verifyMobileTooltipContent2"/>
+        <!-- Verify Desktop Viewport Area -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewport">
+            <argument name="viewportButton"/>
+            <argument name="viewportStage"/>
+        </actionGroup>
+        <!-- Verify Mobile Viewport Area -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+    </test>
+</tests>

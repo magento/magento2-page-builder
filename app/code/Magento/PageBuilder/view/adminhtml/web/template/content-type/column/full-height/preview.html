@@ -17,7 +17,7 @@
     <div class="pagebuilder-resizing" css="{active: resizing}"></div>
     <render args="getOptions().template"></render>
     <div class="pagebuilder-column-inner"
-         ko-style="getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight'])">
+         ko-style="Object.assign({}, getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight']), {backgroundImage: getBackgroundImage()})">
         <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
             <if args="$parent.isContainer()">
                 <div class="pagebuilder-drop-indicator"></div>

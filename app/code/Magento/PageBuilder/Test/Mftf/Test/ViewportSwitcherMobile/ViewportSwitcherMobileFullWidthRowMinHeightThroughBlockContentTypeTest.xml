@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileFullWidthRowMinHeightThroughBlockContentTypeTest" extends="ViewportSwitcherMobileContainedRowThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Validate Full Width Row Min Height Through Block Content Type"/>
+            <description value="Verify that a full width row's minimum height attribute renders correctly through the Block content type on mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-row-full-width"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{RowOnStorefront_FullWidth_FullBleed.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{RowOnStorefront_FullWidth_FullBleed.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStage">
+            <argument name="selector" value="{{RowOnStorefront_FullWidth_FullBleed.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{RowOnStorefront_FullWidth_FullBleed.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
+
+        <!-- Validate Storefront -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
+            <argument name="selector" value="{{RowOnStorefront_FullWidth_FullBleed.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{RowOnStorefront_FullWidth_FullBleed.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+
+        <!-- Validate Storefront Mobile -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefrontMobile">
+            <argument name="selector" value="{{RowOnStorefront_FullWidth_FullBleed.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{RowOnStorefront_FullWidth_FullBleed.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
+    </test>
+</tests>
