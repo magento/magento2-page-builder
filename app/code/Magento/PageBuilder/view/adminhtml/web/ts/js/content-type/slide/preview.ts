@@ -101,15 +101,7 @@ export default class Preview extends BasePreview {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
-            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.wrapper.getAttribute("style") ||
-                this.wrapper.getAttribute("data-jarallax-original-styles");
-            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
             jarallax(this.wrapper, "destroy");
-            this.wrapper.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
-                this.wrapper.style.backgroundImage = `url(${backgroundImage[0].url})`;
-            }
         } catch (e) {
             // Failure of destroying is acceptable
         }
@@ -154,6 +146,21 @@ export default class Preview extends BasePreview {
         }
 
     }, 50);
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
+    }
 
     /**
      * @param {HTMLElement} element
@@ -547,6 +554,12 @@ export default class Preview extends BasePreview {
 
         events.on(`image:${this.contentType.id}:uploadAfter`, () => {
             this.contentType.dataStore.set("background_type", "image");
+        });
+
+        events.on(`stage:${this.contentType.stageId}:viewportChangeAfter`, (args: {viewport: string}) => {
+            if (this.contentType.dataStore.get("background_type") === "video") {
+                this.buildJarallax();
+            }
         });
     }
 

@@ -35,5 +35,6 @@ define([
                 $element.slick('setPosition');
             }
         });
+        events.on('stage:viewportChangeAfter', $element.slick.bind($element, 'setPosition'));
     };
 });

@@ -10,7 +10,7 @@
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <div class="pagebuilder-content-type pagebuilder-row type-container no-system-border children-min-height"
          attr="data.main.attributes"
-         ko-style="getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
+         ko-style="Object.assign({}, getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight']), {backgroundImage: getBackgroundImage()})"
          css="Object.assign(data.main.css(), {
             'empty-container': contentType.children().length == 0,
             'jarallax': data.main.attributes()['data-enable-parallax'] == 1 || data.main.attributes()['data-background-type'] == 'video'
