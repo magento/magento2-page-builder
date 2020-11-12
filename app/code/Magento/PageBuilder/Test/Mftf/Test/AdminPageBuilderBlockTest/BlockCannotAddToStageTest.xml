@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BlockCannotAddToStageTest">
+    <test name="BlockCannotAddToStageTest" deprecated="Block was allowed as a root containers">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -19,15 +19,14 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-cannotAddToStage"/>
+            <skip>
+                <issueId value="PB-508"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="dragContentTypeToStage" stepKey="dragRootRowToStage">
-                <argument name="contentType" value="PageBuilderRowContentType"/>
-                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
