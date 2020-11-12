@@ -48,7 +48,10 @@ export default class Margins implements ConverterInterface {
         if (value && undefined !== value.margin) {
             result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
             result.marginTop = value.margin.top ? value.margin.top + "px" : "";
-            result.marginRight = (parseInt(value.margin.right, 10) !== 0 ? value.margin.right : 1) + "px";
+            result.marginRight = (value.margin.right && parseInt(value.margin.right, 10) !== 0 ?
+                value.margin.right :
+                1
+            ) + "px";
             result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : "";
         }
         return result;
