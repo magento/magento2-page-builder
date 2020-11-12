@@ -60,17 +60,20 @@ define([
                         cool: {}
                     }
                 },
-                breakpoints: {}
+                breakpoints: {},
+                currentViewport: {}
             };
 
             widgetInitializer(data);
 
             applyForMock = mocks['mage/apply/main'].applyFor;
             expect(applyForMock).toHaveBeenCalledWith(jasmine.any(Object), {
-                breakpoints: {}
+                breakpoints: {},
+                currentViewport: {}
             }, 'awesome');
             expect(applyForMock).toHaveBeenCalledWith(jasmine.any(Object), {
-                breakpoints: {}
+                breakpoints: {},
+                currentViewport: {}
             }, 'cool');
             // Due to jQuery objects not being === we must use jQuery's is to validate if the elements are the same
             expect(el.is(applyForMock.calls.mostRecent().args[0])).toBeTruthy();

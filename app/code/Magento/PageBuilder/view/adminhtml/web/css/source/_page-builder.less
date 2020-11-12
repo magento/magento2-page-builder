@@ -6,7 +6,10 @@
 @border-size: 2px; // Deprecated
 
 .pagebuilder-header {
+    display: flex;
+    justify-content: center;
     opacity: 0;
+    position: relative;
     text-align: right;
 
     > .icon-pagebuilder-fullscreen {
@@ -22,6 +25,32 @@
     &.visible {
         opacity: 1;
         visibility: visible;
+    }
+
+    .template-buttons {
+        position: absolute;
+        right: 0;
+        transform: translate(0, 12%);
+    }
+
+    .tooltip {
+        margin-left: 0;
+        .tooltip-content {
+            background: rgba(49, 48, 43, .8);
+            font-size: 12px;
+            margin-left: -69px;
+            padding: 7px 9px;
+            text-align: left;
+
+            &:before {
+                left: 90px;
+                opacity: .65;
+            }
+
+            .tooltip-label {
+                font-weight: bold;
+            }
+        }
     }
 }
 

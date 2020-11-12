@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderVerifyContainerAffordanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Affordance"/>
+            <title value="Verify Container Content Types' Affordance"/>
+            <description value="Verify that the Container content types have the correct size affordance in admin. Verify that the affordance is not present in admin when rendering Container content types through a Block, or when rendering the Container content types on the storefront."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-affordance"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Configure CMS Block -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage for CMS Block -->
+        <actionGroup ref="VerifyAffordanceSizeActionGroup" stepKey="verifyAffordanceSizeActionGroup"/>
+        <actionGroup ref="VerifyAffordanceSizeActionGroup" stepKey="verifyAffordanceSizeActionGroup2">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="VerifyAffordanceSizeActionGroup" stepKey="verifyAffordanceSizeActionGroup3">
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.affordanceCSS}}" userInput="3" stepKey="seeNumberOfAffordance"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Configure CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance3">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="fillSlideOutPanelFieldMarginsAndPadding">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockToStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openPageBuilderEditPanel">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Validate Stage for CMS Page -->
+        <actionGroup ref="VerifyAffordanceSizeActionGroup" stepKey="verifyAffordanceSizeActionGroup4"/>
+        <seeNumberOfElements selector="{{RowOnStage.affordanceCSS}}" userInput="1" stepKey="seeNumberOfAffordance2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefrontForCreatedPage">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{RowOnStage.affordanceCSS}}" stepKey="dontSeeAffordanceInDOM"/>
+        <executeJS function="return window.innerWidth;" stepKey="viewportWidth"/>
+        <waitForElementVisible selector="{{RowOnStorefront.appearanceContainedCSS}}" stepKey="waitForRowContainedVisible"/>
+        <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceContainedCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowContainedSize"/>
+        <executeJS function="return (window.innerWidth - window.getComputedStyle(document.querySelector('{{RowOnStorefront.baseCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.baseCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginLeft.replace(&quot;px&quot;, &quot;&quot;) - window.getComputedStyle(document.querySelector('{{RowOnStorefront.appearanceContainedCSS}}')).marginRight.replace(&quot;px&quot;, &quot;&quot;))" stepKey="calculatedRowContainedSize"/>
+        <assertEquals stepKey="assertRowContainedEqualsExpected">
+            <expectedResult type="variable">calculatedRowContainedSize</expectedResult>
+            <actualResult type="variable">actualRowContainedSize</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{RowOnStorefront.appearanceFullWidthCSS}}" stepKey="waitForRowFullWidthVisible"/>
+        <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceFullWidthCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowFullWidthSize"/>
+        <assertEquals stepKey="assertRowFullWidthEqualsExpected">
+            <expectedResult type="variable">viewportWidth</expectedResult>
+            <actualResult type="variable">actualRowFullWidthSize</actualResult>
+        </assertEquals>
+        <waitForElementVisible selector="{{RowOnStorefront.appearanceFullBleedCSS}}" stepKey="waitForRowFullBleedVisible"/>
+        <executeJS function="return parseInt(document.querySelector('{{RowOnStorefront.appearanceFullBleedCSS}} {{RowOnStorefront.appearanceFullBleedCSS}}').getBoundingClientRect().width, 10)" stepKey="actualRowFullBleedSize"/>
+        <assertEquals stepKey="assertRowFullBleedEqualsExpected">
+            <expectedResult type="variable">viewportWidth</expectedResult>
+            <actualResult type="variable">actualRowFullBleedSize</actualResult>
+        </assertEquals>
+    </test>
+</tests>

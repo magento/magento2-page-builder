@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileAddChildContentTypesFromOnHoverOptionMenusTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Verify That User Can Add Child Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can add child content types from the on-hover option menus within the PageBuilder stage for Product Description on mobile viewport."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-add"/>
+            <group value="pagebuilder-catalog-product"/>
+            <group value="pagebuilder-viewport-switcher"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
+                <argument name="product" value="$$createProduct$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Buttons -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStage"/>
+        <!-- Add 2nd Button -->
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStage"/>
+        <!-- Save Product -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+        <!-- Validate Stage After Save Desktop Viewport -->
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave"/>
+        <!-- Validate Stage After Save Mobile Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave2"/>
+        <!-- Navigate To Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createProduct.name$$.html"/>
+        </actionGroup>
+        <!-- Validate Storefront Desktop -->
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonItemsStorefront"/>
+        <!-- Validate Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription2"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonItemsStorefront2"/>
+    </test>
+</tests>

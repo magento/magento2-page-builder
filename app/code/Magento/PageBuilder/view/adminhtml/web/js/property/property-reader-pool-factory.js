@@ -1,12 +1,5 @@
 /*eslint-disable */
 /* jscs:disable */
-
-function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } it = o[Symbol.iterator](); return it.next.bind(it); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/property/property-reader-pool"], function (_config, _loader, _propertyReaderPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -34,8 +27,19 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", 
           var element = appearance.elements[elementName];
 
           if (element.style !== undefined) {
-            for (var _iterator = _createForOfIteratorHelperLoose(element.style), _step; !(_step = _iterator()).done;) {
-              var propertyConfig = _step.value;
+            for (var _iterator = element.style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+              var _ref;
+
+              if (_isArray) {
+                if (_i3 >= _iterator.length) break;
+                _ref = _iterator[_i3++];
+              } else {
+                _i3 = _iterator.next();
+                if (_i3.done) break;
+                _ref = _i3.value;
+              }
+
+              var propertyConfig = _ref;
 
               if (propertyConfig.reader && propertyReaders.indexOf(propertyConfig.reader) === -1 && !_propertyReaderPool.get(propertyConfig.reader)) {
                 propertyReaders.push(propertyConfig.reader);
@@ -44,8 +48,19 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", 
           }
 
           if (element.attributes !== undefined) {
-            for (var _iterator2 = _createForOfIteratorHelperLoose(element.attributes), _step2; !(_step2 = _iterator2()).done;) {
-              var attributeConfig = _step2.value;
+            for (var _iterator2 = element.attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+              var _ref2;
+
+              if (_isArray2) {
+                if (_i4 >= _iterator2.length) break;
+                _ref2 = _iterator2[_i4++];
+              } else {
+                _i4 = _iterator2.next();
+                if (_i4.done) break;
+                _ref2 = _i4.value;
+              }
+
+              var attributeConfig = _ref2;
 
               if (attributeConfig.reader && propertyReaders.indexOf(attributeConfig.reader) === -1 && !_propertyReaderPool.get(attributeConfig.reader)) {
                 propertyReaders.push(attributeConfig.reader);

@@ -57,6 +57,21 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
+    }
+
+    /**
      * Bind events
      */
     public bindEvents() {

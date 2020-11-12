@@ -40,6 +40,10 @@ export default class PageBuilder implements PageBuilderInterface {
     public stageStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public isAllowedTemplateSave: boolean;
     public isAllowedTemplateApply: boolean;
+    public defaultViewport: string;
+    public viewport: KnockoutObservable<string> = ko.observable("");
+    public viewports: {[key: string]: object} = {};
+    public viewportClasses: {[key: string]: KnockoutObservable<boolean>} = {};
     private previousStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
     private snapshot: boolean;
@@ -49,6 +53,7 @@ export default class PageBuilder implements PageBuilderInterface {
         Config.setMode("Preview");
         this.preloadTemplates(config);
         this.initialValue = initialValue;
+        this.initViewports(config);
         this.isFullScreen(config.isFullScreen);
         this.isSnapshot(!!config.pagebuilder_content_snapshot);
         this.isSnapshotTransition(false);
@@ -219,6 +224,10 @@ export default class PageBuilder implements PageBuilderInterface {
         return this.template;
     }
 
+    get viewportTemplate(): string {
+        return "Magento_PageBuilder/viewport/switcher";
+    }
+
     /**
      * Toggle template manager
      */
@@ -243,6 +252,27 @@ export default class PageBuilder implements PageBuilderInterface {
         return saveAsTemplate(this.stage);
     }
 
+    public toggleViewport(viewport: string) {
+        const previousViewport = this.viewport();
+
+        this.viewport(viewport);
+        _.each(this.viewportClasses, (viewportClass) => {
+            viewportClass(false);
+        });
+        this.viewportClasses[`${viewport}-viewport`](true);
+        Config.setConfig({
+            viewport,
+        } as ConfigInterface);
+        events.trigger(`stage:${this.id}:viewportChangeAfter`, {
+            viewport,
+            previousViewport,
+        });
+        events.trigger(`stage:viewportChangeAfter`, {
+            viewport,
+            previousViewport,
+        });
+    }
+
     /**
      * Preload all templates into the window to reduce calls later in the app
      *
@@ -257,6 +287,24 @@ export default class PageBuilder implements PageBuilderInterface {
 
         _.defer(() => {
             require(previewTemplates);
+        });
+    }
+
+    private initViewports(config: any): void {
+        _.each(config.viewports, (viewport: any, name: string) => {
+            if (viewport.stage) {
+                this.viewports[name] = viewport;
+            }
+        });
+        this.defaultViewport = _.findKey(this.viewports, (viewport: any) => {
+            return viewport.default;
+        });
+        this.viewport(this.defaultViewport);
+        Config.setConfig({
+            viewport: this.defaultViewport,
+        } as ConfigInterface);
+        _.each(this.viewports, (viewport: {[key: string]: any}, name: string) => {
+            this.viewportClasses[`${name}-viewport`] = ko.observable(name === this.defaultViewport);
         });
     }
 }
