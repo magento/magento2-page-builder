@@ -67,6 +67,10 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute1">
             <argument name="attributeCode" value="$$createPageBuilderAttribute1.attribute_code$$"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRootRowToStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -85,6 +89,12 @@
         <comment userInput="Set background colour of row for our second custom attribute" stepKey="commentSetBackgroundColor1"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute2">
             <argument name="attributeCode" value="$$createPageBuilderAttribute2.attribute_code$$"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createPageBuilderAttribute2.attribute_code$$)}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRootRowToStageDescription">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createPageBuilderAttribute2.attribute_code$$)}}"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">

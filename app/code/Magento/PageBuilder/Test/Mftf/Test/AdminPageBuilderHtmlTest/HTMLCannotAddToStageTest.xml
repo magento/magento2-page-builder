@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="HTMLCannotAddToStageTest">
+    <test name="HTMLCannotAddToStageTest" deprecated="HTML was allowed as a root container">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
             <group value="pagebuilder-cannotAddToStage"/>
+            <skip>
+                <issueId value="PB-508"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>

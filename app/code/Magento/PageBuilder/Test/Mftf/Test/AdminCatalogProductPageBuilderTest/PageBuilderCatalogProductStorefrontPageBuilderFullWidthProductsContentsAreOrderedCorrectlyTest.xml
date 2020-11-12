@@ -60,6 +60,10 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute1">
             <argument name="attributeCode" value="$$createPageBuilderAttribute.attribute_code$$"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRootRowToStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -80,6 +84,12 @@
         <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
             <argument name="attributeCode" value="description"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRootRowToStageDescription">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
         <!-- Set background color of row -->
