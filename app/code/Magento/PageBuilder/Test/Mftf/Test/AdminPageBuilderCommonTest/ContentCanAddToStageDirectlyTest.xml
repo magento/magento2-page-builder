@@ -33,10 +33,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertImageInTextareaValueBeforeSave">
-            <argument name="value" value="{{ImageUpload3.value}}"/>
-            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
-        </actionGroup>
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyStageEmpty"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
