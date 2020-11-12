@@ -38,6 +38,10 @@
         <!-- Change row appearance to full-width -->
         <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearanceBlock"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRootRowToStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStageBlock">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -78,6 +82,10 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStagePage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRootRowToStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContentPage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>

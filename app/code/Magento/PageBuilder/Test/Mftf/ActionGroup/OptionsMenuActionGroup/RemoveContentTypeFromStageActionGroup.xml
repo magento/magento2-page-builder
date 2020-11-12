@@ -25,7 +25,7 @@
         <click selector="{{PageBuilderStage.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
         <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalHide"/>
-        <waitForElementVisible time="30" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.rootContainer('1')}}" stepKey="waitForPageBuilderRow"/>
         <!-- Follow with confirmRemovalModal actionGroup -->
     </actionGroup>
 </actionGroups>
