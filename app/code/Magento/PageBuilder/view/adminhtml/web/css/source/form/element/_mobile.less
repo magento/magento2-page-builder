@@ -1,0 +1,85 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Default appearance styles rendered through Mobile viewport
+//  _____________________________________________________
+.admin__fieldset .admin__field.admin__field-min-height-mobile,
+.admin__fieldset .admin__field.admin__field-min-height-mobile-with-notice {
+    .admin__field-control._with-tooltip {
+        .admin__control-addon {
+            max-width: inherit;
+        }
+
+        .admin__field-tooltip {
+            margin-left: 19px;
+            margin-top: .3rem;
+        }
+
+        .admin__field-tooltip-action {
+            &:before {
+                color: @color-gray-middle5;
+                content: @icon-pagebuilder-mobile__content;
+                font-family: @icon_font;
+                font-size: 1.9rem;
+                line-height: inherit;
+                overflow: inherit;
+            }
+        }
+
+        .admin__field-tooltip-content {
+            background: @color-gray-middle5;
+            border: none;
+            bottom: auto;
+            box-shadow: unset;
+            left: -1.9rem;
+            opacity: .9;
+            padding: 6px 15px 2px;
+            right: auto;
+            top: 3.5rem;
+            width: 16rem;
+
+            p {
+                color: @color-white;
+                font-size: 1.2rem;
+            }
+
+            &:before {
+                border-bottom: 7px solid @color-gray-middle5;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: unset;
+                content: '';
+                height: 0;
+                left: 20px;
+                opacity: .9;
+                position: absolute;
+                top: -5px;
+                width: 0;
+            }
+
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.admin__fieldset .admin__field.admin__field-min-height-mobile {
+    .admin__field-control._with-tooltip {
+        display: flex;
+        width: 17.9rem;
+    }
+}
+
+.admin__fieldset .admin__field.admin__field-min-height-mobile-with-notice {
+    .admin__field-control._with-tooltip {
+        width: 38.9rem;
+    }
+
+    .admin__field-note {
+        width: 34.9rem;
+    }
+}
