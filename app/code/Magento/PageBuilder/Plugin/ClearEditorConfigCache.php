@@ -19,6 +19,7 @@ class ClearEditorConfigCache
      * @var EditorConfigCacheCleaner
      */
     private $cacheCleaner;
+
     /**
      * @var UrlInterface
      */
@@ -42,7 +43,7 @@ class ClearEditorConfigCache
      * @param \Magento\Backend\Model\Auth $subject
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterLogin(\Magento\Backend\Model\Auth $subject)
+    public function afterLogin(\Magento\Backend\Model\Auth $subject): void
     {
         if ($this->backendUrl->useSecretKey()) {
             $this->cacheCleaner->execute();

@@ -20,12 +20,12 @@ class RandomKey
     /**
      * Default key length to generate
      */
-    const DEFAULT_KEY_LENGTH = 16;
+    private const DEFAULT_KEY_LENGTH = 16;
 
     /**
      * Default key name
      */
-    const DEFAULT_NAME = '_pb_config_cache_key_suffix';
+    private const DEFAULT_NAME = '_pb_config_cache_key_suffix';
 
     /**
      * @var Random

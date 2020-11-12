@@ -52,7 +52,7 @@ class RandomKeyTest extends TestCase
      * @param string $expected
      * @dataProvider getValueDataProvider
      */
-    public function testGetValue(string $keyName, int $keyLength, ?string $value, string $expected)
+    public function testGetValue(string $keyName, int $keyLength, ?string $value, string $expected): void
     {
         $this->model = new RandomKey(
             $this->random,

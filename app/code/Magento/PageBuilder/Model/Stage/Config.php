@@ -119,6 +119,7 @@ class Config
      * @var Json
      */
     private $serializer;
+
     /**
      * @var RandomKey
      */

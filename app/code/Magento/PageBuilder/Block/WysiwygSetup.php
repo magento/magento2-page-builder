@@ -32,6 +32,7 @@ class WysiwygSetup extends Template
      * @var FrontendInterface
      */
     private $cache;
+
     /**
      * @var RandomKey
      */

@@ -33,6 +33,7 @@ class ClearEditorConfigCacheTest extends TestCase
      * @var ClearEditorConfigCache
      */
     private $model;
+
     /**
      * @var UrlInterface|MockObject
      */
@@ -59,7 +60,7 @@ class ClearEditorConfigCacheTest extends TestCase
      * @dataProvider afterLoginDataProvider
      * @param bool $isUseSecretKey
      */
-    public function testAfterLogin(bool $isUseSecretKey = false): void
+    public function testAfterLogin(bool $isUseSecretKey): void
     {
         $this->backendUrl->expects($this->once())
             ->method('useSecretKey')

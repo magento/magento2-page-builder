@@ -44,7 +44,7 @@ class ConfigTest extends TestCase
      * @magentoConfigFixture admin/url/use_custom_path 1
      * @magentoConfigFixture admin/url/custom_path secret
      */
-    public function testMediaUrlShouldBeTheSameAsStorefrontMediaURL()
+    public function testMediaUrlShouldBeTheSameAsStorefrontMediaURL(): void
     {
         $this->assertEquals('http://localhost/media/', $this->model->getConfig()['media_url']);
     }
@@ -54,7 +54,7 @@ class ConfigTest extends TestCase
      *
      * @magentoConfigFixture admin/security/use_form_key 1
      */
-    public function testConfigShouldNotBeCachedAcrossDifferentSessions()
+    public function testConfigShouldNotBeCachedAcrossDifferentSessions(): void
     {
         $config = $this->model->getConfig();
         $this->startNewSession();
@@ -66,7 +66,7 @@ class ConfigTest extends TestCase
      *
      * @magentoConfigFixture admin/security/use_form_key 1
      */
-    public function testConfigShouldBeCachedWithinSameSession()
+    public function testConfigShouldBeCachedWithinSameSession(): void
     {
         $config = $this->model->getConfig();
         $this->assertEquals($config, $this->model->getConfig());
