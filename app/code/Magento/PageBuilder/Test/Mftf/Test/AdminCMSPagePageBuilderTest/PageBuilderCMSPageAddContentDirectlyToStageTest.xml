@@ -7,29 +7,26 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ContentCanAddToStageDirectlyTest">
+    <test name="PageBuilderCMSPageAddContentDirectlyToStageTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Row"/>
-            <title value="Can add Row, Tabs, Column, HTML Code to Stage directly"/>
-            <description value="If user drags content to stage it is added to stage"/>
-            <severity value="CRITICAL"/>
+            <stories value="CMS Page"/>
+            <title value="Verify Can Only Add Expected Content Types to Stage Directly"/>
+            <description value="Verify user can add Row, Columns, Tabs, HTML Code, and Blocks to stage directly. Verify user cannot add any other content type to stage directly"/>
+            <severity value="BLOCKER"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-            <group value="pagebuilder-tabs"/>
-            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-stage"/>
+            <group value="pagebuilder-cms-page"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -56,33 +53,22 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{TextOnStage.base('1')}}" stepKey="dontSeeText"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragHeadingIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{HeadingOnStage.base('1')}}" stepKey="dontSeeHeading"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{ButtonGroupOnStage.base('1')}}" stepKey="dontSeeButtonGroup"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragDividerIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{DividerOnStage.allDividers}}" stepKey="dontSeeDivider"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHTMLIntoContainer">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuHtml">
-            <argument name="contentType" value="PageBuilderHtmlContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
-            <argument name="property" value="PageBuilderHtmlPropertyButton"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -90,27 +76,22 @@
             <argument name="contentType" value="PageBuilderVideoContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{VideoOnStage.base('1')}}" stepKey="dontSeeVideo"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragImageIntoStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="dontSeeImage"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragMapIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{MapOnStage.base('1')}}" stepKey="dontSeeMap"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{SliderOnStage.all}}" stepKey="dontSeeSlider"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{BannerOnBackend.base('1')}}" stepKey="dontSeeBanner"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -118,18 +99,10 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInPageGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{ProductsOnStage.base('1')}}" stepKey="dontSeeProducts"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -148,7 +121,6 @@
         <dontSeeElement selector="{{SliderOnStage.all}}" stepKey="dontSeeSliderAfterSave"/>
         <dontSeeElement selector="{{BannerOnBackend.base('1')}}" stepKey="dontSeeBannerAfterSave"/>
         <dontSeeElement selector="{{ProductsOnStage.base('1')}}" stepKey="dontSeeProductsAfterSave"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterSave"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront4">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
