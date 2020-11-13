@@ -262,7 +262,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
                 if (rootContentType) {
                     rootContentType.addChild(html);
                 } else {
-                    rootContainer.addChild(html)
+                    rootContainer.addChild(html);
                 }
             });
         }

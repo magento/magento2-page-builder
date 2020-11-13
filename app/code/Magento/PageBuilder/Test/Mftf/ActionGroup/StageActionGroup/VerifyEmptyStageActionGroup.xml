@@ -16,9 +16,9 @@
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForStageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="waitForEmptyStage"/>
-        <seeElement selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="seeEmptyStage"/>
-        <see userInput="Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here" selector="{{PageBuilderStage.rootContainerPlaceholder(rowIndex)}}" stepKey="seeEmptyStagePlaceholderMessage"/>
-        <seeNumberOfElements userInput="0" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeZeroRow"/>
+        <waitForElementVisible selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="waitForEmptyRow"/>
+        <seeElement selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="seeEmptyRow"/>
+        <see userInput="Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here" selector="{{PageBuilderStage.rootContainerPlaceholder(rowIndex)}}" stepKey="seeEmptyRowPlaceholderMessage"/>
+        <seeNumberOfElements userInput="0" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
     </actionGroup>
 </actionGroups>
