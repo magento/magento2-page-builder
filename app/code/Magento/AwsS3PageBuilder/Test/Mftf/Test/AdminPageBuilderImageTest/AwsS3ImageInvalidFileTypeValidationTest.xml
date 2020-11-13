@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AwsS3ImageInvalidFileTypeValidationTest" extends="ImageInvalidFileTypeValidationTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image Invalid File Type Upload validation with Aws S3 Filestorage enabled"/>
+            <description value="Tests that the Image Validation functions as expected for invalid file type"/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="remote_storage_aws_s3"/>
+        </annotations>
+        <before>
+            <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.enable_options}}" stepKey="enableRemoteStorage" after="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.disable_options}}" stepKey="disableRemoteStorage" after="logout"/>
+        </after>
+    </test>
+</tests>

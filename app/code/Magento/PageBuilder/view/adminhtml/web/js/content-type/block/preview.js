@@ -283,7 +283,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
           if (mediaScope) {
             Array.from(rule.cssRules).forEach(function (mediaRule, index) {
               if (mediaRule.selectorText.indexOf(_styleRegistry.pbStyleAttribute) !== -1) {
-                var selector = mediaRule.selectorText.replace(" ", " ." + mediaScope + "-viewport ");
+                var searchPattern = new RegExp(_config.getConfig("bodyId") + " ", "g");
+                var replaceValue = _config.getConfig("bodyId") + " ." + mediaScope + "-viewport ";
+                var selector = mediaRule.selectorText.replace(searchPattern, replaceValue);
                 mediaStyleBlock.append(selector + " {" + mediaRule.style.cssText + "}");
               }
             });
