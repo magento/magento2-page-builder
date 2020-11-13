@@ -279,7 +279,9 @@ export default class Preview extends BasePreview {
                 if (mediaScope) {
                     Array.from(rule.cssRules).forEach((mediaRule: CSSStyleRule, index: number) => {
                         if (mediaRule.selectorText.indexOf(pbStyleAttribute) !== -1) {
-                            const selector = mediaRule.selectorText.replace(" ", ` .${ mediaScope}-viewport `);
+                            const searchPattern = new RegExp(`${ Config.getConfig("bodyId") } `, "g");
+                            const replaceValue = `${ Config.getConfig("bodyId") } .${ mediaScope}-viewport `;
+                            const selector = mediaRule.selectorText.replace(searchPattern, replaceValue);
 
                             mediaStyleBlock.append(`${ selector } {${ mediaRule.style.cssText }}`);
                         }

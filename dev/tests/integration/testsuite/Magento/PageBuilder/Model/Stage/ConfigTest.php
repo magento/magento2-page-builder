@@ -44,6 +44,6 @@ class ConfigTest extends TestCase
      */
     public function testMediaUrlShouldBeTheSameAsStorefrontMediaURL()
     {
-        $this->assertEquals('http://localhost/pub/media/', $this->model->getConfig()['media_url']);
+        $this->assertEquals('http://localhost/media/', $this->model->getConfig()['media_url']);
     }
 }

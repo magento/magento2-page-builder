@@ -11,6 +11,7 @@ namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Directory\Write;
+use Magento\Framework\Filesystem\DriverInterface;
 use Magento\Framework\Image\Adapter\Gd2;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\Framework\Serialize\Serializer\Json;
@@ -81,7 +82,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->templateRepository = $this->objectManager->get(TemplateRepositoryInterface::class);
 
         $this->directoryWrite = $this->getMockBuilder(Write::class)
-            ->setMethods(['writeFile', 'getAbsolutePath'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->filesystem = $this->getMockBuilder(Filesystem::class)
@@ -123,14 +123,19 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
      */
     public function testSaveAction()
     {
-        // Verify that the system attempts to write the file with the current name
-        $this->directoryWrite->expects($this->once())
-            ->method('writeFile')
-            ->with(
-                $this->stringContains('.template-manager/automatedtemplate'),
-                $this->anything()
-            );
-
+        $this->directoryWrite->expects(self::atLeastOnce())->method('getAbsolutePath')
+            ->with('.template-manager')
+            ->willReturn('absolute/path/.template-manager/');
+        $this->directoryWrite->expects(self::atLeastOnce())->method('create')
+            ->with('absolute/path/.template-manager/');
+        $driver = $this->getMockBuilder(DriverInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->directoryWrite->expects(self::atLeastOnce())->method('getDriver')
+            ->willReturn($driver);
+        $this->directoryWrite->expects(self::atLeastOnce())->method('getRelativePath')
+            ->willReturn('.template-manager/automatedtemplate');
+        $driver->expects(self::atLeastOnce())->method('filePutContents');
         $this->imageAdapterFactory->expects($this->once())
             ->method('create')
             ->willReturn($this->imageAdapter);
