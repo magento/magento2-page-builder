@@ -32,6 +32,12 @@
                 <argument name="contentType" value="PageBuilderRowContentType"/>
                 <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             </actionGroup>
+            <actionGroup ref="moveContentTypeToContainer" stepKey="moveHtmlToLeftColumn">
+                <argument name="contentType" value="PageBuilderHtmlContentType"/>
+                <argument name="contentTypeIndex" value="1"/>
+                <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetIndex" value="1"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
