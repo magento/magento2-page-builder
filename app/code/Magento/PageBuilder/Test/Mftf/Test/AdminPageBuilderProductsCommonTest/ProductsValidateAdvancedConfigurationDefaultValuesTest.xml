@@ -5,14 +5,13 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ProductsValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Validate Advanced Configuration Default Values"/>
-            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Product List."/>
+            <title value="Validate Advanced Configuration Default Values for Product (List)"/>
+            <description value="Validates the default values for every attribute in the Advanced form and on Stage for Product List."/>
             <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-2500"/>
@@ -77,10 +76,12 @@
         <comment userInput="removing step" stepKey="getCssClasses"/>
         <comment userInput="removing step" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+            <!-- @todo: Update `PageBuilderMarginsPropertyDefault` with (Default) Empty Values -->
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+            <!-- @todo: Update `PageBuilderPaddingPropertyDefault` with (Default) Empty Values -->
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -126,10 +127,12 @@
         <comment userInput="removing step" stepKey="getCssClasses2"/>
         <comment userInput="removing step" stepKey="assertCssClasses2"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+            <!-- @todo: Update `PageBuilderMarginsPropertyDefault` with (Default) Empty Values -->
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+            <!-- @todo: Update `PageBuilderPaddingPropertyDefault` with (Default) Empty Values -->
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
