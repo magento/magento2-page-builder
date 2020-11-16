@@ -29,12 +29,6 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="removeBannerDefaultMinHeight" before="enterPadding">
-            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
 
         <!-- Duplicate Banner Content Type -->
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
@@ -73,6 +67,9 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterEmptyMinHeightValue" before="validateEmptyHeightField2">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
         <!-- Banner 3: Mobile Min Height = 200px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel6">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
@@ -102,7 +99,7 @@
         <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageDesktop"/>
         <assertEquals stepKey="assertThirdMinHeightCMSBlockStageDesktop">
             <actualResult type="variable">thirdMinHeightCMSBlockStageDesktop</actualResult>
-            <expectedResult type="string">130</expectedResult>
+            <expectedResult type="string">50</expectedResult>
         </assertEquals>
 
         <!-- Validate CMS Block Stage Mobile Viewport -->
@@ -150,7 +147,7 @@
         <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageDesktop"/>
         <assertEquals stepKey="assertThirdMinHeightCMSPageStageDesktop">
             <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
-            <expectedResult type="string">130</expectedResult>
+            <expectedResult type="string">50</expectedResult>
         </assertEquals>
 
         <!-- Validate CMS Page Stage Mobile Viewport -->
@@ -198,7 +195,7 @@
         <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
         <assertEquals stepKey="assertThirdMinHeightStorefront">
             <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
-            <expectedResult type="string">130</expectedResult>
+            <expectedResult type="string">50</expectedResult>
         </assertEquals>
 
         <!-- Validate Storefront Mobile -->

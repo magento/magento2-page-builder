@@ -139,7 +139,6 @@
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
-        <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{RowOnStage.base('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
@@ -233,7 +232,6 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
 
         <!-- Validate CMS Page Stage Desktop Viewport -->
-        <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStageDesktop"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageDesktop">
             <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
@@ -311,7 +309,6 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
             <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
