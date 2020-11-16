@@ -189,6 +189,11 @@
         </assertEquals>
         <executeJS function="return document.evaluate('{{RowOnStage.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageMobile"/>
         <executeJS function="return Math.abs({$viewportHeightCMSBlockStageMobile} - 200)" stepKey="expectedSecondHeightCMSBlockStageMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{RowOnStage.base('2')}}"/>
+            <argument name="expectedProperty" value="$expectedSecondHeightCMSBlockStageMobile"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <assertEquals stepKey="assertSecondMinHeightCMSBlockStageMobile">
             <actualResult type="variable">secondMinHeightCMSBlockStageMobile</actualResult>
             <expectedResult type="variable">expectedSecondHeightCMSBlockStageMobile</expectedResult>
@@ -278,6 +283,11 @@
         </assertEquals>
         <executeJS function="return document.evaluate('{{RowOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageMobile"/>
         <executeJS function="return Math.abs({$viewportHeightCMSPageStageMobile} - 200)" stepKey="expectedSecondHeightCMSPageStageMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{RowOnStorefront.base('3')}}"/>
+            <argument name="expectedProperty" value="$expectedSecondHeightCMSPageStageMobile"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <assertEquals stepKey="assertSecondMinHeightCMSPageStageMobile">
             <actualResult type="variable">secondMinHeightCMSPageStageMobile</actualResult>
             <expectedResult type="variable">expectedSecondHeightCMSPageStageMobile</expectedResult>
@@ -348,6 +358,11 @@
         </assertEquals>
         <executeJS function="return document.evaluate('{{RowOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefrontMobile"/>
         <executeJS function="return Math.abs({$viewportHeightStorefrontMobile} - 200)" stepKey="expectedSecondHeightStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefrontMobile">
+            <argument name="selector" value="{{RowOnStorefront.base('3')}}"/>
+            <argument name="expectedProperty" value="$expectedSecondHeightStorefrontMobile"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <assertEquals stepKey="assertSecondMinHeightStorefrontMobile">
             <actualResult type="variable">secondMinHeightStorefrontMobile</actualResult>
             <expectedResult type="variable">expectedSecondHeightStorefrontMobile</expectedResult>
