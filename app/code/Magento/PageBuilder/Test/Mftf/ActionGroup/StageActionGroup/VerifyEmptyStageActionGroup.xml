@@ -7,18 +7,18 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="verifyEmptyStage">
+    <actionGroup name="verifyEmptyStage" deprecated="Use AdminVerifyEmptyStage">
         <annotations>
-            <description>Verifies that the Page Builder stage only has root container.</description>
+            <description>Verifies that the Page Builder stage only has 1 row that is empty.</description>
         </annotations>
         <arguments>
             <argument name="rowIndex" defaultValue="1" type="string"/>
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForStageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="waitForEmptyRow"/>
-        <seeElement selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="seeEmptyRow"/>
-        <see userInput="Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here" selector="{{PageBuilderStage.rootContainerPlaceholder(rowIndex)}}" stepKey="seeEmptyRowPlaceholderMessage"/>
-        <seeNumberOfElements userInput="0" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
+        <waitForElementVisible selector="{{RowOnStage.empty(rowIndex)}}" stepKey="waitForEmptyRow"/>
+        <seeElement selector="{{RowOnStage.empty(rowIndex)}}" stepKey="seeEmptyRow"/>
+        <see userInput="Drag content types or columns here" selector="{{RowOnStage.emptyPlaceholder(rowIndex)}}" stepKey="seeEmptyRowPlaceholderMessage"/>
+        <seeNumberOfElements userInput="1" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
     </actionGroup>
 </actionGroups>

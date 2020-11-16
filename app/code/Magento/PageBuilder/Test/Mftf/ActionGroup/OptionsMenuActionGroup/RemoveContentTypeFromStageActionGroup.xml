@@ -25,7 +25,8 @@
         <click selector="{{PageBuilderStage.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
         <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalHide"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderStage.rootContainer('1')}}" stepKey="waitForPageBuilderRow"/>
+        <comment userInput="removing deprecated element" stepKey="waitForPageBuilderRow"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.rootContainer('1')}}" stepKey="waitForPageBuilderRootContainer"/>
         <!-- Follow with confirmRemovalModal actionGroup -->
     </actionGroup>
 </actionGroups>
