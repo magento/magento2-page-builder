@@ -71,6 +71,11 @@
             <argument name="attributeCode" value="$$createProductAttribute.attribute_code$$"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRootRowToStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuSectionHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
@@ -103,6 +108,12 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRootRowToStageDescription">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
         <!-- Add Buttons -->
         <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuSectionButtons">
@@ -112,7 +123,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="3"/>
+            <argument name="containerTargetIndex" value="2"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
         <!-- Edit Button Item -->
@@ -145,6 +156,12 @@
         <comment userInput="Edit Product Short Description" stepKey="commentEditProductShortDescription"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForShortDescription">
             <argument name="attributeCode" value="short_description"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRootRowToStageShortDescription">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuSectionDivider">

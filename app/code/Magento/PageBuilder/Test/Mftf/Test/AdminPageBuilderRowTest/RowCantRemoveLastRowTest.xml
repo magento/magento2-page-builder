@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="RowCantRemoveLastRowTest">
+    <test name="RowCantRemoveLastRowTest" deprecated="Was allowed to remove last item from stage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
+            <skip>
+                <issueId value="PB-508"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
