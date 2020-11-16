@@ -29,6 +29,9 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="index" value="1"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="removeBannerDefaultMinHeight" before="enterPadding">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
 
         <!-- Duplicate Banner Content Type -->
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
@@ -66,9 +69,6 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel5">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="contentTypeIndex" value="3"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterEmptyMinHeightValue" before="validateEmptyHeightField2">
-            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
         </actionGroup>
         <!-- Banner 3: Mobile Min Height = 200px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel6">
