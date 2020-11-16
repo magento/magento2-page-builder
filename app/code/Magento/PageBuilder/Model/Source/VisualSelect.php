@@ -47,25 +47,4 @@ class VisualSelect implements \Magento\Framework\Data\OptionSourceInterface
         $this->optionsSize  = $optionsSize;
     }
 
-    /**
-     * Returns options for Visual Select based on di configuration
-     *
-     * @return array
-     */
-    public function toOptionArray(): array
-    {
-        if ($this->optionsData) {
-            foreach ($this->optionsData as $optionKey => $optionValue) {
-                if (isset($optionValue['icon'])) {
-                    $optionValue['icon'] = $this->assetRepo->getUrl($optionValue['icon']);
-                }
-                $optionValue['size'] = $this->optionsSize ?? 'small';
-                $this->optionsData[$optionKey] = $optionValue;
-            }
-        } else {
-            return [];
-        }
-
-        return $this->optionsData;
-    }
 }
