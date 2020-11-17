@@ -73,7 +73,7 @@
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
-        <!-- Verify Cannot HTML Code to Stage Directly -->
+        <!-- Verify Cannot Add HTML Code to Stage Directly -->
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHTMLIntoContainer">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
@@ -136,16 +136,16 @@
             <expectedResult type="int">1</expectedResult>
             <actualResult type="variable">numberOfBlockContentTypesStageAfterSave</actualResult>
         </assertEquals>
-        <dontSeeElementInDOM selector="{{TextOnStage.base('1')}}" stepKey="dontSeeTextAfterSave"/>
-        <dontSeeElementInDOM selector="{{HeadingOnStage.base('1')}}" stepKey="dontSeeHeadingAfterSave"/>
-        <dontSeeElementInDOM selector="{{ButtonGroupOnStage.base('1')}}" stepKey="dontSeeButtonGroupAfterSave"/>
+        <dontSeeElementInDOM selector="{{TextOnStage.allText}}" stepKey="dontSeeTextAfterSave"/>
+        <dontSeeElementInDOM selector="{{HeadingOnStage.all}}" stepKey="dontSeeHeadingAfterSave"/>
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStage.allButtons}}" stepKey="dontSeeButtonGroupAfterSave"/>
         <dontSeeElementInDOM selector="{{DividerOnStage.allDividers}}" stepKey="dontSeeDividerAfterSave"/>
-        <dontSeeElementInDOM selector="{{VideoOnStage.base('1')}}" stepKey="dontSeeVideoAfterSave"/>
-        <dontSeeElementInDOM selector="{{ImageOnStage.base('1')}}" stepKey="dontSeeImageAfterSave"/>
-        <dontSeeElementInDOM selector="{{MapOnStage.base('1')}}" stepKey="dontSeeMapAfterSave"/>
+        <dontSeeElementInDOM selector="{{VideoOnStage.allVideo}}" stepKey="dontSeeVideoAfterSave"/>
+        <dontSeeElementInDOM selector="{{ImageOnStage.allImages}}" stepKey="dontSeeImageAfterSave"/>
+        <dontSeeElementInDOM selector="{{MapOnStage.allMaps}}" stepKey="dontSeeMapAfterSave"/>
         <dontSeeElementInDOM selector="{{SliderOnStage.all}}" stepKey="dontSeeSliderAfterSave"/>
-        <dontSeeElementInDOM selector="{{BannerOnBackend.base('1')}}" stepKey="dontSeeBannerAfterSave"/>
-        <dontSeeElementInDOM selector="{{ProductsOnStage.base('1')}}" stepKey="dontSeeProductsAfterSave"/>
+        <dontSeeElementInDOM selector="{{BannerOnBackend.allBanners}}" stepKey="dontSeeBannerAfterSave"/>
+        <dontSeeElementInDOM selector="{{ProductsOnStage.allProducts}}" stepKey="dontSeeProductsAfterSave"/>
         <!-- Verify Expected Content Types on Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront4">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
@@ -163,15 +163,15 @@
             <expectedResult type="int">1</expectedResult>
             <actualResult type="variable">numberOfBlockContentTypesStorefront</actualResult>
         </assertEquals>
-        <dontSeeElementInDOM selector="{{TextOnStorefront.base('1')}}" stepKey="dontSeeTextStorefront"/>
-        <dontSeeElementInDOM selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeHeadingStorefront"/>
-        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonGroupStorefront"/>
-        <dontSeeElementInDOM selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerStorefront"/>
-        <dontSeeElementInDOM selector="{{VideoOnStorefront.base('1')}}" stepKey="dontSeeVideoStorefront"/>
-        <dontSeeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnStorefront"/>
-        <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeMapStorefront"/>
-        <dontSeeElementInDOM selector="{{SlideOnFrontend.base('1')}}" stepKey="dontSeeSliderOnFrontend"/>
-        <dontSeeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeBannerStorefront"/>
-        <dontSeeElementInDOM selector="{{ProductsOnStorefront.base('1')}}" stepKey="dontSeeProductsStorefront"/>
+        <dontSeeElementInDOM selector="{{TextOnStorefront.allText}}" stepKey="dontSeeTextStorefront"/>
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.all}}" stepKey="dontSeeHeadingStorefront"/>
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.allButtons}}" stepKey="dontSeeButtonGroupStorefront"/>
+        <dontSeeElementInDOM selector="{{DividerOnStorefront.allDividers}}" stepKey="dontSeeDividerStorefront"/>
+        <dontSeeElementInDOM selector="{{VideoOnStorefront.allVideo}}" stepKey="dontSeeVideoStorefront"/>
+        <dontSeeElementInDOM selector="{{ImageOnStorefront.allImages}}" stepKey="notSeeImageOnStorefront"/>
+        <dontSeeElementInDOM selector="{{MapOnStorefront.allMaps}}" stepKey="dontSeeMapStorefront"/>
+        <dontSeeElementInDOM selector="{{SlideOnFrontend.all}}" stepKey="dontSeeSliderOnFrontend"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.allBanners}}" stepKey="dontSeeBannerStorefront"/>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.allProducts}}" stepKey="dontSeeProductsStorefront"/>
     </test>
 </tests>
