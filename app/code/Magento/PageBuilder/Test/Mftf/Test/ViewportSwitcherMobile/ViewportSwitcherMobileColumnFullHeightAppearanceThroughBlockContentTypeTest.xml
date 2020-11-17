@@ -113,11 +113,24 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
         <!-- Validate CMS Block Stage in Mobile Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStageMobile">
             <argument name="section" value="ColumnOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSBlockStageMobile">
+            <argument name="page" value="ColumnOnBackend"/>
+            <argument name="index" value="1"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStageMobile">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
@@ -151,20 +164,18 @@
         <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSBlockStage">
             <argument name="page" value="ColumnOnBackend"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_Auto"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
         </actionGroup>
 
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
-        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -192,6 +203,12 @@
             <argument name="section" value="ColumnOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSPageStageMobile">
+            <argument name="page" value="ColumnOnFrontend"/>
+            <argument name="index" value="1"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStageMobile">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
@@ -235,12 +252,12 @@
         <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSPageStage">
             <argument name="page" value="ColumnOnFrontend"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_Auto"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStage">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_60.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStage">
@@ -280,12 +297,12 @@
         <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSPageStorefront">
             <argument name="page" value="ColumnOnFrontend"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_Auto"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStorefront">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_85.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStorefront">
