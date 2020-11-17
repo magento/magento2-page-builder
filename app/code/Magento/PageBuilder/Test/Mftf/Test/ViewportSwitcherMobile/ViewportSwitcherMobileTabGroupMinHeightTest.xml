@@ -281,7 +281,7 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
+        <executeJS function="return document.evaluate('{{TabsOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
         <assertEquals stepKey="assertFirstMinHeightStorefrontMobile">
             <actualResult type="variable">firstMinHeightStorefrontMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
