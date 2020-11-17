@@ -27,8 +27,19 @@
         <actionGroup ref="dragContentTypeToStage" after="expandPageBuilderPanelMenuSection" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <click selector="{{TabsOnStage.tabsContainer}}" after="dragContentTypeIntoStage" stepKey="focusContentTypeElement1"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" after="focusContentTypeElement1" stepKey="openEditPanelTabGroup">
+
+        <!-- Edit Tab Item -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="dragContentTypeIntoStage" stepKey="openEditPanelTabItem">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" after="openEditPanelTabItem" stepKey="enterBorderNone2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterBorderNone2" stepKey="saveEditPanelSettingsTabItem"/>
+
+        <!-- Edit Tab Group -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" after="saveEditPanelSettingsTabItem" stepKey="openEditPanelTabGroup">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -36,16 +47,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterBorderNone1" stepKey="saveEditPanelSettingsTabGroup"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="saveEditPanelSettingsTabGroup" stepKey="openEditPanelTabItem">
-            <argument name="section" value="TabOnStage"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" after="openEditPanelTabItem" stepKey="enterBorderNone2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" after="enterBorderNone2" stepKey="saveEditPanelSettingsTabItem"/>
-        <click selector="{{TabsOnStage.tabsContainer}}" after="saveEditPanelSettingsTabItem" stepKey="focusContentTypeElement2"/>
 
         <!-- Duplicate Tab Group -->
+        <click selector="{{TabsOnStage.tabsContainer}}" after="saveEditPanelSettingsTabItem" stepKey="focusContentTypeElement2"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -53,7 +57,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
 
-        <!-- Row 1: Desktop Min Height = 500px -->
+        <!-- Tab Group 1: Desktop Min Height = 500px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="index" value="1"/>
@@ -64,7 +68,7 @@
         <actionGroup ref="ValidateMobileIconTooltipNotVisibleInEditFormActionGroup" stepKey="verifyNoMobileIconTooltip">
             <argument name="property" value="PageBuilderTabsMinHeightProperty_500"/>
         </actionGroup>
-        <!-- Row 1: Mobile Empty Min Height -->
+        <!-- Tab Group 1: Mobile Empty Min Height -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel2">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="index" value="1"/>
@@ -76,7 +80,7 @@
             <argument name="property" value="PageBuilderTabsMinHeightProperty_Empty"/>
         </actionGroup>
 
-        <!-- Row 2: Desktop Min Height = 500px -->
+        <!-- Tab Group 2: Desktop Min Height = 500px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel3">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -84,7 +88,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight500px2">
             <argument name="property" value="PageBuilderTabsMinHeightProperty_500"/>
         </actionGroup>
-        <!-- Row 2: Mobile Min Height = 200px -->
+        <!-- Tab Group 2: Mobile Min Height = 200px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel4">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -93,7 +97,7 @@
             <argument name="property" value="PageBuilderTabsMinHeightProperty_200"/>
         </actionGroup>
 
-        <!-- Row 3: Desktop Empty Min Height -->
+        <!-- Tab Group 3: Desktop Empty Min Height -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel5">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -101,7 +105,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="validateEmptyHeightField2">
             <argument name="property" value="PageBuilderTabsMinHeightProperty_Empty"/>
         </actionGroup>
-        <!-- Row 3: Mobile Min Height = 200px -->
+        <!-- Tab Group 3: Mobile Min Height = 200px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel6">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -277,7 +281,7 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
+        <executeJS function="return document.evaluate('{{TabsOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
         <assertEquals stepKey="assertFirstMinHeightStorefrontMobile">
             <actualResult type="variable">firstMinHeightStorefrontMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
