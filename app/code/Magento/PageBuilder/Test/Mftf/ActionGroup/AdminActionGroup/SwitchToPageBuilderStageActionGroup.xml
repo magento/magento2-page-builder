@@ -23,6 +23,7 @@
         <click selector="{{editButtonSelector}}" stepKey="clickEditButton"/>
         <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.rootContainer(rowIndex)}}" stepKey="waitForPageBuilderRootContainer"/>
+        <comment userInput="removing deprecated element" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
 </actionGroups>
