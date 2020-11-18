@@ -34,6 +34,10 @@
             <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
         </actionGroup>
 
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusSlideOptionMenu" before="duplicateContentType1">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+
         <!-- Duplicate Slide Item -->
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -44,7 +48,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
 
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusSlideOptionMenu" before="openEditPanel1">
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusSlideOptionMenu1" before="openEditPanel1">
             <argument name="contentType" value="PageBuilderSlideContentType"/>
         </actionGroup>
 
@@ -101,7 +105,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[1].getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageDesktop"/>
 
         <!-- Validate CMS Block Stage Mobile Viewport -->
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageMobile">
@@ -111,7 +115,7 @@
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[0].getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageMobile"/>
 
-        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[0].getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[1].getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
             <argument name="selector" value="{{SlideOnBackend.wrapper('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightCMSBlockStageMobile"/>
