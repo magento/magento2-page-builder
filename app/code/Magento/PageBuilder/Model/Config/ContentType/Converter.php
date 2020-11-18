@@ -52,6 +52,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      *
      * @param \DOMDocument $source
      * @return array
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function convertTypes(\DOMDocument $source): array
     {

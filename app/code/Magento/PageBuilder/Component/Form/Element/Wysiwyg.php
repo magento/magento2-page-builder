@@ -45,7 +45,6 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
-     * @param ViewConfigInterface $viewConfig
      * @param Repository $assetRepo
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)

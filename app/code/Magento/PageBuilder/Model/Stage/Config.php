@@ -314,6 +314,8 @@ class Config
      * @param array $contentType
      *
      * @return array
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     private function flattenContentTypeData(string $name, array $contentType)
     {

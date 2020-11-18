@@ -38,6 +38,7 @@ class UiComponentConfig
      * @param string|null $breakpoint
      *
      * @return array
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function getFields($componentName, $breakpoint = null) : array
     {
