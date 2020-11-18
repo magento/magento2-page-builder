@@ -33,7 +33,7 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="removeBannerDefaultMinHeight" before="enterPadding">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="removeSliderDefaultMinHeight" before="enterPadding">
             <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
         </actionGroup>
 
@@ -145,7 +145,7 @@
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageDesktop">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('3')}}"/>
-            <argument name="expectedProperty" value="auto"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_Auto.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageDesktop"/>
@@ -197,7 +197,7 @@
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('3')}}"/>
-            <argument name="expectedProperty" value="auto"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_Auto.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
