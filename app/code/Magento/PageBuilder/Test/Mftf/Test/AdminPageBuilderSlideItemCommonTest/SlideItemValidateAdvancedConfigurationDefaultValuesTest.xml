@@ -100,7 +100,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seePaddingStage">
             <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyOverlayDefault.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -138,7 +138,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seePaddingStage2">
             <argument name="selector" value="{{SlideOnBackend.posterPaddingPath('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyOverlayDefault.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
@@ -166,10 +166,10 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -207,7 +207,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seePaddingStorefront">
             <argument name="selector" value="{{SlideOnFrontend.posterPaddingPath('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingPropertyOverlayDefault.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
     </test>
