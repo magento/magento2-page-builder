@@ -12,12 +12,12 @@
             <description>Verifies that the Page Builder stage only has root container.</description>
         </annotations>
         <arguments>
-            <argument name="rotContainerIndex" defaultValue="1" type="string"/>
+            <argument name="rootContainerIndex" defaultValue="1" type="string"/>
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForStageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderStage.rootContainer(rotContainerIndex)}}" stepKey="waitForEmptyRootContainer"/>
-        <see userInput="Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here" selector="{{PageBuilderStage.rootContainerPlaceholder(rotContainerIndex)}}" stepKey="seeEmptyRootContainerPlaceholderMessage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.rootContainer(rootContainerIndex)}}" stepKey="waitForEmptyRootContainer"/>
+        <see userInput="Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here" selector="{{PageBuilderStage.rootContainerPlaceholder(rootContainerIndex)}}" stepKey="seeEmptyRootContainerPlaceholderMessage"/>
         <seeNumberOfElements userInput="0" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeZeroRow"/>
     </actionGroup>
 </actionGroups>
