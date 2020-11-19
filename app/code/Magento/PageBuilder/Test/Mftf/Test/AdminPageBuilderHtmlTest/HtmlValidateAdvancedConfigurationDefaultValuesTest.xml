@@ -45,7 +45,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
@@ -73,8 +73,6 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStage">
             <argument name="page" value="HtmlOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -85,9 +83,6 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStage2">
             <argument name="page" value="HtmlOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -100,7 +95,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
         <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">
