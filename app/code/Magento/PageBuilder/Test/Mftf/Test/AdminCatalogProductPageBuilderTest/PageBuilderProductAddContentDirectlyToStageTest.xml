@@ -20,16 +20,15 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory" after="loginAsAdmin"/>
-            <createData entity="_defaultProduct" stepKey="createProduct" after="createPreReqCategory">
+            <createData entity="_defaultProduct" stepKey="createCMSPage" after="createPreReqCategory">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedCMSPage">
-                <argument name="product" value="$$createProduct$$"/>
+                <argument name="product" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection" after="navigateToCreatedCMSPage"/>
         </before>
         <after>
-            <deleteData createDataKey="createProduct" before="deletePreReqCategory" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
         </after>
         <!-- Save Category and Verify Expected Content Types on Stage -->
@@ -37,8 +36,8 @@
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductsSection" after="saveAndContinueEditCmsPage"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Verify Expected Content Types on Storefront -->
-        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront4">
-            <argument name="page" value="$$createProduct.name$$.html"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.name$$.html"/>
         </actionGroup>
     </test>
 </tests>
