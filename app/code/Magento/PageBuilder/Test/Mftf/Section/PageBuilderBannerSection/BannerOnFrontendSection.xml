@@ -7,6 +7,7 @@
 -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
+        <element name="allBanners" type="button" selector="[data-content-type='banner']"/>
         <element name="base" type="button" selector="(//div[@data-content-type=&quot;banner&quot;])[{{bannerIndex}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="[data-content-type=banner]"/>
         <element name="baseJS" type="button" selector="document.querySelectorAll('[data-content-type=banner] div.pagebuilder-banner-wrapper')[{{wrapperIndex}} - 1]" parameterized="true"/>
