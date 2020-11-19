@@ -243,13 +243,15 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
  */
 function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     // If the sortable instance is disabled don't complete this operation
-    if ($(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
+    if (($(this).hasClass("ui-sortable") && $(this).sortable("option", "disabled"))
+        || ui.item.parents(hiddenClass).length > 0
+    ) {
         ui.item.remove();
         $(this).sortable("cancel");
 
         // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the content type
         if (ui.item.length > 0 && typeof ko.dataFor(ui.item[0]) !== "undefined") {
-            const contentType = ko.dataFor(ui.item[0]).contentType as ContentTypeCollectionInterface;
+            const contentType = ko.dataFor(ui.item[0]).parentContentType as ContentTypeCollectionInterface;
             const children = contentType.getChildren()().splice(0);
             contentType.getChildren()([]);
             contentType.getChildren()(children);
