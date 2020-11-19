@@ -11,7 +11,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
-            <title value="Verify Can Only Add Expected Content Types to CMSBlock Stage Directly"/>
+            <title value="Verify Can Only Add Expected Content Types to CMS Block Stage Directly"/>
             <description value="Verify user can add Row, Columns, Tabs, HTML Code, and Blocks to CMS Block stage directly. Verify user cannot add any other content type to CMS Block stage directly"/>
             <severity value="BLOCKER"/>
             <group value="pagebuilder"/>
@@ -25,68 +25,8 @@
             </actionGroup>
         </before>
         <after>
-            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock" after="deleteCMSPage"/>
         </after>
-        <!-- Verify Cannot Add Text to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragTextIntoStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Heading to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragHeadingIntoStage">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Buttons to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragButtonsIntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Divider to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragDividerIntoStage">
-            <argument name="contentType" value="PageBuilderDividerContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Video to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragVideoIntoStage">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Image to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Map to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragMapIntoStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Slider to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Banner to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
-        <!-- Verify Cannot Add Products to Stage Directly -->
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragProductsIntoStage">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="contentSection" value="BlockNewPageBasicFieldsSection.storeView"/>
-        </actionGroup>
         <!-- Save CMS Block and Verify Expected Content Types on Stage -->
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlock" after="saveAndContinueEditCmsPage">
@@ -94,7 +34,7 @@
         </actionGroup>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Navigate and insert CMSBlock to CMS Page -->
-        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageForBlock" after="dontSeeProductsAfterSave">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageForBlock" after="dontSeeProductsStageAfterSave">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreenBlock" after="navigateToCreatedCMSPageForBlock"/>
@@ -115,7 +55,6 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBlock"  after="saveEditPanelSettingsBlock"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageBlock" after="exitPageBuilderFullScreenBlock"/>
         <!-- Verify Expected Content Types on Storefront -->
-        <executeJS function="return document.querySelectorAll(&quot;{{BlockOnStorefront.allBlocks}}&quot;).length" stepKey="numberOfBlockContentTypesStorefront"/>
         <assertEquals stepKey="assertBlockStorefront">
             <expectedResult type="int">2</expectedResult>
             <actualResult type="variable">numberOfBlockContentTypesStorefront</actualResult>
