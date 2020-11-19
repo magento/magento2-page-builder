@@ -15,8 +15,8 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="borderWidth" defaultValue="{{PageBuilderAdvancedBorderWidthProperty0.value}}" type="string"/>
             <argument name="minHeight" defaultValue="{{PageBuilderMinHeightProperty_300px.intValue}}" type="string"/>
-            <argument name="paddingTop" defaultValue="{{PageBuilderPaddingPropertyDefault.paddingTop}}" type="string"/>
-            <argument name="paddingBottom" defaultValue="{{PageBuilderPaddingPropertyDefault.paddingBottom}}" type="string"/>
+            <argument name="paddingTop" defaultValue="{{PageBuilderPaddingProperty0.paddingTop}}" type="string"/>
+            <argument name="paddingBottom" defaultValue="{{PageBuilderPaddingProperty0.paddingBottom}}" type="string"/>
             <argument name="pixelBuffer" defaultValue="5" type="string"/>
         </arguments>
         <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{paddingTop}}-{{paddingBottom}}-({{borderWidth}}*2)" stepKey="actualContentHeight"/>
