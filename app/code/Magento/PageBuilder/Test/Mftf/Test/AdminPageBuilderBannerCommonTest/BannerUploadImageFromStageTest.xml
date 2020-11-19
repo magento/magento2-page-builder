@@ -53,7 +53,9 @@
         </actionGroup>
         <!-- Verify On Hover Upload Button Work-->
         <comment userInput="Verify On Hover Upload Buttons Work" stepKey="commentVerifyButtons"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusOptionMenu"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
