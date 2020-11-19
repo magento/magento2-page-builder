@@ -251,7 +251,11 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
 
         // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the content type
         if (ui.item.length > 0 && typeof ko.dataFor(ui.item[0]) !== "undefined") {
-            const contentType = ko.dataFor(ui.item[0]).parentContentType as ContentTypeCollectionInterface;
+            const data = ko.dataFor(ui.item[0]);
+            const contentType = data.contentType && data.contentType.getChildren ?
+                data.contentType as ContentTypeCollectionInterface :
+                data.parentContentType as ContentTypeCollectionInterface;
+
             const children = contentType.getChildren()().splice(0);
             contentType.getChildren()([]);
             contentType.getChildren()(children);
