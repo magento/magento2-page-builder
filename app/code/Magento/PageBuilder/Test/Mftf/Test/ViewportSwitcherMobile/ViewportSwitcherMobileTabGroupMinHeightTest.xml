@@ -105,6 +105,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="validateEmptyHeightField2">
             <argument name="property" value="PageBuilderTabsMinHeightProperty_Empty"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!-- Tab Group 3: Mobile Min Height = 200px -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel6">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
@@ -120,9 +121,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageDesktop"/>
-        <assertEquals stepKey="assertFirstMinHeightCMSBlockStageDesktop">
-            <actualResult type="variable">firstMinHeightCMSBlockStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">firstActualHeightCMSBlockStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageDesktop">
@@ -130,9 +131,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageDesktop"/>
-        <assertEquals stepKey="assertSecondMinHeightCMSBlockStageDesktop">
-            <actualResult type="variable">secondMinHeightCMSBlockStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">secondActualHeightCMSBlockStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageDesktop">
@@ -140,9 +141,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageDesktop"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSBlockStageDesktop">
-            <actualResult type="variable">thirdMinHeightCMSBlockStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderTabsDefaultMinHeight.value}}</expectedResult>
         </assertEquals>
 
@@ -152,20 +153,20 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageMobile"/>
-        <assertEquals stepKey="assertFirstMinHeightCMSBlockStageMobile">
-            <actualResult type="variable">firstMinHeightCMSBlockStageMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">firstActualHeightCMSBlockStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
-        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" before="secondMinHeightCMSBlockStageMobile" stepKey="seeSecondMinHeightCMSBlockStageMobile">
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
             <argument name="selector" value="{{TabsOnStage.tabsContentContainerIndex('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageMobile"/>
-        <comment userInput="BIC workaround" stepKey="expectedSecondHeightCMSBlockStageMobile"/>
-        <assertEquals stepKey="assertSecondMinHeightCMSBlockStageMobile">
-            <actualResult type="variable">secondMinHeightCMSBlockStageMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageMobile"/>
+        <remove keyForRemoval="expectedSecondHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">secondActualHeightCMSBlockStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsDefaultMinHeight.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageMobile">
@@ -173,9 +174,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageMobile"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSBlockStageMobile">
-            <actualResult type="variable">thirdMinHeightCMSBlockStageMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnStage.tabsContentContainerIndex('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsDefaultMinHeight.value}}</expectedResult>
         </assertEquals>
 
@@ -185,9 +186,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageDesktop"/>
-        <assertEquals stepKey="assertFirstMinHeightCMSPageStageDesktop">
-            <actualResult type="variable">firstMinHeightCMSPageStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">firstActualHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageDesktop">
@@ -195,9 +196,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageDesktop"/>
-        <assertEquals stepKey="assertSecondMinHeightCMSPageStageDesktop">
-            <actualResult type="variable">secondMinHeightCMSPageStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">secondActualHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageDesktop">
@@ -205,9 +206,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageDesktop"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSPageStageDesktop">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_80.value}}</expectedResult>
         </assertEquals>
 
@@ -217,9 +218,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
-        <assertEquals stepKey="assertFirstMinHeightCMSPageStageMobile">
-            <actualResult type="variable">firstMinHeightCMSPageStageMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">firstActualHeightCMSPageStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageMobile">
@@ -227,9 +228,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageMobile"/>
-        <assertEquals stepKey="assertSecondMinHeightCMSPageStageMobile">
-            <actualResult type="variable">secondMinHeightCMSPageStageMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">secondActualHeightCMSPageStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_200.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageMobile">
@@ -237,9 +238,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageMobile"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSPageStageMobile">
-            <actualResult type="variable">thirdMinHeightCMSPageStageMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSPageStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_200.value}}</expectedResult>
         </assertEquals>
 
@@ -249,9 +250,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
-        <assertEquals stepKey="assertFirstMinHeightStorefront">
-            <actualResult type="variable">firstMinHeightStorefront</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefront"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">firstActualHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefront">
@@ -259,9 +260,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
-        <assertEquals stepKey="assertSecondMinHeightStorefront">
-            <actualResult type="variable">secondMinHeightStorefront</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefront"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">secondActualHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefront">
@@ -269,9 +270,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
-        <assertEquals stepKey="assertThirdMinHeightStorefront">
-            <actualResult type="variable">thirdMinHeightStorefront</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">thirdActualHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_80.value}}</expectedResult>
         </assertEquals>
 
@@ -281,9 +282,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_500.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
-        <assertEquals stepKey="assertFirstMinHeightStorefrontMobile">
-            <actualResult type="variable">firstMinHeightStorefrontMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">firstActualHeightStorefrontMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_500.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefrontMobile">
@@ -291,9 +292,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefrontMobile"/>
-        <assertEquals stepKey="assertSecondMinHeightStorefrontMobile">
-            <actualResult type="variable">secondMinHeightStorefrontMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">secondActualHeightStorefrontMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_200.value}}</expectedResult>
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefrontMobile">
@@ -301,9 +302,9 @@
             <argument name="expectedProperty" value="{{PageBuilderTabsMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefrontMobile"/>
-        <assertEquals stepKey="assertThirdMinHeightStorefrontMobile">
-            <actualResult type="variable">thirdMinHeightStorefrontMobile</actualResult>
+        <executeJS function="return document.evaluate('{{TabsOnFrontend.advancedConfigurationPath('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">thirdActualHeightStorefrontMobile</actualResult>
             <expectedResult type="string">{{PageBuilderTabsMinHeightProperty_200.value}}</expectedResult>
         </assertEquals>
     </test>
