@@ -86,21 +86,21 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="firstMinHeightCMSBlockStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="firstActualHeightCMSBlockStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="secondMinHeightCMSBlockStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="secondActualHeightCMSBlockStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdMinHeightCMSBlockStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdActualHeightCMSBlockStageDesktop"/>
 
         <!-- Validate CMS Block Stage Mobile Viewport -->
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageMobile">
@@ -108,9 +108,9 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="firstMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="firstActualHeightCMSBlockStageMobile"/>
 
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="secondMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="secondActualHeightCMSBlockStageMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
             <argument name="selector" value="{{SliderOnStage.advancedConfigurationPath('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightCMSBlockStageMobile"/>
@@ -122,7 +122,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdActualHeightCMSBlockStageMobile"/>
         <assertEquals stepKey="assertThirdMinHeightCMSBlockStageMobile">
             <actualResult type="variable">thirdMinHeightCMSBlockStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
@@ -134,21 +134,21 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageDesktop">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageDesktop">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_Auto.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageDesktop"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
         <assertEquals stepKey="assertThirdMinHeightCMSPageStageDesktop">
             <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
@@ -160,9 +160,9 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageMobile"/>
 
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageMobile">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightCMSPageStageMobile"/>
@@ -174,7 +174,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageMobile"/>
         <assertEquals stepKey="assertThirdMinHeightCMSPageStageMobile">
             <actualResult type="variable">thirdMinHeightCMSPageStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
@@ -186,21 +186,21 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstActualHeightStorefront"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondActualHeightStorefront"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefront">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_Auto.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
         <assertEquals stepKey="assertThirdMinHeightStorefront">
             <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
@@ -212,9 +212,9 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[0].getBoundingClientRect().height" stepKey="firstActualHeightStorefrontMobile"/>
 
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondMinHeightStorefrontMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[1].getBoundingClientRect().height" stepKey="secondActualHeightStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefrontMobile">
             <argument name="selector" value="{{SliderOnFrontend.advancedConfigurationPath('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightStorefrontMobile"/>
@@ -226,7 +226,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdMinHeightStorefrontMobile"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
         <assertEquals stepKey="assertThirdMinHeightStorefrontMobile">
             <actualResult type="variable">thirdMinHeightCMSPageStageMobile</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>

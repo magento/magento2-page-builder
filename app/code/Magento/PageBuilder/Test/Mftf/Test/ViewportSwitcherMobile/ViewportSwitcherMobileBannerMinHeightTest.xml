@@ -82,23 +82,23 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageDesktop"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{BannerOnBackend.overlay('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageDesktop"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{BannerOnBackend.overlay('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageDesktop"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSBlockStageDesktop">
-            <actualResult type="variable">thirdMinHeightCMSBlockStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageDesktop</actualResult>
             <expectedResult type="string">50</expectedResult>
         </assertEquals>
 
@@ -108,9 +108,9 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageMobile"/>
 
-        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
             <argument name="selector" value="{{BannerOnBackend.overlay('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightCMSBlockStageMobile"/>
@@ -122,7 +122,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSBlockStageMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnBackend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageMobile"/>
 
         <!-- Validate CMS Page Stage Desktop Viewport -->
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageDesktop">
@@ -130,23 +130,23 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageDesktop"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageDesktop">
             <argument name="selector" value="{{BannerOnFrontend.overlay('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageDesktop"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageDesktop"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageDesktop">
             <argument name="selector" value="{{BannerOnFrontend.overlay('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageDesktop"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSPageStageDesktop">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">50</expectedResult>
         </assertEquals>
 
@@ -156,9 +156,9 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStageMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageMobile"/>
 
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightCMSPageStageMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageMobile">
             <argument name="selector" value="{{BannerOnFrontend.overlay('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightCMSPageStageMobile"/>
@@ -170,7 +170,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightCMSPageStageMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageMobile"/>
 
         <!-- Validate Storefront Desktop -->
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
@@ -178,23 +178,23 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefront"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefront">
             <argument name="selector" value="{{BannerOnFrontend.overlay('2')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefront"/>
 
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefront">
             <argument name="selector" value="{{BannerOnFrontend.overlay('3')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
-        <assertEquals stepKey="assertThirdMinHeightStorefront">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">thirdActualHeightStorefront</actualResult>
             <expectedResult type="string">50</expectedResult>
         </assertEquals>
 
@@ -204,9 +204,9 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefrontMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefrontMobile"/>
 
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefrontMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefrontMobile">
             <argument name="selector" value="{{BannerOnFrontend.overlay('2')}}"/>
             <argument name="expectedProperty" value="$expectedSecondHeightStorefrontMobile"/>
@@ -218,6 +218,6 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefrontMobile"/>
+        <executeJS function="return document.evaluate('{{BannerOnFrontend.overlay('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
     </test>
 </tests>
