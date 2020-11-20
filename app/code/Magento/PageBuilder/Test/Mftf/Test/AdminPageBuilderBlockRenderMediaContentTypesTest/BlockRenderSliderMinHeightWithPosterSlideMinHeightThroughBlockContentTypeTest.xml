@@ -150,7 +150,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="firstSliderMinHeightCMSBlockStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[0].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthProperty1.value}}*2)" stepKey="firstSliderMinHeightCMSBlockStage"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[0].getBoundingClientRect().height" stepKey="firstSlideMinHeightCMSBlockStage"/>
         <assertEquals stepKey="assertFirstSliderMinHeightCMSBlockStage">
             <actualResult type="variable">firstSliderMinHeightCMSBlockStage</actualResult>
@@ -166,7 +166,7 @@
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2)" stepKey="secondSliderMinHeightCMSBlockStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[1].getBoundingClientRect().height" stepKey="secondSliderMinHeightCMSBlockStage"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[1].getBoundingClientRect().height" stepKey="secondSlideMinHeightCMSBlockStage"/>
         <assertEquals stepKey="assertSecondSliderMinHeightCMSBlockStage">
             <actualResult type="variable">secondSliderMinHeightCMSBlockStage</actualResult>
@@ -178,7 +178,7 @@
         </assertEquals>
         <comment userInput="BIC workaround" stepKey="seeThirdSliderMinHeightCMSBlockStage"/>
         <comment userInput="BIC workaround" stepKey="seeThirdSlideHeightCMSBlockStage"/>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdSliderMinHeightCMSBlockStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthProperty1.value}}*2)" stepKey="thirdSliderMinHeightCMSBlockStage"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdSlideMinHeightCMSBlockStage"/>
         <assertEquals stepKey="assertThirdSliderMinHeightCMSBlockStage">
             <actualResult type="variable">thirdSliderMinHeightCMSBlockStage</actualResult>
@@ -194,7 +194,7 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <comment userInput="BIC workaround" stepKey="seeFourthSlideHeightCMSBlockStage"/>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[3].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="fourthSliderMinHeightCMSBlockStage"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[3].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthProperty1.value}}*2)" stepKey="fourthSliderMinHeightCMSBlockStage"/>
         <executeJS function="return document.querySelectorAll('{{SlideOnBackend.wrapperCSS}}')[3].getBoundingClientRect().height" stepKey="fourSlideMinHeightCMSBlockStage"/>
         <executeJS function="return Math.abs({$viewportHeightCMSBlockStage} - 200)" stepKey="expectedFourthHeightCMSBlockStage"/>
         <assertEquals stepKey="assertFourthSliderMinHeightCMSBlockStage">
