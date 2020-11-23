@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="BlockImageIsRightAlignedTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -102,7 +101,7 @@
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockBeforeSave">
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -117,7 +116,7 @@
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockAfterSave">
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <!-- Verify Right Alignment In Storefront -->
         <comment userInput="Verify right alignment in storefront" stepKey="commentVerifyRightAlignmentInStorefront"/>
@@ -132,7 +131,7 @@
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockStorefront">
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
     </test>
 </tests>

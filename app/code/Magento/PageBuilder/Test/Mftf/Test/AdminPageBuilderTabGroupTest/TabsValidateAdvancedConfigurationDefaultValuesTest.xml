@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TabsValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -35,6 +34,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+
         <!-- Add Tabs to Stage -->
         <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
@@ -43,11 +43,13 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+
         <!-- Open Tabs Panel -->
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="validateTextAlignment" stepKey="validateAlignment">
@@ -61,7 +63,7 @@
             <actualResult type="variable">getBorderColor</actualResult>
         </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
@@ -77,26 +79,27 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForDefaultBorderStyleTab">
             <argument name="selector" value="{{TabOnStage.tabHeaderItem('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty0.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForDefaultBorderWidthStyleTab">
             <argument name="selector" value="{{TabOnStage.tabHeaderItem('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty1.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForDefaultBorderStyleTabs">
             <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty0.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForDefaultBorderWidthStyleTabs">
             <argument name="selector" value="{{TabsOnStage.tabsContent}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty1.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="waitForDefaultMinHeightStyleTabs">

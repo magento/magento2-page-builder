@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ViewportSwitcherMobileColumnFullHeightAppearanceThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -60,6 +59,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
+
         <!-- Edit Column 1 -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -96,6 +96,7 @@
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn1"/>
+
         <!-- Edit Column 2 -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -108,6 +109,7 @@
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn2"/>
+
         <!-- Add Divider To Column 1 -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionDivider">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -117,6 +119,7 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
+
         <!-- Validate CMS Block Stage in Mobile Viewport -->
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStageMobile">
             <argument name="section" value="ColumnOnBackend"/>
@@ -131,12 +134,15 @@
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStageMobile">
             <argument name="page" value="DividerOnStage"/>
         </actionGroup>
+
         <!-- Validate CMS Block Stage Desktop Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewport">
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
-        <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSBlockStage"/>
+        <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSBlockStage">
+            <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
+        </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="ColumnOnBackend"/>
             <argument name="index" value="1"/>
@@ -166,9 +172,9 @@
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
         </actionGroup>
-
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+
         <!-- Add Block to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -195,6 +201,7 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+
         <!-- Validate CMS Page Stage on Mobile Viewport-->
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageMobile">
             <argument name="section" value="ColumnOnFrontend"/>
@@ -263,6 +270,7 @@
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
@@ -305,6 +313,7 @@
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
             <argument name="page" value="DividerOnStorefront"/>
         </actionGroup>
+
         <!-- Validate CMS Page Storefront Mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
         <reloadPage stepKey="reloadPage"/>

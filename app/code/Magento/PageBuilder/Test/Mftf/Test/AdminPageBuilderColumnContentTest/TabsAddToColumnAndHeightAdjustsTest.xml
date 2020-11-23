@@ -44,14 +44,14 @@
         <comment userInput="Validate Column Height adjusts to Tabs Height" stepKey="commentValidateColumnHeightWithTabs"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderTabsContentType.role,'1')}}" stepKey="actualStageTabsHeight"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageColumnHeightWithTabs"/>
-        <executeJS function="return Math.round({$actualStageTabsHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedColumnHeightWithTabsAndPadding"/>
+        <executeJS function="return Math.round({$actualStageTabsHeight}+{{PageBuilderColumnAffordanceHeight.value}})" stepKey="expectedColumnHeightWithTabsAndPadding"/>
         <assertEquals stepKey="assertColumnHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedColumnHeightWithTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageColumnHeightWithTabs</actualResult>
         </assertEquals>
         <comment userInput="Validate Row Height adjusts to Tabs inside Column" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
-        <executeJS function="return Math.round({$actualStageColumnHeightWithTabs}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
+        <executeJS function="return Math.round({$actualStageColumnHeightWithTabs})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>

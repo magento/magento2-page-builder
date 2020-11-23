@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="DefaultTabItemStateOnAddingNewTabTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -100,22 +99,22 @@
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC10"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1BorderWidth">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderWidthProperty1.value}}"/>
             <argument name="cssProperty" value="borderWidth"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1BorderRadius">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusDefaultProperty.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderAdvancedBorderRadiusProperty0.value}}"/>
             <argument name="cssProperty" value="borderRadius"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1Margins">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMarginsPropertyTabDefault.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMarginsProperty0.value}}"/>
             <argument name="cssProperty" value="margin"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTab1Padding">
             <argument name="selector" value="{{TabOnStage.tabContent('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty40.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderPaddingProperty0.value}}"/>
             <argument name="cssProperty" value="padding"/>
         </actionGroup>
         <!-- Validate Default Values on Edit Tab for initial tab -->

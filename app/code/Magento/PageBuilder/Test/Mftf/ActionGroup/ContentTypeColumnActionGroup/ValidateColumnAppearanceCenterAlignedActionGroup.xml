@@ -11,6 +11,6 @@
         <comment userInput="validateColumnAppearanceCenterAligned" stepKey="comment"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Center.value)}}" stepKey="seeColumnAppearance"/>
         <executeJS function="return Math.round(document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().top + (document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].clientHeight / 2))" stepKey="topOfColumnGroup"/>
-        <executeJS function="return Math.round(document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top  + (document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight / 2))" stepKey="topOfIndividualColumn"/>
+        <executeJS function="return Math.round(document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top  + (document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight / 2) + ({{affordanceValue}}/2))" stepKey="topOfIndividualColumn"/>
     </actionGroup>
 </actionGroups>

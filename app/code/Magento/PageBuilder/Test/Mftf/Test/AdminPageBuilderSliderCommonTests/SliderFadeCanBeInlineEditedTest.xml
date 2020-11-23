@@ -70,14 +70,14 @@
         <executeJS function="return document.querySelectorAll('[data-content-type=slide]')[1].getBoundingClientRect().right" stepKey="slideRightPosition"/>
         <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().left" stepKey="sliderLeftPosition"/>
         <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().right" stepKey="sliderRightPosition"/>
-        <assertLessThan stepKey="assertSlideRightSideIsLessThanSliderRightSide">
+        <assertLessThanOrEqual stepKey="assertSlideRightSideIsLessThanSliderRightSide">
             <expectedResult type="variable">sliderRightPosition</expectedResult>
             <actualResult type="variable">slideRightPosition</actualResult>
-        </assertLessThan>
-        <assertGreaterThan stepKey="assertSlideLeftSideIsGreaterThanSliderLeftSide">
+        </assertLessThanOrEqual>
+        <assertLessThanOrEqual stepKey="assertSlideLeftSideIsGreaterThanSliderLeftSide">
             <expectedResult type="variable">sliderLeftPosition</expectedResult>
             <actualResult type="variable">slideLeftPosition</actualResult>
-        </assertGreaterThan>
+        </assertLessThanOrEqual>
         <!-- Add Content To Slide 2 -->
         <comment userInput="Add Content To Slide 2" stepKey="commentAddContentToSlide2"/>
         <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">

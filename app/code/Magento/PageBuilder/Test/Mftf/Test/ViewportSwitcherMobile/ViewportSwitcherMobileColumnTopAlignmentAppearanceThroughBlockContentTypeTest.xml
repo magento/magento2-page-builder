@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ViewportSwitcherMobileColumnTopAlignmentAppearanceThroughBlockContentTypeTest" extends="ViewportSwitcherMobileColumnFullHeightAppearanceThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -32,6 +31,7 @@
 
         <!-- Validate CMS Block Stage Desktop Viewport -->
         <actionGroup ref="validateColumnAppearanceTopAligned" stepKey="validateColumn1AppearanceCMSBlockStage">
+            <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">

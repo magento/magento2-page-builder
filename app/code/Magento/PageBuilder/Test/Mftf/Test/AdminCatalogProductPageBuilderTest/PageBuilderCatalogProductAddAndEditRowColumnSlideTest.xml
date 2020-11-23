@@ -44,6 +44,14 @@
             <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
+        <!-- Edit 1st Row -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettingsRow"/>
         <!-- Add 2nd Row -->
         <comment userInput="Add 2nd Row" stepKey="commentAddRow"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowToStage">

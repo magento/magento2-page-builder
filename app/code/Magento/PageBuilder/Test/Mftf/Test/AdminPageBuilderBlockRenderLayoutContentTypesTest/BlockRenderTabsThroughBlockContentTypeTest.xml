@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="BlockRenderTabsThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -61,6 +60,7 @@
         <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+
         <!-- Edit Tab Group -->
         <comment userInput="Edit Tab Group" stepKey="commentEditTabs"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuTabs">
@@ -76,6 +76,7 @@
             <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTabs"/>
+
         <!-- Edit Tab 1 -->
         <comment userInput="Edit Tab 1" stepKey="commentEditTab1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelTab1">
@@ -113,7 +114,7 @@
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTab1"/>
-        <!-- Add Divider To Tab 1 -->
+        <!-- Add Divider -->
         <comment userInput="Add Divider To Tab 1" stepKey="commentAddDividerToTab1"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelDividerMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -123,6 +124,7 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
+
         <!-- Edit Tab 2 -->
         <comment userInput="Edit Tab 2" stepKey="commentEditTab2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelTab2">
@@ -139,6 +141,7 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeElement selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSBlockStage"/>
@@ -195,15 +198,14 @@
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSBlockStage">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
-            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty0.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <seeElement selector="{{DividerOnStage.base('1')}}" stepKey="seeDividerCMSBlockStage"/>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
         </actionGroup>
+
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
@@ -227,6 +229,7 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeTab2ActiveCMSPageStage"/>
@@ -255,12 +258,13 @@
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSPageStage">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderTabMinHeight0Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty20.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty20.paddingBottom}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
@@ -337,6 +341,7 @@
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
             <argument name="page" value="DividerOnStorefront"/>
         </actionGroup>
+
         <!-- Validate CMS Page Storefront Mobile -->
         <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefrontMobile"/>
@@ -376,6 +381,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+
         <!-- Change Default Tab -->
         <comment userInput="Change Default Tab" stepKey="commentChangeDefaultTab"/>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
@@ -400,6 +406,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTabs2"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock2"/>
+
         <!-- Validate CMS Page Stage Again -->
         <comment userInput="Validate CMS Page Stage Again" stepKey="commentValidateCMSPageStageAgain"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">

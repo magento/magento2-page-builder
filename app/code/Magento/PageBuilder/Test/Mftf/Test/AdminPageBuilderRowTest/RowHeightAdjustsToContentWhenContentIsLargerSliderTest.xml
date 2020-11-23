@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="RowHeightAdjustsToContentWhenContentIsLargerSliderTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -38,8 +37,8 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
-            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
-            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty0"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -54,11 +53,12 @@
             <argument name="containerDefaultHeight" value="PageBuilderEmptySliderContainerHeight"/>
             <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
             <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+            <argument name="expectedBorderWidth" value="PageBuilderAdvancedBorderWidthProperty1"/>
         </actionGroup>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
         <comment userInput="Validate Row Height adjusts to Slider Height on Stage" stepKey="commentValidateRowHeightAdjustToSlider"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
-        <executeJS function="return Math.round({$actualStageInitialSliderHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
+        <executeJS function="return Math.round({$actualStageInitialSliderHeight})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToSliderHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndSlider</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithSlider</actualResult>

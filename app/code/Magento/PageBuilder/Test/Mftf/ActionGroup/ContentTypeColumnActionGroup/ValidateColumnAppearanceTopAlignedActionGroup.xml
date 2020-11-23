@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateColumnAppearanceTopAligned">
         <arguments>
             <argument name="section" defaultValue="ColumnOnBackend"/>
@@ -14,14 +13,16 @@
             <argument name="columnIndex" defaultValue="1" type="string"/>
             <argument name="columnGroupIndex" defaultValue="1" type="string"/>
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
+            <argument name="affordanceValue" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="validateColumnAppearanceTopAligned" stepKey="comment"/>
         <waitForElementVisible selector="{{section.columnGroup(columnGroupIndex)}}" stepKey="waitForColumnGroup"/>
         <waitForElementVisible selector="{{section.base(columnIndex)}}" stepKey="waitForColumn"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Top.value)}}" stepKey="seeColumnAppearance"/>
-        <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight" stepKey="individualColumnHeight"/>
+        <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight + {{affordanceValue}}" stepKey="individualColumnHeight"/>
         <executeJS function="return Math.round(Math.abs({$individualColumnHeight}-{{height.value}}))" stepKey="heightDifference"/>
-        <!-- Validate height of column -->
+
+        <!-- Validate Height of Column -->
         <assertLessThanOrEqual stepKey="assertContentHeightAcceptable">
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>
             <actualResult type="variable">heightDifference</actualResult>
@@ -29,7 +30,8 @@
         <executeJS function="return document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().top" stepKey="topOfColumnGroup"/>
         <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top" stepKey="topOfIndividualColumn"/>
         <executeJS function="return Math.round(Math.abs({$topOfColumnGroup}-{$topOfIndividualColumn}))" stepKey="topOfColumnDifference"/>
-        <!-- Validate position of column -->
+
+        <!-- Validate Position of Column -->
         <assertLessThan stepKey="assertTopOfColumnAcceptable">
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>
             <actualResult type="variable">topOfColumnDifference</actualResult>

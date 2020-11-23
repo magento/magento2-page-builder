@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselValidateAdvancedConfigurationDefaultValuesTest" extends="ProductsValidateAdvancedConfigurationDefaultValuesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Validate Advanced Configuration Default Values for Products (Carousel)"/>
+            <description value="Validates the default values for every attribute in the Advanced form and on Stage for Products Carousel."/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <!-- Select Product Carousel Appearance -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance" after="openEditAfterDrop">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+</tests>

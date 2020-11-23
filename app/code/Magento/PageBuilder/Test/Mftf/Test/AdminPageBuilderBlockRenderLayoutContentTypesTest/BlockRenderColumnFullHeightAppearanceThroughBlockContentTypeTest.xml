@@ -122,7 +122,9 @@
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSBlockStage"/>
+        <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSBlockStage">
+            <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
+        </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="ColumnOnBackend"/>
             <argument name="index" value="1"/>

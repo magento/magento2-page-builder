@@ -142,17 +142,17 @@
         <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthFrontend"/>
         <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthFrontend"/>
         <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productActions}}')[0].clientWidth" stepKey="productActionsWidthFrontend"/>
-        <assertGreaterThan stepKey="assertColumnIsWiderThanProductImageFrontend">
+        <assertGreaterThanOrEqual stepKey="assertColumnIsWiderThanProductImageFrontend">
             <actualResult type="variable">firstColumnWidthFrontend</actualResult>
             <expectedResult type="variable">productImageWidthFrontend</expectedResult>
-        </assertGreaterThan>
-        <assertGreaterThan stepKey="assertColumnIsWiderThanProductPriceContainerFrontend">
+        </assertGreaterThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertColumnIsWiderThanProductPriceContainerFrontend">
             <actualResult type="variable">firstColumnWidthFrontend</actualResult>
             <expectedResult type="variable">productPriceContainerWidthFrontend</expectedResult>
-        </assertGreaterThan>
-        <assertGreaterThan stepKey="assertColumnIsWiderThanProductActionsFrontend">
+        </assertGreaterThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertColumnIsWiderThanProductActionsFrontend">
             <actualResult type="variable">firstColumnWidthFrontend</actualResult>
             <expectedResult type="variable">productActionsWidthFrontend</expectedResult>
-        </assertGreaterThan>
+        </assertGreaterThanOrEqual>
     </test>
 </tests>

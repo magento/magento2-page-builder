@@ -55,14 +55,14 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverColumn"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-column'),null).getPropertyValue('box-shadow')" stepKey="getDefaultColumnBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultColumnBoxShadowStyle" message="pass">
-            <expectedResult type="string">{{PageBuilderBoxShadowProperty_Default.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_Affordance.value}}</expectedResult>
             <actualResult type="variable">getDefaultColumnBoxShadowStyle</actualResult>
         </assertEquals>
         <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn"/>
         <waitForPageLoad stepKey="waitForColumnHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-column'),null).getPropertyValue('box-shadow')" stepKey="getDefaultColumnHoverBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultColumnHoverBoxShadowStyle" message="pass">
-            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Affordance.value}}</expectedResult>
             <actualResult type="variable">getDefaultColumnHoverBoxShadowStyle</actualResult>
         </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">

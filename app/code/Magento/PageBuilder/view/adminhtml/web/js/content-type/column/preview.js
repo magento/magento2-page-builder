@@ -1,6 +1,8 @@
 /*eslint-disable */
 /* jscs:disable */
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -47,7 +49,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this.contentType.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_this)), "width");
 
-      _this.contentType.parentContentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_this)), "grid_size");
+      _this.contentType.parentContentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_this)), "grid_size"); // Update the column number for the column
+
+
+      _this.contentType.parentContentType.children.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_this)));
 
       return _this;
     }
@@ -106,6 +111,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         element: (0, _jquery)(element),
         columnGroup: this.contentType.parentContentType
       });
+
+      this.updateDisplayLabel();
     }
     /**
      * Return an array of options
@@ -249,7 +256,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
         var gridSize = this.contentType.parentContentType.preview.gridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
-        this.displayLabel((0, _translate)("Column") + " " + newLabel);
+        var columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
+        var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
+        this.displayLabel((0, _translate)("Column") + " " + columnNumber + "(" + newLabel + ")");
       }
     }
     /**
@@ -271,6 +280,40 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var roundedWidth = Math.ceil(parseFloat(this.contentType.dataStore.get("width").toString()) / 10) * 10;
       this.element.addClass("column-width-" + roundedWidth);
+    }
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyle = function getStyle(element, styleProperties) {
+      var stylesObject = element.style();
+      return styleProperties.reduce(function (obj, key) {
+        var _extends2;
+
+        return _extends({}, obj, (_extends2 = {}, _extends2[key] = stylesObject[key], _extends2));
+      }, {});
+    }
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
+      var stylesObject = element.style();
+      return Object.keys(stylesObject).filter(function (key) {
+        return !styleProperties.includes(key);
+      }).reduce(function (obj, key) {
+        var _extends3;
+
+        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
+      }, {});
     }
     /**
      * Fire the mount event for content types

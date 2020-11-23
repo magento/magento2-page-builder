@@ -64,8 +64,8 @@
         <comment userInput="Verify Column Number and Size" stepKey="context3"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns"/>
         <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidth"/>
         <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
         <assertEquals stepKey="assertRatioIsCorrect">
             <expectedResult type="int">5</expectedResult>
@@ -78,8 +78,8 @@
         <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
         <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers2"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').offsetWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').offsetWidth" stepKey="columnTwoWidth2"/>
         <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio2"/>
         <assertEquals stepKey="assertRatioIsCorrect2">
             <expectedResult type="int">5</expectedResult>
