@@ -291,14 +291,8 @@ export default class PageBuilder implements PageBuilderInterface {
     }
 
     private initViewports(config: any): void {
-        _.each(config.viewports, (viewport: any, name: string) => {
-            if (viewport.stage) {
-                this.viewports[name] = viewport;
-            }
-        });
-        this.defaultViewport = _.findKey(this.viewports, (viewport: any) => {
-            return viewport.default;
-        });
+        this.viewports = config.viewports;
+        this.defaultViewport = config.defaultViewport;
         this.viewport(this.defaultViewport);
         Config.setConfig({
             viewport: this.defaultViewport,

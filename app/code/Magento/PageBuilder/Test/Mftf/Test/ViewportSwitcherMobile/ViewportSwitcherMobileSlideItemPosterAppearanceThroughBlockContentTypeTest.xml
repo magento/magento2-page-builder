@@ -92,7 +92,7 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+        <actionGroup ref="AddTextToTinyMCEMobileFormActionGroup" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
@@ -147,7 +147,9 @@
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageCMSBlockStageMobile">
+            <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStageMobile"/>
@@ -207,7 +209,9 @@
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageCMSBlockStage">
+            <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
@@ -287,7 +291,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageMobile">
             <argument name="section" value="SlideOnFrontend"/>
@@ -338,7 +341,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageAfterSave">
             <argument name="section" value="SlideOnFrontend"/>
@@ -391,7 +393,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
@@ -457,7 +458,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
             <argument name="section" value="SlideOnFrontend"/>

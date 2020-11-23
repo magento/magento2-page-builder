@@ -4,8 +4,9 @@
  */
 
 import _ from "underscore";
+import Config from "../config";
 import ContentTypeInterface from "../content-type.types";
-import {DataObject} from "../data-store";
+import DataStore, {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
@@ -102,7 +103,27 @@ export default class Master {
         this.observableUpdater.update(
             this,
             _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState()),
+            this.getDataStoresStates(),
         );
         this.afterObservablesUpdated();
+    }
+
+    /**
+     * Get data stores states only for viewport fields
+     */
+    private getDataStoresStates() {
+        const result: {[key: string]: any} = {};
+
+        _.each(this.contentType.dataStores, (dataStore: DataStore, name: string) => {
+            if (Config.getConfig("defaultViewport") !== name) {
+                const dataStoreFields = _.keys(this.contentType.getDiffViewportFields(name, dataStore.getState()));
+
+                result[name] = _.pick(dataStore.getState(), dataStoreFields);
+            } else {
+                result[name] = dataStore.getState();
+            }
+        });
+
+        return result;
     }
 }

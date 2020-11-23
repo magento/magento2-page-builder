@@ -31,35 +31,67 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
   function convertToInlineStyles(document) {
     var styleBlocks = document.getElementsByTagName("style");
-    var styles = {};
+    var viewportStyles = {};
+
+    _.each(_config.getConfig("viewports"), function (viewport, name) {
+      return viewportStyles[name] = {};
+    });
 
     if (styleBlocks.length > 0) {
       Array.from(styleBlocks).forEach(function (styleBlock) {
         var cssRules = styleBlock.sheet.cssRules;
-        Array.from(cssRules).forEach(function (rule) {
-          var selectors = rule.selectorText.split(",").map(function (selector) {
-            return selector.trim();
-          });
-          selectors.forEach(function (selector) {
-            if (!styles[selector]) {
-              styles[selector] = [];
-            }
-
-            styles[selector].push(rule.style);
-          });
-        });
+        processCssRules(cssRules, viewportStyles, _config.getConfig("defaultViewport"));
         styleBlock.remove();
       });
     }
 
-    _.each(styles, function (stylesArray, selector) {
-      var element = document.querySelector(selector);
+    _.each(viewportStyles, function (styles, name) {
+      _.each(styles, function (stylesArray, selector) {
+        var element = document.querySelector(selector);
 
-      _.each(stylesArray, function (style) {
-        element.setAttribute("style", element.style.cssText + style.cssText);
+        _.each(stylesArray, function (style) {
+          element.setAttribute("data-" + name + "-style", element.getAttribute("data-" + name + "-style") ? element.getAttribute("data-" + name + "-style") + style.cssText : style.cssText);
+        });
       });
+    });
 
+    document.querySelectorAll("[" + _styleRegistry.pbStyleAttribute + "]").forEach(function (element) {
       element.removeAttribute(_styleRegistry.pbStyleAttribute);
+    });
+  }
+  /**
+   * Process styles and assign them to corespondent style object.
+   *
+   * @param cssRules
+   * @param styles
+   * @param scope
+   */
+
+
+  function processCssRules(cssRules, styles, scope) {
+    Array.from(cssRules).forEach(function (rule) {
+      if (rule instanceof CSSStyleRule) {
+        var selectors = rule.selectorText.split(",").map(function (selector) {
+          return selector.trim();
+        });
+        selectors.forEach(function (selector) {
+          if (!styles[scope][selector]) {
+            styles[scope][selector] = [];
+          }
+
+          styles[scope][selector].push(rule.style);
+        });
+      } else if (rule instanceof CSSMediaRule) {
+        var mediaCssRules = rule.cssRules;
+
+        var mediaScope = _.findKey(_config.getConfig("viewports"), function (viewport) {
+          return rule.conditionText === viewport.media;
+        });
+
+        if (mediaScope) {
+          processCssRules(mediaCssRules, styles, mediaScope);
+        }
+      }
     });
   }
   /**
@@ -121,8 +153,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       return Promise.reject("Unable to load Page Builder configuration for content type \"" + role + "\".");
     }
 
-    return getElementData(element, config).then(function (data) {
-      return (0, _contentTypeFactory)(config, contentType, stage.id, data, getElementChildren(element).length);
+    return getElementData(element, config).then( // @ts-ignore
+    function (data) {
+      return (0, _contentTypeFactory)(config, contentType, stage.id, data[_config.getConfig("defaultViewport")], getElementChildren(element).length, data);
     });
   }
   /**
@@ -158,11 +191,12 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
              * Iterate through the reader data and set the values onto the result array to ensure dot notation
              * keys are properly handled.
              */
-            _.each(readerData, function (value, key) {
+            _.each(readerData[_config.getConfig("defaultViewport")], function (value, key) {
               (0, _object.set)(result, key, value);
             });
 
-            resolve(result);
+            readerData[_config.getConfig("defaultViewport")] = result;
+            resolve(readerData);
           });
         });
       }
