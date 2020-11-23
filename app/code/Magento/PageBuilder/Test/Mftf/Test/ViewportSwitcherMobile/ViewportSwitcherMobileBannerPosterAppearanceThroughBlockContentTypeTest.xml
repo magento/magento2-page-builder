@@ -166,7 +166,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
