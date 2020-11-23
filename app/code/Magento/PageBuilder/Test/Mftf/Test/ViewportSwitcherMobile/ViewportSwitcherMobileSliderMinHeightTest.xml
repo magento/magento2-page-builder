@@ -227,8 +227,8 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
-        <assertGreaterThanOrEqual stepKey="assertThirdMinHeightStorefrontMobile">
-            <actualResult type="variable">assertThirdHeightEqualsMinHeightStorefrontMobile</actualResult>
+        <assertGreaterThanOrEqual stepKey="assertThirdHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">thirdActualHeightStorefrontMobile</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
         </assertGreaterThanOrEqual>
     </test>
