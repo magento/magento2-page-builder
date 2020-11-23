@@ -150,8 +150,8 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSPageStageDesktop">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
         </assertEquals>
 
@@ -198,8 +198,8 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SlideOnFrontend.wrapperCSS}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
-        <assertEquals stepKey="assertThirdMinHeightStorefront">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">thirdActualHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
         </assertEquals>
 

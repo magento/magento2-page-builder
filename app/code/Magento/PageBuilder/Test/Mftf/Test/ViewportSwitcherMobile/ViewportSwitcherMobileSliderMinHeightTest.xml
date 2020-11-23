@@ -123,10 +123,10 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnStage.containerCSS}}')[2].getBoundingClientRect().height-({{PageBuilderAdvancedBorderWidthPropertyDefault.value}}*2*2)" stepKey="thirdActualHeightCMSBlockStageMobile"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSBlockStageMobile">
-            <actualResult type="variable">thirdMinHeightCMSBlockStageMobile</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
-        </assertEquals>
+        <assertGreaterThanOrEqual stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertGreaterThanOrEqual>
 
         <!-- Validate CMS Page Stage Desktop Viewport -->
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageDesktop">
@@ -149,8 +149,8 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSPageStageDesktop">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSPageStageDesktop</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
         </assertEquals>
 
@@ -175,10 +175,10 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageMobile"/>
-        <assertEquals stepKey="assertThirdMinHeightCMSPageStageMobile">
-            <actualResult type="variable">thirdMinHeightCMSPageStageMobile</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
-        </assertEquals>
+        <assertGreaterThanOrEqual stepKey="assertThirdHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertGreaterThanOrEqual>
 
         <!-- Validate Storefront Desktop -->
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
@@ -201,8 +201,8 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
-        <assertEquals stepKey="assertThirdMinHeightStorefront">
-            <actualResult type="variable">thirdMinHeightCMSPageStageDesktop</actualResult>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">thirdActualHeightStorefront</actualResult>
             <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
         </assertEquals>
 
@@ -227,9 +227,9 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{SliderOnFrontend.all}}')[2].getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
-        <assertEquals stepKey="assertThirdMinHeightStorefrontMobile">
-            <actualResult type="variable">thirdMinHeightCMSPageStageMobile</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
-        </assertEquals>
+        <assertGreaterThanOrEqual stepKey="assertThirdMinHeightStorefrontMobile">
+            <actualResult type="variable">assertThirdHeightEqualsMinHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertGreaterThanOrEqual>
     </test>
 </tests>
