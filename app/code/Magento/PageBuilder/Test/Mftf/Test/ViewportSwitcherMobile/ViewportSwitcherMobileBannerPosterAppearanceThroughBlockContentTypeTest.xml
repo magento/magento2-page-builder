@@ -166,7 +166,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
@@ -226,7 +226,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStageDesktop"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStageDesktop"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageDesktop}-{$overlayLeftPositionCMSBlockStageDesktop}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageDesktop"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageDesktop}-{$overlayLeftPositionCMSBlockStageDesktop}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageDesktop"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStageDesktop">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStageDesktop</actualResult>
@@ -294,7 +294,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStage"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStage"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStage">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStage</actualResult>
@@ -345,7 +345,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStageDesktop"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageDesktop"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageDesktop}-{$overlayLeftPositionCMSPageStageDesktop}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageDesktop"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageDesktop}-{$overlayLeftPositionCMSPageStageDesktop}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageDesktop"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStageDesktop">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStageDesktop</actualResult>
@@ -407,7 +407,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefront">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStorefront</actualResult>
