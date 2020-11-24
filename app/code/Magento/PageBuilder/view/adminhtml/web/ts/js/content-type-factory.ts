@@ -94,6 +94,7 @@ function assignDataToDataStores(
     viewportsData: {[key: string]: any},
 ) {
     const defaultData = prepareData(config, data);
+    const currentViewport = Config.getConfig("viewport") || Config.getConfig("defaultViewport");
 
     _.each(Config.getConfig("viewports"), (viewport: ContentTypeConfigBreakpointInterface, name: string) => {
         let viewportData = {};
@@ -107,7 +108,7 @@ function assignDataToDataStores(
         contentType.dataStores[name].setState(_.extend({}, defaultData, viewportData));
     });
 
-    contentType.dataStore.setState(defaultData);
+    contentType.dataStore.setState(contentType.dataStores[currentViewport].getState());
 }
 
 /**

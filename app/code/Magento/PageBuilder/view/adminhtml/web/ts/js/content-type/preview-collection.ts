@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../config";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
 import ContentTypeInterface from "../content-type.types";
@@ -34,6 +35,7 @@ export default class PreviewCollection extends Preview implements PreviewCollect
         autoAppend: boolean = true,
         direct: boolean = false,
     ): Promise<ContentTypeCollectionInterface> | void {
+        const defaultViewport = Config.getConfig("defaultViewport");
         const index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
         const childrenLength = contentType.children ? contentType.children().length : null;
 
@@ -42,8 +44,9 @@ export default class PreviewCollection extends Preview implements PreviewCollect
                 contentType.config,
                 contentType.parentContentType,
                 contentType.stageId,
-                contentType.dataStore.getState(),
+                contentType.dataStores[defaultViewport].getState(),
                 childrenLength,
+                contentType.getDataStoresStates(),
             ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate

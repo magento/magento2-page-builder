@@ -154,8 +154,16 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="1" stepKey="seeOneRowStorefront"/>
-        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeTwoColumnsStorefront"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{RowOnStorefront.allRows}}&quot;).length" stepKey="numberOfRowContentTypesStorefront"/>
+        <assertEquals stepKey="assertRowStorefront">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">numberOfRowContentTypesStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return document.querySelectorAll(&quot;{{ColumnOnFrontend.baseCSS}}&quot;).length" stepKey="numberOfColumnsContentTypesStorefront"/>
+        <assertEquals stepKey="assertColumnsStorefront">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">numberOfColumnsContentTypesStorefront</actualResult>
+        </assertEquals>
         <seeNumberOfElements selector="{{TabOnStorefront.allTabs}}" userInput="1" stepKey="seeOneTabStorefront"/>
         <executeJS function="return document.querySelectorAll(&quot;{{HtmlOnStorefront.allHtml}}&quot;).length" stepKey="numberOfHTMLContentTypesStorefront"/>
         <assertEquals stepKey="assertHTMLStorefront">

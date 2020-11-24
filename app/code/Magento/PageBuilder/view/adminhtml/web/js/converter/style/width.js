@@ -44,7 +44,7 @@ define([], function () {
     ;
 
     _proto.toDom = function toDom(name, data) {
-      if (data[name] !== "") {
+      if (data[name] && data[name] !== "") {
         var marginsAndPadding = data.margins_and_padding || {};
         var margins = marginsAndPadding.margin || "";
         var marginLeft = margins.left ? parseInt(margins.left, 10) : 0;

@@ -5,7 +5,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _config, _object, _appearanceConfig) {
+define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _object, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -101,30 +101,8 @@ define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/u
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
         name: this.contentType.config.name
-      }, this.contentType.dataStore.getState()), this.getDataStoresStates());
+      }, this.contentType.dataStore.getState()), this.contentType.getDataStoresStates());
       this.afterObservablesUpdated();
-    }
-    /**
-     * Get data stores states only for viewport fields
-     */
-    ;
-
-    _proto.getDataStoresStates = function getDataStoresStates() {
-      var _this2 = this;
-
-      var result = {};
-
-      _underscore.each(this.contentType.dataStores, function (dataStore, name) {
-        if (_config.getConfig("defaultViewport") !== name) {
-          var dataStoreFields = _underscore.keys(_this2.contentType.getDiffViewportFields(name, dataStore.getState()));
-
-          result[name] = _underscore.pick(dataStore.getState(), dataStoreFields);
-        } else {
-          result[name] = dataStore.getState();
-        }
-      });
-
-      return result;
     };
 
     _createClass(Master, [{

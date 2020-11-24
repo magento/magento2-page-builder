@@ -78,25 +78,22 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
     }
 
     /**
-     * Get viewport fields that is different from default.
-     *
-     * @param {string} viewport
-     * @param {DataObject} data
+     * Get data stores states only for viewport fields
      */
-    public getDiffViewportFields(viewport: string, data: DataObject): ConfigFieldInterface {
-        const fields = this.getViewportFields(viewport, data);
-        const defaultData = this.dataStores[Config.getConfig("defaultViewport")].getState();
-        const excludedFields: string[] = [];
+    public getDataStoresStates(): {[key: string]: any} {
+        const result: {[key: string]: any} = {};
 
-        _.each(fields, (field, key) => {
-            const comparison = mageUtils.compare(data[key], defaultData[key]);
-            const isEmpty = !_.find(comparison.changes, (change) => !_.isEmpty(change.oldValue));
-            if (comparison.equal || isEmpty) {
-                excludedFields.push(key);
+        _.each(this.dataStores, (dataStore: DataStore, name: string) => {
+            if (Config.getConfig("defaultViewport") !== name) {
+                const dataStoreFields = _.keys(this.getDiffViewportFields(name, dataStore.getState()));
+
+                result[name] = _.pick(dataStore.getState(), dataStoreFields);
+            } else {
+                result[name] = dataStore.getState();
             }
         });
 
-        return _.omit(fields, excludedFields);
+        return result;
     }
 
     protected bindEvents() {
@@ -167,5 +164,27 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
         _.each(Config.getConfig("viewports"), (value, name: string) => {
             this.dataStores[name] = new DataStore();
         });
+    }
+
+    /**
+     * Get viewport fields that is different from default.
+     *
+     * @param {string} viewport
+     * @param {DataObject} data
+     */
+    private getDiffViewportFields(viewport: string, data: DataObject): ConfigFieldInterface {
+        const fields = this.getViewportFields(viewport, data);
+        const defaultData = this.dataStores[Config.getConfig("defaultViewport")].getState();
+        const excludedFields: string[] = [];
+
+        _.each(fields, (field, key) => {
+            const comparison = mageUtils.compare(data[key], defaultData[key]);
+            const isEmpty = !_.find(comparison.changes, (change) => !_.isEmpty(change.oldValue));
+            if (comparison.equal || isEmpty) {
+                excludedFields.push(key);
+            }
+        });
+
+        return _.omit(fields, excludedFields);
     }
 }

@@ -36,7 +36,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" after="enterBorderNone2" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderPadding_0"/>
+            <argument name="property" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMargins" after="enterPadding" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -133,13 +133,13 @@
         </assertEquals>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{TabOnStage.base('3')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeightEmptyContainerProperty.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeightDefaultProperty.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.evaluate('{{TabOnStage.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageDesktop"/>
         <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageDesktop">
             <actualResult type="variable">thirdActualHeightCMSBlockStageDesktop</actualResult>
-            <expectedResult type="string">{{PageBuilderTabMinimumHeightEmptyContainerProperty.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeightDefaultProperty.value}}</expectedResult>
         </assertEquals>
 
         <!-- Validate CMS Block Stage Mobile Viewport -->

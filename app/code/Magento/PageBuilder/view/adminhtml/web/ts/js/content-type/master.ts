@@ -103,27 +103,8 @@ export default class Master {
         this.observableUpdater.update(
             this,
             _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState()),
-            this.getDataStoresStates(),
+            this.contentType.getDataStoresStates(),
         );
         this.afterObservablesUpdated();
-    }
-
-    /**
-     * Get data stores states only for viewport fields
-     */
-    private getDataStoresStates() {
-        const result: {[key: string]: any} = {};
-
-        _.each(this.contentType.dataStores, (dataStore: DataStore, name: string) => {
-            if (Config.getConfig("defaultViewport") !== name) {
-                const dataStoreFields = _.keys(this.contentType.getDiffViewportFields(name, dataStore.getState()));
-
-                result[name] = _.pick(dataStore.getState(), dataStoreFields);
-            } else {
-                result[name] = dataStore.getState();
-            }
-        });
-
-        return result;
     }
 }

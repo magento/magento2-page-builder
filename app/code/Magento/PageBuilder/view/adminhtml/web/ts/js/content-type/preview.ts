@@ -334,7 +334,8 @@ export default class Preview implements PreviewInterface {
         autoAppend: boolean = true,
         direct: boolean = false,
     ): Promise<ContentTypeInterface> | void {
-        const contentTypeData = contentType.dataStore.getState();
+        const defaultViewport = Config.getConfig("defaultViewport");
+        const contentTypeData = contentType.dataStores[defaultViewport].getState();
         const index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
 
         return createContentType(
@@ -342,6 +343,8 @@ export default class Preview implements PreviewInterface {
             contentType.parentContentType,
             contentType.stageId,
             contentTypeData,
+            null,
+            contentType.getDataStoresStates(),
         ).then((duplicateContentType: ContentTypeInterface) => {
             if (autoAppend) {
                 contentType.parentContentType.addChild(duplicateContentType, index);

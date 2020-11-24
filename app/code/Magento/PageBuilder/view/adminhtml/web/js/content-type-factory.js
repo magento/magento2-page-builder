@@ -75,6 +75,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
   function assignDataToDataStores(contentType, config, data, viewportsData) {
     var defaultData = prepareData(config, data);
 
+    var currentViewport = _config.getConfig("viewport") || _config.getConfig("defaultViewport");
+
     _underscore.each(_config.getConfig("viewports"), function (viewport, name) {
       var viewportData = {};
       var breakpoint = config.breakpoints[name];
@@ -90,7 +92,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       contentType.dataStores[name].setState(_underscore.extend({}, defaultData, viewportData));
     });
 
-    contentType.dataStore.setState(defaultData);
+    contentType.dataStore.setState(contentType.dataStores[currentViewport].getState());
   }
   /**
    * Merge defaults and content type data
