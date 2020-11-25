@@ -27,9 +27,10 @@
             <actualResult type="variable">button1Width</actualResult>
             <expectedResult type="int">0</expectedResult>
         </assertGreaterThan>
-        <assertEquals stepKey="assertButtonWidthSize">
-            <actualResult type="variable">button1Width</actualResult>
-            <expectedResult type="variable">button2Width</expectedResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$button1Width}-{$button2Width})" stepKey="buttonsWidthDifference"/>
+        <assertLessThanOrEqual stepKey="assertButtonWidthSize">
+            <actualResult type="variable">buttonsWidthDifference</actualResult>
+            <expectedResult type="int">1</expectedResult>
+        </assertLessThanOrEqual>
     </actionGroup>
 </actionGroups>
