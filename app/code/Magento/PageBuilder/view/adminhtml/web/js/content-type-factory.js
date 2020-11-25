@@ -92,7 +92,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       contentType.dataStores[name].setState(_underscore.extend({}, defaultData, viewportData));
     });
 
-    contentType.setViewportDataToDataStore(currentViewport); // contentType.dataStore.setState(contentType.dataStores[currentViewport].getState());
+    contentType.setViewportDataToDataStore(currentViewport);
   }
   /**
    * Merge defaults and content type data
