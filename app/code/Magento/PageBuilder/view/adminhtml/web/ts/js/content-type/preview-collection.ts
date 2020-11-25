@@ -37,7 +37,7 @@ export default class PreviewCollection extends Preview implements PreviewCollect
     ): Promise<ContentTypeCollectionInterface> | void {
         const defaultViewport = Config.getConfig("defaultViewport");
         const index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
-        const childrenLength = contentType.children ? contentType.children().length : null;
+        const childrenLength = contentType.children ? contentType.children().length : 0;
 
         return new Promise((resolve, reject) => {
             createContentType(

@@ -92,7 +92,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       contentType.dataStores[name].setState(_underscore.extend({}, defaultData, viewportData));
     });
 
-    contentType.dataStore.setState(contentType.dataStores[currentViewport].getState());
+    contentType.setViewportDataToDataStore(currentViewport); // contentType.dataStore.setState(contentType.dataStores[currentViewport].getState());
   }
   /**
    * Merge defaults and content type data
@@ -143,6 +143,10 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
 
   function fireContentTypeReadyEvent(contentType, childrenLength) {
+    if (childrenLength === void 0) {
+      childrenLength = 0;
+    }
+
     var fire = function fire() {
       var params = {
         id: contentType.id,

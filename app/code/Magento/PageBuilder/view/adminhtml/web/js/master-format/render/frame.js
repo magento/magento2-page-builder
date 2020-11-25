@@ -221,7 +221,7 @@ define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engin
     }
 
     return new Promise(function (resolve, reject) {
-      (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null, tree.viewportsData).then(function (contentType) {
+      (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : 0, tree.viewportsData).then(function (contentType) {
         // Ensure  we retain the original tree ID's
         contentType.id = tree.id;
 

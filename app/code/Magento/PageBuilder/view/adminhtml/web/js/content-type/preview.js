@@ -327,7 +327,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var contentTypeData = contentType.dataStores[defaultViewport].getState();
       var index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
-      return (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentTypeData, null, contentType.getDataStoresStates()).then(function (duplicateContentType) {
+      return (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentTypeData, 0, contentType.getDataStoresStates()).then(function (duplicateContentType) {
         if (autoAppend) {
           contentType.parentContentType.addChild(duplicateContentType, index);
         }

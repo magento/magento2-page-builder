@@ -84,6 +84,24 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
       });
 
       return result;
+    }
+    /**
+     * Set data to dataStore from dataStores base on current viewport.
+     *
+     * @param {String} viewport
+     */
+    ;
+
+    _proto.setViewportDataToDataStore = function setViewportDataToDataStore(viewport) {
+      var defaultViewport = _config.getConfig("defaultViewport");
+
+      var currentViewportState = this.dataStores[viewport].getState();
+      var defaultViewportState = this.dataStores[defaultViewport].getState();
+
+      var viewportFields = _underscore.keys(this.getDiffViewportFields(viewport, currentViewportState)); // Filter viewport specific data for states
+
+
+      this.dataStore.setState(_underscore.extend({}, defaultViewportState, _underscore.pick(currentViewportState, viewportFields)));
     };
 
     _proto.bindEvents = function bindEvents() {
@@ -98,11 +116,13 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
         var viewport = _config.getConfig("viewport") || defaultViewport;
 
         if (viewport !== defaultViewport) {
-          var viewportFields = _underscore.keys(_this2.getDiffViewportFields(viewport, state));
+          var viewportFields = _underscore.keys(_this2.getViewportFields(viewport, state));
+
+          var diffViewportFields = _underscore.keys(_this2.getDiffViewportFields(viewport, state));
 
           _this2.dataStores[defaultViewport].setState(_underscore.extend(_this2.dataStores[defaultViewport].getState(), _underscore.omit(state, viewportFields)));
 
-          _this2.dataStores[viewport].setState(_underscore.extend(_this2.dataStores[viewport].getState(), _underscore.pick(state, viewportFields)));
+          _this2.dataStores[viewport].setState(_underscore.extend(_this2.dataStores[viewport].getState(), _underscore.pick(state, diffViewportFields)));
         } else {
           _this2.dataStores[viewport].setState(state);
         }
@@ -124,15 +144,7 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
     ;
 
     _proto.onViewportSwitch = function onViewportSwitch(args) {
-      var defaultViewport = _config.getConfig("defaultViewport");
-
-      var currentViewportState = this.dataStores[args.viewport].getState();
-      var defaultViewportState = this.dataStores[defaultViewport].getState();
-
-      var viewportFields = _underscore.keys(this.getDiffViewportFields(args.viewport, currentViewportState)); // Filter viewport specific data for states
-
-
-      this.dataStore.setState(_underscore.extend({}, defaultViewportState, _underscore.pick(currentViewportState, viewportFields)));
+      this.setViewportDataToDataStore(args.viewport);
     }
     /**
      * Init data store for each viewport.

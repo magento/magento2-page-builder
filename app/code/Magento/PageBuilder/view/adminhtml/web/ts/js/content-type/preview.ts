@@ -343,7 +343,7 @@ export default class Preview implements PreviewInterface {
             contentType.parentContentType,
             contentType.stageId,
             contentTypeData,
-            null,
+            0,
             contentType.getDataStoresStates(),
         ).then((duplicateContentType: ContentTypeInterface) => {
             if (autoAppend) {

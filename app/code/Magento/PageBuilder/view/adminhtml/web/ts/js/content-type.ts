@@ -96,6 +96,25 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
         return result;
     }
 
+    /**
+     * Set data to dataStore from dataStores base on current viewport.
+     *
+     * @param {String} viewport
+     */
+    public setViewportDataToDataStore(viewport: string) {
+        const defaultViewport = Config.getConfig("defaultViewport");
+        const currentViewportState = this.dataStores[viewport].getState();
+        const defaultViewportState = this.dataStores[defaultViewport].getState();
+        const viewportFields = _.keys(this.getDiffViewportFields(viewport, currentViewportState));
+
+        // Filter viewport specific data for states
+        this.dataStore.setState(_.extend(
+            {},
+            defaultViewportState,
+            _.pick(currentViewportState, viewportFields),
+        ));
+    }
+
     protected bindEvents() {
         const eventName: string = this.config.name + ":" + this.id + ":updateAfter";
         const paramObj: any = {};
@@ -106,7 +125,8 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
                 const viewport = Config.getConfig("viewport") || defaultViewport;
 
                 if (viewport !== defaultViewport) {
-                    const viewportFields = _.keys(this.getDiffViewportFields(viewport, state));
+                    const viewportFields = _.keys(this.getViewportFields(viewport, state));
+                    const diffViewportFields = _.keys(this.getDiffViewportFields(viewport, state));
                     this.dataStores[defaultViewport].setState(
                         _.extend(
                             this.dataStores[defaultViewport].getState(),
@@ -116,7 +136,7 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
                     this.dataStores[viewport].setState(
                         _.extend(
                             this.dataStores[viewport].getState(),
-                            _.pick(state, viewportFields),
+                            _.pick(state, diffViewportFields),
                         ),
                     );
                 } else {
@@ -144,17 +164,7 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
      * @param {Object} args
      */
     private onViewportSwitch(args: {viewport: string, previousViewport: string}) {
-        const defaultViewport = Config.getConfig("defaultViewport");
-        const currentViewportState = this.dataStores[args.viewport].getState();
-        const defaultViewportState = this.dataStores[defaultViewport].getState();
-        const viewportFields = _.keys(this.getDiffViewportFields(args.viewport, currentViewportState));
-
-        // Filter viewport specific data for states
-        this.dataStore.setState(_.extend(
-            {},
-            defaultViewportState,
-            _.pick(currentViewportState, viewportFields),
-        ));
+        this.setViewportDataToDataStore(args.viewport);
     }
 
     /**

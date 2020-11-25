@@ -47,7 +47,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
       var defaultViewport = _config.getConfig("defaultViewport");
 
       var index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
-      var childrenLength = contentType.children ? contentType.children().length : null;
+      var childrenLength = contentType.children ? contentType.children().length : 0;
       return new Promise(function (resolve, reject) {
         (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentType.dataStores[defaultViewport].getState(), childrenLength, contentType.getDataStoresStates()).then(function (duplicate) {
           if (contentType.children && contentType.children().length > 0) {

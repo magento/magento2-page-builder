@@ -31,4 +31,5 @@ export default interface ContentTypeInterface<P extends Preview = Preview, M ext
      */
     getViewportFields(viewport: string, data: DataObject): ConfigFieldInterface;
     getDataStoresStates(): {[key: string]: any};
+    setViewportDataToDataStore(viewport: string): void;
 }

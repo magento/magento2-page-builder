@@ -216,7 +216,7 @@ function createRenderTree(
             parent,
             stageId,
             tree.data,
-            parent !== null ? tree.children.length : null,
+            parent !== null ? tree.children.length : 0,
             tree.viewportsData,
         ).then((contentType: ContentTypeCollectionInterface) => {
             // Ensure  we retain the original tree ID's

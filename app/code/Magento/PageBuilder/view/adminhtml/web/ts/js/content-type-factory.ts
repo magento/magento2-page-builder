@@ -107,8 +107,7 @@ function assignDataToDataStores(
         }
         contentType.dataStores[name].setState(_.extend({}, defaultData, viewportData));
     });
-
-    contentType.dataStore.setState(contentType.dataStores[currentViewport].getState());
+    contentType.setViewportDataToDataStore(currentViewport);
 }
 
 /**
@@ -163,7 +162,7 @@ function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
  */
 function fireContentTypeReadyEvent(
     contentType: ContentTypeInterface | ContentTypeCollectionInterface,
-    childrenLength: number,
+    childrenLength: number = 0,
 ) {
     const fire = () => {
         const params = {id: contentType.id, contentType, expectChildren: childrenLength};
