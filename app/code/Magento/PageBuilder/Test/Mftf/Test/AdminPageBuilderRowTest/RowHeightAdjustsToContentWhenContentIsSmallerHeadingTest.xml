@@ -33,8 +33,8 @@
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <!-- Assert row height is 320px when empty -->
-        <comment userInput="Assert row height is 320px when empty" stepKey="comment1"/>
+        <!-- Assert row height is 300px when empty -->
+        <comment userInput="Assert row height is 300px when empty" stepKey="comment1"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setEmptyRowHeight"/>
         <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getEmptyRowHeight"/>
         <assertEquals stepKey="assertEmptyRowHeight">

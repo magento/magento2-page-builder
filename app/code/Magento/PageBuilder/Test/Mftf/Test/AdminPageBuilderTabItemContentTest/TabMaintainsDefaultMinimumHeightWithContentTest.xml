@@ -66,9 +66,8 @@
 
         <!-- Verify on Stage -->
         <comment userInput="Verify Tab height on stage" stepKey="verifyTabOnStage"/>
-        <!-- @todo: Use `{{PageBuilderTabMinimumHeightDefaultProperty.value}}` as `expectedResult` -->
-        <executeJS function="return {{PageBuilderTabMinimumHeightDefaultProperty.value}}" stepKey="tabExpectedHeight"/>
         <executeJS function="return {{TabOnStage.tabContentHeightJS('0')}}" stepKey="tabContentHeightStage"/>
+        <executeJS function="return {{PageBuilderTabMinimumHeightDefaultProperty.value}}" stepKey="tabExpectedHeight"/>
         <assertEquals stepKey="assertTabHeightStage">
             <expectedResult type="variable">tabExpectedHeight</expectedResult>
             <actualResult type="variable">tabContentHeightStage</actualResult>
