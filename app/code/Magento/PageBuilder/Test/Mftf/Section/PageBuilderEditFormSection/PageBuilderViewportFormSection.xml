@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderViewportFormSection">
+        <!-- Mobile Icon Tooltip Container -->
+        <element name="mobileFieldTooltip" type="button" parameterized="true" selector="//aside//*[@data-index='{{section}}']/descendant::*[@name='{{field}}']/ancestor::*[contains(@class,'admin__field-control')]/descendant::div[contains(@class,'admin__field-tooltip')]"/>
+        <!-- Mobile Icon -->
+        <element name="mobileIconField" type="button" parameterized="true" selector="//aside//*[@data-index='{{section}}']/descendant::*[@name='{{field}}']/ancestor::*[contains(@class,'admin__field-control')]/descendant::a[contains(@class,'admin__field-tooltip-action')]"/>
+        <!-- Mobile Icon Tooltip -->
+        <element name="mobileFieldTooltipContent" type="text" parameterized="true" selector="//aside//*[@data-index='{{section}}']/descendant::*[@name='{{field}}']/ancestor::*[contains(@class,'admin__field-control')]/descendant::*[contains(@class,'admin__field-tooltip-content')]"/>
+    </section>
+</sections>

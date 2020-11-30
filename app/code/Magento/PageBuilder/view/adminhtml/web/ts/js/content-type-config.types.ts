@@ -21,6 +21,7 @@ export default interface ContentTypeConfigInterface {
     };
     allowed_parents: string[];
     is_system: boolean;
+    breakpoints: ContentTypeConfigBreakpointsInterface;
     additional_data: AdditionalDataConfigInterface;
 }
 
@@ -40,6 +41,7 @@ export interface ContentTypeConfigAppearanceElementInterface {
 }
 
 export interface ContentTypeConfigAppearanceInterface {
+    breakpoints: ContentTypeConfigBreakpointsInterface;
     reader: string;
     path: string;
     converters: ConverterInterface[];
@@ -49,6 +51,15 @@ export interface ContentTypeConfigAppearanceInterface {
     render: string;
     default: string;
     form: string;
+}
+
+export interface ContentTypeConfigBreakpointsInterface {
+    [key: string]: ContentTypeConfigBreakpointInterface;
+}
+
+export interface ContentTypeConfigBreakpointInterface {
+    form: string;
+    fields: ConfigFieldInterface;
 }
 
 export interface ContentTypeConfigAppearanceElementsInterface {

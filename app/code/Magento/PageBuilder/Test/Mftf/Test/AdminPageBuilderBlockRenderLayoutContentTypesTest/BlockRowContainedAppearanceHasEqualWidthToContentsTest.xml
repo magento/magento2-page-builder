@@ -31,6 +31,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
@@ -71,6 +75,10 @@
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveBlock"/>
         <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <!-- Go to CMS page and choose Block -->
         <comment userInput="Go to CMS page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">

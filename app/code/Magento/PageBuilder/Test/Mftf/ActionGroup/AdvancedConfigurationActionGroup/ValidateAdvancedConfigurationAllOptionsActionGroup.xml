@@ -5,22 +5,21 @@
   * See COPYING.txt for license details.
   */
 -->
-<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="ValidateAdvancedConfigurationAllOptionsActionGroup">
         <annotations>
-            <description value="Validates styles from Advanced configuration in content type settings"/>
+            <description>Validates styles from Advanced Configuration in content type settings.</description>
         </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderColor" defaultValue=""/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusProperty0"/>
             <argument name="cssClasses" defaultValue=""/>
-            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsProperty0"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingProperty0"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>

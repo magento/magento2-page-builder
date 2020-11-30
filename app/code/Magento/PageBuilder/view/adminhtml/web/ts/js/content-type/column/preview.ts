@@ -54,6 +54,9 @@ export default class Preview extends PreviewCollection {
         this.contentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
         this.contentType.dataStore.subscribe(this.triggerChildren.bind(this), "width");
         this.contentType.parentContentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
+
+        // Update the column number for the column
+        this.contentType.parentContentType.children.subscribe(this.updateDisplayLabel.bind(this));
     }
 
     /**
@@ -105,6 +108,7 @@ export default class Preview extends PreviewCollection {
             element: $(element),
             columnGroup: this.contentType.parentContentType,
         });
+        this.updateDisplayLabel();
     }
 
     /**
@@ -271,7 +275,9 @@ export default class Preview extends PreviewCollection {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
             const gridSize = (this.contentType.parentContentType.preview as ColumnGroupPreview).gridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
-            this.displayLabel(`${$t("Column")} ${newLabel}`);
+            const columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
+            const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
+            this.displayLabel(`${$t("Column")} ${columnNumber}(${newLabel})`);
         }
     }
 
@@ -293,6 +299,37 @@ export default class Preview extends PreviewCollection {
         const roundedWidth = Math.ceil(parseFloat(this.contentType.dataStore.get("width").toString()) / 10) * 10;
 
         this.element.addClass("column-width-" + roundedWidth);
+    }
+
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyle(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
+    }
+
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return Object.keys(stylesObject)
+            .filter((key) => !styleProperties.includes(key))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: stylesObject[key],
+                };
+            }, {});
     }
 
     /**

@@ -56,6 +56,10 @@
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute">
             <argument name="attributeCode" value="$$createWysiwygAttribute.attribute_code$$"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -75,6 +79,12 @@
         <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
             <argument name="attributeCode" value="description"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowToRootContainerDescription">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openDescriptionEditMenuOnStage">

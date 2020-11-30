@@ -9,6 +9,7 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="TabOnStorefront">
         <element name="all" type="button" selector="[data-content-type=\'tab-item\']"/>
+        <element name="allTabs" type="button" selector="(//div[@data-content-type=&quot;tab-item&quot;])"/>
         <element name="base" type="button" selector="(//div[@data-content-type=&quot;tab-item&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="[data-content-type=tab-item]"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=tab-item]')[{{arg1}} - 1]" parameterized="true"/>

@@ -26,6 +26,10 @@
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
             <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
                 <argument name="contentType" value="PageBuilderButtonsContentType"/>
             </actionGroup>
@@ -51,7 +55,7 @@
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage Empty -->
-        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <actionGroup ref="AdminVerifyEmptyStageActionGroup" stepKey="verifyEmptyStage"/>
         <!-- Apply Template -->
         <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
         <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
@@ -69,7 +73,11 @@
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
-        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeRowFromStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRowRemovalModal"/>
+        <actionGroup ref="AdminVerifyEmptyStageActionGroup" stepKey="verifyEmptyStage2"/>
         <!-- Apply Template Again -->
         <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut2"/>
         <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2">

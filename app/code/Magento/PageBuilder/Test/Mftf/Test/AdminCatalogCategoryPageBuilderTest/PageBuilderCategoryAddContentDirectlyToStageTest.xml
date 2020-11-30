@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test  name="PageBuilderCategoryAddContentDirectlyToStageTest" extends="PageBuilderCMSPageAddContentDirectlyToStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify Can Only Add Expected Content Types to Category Stage Directly"/>
+            <description value="Verify user can add Row, Columns, Tabs, HTML Code, and Blocks to Category stage directly. Verify user cannot add any other content type to Category stage directly"/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-stage"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCMSPage"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="Category" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="navigateToCreatedCMSPage"/>
+        </before>
+        <!-- Save Category and Verify Expected Content Types on Stage -->
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Expected Content Types on Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.name$$.html"/>
+        </actionGroup>
+    </test>
+</tests>

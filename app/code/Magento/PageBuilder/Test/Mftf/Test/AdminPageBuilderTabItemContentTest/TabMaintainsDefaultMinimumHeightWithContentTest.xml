@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TabMaintainsDefaultMinimumHeightWithContentTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -23,6 +22,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -60,17 +63,19 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <!-- Verify Tab height on stage -->
+
+        <!-- Verify on Stage -->
         <comment userInput="Verify Tab height on stage" stepKey="verifyTabOnStage"/>
         <executeJS function="return {{TabOnStage.tabContentHeightJS('0')}}" stepKey="tabContentHeightStage"/>
-        <executeJS function="return {{PageBuilderTabMinimumHeightDefaultProperty.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tabExpectedHeight"/>
+        <executeJS function="return {{PageBuilderTabMinimumHeightDefaultProperty.value}}" stepKey="tabExpectedHeight"/>
         <assertEquals stepKey="assertTabHeightStage">
             <expectedResult type="variable">tabExpectedHeight</expectedResult>
             <actualResult type="variable">tabContentHeightStage</actualResult>
         </assertEquals>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Verify Tab height on storefront -->
+
+        <!-- Verify on Storefront -->
         <comment userInput="Verify Tab height on storefront" stepKey="viewTabOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>

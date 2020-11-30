@@ -7,7 +7,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _events, _ResizeObserver, _underscore, _vimeoWrapper, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
+define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _events, _ResizeObserver, _underscore, _vimeoWrapper, _hideShowOption, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -145,9 +145,6 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
-      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
-        preview: this
-      }));
       options.hideShow = new _hideShowOption({
         preview: this,
         icon: _hideShowOption.showIcon,
