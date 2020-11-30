@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="MapOnStorefront">
+        <element name="allMaps" type="text" selector="[data-content-type='map']"/>
         <element name="emptyMap" type="button" selector="(//div[@data-content-type='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
         <element name="base" type="button" selector="(//div[@data-content-type='map'])[{{arg1}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector="[data-content-type=map][data-element=main]"/>

@@ -42,7 +42,11 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer" after="switchToPageBuilderStageAfterBlock">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="dragRowToRootContainer">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">

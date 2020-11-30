@@ -7,6 +7,7 @@
 -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnBackend">
+        <element name="allBanners" type="button" selector="[data-content-type='banner']"/>
         <element name="base" type="button" selector="(//div[contains(@class,&quot;pagebuilder-banner&quot;) and contains(@class,&quot;pagebuilder-content-type&quot;)])[{{bannerIndex}}]" parameterized="true"/>
         <element name="baseCSS" type="button" selector=".pagebuilder-banner.pagebuilder-content-type"/>
         <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{bannerIndex}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>

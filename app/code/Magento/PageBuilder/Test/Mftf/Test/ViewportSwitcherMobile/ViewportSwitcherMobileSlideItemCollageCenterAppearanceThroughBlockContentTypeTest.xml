@@ -59,7 +59,7 @@
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
         <!-- Validate CMS Page Storefront Mobile -->
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStorefrontMobile"/>
-        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSBlockStageFrontend" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width)" stepKey="widthOfWrapperMinusPaddingCMSBlockStageFrontend" before="validateOverlayPositionCMSPageStorefrontMobile"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
             <argument name="page" value="SlideOnFrontend"/>
             <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSBlockStageFrontend}"/>

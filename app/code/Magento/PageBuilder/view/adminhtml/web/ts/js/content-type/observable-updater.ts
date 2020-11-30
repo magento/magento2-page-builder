@@ -5,6 +5,8 @@
 
 import consoleLogger from "consoleLogger";
 import ko from "knockout";
+import _ from "underscore";
+import Config from "../config";
 import {
     ContentTypeConfigAppearanceElementInterface,
     ContentTypeConfigAppearanceElementsInterface,
@@ -59,8 +61,9 @@ export default class ObservableUpdater {
      *
      * @param {Preview} viewModel
      * @param {DataObject} data
+     * @param {DataObject} dataStores
      */
-    public update(viewModel: Preview | Master, data: DataObject) {
+    public update(viewModel: Preview | Master, data: DataObject, dataStores?: {[key: string]: DataObject}) {
         const appearance = data && data.appearance !== undefined ? data.appearance as string : undefined;
         const appearanceConfiguration = appearanceConfig(viewModel.contentType.config.name, appearance);
         if (undefined === appearanceConfiguration
@@ -74,6 +77,7 @@ export default class ObservableUpdater {
             appearanceConfiguration.elements,
             appearanceConfiguration.converters,
             data,
+            dataStores,
         );
 
         for (const element in generatedBindings) {
@@ -108,11 +112,13 @@ export default class ObservableUpdater {
      * @param elements
      * @param converters
      * @param data
+     * @param dataStoreStates
      */
     public generateKnockoutBindings(
         elements: ContentTypeConfigAppearanceElementsInterface,
         converters: ConverterInterface[],
         data: DataObject,
+        dataStoreStates?: {[key: string]: DataObject},
     ): GeneratedElementsData {
         const convertedData = this.convertData(data, converters);
         const generatedData: GeneratedElementsData = {};
@@ -125,7 +131,15 @@ export default class ObservableUpdater {
 
             generatedData[elementName] = {
                 attributes: this.generateKnockoutBinding("attributes", elementName, elementConfig, data),
-                style: this.generateKnockoutBinding("style", elementName, elementConfig, data),
+                style: Config.getMode() === "Preview" ?
+                    this.generateKnockoutBinding("style", elementName, elementConfig, data) :
+                    this.generateKnockoutBindingForBreakpoints(
+                        "style",
+                        elementName,
+                        elementConfig,
+                        data,
+                        dataStoreStates,
+                    ),
                 css: elementConfig.css.var in convertedData ?
                     this.generateKnockoutBinding("css", elementName, elementConfig, data) : {},
                 html: this.generateKnockoutBinding("html", elementName, elementConfig, data),
@@ -196,5 +210,31 @@ export default class ObservableUpdater {
 
         this.previousData[elementName][binding] = generatedBindingData;
         return generatedBindingData;
+    }
+    /**
+     * Generate an individual knockout binding for breakpoints
+     *
+     * @param binding
+     * @param elementName
+     * @param config
+     * @param data
+     * @param dataStoreStates
+     */
+    private generateKnockoutBindingForBreakpoints(
+        binding: Binding,
+        elementName: string,
+        config: ContentTypeConfigAppearanceElementInterface,
+        data: DataObject,
+        dataStoreStates: {[key: string]: DataObject},
+    ) {
+        const result: {[key: string]: any} = {};
+
+        Object.keys(dataStoreStates).forEach((name: string) => {
+            result[name] = _.isEmpty(dataStoreStates[name]) ?
+                {} :
+                this.generateKnockoutBinding(binding, elementName, config, dataStoreStates[name]);
+        });
+
+        return result;
     }
 }

@@ -43,29 +43,65 @@ function buildFromContent(stage: Stage, value: string) {
  */
 function convertToInlineStyles(document: Document): void {
     const styleBlocks = document.getElementsByTagName("style");
-    const styles: { [key: string]: CSSStyleDeclaration[] } = {};
+    const viewportStyles: { [key: string]: any } = {};
+
+    _.each(Config.getConfig("viewports"), (viewport, name: string) => viewportStyles[name] = {});
+
     if (styleBlocks.length > 0) {
         Array.from(styleBlocks).forEach((styleBlock: HTMLStyleElement) => {
             const cssRules = (styleBlock.sheet as CSSStyleSheet).cssRules;
-            Array.from(cssRules).forEach((rule: CSSStyleRule) => {
-                const selectors = rule.selectorText.split(",").map((selector) => selector.trim());
-                selectors.forEach((selector) => {
-                    if (!styles[selector]) {
-                        styles[selector] = [];
-                    }
-                    styles[selector].push(rule.style);
-                });
-            });
+
+            processCssRules(cssRules, viewportStyles, Config.getConfig("defaultViewport"));
             styleBlock.remove();
         });
     }
-    _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
-        const element: HTMLElement = document.querySelector(selector);
 
-        _.each(stylesArray, (style: CSSStyleDeclaration) => {
-            element.setAttribute("style", element.style.cssText + style.cssText);
+    _.each(viewportStyles, (styles, name: string) => {
+        _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
+            const element: HTMLElement = document.querySelector(selector);
+
+            _.each(stylesArray, (style: CSSStyleDeclaration) => {
+                element.setAttribute(
+                    `data-${name}-style`,
+                    element.getAttribute(`data-${name}-style`) ?
+                        element.getAttribute(`data-${name}-style`) + style.cssText :
+                        style.cssText,
+                );
+            });
         });
+    });
+    document.querySelectorAll(`[${pbStyleAttribute}]`).forEach((element) => {
         element.removeAttribute(pbStyleAttribute);
+    });
+}
+
+/**
+ * Process styles and assign them to corespondent style object.
+ *
+ * @param cssRules
+ * @param styles
+ * @param scope
+ */
+function processCssRules(cssRules: CSSRuleList, styles: { [key: string]: any }, scope: string) {
+    Array.from(cssRules).forEach((rule: CSSStyleRule | CSSMediaRule) => {
+        if (rule instanceof CSSStyleRule) {
+            const selectors = rule.selectorText.split(",").map((selector) => selector.trim());
+            selectors.forEach((selector) => {
+                if (!styles[scope][selector]) {
+                    styles[scope][selector] = [];
+                }
+                styles[scope][selector].push(rule.style);
+            });
+        } else if (rule instanceof CSSMediaRule) {
+            const mediaCssRules = rule.cssRules;
+            const mediaScope = _.findKey(
+                Config.getConfig("viewports"),
+                (viewport: any) => rule.conditionText === viewport.media,
+            );
+            if (mediaScope) {
+                processCssRules(mediaCssRules, styles, mediaScope);
+            }
+        }
     });
 }
 
@@ -121,7 +157,7 @@ function createElementContentType(
     element: HTMLElement,
     stage: Stage,
     contentType?: ContentTypeCollectionInterface,
-) {
+): Promise<ContentTypeInterface> {
     contentType = contentType || stage.rootContainer;
     const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
     if (!role) {
@@ -135,12 +171,14 @@ function createElementContentType(
     }
 
     return getElementData(element, config).then(
-        (data: object) => createContentType(
+        // @ts-ignore
+        (data: any) => createContentType(
             config,
             contentType,
             stage.id,
-            data,
+            data[Config.getConfig("defaultViewport")],
             getElementChildren(element).length,
+            data,
         ),
     );
 }
@@ -172,10 +210,11 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
                      * Iterate through the reader data and set the values onto the result array to ensure dot notation
                      * keys are properly handled.
                      */
-                    _.each(readerData, (value: any, key: string) => {
+                    _.each(readerData[Config.getConfig("defaultViewport")], (value: any, key: string) => {
                         set(result, key, value);
                     });
-                    resolve(result);
+                    readerData[Config.getConfig("defaultViewport")] = result;
+                    resolve(readerData);
                 });
             });
         }
@@ -236,32 +275,39 @@ function buildEmpty(stage: Stage, initialValue: string) {
     const rootContainer = stage.rootContainer;
     const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
+    // @ts-ignore
+    let promise = Promise.resolve() as Promise<ContentTypeInterface | ContentTypeCollectionInterface>;
 
-    if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, rootContainer, stage.id)
-            .then((rootContentType: ContentTypeCollectionInterface) => {
-                if (!rootContentType) {
-                    return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +
-                        ` within stage.`);
-                }
-                rootContainer.addChild(rootContentType);
-
-                if (htmlDisplayContentTypeConfig && initialValue) {
-                    return createContentType(
-                        htmlDisplayContentTypeConfig,
-                        rootContainer,
-                        stage.id,
-                        {
-                            html: initialValue,
-                        },
-                    ).then((text: ContentTypeInterface) => {
-                        rootContentType.addChild(text);
-                    });
+    if (stageConfig.root_content_type && stageConfig.root_content_type !== "none") {
+        promise = createContentType(rootContentTypeConfig, rootContainer, stage.id);
+        promise.then((rootContentType: ContentTypeCollectionInterface) => {
+            if (!rootContentType) {
+                return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +
+                    ` within stage.`);
+            }
+            rootContainer.addChild(rootContentType);
+        });
+    }
+    promise.then((rootContentType: ContentTypeCollectionInterface) => {
+        if (htmlDisplayContentTypeConfig && initialValue) {
+            return createContentType(
+                htmlDisplayContentTypeConfig,
+                rootContainer,
+                stage.id,
+                {
+                    html: initialValue,
+                },
+            ).then((html: ContentTypeInterface) => {
+                if (rootContentType) {
+                    rootContentType.addChild(html);
+                } else {
+                    rootContainer.addChild(html);
                 }
             });
-    }
+        }
+    });
 
-    return Promise.resolve();
+    return promise;
 }
 
 /**

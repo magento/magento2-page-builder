@@ -101,7 +101,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
         name: this.contentType.config.name
-      }, this.contentType.dataStore.getState()));
+      }, this.contentType.dataStore.getState()), this.contentType.getDataStoresStates());
       this.afterObservablesUpdated();
     };
 

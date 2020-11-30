@@ -1,0 +1,21 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-content-type type-container pagebuilder-root-container"
+     css="'empty-container': contentType.children().length == 0, 'children-min-height': contentType.children().length == 0">
+    <div class="element-children content-type-container" each="contentType.getChildren()" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+        <if args="$parent.isContainer()">
+            <div class="pagebuilder-drop-indicator"></div>
+        </if>
+        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.template, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }" css="{'pagebuilder-content-type-hidden': !preview.display()}"></div>
+        <if args="$parent.isContainer() && $index() === $parent.contentType.getChildren()().length - 1">
+            <div class="pagebuilder-drop-indicator"></div>
+        </if>
+    </div>
+    <div class="pagebuilder-empty-container empty-placeholder empty-placeholder-background" css="visible: contentType.children().length == 0"
+         translate="'Drag Row, Columns, Tabs, Block, Dynamic Block or HTML Code here'"/>
+</div>

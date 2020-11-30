@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileColumnMinHeightTest" extends="ViewportSwitcherMobileRowMinHeightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Verify Column Minimum Height Works As Expected Between Mobile And Desktop"/>
+            <description value="Verify column's minimum height behaves as expected when desktop is set and mobile is empty, when desktop is set and mobile is set to calculated value, and when desktop is empty and mobile is set. Verify on desktop and mobile viewports on CMS Block stage, CMS Page through Block, and storefront."/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-viewport-switcher"/>
+            <group value="pagebuilder-cms-block"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <!-- Add Column -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" after="saveEditPanelSettings" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="expandPageBuilderPanelMenuSection" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+
+        <!-- Duplicate Column -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <remove keyForRemoval="duplicateContentType2"/>
+
+        <!-- Column 1: Desktop Min Height = 500px -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight500px1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="ValidateMobileIconTooltipNotVisibleInEditFormActionGroup" stepKey="verifyNoMobileIconTooltip">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <!-- Column 1: Mobile Empty Min Height -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateMobileIconTooltipInContentTypeEditFormActionGroup" stepKey="verifyMobileIconTooltip">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEmptyHeightField">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+
+        <!-- Column 2: Desktop Min Height = 500px -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight500px2">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <!-- Column 2: Mobile Min Height = 200px -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel4">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightCalculation">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+
+        <!-- Column 3: Desktop Empty Min Height -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel5">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="validateEmptyHeightField2">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!-- Column 3: Mobile Min Height = 200px -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel6">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight200px">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{ColumnOnBackend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnBackend.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">firstActualHeightCMSBlockStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{ColumnOnBackend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnBackend.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">secondActualHeightCMSBlockStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{ColumnOnBackend.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnBackend.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Block Stage Mobile Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{ColumnOnBackend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnBackend.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">firstActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{ColumnOnBackend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnBackend.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageMobile"/>
+        <remove keyForRemoval="expectedSecondHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">secondActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{ColumnOnBackend.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnBackend.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">firstActualHeightCMSPageStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">secondActualHeightCMSPageStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{ColumnOnFrontend.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_Auto.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSPageStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">firstActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">secondActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{ColumnOnFrontend.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate Storefront Desktop -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefront"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">firstActualHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefront">
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefront"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">secondActualHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefront">
+            <argument name="selector" value="{{ColumnOnFrontend.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_Auto.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">thirdActualHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate Storefront Mobile -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefrontMobile">
+            <argument name="selector" value="{{ColumnOnFrontend.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">firstActualHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefrontMobile">
+            <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">secondActualHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefrontMobile">
+            <argument name="selector" value="{{ColumnOnFrontend.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{ColumnOnFrontend.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">thirdActualHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

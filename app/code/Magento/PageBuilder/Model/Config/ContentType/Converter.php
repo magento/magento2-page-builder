@@ -52,6 +52,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      *
      * @param \DOMDocument $source
      * @return array
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function convertTypes(\DOMDocument $source): array
     {
@@ -83,6 +84,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             'defaultPolicy' => $this->getAttributeValue($childNode, 'default_policy'),
                             'types' => $this->convertParentChildData($childNode, 'child')
                         ];
+                    } elseif ('breakpoints' === $childNode->nodeName) {
+                        $typesData[$name][$childNode->nodeName] = $this->convertBreakpoints($childNode);
                     } else {
                         $typesData[$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
@@ -97,6 +100,40 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $allowedParents = $this->convertParentChildDataToAllowedParents(array_keys($typesData), $parentChildData);
 
         return array_merge_recursive($typesData, $allowedParents);
+    }
+
+    /**
+     * Convert breakpoints data
+     *
+     * @param \DOMElement $childNode
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    private function convertBreakpoints(\DOMElement $childNode): array
+    {
+        $breakpointsData = [];
+        foreach ($childNode->getElementsByTagName('breakpoint') as $breakpointNode) {
+            $breakpointName = $breakpointNode->attributes->getNamedItem('name')->nodeValue;
+            $breakpointsData[$breakpointName] = $this->convertBreakpointData($breakpointNode);
+        }
+        return $breakpointsData;
+    }
+
+    /**
+     * Convert breakpoint data
+     *
+     * @param \DOMElement $childNode
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    private function convertBreakpointData(\DOMElement $childNode): array
+    {
+        $breakpointsData = [];
+        $formNode = $childNode->getElementsByTagName('form')->item(0);
+        if ($formNode && $formNode->nodeValue) {
+            $breakpointsData['form'] = $formNode->nodeValue;
+        }
+        return $breakpointsData;
     }
 
     /**
@@ -139,9 +176,18 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $appearanceData['master_template'] = $this->getAttributeValue($appearanceNode, 'master_template');
         $appearanceData['reader'] = $this->getAttributeValue($appearanceNode, 'reader');
         $appearanceData['default'] = $this->getAttributeValue($appearanceNode, 'default');
-        $formNode = $appearanceNode->getElementsByTagName('form')->item(0);
-        if ($formNode && $formNode->nodeValue) {
+
+        foreach ($appearanceNode->childNodes as $node) {
+            if ($node->nodeName === 'form') {
+                $formNode = $node;
+            }
+        }
+        if (isset($formNode) && $formNode->nodeValue) {
             $appearanceData['form'] = $formNode->nodeValue;
+        }
+        $breakpointsNode = $appearanceNode->getElementsByTagName('breakpoints')->item(0);
+        if ($breakpointsNode && $breakpointsNode->nodeValue) {
+            $appearanceData['breakpoints'] = $this->convertBreakpoints($breakpointsNode);
         }
         return $appearanceData;
     }

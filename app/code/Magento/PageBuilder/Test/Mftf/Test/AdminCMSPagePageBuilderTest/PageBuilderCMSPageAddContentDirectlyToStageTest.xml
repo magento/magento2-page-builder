@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCMSPageAddContentDirectlyToStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Page"/>
+            <title value="Verify Can Only Add Expected Content Types to CMS Page Stage Directly"/>
+            <description value="Verify user can add Row, Columns, Tabs, HTML Code, and Blocks to CMS Page stage directly. Verify user cannot add any other content type to CMS Page stage directly"/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-stage"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Verify Stage is Empty By Default -->
+        <actionGroup ref="AdminVerifyEmptyStageActionGroup" stepKey="verifyStageEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionLayout">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Verify Can Add Row to Stage Directly -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowIntoContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Can Add Column to Stage Directly -->
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragColumnIntoContainer">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="dropZoneIndex" value="2"/>
+        </actionGroup>
+        <!-- Verify Can Add Tab to Stage Directly -->
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTabsIntoContainer">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="dropZoneIndex" value="3"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Text to Stage Directly -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Heading to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Buttons to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Divider to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Can Add HTML Code to Stage Directly -->
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragHTMLIntoContainer">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="dropZoneIndex" value="4"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Video to Stage Directly -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Image to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Map to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Slider to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Banner to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Verify Can Add Block to Stage Directly -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragBlockIntoContainer">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="dropZoneIndex" value="5"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Products to Stage Directly -->
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <!-- Save Page and Verify Expected Content Types on Stage -->
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRowStageAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeTwoColumnsStageAfterSave"/>
+        <seeNumberOfElements selector="{{TabOnStage.all}}" userInput="1" stepKey="seeOneTabStageAfterSave"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HtmlOnStage.allHtml}}&quot;).length" stepKey="numberOfHTMLContentTypesStageAfterSave"/>
+        <assertEquals stepKey="assertHTMLStage">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">numberOfHTMLContentTypesStageAfterSave</actualResult>
+        </assertEquals>
+        <executeJS function="return document.querySelectorAll(&quot;{{BlockOnStage.allBlocks}}&quot;).length" stepKey="numberOfBlockContentTypesStageAfterSave"/>
+        <assertEquals stepKey="assertBlockStage">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">numberOfBlockContentTypesStageAfterSave</actualResult>
+        </assertEquals>
+        <dontSeeElementInDOM selector="{{TextOnStage.allText}}" stepKey="dontSeeTextStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{HeadingOnStage.all}}" stepKey="dontSeeHeadingStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStage.allButtons}}" stepKey="dontSeeButtonGroupStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{DividerOnStage.allDividers}}" stepKey="dontSeeDividerStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{VideoOnStage.allVideo}}" stepKey="dontSeeVideoStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{ImageOnStage.allImages}}" stepKey="dontSeeImageStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{MapOnStage.allMaps}}" stepKey="dontSeeMapStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{SliderOnStage.all}}" stepKey="dontSeeSliderStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{BannerOnBackend.allBanners}}" stepKey="dontSeeBannerStageAfterSave"/>
+        <dontSeeElementInDOM selector="{{ProductsOnStage.allProducts}}" stepKey="dontSeeProductsStageAfterSave"/>
+        <!-- Verify Expected Content Types on Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <executeJS function="return document.querySelectorAll(&quot;{{RowOnStorefront.allRows}}&quot;).length" stepKey="numberOfRowContentTypesStorefront"/>
+        <assertEquals stepKey="assertRowStorefront">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">numberOfRowContentTypesStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return document.querySelectorAll(&quot;{{ColumnOnFrontend.baseCSS}}&quot;).length" stepKey="numberOfColumnsContentTypesStorefront"/>
+        <assertEquals stepKey="assertColumnsStorefront">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">numberOfColumnsContentTypesStorefront</actualResult>
+        </assertEquals>
+        <seeNumberOfElements selector="{{TabOnStorefront.allTabs}}" userInput="1" stepKey="seeOneTabStorefront"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HtmlOnStorefront.allHtml}}&quot;).length" stepKey="numberOfHTMLContentTypesStorefront"/>
+        <assertEquals stepKey="assertHTMLStorefront">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">numberOfHTMLContentTypesStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return document.querySelectorAll(&quot;{{BlockOnStorefront.allBlocks}}&quot;).length" stepKey="numberOfBlockContentTypesStorefront"/>
+        <assertEquals stepKey="assertBlockStorefront">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">numberOfBlockContentTypesStorefront</actualResult>
+        </assertEquals>
+        <dontSeeElementInDOM selector="{{TextOnStorefront.allText}}" stepKey="dontSeeTextStorefront"/>
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.all}}" stepKey="dontSeeHeadingStorefront"/>
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.allButtons}}" stepKey="dontSeeButtonGroupStorefront"/>
+        <dontSeeElementInDOM selector="{{DividerOnStorefront.allDividers}}" stepKey="dontSeeDividerStorefront"/>
+        <dontSeeElementInDOM selector="{{VideoOnStorefront.allVideo}}" stepKey="dontSeeVideoStorefront"/>
+        <dontSeeElementInDOM selector="{{ImageOnStorefront.allImages}}" stepKey="dontSeeImageOnStorefront"/>
+        <dontSeeElementInDOM selector="{{MapOnStorefront.allMaps}}" stepKey="dontSeeMapStorefront"/>
+        <dontSeeElementInDOM selector="{{SlideOnFrontend.all}}" stepKey="dontSeeSliderOnFrontend"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.allBanners}}" stepKey="dontSeeBannerStorefront"/>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.allProducts}}" stepKey="dontSeeProductsStorefront"/>
+    </test>
+</tests>
