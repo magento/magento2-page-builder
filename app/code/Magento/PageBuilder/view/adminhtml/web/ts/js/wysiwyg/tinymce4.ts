@@ -168,6 +168,7 @@ export default class Wysiwyg implements WysiwygInterface {
                 .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
 
             this.invertInlineEditorToAccommodateOffscreenToolbar();
+            this.setStyleOnTableToolbar();
         });
     }
 
@@ -177,6 +178,9 @@ export default class Wysiwyg implements WysiwygInterface {
     private onChangeContent() {
         this.saveContentDebounce();
         this.invertInlineEditorToAccommodateOffscreenToolbar();
+        _.defer(() => {
+            this.setStyleOnTableToolbar();
+        });
     }
 
     /**
@@ -241,5 +245,38 @@ export default class Wysiwyg implements WysiwygInterface {
      */
     private getFixedToolbarContainer() {
         return $(`#${this.elementId}`).closest(`${this.config.adapter.settings.fixed_toolbar_container}`);
+    }
+
+    /**
+     * Get wysiwyg container
+     *
+     * @returns {jQuery}
+     */
+    private getEditor() {
+        return $(`#${this.elementId}`)[0];
+    }
+
+    /**
+     * Adjust table toolbar position, when editor container is smaller than toolbar
+     */
+    private setStyleOnTableToolbar() {
+        if (this.config.adapter_config.mode !== "inline") {
+            return;
+        }
+
+        const $tableToolbar = $(".mce-tinymce-inline.mce-arrow.mce-floatpanel.mce-arrow-up");
+
+        if (!!$tableToolbar.length) {
+            $tableToolbar.css("transform", "translateY(0px)");
+        }
+
+        const $shortTableToolbar = $(".mce-tinymce-inline.mce-arrow.mce-floatpanel:not(.mce-arrow-up)");
+
+        if (!$shortTableToolbar.length) {
+            return;
+        }
+
+        const editorHeight = this.getEditor().clientHeight;
+        $shortTableToolbar.css("transform", "translateY(" + editorHeight + "px)");
     }
 }
