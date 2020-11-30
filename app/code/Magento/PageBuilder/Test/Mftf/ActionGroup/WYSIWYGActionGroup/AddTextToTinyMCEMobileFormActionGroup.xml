@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AddTextToTinyMCEMobileFormActionGroup" extends="addTextToTinyMCE">
+        <annotations>
+            <description>Adds content to the TinyMCE editor on a content type's edit panel when editing in the mobile viewport.</description>
+        </annotations>
+        <waitForElementVisible selector="#{{section.tinyMCEIFrameMobile}}" stepKey="waitForIFrame"/>
+        <click selector="#{{section.tinyMCEIFrameMobile}}" stepKey="clickIFrame"/>
+        <switchToIFrame selector="{{section.tinyMCEIFrameMobile}}" stepKey="switchToIFrame"/>
+    </actionGroup>
+</actionGroups>

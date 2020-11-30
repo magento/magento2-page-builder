@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test  name="PageBuilderProductAddContentDirectlyToStageTest" extends="PageBuilderCMSPageAddContentDirectlyToStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Verify Can Only Add Expected Content Types to Products Stage Directly"/>
+            <description value="Verify user can add Row, Columns, Tabs, HTML Code, and Blocks to Products stage directly. Verify user cannot add any other content type to Products stage directly"/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-stage"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory" after="loginAsAdmin"/>
+            <createData entity="_defaultProduct" stepKey="createCMSPage" after="createPreReqCategory">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="product" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection" after="navigateToCreatedCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" after="deleteCMSPage"/>
+        </after>
+        <!-- Save Category and Verify Expected Content Types on Stage -->
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductsSection" after="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Expected Content Types on Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.name$$.html"/>
+        </actionGroup>
+    </test>
+</tests>

@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TabsAddToColumnWithSetLargeMinimumHeightAndHeightDoesNotAdjustTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -24,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -48,7 +51,7 @@
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
-        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
+        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty0.paddingTop}}+{{PageBuilderPaddingProperty0.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndColumns</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
@@ -67,7 +70,7 @@
         </assertEquals>
         <comment userInput="Validate Row Height does not shrink to Tabs height" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
-        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
+        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty0.paddingTop}}+{{PageBuilderPaddingProperty0.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>

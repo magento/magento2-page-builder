@@ -19,9 +19,11 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      */
     protected $_idAttributes = [
         self::TYPE_PATH => 'name',
+        self::TYPE_PATH . '/breakpoints/breakpoint' => 'name',
         self::TYPE_PATH . '/parents/parent' => 'name',
         self::TYPE_PATH . '/children/child' => 'name',
         self::TYPE_PATH . '/appearances/appearance' => 'name',
+        self::TYPE_PATH . '/appearances/appearance/breakpoints/breakpoint' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data' => 'name',
         self::TYPE_PATH . '/appearances/appearance/elements/element' => 'name',
         self::TYPE_PATH . '/appearances/appearance/elements/element/style'

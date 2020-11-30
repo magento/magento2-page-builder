@@ -7,7 +7,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/preview"], function (_contentTypeFactory, _preview) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/preview"], function (_config, _contentTypeFactory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -44,10 +44,12 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
         direct = false;
       }
 
+      var defaultViewport = _config.getConfig("defaultViewport");
+
       var index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
-      var childrenLength = contentType.children ? contentType.children().length : null;
+      var childrenLength = contentType.children ? contentType.children().length : 0;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentType.dataStore.getState(), childrenLength).then(function (duplicate) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentType.dataStores[defaultViewport].getState(), childrenLength, contentType.getDataStoresStates()).then(function (duplicate) {
           if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
             contentType.children().forEach(function (subChild) {

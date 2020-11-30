@@ -23,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -46,8 +50,8 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
-            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
-            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty0"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
     </test>
 </tests>

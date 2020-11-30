@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ColumnCannotAddToStageTest">
+    <test name="ColumnCannotAddToStageTest" deprecated="Column was allowed as a root container">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -20,6 +20,9 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGeneral"/>
             <group value="pagebuilder-cannotAddToStage"/>
+            <skip>
+                <issueId value="DEPRECATED">Block was allowed as a root container</issueId>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>

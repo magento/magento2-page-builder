@@ -23,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -170,6 +174,7 @@
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty1"/>
             <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>

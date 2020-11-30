@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ButtonGroupOnStage">
+        <element name="allButtons" type="text" selector="[data-content-type='buttons']"/>
         <element name="jsButtonGroupSelector" type="text" selector="document.querySelectorAll('.pagebuilder-buttons')[{{arg1}}-1]" parameterized="true"/>
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>

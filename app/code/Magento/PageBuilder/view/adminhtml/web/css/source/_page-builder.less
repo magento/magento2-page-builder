@@ -67,6 +67,7 @@
     -moz-transition: .35s ease-in-out;
     -webkit-transition: .35s ease-in-out;
     background: @color-white;
+    height: 100%;
     position: relative;
     transition: .35s ease-in-out;
 
@@ -289,6 +290,9 @@
     .pagebuilder-canvas {
         -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+        background-color: @color-white;
+        margin: 0 10px;
+        min-height: 100%;
         opacity: 0;
         padding-bottom: 120px;
         transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
@@ -347,16 +351,16 @@
                     background-color: transparent;
                 }
                 100% {
-                    background-color: @color-white;
+                    background-color: @color-gray-middle1;
                 }
             });
             .animation(fade-in @pagebuilder-animation);
-            background-color: @color-white;
+            background-color: @color-gray-middle1;
 
             &.transition-out {
                 .keyframes(fade-out; {
                     0% {
-                        background-color: @color-white;
+                        background-color: @color-gray-middle1;
                     }
                     50% {
                         background-color: @color-white;
@@ -369,6 +373,7 @@
             }
 
             .pagebuilder-stage {
+                height: inherit;
                 left: 0;
                 position: relative;
                 top: 0;

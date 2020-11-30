@@ -14,8 +14,9 @@
             <argument name="containerDefaultHeight" defaultValue="1"/>
             <argument name="expectedPaddingTop" defaultValue="1"/>
             <argument name="expectedPaddingBottom" defaultValue="1"/>
+            <argument name="expectedBorderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
         </arguments>
-        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}+({{expectedBorderWidth.value}}*2)" stepKey="actualStageContentTypeHeight"/>
         <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentTypeHeightWithPadding"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
             <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>

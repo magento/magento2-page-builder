@@ -26,6 +26,10 @@
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
@@ -192,7 +196,7 @@
         </actionGroup>
         <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut2"/>
         <!-- Verify Empty Stage -->
-        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <seeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="verifyEmptyStage"/>
         <!-- Reopen Apply Template and Cancel Apply Confirm -->
         <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut3"/>
         <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5">
@@ -208,6 +212,6 @@
         <actionGroup ref="closeConfirmModal" stepKey="closeConfirmModal"/>
         <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut4"/>
         <!-- Verify Empty Stage -->
-        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+        <seeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="verifyEmptyStage2"/>
     </test>
 </tests>

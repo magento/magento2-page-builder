@@ -27,7 +27,7 @@
 
         <!-- Validate CMS Block Stage Mobile Viewport -->
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
-        <executeJS function="return Math.abs({{BannerOnBackend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSBlockStage" before="validateOverlayPositionCMSBlockStage"/>
+        <executeJS function="return Math.abs({{BannerOnBackend.wrapperJS('1')}}.getBoundingClientRect().width)" stepKey="widthOfWrapperMinusPaddingCMSBlockStage" before="validateOverlayPositionCMSBlockStage"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="BannerOnBackend"/>
             <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSBlockStage}"/>
@@ -48,7 +48,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStageDesktop">
             <argument name="selector" value="{{BannerOnBackend.wrapper('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerCMSBlockStageDesktop"/>
@@ -56,7 +56,7 @@
 
         <!-- Validate CMS Page Stage Mobile Viewport -->
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStage"/>
-        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStage" before="validateOverlayPositionCMSPageStage"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width)" stepKey="widthOfWrapperMinusPaddingCMSPageStage" before="validateOverlayPositionCMSPageStage"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStage">
             <argument name="page" value="BannerOnFrontend"/>
             <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStage}"/>
@@ -75,7 +75,7 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStageDesktop">
             <argument name="selector" value="{{BannerOnFrontend.wrapper('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageDesktop"/>
@@ -87,14 +87,14 @@
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefront">
             <argument name="selector" value="{{BannerOnFrontend.wrapper('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
 
         <!-- Validate CMS Page Storefront Mobile -->
-        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width)" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
             <argument name="page" value="BannerOnFrontend"/>
             <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
