@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="TextOnStorefront">
+        <element name="allText" type="text" selector="[data-content-type='text']"/>
         <element name="base" type="text" selector="(//div[@data-content-type=&quot;text&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>

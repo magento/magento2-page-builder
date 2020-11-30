@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (_consoleLogger, _knockout, _appearanceConfig, _attributes, _css, _html, _style) {
+define(["consoleLogger", "knockout", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (_consoleLogger, _knockout, _underscore, _config, _appearanceConfig, _attributes, _css, _html, _style) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -35,12 +35,13 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
      *
      * @param {Preview} viewModel
      * @param {DataObject} data
+     * @param {DataObject} dataStores
      */
 
 
     var _proto = ObservableUpdater.prototype;
 
-    _proto.update = function update(viewModel, data) {
+    _proto.update = function update(viewModel, data, dataStores) {
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(viewModel.contentType.config.name, appearance);
 
@@ -49,7 +50,7 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       } // Generate Knockout bindings in objects for usage in preview and master templates
 
 
-      var generatedBindings = this.generateKnockoutBindings(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
+      var generatedBindings = this.generateKnockoutBindings(appearanceConfiguration.elements, appearanceConfiguration.converters, data, dataStores);
 
       var _loop = function _loop(element) {
         if (generatedBindings.hasOwnProperty(element)) {
@@ -88,10 +89,11 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
      * @param elements
      * @param converters
      * @param data
+     * @param dataStoreStates
      */
     ;
 
-    _proto.generateKnockoutBindings = function generateKnockoutBindings(elements, converters, data) {
+    _proto.generateKnockoutBindings = function generateKnockoutBindings(elements, converters, data, dataStoreStates) {
       var convertedData = this.convertData(data, converters);
       var generatedData = {};
 
@@ -105,7 +107,7 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
 
         generatedData[elementName] = {
           attributes: this.generateKnockoutBinding("attributes", elementName, elementConfig, data),
-          style: this.generateKnockoutBinding("style", elementName, elementConfig, data),
+          style: _config.getMode() === "Preview" ? this.generateKnockoutBinding("style", elementName, elementConfig, data) : this.generateKnockoutBindingForBreakpoints("style", elementName, elementConfig, data, dataStoreStates),
           css: elementConfig.css.var in convertedData ? this.generateKnockoutBinding("css", elementName, elementConfig, data) : {},
           html: this.generateKnockoutBinding("html", elementName, elementConfig, data)
         };
@@ -180,6 +182,26 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       var generatedBindingData = this.bindingGenerators[binding](elementName, config, data, this.converterResolver, this.converterPool, previousData);
       this.previousData[elementName][binding] = generatedBindingData;
       return generatedBindingData;
+    }
+    /**
+     * Generate an individual knockout binding for breakpoints
+     *
+     * @param binding
+     * @param elementName
+     * @param config
+     * @param data
+     * @param dataStoreStates
+     */
+    ;
+
+    _proto.generateKnockoutBindingForBreakpoints = function generateKnockoutBindingForBreakpoints(binding, elementName, config, data, dataStoreStates) {
+      var _this = this;
+
+      var result = {};
+      Object.keys(dataStoreStates).forEach(function (name) {
+        result[name] = _underscore.isEmpty(dataStoreStates[name]) ? {} : _this.generateKnockoutBinding(binding, elementName, config, dataStoreStates[name]);
+      });
+      return result;
     };
 
     return ObservableUpdater;

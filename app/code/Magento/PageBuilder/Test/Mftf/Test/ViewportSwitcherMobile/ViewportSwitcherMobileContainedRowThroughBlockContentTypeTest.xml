@@ -28,6 +28,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
             <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
                 <argument name="viewportButton" value="mobile"/>
                 <argument name="viewportStage" value="mobile"/>
@@ -54,7 +58,7 @@
             <argument name="property" value="PageBuilderBackgroundColor_Red"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderPadding_0"/>
+            <argument name="property" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate CMS Block Stage in Mobile Viewport -->
@@ -78,13 +82,13 @@
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStage">
             <argument name="selector" value="{{RowOnStage.base('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.evaluate('{{RowOnStage.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSBlockStage"/>
         <assertEquals stepKey="assertFirstMinHeightCMSBlockStage">
             <actualResult type="variable">firstMinHeightCMSBlockStage</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.intValue}}</expectedResult>
         </assertEquals>
 
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
@@ -94,6 +98,10 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
@@ -133,13 +141,13 @@
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightCMSPageStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStage">
             <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.evaluate('{{RowOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightCMSPageStage"/>
         <assertEquals stepKey="assertFirstMinHeightCMSPageStage">
             <actualResult type="variable">firstMinHeightCMSPageStage</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_0.value}}</expectedResult>
         </assertEquals>
 
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -151,13 +159,13 @@
         <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
             <argument name="selector" value="{{RowOnStorefront.base('2')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200px.intValue}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_0.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <executeJS function="return document.evaluate('{{RowOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
         <assertEquals stepKey="assertFirstMinHeightStorefront">
             <actualResult type="variable">firstMinHeightStorefront</actualResult>
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_0.value}}</expectedResult>
         </assertEquals>
         <!-- Validate Storefront Mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>

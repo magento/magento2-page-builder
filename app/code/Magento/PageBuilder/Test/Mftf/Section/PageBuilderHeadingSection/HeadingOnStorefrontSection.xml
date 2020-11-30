@@ -7,6 +7,7 @@
 -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="HeadingOnStorefront">
+        <element name="all" type="text" selector="[data-content-type='heading']"/>
         <element name="base" type="text" selector="(//*[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
         <element name="baseByTagName" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
         <element name="baseJs" type="text" selector="document.querySelectorAll('[data-content-type=\'heading\']')[{{arg1}}]" parameterized="true"/>

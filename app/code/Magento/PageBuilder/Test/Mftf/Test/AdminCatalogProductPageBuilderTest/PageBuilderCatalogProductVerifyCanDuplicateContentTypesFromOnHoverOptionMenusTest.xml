@@ -32,6 +32,10 @@
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
@@ -43,6 +47,9 @@
         <comment userInput="Edit Row" stepKey="commentEditRow"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuForRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>

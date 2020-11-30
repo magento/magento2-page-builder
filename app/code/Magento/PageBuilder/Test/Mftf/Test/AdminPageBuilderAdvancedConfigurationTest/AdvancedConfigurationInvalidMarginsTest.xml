@@ -23,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -220,12 +224,12 @@
         <!-- User can recover after invalid input -->
         <comment userInput="User can recover after invalid input" stepKey="commentCanRecover"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="property" value="PageBuilderMarginsProperty0"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="ValidateAdvancedConfigurationWithNoAlignmentActionGroup" stepKey="validateStage">
             <argument name="page" value="TextOnStage"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="margin" value="PageBuilderMarginsProperty0"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>

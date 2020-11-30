@@ -11,7 +11,7 @@
     display: flex;
     margin-right: 1px;
 
-    > .element-children {
+    .pagebuilder-column-inner > .element-children {
         flex: 1;
         max-width: 100%;
         min-height: initial;
@@ -19,8 +19,14 @@
     }
 }
 
+.pagebuilder-column-inner {
+    display: flex;
+    max-width: 100%;
+    min-height: initial;
+    width: 100%;
+}
+
 .pagebuilder-content-type.pagebuilder-column {
-    margin-bottom: 10px;
     min-height: inherit;
 
     &.empty-container {
@@ -31,10 +37,11 @@
         background: @color-pagebuilder-light-blue;
         bottom: 0;
         cursor: col-resize;
+        height: calc(~'100% + 30px');
         opacity: 0;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: -15px;
+        top: -15px;
         transition: .5s opacity;
         width: 15px;
         z-index: 28;

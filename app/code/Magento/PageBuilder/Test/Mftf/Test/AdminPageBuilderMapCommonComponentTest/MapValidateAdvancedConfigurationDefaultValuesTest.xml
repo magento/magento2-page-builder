@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="MapValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -25,6 +24,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
@@ -48,10 +51,10 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -95,10 +98,10 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>

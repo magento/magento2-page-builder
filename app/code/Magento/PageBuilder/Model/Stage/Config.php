@@ -197,6 +197,8 @@ class Config
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
             'breakpoints' => $this->getCachedWidgetBreakpoints(),
+            'viewports' => $this->getViewports($this->getCachedWidgetBreakpoints()),
+            'defaultViewport' => $this->getDefaultViewport($this->getCachedWidgetBreakpoints()),
             'tinymce' => $this->getCachedTinyMceConfig(),
             'acl' => $this->getAcl()
         ];
@@ -312,6 +314,8 @@ class Config
      * @param array $contentType
      *
      * @return array
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     private function flattenContentTypeData(string $name, array $contentType)
     {
@@ -329,18 +333,57 @@ class Config
             'master_component' => $contentType['master_component'] ?? self::DEFAULT_MASTER_COMPONENT,
             'allowed_parents' => $contentType['allowed_parents'] ?? [],
             'appearances' => $contentType['appearances'] ?? [],
+            'breakpoints' => $contentType['breakpoints'] ?? [],
             'additional_data' => isset($contentType['additional_data'])
                 ? $this->additionalDataParser->toArray($contentType['additional_data'])
                 : [],
             'is_system' => isset($contentType['is_system']) && $contentType['is_system'] === 'false' ? false : true
         ];
 
+        $result['breakpoints'] = array_merge_recursive(
+            $result['breakpoints'],
+            $this->getBreakpointsFields($result['breakpoints'], 'default')
+        );
+
         foreach ($result['appearances'] as $key => $appearance) {
             if (isset($appearance['form'])) {
                 $result['fields'][$key . '-appearance'] = $this->uiComponentConfig->getFields($appearance['form']);
             }
+            if (isset($appearance['breakpoints'])) {
+                $namespace = $key . '-appearance';
+                if ($appearance['default']) {
+                    $namespace = 'default';
+                    foreach ($appearance['breakpoints'] as $name => $breakpoint) {
+                        if (isset($breakpoint['form'])) {
+                            $result['breakpoints'][$name]['form'] = $breakpoint['form'];
+                        }
+                    }
+                }
+                $result['breakpoints'] = array_replace_recursive(
+                    $result['breakpoints'],
+                    $this->getBreakpointsFields($appearance['breakpoints'], $namespace)
+                );
+            }
         }
 
+        return $result;
+    }
+
+    /**
+     * Get breakpoint fields.
+     *
+     * @param array $breakpoints
+     * @param string $namespace
+     * @return array
+     */
+    private function getBreakpointsFields(array $breakpoints, string $namespace): array
+    {
+        $result = [];
+        foreach ($breakpoints as $key => $breakpoint) {
+            if (isset($breakpoint['form'])) {
+                $result[$key]['fields'][$namespace] = $this->uiComponentConfig->getFields($breakpoint['form'], $key);
+            }
+        }
         return $result;
     }
 
@@ -411,5 +454,36 @@ class Config
     private function saveCache(array $data, string $cacheIdentifier): void
     {
         $this->cache->save($this->serializer->serialize($data), $cacheIdentifier);
+    }
+
+    /**
+     * Get viewports.
+     *
+     * @param array $breakpoints
+     * @return array
+     */
+    private function getViewports(array $breakpoints): array
+    {
+        $viewports = [];
+
+        foreach ($breakpoints as $name => $breakpoint) {
+            if (isset($breakpoint['stage'])) {
+                $viewports[$name] = $breakpoint;
+            }
+        }
+
+        return $viewports;
+    }
+
+    /**
+     * Get default viewport.
+     *
+     * @param array $breakpoints
+     * @return string
+     */
+    private function getDefaultViewport(array $breakpoints): string
+    {
+        $keyIndex = array_search(true, array_column($breakpoints, 'default'));
+        return $keyIndex === false ? '' : array_keys($breakpoints)[$keyIndex];
     }
 }

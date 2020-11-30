@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ViewportSwitcherMobileDuplicateContentTypesFromOnHoverOptionMenusTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -31,6 +30,10 @@
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
             <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
                 <argument name="viewportButton" value="mobile"/>
                 <argument name="viewportStage" value="mobile"/>
@@ -50,6 +53,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForRow"/>
         <!-- Duplicate and Validate Stage -->
         <actionGroup ref="duplicateContentType" stepKey="duplicateRow">
@@ -66,6 +72,7 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+
         <!-- Validate Edit Panel For Duplicate -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuForRow2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -80,6 +87,7 @@
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+
         <!-- Validate Stage After Save Desktop Viewport -->
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="see2RowsStageAfterSave"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorRow1Stage2">
@@ -92,6 +100,7 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+
         <!-- Validate Stage After Save Mobile Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportAfterSave">
             <argument name="viewportButton" value="mobile"/>
@@ -108,6 +117,7 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+
         <!-- Navigate To Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>

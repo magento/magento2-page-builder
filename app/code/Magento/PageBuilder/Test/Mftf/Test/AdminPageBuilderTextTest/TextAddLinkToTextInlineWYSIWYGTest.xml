@@ -31,13 +31,15 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>

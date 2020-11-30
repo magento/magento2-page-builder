@@ -24,6 +24,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -64,10 +68,10 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
-            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -170,10 +174,10 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
-            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

@@ -30,6 +30,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -133,8 +137,6 @@
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSBlockStage">
             <argument name="content" value="{{RowOnStage.baseCSS}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
             <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
@@ -146,6 +148,10 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
