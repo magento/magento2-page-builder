@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateMobileIconTooltipNotVisibleInEditFormActionGroup">
+        <annotations>
+            <description>Verifies that the mobile icon and tooltip do not exist for the specified Edit Form field</description>
+        </annotations>
+        <arguments>
+            <argument name="property" defaultValue="PageBuilderMinHeightProperty_Empty"/>
+        </arguments>
+        <dontSeeElementInDOM selector="{{PageBuilderViewportFormSection.mobileIconField(property.section, property.fieldName)}}" stepKey="verifyMobileIconIsNotVisible"/>
+        <dontSeeElementInDOM selector="{{PageBuilderViewportFormSection.mobileFieldTooltipContent(property.section, property.fieldName)}}" stepKey="verifyTooltipIsNotVisible"/>
+    </actionGroup>
+</actionGroups>

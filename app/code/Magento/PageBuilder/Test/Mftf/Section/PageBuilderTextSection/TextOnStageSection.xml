@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="TextOnStage">
+        <element name="allText" type="text" selector="[data-content-type='text']"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div" parameterized="true"/>
         <element name="textAreaText" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//div[.='{{arg2}}']" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>

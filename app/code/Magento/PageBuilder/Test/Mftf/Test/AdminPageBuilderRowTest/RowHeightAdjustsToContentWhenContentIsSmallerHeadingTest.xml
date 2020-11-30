@@ -25,16 +25,20 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <!-- Assert row height is 320px when empty -->
-        <comment userInput="Assert row height is 320px when empty" stepKey="comment1"/>
+        <!-- Assert row height is 300px when empty -->
+        <comment userInput="Assert row height is 300px when empty" stepKey="comment1"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setEmptyRowHeight"/>
         <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getEmptyRowHeight"/>
         <assertEquals stepKey="assertEmptyRowHeight">
-            <expectedResult type="string">320</expectedResult>
+            <expectedResult type="string">300</expectedResult>
             <actualResult type="variable">getEmptyRowHeight</actualResult>
         </assertEquals>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">

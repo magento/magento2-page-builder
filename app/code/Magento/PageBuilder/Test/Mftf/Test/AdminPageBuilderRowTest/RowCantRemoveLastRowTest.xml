@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="RowCantRemoveLastRowTest">
+    <test name="RowCantRemoveLastRowTest" deprecated="Was allowed to remove last item from stage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -19,11 +19,18 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
+            <skip>
+                <issueId value="DEPRECATED">Block was allowed as a root container</issueId>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>

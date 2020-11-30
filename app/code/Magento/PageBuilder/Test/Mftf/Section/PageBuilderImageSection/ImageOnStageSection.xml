@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ImageOnStage">
+        <element name="allImages" type="text" selector="[data-content-type='image']"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
         <element name="imageSourceByIndex" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="imageCaption" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//figcaption[@data-element='caption']" parameterized="true"/>

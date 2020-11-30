@@ -24,6 +24,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -71,7 +75,7 @@
         </assertEquals>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPosition"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPadding"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAligned">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPadding</actualResult>
@@ -97,7 +101,7 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPosition"/>
-        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-{{PageBuilderPaddingPropertyOverlayDefault.paddingRight}}))" stepKey="overlayMinusButtonMinusPadding"/>
         <assertLessThanOrEqual stepKey="assertButtonRightAligned">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">overlayMinusButtonMinusPadding</actualResult>
@@ -114,7 +118,7 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionAfterSave"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPositionAfterSave"/>
-        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-{{PageBuilderPaddingPropertyOverlayDefault.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
         <assertLessThanOrEqual stepKey="assertButtonRightAlignedAfterSave">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">overlayMinusButtonMinusPaddingAfterSave</actualResult>
@@ -131,7 +135,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionStoreFront"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPositionStoreFront"/>
-        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-{{PageBuilderPaddingPropertyOverlayDefault.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
         <assertLessThanOrEqual stepKey="assertButtonRightAlignedStoreFront">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">overlayMinusButtonMinusPaddingStoreFront</actualResult>

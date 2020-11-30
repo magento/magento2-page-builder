@@ -29,6 +29,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
             <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
                 <argument name="viewportButton" value="mobile"/>
                 <argument name="viewportStage" value="mobile"/>
@@ -88,7 +92,7 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+        <actionGroup ref="AddTextToTinyMCEMobileFormActionGroup" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
@@ -143,7 +147,9 @@
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageCMSBlockStageMobile">
+            <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStageMobile"/>
@@ -166,7 +172,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStageMobile"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageMobile}-{$overlayLeftPositionCMSBlockStageMobile}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageMobile"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStageMobile}-{$overlayLeftPositionCMSBlockStageMobile}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStageMobile"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStageMobile">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStageMobile</actualResult>
@@ -203,7 +209,9 @@
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageCMSBlockStage">
+            <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
@@ -226,7 +234,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
@@ -241,6 +249,10 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportForBlock">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
@@ -279,7 +291,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageMobile">
             <argument name="section" value="SlideOnFrontend"/>
@@ -295,7 +306,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStageMobile"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageMobile"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageMobile}-{$overlayLeftPositionCMSPageStageMobile}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageMobile"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageMobile}-{$overlayLeftPositionCMSPageStageMobile}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageMobile"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStageMobile">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStageMobile</actualResult>
@@ -330,7 +341,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStageAfterSave">
             <argument name="section" value="SlideOnFrontend"/>
@@ -346,7 +356,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStageAfterSave"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStageAfterSave"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageAfterSave}-{$overlayLeftPositionCMSPageStageAfterSave}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStageAfterSave}-{$overlayLeftPositionCMSPageStageAfterSave}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStageAfterSave"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStageAfterSave">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStageAfterSave</actualResult>
@@ -383,7 +393,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
@@ -409,7 +418,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefront"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefront">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStorefront</actualResult>
@@ -449,7 +458,6 @@
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
             <argument name="section" value="SlideOnFrontend"/>
@@ -475,7 +483,7 @@
         </actionGroup>
         <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefrontMobile"/>
         <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefrontMobile"/>
-        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefrontMobile"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefrontMobile"/>
         <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefrontMobile">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStorefront</actualResult>

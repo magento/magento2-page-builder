@@ -28,6 +28,10 @@
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -109,10 +113,10 @@
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefrontMobile"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
-        <assertLessThan stepKey="assertButtonSmallerThanTabStorefrontMobile">
+        <assertLessThanOrEqual stepKey="assertButtonSmallerThanTabStorefrontMobile">
             <expectedResult type="variable">$tabWidthStorefrontMobile</expectedResult>
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
-        </assertLessThan>
+        </assertLessThanOrEqual>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop1"/>
     </test>
 </tests>

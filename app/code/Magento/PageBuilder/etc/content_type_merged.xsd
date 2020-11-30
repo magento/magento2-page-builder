@@ -16,6 +16,7 @@
                             <xs:element type="xs:string" name="preview_template" minOccurs="0"/>
                             <xs:element type="xs:string" name="master_template" minOccurs="0"/>
                             <xs:element type="parents" name="parents" minOccurs="0" maxOccurs="1"/>
+                            <xs:element type="breakpoints" name="breakpoints" minOccurs="0" maxOccurs="1"/>
                             <xs:element type="children" name="children" minOccurs="0" maxOccurs="1"/>
                             <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                 <xs:complexType>
@@ -56,6 +57,7 @@
             <xs:element type="elements" name="elements" minOccurs="1" maxOccurs="1"/>
             <xs:element type="converters" name="converters" minOccurs="0" maxOccurs="1"/>
             <xs:element type="xs:string" name="form" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="breakpoints" name="breakpoints" minOccurs="0" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:boolean" name="default" use="optional"/>
@@ -69,6 +71,11 @@
         </xs:sequence>
         <xs:attribute type="xs:string" name="default_policy" use="required"/>
     </xs:complexType>
+    <xs:complexType name="breakpoints">
+        <xs:sequence>
+            <xs:element type="breakpoint" name="breakpoint" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="children">
         <xs:sequence>
             <xs:element type="child" name="child" minOccurs="0" maxOccurs="unbounded"/>
@@ -78,6 +85,12 @@
     <xs:complexType name="parent">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="policy" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="breakpoint">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element type="xs:string" name="form" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
     <xs:complexType name="child">
         <xs:attribute type="xs:string" name="name" use="required"/>

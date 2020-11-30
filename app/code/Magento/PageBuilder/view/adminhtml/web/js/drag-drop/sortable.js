@@ -223,13 +223,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
   function onSortUpdate(preview, event, ui) {
     // If the sortable instance is disabled don't complete this operation
-    if ((0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
+    if ((0, _jquery)(this).hasClass("ui-sortable") && (0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
       ui.item.remove();
       (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the content type
 
       if (ui.item.length > 0 && typeof _knockout.dataFor(ui.item[0]) !== "undefined") {
-        var contentType = _knockout.dataFor(ui.item[0]).contentType;
+        var data = _knockout.dataFor(ui.item[0]);
 
+        var contentType = data.contentType && data.contentType.getChildren ? data.contentType : data.parentContentType;
         var children = contentType.getChildren()().splice(0);
         contentType.getChildren()([]);
         contentType.getChildren()(children);

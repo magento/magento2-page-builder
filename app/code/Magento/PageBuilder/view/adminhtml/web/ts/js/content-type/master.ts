@@ -4,8 +4,9 @@
  */
 
 import _ from "underscore";
+import Config from "../config";
 import ContentTypeInterface from "../content-type.types";
-import {DataObject} from "../data-store";
+import DataStore, {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
@@ -102,6 +103,7 @@ export default class Master {
         this.observableUpdater.update(
             this,
             _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState()),
+            this.contentType.getDataStoresStates(),
         );
         this.afterObservablesUpdated();
     }

@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ViewportSwitcherMobileColumnBottomAlignmentAppearanceThroughBlockContentTypeTest" extends="ViewportSwitcherMobileColumnFullHeightAppearanceThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -33,11 +32,12 @@
 
         <!-- Validate CMS Block Stage Desktop Viewport -->
         <actionGroup ref="validateColumnAppearanceBottomAligned" stepKey="validateColumn1AppearanceCMSBlockStage">
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_75"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_75.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
 
@@ -51,22 +51,25 @@
         <!-- Validate CMS Page Stage Desktop Viewport -->
         <actionGroup ref="validateColumnAppearanceBottomAligned" stepKey="validateColumn1AppearanceCMSPageStage">
             <argument name="section" value="ColumnOnFrontend"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_20"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStage">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_20.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
 
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="validateColumnAppearanceBottomAligned" stepKey="validateColumn1AppearanceCMSPageStorefront">
             <argument name="section" value="ColumnOnFrontend"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_45"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSPageStorefront">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty1.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_0.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty20.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty20.paddingBottom}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
 

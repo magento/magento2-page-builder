@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileTabItemMinHeightTest" extends="ViewportSwitcherMobileRowMinHeightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Verify Tab Item Minimum Height Works As Expected Between Mobile And Desktop"/>
+            <description value="Verify tab item's minimum height behaves as expected when desktop is set and mobile is empty, when desktop is set and mobile is set to calculated value, and when desktop is empty and mobile is set. Verify on desktop and mobile viewports on CMS Block stage, CMS Page through Block, and storefront."/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-viewport-switcher"/>
+            <group value="pagebuilder-cms-block"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <!-- Add Tab Group -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" after="saveEditPanelSettings" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="expandPageBuilderPanelMenuSection" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+
+        <!-- Edit Tab Item -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="dragContentTypeIntoStage" stepKey="openEditPanelTabItem">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" after="openEditPanelTabItem" stepKey="enterBorderNone2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" after="enterBorderNone2" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingProperty0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" after="enterPadding" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterMargins" stepKey="saveEditPanelSettingsTabItem"/>
+
+        <!-- Duplicate Tab Group -->
+        <click selector="{{TabsOnStage.tabsContainer}}" after="saveEditPanelSettingsTabItem" stepKey="focusContentTypeElement"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+
+        <!-- Tab Item 1: Desktop Min Height = 500px -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight500px1">
+            <argument name="property" value="PageBuilderTabMinimumHeight500Property"/>
+        </actionGroup>
+        <actionGroup ref="ValidateMobileIconTooltipNotVisibleInEditFormActionGroup" stepKey="verifyNoMobileIconTooltip">
+            <argument name="property" value="PageBuilderTabMinimumHeight500Property"/>
+        </actionGroup>
+        <!-- Tab Item 1: Mobile Empty Min Height -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="ValidateMobileIconTooltipInContentTypeEditFormActionGroup" stepKey="verifyMobileIconTooltip">
+            <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEmptyHeightField">
+            <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
+        </actionGroup>
+
+        <!-- Tab Item 2: Desktop Min Height = 500px -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel3">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight500px2">
+            <argument name="property" value="PageBuilderTabMinimumHeight500Property"/>
+        </actionGroup>
+        <!-- Tab Item 2: Mobile Min Height = 200px -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel4">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightCalculation">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+
+        <!-- Tab Item 3: Desktop Empty Min Height -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel5">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="validateEmptyHeightField2">
+            <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!-- Tab Item 3: Mobile Min Height = 200px -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel6">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight200px">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{TabOnStage.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStage.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">firstActualHeightCMSBlockStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{TabOnStage.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStage.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">secondActualHeightCMSBlockStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageDesktop">
+            <argument name="selector" value="{{TabOnStage.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeightDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStage.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeightDefaultProperty.value}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Block Stage Mobile Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{TabOnStage.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStage.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">firstActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{TabOnStage.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStage.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSBlockStageMobile"/>
+        <remove keyForRemoval="expectedSecondHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">secondActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight200Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSBlockStageMobile">
+            <argument name="selector" value="{{TabOnStage.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStage.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSBlockStageMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSBlockStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSBlockStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight200Property.value}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">firstActualHeightCMSPageStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">secondActualHeightCMSPageStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageDesktop">
+            <argument name="selector" value="{{TabOnStorefront.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinHeight0Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageDesktop"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageDesktop">
+            <actualResult type="variable">thirdActualHeightCMSPageStageDesktop</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinHeight0Property.value}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">firstActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">secondActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight200Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightCMSPageStageMobile">
+            <argument name="selector" value="{{TabOnStorefront.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightCMSPageStageMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightCMSPageStageMobile">
+            <actualResult type="variable">thirdActualHeightCMSPageStageMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight200Property.value}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate Storefront Desktop -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefront">
+            <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefront"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">firstActualHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefront">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefront"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">secondActualHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefront">
+            <argument name="selector" value="{{TabOnStorefront.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeightDefaultProperty.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefront"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefront">
+            <actualResult type="variable">thirdActualHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeightDefaultProperty.value}}</expectedResult>
+        </assertEquals>
+
+        <!-- Validate Storefront Mobile -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstMinHeightStorefrontMobile">
+            <argument name="selector" value="{{TabOnStorefront.base('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight500Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('1')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertFirstHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">firstActualHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight500Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeSecondMinHeightStorefrontMobile">
+            <argument name="selector" value="{{TabOnStorefront.base('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('2')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertSecondHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">secondActualHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight200Property.value}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeThirdMinHeightStorefrontMobile">
+            <argument name="selector" value="{{TabOnStorefront.base('3')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('{{TabOnStorefront.base('3')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdActualHeightStorefrontMobile"/>
+        <assertEquals stepKey="assertThirdHeightEqualsMinHeightStorefrontMobile">
+            <actualResult type="variable">thirdActualHeightStorefrontMobile</actualResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight200Property.value}}</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

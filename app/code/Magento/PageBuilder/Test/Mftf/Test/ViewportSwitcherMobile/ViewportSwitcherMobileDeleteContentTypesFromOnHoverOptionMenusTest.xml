@@ -31,6 +31,10 @@
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
             <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
                 <argument name="viewportButton" value="mobile"/>
                 <argument name="viewportStage" value="mobile"/>
@@ -63,6 +67,9 @@
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <!-- Delete Divider -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>

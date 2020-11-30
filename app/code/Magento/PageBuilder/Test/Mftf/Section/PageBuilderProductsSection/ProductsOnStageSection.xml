@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ProductsOnStage">
+        <element name="allProducts" type="text" selector="[data-content-type='products']"/>
         <element name="base" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]"/>
         <element name="price" type="text" selector="//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//div[contains(@data-role,'priceBox')]"/>
         <element name="hidden" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{indexOfProductGroup}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]"/>

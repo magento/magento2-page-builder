@@ -24,6 +24,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -67,6 +71,7 @@
         </actionGroup>
         <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStage">
             <argument name="page" value="BannerOnBackend"/>
+            <argument name="padding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -75,6 +80,7 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStageAfterSave">
             <argument name="page" value="BannerOnBackend"/>
+            <argument name="padding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStageAfterSave">
             <argument name="page" value="BannerOnBackend"/>

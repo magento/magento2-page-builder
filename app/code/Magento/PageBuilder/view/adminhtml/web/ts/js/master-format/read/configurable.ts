@@ -40,10 +40,13 @@ export default class Configurable implements ReadInterface {
             converterPoolFactory(role),
             massConverterPoolFactory(role),
         ];
-        return new Promise((resolve: (data: object) => void) => {
+        return new Promise((resolve: (data: object, viewportData?: object) => void) => {
             Promise.all(componentsPromise).then((loadedComponents) => {
                 const [propertyReaderPool, converterPool, massConverterPool] = loadedComponents;
-                let data = {};
+                const viewports = Config.getConfig("viewports");
+                const data: {[key: string]: any} = {};
+
+                _.each(viewports, (viewport, name) => data[name] = {});
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
                     const currentElement = this.findElementByName(element, elementName);
@@ -52,41 +55,51 @@ export default class Configurable implements ReadInterface {
                     if (currentElement === null || currentElement === undefined) {
                         continue;
                     }
+                    _.each(viewports, (viewportObj, viewport: string) => {
+                        currentElement.setAttribute("style", currentElement.getAttribute(`data-${viewport}-style`));
 
-                    if (elementConfig.style.length) {
-                        data = this.readStyle(
-                            elementConfig.style,
-                            currentElement,
-                            data,
-                            propertyReaderPool,
-                            converterPool,
-                        );
-                    }
+                        if (elementConfig.style.length) {
+                            data[viewport] = this.readStyle(
+                                elementConfig.style,
+                                currentElement,
+                                data[viewport],
+                                propertyReaderPool,
+                                converterPool,
+                            );
+                        }
 
-                    if (elementConfig.attributes.length) {
-                        data = this.readAttributes(
-                            elementConfig.attributes,
-                            currentElement,
-                            data,
-                            propertyReaderPool,
-                            converterPool,
-                        );
-                    }
+                        if (elementConfig.attributes.length) {
+                            data[viewport] = this.readAttributes(
+                                elementConfig.attributes,
+                                currentElement,
+                                data[viewport],
+                                propertyReaderPool,
+                                converterPool,
+                            );
+                        }
 
-                    if (undefined !== elementConfig.html.var) {
-                        data = this.readHtml(elementConfig, currentElement, data, converterPool);
-                    }
+                        if (undefined !== elementConfig.html.var) {
+                            data[viewport] = this.readHtml(
+                                elementConfig,
+                                currentElement,
+                                data[viewport],
+                                converterPool,
+                            );
+                        }
 
-                    if (undefined !== elementConfig.tag.var) {
-                        data = this.readHtmlTag(elementConfig, currentElement, data);
-                    }
+                        if (undefined !== elementConfig.tag.var) {
+                            data[viewport] = this.readHtmlTag(elementConfig, currentElement, data[viewport]);
+                        }
 
-                    if (undefined !== elementConfig.css.var) {
-                        data = this.readCss(elementConfig, currentElement, data);
-                    }
+                        if (undefined !== elementConfig.css.var) {
+                            data[viewport] = this.readCss(elementConfig, currentElement, data[viewport]);
+                        }
+                    });
                 }
 
-                data = this.convertData(config, data, massConverterPool);
+                _.each(viewports, (viewportObj, viewport: string) => {
+                    data[viewport] = this.convertData(config, data[viewport], massConverterPool);
+                });
                 resolve(data);
             }).catch((error) => {
                 console.error(error);
