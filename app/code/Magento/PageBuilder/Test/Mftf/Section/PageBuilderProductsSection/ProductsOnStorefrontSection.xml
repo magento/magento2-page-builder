@@ -8,6 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ProductsOnStorefront">
+        <element name="allProducts" type="text" selector="[data-content-type='products']"/>
         <element name="base" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}]"/>
         <element name="price" type="text" selector="//div[contains(@data-content-type,'products')]//div[contains(@data-role,'priceBox')]"/>
         <element name="hidden" type="text" parameterized="true" selector="(//div[contains(@data-content-type,'products')])[{{indexOfProductGroup}}][contains(@style, 'display: none')]"/>

@@ -23,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -48,7 +52,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty message="Heading has text: $getBorderColor" stepKey="assertBorderColor">
@@ -101,9 +105,6 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="VerifyHeadingDefaultAdvancedConfigurationVisibleActionGroup" stepKey="validateStage">
             <argument name="page" value="HeadingOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="1"/>
             <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -114,9 +115,6 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="VerifyHeadingDefaultAdvancedConfigurationVisibleActionGroup" stepKey="validateStage2">
             <argument name="page" value="HeadingOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="1"/>
             <argument name="defaultAlignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -129,7 +127,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
         <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">

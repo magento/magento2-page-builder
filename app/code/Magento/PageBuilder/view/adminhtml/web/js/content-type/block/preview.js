@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "mageUtils", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _mageUtils, _config, _hideShowOption, _object, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _mageUtils, _underscore, _config, _hideShowOption, _styleRegistry, _object, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -171,7 +171,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         if (response.data.content) {
           _this2.showBlockPreview(true);
 
-          content = _this2.processBackgroundImages(response.data.content);
+          content = _this2.processContent(response.data.content);
 
           _this2.data.main.html(content);
 
@@ -201,6 +201,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
     _proto.showBlockPreview = function showBlockPreview(isShow) {
       this.displayingBlockPreview(isShow);
+    }
+    /**
+     * Adapt content to view it on stage.
+     *
+     * @param content
+     */
+    ;
+
+    _proto.processContent = function processContent(content) {
+      var processedContent = this.processBackgroundImages(content);
+      processedContent = this.processBreakpointStyles(processedContent);
+      return processedContent;
     }
     /**
      * Generate styles for background images.
@@ -241,6 +253,48 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
       if (elements.length && styleBlock.innerText.length) {
         document.body.append(styleBlock);
+        content = document.head.innerHTML + document.body.innerHTML;
+      }
+
+      return content;
+    }
+    /**
+     * Replace media queries with viewport classes.
+     *
+     * @param {string} content
+     * @return string
+     */
+    ;
+
+    _proto.processBreakpointStyles = function processBreakpointStyles(content) {
+      var document = new DOMParser().parseFromString(content, "text/html");
+      var styleBlocks = document.querySelectorAll("style");
+      var mediaStyleBlock = document.createElement("style");
+
+      var viewports = _config.getConfig("viewports");
+
+      styleBlocks.forEach(function (styleBlock) {
+        var cssRules = styleBlock.sheet.cssRules;
+        Array.from(cssRules).forEach(function (rule) {
+          var mediaScope = rule instanceof CSSMediaRule && _underscore.findKey(viewports, function (viewport) {
+            return rule.conditionText === viewport.media;
+          });
+
+          if (mediaScope) {
+            Array.from(rule.cssRules).forEach(function (mediaRule, index) {
+              if (mediaRule.selectorText.indexOf(_styleRegistry.pbStyleAttribute) !== -1) {
+                var searchPattern = new RegExp(_config.getConfig("bodyId") + " ", "g");
+                var replaceValue = _config.getConfig("bodyId") + " ." + mediaScope + "-viewport ";
+                var selector = mediaRule.selectorText.replace(searchPattern, replaceValue);
+                mediaStyleBlock.append(selector + " {" + mediaRule.style.cssText + "}");
+              }
+            });
+          }
+        });
+      });
+
+      if (mediaStyleBlock.innerText.length) {
+        document.body.append(mediaStyleBlock);
         content = document.head.innerHTML + document.body.innerHTML;
       }
 

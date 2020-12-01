@@ -28,6 +28,10 @@
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
             <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
             <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
                 <argument name="viewportButton" value="mobile"/>
                 <argument name="viewportStage" value="mobile"/>
@@ -185,9 +189,7 @@
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSBlockStageMobile">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
-            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty1.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <seeElement selector="{{DividerOnStage.base('1')}}" stepKey="seeDividerCMSBlockStageMobile"/>
@@ -211,7 +213,7 @@
         <dontSeeElement selector="{{DividerOnStage.base('1')}}" stepKey="dontSeeDividerCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsMinHeightCMSBlockStage">
             <argument name="selector" value="{{TabsOnStage.tabsContentPath}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsNavAlignedCenterCMSBlockStage">
@@ -253,15 +255,13 @@
         <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateTab1LayoutCMSBlockStage">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight300Property"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSBlockStage">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
-            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthPropertyDefault.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight300Property.value}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty1.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <seeElement selector="{{DividerOnStage.base('1')}}" stepKey="seeDividerCMSBlockStage"/>
@@ -276,6 +276,10 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
@@ -320,8 +324,8 @@
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSPageStageMobile">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderTabMinHeight0Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty20.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty20.paddingBottom}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate CMS Page Stage Desktop Viewport -->
@@ -335,7 +339,7 @@
         <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerCMSPageStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsMinHeightCMSPageStage">
             <argument name="selector" value="{{TabsOnFrontend.tabsContentPath}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsNavAlignedCenterCMSPageStage">
@@ -355,8 +359,8 @@
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSPageStage">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
             <argument name="minHeight" value="{{PageBuilderTabMinHeight0Property.value}}"/>
-            <argument name="paddingTop" value="{{PageBuilderPaddingProperty40.paddingTop}}"/>
-            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty40.paddingBottom}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty20.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty20.paddingBottom}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
@@ -372,7 +376,7 @@
         <dontSeeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeDividerCMSPageStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsMinHeightCMSPageStorefront">
             <argument name="selector" value="{{TabsOnFrontend.tabsContentPath}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTabsNavAlignedCenterCMSPageStorefront">
@@ -391,7 +395,7 @@
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab2MinHeightCMSPageStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderTabsDefinedMinHeight.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabsDefaultMinHeight.value}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsCMSPageStorefront">
@@ -418,12 +422,12 @@
         <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateTab1LayoutCMSPageStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight300Property"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateTab1MinHeightCMSPageStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight200Property.value}}"/>
+            <argument name="minHeight" value="{{PageBuilderTabMinimumHeight300Property.value}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStorefront">

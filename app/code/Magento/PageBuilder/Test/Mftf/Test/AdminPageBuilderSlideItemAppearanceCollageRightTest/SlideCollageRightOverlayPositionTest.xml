@@ -24,6 +24,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -33,12 +37,15 @@
         </actionGroup>
         <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionStage">
             <argument name="page" value="SlideOnBackend"/>
+            <argument name="padding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionStageAfterSave">
             <argument name="page" value="SlideOnBackend"/>
+            <argument name="padding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
         <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionStorefront">
             <argument name="page" value="SlideOnFrontend"/>
+            <argument name="padding" value="PageBuilderPaddingProperty0"/>
         </actionGroup>
     </test>
 </tests>

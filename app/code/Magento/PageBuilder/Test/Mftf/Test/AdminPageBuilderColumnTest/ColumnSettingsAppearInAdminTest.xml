@@ -23,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -77,7 +81,7 @@
             <argument name="cssProperty" value="minHeight"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstColumnBgColor">
-            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="selector" value="{{ColumnOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
@@ -86,22 +90,22 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstColumnBgPosition">
-            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="selector" value="{{ColumnOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundPosition_TopLeft.computedStyleValue}}"/>
             <argument name="cssProperty" value="backgroundPosition"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstColumnBgSize">
-            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="selector" value="{{ColumnOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundSize_Contain.value}}"/>
             <argument name="cssProperty" value="backgroundSize"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstColumnBgRepeat">
-            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="selector" value="{{ColumnOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundRepeat_Enabled.value}}"/>
             <argument name="cssProperty" value="backgroundRepeat"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeFirstColumnBgAttachment">
-            <argument name="selector" value="{{ColumnOnBackend.columnConfigurationPath('1')}}"/>
+            <argument name="selector" value="{{ColumnOnBackend.backgroundPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBackgroundAttachment_Fixed.value}}"/>
             <argument name="cssProperty" value="backgroundAttachment"/>
         </actionGroup>

@@ -35,8 +35,9 @@ export default class Width implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string {
-        if (data[name] !== "" && data.margins_and_padding) {
-            const margins = (data.margins_and_padding as any).margin || "";
+        if (data[name] && data[name] !== "") {
+            const marginsAndPadding = data.margins_and_padding || {};
+            const margins = (marginsAndPadding as any).margin || "";
             const marginLeft = margins.left ? parseInt(margins.left as string, 10) : 0;
             const marginRight = margins.right ? parseInt(margins.right as string, 10) : 0;
 

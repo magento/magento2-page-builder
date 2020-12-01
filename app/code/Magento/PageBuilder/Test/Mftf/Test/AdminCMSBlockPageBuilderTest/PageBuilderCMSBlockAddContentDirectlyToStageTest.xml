@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test  name="PageBuilderCMSBlockAddContentDirectlyToStageTest" extends="PageBuilderCMSPageAddContentDirectlyToStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Verify Can Only Add Expected Content Types to CMS Block Stage Directly"/>
+            <description value="Verify user can add Row, Columns, Tabs, HTML Code, and Blocks to CMS Block stage directly. Verify user cannot add any other content type to CMS Block stage directly"/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-stage"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock" after="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock" after="deleteCMSPage"/>
+        </after>
+        <!-- Save CMS Block and Verify Expected Content Types on Stage -->
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlock" after="saveAndContinueEditCmsPage">
+            <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
+        <!-- Navigate and insert CMSBlock to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageForBlock" after="dontSeeProductsStageAfterSave">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreenBlock" after="navigateToCreatedCMSPageForBlock"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionContentBlock" after="openPageBuilderFullScreenBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragBlockIntoContainerBlock" after="expandMenuSectionContentBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoContainerBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock" after="searchBlockInGrid"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBlock"  after="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageBlock" after="exitPageBuilderFullScreenBlock"/>
+        <!-- Verify Expected Content Types on Storefront -->
+        <assertEquals stepKey="assertBlockStorefront">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">numberOfBlockContentTypesStorefront</actualResult>
+        </assertEquals>
+    </test>
+</tests>

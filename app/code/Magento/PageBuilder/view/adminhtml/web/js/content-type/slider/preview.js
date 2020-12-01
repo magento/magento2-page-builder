@@ -588,7 +588,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this6.checkWidth();
         }
-      }, 400);
+      }, 450);
     }
     /**
      * Check width and add class that marks element as small

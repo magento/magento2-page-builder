@@ -10,30 +10,45 @@ import Config from "../config";
 import {getStyleRegistry, pbStyleAttribute} from "../content-type/style-registry";
 
 const bodyId: string = Config.getConfig("bodyId");
+const getStyles = (styleObject: {[key: string]: any}) => {
+    const styles: { [key: string]: any; } = {};
+
+    ko.utils.objectForEach(styleObject, (styleName, styleValue) => {
+        styleValue = ko.utils.unwrapObservable(styleValue);
+
+        if (styleValue === null || styleValue === undefined || styleValue === false) {
+            // Empty string removes the value, whereas null/undefined have no effect
+            styleValue = "";
+        }
+        if (styleValue) {
+            styles[styleName] = styleValue;
+        }
+    });
+
+    return styles;
+};
 
 ko.bindingHandlers.style = {
     update: (element: HTMLElement, valueAccessor, allBindings, viewModel, bindingContext) => {
         const value = ko.utils.unwrapObservable(valueAccessor() || {});
-        const styles: { [key: string]: any; } = {};
+        const viewportKeys: string[] = _.keys(Config.getConfig("viewports"));
+        const commonStyles: { [key: string]: any; } = getStyles(_.omit(value, viewportKeys));
+        const viewportStyles: { [key: string]: any; } = {};
 
-        ko.utils.objectForEach(value, (styleName, styleValue) => {
-            styleValue = ko.utils.unwrapObservable(styleValue);
-
-            if (styleValue === null || styleValue === undefined || styleValue === false) {
-                // Empty string removes the value, whereas null/undefined have no effect
-                styleValue = "";
-            }
-            if (styleValue) {
-                styles[styleName] = styleValue;
-            }
+        _.each(viewportKeys, (name: string) => {
+            viewportStyles[name] = _.extend(getStyles(value[name]), commonStyles);
         });
 
-        if (!_.isEmpty(styles)) {
+        if (_.findKey(viewportStyles, (styles) => !_.isEmpty(styles))) {
             const id = utils.uniqueid();
             const selector = `#${bodyId} [${pbStyleAttribute}="${id}"]`;
-            const registry = getStyleRegistry(bindingContext.$root.id);
 
-            registry.setStyles(selector, styles);
+            _.each(viewportKeys, (name: string) => {
+                const registry = getStyleRegistry(name + bindingContext.$root.id);
+
+                registry.setStyles(selector, viewportStyles[name]);
+            });
+
             element.setAttribute(pbStyleAttribute, id);
         }
 

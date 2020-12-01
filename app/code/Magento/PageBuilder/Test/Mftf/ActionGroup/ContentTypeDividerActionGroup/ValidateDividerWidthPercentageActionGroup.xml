@@ -5,13 +5,15 @@
   * See COPYING.txt for license details.
   */
 -->
-<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateDividerWidthPercentage">
+        <annotations>
+            <description>Validates the width of a Divider content type by comparing it against its container.</description>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="dividerWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingProperty10"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingProperty0"/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="index" defaultValue="1" type="string"/>
             <!-- expectedOffset is necessary because divider width is equal to (expected width) + (line thickness attribute*2) in admin when rendered through Block -->

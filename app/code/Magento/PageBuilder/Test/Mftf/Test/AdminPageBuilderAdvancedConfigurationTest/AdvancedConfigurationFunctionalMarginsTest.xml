@@ -23,6 +23,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -60,7 +64,7 @@
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="clearSlideOutPanelFieldMargins" stepKey="clearMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="property" value="PageBuilderMarginsProperty0"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2"/>

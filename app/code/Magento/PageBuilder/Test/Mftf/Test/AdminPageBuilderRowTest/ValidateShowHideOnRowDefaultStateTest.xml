@@ -24,6 +24,10 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -31,6 +35,14 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
+        <!-- Edit Row -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow"/>
         <!-- Stage: Validate Default Show/Hide State - Before Save -->
         <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
         <seeElement selector="{{RowOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
@@ -45,6 +57,10 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <seeElement selector="{{RowOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleDoesNotEqualExpectedStyleActionGroup" stepKey="seeContentTypeNotHiddenStorefront">
+            <argument name="selector" value="{{RowOnStorefront.advancedConfigurationPath('1')}}"/>
+            <argument name="notExpectedProperty" value="none"/>
+            <argument name="cssProperty" value="display"/>
+        </actionGroup>
     </test>
 </tests>
