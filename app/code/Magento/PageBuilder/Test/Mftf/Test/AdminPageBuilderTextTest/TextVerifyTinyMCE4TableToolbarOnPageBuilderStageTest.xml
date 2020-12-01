@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TextVerifyTinyMCE4TableToolbarOnPageBuilderStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="TinyMCE4 table toolbar on PageBuilder stage"/>
+            <description value="Verify that WYSIWYG table toolbar doesn't overlap textarea"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+            <group value="pagebuilder-tinyMCE"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextToColumnContentType">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add table to Text Editor -->
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="clickOnTableMenuItem"/>
+        <moveMouseOver selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem('2')}}" stepKey="moveMouseOverTableMenuIFirstItem"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem('2')}}" stepKey="clickOnTableMenuFirstItem"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.tableGrid('6', '0')}}" stepKey="chooseTableSize"/>
+        <!-- Validate table size is 7 x 1 -->
+        <seeElement selector="{{TextOnStage.elementInText('1', 'table', '1')}}" stepKey="seeTable"/>
+        <seeElement selector="{{TextOnStage.elementInText('1', 'tr', '1')}}" stepKey="seeTableTr"/>
+        <dontSeeElement selector="{{TextOnStage.elementInText('1', 'tr', '2')}}" stepKey="dontSeeMoreThan1TableTr"/>
+        <seeElement selector="{{TextOnStage.elementInText('1', 'td', '7')}}" stepKey="see7TableTd"/>
+        <dontSeeElement selector="{{TextOnStage.elementInText('1', 'td', '8')}}" stepKey="dontSeeMoreThan7TableTr"/>
+        <!-- Validate that textarea is visible -->
+
+        <!-- Resize column to 4/12 and check toolbar position -->
+
+        <!-- Resize column back to 3/12 and check toolbar and textarea are visible -->
+
+
+    </test>
+</tests>

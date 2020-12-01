@@ -248,15 +248,6 @@ export default class Wysiwyg implements WysiwygInterface {
     }
 
     /**
-     * Get wysiwyg container
-     *
-     * @returns {jQuery}
-     */
-    private getEditor() {
-        return $(`#${this.elementId}`)[0];
-    }
-
-    /**
      * Adjust table toolbar position, when editor container is smaller than toolbar
      */
     private setStyleOnTableToolbar() {
@@ -264,19 +255,12 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const $tableToolbar = $(".mce-tinymce-inline.mce-arrow.mce-floatpanel.mce-arrow-up");
+        const $tableToolbar = $(".mce-tinymce-inline.mce-arrow.mce-floatpanel:not(.mce-arrow-up)");
 
-        if (!!$tableToolbar.length) {
-            $tableToolbar.css("transform", "translateY(0px)");
-        }
-
-        const $shortTableToolbar = $(".mce-tinymce-inline.mce-arrow.mce-floatpanel:not(.mce-arrow-up)");
-
-        if (!$shortTableToolbar.length) {
+        if (!$tableToolbar.length) {
             return;
         }
 
-        const editorHeight = this.getEditor().clientHeight;
-        $shortTableToolbar.css("transform", "translateY(" + editorHeight + "px)");
+        $tableToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
     }
 }

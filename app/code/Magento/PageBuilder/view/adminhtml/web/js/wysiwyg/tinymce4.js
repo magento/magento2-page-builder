@@ -217,16 +217,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       return (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container);
     }
     /**
-     * Get wysiwyg container
-     *
-     * @returns {jQuery}
-     */
-    ;
-
-    _proto.getEditor = function getEditor() {
-      return (0, _jquery)("#" + this.elementId)[0];
-    }
-    /**
      * Adjust table toolbar position, when editor container is smaller than toolbar
      */
     ;
@@ -236,20 +226,13 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         return;
       }
 
-      var $tableToolbar = (0, _jquery)(".mce-tinymce-inline.mce-arrow.mce-floatpanel.mce-arrow-up");
+      var $tableToolbar = (0, _jquery)(".mce-tinymce-inline.mce-arrow.mce-floatpanel:not(.mce-arrow-up)");
 
-      if (!!$tableToolbar.length) {
-        $tableToolbar.css("transform", "translateY(0px)");
-      }
-
-      var $shortTableToolbar = (0, _jquery)(".mce-tinymce-inline.mce-arrow.mce-floatpanel:not(.mce-arrow-up)");
-
-      if (!$shortTableToolbar.length) {
+      if (!$tableToolbar.length) {
         return;
       }
 
-      var editorHeight = this.getEditor().clientHeight;
-      $shortTableToolbar.css("transform", "translateY(" + editorHeight + "px)");
+      $tableToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
     };
 
     return Wysiwyg;
