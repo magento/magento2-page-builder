@@ -18,13 +18,14 @@
             <group value="pagebuilder-tinyMCE"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -39,6 +40,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextToColumnContentType">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Add table to Text Editor -->
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
@@ -53,11 +55,52 @@
         <seeElement selector="{{TextOnStage.elementInText('1', 'td', '7')}}" stepKey="see7TableTd"/>
         <dontSeeElement selector="{{TextOnStage.elementInText('1', 'td', '8')}}" stepKey="dontSeeMoreThan7TableTr"/>
         <!-- Validate that textarea is visible -->
-
+        <seeElement selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="seeFocusedTinyMCE"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar"/>
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().top" stepKey="grabTableToolbarTopPosition"/>
+        <executeJS function="return document.evaluate(&quot;{{WYSIWYGOnPageBuilderInline.toolbarPath('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="grabToolbarTopPosition"/>
+        <executeJS function="return Math.abs({$grabTableToolbarTopPosition} - {$grabToolbarTopPosition})" stepKey="topPositionDifference"/>
+        <assertLessThanOrEqual stepKey="assertTopPositionDifference">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">topPositionDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Add new rows to table and verify that toolbar and textarea changed their position -->
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.insertRowAfterButton}}" stepKey="waitForInsertRowButton"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.insertRowAfterButton}}" stepKey="clickInsertRowButton"/>
+        <waitForElementVisible selector="{{TextOnStage.elementInText('1', 'tr', '2')}}" stepKey="waitForTableSecondRow"/>
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().top" stepKey="grabTableToolbarTopPosition2"/>
+        <executeJS function="return document.evaluate(&quot;{{WYSIWYGOnPageBuilderInline.toolbarPath('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="grabToolbarTopPosition2"/>
+        <executeJS function="return Math.abs({$grabTableToolbarTopPosition} - {$grabToolbarTopPosition})" stepKey="topPositionDifference2"/>
+        <assertLessThanOrEqual stepKey="assertTopPositionDifference2">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">topPositionDifference2</actualResult>
+        </assertLessThanOrEqual>
         <!-- Resize column to 4/12 and check toolbar position -->
-
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumnContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeColumnContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().top" stepKey="grabTableToolbarTopPosition3"/>
+        <executeJS function="return document.evaluate(&quot;{{WYSIWYGOnPageBuilderInline.toolbarPath('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="grabToolbarTopPosition3"/>
+        <executeJS function="return Math.abs({$grabTableToolbarTopPosition} - {$grabToolbarTopPosition})" stepKey="topPositionDifference3"/>
+        <assertLessThanOrEqual stepKey="assertTopPositionDifference3">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">topPositionDifference3</actualResult>
+        </assertLessThanOrEqual>
         <!-- Resize column back to 3/12 and check toolbar and textarea are visible -->
-
-
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="dragColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().top" stepKey="grabTableToolbarTopPosition4"/>
+        <executeJS function="return document.evaluate(&quot;{{WYSIWYGOnPageBuilderInline.toolbarPath('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="grabToolbarTopPosition4"/>
+        <executeJS function="return Math.abs({$grabTableToolbarTopPosition} - {$grabToolbarTopPosition})" stepKey="topPositionDifference4"/>
+        <assertLessThanOrEqual stepKey="assertTopPositionDifference4">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">topPositionDifference4</actualResult>
+        </assertLessThanOrEqual>
     </test>
 </tests>
