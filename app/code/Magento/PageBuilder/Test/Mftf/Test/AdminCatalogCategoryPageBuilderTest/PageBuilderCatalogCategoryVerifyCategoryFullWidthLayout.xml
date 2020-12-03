@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryVerifyCategoryFullWidthLayout">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify the Category – Full Width layout on the storefront with all category content"/>
+            <description value="This test is intended to verify the category - full width layout on the storefront with all category content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value=""/>
+            <testCaseId value="MC-15481"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_emptyCmsBlock" stepKey="createPreReqCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+
+            <!-- Navigate to CMS Block -->
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSBlockPage" value="$$createPreReqCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <!-- Add Row -->
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer1">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
+            <!-- Edit Row -->
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+            </actionGroup>
+            <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance1">
+                <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor1">
+                <argument name="property" value="PageBuilderBackgroundColor_Hex_Blue"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+            <!-- Add Heading to Row -->
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+                <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage1">
+                <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            </actionGroup>
+            <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage1">
+                <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            </actionGroup>
+            <!-- Save CMS Block -->
+            <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1"/>
+            <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCMSBlock" stepKey="deletePreReqCMSBlock"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Navigate to Category -->
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createPreReqCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        <!-- Add Row -->
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <!-- Edit Row -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Set Appearance to Full-Width -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <!-- Set Background Color -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings2"/>
+        <!-- Add Heading to Row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory1"/>
+
+        <!-- Add Category Image -->
+        <actionGroup ref="AddCategoryImageActionGroup" stepKey="addCategoryImage">
+            <argument name="image" value="PageBuilderImageProperty_PNG"/>
+        </actionGroup>
+
+        <!-- Add CMS Block -->
+        <selectOption selector="{{AdminCategoryContentSection.AddCMSBlock}}" stepKey="selectSavedBlock" userInput="{{_emptyCmsBlock.title}}"/>
+
+        <!-- Set Display Mode: Static block and products -->
+        <waitForElementVisible selector="{{AdminCategoryDisplaySettingsSection.settingsHeader}}" stepKey="waitForDisplaySettingsSection"/>
+        <conditionalClick selector="{{AdminCategoryDisplaySettingsSection.settingsHeader}}" dependentSelector="{{AdminCategoryDisplaySettingsSection.displayMode}}" visible="false" stepKey="openDisplaySettingsSection"/>
+        <waitForPageLoad stepKey="waitForDisplaySettingsLoad"/>
+        <selectOption userInput="Static block and products" selector="{{AdminCategoryDisplaySettingsSection.displayMode}}" stepKey="selectStaticBlockAndProductsOption"/>
+
+        <!-- Set Products in Category -->
+        <actionGroup ref="OpenProductsInCategorySectionActionGroup" stepKey="openProductsInCategorySection"/>
+        <actionGroup ref="GoToAddProductsBySearchActionGroup" stepKey="goToAddProductsBySearch"/>
+        <!-- Assign First Product -->
+        <actionGroup ref="SearchAProductForCategoryByKeywordActionGroup" stepKey="searchFirstProductForCategoryByKeyword">
+            <argument name="keyword" value="$$createPreReqProduct1.sku$$"/>
+        </actionGroup>
+        <!-- Assign Second Product -->
+        <actionGroup ref="SearchAProductForCategoryByKeywordActionGroup" stepKey="searchSecondProductForCategoryByKeyword">
+            <argument name="keyword" value="$$createPreReqProduct2.name$$"/>
+        </actionGroup>
+        <!-- Click save and close -->
+        <click selector="{{AdminCategoryAddProductsModalSection.saveClose}}" stepKey="clickSaveClose"/>
+
+        <!-- Use Category - Full Width layout -->
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
+        </actionGroup>
+
+        <!-- Save Category -->
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory2"/>
+
+        <!-- Navigate to Storefront Category Page -->
+        <actionGroup ref="StorefrontGoToCategoryPageActionGroup" stepKey="openStorefrontCategoryPage">
+            <argument name="categoryName" value="$$createPreReqCategory.name$$"/>
+        </actionGroup>
+
+        <!-- Verify Category Content s in Category Full Width Layout -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText1"/>
+        <!-- Verify Category Image -->
+        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeImage1"/>
+        <!-- Verify Category Description Row Appearance -->
+        <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance1">
+            <argument name="dataAppearance" value="full-width"/>
+        </actionGroup>
+        <!-- Verify CMS Block Content is in Full Width Appearance on Storefront -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '2')}}" stepKey="waitForStorefrontHeadingText2"/>
+        <!-- Verify Products in Category on Storefront -->
+        <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeFirstProductInCategory1">
+            <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct1.name$$')}}"/>
+        </actionGroup>
+        <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeSecondProductInCategory1">
+            <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct2.name$$')}}"/>
+        </actionGroup>
+
+        <resizeWindow width="1600" height="1024" stepKey="resizeWindowTo1600"/>
+        <!-- Verify Category Content s in Category Full Width Layout -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText3"/>
+        <!-- Verify Category Image -->
+        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeImage2"/>
+        <!-- Verify Category Description Row Appearance -->
+        <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance2">
+            <argument name="dataAppearance" value="full-width"/>
+        </actionGroup>
+        <!-- Verify CMS Block Content is in Full Width Appearance on Storefront -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '2')}}" stepKey="waitForStorefrontHeadingText4"/>
+        <!-- Verify Products in Category on Storefront -->
+        <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeFirstProductInCategory2">
+            <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct1.name$$')}}"/>
+        </actionGroup>
+        <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeSecondProductInCategory2">
+            <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct2.name$$')}}"/>
+        </actionGroup>
+
+        <resizeWindow width="600" height="1024" stepKey="resizeWindowTo600"/>
+        <!-- Verify Category Content s in Category Full Width Layout -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText5"/>
+        <!-- Verify Category Image -->
+        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeImage3"/>
+        <!-- Verify Category Description Row Appearance -->
+        <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance3">
+            <argument name="dataAppearance" value="full-width"/>
+        </actionGroup>
+        <!-- Verify CMS Block Content is in Full Width Appearance on Storefront -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '2')}}" stepKey="waitForStorefrontHeadingText6"/>
+        <!-- Verify Products in Category on Storefront -->
+        <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeFirstProductInCategory3">
+            <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct1.name$$')}}"/>
+        </actionGroup>
+        <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeSecondProductInCategory3">
+            <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct2.name$$')}}"/>
+        </actionGroup>
+    </test>
+</tests>
