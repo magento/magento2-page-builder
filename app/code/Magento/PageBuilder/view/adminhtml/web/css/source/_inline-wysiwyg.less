@@ -72,10 +72,10 @@
     }
 }
 
-.mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel:not(.mce-arrow-up) {
-    transform: translateY(30px); // table toolbar position fix
-}
+.mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel[aria-label="Inline toolbar"] {
+    transition: transform 200ms;
 
-.mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel.mce-arrow-up {
-    transform: translateY(0) !important;
+    &:not(.mce-arrow-up):not(.mce-arrow-down) {
+        transform: translate(-1px, -36px); // table toolbar position fix
+    }
 }

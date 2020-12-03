@@ -136,8 +136,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         _this2.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
 
         _this2.invertInlineEditorToAccommodateOffscreenToolbar();
-
-        _this2.setStyleOnTableToolbar();
       });
     }
     /**
@@ -146,14 +144,8 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.onChangeContent = function onChangeContent() {
-      var _this3 = this;
-
       this.saveContentDebounce();
       this.invertInlineEditorToAccommodateOffscreenToolbar();
-
-      _underscore.defer(function () {
-        _this3.setStyleOnTableToolbar();
-      });
     }
     /**
      * Called for the onBlur events
@@ -215,24 +207,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.getFixedToolbarContainer = function getFixedToolbarContainer() {
       return (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container);
-    }
-    /**
-     * Adjust table toolbar position, when editor container is smaller than toolbar
-     */
-    ;
-
-    _proto.setStyleOnTableToolbar = function setStyleOnTableToolbar() {
-      if (this.config.adapter_config.mode !== "inline") {
-        return;
-      }
-
-      var $tableToolbar = (0, _jquery)(".mce-tinymce-inline.mce-arrow.mce-floatpanel:not(.mce-arrow-up)");
-
-      if (!$tableToolbar.length) {
-        return;
-      }
-
-      $tableToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
     };
 
     return Wysiwyg;
