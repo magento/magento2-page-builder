@@ -9,7 +9,6 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="WYSIWYGOnPageBuilderInline">
         <element name="toolbar" type="button" selector=".mce-tinymce.mce-tinymce-inline"/>
-        <element name="toolbarPath" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg}}]//div[contains(@class, 'mce-tinymce-inline')]" parameterized="true"/>
         <element name="inlineCss" type="button" selector=".mce-tinymce.mce-tinymce-inline"/>
         <element name="notCss" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline)"/>
         <element name="undo" type="button" selector=".mce-tinymce-inline div[aria-label='Undo']"/>
@@ -33,7 +32,14 @@
         <element name="tableMenuFirstItem" type="text" selector="(//i[contains(@class, 'mce-i-table')])[{{arg1}}]" parameterized="true"/>
         <element name="tableGrid" type="text" selector="//a[@data-mce-x={{arg1}}][@data-mce-y={{arg2}}]" parameterized="true"/>
         <element name="tableToolbar" type="text" selector=".mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel[aria-label='Inline toolbar']"/>
-        <element name="insertRowAfterButton" type="text" selector="div[aria-label='Insert row after'] button"/>
+        <element name="tableProperties" type="button" selector="div[aria-label='Table properties'] button"/>
+        <element name="deleteTable" type="button" selector="div[aria-label='Delete table'] button"/>
+        <element name="insertRowBefore" type="button" selector="div[aria-label='Insert row before'] button"/>
+        <element name="insertRowAfter" type="button" selector="div[aria-label='Insert row after'] button"/>
+        <element name="deleteRow" type="button" selector="div[aria-label='Delete row'] button"/>
+        <element name="insertColumnBefore" type="button" selector="div[aria-label='Insert column before'] button"/>
+        <element name="insertColumnAfter" type="button" selector="div[aria-label='Insert column after'] button"/>
+        <element name="deleteColumn" type="button" selector="div[aria-label='Delete column'] button"/>
         <element name="specialCharacter" type="button" selector=".mce-tinymce-inline div[aria-label='Special character']"/>
         <element name="insertWidget" type="button" selector=".mce-tinymce-inline div[aria-label='Insert Widget']"/>
         <element name="insertVariable" type="button" selector=".mce-tinymce-inline div[aria-label='Insert Variable']"/>
