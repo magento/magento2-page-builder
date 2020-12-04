@@ -43,6 +43,7 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <createData stepKey="createPageBuilderAttribute" entity="productAttributePageBuilder"/>
+            <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
@@ -222,7 +223,7 @@
         <!-- Add Product Image -->
         <actionGroup ref="AddProductImageActionGroup" stepKey="addProductImage"/>
 
-        <!-- Add Related Products, Up-Sells, and Cross-Sells -->
+        <!-- Add Related Products and Up-Sells -->
         <actionGroup ref="AddRelatedProductBySkuActionGroup" stepKey="addRelatedProduct1">
             <argument name="sku" value="$$createProduct1.sku$$"/>
         </actionGroup>
@@ -237,6 +238,10 @@
             <argument name="sku" value="$$createProduct4.sku$$"/>
         </actionGroup>
 
+        <!-- Save product after adding related and upsell -->
+        <actionGroup ref="AdminProductFormSaveActionGroup" stepKey="clickSaveButton"/>
+        <seeElement selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="verifySaveMessageSuccessIsShown"/>
+
         <actionGroup ref="AddCrossSellProductBySkuActionGroup" stepKey="addCrossSellProduct1">
             <argument name="sku" value="$$createProduct5.sku$$"/>
         </actionGroup>
@@ -250,29 +255,98 @@
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
 
-        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
-        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <actionGroup ref="AdminProductFormSaveActionGroup" stepKey="clickSaveButton2"/>
+        <seeElement selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="verifySaveMessageSuccessIsShown2"/>
 
         <!-- Validate in Storefront - Full screen -->
         <amOnPage url="{{SimpleProduct.name}}.html" stepKey="navigateToProductPage"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
 
-        <!-- Assert product content -->
-        <see selector="{{StorefrontProductInfoMainSection.productShortDescription}}" userInput="{{PageBuilderHeadingTextSample2.value}}" stepKey="seeShortDescriptionStorefront"/>
-        <see selector="{{StorefrontProductInfoMainSection.productDescription}}" userInput="{{PageBuilderHeadingTextSample1.value}}" stepKey="seeLongDescriptionStorefront"/>
-        <actionGroup ref="AssertStorefrontCustomProductAttributeActionGroup" stepKey="verifyCustomAttribute">
-            <argument name="attributeLabel" value="{{productAttributePageBuilder.frontend_label}}"/>
-            <argument name="attributeValue" value="{{PageBuilderHeadingTextSample3.value}}"/>
-        </actionGroup>
+        <!-- Assert sections on page are in correct order -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().y" stepKey="shortDescriptionPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="attributesPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellPosition"/>
 
-        <!-- See Related Products -->
-        <seeElement selector="{{StorefrontProductRelatedProductsSection.relatedProductName($$createProduct1.sku$$)}}" stepKey="seeRelatedProduct1InStorefront"/>
-        <seeElement selector="{{StorefrontProductRelatedProductsSection.relatedProductName($$createProduct2.sku$$)}}" stepKey="seeRelatedProduct2InStorefront"/>
+        <assertGreaterThan stepKey="assertDescriptionBelowShortDescription">
+            <expectedResult type="variable">shortDescriptionPosition</expectedResult>
+            <actualResult type="variable">descriptionPosition</actualResult>
+        </assertGreaterThan>
 
-        <!--Verify Up Sell Products displayed in SimpleProduct page-->
-        <see stepKey="seeTheUpSellHeading" selector="{{StorefrontProductUpSellProductsSection.upSellHeading}}" userInput="We found other products you might like!"/>
-        <see stepKey="seeUpsell1" selector="{{StorefrontProductUpSellProductsSection.upSellProducts}}" userInput="$$createProduct3.name$$"/>
-        <see stepKey="seeUpsell2" selector="{{StorefrontProductUpSellProductsSection.upSellProducts}}" userInput="$$createProduct4.name$$"/>
+        <assertGreaterThan stepKey="assertAttributesBelowDescription">
+            <expectedResult type="variable">descriptionPosition</expectedResult>
+            <actualResult type="variable">attributesPosition</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertRelatedBelowAttributes">
+            <expectedResult type="variable">attributesPosition</expectedResult>
+            <actualResult type="variable">relatedPosition</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertUpsellBelowRelated">
+            <expectedResult type="variable">relatedPosition</expectedResult>
+            <actualResult type="variable">upsellPosition</actualResult>
+        </assertGreaterThan>
+
+        <!-- Validate in Storefront - 1600px width -->
+        <resizeWindow width="1600" height="1024" stepKey="resizeWindowWidth"/>
+
+        <!-- Assert sections on page are in correct order -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().y" stepKey="shortDescriptionPosition1"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionPosition1"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="attributesPosition1"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedPosition1"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellPosition1"/>
+
+        <assertGreaterThan stepKey="assertDescriptionBelowShortDescription1">
+            <expectedResult type="variable">shortDescriptionPosition1</expectedResult>
+            <actualResult type="variable">descriptionPosition1</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertAttributesBelowDescription1">
+            <expectedResult type="variable">descriptionPosition1</expectedResult>
+            <actualResult type="variable">attributesPosition1</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertRelatedBelowAttributes1">
+            <expectedResult type="variable">attributesPosition1</expectedResult>
+            <actualResult type="variable">relatedPosition1</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertUpsellBelowRelated1">
+            <expectedResult type="variable">relatedPosition1</expectedResult>
+            <actualResult type="variable">upsellPosition1</actualResult>
+        </assertGreaterThan>
+
+        <!-- Validate in Storefront - 600px width -->
+        <resizeWindow width="600" height="1000" stepKey="resizeWindowWidth2"/>
+
+        <!-- Assert sections on page are in correct order -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().y" stepKey="shortDescriptionPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="attributesPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellPosition2"/>
+
+        <assertGreaterThan stepKey="assertDescriptionBelowShortDescription2">
+            <expectedResult type="variable">shortDescriptionPosition2</expectedResult>
+            <actualResult type="variable">descriptionPosition2</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertAttributesBelowDescription2">
+            <expectedResult type="variable">descriptionPosition2</expectedResult>
+            <actualResult type="variable">attributesPosition2</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertRelatedBelowAttributes2">
+            <expectedResult type="variable">attributesPosition2</expectedResult>
+            <actualResult type="variable">relatedPosition2</actualResult>
+        </assertGreaterThan>
+
+        <assertGreaterThan stepKey="assertUpsellBelowRelated2">
+            <expectedResult type="variable">relatedPosition2</expectedResult>
+            <actualResult type="variable">upsellPosition2</actualResult>
+        </assertGreaterThan>
     </test>
 </tests>
