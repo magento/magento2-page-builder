@@ -30,6 +30,7 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <createData entity="_emptyCmsBlock" stepKey="createPreReqCMSBlock"/>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop1"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
 
             <!-- Navigate to CMS Block -->
@@ -61,13 +62,14 @@
                 <argument name="contentType" value="PageBuilderHeadingContentType"/>
             </actionGroup>
             <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage1">
-                <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+                <argument name="headingText" value="PageBuilderHeadingTextProperty_CMSBlock"/>
             </actionGroup>
             <!-- Save CMS Block -->
             <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1"/>
             <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
@@ -106,7 +108,7 @@
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
-            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty_Description"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory1"/>
@@ -115,16 +117,13 @@
         <actionGroup ref="AddCategoryImageActionGroup" stepKey="addCategoryImage">
             <argument name="image" value="PageBuilderImageProperty_PNG"/>
         </actionGroup>
-
         <!-- Add CMS Block -->
         <selectOption selector="{{AdminCategoryContentSection.AddCMSBlock}}" stepKey="selectSavedBlock" userInput="{{_emptyCmsBlock.title}}"/>
-
         <!-- Set Display Mode: Static block and products -->
         <waitForElementVisible selector="{{AdminCategoryDisplaySettingsSection.settingsHeader}}" stepKey="waitForDisplaySettingsSection"/>
         <conditionalClick selector="{{AdminCategoryDisplaySettingsSection.settingsHeader}}" dependentSelector="{{AdminCategoryDisplaySettingsSection.displayMode}}" visible="false" stepKey="openDisplaySettingsSection"/>
         <waitForPageLoad stepKey="waitForDisplaySettingsLoad"/>
         <selectOption userInput="Static block and products" selector="{{AdminCategoryDisplaySettingsSection.displayMode}}" stepKey="selectStaticBlockAndProductsOption"/>
-
         <!-- Set Products in Category -->
         <actionGroup ref="OpenProductsInCategorySectionActionGroup" stepKey="openProductsInCategorySection"/>
         <actionGroup ref="GoToAddProductsBySearchActionGroup" stepKey="goToAddProductsBySearch"/>
@@ -138,13 +137,11 @@
         </actionGroup>
         <!-- Click save and close -->
         <click selector="{{AdminCategoryAddProductsModalSection.saveClose}}" stepKey="clickSaveClose"/>
-
         <!-- Use Category - Full Width layout -->
         <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
             <argument name="designSection" value="CmsDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
-
         <!-- Save Category -->
         <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory2"/>
 
@@ -153,60 +150,85 @@
             <argument name="categoryName" value="$$createPreReqCategory.name$$"/>
         </actionGroup>
 
-        <!-- Verify Category Content s in Category Full Width Layout -->
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText1"/>
-        <!-- Verify Category Image -->
-        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeImage1"/>
-        <!-- Verify Category Description Row Appearance -->
+        <!-- Validate in Storefront - Fullscreen -->
+        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeCategoryImage1"/>
         <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance1">
             <argument name="dataAppearance" value="full-width"/>
         </actionGroup>
-        <!-- Verify CMS Block Content is in Full Width Appearance on Storefront -->
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '2')}}" stepKey="waitForStorefrontHeadingText2"/>
-        <!-- Verify Products in Category on Storefront -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty_Description.value, '1')}}" stepKey="waitForStorefrontHeadingText1"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty_CMSBlock.value, '1')}}" stepKey="waitForStorefrontHeadingText2"/>
         <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeFirstProductInCategory1">
             <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct1.name$$')}}"/>
         </actionGroup>
         <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeSecondProductInCategory1">
             <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct2.name$$')}}"/>
         </actionGroup>
+        <!-- Assert sections on page are in correct order -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryImage}}')[0].getBoundingClientRect().y" stepKey="categoryImagePosition1"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryDescription}}')[0].getBoundingClientRect().y" stepKey="categoryDescriptionPosition1"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryCMS}}')[0].getBoundingClientRect().y" stepKey="categoryCMSPosition1"/>
+        <assertGreaterThan stepKey="assertDescriptionBelowCategoryImage1">
+            <expectedResult type="variable">categoryImagePosition1</expectedResult>
+            <actualResult type="variable">categoryDescriptionPosition1</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCategoryCMSBelowCategoryDescription1">
+            <expectedResult type="variable">categoryDescriptionPosition1</expectedResult>
+            <actualResult type="variable">categoryCMSPosition1</actualResult>
+        </assertGreaterThan>
 
-        <resizeWindow width="1600" height="1024" stepKey="resizeWindowTo1600"/>
-        <!-- Verify Category Content s in Category Full Width Layout -->
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText3"/>
-        <!-- Verify Category Image -->
-        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeImage2"/>
-        <!-- Verify Category Description Row Appearance -->
+
+        <!-- Validate in Storefront - 1600px width -->
+        <resizeWindow width="1600" height="1024" stepKey="resizeWindowWidth1"/>
+        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeCategoryImage2"/>
         <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance2">
             <argument name="dataAppearance" value="full-width"/>
         </actionGroup>
-        <!-- Verify CMS Block Content is in Full Width Appearance on Storefront -->
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '2')}}" stepKey="waitForStorefrontHeadingText4"/>
-        <!-- Verify Products in Category on Storefront -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty_Description.value, '1')}}" stepKey="waitForStorefrontHeadingText3"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty_CMSBlock.value, '1')}}" stepKey="waitForStorefrontHeadingText4"/>
         <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeFirstProductInCategory2">
             <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct1.name$$')}}"/>
         </actionGroup>
         <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeSecondProductInCategory2">
             <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct2.name$$')}}"/>
         </actionGroup>
+        <!-- Assert sections on page are in correct order -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryImage}}')[0].getBoundingClientRect().y" stepKey="categoryImagePosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryDescription}}')[0].getBoundingClientRect().y" stepKey="categoryDescriptionPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryCMS}}')[0].getBoundingClientRect().y" stepKey="categoryCMSPosition2"/>
+        <assertGreaterThan stepKey="assertDescriptionBelowCategoryImage2">
+            <expectedResult type="variable">categoryImagePosition2</expectedResult>
+            <actualResult type="variable">categoryDescriptionPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCategoryCMSBelowCategoryDescription2">
+            <expectedResult type="variable">categoryDescriptionPosition2</expectedResult>
+            <actualResult type="variable">categoryCMSPosition2</actualResult>
+        </assertGreaterThan>
 
-        <resizeWindow width="600" height="1024" stepKey="resizeWindowTo600"/>
-        <!-- Verify Category Content s in Category Full Width Layout -->
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText5"/>
-        <!-- Verify Category Image -->
-        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeImage3"/>
-        <!-- Verify Category Description Row Appearance -->
+        <!-- Validate in Storefront - 600px width -->
+        <resizeWindow width="600" height="1024" stepKey="resizeWindowWidth2"/>
+        <seeElement selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="seeCategoryImage3"/>
         <actionGroup ref="StorefrontValidateCategoryDescriptionAppearanceActionGroup" stepKey="validateDataAppearance3">
             <argument name="dataAppearance" value="full-width"/>
         </actionGroup>
-        <!-- Verify CMS Block Content is in Full Width Appearance on Storefront -->
-        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '2')}}" stepKey="waitForStorefrontHeadingText6"/>
-        <!-- Verify Products in Category on Storefront -->
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty_Description.value, '1')}}" stepKey="waitForStorefrontHeadingText5"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty_CMSBlock.value, '1')}}" stepKey="waitForStorefrontHeadingText6"/>
         <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeFirstProductInCategory3">
             <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct1.name$$')}}"/>
         </actionGroup>
         <actionGroup ref="AssertStorefrontSeeElementActionGroup" stepKey="seeSecondProductInCategory3">
             <argument name="selector" value="{{StorefrontCategoryProductSection.ProductTitleByName('$$createPreReqProduct2.name$$')}}"/>
         </actionGroup>
+        <!-- Assert sections on page are in correct order -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryImage}}')[0].getBoundingClientRect().y" stepKey="categoryImagePosition3"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryDescription}}')[0].getBoundingClientRect().y" stepKey="categoryDescriptionPosition3"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontCategoryMainSection.categoryCMS}}')[0].getBoundingClientRect().y" stepKey="categoryCMSPosition3"/>
+        <assertGreaterThan stepKey="assertDescriptionBelowCategoryImage3">
+            <expectedResult type="variable">categoryImagePosition3</expectedResult>
+            <actualResult type="variable">categoryDescriptionPosition3</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCategoryCMSBelowCategoryDescription3">
+            <expectedResult type="variable">categoryDescriptionPosition3</expectedResult>
+            <actualResult type="variable">categoryCMSPosition3</actualResult>
+        </assertGreaterThan>
     </test>
 </tests>
