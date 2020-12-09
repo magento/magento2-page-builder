@@ -316,6 +316,17 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
     }
   }
   /**
+   * Replace all desktop styles that left unprocessed back to style element to prevent data corruption.
+   */
+
+
+  function processInlineStyles(html) {
+    var name = _config.getConfig("defaultViewport");
+
+    var searchPattern = new RegExp("data-" + name + "-style=", "g");
+    return html.replace(searchPattern, "style=");
+  }
+  /**
    * Move the end point of a range to handle tables
    *
    * @param range
@@ -375,7 +386,8 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
     getActiveEditor: getActiveEditor,
     findNodeIndex: findNodeIndex,
     getNodeByIndex: getNodeByIndex,
-    createDoubleClickEvent: createDoubleClickEvent
+    createDoubleClickEvent: createDoubleClickEvent,
+    processInlineStyles: processInlineStyles
   };
 });
 //# sourceMappingURL=editor.js.map

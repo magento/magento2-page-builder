@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_config, _directives, _object) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/object"], function (_config, _directives, _editor, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -31,6 +31,11 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
 
     if (_config.getMode() !== "Preview" && typeof value === "string" && value.indexOf("{{media url=") !== -1) {
       value = (0, _directives.replaceWithDataSrc)(value);
+    } // Process all desktop styles that left unprocessed after migrating from inline styles.
+
+
+    if (typeof value === "string") {
+      value = (0, _editor.processInlineStyles)(value);
     }
 
     return value;
