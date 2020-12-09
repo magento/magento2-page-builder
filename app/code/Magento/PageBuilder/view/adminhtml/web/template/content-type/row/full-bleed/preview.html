@@ -8,6 +8,8 @@
 <div class="pagebuilder-affordance-row pagebuilder-content-type pagebuilder-content-type-affordance"
      ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <div class="pagebuilder-display-label"
+         text="function () { return displayLabel().toUpperCase(); }()"/>
     <div class="pagebuilder-content-type type-container no-system-border pagebuilder-row children-min-height"
          attr="data.main.attributes"
          ko-style="Object.assign({}, getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight']), {backgroundImage: getBackgroundImage()})"
@@ -34,6 +36,4 @@
              css="placeholderCss()"
              translate="'Drag content types or columns here'"/>
     </div>
-    <div class="pagebuilder-display-label"
-         text="function () { return displayLabel().toUpperCase(); }()"/>
 </div>
