@@ -21,8 +21,12 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openMediaGallery"/>
             <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridBefore"/>
+            <actionGroup ref="AdminMediaGalleryOpenNewFolderFormActionGroup" stepKey="openNewFolderForm"/>
+            <actionGroup ref="AdminMediaGalleryCreateNewFolderActionGroup" stepKey="createNewFolder">
+                <argument name="name" value="pagebuilder"/>
+            </actionGroup>
             <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectFolderBefore">
-                <argument name="name" value="wysiwyg"/>
+                <argument name="name" value="pagebuilder"/>
             </actionGroup>
             <actionGroup ref="AdminEnhancedMediaGalleryUploadImageActionGroup" stepKey="uploadImage">
                 <argument name="image" value="ImageUpload3"/>
@@ -32,9 +36,10 @@
             <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openStandaloneMediaGalleryAfter"/>
             <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridToDefaultViewAfter"/>
             <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectFolderAfter">
-                <argument name="name" value="wysiwyg"/>
+                <argument name="name" value="pagebuilder"/>
             </actionGroup>
             <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage"/>
+            <actionGroup ref="AdminMediaGalleryFolderDeleteActionGroup" stepKey="deleteFolder"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCmsPage"/>
         </after>
@@ -57,6 +62,9 @@
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="AdminOpenSelectImageFromGalleryActionGroup" stepKey="openMediaGallery"/>
+        <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectMediaGalleryFolder">
+            <argument name="name" value="pagebuilder"/>
+        </actionGroup>
         <actionGroup ref="AdminMediaGalleryClickImageInGridActionGroup" stepKey="selectFirstImage">
             <argument name="imageName" value="{{ImageMetadata.title}}"/>
         </actionGroup>
