@@ -11,7 +11,8 @@ define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
             var originalTarget = target.trigger,
                 isAdminAnalyticsEnabled,
                 event,
-                hasPageBuilderBeenUsed = false;
+                hasPageBuilderBeenUsed = false,
+                delayedPush;
 
             /**
              * Invokes custom code to track information regarding Page Builder usage
@@ -40,8 +41,13 @@ define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-b
                 event = EventBuilder.build(name, args);
 
                 if (isAdminAnalyticsEnabled && !_.isUndefined(window.digitalData.event) && !_.isUndefined(event)) {
-                    window.digitalData.event.push(event);
-                    window._satellite.track('event');
+                    delayedPush = setInterval(function (object) {
+                        if (_.isArray(window.digitalData.event)) {
+                            window.digitalData.event.push(object);
+                            window._satellite.track('event');
+                            clearInterval(delayedPush);
+                        }
+                    }, 500, event);
                 }
             };
 
