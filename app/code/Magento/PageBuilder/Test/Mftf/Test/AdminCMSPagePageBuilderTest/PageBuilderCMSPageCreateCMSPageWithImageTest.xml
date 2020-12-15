@@ -19,7 +19,7 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openMediaGallery"/>
+            <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openMediaGalleryBefore"/>
             <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridBefore"/>
             <actionGroup ref="AdminEnhancedMediaGalleryUploadImageActionGroup" stepKey="uploadImage">
                 <argument name="image" value="ImageUpload3"/>
@@ -55,6 +55,7 @@
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="AdminOpenSelectImageFromGalleryActionGroup" stepKey="openMediaGallery"/>
+        <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGrid"/>
         <actionGroup ref="AdminMediaGalleryClickImageInGridActionGroup" stepKey="selectFirstImage">
             <argument name="imageName" value="{{ImageMetadata.title}}"/>
         </actionGroup>
