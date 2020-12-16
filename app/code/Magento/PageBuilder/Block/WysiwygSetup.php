@@ -8,9 +8,13 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Cache\FrontendInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\PageBuilder\Model\Session\RandomKey;
+use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 
 /**
  * @api
@@ -20,7 +24,7 @@ class WysiwygSetup extends Template
     private const WYSIWYG_CONFIG_CACHE_ID = 'WYSIWYG_CONFIG';
 
     /**
-     * @var \Magento\Ui\Component\Wysiwyg\ConfigInterface
+     * @var ConfigInterface
      */
     private $config;
 
@@ -30,19 +34,28 @@ class WysiwygSetup extends Template
     private $cache;
 
     /**
-     * @param Template\Context $context
-     * @param \Magento\Ui\Component\Wysiwyg\ConfigInterface $config
+     * @var RandomKey
+     */
+    private $sessionRandomKey;
+
+    /**
+     * @param Context $context
+     * @param ConfigInterface $config
      * @param array $data
      * @param FrontendInterface|null $cache
+     * @param RandomKey|null $sessionRandomKey
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Ui\Component\Wysiwyg\ConfigInterface $config,
+        Context $context,
+        ConfigInterface $config,
         array $data = [],
-        FrontendInterface $cache = null
+        FrontendInterface $cache = null,
+        ?RandomKey $sessionRandomKey = null
     ) {
         $this->config = $config;
-        $this->cache = $cache ?: \Magento\Framework\App\ObjectManager::getInstance()->get(FrontendInterface::class);
+        $this->cache = $cache ?: ObjectManager::getInstance()->get(FrontendInterface::class);
+        $this->sessionRandomKey = $sessionRandomKey
+            ?: ObjectManager::getInstance()->get(RandomKey::class);
         parent::__construct($context, $data);
     }
 
@@ -53,14 +66,18 @@ class WysiwygSetup extends Template
      */
     public function getConfigJson() : string
     {
-        $configJson = $this->cache->load(self::WYSIWYG_CONFIG_CACHE_ID);
+        $cacheKey = self::WYSIWYG_CONFIG_CACHE_ID;
+        if ($this->_urlBuilder->useSecretKey()) {
+            $cacheKey .= '_' . $this->sessionRandomKey->getValue();
+        }
+        $configJson = $this->cache->load($cacheKey);
         if (!$configJson) {
             $config = $this->config->getConfig();
             if (is_array($config)) {
                 $config = new DataObject($config);
             }
             $configJson = $config->toJson();
-            $this->cache->save($configJson, self::WYSIWYG_CONFIG_CACHE_ID);
+            $this->cache->save($configJson, $cacheKey);
         }
 
         return $configJson;
