@@ -30,7 +30,7 @@
             <expectedResult type="string">{{backgroundColor}}</expectedResult>
             <actualResult type="variable">$backgroundColor</actualResult>
         </assertEquals>
-        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
+        <waitForElement selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
         <assertStringContainsString stepKey="assertHeight">
