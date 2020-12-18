@@ -12,9 +12,7 @@ define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collec
   /**
    * @api
    */
-  var RootContainer =
-  /*#__PURE__*/
-  function (_contentTypeCollectio) {
+  var RootContainer = /*#__PURE__*/function (_contentTypeCollectio) {
     "use strict";
 
     _inheritsLoose(RootContainer, _contentTypeCollectio);

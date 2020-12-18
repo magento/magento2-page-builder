@@ -14,7 +14,7 @@ interface PropertyReaderInterface {
      * @param {string} source
      * @returns {string | object}
      */
-    read(element: HTMLElement, source: string): string | object;
+    read(element: HTMLElement, source: string): string | number | object;
 }
 
 export default PropertyReaderInterface;

@@ -14,9 +14,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_previewCollection2) {
+  var Preview = /*#__PURE__*/function (_previewCollection2) {
     "use strict";
 
     _inheritsLoose(Preview, _previewCollection2);

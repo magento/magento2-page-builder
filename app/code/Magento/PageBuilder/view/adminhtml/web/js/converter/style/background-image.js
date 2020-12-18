@@ -9,9 +9,7 @@ define([], function () {
   /**
    * @api
    */
-  var BackgroundImage =
-  /*#__PURE__*/
-  function () {
+  var BackgroundImage = /*#__PURE__*/function () {
     "use strict";
 
     function BackgroundImage() {}

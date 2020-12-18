@@ -10,9 +10,7 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var HideShowOption =
-  /*#__PURE__*/
-  function (_option2) {
+  var HideShowOption = /*#__PURE__*/function (_option2) {
     "use strict";
 
     _inheritsLoose(HideShowOption, _option2);

@@ -5,9 +5,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var DataStore =
-  /*#__PURE__*/
-  function () {
+  var DataStore = /*#__PURE__*/function () {
     "use strict";
 
     function DataStore() {

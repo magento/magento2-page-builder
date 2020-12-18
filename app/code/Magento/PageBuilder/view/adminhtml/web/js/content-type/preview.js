@@ -14,9 +14,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function () {
+  var Preview = /*#__PURE__*/function () {
     "use strict";
 
     /**

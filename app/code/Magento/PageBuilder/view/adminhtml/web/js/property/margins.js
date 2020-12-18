@@ -9,9 +9,7 @@ define([], function () {
   /**
    * @api
    */
-  var Margins =
-  /*#__PURE__*/
-  function () {
+  var Margins = /*#__PURE__*/function () {
     "use strict";
 
     function Margins() {}

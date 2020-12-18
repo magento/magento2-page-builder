@@ -5,9 +5,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var VideoOverlayColor =
-  /*#__PURE__*/
-  function () {
+  var VideoOverlayColor = /*#__PURE__*/function () {
     "use strict";
 
     function VideoOverlayColor() {}

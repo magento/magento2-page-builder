@@ -5,9 +5,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Locations =
-  /*#__PURE__*/
-  function () {
+  var Locations = /*#__PURE__*/function () {
     "use strict";
 
     function Locations() {}

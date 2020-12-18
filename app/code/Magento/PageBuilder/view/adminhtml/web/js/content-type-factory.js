@@ -38,7 +38,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
           var viewFactory = _config.getMode() === "Preview" ? _previewFactory : _masterFactory;
           viewFactory(_contentType, config).then(function (viewComponent) {
-            var viewName = _config.getMode() === "Preview" ? "preview" : "content";
+            var viewName = _config.getMode() === "Preview" ? "preview" : "content"; // @ts-ignore
+
             _contentType[viewName] = viewComponent;
             assignDataToDataStores(_contentType, config, data, viewportsData);
             resolve(_contentType);

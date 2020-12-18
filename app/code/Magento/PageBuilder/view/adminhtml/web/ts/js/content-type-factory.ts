@@ -61,6 +61,7 @@ export default function createContentType(
                 const viewFactory: ViewFactory = Config.getMode() === "Preview" ? previewFactory : masterFactory;
                 viewFactory(contentType, config).then((viewComponent) => {
                     const viewName = Config.getMode() === "Preview" ? "preview" : "content";
+                    // @ts-ignore
                     contentType[viewName] = viewComponent;
                     assignDataToDataStores(contentType, config, data, viewportsData);
                     resolve(contentType);

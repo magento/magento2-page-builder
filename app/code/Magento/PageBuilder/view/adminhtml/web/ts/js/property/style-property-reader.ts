@@ -17,7 +17,7 @@ export default class StylePropertyReader implements PropertyReaderInterface {
      * @param {string} source
      * @returns {string | object}
      */
-    public read(element: HTMLElement, source: string): string | object {
+    public read(element: HTMLElement, source: string): string | number | object {
         const camelCasedSource = fromSnakeToCamelCase(source);
         return element.style[camelCasedSource as keyof CSSStyleDeclaration];
     }
