@@ -20,7 +20,7 @@
             <description value="Verify the Product – Full Width layout on the storefront with all product content"/>
             <severity value="BLOCKER"/>
             <testCaseId value="PB-898"/>
-            <group value="pagebuilder"/>
+<!--            <group value="pagebuilder"/>-->
             <group value="pagebuilder-layout"/>
             <group value="pagebuilder-catalog-product"/>
         </annotations>
@@ -114,9 +114,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
@@ -130,8 +132,10 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="3"/>
             <argument name="headingText" value="PageBuilderHeadingText_Description"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
@@ -184,11 +188,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance3">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
@@ -202,10 +204,8 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow3">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
-            <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
-            <argument name="index" value="3"/>
             <argument name="headingText" value="PageBuilderHeadingText_CustomAttribute"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
