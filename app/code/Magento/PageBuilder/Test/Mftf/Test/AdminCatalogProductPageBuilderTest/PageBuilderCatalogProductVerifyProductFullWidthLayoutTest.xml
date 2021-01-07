@@ -268,8 +268,8 @@
         <waitForElementVisible selector="{{StorefrontProductFullWidth.attributes}}" stepKey="waitForCustomAttribute"/>
         <see userInput="{{PageBuilderHeadingText_CustomAttribute.value}}" selector="{{StorefrontProductFullWidth.attributes}}" stepKey="seeHeadingCustomAttribute"/>
         <waitForElementVisible selector="{{StorefrontProductFullWidth.reviews}}" stepKey="waitForReviews"/>
-        <waitForElementVisible selector="{{StorefrontProductFullWidth.relatedProducts}}" stepKey="waitForRelatedProducts"/>
-        <waitForElementVisible selector="{{StorefrontProductFullWidth.upsellProducts}}" stepKey="waitForUpSellProducts"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.related}}" stepKey="waitForRelatedProducts"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.upsell}}" stepKey="waitForUpSellProducts"/>
 
         <!-- Storefront 1600px: Assert Sections on Page are in Correct Order: Left/Right -->
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().x" stepKey="productMediaXPosition"/>
@@ -282,8 +282,8 @@
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().x" stepKey="descriptionXPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().x" stepKey="customAttributeXPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().x" stepKey="reviewsXPosition"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.relatedProducts}}')[0].getBoundingClientRect().x" stepKey="relatedXPosition"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsellProducts}}')[0].getBoundingClientRect().x" stepKey="upsellXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().x" stepKey="relatedXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().x" stepKey="upsellXPosition"/>
         <assertGreaterThan stepKey="assertImageLeftOfTitle">
             <expectedResult type="variable">productMediaXPosition</expectedResult>
             <actualResult type="variable">productTitleXPosition</actualResult>
@@ -340,8 +340,8 @@
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionYPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="customAttributeYPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().y" stepKey="reviewsYPosition"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.relatedProducts}}')[0].getBoundingClientRect().y" stepKey="relatedYPosition"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsellProducts}}')[0].getBoundingClientRect().y" stepKey="upsellYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellYPosition"/>
         <assertGreaterThan stepKey="assertDescriptionBelowImage">
             <expectedResult type="variable">productMediaYPosition</expectedResult>
             <actualResult type="variable">descriptionYPosition</actualResult>
@@ -436,8 +436,8 @@
         <waitForElementVisible selector="{{StorefrontProductFullWidth.attributes}}" stepKey="waitForCustomAttribute2"/>
         <see userInput="{{PageBuilderHeadingText_CustomAttribute.value}}" selector="{{StorefrontProductFullWidth.attributes}}" stepKey="seeHeadingCustomAttribute2"/>
         <waitForElementVisible selector="{{StorefrontProductFullWidth.reviews}}" stepKey="waitForReviews2"/>
-        <waitForElementVisible selector="{{StorefrontProductFullWidth.relatedProducts}}" stepKey="waitForRelatedProducts2"/>
-        <waitForElementVisible selector="{{StorefrontProductFullWidth.upsellProducts}}" stepKey="waitForUpSellProducts2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.related}}" stepKey="waitForRelatedProducts2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.upsell}}" stepKey="waitForUpSellProducts2"/>
 
         <!-- Storefront 767px Width: Assert Sections on Page are in Correct Order: Left/Right -->
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().x" stepKey="productMediaXPosition2"/>
@@ -450,8 +450,8 @@
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().x" stepKey="descriptionXPosition2"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().x" stepKey="customAttributeXPosition2"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().x" stepKey="reviewsXPosition2"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.relatedProducts}}')[0].getBoundingClientRect().x" stepKey="relatedXPosition2"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsellProducts}}')[0].getBoundingClientRect().x" stepKey="upsellXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().x" stepKey="relatedXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().x" stepKey="upsellXPosition2"/>
         <assertEquals stepKey="assertImageXSameAsTitle2">
             <expectedResult type="variable">productMediaXPosition2</expectedResult>
             <actualResult type="variable">productTitleXPosition2</actualResult>
@@ -508,8 +508,8 @@
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionYPosition2"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="customAttributeYPosition2"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().y" stepKey="reviewsYPosition2"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.relatedProducts}}')[0].getBoundingClientRect().y" stepKey="relatedYPosition2"/>
-        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsellProducts}}')[0].getBoundingClientRect().y" stepKey="upsellYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellYPosition2"/>
         <assertGreaterThan stepKey="assertTitleBelowProductImage2">
             <expectedResult type="variable">productMediaYPosition2</expectedResult>
             <actualResult type="variable">productTitleYPosition2</actualResult>
