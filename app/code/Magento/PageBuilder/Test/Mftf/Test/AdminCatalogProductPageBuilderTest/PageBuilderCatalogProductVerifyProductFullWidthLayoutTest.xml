@@ -104,6 +104,10 @@
         </after>
 
         <!-- Add Row & Heading to Product Custom Page Builder Attribute -->
+        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
+            <argument name="product" value="$$createProduct$$"/>
+        </actionGroup>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForCustomPageBuilderAttribute">
             <argument name="attributeCode" value="$$createPageBuilderAttribute.attribute_code$$"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createPageBuilderAttribute.attribute_code$$)}}"/>
@@ -174,10 +178,6 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
 
         <!-- Add Row & Heading to Product Description -->
-        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
-            <argument name="product" value="$$createProduct$$"/>
-        </actionGroup>
-        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
