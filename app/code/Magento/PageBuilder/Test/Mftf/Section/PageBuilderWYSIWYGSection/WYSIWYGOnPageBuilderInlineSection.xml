@@ -29,8 +29,8 @@
         <element name="insertLink" type="button" selector=".mce-tinymce-inline div[aria-label='Insert/edit link']"/>
         <element name="imageSelector" type="button" selector=".mce-tinymce-inline div[aria-label='Insert/edit image']"/>
         <element name="table" type="button" selector=".mce-tinymce-inline div[aria-label='Table']"/>
-        <element name="tableMenuFirstItem" type="text" selector="(//i[contains(@class, 'mce-i-table')])[{{arg1}}]" parameterized="true"/>
-        <element name="tableGrid" type="text" selector="//a[@data-mce-x={{arg1}}][@data-mce-y={{arg2}}]" parameterized="true"/>
+        <element name="tableMenuFirstItem" type="text" parameterized="true" selector="(//i[contains(@class, 'mce-i-table')])[{{index}}]"/>
+        <element name="tableGrid" type="text" parameterized="true" selector="//a[@data-mce-x={{xSize}}][@data-mce-y={{ySize}}]"/>
         <element name="tableToolbar" type="text" selector=".mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel[aria-label='Inline toolbar']"/>
         <element name="tableProperties" type="button" selector="div[aria-label='Table properties'] button"/>
         <element name="deleteTable" type="button" selector="div[aria-label='Delete table'] button"/>
@@ -45,6 +45,6 @@
         <element name="insertVariable" type="button" selector=".mce-tinymce-inline div[aria-label='Insert Variable']"/>
         <element name="imageSelectorBrowse" type="button" selector="div[aria-label='Insert/edit image'] i.mce-i-browse"/>
         <element name="imageSelectorOk" type="button" selector="//div[contains(@aria-label, 'Insert/edit image')]//span[contains(@class, 'mce-txt')][text()='Ok']"/>
-        <element name="formatOption" type="text" selector="//div[contains(@class, 'mce-menu')]//span[contains(@class, 'mce-text') and text()='{{label}}']" parameterized="true"/>
+        <element name="formatOption" type="text" parameterized="true" selector="//div[contains(@class, 'mce-menu')]//span[contains(@class, 'mce-text') and text()='{{label}}']"/>
     </section>
 </sections>
