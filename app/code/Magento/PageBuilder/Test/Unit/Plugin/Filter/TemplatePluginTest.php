@@ -53,15 +53,4 @@ class TemplatePluginTest extends TestCase
             ->willReturn('');
         $this->assertSame('', $this->templatePlugin->afterFilter($this->frameworkTemplateFilter, $result));
     }
-
-    /**
-     * @return array
-     */
-    public function afterLoginDataProvider(): array
-    {
-        return [
-            [false],
-            [true],
-        ];
-    }
 }
