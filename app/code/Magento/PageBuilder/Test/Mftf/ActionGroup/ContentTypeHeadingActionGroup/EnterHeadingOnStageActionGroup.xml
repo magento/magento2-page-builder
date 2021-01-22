@@ -11,12 +11,11 @@
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
-            <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
             <argument name="headingAlignment" defaultValue="PageBuilderHeadingAlignmentProperty_left"/>
-            <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
+            <argument name="headingText" defaultValue="{{PageBuilderHeadingTextProperty.value}}" type="string"/>
         </arguments>
         <comment userInput="Edit heading text inline on stage" stepKey="commentEditHeading"/>
-        <pressKey selector="{{HeadingOnStage.headingEditableText(index)}}" userInput="{{headingText.value}}" stepKey="enterHeadingText"/>
+        <pressKey selector="{{HeadingOnStage.headingEditableText(index)}}" userInput="{{headingText}}" stepKey="enterHeadingText"/>
         <waitForPageLoad stepKey="waitForToolbar" time="30"/>
         <waitForElementVisible selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="waitForToolbarVisible"/>
         <click selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="clickHeadingType"/>
