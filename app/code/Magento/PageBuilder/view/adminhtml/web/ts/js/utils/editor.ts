@@ -351,6 +351,16 @@ export function createDoubleClickEvent(): Event {
 }
 
 /**
+ * Replace all desktop styles that left unprocessed back to style element to prevent data corruption.
+ */
+export function processInlineStyles(html: string) {
+    const name = Config.getConfig("defaultViewport");
+    const searchPattern =  new RegExp(`data-${name}-style=`, "g");
+
+    return html.replace(searchPattern, "style=");
+}
+
+/**
  * Move the end point of a range to handle tables
  *
  * @param range
