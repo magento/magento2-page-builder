@@ -9,7 +9,7 @@
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="AdminValidateContentTextInTinyMCEIFrameActionGroup">
         <arguments>
-            <argument name="text" type="string" defaultValue=""/>
+            <argument name="text" type="string" defaultValue="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </arguments>
         <waitForElementVisible selector="{{SlideOnConfigurationPanel.tinyMCEIFrame}}" stepKey="waitForIFrame"/>
         <executeJS function="jQuery('{{ContentManagementSection.configurationPopupContent}}').scrollTop(jQuery('{{SlideOnConfigurationPanel.tinyMCEIFrame}}').offset().top)" stepKey="expectedColumnSizeRatio"/>
