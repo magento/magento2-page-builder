@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminValidateContentTextInTinyMCEIFrameActionGroup">
+        <arguments>
+            <argument name="text" type="string" defaultValue="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </arguments>
+        <waitForElementVisible selector="{{SlideOnConfigurationPanel.contentTinyMCEIFrame}}" stepKey="waitForIFrame"/>
+        <executeJS function="jQuery('{{ContentManagementSection.configurationPopupContent}}').scrollTop(jQuery('{{SlideOnConfigurationPanel.contentTinyMCEIFrame}}').offset().top)" stepKey="expectedColumnSizeRatio"/>
+        <switchToIFrame selector="{{SlideOnConfigurationPanel.contentTinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <see selector="body" userInput="{{text}}" stepKey="seeText"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+    </actionGroup>
+</actionGroups>
