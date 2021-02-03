@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Plugin\Filter;
 
+use Magento\PageBuilder\Model\Filter\Template as TemplateFilter;
+use Magento\Framework\Filter\Template as FrameworkTemplateFilter;
+
 /**
  * Plugin to the template filter to process any background images added by Page Builder
  */
@@ -17,15 +20,15 @@ class TemplatePlugin
     const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
 
     /**
-     * @var \Magento\PageBuilder\Model\Filter\Template
+     * @var TemplateFilter
      */
     private $templateFilter;
 
     /**
-     * @param \Magento\PageBuilder\Model\Filter\Template $templateFilter
+     * @param TemplateFilter $templateFilter
      */
     public function __construct(
-        \Magento\PageBuilder\Model\Filter\Template $templateFilter
+        TemplateFilter $templateFilter
     ) {
         $this->templateFilter = $templateFilter;
     }
@@ -33,14 +36,14 @@ class TemplatePlugin
     /**
      * After filter of template data apply transformations
      *
-     * @param \Magento\Framework\Filter\Template $subject
+     * @param FrameworkTemplateFilter $subject
      * @param string $result
      *
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterFilter(\Magento\Framework\Filter\Template $subject, string $result) : string
+    public function afterFilter(FrameworkTemplateFilter $subject, $result)
     {
-        return $this->templateFilter->filter($result);
+        return $this->templateFilter->filter((string) $result);
     }
 }
