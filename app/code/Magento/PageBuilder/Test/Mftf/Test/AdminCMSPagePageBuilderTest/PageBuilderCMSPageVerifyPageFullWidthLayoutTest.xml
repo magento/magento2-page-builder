@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCMSPageVerifyPageFullWidthLayoutTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Page"/>
+            <title value="Verify Page – Full Width Layout Width and Order of Contents"/>
+            <description value="Verify page builder Full Width layout renders storefront contents correctly for CMS
+            Pages. Verify correct width of page builder contents."/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="MC-15482"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+
+        <before>
+            <!-- Create CMS Page -->
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+
+        <after>
+            <!-- Delete Data -->
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Add Row & Heading to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Sprout"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="{{PageBuilderHeadingText_PageContent.value}}"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+
+        <!-- Set Page - Full Width layout -->
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setPageFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
+        </actionGroup>
+
+        <!-- Save CMS Page -->
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- Storefront 1600px: Verify Contents Visible -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <resizeWindow width="1600" height="1024" stepKey="resizeWindowWidth1"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingText_PageContent.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>
+
+        <!-- Storefront 1600px: Assert Page Builder Contents Are Correct Width -->
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[0].clientWidth" stepKey="rowWidth"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[0].clientWidth" stepKey="headingWidth"/>
+        <assertEquals stepKey="assertRowWidthEqualsWindowWidth">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertHeadingWidthEqualsRowWidth">
+            <expectedResult type="variable">rowWidth</expectedResult>
+            <actualResult type="variable">headingWidth</actualResult>
+        </assertEquals>
+
+        <!-- Storefront 767px: Verify Contents Visible -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowWidth2"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingText_PageContent.value, '1')}}" stepKey="waitForStorefrontHeadingText2"/>
+
+        <!-- Storefront 767px: Assert Page Builder Contents Are Correct Width -->
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth2"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[0].clientWidth" stepKey="rowWidth2"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[0].clientWidth" stepKey="headingWidth2"/>
+        <assertEquals stepKey="assertRowWidthEqualsWindowWidth2">
+            <expectedResult type="variable">pageWidth2</expectedResult>
+            <actualResult type="variable">rowWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertHeadingWidthEqualsRowWidth2">
+            <expectedResult type="variable">rowWidth2</expectedResult>
+            <actualResult type="variable">headingWidth2</actualResult>
+        </assertEquals>
+    </test>
+</tests>

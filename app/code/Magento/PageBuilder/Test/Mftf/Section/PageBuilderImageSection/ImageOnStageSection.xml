@@ -15,6 +15,8 @@
         <element name="imageAltText" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@alt='{{arg2}}']" parameterized="true"/>
         <element name="imageTitleAttribute" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@title='{{arg2}}']" parameterized="true"/>
         <element name="caption" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figcaption" parameterized="true"/>
+        <element name="onHoverSelectFromGalleryButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//ul[contains(@class,'pagebuilder-options-links')]//label[text()='Select from Gallery']" parameterized="true"/>
+        <element name="onHoverUploadImageButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//label[text()='Upload New Image']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figure[not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figure[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
