@@ -71,3 +71,11 @@
         }
     }
 }
+
+.mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel[aria-label*='toolbar'] {
+    transition: transform 200ms;
+
+    &:not(.mce-arrow-up):not(.mce-arrow-down) {
+        transform: translate(-1px, -36px); // table toolbar position fix
+    }
+}
