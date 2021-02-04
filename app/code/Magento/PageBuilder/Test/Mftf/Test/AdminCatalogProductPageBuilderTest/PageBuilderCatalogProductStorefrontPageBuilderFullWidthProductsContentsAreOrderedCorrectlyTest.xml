@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="PageBuilderCatalogProductStorefrontPageBuilderFullWidthProductsContentsAreOrderedCorrectlyTest">
+    <test name="PageBuilderCatalogProductStorefrontPageBuilderFullWidthProductsContentsAreOrderedCorrectlyTest" deprecated="Use PageBuilderCatalogProductVerifyProductFullWidthLayoutTest instead.">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Catalog Products"/>
@@ -20,6 +20,9 @@
             <group value="pagebuilder-layout"/>
             <group value="pagebuilder-fullwidth"/>
             <group value="pagebuilder-catalog-product"/>
+            <skip>
+                <issueId value="DEPRECATED">Use PageBuilderCatalogProductVerifyProductFullWidthLayoutTest instead.</issueId>
+            </skip>
         </annotations>
         <before>
             <createData stepKey="createPageBuilderAttribute" entity="productAttributeWysiwyg"/>

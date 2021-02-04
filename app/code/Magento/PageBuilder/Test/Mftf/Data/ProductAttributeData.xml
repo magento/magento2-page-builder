@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="productAttributePageBuilder" extends="productAttributeWysiwyg" type="ProductAttribute">
+        <data key="frontend_label">Page Builder Attribute</data>
+        <data key="attribute_code" unique="suffix">page_builder_attribute</data>
+        <data key="frontend_input_admin">Page Builder</data>
+        <data key="is_searchable">false</data>
+        <data key="is_comparable">false</data>
+        <data key="is_filterable">false</data>
+        <data key="is_filterable_in_search">false</data>
+        <data key="is_used_for_promo_rules">false</data>
+        <data key="used_in_product_listing">false</data>
+        <data key="used_for_sort_by">false</data>
+        <data key="is_html_allowed_on_front">true</data>
+        <data key="is_pagebuilder_enabled">true</data>
+    </entity>
+    <entity name="AddToDefaultSet_ContentGroup" type="ProductAttributeSet" extends="AddToDefaultSet">
+        <data key="attributeGroupId">13</data>
+        <data key="sortOrder">2</data>
+    </entity>
+</entities>

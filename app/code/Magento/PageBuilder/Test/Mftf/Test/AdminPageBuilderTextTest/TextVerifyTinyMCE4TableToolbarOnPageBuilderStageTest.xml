@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TextVerifyTinyMCE4TableToolbarOnPageBuilderStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="TinyMCE4 Table Toolbar Doesn't Overlay TextArea and Is Always Visible"/>
+            <description value="Verify that WYSIWYG table toolbar doesn't overlap textarea, overlays other toolbars,
+            overlays other content types, and always has its buttons visible."/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+            <group value="pagebuilder-tinyMCE"/>
+        </annotations>
+
+        <before>
+            <!-- Enable WYSIWYG & TinyMCE4 -->
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
+                <argument name="tags" value="config full_page"/>
+            </actionGroup>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Add Text to 3/12 Column on CMS Page -->
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToRootContainer">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextToColumnContentType">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+
+        <!-- Add TinyMCE4 Table to Text Editor -->
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="waitForTableMenuItem"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="clickOnTableMenuItem"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem('2')}}" stepKey="waitForTableMenuIFirstItem"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem('2')}}" stepKey="clickOnTableMenuFirstItem"/>
+        <waitForElement selector="{{WYSIWYGOnPageBuilderInline.tableGrid('6', '1')}}" stepKey="waitForTableGrid"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.tableGrid('6', '1')}}" stepKey="chooseTableSize"/>
+
+        <!-- Validate Table Size is 7 x 2 -->
+        <seeElement selector="{{TextOnStage.elementInText('1', 'table', '1')}}" stepKey="seeTable"/>
+        <seeElement selector="{{TextOnStage.elementInText('1', 'tr', '2')}}" stepKey="see2TableRows"/>
+        <dontSeeElementInDOM selector="{{TextOnStage.elementInText('1', 'tr', '3')}}" stepKey="dontSeeMoreThan2TableRows"/>
+        <seeElement selector="{{TextOnStage.elementInText('1', 'td', '7')}}" stepKey="see7TableColumns"/>
+        <dontSeeElementInDOM selector="{{TextOnStage.elementInText('1', 'td', '8')}}" stepKey="dontSee8TableColumns"/>
+
+        <!-- Verify All Table Toolbar Menu Items are Visible -->
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowAfter}}" stepKey="seeInsertRowAfter"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteRow}}" stepKey="seeDeleteRow"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertColumnBefore}}" stepKey="seeInsertColumnBefore"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertColumnAfter}}" stepKey="seeInsertColumnAfter"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteColumn}}" stepKey="seeDeleteColumn"/>
+
+        <!-- Validate Table Toolbar Doesn't Overlap Table Content -->
+        <seeElement selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="seeFocusedTinyMCE"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar"/>
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().bottom" stepKey="tableToolbarBottomPosition"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="tableElementTopPosition"/>
+        <executeJS function="return Math.abs({$tableToolbarBottomPosition} - {$tableElementTopPosition})" stepKey="tableToolbarVsTablePositionDifference"/>
+        <assertLessThanOrEqual stepKey="verifyTableToolbarDoesNotOverlapTable">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">tableToolbarVsTablePositionDifference</actualResult>
+        </assertLessThanOrEqual>
+
+        <!-- Validate Main Toolbar Doesn't Overlap Table Content -->
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="mainToolbarTopPosition"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="tableElementBottomPosition"/>
+        <executeJS function="return Math.abs({$mainToolbarTopPosition} - {$tableElementBottomPosition})" stepKey="mainToolbarVsTablePositionDifference"/>
+        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">mainToolbarVsTablePositionDifference</actualResult>
+        </assertLessThan>
+
+        <!-- Move Text to 6/12 Column -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveTextIntoThirdColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+
+        <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible -->
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType"/>
+        <waitForPageLoad stepKey="waitForTinyMCEToolbar"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickAgainToOpenTableToolbar"/>
+        <waitForPageLoad stepKey="waitForTinyMCETableToolbar"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowAfter}}" stepKey="seeInsertRowAfter2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteRow}}" stepKey="seeDeleteRow2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertColumnBefore}}" stepKey="seeInsertColumnBefore2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertColumnAfter}}" stepKey="seeInsertColumnAfter2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteColumn}}" stepKey="seeDeleteColumn2"/>
+
+        <!-- Validate Table Toolbar Doesn't Overlap Table Content 2 -->
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().top" stepKey="tableToolbarTopPosition2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="tableElementBottomPosition2"/>
+        <executeJS function="return Math.abs({$tableToolbarTopPosition2} - {$tableElementBottomPosition2})" stepKey="tableToolbarVsTablePositionDifference2"/>
+        <assertLessThanOrEqual stepKey="verifyTableToolbarDoesNotOverlapTable2">
+            <expectedResult type="int">15</expectedResult>
+            <actualResult type="variable">tableToolbarVsTablePositionDifference2</actualResult>
+        </assertLessThanOrEqual>
+
+        <!-- Validate Main Toolbar Doesn't Overlap Table Content 2 -->
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="mainToolbarTopPosition2"/>
+        <executeJS function="return Math.abs({$mainToolbarTopPosition2} - {$tableElementBottomPosition2})" stepKey="mainToolbarVsTablePositionDifference2"/>
+        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable2">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">mainToolbarVsTablePositionDifference2</actualResult>
+        </assertLessThan>
+
+        <!-- Add Video to Column 1 & Move Text Back to Column 1 -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection3">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoToColumnContentType">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openVideoEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setAutoplayEnabled">
+            <argument name="property" value="PageBuilderVideoAutoplay_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveTextIntoFirstColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+
+        <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible Again -->
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType2"/>
+        <waitForPageLoad stepKey="waitForTinymceToolbar2"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickAgainToOpenTableToolbar2"/>
+        <waitForPageLoad stepKey="waitForTinymceTableToolbar2"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowAfter}}" stepKey="seeInsertRowAfter3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteRow}}" stepKey="seeDeleteRow3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertColumnBefore}}" stepKey="seeInsertColumnBefore3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertColumnAfter}}" stepKey="seeInsertColumnAfter3"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteColumn}}" stepKey="seeDeleteColumn3"/>
+
+        <!-- Validate Table Toolbar Doesn't Overlap Table Content 3 -->
+        <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().bottom" stepKey="tableToolbarBottomPosition3"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="tableElementTopPosition3"/>
+        <executeJS function="return Math.abs({$tableToolbarBottomPosition3} - {$tableElementTopPosition3})" stepKey="tableToolbarVsTablePositionDifference3"/>
+        <assertLessThanOrEqual stepKey="verifyTableToolbarDoesNotOverlapTable3">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">tableToolbarVsTablePositionDifference3</actualResult>
+        </assertLessThanOrEqual>
+
+        <!-- Validate Main Toolbar Doesn't Overlap Table Content 3 -->
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="mainToolbarBottomPosition3"/>
+        <executeJS function="return Math.abs({$mainToolbarBottomPosition3} - {$tableElementTopPosition3})" stepKey="mainToolbarVsTablePositionDifference3"/>
+        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable3">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">mainToolbarVsTablePositionDifference3</actualResult>
+        </assertLessThan>
+    </test>
+</tests>
