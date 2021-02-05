@@ -77,7 +77,7 @@ class UploadTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $_FILES = [];
     }
