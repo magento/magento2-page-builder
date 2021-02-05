@@ -9,9 +9,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
   /**
    * @api
    */
-  var CreateValueForHref =
-  /*#__PURE__*/
-  function () {
+  var CreateValueForHref = /*#__PURE__*/function () {
     "use strict";
 
     function CreateValueForHref() {

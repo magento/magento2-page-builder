@@ -14,9 +14,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
   /**
    * @api
    */
-  var Master =
-  /*#__PURE__*/
-  function () {
+  var Master = /*#__PURE__*/function () {
     "use strict";
 
     /**

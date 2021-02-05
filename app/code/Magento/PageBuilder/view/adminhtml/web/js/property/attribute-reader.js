@@ -9,9 +9,7 @@ define([], function () {
   /**
    * @api
    */
-  var AttributeReader =
-  /*#__PURE__*/
-  function () {
+  var AttributeReader = /*#__PURE__*/function () {
     "use strict";
 
     function AttributeReader() {}

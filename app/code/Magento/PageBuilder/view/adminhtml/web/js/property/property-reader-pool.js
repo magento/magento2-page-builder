@@ -5,9 +5,7 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var PropertyReaderPool =
-  /*#__PURE__*/
-  function () {
+  var PropertyReaderPool = /*#__PURE__*/function () {
     "use strict";
 
     function PropertyReaderPool() {

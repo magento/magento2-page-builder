@@ -8,9 +8,7 @@ define(["Magento_PageBuilder/js/content-type/master"], function (_master) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Master =
-  /*#__PURE__*/
-  function (_master2) {
+  var Master = /*#__PURE__*/function (_master2) {
     "use strict";
 
     _inheritsLoose(Master, _master2);

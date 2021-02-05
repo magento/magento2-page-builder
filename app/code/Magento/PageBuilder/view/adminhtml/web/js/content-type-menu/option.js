@@ -10,9 +10,7 @@ define(["knockout"], function (_knockout) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Option =
-  /*#__PURE__*/
-  function () {
+  var Option = /*#__PURE__*/function () {
     "use strict";
 
     /**

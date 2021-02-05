@@ -5,9 +5,7 @@ define(["knockout"], function (_knockout) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Menu =
-  /*#__PURE__*/
-  function () {
+  var Menu = /*#__PURE__*/function () {
     "use strict";
 
     /**

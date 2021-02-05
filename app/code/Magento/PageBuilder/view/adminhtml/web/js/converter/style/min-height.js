@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * @api
    */
-  var MinHeight =
-  /*#__PURE__*/
-  function () {
+  var MinHeight = /*#__PURE__*/function () {
     "use strict";
 
     function MinHeight() {}

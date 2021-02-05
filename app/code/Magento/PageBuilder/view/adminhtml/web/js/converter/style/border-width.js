@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * @api
    */
-  var BorderWidth =
-  /*#__PURE__*/
-  function () {
+  var BorderWidth = /*#__PURE__*/function () {
     "use strict";
 
     function BorderWidth() {}

@@ -12,9 +12,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ContentTypeCollection =
-  /*#__PURE__*/
-  function (_contentType2) {
+  var ContentTypeCollection = /*#__PURE__*/function (_contentType2) {
     "use strict";
 
     _inheritsLoose(ContentTypeCollection, _contentType2);

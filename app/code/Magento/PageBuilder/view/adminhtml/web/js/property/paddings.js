@@ -9,9 +9,7 @@ define([], function () {
   /**
    * @api
    */
-  var Paddings =
-  /*#__PURE__*/
-  function () {
+  var Paddings = /*#__PURE__*/function () {
     "use strict";
 
     function Paddings() {}
