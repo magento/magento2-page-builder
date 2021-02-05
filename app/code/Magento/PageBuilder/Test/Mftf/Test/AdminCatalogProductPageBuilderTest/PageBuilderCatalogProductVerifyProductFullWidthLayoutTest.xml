@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductVerifyProductFullWidthLayoutTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Verify Product – Full Width Layout Width and Order of Contents"/>
+            <description value="Verify page builder Full Width layout renders storefront contents correctly for Catalog
+            Products. Verify order of title, amounts, cart buttons, image, description, short description, custom
+            attributes, reviews, related products, up-sell products, cross-sell products. Verify correct width of
+            page builder contents in description, short description, and custom attributes."/>
+            <description value="Verify the Product – Full Width layout on the storefront with all product content"/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="PB-898"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+
+        <before>
+            <!-- Create Products & Product Attribute -->
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="productAttributePageBuilder" stepKey="createPageBuilderAttribute"/>
+            <createData entity="AddToDefaultSet_ContentGroup" stepKey="addPageBuilderAttributeToDefaultAttributeSet">
+                <requiredEntity createDataKey="createPageBuilderAttribute"/>
+            </createData>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+
+            <!-- Change Custom Attribute to Page Builder type -->
+            <actionGroup ref="OpenProductAttributeFromSearchResultInGridActionGroup" stepKey="openProductAttributeInAdmin">
+                <argument name="productAttributeCode" value="$$createPageBuilderAttribute.attribute_code$$"/>
+            </actionGroup>
+            <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder"/>
+            <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveAttribute"/>
+
+            <!-- Change Short Description Attribute to Page Builder type -->
+            <actionGroup ref="OpenProductAttributeFromSearchResultInGridActionGroup" stepKey="openProductAttributeInAdmin2">
+                <argument name="productAttributeCode" value="short_description"/>
+            </actionGroup>
+            <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder2"/>
+            <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveAttribute2"/>
+
+            <!-- Clean Magento Cache -->
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
+                <argument name="tags" value="full_page"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Delete Data & Revert Attribute -->
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteCreatedProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteCreatedProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteCreatedProduct3"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteCreatedProduct4"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteCreatedProduct5"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteCreatedProduct6"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCreatedCategory"/>
+            <deleteData createDataKey="createPageBuilderAttribute" stepKey="deletePageBuilderAttribute"/>
+
+            <!-- Revert Short Description Attribute to Page Builder type -->
+            <actionGroup ref="OpenProductAttributeFromSearchResultInGridActionGroup" stepKey="openProductAttributeInAdmin">
+                <argument name="productAttributeCode" value="short_description"/>
+            </actionGroup>
+            <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="selectTextEditor"/>
+            <actionGroup ref="ConfirmChangeInputTypeModalActionGroup" stepKey="confirmChangeInputTypeModal"/>
+            <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveAttribute"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
+                <argument name="tags" value="full_page"/>
+            </actionGroup>
+
+            <!-- Logout -->
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Add Row & Heading to Product Custom Page Builder Attribute -->
+        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
+            <argument name="product" value="$$createProduct$$"/>
+        </actionGroup>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForCustomPageBuilderAttribute">
+            <argument name="attributeCode" value="$$createPageBuilderAttribute.attribute_code$$"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createPageBuilderAttribute.attribute_code$$)}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance3">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor3">
+            <argument name="property" value="PageBuilderBackgroundColor_Cornflower"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
+            <argument name="headingText" value="{{PageBuilderHeadingText_CustomAttribute.value}}"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen3"/>
+
+        <!-- Add Row & Heading to Product Short Description -->
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForShortDescription">
+            <argument name="attributeCode" value="short_description"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_TonysPink"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
+            <argument name="headingText" value="{{PageBuilderHeadingText_ShortDescription.value}}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+
+        <!-- Add Row & Heading to Product Description -->
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Sprout"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="{{PageBuilderHeadingText_Description.value}}"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+
+        <!-- Add Product Image -->
+        <actionGroup ref="AddProductImageActionGroup" stepKey="addProductImage"/>
+
+        <!-- Add Related Products and Up-Sells -->
+        <actionGroup ref="AddRelatedProductBySkuActionGroup" stepKey="addRelatedProduct1">
+            <argument name="sku" value="$$createProduct1.sku$$"/>
+        </actionGroup>
+        <actionGroup ref="AddRelatedProductBySkuActionGroup" stepKey="addRelatedProduct2">
+            <argument name="sku" value="$$createProduct2.sku$$"/>
+        </actionGroup>
+
+        <!-- Add Up-Sells -->
+        <actionGroup ref="AddUpSellProductBySkuActionGroup" stepKey="addUpSellProduct1">
+            <argument name="sku" value="$$createProduct3.sku$$"/>
+        </actionGroup>
+        <actionGroup ref="AddUpSellProductBySkuActionGroup" stepKey="addUpSellProduct2">
+            <argument name="sku" value="$$createProduct4.sku$$"/>
+        </actionGroup>
+
+        <!-- Add Cross-Sells -->
+        <actionGroup ref="AdminProductFormSaveActionGroup" stepKey="clickSaveButton"/>
+        <actionGroup ref="AddCrossSellProductBySkuActionGroup" stepKey="addCrossSellProduct1">
+            <argument name="sku" value="$$createProduct5.sku$$"/>
+        </actionGroup>
+        <actionGroup ref="AddCrossSellProductBySkuActionGroup" stepKey="addCrossSellProduct2">
+            <argument name="sku" value="$$createProduct6.sku$$"/>
+        </actionGroup>
+
+        <!-- Set Full Width Layout -->
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="ProductDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        </actionGroup>
+
+        <!-- Save Product -->
+        <actionGroup ref="AdminProductFormSaveActionGroup" stepKey="clickSaveButton2"/>
+
+        <!-- Storefront 1600px: Verify Contents Visible -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createProduct.name$$.html"/>
+        </actionGroup>
+        <resizeWindow width="1600" height="1024" stepKey="resizeWindowWidth1"/>
+        <waitForText userInput="$$createProduct.name$$" selector="{{StorefrontProductFullWidth.title}}" stepKey="waitForProductTitle"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.media}}" stepKey="waitForProductImage"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.reviewsSummary}}" stepKey="waitForReviewsSummart"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.priceInfoForm}}" stepKey="waitForPriceInfoForm"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.addProductForm}}" stepKey="waitForAddProductForm"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.socialLinksForm}}" stepKey="waitForSocialLinksForm"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.shortDescription}}" stepKey="waitForShortDescription"/>
+        <see userInput="{{PageBuilderHeadingText_ShortDescription.value}}" selector="{{StorefrontProductFullWidth.shortDescription}}" stepKey="seeHeadingShortDescription"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.description}}" stepKey="waitForDescription"/>
+        <see userInput="{{PageBuilderHeadingText_Description.value}}" selector="{{StorefrontProductFullWidth.description}}" stepKey="seeHeadingDescription"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.attributes}}" stepKey="waitForCustomAttribute"/>
+        <see userInput="{{PageBuilderHeadingText_CustomAttribute.value}}" selector="{{StorefrontProductFullWidth.attributes}}" stepKey="seeHeadingCustomAttribute"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.reviews}}" stepKey="waitForReviews"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.related}}" stepKey="waitForRelatedProducts"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.upsell}}" stepKey="waitForUpSellProducts"/>
+
+        <!-- Storefront 1600px: Assert Sections on Page are in Correct Order: Left/Right -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().x" stepKey="productMediaXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.title}}')[0].getBoundingClientRect().x" stepKey="productTitleXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviewsSummary}}')[0].getBoundingClientRect().x" stepKey="reviewsSummaryXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.priceInfoForm}}')[0].getBoundingClientRect().x" stepKey="priceInfoFormXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.addProductForm}}')[0].getBoundingClientRect().x" stepKey="addProductFormXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.socialLinksForm}}')[0].getBoundingClientRect().x" stepKey="socialLinksFormXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().x" stepKey="shortDescriptionXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().x" stepKey="descriptionXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().x" stepKey="customAttributeXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().x" stepKey="reviewsXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().x" stepKey="relatedXPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().x" stepKey="upsellXPosition"/>
+        <assertGreaterThan stepKey="assertImageLeftOfTitle">
+            <expectedResult type="variable">productMediaXPosition</expectedResult>
+            <actualResult type="variable">productTitleXPosition</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertTitleXSameAsReviewsSummary">
+            <expectedResult type="variable">productTitleXPosition</expectedResult>
+            <actualResult type="variable">reviewsSummaryXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertTitleXSameAsPriceInfoForm">
+            <expectedResult type="variable">productTitleXPosition</expectedResult>
+            <actualResult type="variable">priceInfoFormXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertTitleXSameAsAddProductForm">
+            <expectedResult type="variable">productTitleXPosition</expectedResult>
+            <actualResult type="variable">addProductFormXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertTitleXSameAsSocialLinksForm">
+            <expectedResult type="variable">productTitleXPosition</expectedResult>
+            <actualResult type="variable">socialLinksFormXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertTitleXSameAsShortDescription">
+            <expectedResult type="variable">productTitleXPosition</expectedResult>
+            <actualResult type="variable">shortDescriptionXPosition</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertDescriptionLeftOfImage">
+            <expectedResult type="variable">descriptionXPosition</expectedResult>
+            <actualResult type="variable">productMediaXPosition</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertCustomAttributeXSameAsDescription">
+            <expectedResult type="variable">customAttributeXPosition</expectedResult>
+            <actualResult type="variable">descriptionXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertReviewsXSameAsImage">
+            <expectedResult type="variable">reviewsXPosition</expectedResult>
+            <actualResult type="variable">productMediaXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertRelatedProductsXSameAsImage">
+            <expectedResult type="variable">relatedXPosition</expectedResult>
+            <actualResult type="variable">productMediaXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertUpSellProductsXSameAsImage">
+            <expectedResult type="variable">upsellXPosition</expectedResult>
+            <actualResult type="variable">productMediaXPosition</actualResult>
+        </assertEquals>
+
+        <!-- Storefront 1600px: Assert Sections on Page are in Correct Order: Up/Down -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().y" stepKey="productMediaYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.title}}')[0].getBoundingClientRect().y" stepKey="productTitleYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviewsSummary}}')[0].getBoundingClientRect().y" stepKey="reviewsSummaryYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.priceInfoForm}}')[0].getBoundingClientRect().y" stepKey="priceInfoFormYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.addProductForm}}')[0].getBoundingClientRect().y" stepKey="addProductFormYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.socialLinksForm}}')[0].getBoundingClientRect().y" stepKey="socialLinksFormYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().y" stepKey="shortDescriptionYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="customAttributeYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().y" stepKey="reviewsYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedYPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellYPosition"/>
+        <assertGreaterThan stepKey="assertDescriptionBelowImage">
+            <expectedResult type="variable">productMediaYPosition</expectedResult>
+            <actualResult type="variable">descriptionYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertReviewsSummaryBelowTitle">
+            <expectedResult type="variable">productTitleYPosition</expectedResult>
+            <actualResult type="variable">reviewsSummaryYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertPriceInfoFormBelowReviews">
+            <expectedResult type="variable">reviewsSummaryYPosition</expectedResult>
+            <actualResult type="variable">priceInfoFormYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertAddProductFormBelowPriceInfoForm">
+            <expectedResult type="variable">priceInfoFormYPosition</expectedResult>
+            <actualResult type="variable">addProductFormYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertSocialLinksFormBelowAddProductForm">
+            <expectedResult type="variable">addProductFormYPosition</expectedResult>
+            <actualResult type="variable">socialLinksFormYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertShortDescriptionBelowSocialLinksForm">
+            <expectedResult type="variable">socialLinksFormYPosition</expectedResult>
+            <actualResult type="variable">shortDescriptionYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertDescriptionBelowShortDescription">
+            <expectedResult type="variable">shortDescriptionYPosition</expectedResult>
+            <actualResult type="variable">descriptionYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCustomAttributeBelowDescription">
+            <expectedResult type="variable">descriptionYPosition</expectedResult>
+            <actualResult type="variable">customAttributeYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertReviewsBelowCustomAttribute">
+            <expectedResult type="variable">customAttributeYPosition</expectedResult>
+            <actualResult type="variable">reviewsYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertRelatedBelowReviews">
+            <expectedResult type="variable">reviewsYPosition</expectedResult>
+            <actualResult type="variable">relatedYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertUpsellBelowRelated">
+            <expectedResult type="variable">relatedYPosition</expectedResult>
+            <actualResult type="variable">upsellYPosition</actualResult>
+        </assertGreaterThan>
+
+        <!-- Storefront 1600px: Assert Page Builder Contents Are Correct Width -->
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <executeJS function="return document.querySelector('{{StorefrontProductFullWidth.infoMain}}').clientWidth" stepKey="productInfoWidth"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[0].clientWidth" stepKey="shortDescriptionRowWidth"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[0].clientWidth" stepKey="shortDescriptionHeadingWidth"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[1].clientWidth" stepKey="descriptionRowWidth"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[1].clientWidth" stepKey="descriptionHeadingWidth"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[2].clientWidth" stepKey="customAttributeRowWidth"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[2].clientWidth" stepKey="customAttributeHeadingWidth"/>
+        <assertEquals stepKey="assertShortDescriptionRowWidthEqualsProductInfoWidth">
+            <expectedResult type="variable">productInfoWidth</expectedResult>
+            <actualResult type="variable">shortDescriptionRowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertShortDescriptionHeadingWidthEqualsRowWidth">
+            <expectedResult type="variable">shortDescriptionRowWidth</expectedResult>
+            <actualResult type="variable">shortDescriptionHeadingWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertDescriptionRowWidthEqualsWindowWidth">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">descriptionRowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertDescriptionHeadingWidthEqualsRowWidth">
+            <expectedResult type="variable">descriptionRowWidth</expectedResult>
+            <actualResult type="variable">descriptionHeadingWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCustomAttributeRowWidthEqualsWindowWidth">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">customAttributeRowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCustomAttributeHeadingWidthEqualsRowWidth">
+            <expectedResult type="variable">customAttributeRowWidth</expectedResult>
+            <actualResult type="variable">customAttributeHeadingWidth</actualResult>
+        </assertEquals>
+
+        <!-- Storefront 1600px: Verify Contents Visible -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowWidth3"/>
+        <waitForText userInput="$$createProduct.name$$" selector="{{StorefrontProductFullWidth.title}}" stepKey="waitForProductTitle2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.media}}" stepKey="waitForProductImage2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.reviewsSummary}}" stepKey="waitForReviewsSummary2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.priceInfoForm}}" stepKey="waitForPriceInfoForm2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.addProductForm}}" stepKey="waitForAddProductForm2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.socialLinksForm}}" stepKey="waitForSocialLinksForm2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.shortDescription}}" stepKey="waitForShortDescription2"/>
+        <see userInput="{{PageBuilderHeadingText_ShortDescription.value}}" selector="{{StorefrontProductFullWidth.shortDescription}}" stepKey="seeHeadingShortDescription2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.description}}" stepKey="waitForDescription2"/>
+        <see userInput="{{PageBuilderHeadingText_Description.value}}" selector="{{StorefrontProductFullWidth.description}}" stepKey="seeHeadingDescription2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.attributes}}" stepKey="waitForCustomAttribute2"/>
+        <see userInput="{{PageBuilderHeadingText_CustomAttribute.value}}" selector="{{StorefrontProductFullWidth.attributes}}" stepKey="seeHeadingCustomAttribute2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.reviews}}" stepKey="waitForReviews2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.related}}" stepKey="waitForRelatedProducts2"/>
+        <waitForElementVisible selector="{{StorefrontProductFullWidth.upsell}}" stepKey="waitForUpSellProducts2"/>
+
+        <!-- Storefront 767px Width: Assert Sections on Page are in Correct Order: Left/Right -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().x" stepKey="productMediaXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.title}}')[0].getBoundingClientRect().x" stepKey="productTitleXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviewsSummary}}')[0].getBoundingClientRect().x" stepKey="reviewsSummaryXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.priceInfoForm}}')[0].getBoundingClientRect().x" stepKey="priceInfoFormXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.addProductForm}}')[0].getBoundingClientRect().x" stepKey="addProductFormXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.socialLinksForm}}')[0].getBoundingClientRect().x" stepKey="socialLinksFormXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().x" stepKey="shortDescriptionXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().x" stepKey="descriptionXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().x" stepKey="customAttributeXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().x" stepKey="reviewsXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().x" stepKey="relatedXPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().x" stepKey="upsellXPosition2"/>
+        <assertEquals stepKey="assertImageXSameAsTitle2">
+            <expectedResult type="variable">productMediaXPosition2</expectedResult>
+            <actualResult type="variable">productTitleXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertImageXSameAsReviewsSummary2">
+            <expectedResult type="variable">productMediaXPosition2</expectedResult>
+            <actualResult type="variable">reviewsSummaryXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertImageXSameAsPriceInfoForm2">
+            <expectedResult type="variable">productMediaXPosition2</expectedResult>
+            <actualResult type="variable">priceInfoFormXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertImageXSameAsAddProductForm2">
+            <expectedResult type="variable">productMediaXPosition2</expectedResult>
+            <actualResult type="variable">addProductFormXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertImageXSameAsSocialLinksForm2">
+            <expectedResult type="variable">productMediaXPosition2</expectedResult>
+            <actualResult type="variable">socialLinksFormXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertImageXSameAsShortDescription2">
+            <expectedResult type="variable">productMediaXPosition2</expectedResult>
+            <actualResult type="variable">shortDescriptionXPosition2</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertDescriptionLeftOfImage2">
+            <expectedResult type="variable">descriptionXPosition2</expectedResult>
+            <actualResult type="variable">productMediaXPosition2</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertCustomAttributeXSameAsDescription2">
+            <expectedResult type="variable">customAttributeXPosition2</expectedResult>
+            <actualResult type="variable">descriptionXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertReviewsXSameAsImage2">
+            <expectedResult type="variable">reviewsXPosition2</expectedResult>
+            <actualResult type="variable">productMediaXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertRelatedProductsXSameAsImage2">
+            <expectedResult type="variable">relatedXPosition2</expectedResult>
+            <actualResult type="variable">productMediaXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertUpSellProductsXSameAsImage2">
+            <expectedResult type="variable">upsellXPosition2</expectedResult>
+            <actualResult type="variable">productMediaXPosition2</actualResult>
+        </assertEquals>
+
+        <!-- Storefront 767px Width: Assert Sections on Page are in Correct Order: Up/Down -->
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().y" stepKey="productMediaYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.title}}')[0].getBoundingClientRect().y" stepKey="productTitleYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviewsSummary}}')[0].getBoundingClientRect().y" stepKey="reviewsSummaryYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.priceInfoForm}}')[0].getBoundingClientRect().y" stepKey="priceInfoFormYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.addProductForm}}')[0].getBoundingClientRect().y" stepKey="addProductFormYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.socialLinksForm}}')[0].getBoundingClientRect().y" stepKey="socialLinksFormYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.shortDescription}}')[0].getBoundingClientRect().y" stepKey="shortDescriptionYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="customAttributeYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().y" stepKey="reviewsYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedYPosition2"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellYPosition2"/>
+        <assertGreaterThan stepKey="assertTitleBelowProductImage2">
+            <expectedResult type="variable">productMediaYPosition2</expectedResult>
+            <actualResult type="variable">productTitleYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertReviewsSummaryBelowTitle2">
+            <expectedResult type="variable">productTitleYPosition2</expectedResult>
+            <actualResult type="variable">reviewsSummaryYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertPriceInfoFormBelowReviews2">
+            <expectedResult type="variable">reviewsSummaryYPosition2</expectedResult>
+            <actualResult type="variable">priceInfoFormYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertAddProductFormBelowPriceInfoForm2">
+            <expectedResult type="variable">priceInfoFormYPosition2</expectedResult>
+            <actualResult type="variable">addProductFormYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertSocialLinksFormBelowAddProductForm2">
+            <expectedResult type="variable">addProductFormYPosition2</expectedResult>
+            <actualResult type="variable">socialLinksFormYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertShortDescriptionBelowSocialLinksForm2">
+            <expectedResult type="variable">socialLinksFormYPosition2</expectedResult>
+            <actualResult type="variable">shortDescriptionYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertDescriptionBelowShortDescription2">
+            <expectedResult type="variable">shortDescriptionYPosition2</expectedResult>
+            <actualResult type="variable">descriptionYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCustomAttributeBelowDescription2">
+            <expectedResult type="variable">descriptionYPosition2</expectedResult>
+            <actualResult type="variable">customAttributeYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertReviewsBelowCustomAttribute2">
+            <expectedResult type="variable">customAttributeYPosition2</expectedResult>
+            <actualResult type="variable">reviewsYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertRelatedBelowReviews2">
+            <expectedResult type="variable">reviewsYPosition2</expectedResult>
+            <actualResult type="variable">relatedYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertUpsellBelowRelated2">
+            <expectedResult type="variable">relatedYPosition2</expectedResult>
+            <actualResult type="variable">upsellYPosition2</actualResult>
+        </assertGreaterThan>
+
+        <!-- Storefront 767px Width: Assert Page Builder Contents Are Correct Width -->
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth2"/>
+        <executeJS function="return document.querySelector('{{StorefrontProductFullWidth.infoMain}}').clientWidth" stepKey="productInfoWidth2"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[0].clientWidth" stepKey="shortDescriptionRowWidth2"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[0].clientWidth" stepKey="shortDescriptionHeadingWidth2"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[1].clientWidth" stepKey="descriptionRowWidth2"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[1].clientWidth" stepKey="descriptionHeadingWidth2"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[2].clientWidth" stepKey="customAttributeRowWidth2"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[2].clientWidth" stepKey="customAttributeHeadingWidth2"/>
+        <assertEquals stepKey="assertShortDescriptionRowWidthEqualsProductInfoWidth2">
+            <expectedResult type="variable">productInfoWidth2</expectedResult>
+            <actualResult type="variable">shortDescriptionRowWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertShortDescriptionHeadingWidthEqualsRowWidth2">
+            <expectedResult type="variable">shortDescriptionRowWidth2</expectedResult>
+            <actualResult type="variable">shortDescriptionHeadingWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertDescriptionRowWidthEqualsWindowWidth2">
+            <expectedResult type="variable">pageWidth2</expectedResult>
+            <actualResult type="variable">descriptionRowWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertDescriptionHeadingWidthEqualsRowWidth2">
+            <expectedResult type="variable">descriptionRowWidth2</expectedResult>
+            <actualResult type="variable">descriptionHeadingWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCustomAttributeRowWidthEqualsWindowWidth2">
+            <expectedResult type="variable">pageWidth2</expectedResult>
+            <actualResult type="variable">customAttributeRowWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCustomAttributeHeadingWidthEqualsRowWidth2">
+            <expectedResult type="variable">customAttributeRowWidth2</expectedResult>
+            <actualResult type="variable">customAttributeHeadingWidth2</actualResult>
+        </assertEquals>
+    </test>
+</tests>

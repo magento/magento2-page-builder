@@ -18,7 +18,7 @@
         <element name="overlay" type="text" selector="(//div[@data-content-type=&quot;slide&quot;])[{{slideIndex}}]//div[@data-element=&quot;overlay&quot; or contains(@class,&quot;pagebuilder-overlay&quot;)]" parameterized="true"/>
         <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=slider] div.pagebuilder-overlay')[{{slideOverlayIndex}} - 1]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
-        <element name="imageSourceByIndex" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[contains(@style,'{{image}}')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="imageSourceByIndex" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[contains(@data-background-images,'{{image}}')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{buttonClass}}')]" parameterized="true"/>
