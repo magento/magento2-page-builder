@@ -33,7 +33,7 @@ class SortingTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
         $this->sortingFactoryMock = $this->createMock(Factory::class);
