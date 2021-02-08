@@ -14,9 +14,7 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
   /**
    * @api
    */
-  var ContentTypeMenu =
-  /*#__PURE__*/
-  function () {
+  var ContentTypeMenu = /*#__PURE__*/function () {
     "use strict";
 
     /**

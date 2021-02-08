@@ -12,9 +12,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
   /**
    * @api
    */
-  var WidgetDirective =
-  /*#__PURE__*/
-  function (_widgetDirectiveAbstr) {
+  var WidgetDirective = /*#__PURE__*/function (_widgetDirectiveAbstr) {
     "use strict";
 
     _inheritsLoose(WidgetDirective, _widgetDirectiveAbstr);

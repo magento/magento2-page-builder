@@ -12,9 +12,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_preview2) {
+  var Preview = /*#__PURE__*/function (_preview2) {
     "use strict";
 
     _inheritsLoose(Preview, _preview2);

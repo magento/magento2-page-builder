@@ -14,9 +14,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
   /**
    * @api
    */
-  var Toolbar =
-  /*#__PURE__*/
-  function () {
+  var Toolbar = /*#__PURE__*/function () {
     "use strict";
 
     /**

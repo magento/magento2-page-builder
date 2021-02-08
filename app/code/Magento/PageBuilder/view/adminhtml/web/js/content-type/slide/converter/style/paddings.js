@@ -5,9 +5,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Paddings =
-  /*#__PURE__*/
-  function () {
+  var Paddings = /*#__PURE__*/function () {
     "use strict";
 
     function Paddings() {}

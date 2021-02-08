@@ -9,9 +9,7 @@ define([], function () {
   /**
    * @api
    */
-  var Display =
-  /*#__PURE__*/
-  function () {
+  var Display = /*#__PURE__*/function () {
     "use strict";
 
     function Display() {}

@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
   /**
    * @api
    */
-  var StylePropertyReader =
-  /*#__PURE__*/
-  function () {
+  var StylePropertyReader = /*#__PURE__*/function () {
     "use strict";
 
     function StylePropertyReader() {}

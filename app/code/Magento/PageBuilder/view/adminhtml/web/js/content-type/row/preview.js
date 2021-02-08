@@ -16,9 +16,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_previewCollection2) {
+  var Preview = /*#__PURE__*/function (_previewCollection2) {
     "use strict";
 
     _inheritsLoose(Preview, _previewCollection2);

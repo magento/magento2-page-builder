@@ -5,9 +5,7 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ContentType =
-  /*#__PURE__*/
-  function () {
+  var ContentType = /*#__PURE__*/function () {
     "use strict";
 
     /**

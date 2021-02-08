@@ -5,9 +5,7 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_Pag
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Edit =
-  /*#__PURE__*/
-  function () {
+  var Edit = /*#__PURE__*/function () {
     "use strict";
 
     /**
