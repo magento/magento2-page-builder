@@ -5,9 +5,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Resize =
-  /*#__PURE__*/
-  function () {
+  var Resize = /*#__PURE__*/function () {
     "use strict";
 
     function Resize(columnGroup) {

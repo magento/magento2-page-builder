@@ -1,5 +1,12 @@
 /*eslint-disable */
 /* jscs:disable */
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } it = o[Symbol.iterator](); return it.next.bind(it); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _config, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,9 +16,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
   /**
    * @api
    */
-  var Configurable =
-  /*#__PURE__*/
-  function () {
+  var Configurable = /*#__PURE__*/function () {
     "use strict";
 
     function Configurable() {}
@@ -138,19 +143,8 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     _proto.readAttributes = function readAttributes(config, element, data, propertyReaderPool, converterPool) {
       var result = {};
 
-      for (var _iterator = config, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
-
-        if (_isArray) {
-          if (_i2 >= _iterator.length) break;
-          _ref = _iterator[_i2++];
-        } else {
-          _i2 = _iterator.next();
-          if (_i2.done) break;
-          _ref = _i2.value;
-        }
-
-        var attributeConfig = _ref;
+      for (var _iterator = _createForOfIteratorHelperLoose(config), _step; !(_step = _iterator()).done;) {
+        var attributeConfig = _step.value;
 
         if ("write" === attributeConfig.persistence_mode) {
           continue;
@@ -188,19 +182,8 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
       var result = _underscore.extend({}, data);
 
-      for (var _iterator2 = config, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-        var _ref2;
-
-        if (_isArray2) {
-          if (_i3 >= _iterator2.length) break;
-          _ref2 = _iterator2[_i3++];
-        } else {
-          _i3 = _iterator2.next();
-          if (_i3.done) break;
-          _ref2 = _i3.value;
-        }
-
-        var propertyConfig = _ref2;
+      for (var _iterator2 = _createForOfIteratorHelperLoose(config), _step2; !(_step2 = _iterator2()).done;) {
+        var propertyConfig = _step2.value;
 
         if ("write" === propertyConfig.persistence_mode) {
           continue;
@@ -251,19 +234,8 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
       var css = element.getAttribute("class") !== null ? element.getAttribute("class") : "";
 
       if (config.css !== undefined && config.css.filter !== undefined && config.css.filter.length) {
-        for (var _iterator3 = config.css.filter, _isArray3 = Array.isArray(_iterator3), _i4 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-          var _ref3;
-
-          if (_isArray3) {
-            if (_i4 >= _iterator3.length) break;
-            _ref3 = _iterator3[_i4++];
-          } else {
-            _i4 = _iterator3.next();
-            if (_i4.done) break;
-            _ref3 = _i4.value;
-          }
-
-          var filterClass = _ref3;
+        for (var _iterator3 = _createForOfIteratorHelperLoose(config.css.filter), _step3; !(_step3 = _iterator3()).done;) {
+          var filterClass = _step3.value;
           css = css.replace(filterClass, "");
         }
       }
@@ -304,19 +276,8 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     ;
 
     _proto.convertData = function convertData(config, data, massConverterPool) {
-      for (var _iterator4 = config.converters, _isArray4 = Array.isArray(_iterator4), _i5 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
-        var _ref4;
-
-        if (_isArray4) {
-          if (_i5 >= _iterator4.length) break;
-          _ref4 = _iterator4[_i5++];
-        } else {
-          _i5 = _iterator4.next();
-          if (_i5.done) break;
-          _ref4 = _i5.value;
-        }
-
-        var converterConfig = _ref4;
+      for (var _iterator4 = _createForOfIteratorHelperLoose(config.converters), _step4; !(_step4 = _iterator4()).done;) {
+        var converterConfig = _step4.value;
 
         if (massConverterPool.get(converterConfig.component)) {
           data = massConverterPool.get(converterConfig.component).fromDom(data, converterConfig.config);

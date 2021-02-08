@@ -11,9 +11,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
    *
    * @api
    */
-  var Wysiwyg =
-  /*#__PURE__*/
-  function () {
+  var Wysiwyg = /*#__PURE__*/function () {
     "use strict";
 
     /**
