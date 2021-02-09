@@ -35,7 +35,7 @@ class TemplateTest extends TestCase
     /**
      * @inheritDoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->logger = $this->createMock(LoggerInterface::class);

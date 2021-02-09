@@ -22,7 +22,7 @@ class AllowedParentTest extends \PHPUnit\Framework\TestCase
      */
     private $fileResolverMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $objectManager = Bootstrap::getObjectManager();
 
