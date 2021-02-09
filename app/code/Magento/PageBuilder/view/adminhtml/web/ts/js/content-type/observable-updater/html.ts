@@ -8,6 +8,7 @@ import {ContentTypeConfigAppearanceElementInterface} from "../../content-type-co
 import ConverterPool from "../../converter/converter-pool";
 import {DataObject} from "../../data-store";
 import { replaceWithDataSrc } from "../../utils/directives";
+import {processInlineStyles} from "../../utils/editor";
 import {get} from "../../utils/object";
 
 /**
@@ -39,6 +40,11 @@ export default function generate(
     // Replacing src attribute with data-tmp-src to prevent img requests in iframe during master format rendering
     if (Config.getMode() !== "Preview" && typeof value === "string" && value.indexOf("{{media url=") !== -1) {
         value = replaceWithDataSrc(value);
+    }
+
+    // Process all desktop styles that left unprocessed after migrating from inline styles.
+    if (typeof value === "string") {
+        value = processInlineStyles(value);
     }
 
     return value;
