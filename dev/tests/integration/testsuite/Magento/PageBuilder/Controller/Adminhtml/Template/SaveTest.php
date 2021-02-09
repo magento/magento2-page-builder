@@ -173,6 +173,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals('Automated Template', $template->getName());
         $this->assertEquals('<div data-content-type="row"></div>', $template->getTemplate());
         $this->assertEquals('any', $template->getCreatedFor());
-        $this->assertContains('.template-manager/automatedtemplate', $template->getPreviewImage());
+        $this->assertStringContainsString('.template-manager/automatedtemplate', $template->getPreviewImage());
     }
 }
