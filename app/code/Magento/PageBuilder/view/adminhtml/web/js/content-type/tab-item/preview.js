@@ -14,9 +14,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_previewCollection2) {
+  var Preview = /*#__PURE__*/function (_previewCollection2) {
     "use strict";
 
     _inheritsLoose(Preview, _previewCollection2);

@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
   /**
    * @api
    */
-  var Uploader =
-  /*#__PURE__*/
-  function () {
+  var Uploader = /*#__PURE__*/function () {
     "use strict";
 
     /**

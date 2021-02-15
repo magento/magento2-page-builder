@@ -9,9 +9,7 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
   /**
    * @api
    */
-  var Collection =
-  /*#__PURE__*/
-  function () {
+  var Collection = /*#__PURE__*/function () {
     "use strict";
 
     function Collection(children) {

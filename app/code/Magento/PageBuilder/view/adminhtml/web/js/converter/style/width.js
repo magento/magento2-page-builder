@@ -12,9 +12,7 @@ define([], function () {
    *
    * @api
    */
-  var Width =
-  /*#__PURE__*/
-  function () {
+  var Width = /*#__PURE__*/function () {
     "use strict";
 
     function Width() {}

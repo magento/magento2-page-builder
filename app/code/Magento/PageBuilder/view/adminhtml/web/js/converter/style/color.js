@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * @api
    */
-  var Color =
-  /*#__PURE__*/
-  function () {
+  var Color = /*#__PURE__*/function () {
     "use strict";
 
     function Color() {}

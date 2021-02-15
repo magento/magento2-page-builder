@@ -5,9 +5,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var BackgroundImages =
-  /*#__PURE__*/
-  function () {
+  var BackgroundImages = /*#__PURE__*/function () {
     "use strict";
 
     function BackgroundImages() {}

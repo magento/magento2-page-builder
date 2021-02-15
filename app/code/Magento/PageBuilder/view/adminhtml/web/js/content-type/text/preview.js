@@ -12,9 +12,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
   /**
    * @api
    */
-  var Preview =
-  /*#__PURE__*/
-  function (_preview2) {
+  var Preview = /*#__PURE__*/function (_preview2) {
     "use strict";
 
     _inheritsLoose(Preview, _preview2);

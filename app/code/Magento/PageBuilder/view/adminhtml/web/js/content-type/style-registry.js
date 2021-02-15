@@ -9,9 +9,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/string"], function (_undersc
   var pbStyleAttribute = "data-pb-style";
   var styleDataAttribute = "data-style-id";
 
-  var StyleRegistry =
-  /*#__PURE__*/
-  function () {
+  var StyleRegistry = /*#__PURE__*/function () {
     "use strict";
 
     function StyleRegistry(identifier) {

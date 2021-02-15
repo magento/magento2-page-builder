@@ -5,9 +5,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var MasterFormatRenderer =
-  /*#__PURE__*/
-  function () {
+  var MasterFormatRenderer = /*#__PURE__*/function () {
     "use strict";
 
     /**

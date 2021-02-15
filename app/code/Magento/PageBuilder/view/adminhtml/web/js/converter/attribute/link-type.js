@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * @api
    */
-  var CreateValueForLinkType =
-  /*#__PURE__*/
-  function () {
+  var CreateValueForLinkType = /*#__PURE__*/function () {
     "use strict";
 
     function CreateValueForLinkType() {}

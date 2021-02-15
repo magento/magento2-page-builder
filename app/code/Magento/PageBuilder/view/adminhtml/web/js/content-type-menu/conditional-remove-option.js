@@ -8,9 +8,7 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ConditionalRemoveOption =
-  /*#__PURE__*/
-  function (_option2) {
+  var ConditionalRemoveOption = /*#__PURE__*/function (_option2) {
     "use strict";
 
     _inheritsLoose(ConditionalRemoveOption, _option2);

@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils
   /**
    * @api
    */
-  var Directives =
-  /*#__PURE__*/
-  function () {
+  var Directives = /*#__PURE__*/function () {
     "use strict";
 
     function Directives() {}

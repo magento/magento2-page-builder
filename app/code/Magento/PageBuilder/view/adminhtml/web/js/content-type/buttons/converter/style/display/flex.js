@@ -9,9 +9,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
   /**
    * @api
    */
-  var Flex =
-  /*#__PURE__*/
-  function () {
+  var Flex = /*#__PURE__*/function () {
     "use strict";
 
     function Flex() {}

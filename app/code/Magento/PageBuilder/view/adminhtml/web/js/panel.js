@@ -9,9 +9,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
   /**
    * @api
    */
-  var Panel =
-  /*#__PURE__*/
-  function () {
+  var Panel = /*#__PURE__*/function () {
     "use strict";
 
     function Panel(pageBuilder) {
@@ -262,7 +260,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
 
         this.isVisible(true); // Open first menu section
 
-        var hasGroups = 0 in this.menuSections();
+        var hasGroups = (0 in this.menuSections());
 
         if (hasGroups) {
           this.menuSections()[0].active(true);
