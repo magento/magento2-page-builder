@@ -36,11 +36,9 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @expectedException \Magento\Framework\Exception\LocalizedException
-     */
     public function testPartial()
     {
+        $this->expectException(\Magento\Framework\Exception\LocalizedException::class);
         $file = file_get_contents(__DIR__ . '/../../../_files/content_type/type3_content_type2.xml');
         $this->fileResolverMock->expects($this->once())
             ->method('get')

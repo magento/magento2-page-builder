@@ -30,8 +30,8 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     public function testFilterFor(string $results, bool $contains, string $value)
     {
         $contains ?
-            self::assertContains($results, $this->templateFilter->filter($value)) :
-            self::assertNotContains($results, $this->templateFilter->filter($value));
+            self::assertStringContainsString($results, $this->templateFilter->filter($value)) :
+            self::assertStringNotContainsString($results, $this->templateFilter->filter($value));
     }
 
     /**
