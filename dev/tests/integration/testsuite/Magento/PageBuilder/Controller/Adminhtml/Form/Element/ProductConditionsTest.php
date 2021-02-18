@@ -23,9 +23,9 @@ class ProductConditionsTest extends \Magento\TestFramework\TestCase\AbstractBack
         $this->dispatch('backend/pagebuilder/form/element_productconditions');
         $responseBody = $this->getResponse()->getBody();
         // Assert form is associated correctly
-        $this->assertContains('data-form-part="test_namespace"', $responseBody);
+        $this->assertStringContainsString('data-form-part="test_namespace"', $responseBody);
         // Assert correct conditions are loaded
-        $this->assertContains(\Magento\CatalogWidget\Model\Rule\Condition\Combine::class, $responseBody);
+        $this->assertStringContainsString(\Magento\CatalogWidget\Model\Rule\Condition\Combine::class, $responseBody);
     }
 
     public function testFormLoadsConditionsFromPost()
@@ -63,19 +63,19 @@ class ProductConditionsTest extends \Magento\TestFramework\TestCase\AbstractBack
         $responseBody = $this->getResponse()->getBody();
 
         // Assert the description rule is loaded correctly
-        $this->assertContains('<option value="{}" selected="selected">contains</option>', $responseBody);
+        $this->assertStringContainsString('<option value="{}" selected="selected">contains</option>', $responseBody);
         $expected = 'data-ui-id="editable-0-text-parameters-conditions-1-1-value"' .
             '  value="foo" data-form-part="test_namespace"';
-        $this->assertContains($expected, $responseBody);
+        $this->assertStringContainsString($expected, $responseBody);
 
         // Assert the combine form has form-part
         $expected = 'name="parameters[conditions][1--2][value]" data-form-part="test_namespace"';
-        $this->assertContains($expected, $responseBody);
+        $this->assertStringContainsString($expected, $responseBody);
 
         // Assert the combine condition has the correct child value and form-part
         $expected = 'data-ui-id="editable-0-text-parameters-conditions-1-2-1-value"' .
             '  value="123" data-form-part="test_namespace"';
-        $this->assertContains($expected, $responseBody);
+        $this->assertStringContainsString($expected, $responseBody);
     }
 
     public function testFormLoadsProperPrefix()
@@ -115,6 +115,6 @@ class ProductConditionsTest extends \Magento\TestFramework\TestCase\AbstractBack
 
         // Assert the combine form has form-part
         $expected = 'name="parameters[myprefix][1--2][value]"';
-        $this->assertContains($expected, $responseBody);
+        $this->assertStringContainsString($expected, $responseBody);
     }
 }
