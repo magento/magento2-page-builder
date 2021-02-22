@@ -74,7 +74,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @inheritDoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->objectManager = Bootstrap::getObjectManager();
@@ -173,6 +173,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals('Automated Template', $template->getName());
         $this->assertEquals('<div data-content-type="row"></div>', $template->getTemplate());
         $this->assertEquals('any', $template->getCreatedFor());
-        $this->assertContains('.template-manager/automatedtemplate', $template->getPreviewImage());
+        $this->assertStringContainsString('.template-manager/automatedtemplate', $template->getPreviewImage());
     }
 }
