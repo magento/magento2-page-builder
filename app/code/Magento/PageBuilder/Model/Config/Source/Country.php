@@ -13,7 +13,7 @@ namespace Magento\PageBuilder\Model\Config\Source;
  *
  * @api
  */
-class Country implements \Magento\Framework\Option\ArrayInterface
+class Country implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**
      * @var \Magento\Directory\Model\ResourceModel\Country\Collection
