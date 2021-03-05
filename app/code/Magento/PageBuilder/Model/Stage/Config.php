@@ -13,6 +13,7 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\Cache\FrontendInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\PageBuilder\Model\Session\RandomKey;
 
 /**
  * Provide configuration to the admin JavaScript app
@@ -120,6 +121,11 @@ class Config
     private $serializer;
 
     /**
+     * @var RandomKey
+     */
+    private $sessionRandomKey;
+
+    /**
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
@@ -136,6 +142,7 @@ class Config
      * @param AuthorizationInterface|null $authorization
      * @param FrontendInterface|null $cache
      * @param Json|null $serializer
+     * @param RandomKey|null $sessionRandomKey
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -155,7 +162,8 @@ class Config
         \Magento\Variable\Model\Variable\Config $variableConfig = null,
         AuthorizationInterface $authorization = null,
         FrontendInterface $cache = null,
-        Json $serializer = null
+        Json $serializer = null,
+        ?RandomKey $sessionRandomKey = null
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
@@ -175,6 +183,8 @@ class Config
         $this->authorization = $authorization ?: ObjectManager::getInstance()->get(AuthorizationInterface::class);
         $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()->get(Json::class);
         $this->cache = $cache ?: \Magento\Framework\App\ObjectManager::getInstance()->get(FrontendInterface::class);
+        $this->sessionRandomKey = $sessionRandomKey
+            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(RandomKey::class);
     }
 
     /**
@@ -437,6 +447,9 @@ class Config
      */
     private function getCache(string $cacheIdentifier): array
     {
+        if ($this->urlBuilder->useSecretKey()) {
+            $cacheIdentifier .= '_' . $this->sessionRandomKey->getValue();
+        }
         $serializedData = $this->cache->load($cacheIdentifier);
         $cache = $serializedData
             ? $this->serializer->unserialize($serializedData)
@@ -453,6 +466,9 @@ class Config
      */
     private function saveCache(array $data, string $cacheIdentifier): void
     {
+        if ($this->urlBuilder->useSecretKey()) {
+            $cacheIdentifier .= '_' . $this->sessionRandomKey->getValue();
+        }
         $this->cache->save($this->serializer->serialize($data), $cacheIdentifier);
     }
 
