@@ -107,14 +107,15 @@ define([
         validator.addRule(
             ruleName,
             function (value, params) {
-                var allNumbers = true;
+                var allNumbers = true,
+                    handler = rule.handler.bind(this);
 
                 if (typeof value !== 'object') {
-                    return rule.handler(value, params);
+                    return handler(value, params);
                 }
 
                 _.flatten(_.map(value, _.values)).forEach(function (val) {
-                    if (!rule.handler(val, params)) {
+                    if (!handler(val, params)) {
                         allNumbers = false;
 
                         return allNumbers;
