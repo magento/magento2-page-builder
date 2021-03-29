@@ -129,7 +129,7 @@
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <!--Go to storefront to verify Product Link-->
         <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
-        <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
+        <amOnPage url="$$createPreReqProduct.custom_attributes[url_key]$$.html" stepKey="navigateToProductPage"/>
         <comment userInput="Verify directive link on Storefront" stepKey="verifyDirectiveLinkOnStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <scrollTo selector="{{StorefrontProductInfoDetailsSection.detailsTab}}" stepKey="scrollToDetailsTab"/>
