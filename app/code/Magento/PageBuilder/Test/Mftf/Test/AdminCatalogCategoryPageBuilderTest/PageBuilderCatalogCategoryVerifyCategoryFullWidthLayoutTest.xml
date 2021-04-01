@@ -25,12 +25,9 @@
         <before>
             <!-- Create Products & Product Attribute -->
             <createData entity="_defaultCategory" stepKey="createCategory"/>
-            <createData entity="_defaultProduct" stepKey="createProduct1">
-                <requiredEntity createDataKey="createCategory"/>
-            </createData>
-            <createData entity="_defaultProduct" stepKey="createProduct2">
+            <createData entity="SimpleProduct2" stepKey="createProduct1"/>
+            <createData entity="SimpleProduct2" stepKey="createProduct2">
                 <field key="price">100</field>
-                <requiredEntity createDataKey="createCategory"/>
             </createData>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -124,15 +121,13 @@
         <selectOption userInput="Static block and products" selector="{{AdminCategoryDisplaySettingsSection.displayMode}}" stepKey="selectStaticBlockAndProductsOption"/>
 
         <!-- Assign Products to Category -->
-        <actionGroup ref="OpenProductsInCategorySectionActionGroup" stepKey="openProductsInCategorySection"/>
-        <actionGroup ref="GoToAddProductsBySearchActionGroup" stepKey="goToAddProductsBySearch"/>
-        <actionGroup ref="SearchAProductForCategoryByKeywordActionGroup" stepKey="searchFirstProductForCategoryByKeyword">
-            <argument name="keyword" value="$$createProduct1.sku$$"/>
+        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="assignSimpleProductFirst">
+            <argument name="productSku" value="$$createProduct1.sku$$"/>
         </actionGroup>
-        <actionGroup ref="SearchAProductForCategoryByKeywordActionGroup" stepKey="searchSecondProductForCategoryByKeyword">
-            <argument name="keyword" value="$$createProduct2.name$$"/>
+        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="assignSimpleProductSecond">
+            <argument name="productSku" value="$$createProduct2.sku$$"/>
         </actionGroup>
-        <actionGroup ref="AdminProductsInCategoryAddProductsModalSaveAndCloseActionGroup" stepKey="saveAndCloseModal"/>
+        <actionGroup ref="AdminSaveCategoryFormActionGroup" stepKey="saveCategory"/>
 
         <!-- Set Category - Full Width layout -->
         <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
