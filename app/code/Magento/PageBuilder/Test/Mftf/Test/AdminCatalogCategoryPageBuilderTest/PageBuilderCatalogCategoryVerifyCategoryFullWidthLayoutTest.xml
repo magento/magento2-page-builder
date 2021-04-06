@@ -121,13 +121,15 @@
         <selectOption userInput="Static block and products" selector="{{AdminCategoryDisplaySettingsSection.displayMode}}" stepKey="selectStaticBlockAndProductsOption"/>
 
         <!-- Assign Products to Category -->
-        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="assignSimpleProductFirst">
+        <comment userInput="BIC workaround" stepKey="openProductsInCategorySection"/>
+        <comment userInput="BIC workaround" stepKey="goToAddProductsBySearch"/>
+        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="searchFirstProductForCategoryByKeyword">
             <argument name="productSku" value="$$createProduct1.sku$$"/>
         </actionGroup>
-        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="assignSimpleProductSecond">
+        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="searchSecondProductForCategoryByKeyword">
             <argument name="productSku" value="$$createProduct2.sku$$"/>
         </actionGroup>
-        <actionGroup ref="AdminSaveCategoryFormActionGroup" stepKey="saveCategory"/>
+        <comment userInput="BIC workaround" stepKey="saveAndCloseModal"/>
 
         <!-- Set Category - Full Width layout -->
         <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
