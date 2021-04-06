@@ -19,6 +19,10 @@ import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.types";
 import buildStage from "./stage-builder";
 import {StageUpdateAfterParamsInterface} from "./stage-events.types";
+import {
+    escapeDoubleQuoteWithinWidgetDirective,
+    unescapeDoubleQuoteWithinWidgetDirective,
+} from "./utils/editor";
 import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 export default class Stage {
@@ -53,7 +57,7 @@ export default class Stage {
             .then((renderedOutput: string) => {
                 if (this.lastRenderId === renderId) {
                     events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
-                        value: renderedOutput,
+                        value: unescapeDoubleQuoteWithinWidgetDirective(renderedOutput),
                     });
                     this.renderingLocks.forEach((lock) => {
                         lock.resolve(renderedOutput);
@@ -85,7 +89,7 @@ export default class Stage {
 
         // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
-            buildStage(this, this.pageBuilder.initialValue),
+            buildStage(this, escapeDoubleQuoteWithinWidgetDirective(this.pageBuilder.initialValue)),
             this.afterRenderDeferred.promise,
         ]).then(this.ready.bind(this)).catch((error) => {
             console.error(error);
