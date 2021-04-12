@@ -150,8 +150,10 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
 
   function lockImageSize(element) {
     [].slice.call(element.querySelectorAll("img")).forEach(function (image) {
-      image.style.width = image.width + "px";
-      image.style.height = image.height + "px";
+      if (image.style.width.length === 0 && image.style.height.length === 0) {
+        image.style.width = image.width + "px";
+        image.style.height = image.height + "px";
+      }
     });
   }
   /**
