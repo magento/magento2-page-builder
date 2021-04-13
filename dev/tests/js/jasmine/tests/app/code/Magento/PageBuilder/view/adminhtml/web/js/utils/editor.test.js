@@ -20,8 +20,6 @@ define([
 
                 utils.lockImageSize(document.body);
                 expect(image.style.width).toEqual('100%');
-
-                image.remove();
             });
         });
     });
