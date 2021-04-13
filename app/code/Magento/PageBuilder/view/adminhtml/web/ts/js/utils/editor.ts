@@ -171,8 +171,10 @@ export function parseAttributesString(attributes: string): { [key: string]: stri
  */
 export function lockImageSize(element: HTMLElement) {
     [].slice.call(element.querySelectorAll("img")).forEach((image: HTMLImageElement) => {
-        image.style.width = `${image.width}px`;
-        image.style.height = `${image.height}px`;
+        if (image.style.width.length === 0 && image.style.height.length === 0) {
+            image.style.width = `${image.width}px`;
+            image.style.height = `${image.height}px`;
+        }
     });
 }
 
