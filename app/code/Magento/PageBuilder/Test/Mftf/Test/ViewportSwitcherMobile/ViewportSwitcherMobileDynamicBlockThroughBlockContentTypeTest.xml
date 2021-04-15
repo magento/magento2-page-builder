@@ -7,11 +7,11 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ViewportSwitcherMobileDynamicBlockThroughBlockContentTypeTest">
+    <test name="ViewportSwitcherMobileDynamicBlockThroughBlockContentTypeTest" deprecated="Use DynamicBlockThroughBlockContentTypeViewportSwitcherMobileTest instead">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Viewport Switcher"/>
-            <title value="Mobile Viewport: Render Dynamic Block Through Block Content Type"/>
+            <title value="DEPRECATED. Mobile Viewport: Render Dynamic Block Through Block Content Type"/>
             <description value="Verify that users are able to successfully render and use the dynamic block content type through the Block content type in the mobile viewport."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -20,11 +20,14 @@
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-viewport-switcher"/>
+            <skip>
+                <issueId value="DEPRECATED">Use DynamicBlockThroughBlockContentTypeViewportSwitcherMobileTest instead</issueId>
+            </skip>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
-            <createData entity="_defaultDynamicBlock" stepKey="createDynamicBlock"/>
+            <comment userInput="BIC workaround" stepKey="createDynamicBlock"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
@@ -43,26 +46,15 @@
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="DeleteBannerActionGroup" stepKey="deleteDynamicBlock">
-                <argument name="bannerName" value="$$createDynamicBlock.name$$"/>
-            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="deleteDynamicBlock"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Dynamic Block -->
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderDynamicBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragDynamicBlockIntoStage">
-            <argument name="contentType" value="PageBuilderDynamicBlockContentType"/>
-        </actionGroup>
-        <!-- Edit Dynamic Block -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
-            <argument name="contentType" value="PageBuilderDynamicBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchAndSelectDynamicBlockInGrid" stepKey="searchDynamicBlockInGrid">
-            <argument name="block" value="$$createDynamicBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsDynamicBlock"/>
+        <comment userInput="BIC workaround" stepKey="expandPageBuilderPanelMenuSection"/>
+        <comment userInput="BIC workaround" stepKey="dragDynamicBlockIntoStage"/>
+        <comment userInput="BIC workaround" stepKey="openEditAfterDrop"/>
+        <comment userInput="BIC workaround" stepKey="searchDynamicBlockInGrid"/>
+        <comment userInput="BIC workaround" stepKey="saveEditPanelSettingsDynamicBlock"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
@@ -71,16 +63,16 @@
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
         </actionGroup>
-        <seeElement selector="{{DynamicBlockOnStage.base('1')}}" stepKey="seeDynamicBlockCMSBlockStage"/>
-        <see selector="{{DynamicBlockOnStage.base('1')}}" userInput="$$createDynamicBlock.default_contents$$" stepKey="seeDynamicBlockContentOnCMSBlockStage"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockCMSBlockStage"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockContentOnCMSBlockStage"/>
 
         <!-- Validate CMS Block Stage Desktop Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
-        <seeElement selector="{{DynamicBlockOnStage.base('1')}}" stepKey="seeDynamicBlockCMSBlockStageDesktop"/>
-        <see selector="{{DynamicBlockOnStage.base('1')}}" userInput="$$createDynamicBlock.default_contents$$" stepKey="seeDynamicBlockContentOnCMSBlockStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockCMSBlockStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockContentOnCMSBlockStageDesktop"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
 
         <!-- Add Block to CMS Page -->
@@ -110,22 +102,22 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage Mobile Viewport -->
-        <seeElement selector="{{BlockOnStage.base('1')}}" stepKey="seeBlockCMSPageStage"/>
-        <seeElement selector="{{DynamicBlockOnStage.nestedPlaceholderText('1', $$createDynamicBlock.name$$)}}" stepKey="seeNestedDynamicBlockPlaceHolderNameCMSPageStage"/>
-        <seeElement selector="{{DynamicBlockOnStage.nestedPlaceholderSegments('1', $$createDynamicBlock.CustomerSegment$$)}}" stepKey="seeNestedDynamicBlockPlaceHolderSegmentsCMSPageStage"/>
-        <dontSeeElementInDOM selector="{{DynamicBlockOnStorefront.base('1')}}" stepKey="dontSeeDynamicBlockCMSPageStage"/>
-        <dontSee userInput="$$createDynamicBlock.default_contents$$" stepKey="dontSeeDynamicBlockContentCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="seeBlockCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="seeNestedDynamicBlockPlaceHolderNameCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="seeNestedDynamicBlockPlaceHolderSegmentsCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="dontSeeDynamicBlockCMSPageStage"/>
+        <comment userInput="BIC workaround" stepKey="dontSeeDynamicBlockContentCMSPageStage"/>
 
         <!-- Validate CMS Page Stage Desktop Viewport -->
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
             <argument name="viewportButton" value="desktop"/>
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStage.base('1')}}" stepKey="seeBlockCMSPageStageDesktop"/>
-        <seeElement selector="{{DynamicBlockOnStage.nestedPlaceholderText('1', $$createDynamicBlock.name$$)}}" stepKey="seeNestedDynamicBlockPlaceHolderNameCMSPageStageDesktop"/>
-        <seeElement selector="{{DynamicBlockOnStage.nestedPlaceholderSegments('1', $$createDynamicBlock.CustomerSegment$$)}}" stepKey="seeNestedDynamicBlockPlaceHolderSegmentsCMSPageStageDesktop"/>
-        <dontSeeElementInDOM selector="{{DynamicBlockOnStorefront.base('1')}}" stepKey="dontSeeDynamicBlockCMSPageStageDesktop"/>
-        <dontSee userInput="$$createDynamicBlock.default_contents$$" stepKey="dontSeeDynamicBlockContentCMSPageStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="seeBlockCMSPageStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="seeNestedDynamicBlockPlaceHolderNameCMSPageStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="seeNestedDynamicBlockPlaceHolderSegmentsCMSPageStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="dontSeeDynamicBlockCMSPageStageDesktop"/>
+        <comment userInput="BIC workaround" stepKey="dontSeeDynamicBlockContentCMSPageStageDesktop"/>
 
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -133,14 +125,14 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="seeBlockCMSPageStorefront"/>
-        <seeElement selector="{{DynamicBlockOnStorefront.base('1')}}" stepKey="seeDynamicBlockCMSPageStorefront"/>
-        <see selector="{{DynamicBlockOnStorefront.base('1')}}" userInput="$$createDynamicBlock.default_contents$$" stepKey="seeDynamicBlockContentCMSPageStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeBlockCMSPageStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockCMSPageStorefront"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockContentCMSPageStorefront"/>
 
         <!-- Validate CMS Page Storefront Mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="seeBlockCMSPageStorefrontMobile"/>
-        <seeElement selector="{{DynamicBlockOnStorefront.base('1')}}" stepKey="seeDynamicBlockCMSPageStorefrontMobile"/>
-        <see selector="{{DynamicBlockOnStorefront.base('1')}}" userInput="$$createDynamicBlock.default_contents$$" stepKey="seeDynamicBlockContentCMSPageStorefrontMobile"/>
+        <comment userInput="BIC workaround" stepKey="seeBlockCMSPageStorefrontMobile"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockCMSPageStorefrontMobile"/>
+        <comment userInput="BIC workaround" stepKey="seeDynamicBlockContentCMSPageStorefrontMobile"/>
     </test>
 </tests>
