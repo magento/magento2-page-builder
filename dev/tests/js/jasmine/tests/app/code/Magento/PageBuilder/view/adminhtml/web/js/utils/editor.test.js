@@ -13,13 +13,29 @@ define([
     describe('Magento_PageBuilder/js/utils/editor.js', function () {
         describe('lockImageSize', function () {
             it('Should not change the defined image sizes', function () {
-                var image = new Image();
+                var image = document.createElement('img'),
+                    element = document.createElement('div');
 
-                $(document.body).append(image);
-                $(image).width('100%');
+                image.setAttribute('width', '100%');
+                $(element).append(image);
 
-                utils.lockImageSize(document.body);
+                utils.lockImageSize(element);
                 expect(image.style.width).toEqual('100%');
+            });
+        });
+
+        describe('unlockImageSize', function () {
+            it('Should unlock locked images sizes only', function () {
+                var image = document.createElement('img'),
+                    element = document.createElement('div');
+
+                $(image).css({'width' : '100%', 'height' : '100%'});
+                $(image).attr('data-height-locked', 'true');
+                $(element).append(image);
+
+                utils.unlockImageSize(element);
+                expect(image.style.width).toEqual('100%');
+                expect(image.style.height).toEqual('');
             });
         });
     });
