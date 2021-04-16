@@ -29,7 +29,10 @@ define([
                 var image = document.createElement('img'),
                     element = document.createElement('div');
 
-                $(image).css({'width' : '100%', 'height' : '100%'});
+                $(image).css({
+                    width: '100%',
+                    height: '100%'
+                });
                 $(image).attr('data-height-locked', 'true');
                 $(element).append(image);
 
