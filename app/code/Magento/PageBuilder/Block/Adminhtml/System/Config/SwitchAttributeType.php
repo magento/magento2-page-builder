@@ -8,18 +8,23 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
+use Magento\Backend\Block\Template\Context;
+use Magento\Config\Block\System\Config\Form\Field;
+use Magento\Framework\Phrase;
+
 /**
  * Class SwitchAttributeType renders modal window to confirm changing attribute type
  *
+ * @api
  */
-class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
+class SwitchAttributeType extends Field
 {
     /**
-     * @param \Magento\Backend\Block\Template\Context $context
+     * @param Context $context
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
+        Context $context,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -38,9 +43,9 @@ class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
     /**
      * Get text for the modal title heading when user switches to disable
      *
-     * @return \Magento\Framework\Phrase
+     * @return Phrase
      */
-    public function getModalTitleText() : \Magento\Framework\Phrase
+    public function getModalTitleText() : Phrase
     {
         return __('Product data may be lost');
     }
