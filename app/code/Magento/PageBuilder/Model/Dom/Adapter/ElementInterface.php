@@ -11,6 +11,8 @@ use Gt\Dom\Element as GtDomElement;
 
 /**
  * Interface for Element wrappers
+ *
+ * @api
  */
 interface ElementInterface
 {
