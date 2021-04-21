@@ -50,7 +50,7 @@ class ClearEditorConfigCacheTest extends TestCase
         $this->auth = $this->createMock(Auth::class);
         $this->model = new ClearEditorConfigCache(
             $this->backendUrl,
-            $this->cacheCleaner,
+            $this->cacheCleaner
         );
     }
 
@@ -77,7 +77,7 @@ class ClearEditorConfigCacheTest extends TestCase
     {
         return [
             [false],
-            [true],
+            [true]
         ];
     }
 }

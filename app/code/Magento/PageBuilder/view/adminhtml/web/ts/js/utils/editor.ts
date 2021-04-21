@@ -26,7 +26,9 @@ export function encodeContent(content: string) {
     if (isWysiwygSupported()) {
         return convertVariablesToHtmlPreview(
             convertWidgetsToHtmlPreview(
-                removeInvalidPlaceholders(content),
+                unescapeDoubleQuoteWithinWidgetDirective(
+                    removeInvalidPlaceholders(content),
+                ),
             ),
         );
     }
@@ -156,7 +158,7 @@ export function parseAttributesString(attributes: string): { [key: string]: stri
     attributes.replace(
         /(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g,
         (match: string, key: string, value: string) => {
-            result[key] = value.replace(/&quote;/g, "\"");
+            result[key] = value ? value.replace(/&quote;/g, "\"") : value;
             return "";
         },
     );
@@ -404,6 +406,51 @@ function normalizeTableCellSelection(range: Range): Range {
     moveEndPoint(range, false);
 
     return range;
+}
+
+/**
+ * Convert HTML encoded double quote to double quote with backslash within widget directives
+ *
+ * @param {string} content
+ * @returns {string}
+ */
+export function escapeDoubleQuoteWithinWidgetDirective(content: string): string {
+    return content.replace(/\{\{widget.*?\}\}/ig,  (match: string) => {
+        return match.replace(/&quot;/g, "\\\"");
+    });
+}
+
+/**
+ * Convert double quote with backslash to HTML encoded double quote within widget directives
+ *
+ * @param {string} content
+ * @returns {string}
+ */
+export function unescapeDoubleQuoteWithinWidgetDirective(content: string): string {
+    return content.replace(/\{\{widget.*?\}\}/ig,  (match: string) => {
+        return match.replace(/\\+"/g, "&quot;");
+    });
+}
+
+/**
+ * Convert double quote to single quote within magento variable directives
+ *
+ * @param {string} content
+ * @returns {string}
+ */
+export function replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(content: string): string {
+    // Find html elements which attributes contain magento variables directives
+    return content.replace(
+        /<([a-z0-9\-\_]+)([^>]+?[a-z0-9\-\_]+="[^"]*?\{\{.+?\}\}.*?".*?)>/gi,
+        (match1: string, tag: string, attributes: string) => {
+            // Replace double quote with single quote within magento variable directive
+            const sanitizedAttributes = attributes.replace(
+                /\{\{[^\{\}]+\}\}/gi,
+                (match2: string) => match2.replace(/"/g, "'"),
+            );
+            return "<" + tag + sanitizedAttributes + ">";
+        },
+    );
 }
 
 interface IdBookmark {
