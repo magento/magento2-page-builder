@@ -7,72 +7,18 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Controller\Result\Json;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\File\Mime;
-use Magento\Framework\File\Uploader;
-use Magento\Framework\File\UploaderFactory;
-use Magento\Framework\ObjectManagerInterface;
-use Magento\PageBuilder\Controller\Adminhtml\ContentType\Image\Upload as UploadController;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use Magento\Framework\App\Request\Http as HttpRequest;
+use Magento\Framework\Exception\FileSystemException;
+use Magento\Framework\Filesystem;
+use Magento\Framework\Filesystem\DirectoryList;
+use Magento\TestFramework\TestCase\AbstractBackendController;
 
-class UploadTest extends TestCase
+/**
+ * @magentoAppArea adminhtml
+ */
+class UploadTest extends AbstractBackendController
 {
-    /**
-     * @var UploadController
-     */
-    private $controller;
-
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var UploaderFactory|MockObject
-     */
-    private $uploaderFactory;
-
-    /**
-     * @var Json|MockObject
-     */
-    private $resultJson;
-
-    /**
-     * @var JsonFactory|MockObject
-     */
-    private $resultJsonFactory;
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp(): void
-    {
-        $this->objectManager = ObjectManager::getInstance();
-
-        $this->uploaderFactory = $this->createPartialMock(UploaderFactory::class, ['create']);
-
-        $this->resultJson = $this->getMockBuilder(Json::class)
-            ->setMethods(['setData'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->resultJsonFactory = $this->getMockBuilder(JsonFactory::class)
-            ->setMethods(['create'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->resultJsonFactory->expects($this->once())
-            ->method('create')
-            ->willReturn($this->resultJson);
-
-        $this->controller = $this->objectManager->create(UploadController::class, [
-            'resultJsonFactory' => $this->resultJsonFactory,
-            'uploaderFactory' => $this->uploaderFactory
-        ]);
-    }
+    private const URI = 'backend/pagebuilder/contentType/image_upload';
 
     /**
      * @inheritdoc
@@ -80,87 +26,106 @@ class UploadTest extends TestCase
     protected function tearDown(): void
     {
         $_FILES = [];
+        parent::tearDown();
     }
 
     /**
      * Assert that file validation passes when uploaded file has correct extension and valid mime type
-     * @magentoAppArea adminhtml
      */
     public function testFileValidationPassesWhenFileHasCorrectExtensionAndValidMimeType()
     {
-        $valid_file_pathname = realpath(__DIR__ . '/../../../../_files/uploader/a.png');
+        $filePath = realpath(__DIR__ . '/../../../../_files/uploader/a.png');
 
-        $this->setFilesGlobalMock($valid_file_pathname);
-        $this->setUploaderMockForField('background_image');
-
-        $this->resultJson->expects($this->once())
-            ->method('setData')
-            ->willReturnCallback(function ($result) {
-                $this->assertNotEquals([
-                    'error' => 'File validation failed.',
-                    'errorcode' => 0
-                ], $result);
-            });
-
-        $this->controller->execute();
+        $this->createUploadFixture($filePath);
+        $this->makeRequest();
+        $this->assertEquals(200, $this->getResponse()->getStatusCode());
+        $result = json_decode($this->getResponse()->getBody(), true);
+        $this->assertEquals(0, $result['error']);
+        $this->assertNotEmpty($result['url']);
     }
 
     /**
      * Assert that file validation fails when uploaded file has correct extension but invalid mime type
-     * @magentoAppArea adminhtml
      */
     public function testFileValidationFailsWhenFileHasCorrectExtensionButInvalidMimeType()
     {
-        $invalid_file_pathname = realpath(__DIR__ . '/../../../../_files/uploader/not-a.png');
+        $filePath = realpath(__DIR__ . '/../../../../_files/uploader/not-a.png');
 
-        $this->setFilesGlobalMock($invalid_file_pathname);
-        $this->setUploaderMockForField('background_image');
-
-        $this->resultJson->expects($this->once())->method('setData')->willReturnCallback(function ($result) {
-            $this->assertEquals([
+        $this->createUploadFixture($filePath);
+        $this->makeRequest();
+        $this->assertEquals(200, $this->getResponse()->getStatusCode());
+        $result = json_decode($this->getResponse()->getBody(), true);
+        $this->assertEquals(
+            [
                 'error' => 'File validation failed.',
                 'errorcode' => 0
-            ], $result);
-        });
-
-        $this->controller->execute();
+            ],
+            $result
+        );
     }
 
     /**
-     * Initiates Uploader object for `$fieldId` and returns as a result of `UploaderFactory::create()`
+     * Assert that file url should be based on backend base url
      *
-     * @param string $fieldId
-     * @return void
+     * @magentoConfigFixture default_store web/unsecure/base_url http://storefront.magento.test/
+     * @magentoConfigFixture default_store web/secure/base_url https://storefront.magento.test/
      */
-    private function setUploaderMockForField(string $fieldId): void
+    public function testFileUrlShouldBeBaseOnBackendBaseUrl()
     {
-        $uploader = $this->objectManager->create(Uploader::class, [
-            'fileId' => $fieldId,
-            'fileMime' => $this->objectManager->create(Mime::class),
-        ]);
+        $filePath = realpath(__DIR__ . '/../../../../_files/uploader/a.png');
 
-        $this->uploaderFactory
-            ->expects($this->once())
-            ->method('create')
-            ->will($this->returnValue($uploader));
+        $this->createUploadFixture($filePath);
+        $this->makeRequest();
+        $this->assertEquals(200, $this->getResponse()->getStatusCode());
+        $result = json_decode($this->getResponse()->getBody(), true);
+        $this->assertStringStartsWith('http://localhost/media/', $result['url']);
     }
 
     /**
-     * Mock that `$pathname` was uploaded (mock of `$_FILES` array)
+     * Initiates request
      *
-     * @param string $pathname
-     * @return void
+     * @param string $fileParam
      */
-    private function setFilesGlobalMock(string $pathname): void
+    private function makeRequest(string $fileParam = 'image'): void
     {
+        $this->getRequest()
+            ->setParams(['param_name' => $fileParam])
+            ->setMethod(HttpRequest::METHOD_POST);
+        $this->dispatch(self::URI);
+    }
+
+    /**
+     * Creates a fixture for testing uploaded file
+     *
+     * @param string $filePath
+     * @param string $fileType
+     * @param string $fileParam
+     * @return void
+     * @throws FileSystemException
+     */
+    private function createUploadFixture(
+        string $filePath,
+        string $fileType = 'image/png',
+        string $fileParam = 'image'
+    ): void {
+        $filename = basename($filePath);
+        $filesize = filesize($filePath);
+        /** @var \Magento\TestFramework\App\Filesystem $filesystem */
+        $filesystem = $this->_objectManager->get(Filesystem::class);
+        $tmpDir = $filesystem->getDirectoryWrite(DirectoryList::SYS_TMP);
+        // phpcs:ignore
+        $subDir = md5(get_class($this));
+        $tmpDir->create($subDir);
+        $tmpPath = $tmpDir->getAbsolutePath("{$subDir}/{$filename}");
+        copy($filePath, $tmpPath);
         $_FILES = [
-            'background_image' => [
-                'type' => 'image/png',
-                'name' => basename($pathname),
-                'tmp_name' => $pathname,
-                'size' => filesize($pathname),
+            $fileParam => [
+                'type' => $fileType,
+                'name' => $filename,
+                'tmp_name' => $tmpPath,
+                'size' => $filesize,
                 'error' => UPLOAD_ERR_OK,
-            ]
+            ],
         ];
     }
 }
