@@ -173,8 +173,13 @@ class Template
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         try {
             libxml_use_internal_errors(true);
+            // LIBXML_SCHEMA_CREATE option added according to this message
+            // https://stackoverflow.com/a/66473950/773018
+            // Its need to avoid bug described in maskScriptTags()
+            // https://bugs.php.net/bug.php?id=52012
             $domDocument->loadHTML(
-                '<html><body>' . $string . '</body></html>'
+                '<html><body>' . $string . '</body></html>',
+                LIBXML_SCHEMA_CREATE
             );
             libxml_clear_errors();
         } catch (Exception $e) {
