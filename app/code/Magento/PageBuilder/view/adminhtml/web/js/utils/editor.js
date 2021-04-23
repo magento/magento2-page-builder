@@ -21,7 +21,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
 
   function encodeContent(content) {
     if (isWysiwygSupported()) {
-      return convertVariablesToHtmlPreview(convertWidgetsToHtmlPreview(removeInvalidPlaceholders(content)));
+      return convertVariablesToHtmlPreview(convertWidgetsToHtmlPreview(unescapeDoubleQuoteWithinWidgetDirective(removeInvalidPlaceholders(content))));
     }
 
     return content;
@@ -136,7 +136,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
   function parseAttributesString(attributes) {
     var result = {};
     attributes.replace(/(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g, function (match, key, value) {
-      result[key] = value.replace(/&quote;/g, "\"");
+      result[key] = value ? value.replace(/&quote;/g, "\"") : value;
       return "";
     });
     return result;
@@ -390,6 +390,50 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
     moveEndPoint(range, false);
     return range;
   }
+  /**
+   * Convert HTML encoded double quote to double quote with backslash within widget directives
+   *
+   * @param {string} content
+   * @returns {string}
+   */
+
+
+  function escapeDoubleQuoteWithinWidgetDirective(content) {
+    return content.replace(/\{\{widget.*?\}\}/ig, function (match) {
+      return match.replace(/&quot;/g, "\\\"");
+    });
+  }
+  /**
+   * Convert double quote with backslash to HTML encoded double quote within widget directives
+   *
+   * @param {string} content
+   * @returns {string}
+   */
+
+
+  function unescapeDoubleQuoteWithinWidgetDirective(content) {
+    return content.replace(/\{\{widget.*?\}\}/ig, function (match) {
+      return match.replace(/\\+"/g, "&quot;");
+    });
+  }
+  /**
+   * Convert double quote to single quote within magento variable directives
+   *
+   * @param {string} content
+   * @returns {string}
+   */
+
+
+  function replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(content) {
+    // Find html elements which attributes contain magento variables directives
+    return content.replace(/<([a-z0-9\-\_]+)([^>]+?[a-z0-9\-\_]+="[^"]*?\{\{.+?\}\}.*?".*?)>/gi, function (match1, tag, attributes) {
+      // Replace double quote with single quote within magento variable directive
+      var sanitizedAttributes = attributes.replace(/\{\{[^\{\}]+\}\}/gi, function (match2) {
+        return match2.replace(/"/g, "'");
+      });
+      return "<" + tag + sanitizedAttributes + ">";
+    });
+  }
 
   return {
     isWysiwygSupported: isWysiwygSupported,
@@ -403,7 +447,10 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
     findNodeIndex: findNodeIndex,
     getNodeByIndex: getNodeByIndex,
     createDoubleClickEvent: createDoubleClickEvent,
-    processInlineStyles: processInlineStyles
+    processInlineStyles: processInlineStyles,
+    escapeDoubleQuoteWithinWidgetDirective: escapeDoubleQuoteWithinWidgetDirective,
+    unescapeDoubleQuoteWithinWidgetDirective: unescapeDoubleQuoteWithinWidgetDirective,
+    replaceDoubleQuoteWithSingleQuoteWithinVariableDirective: replaceDoubleQuoteWithSingleQuoteWithinVariableDirective
   };
 });
 //# sourceMappingURL=editor.js.map

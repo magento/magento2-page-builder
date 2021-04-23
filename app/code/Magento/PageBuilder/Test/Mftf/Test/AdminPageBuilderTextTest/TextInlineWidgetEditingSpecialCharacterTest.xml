@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!--
+     /**
+      * Copyright © Magento, Inc. All rights reserved.
+      * See COPYING.txt for license details.
+      */
+    -->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<test name="TextInlineWidgetEditingSpecialCharacterTest"  extends="TextInlineWidgetEditingTest">
+    <annotations>
+        <features value="PageBuilder"/>
+        <stories value="Text"/>
+        <title value="Edit widget inline with special characters in WYSIWYG and see on storefront"/>
+        <description value="Verify that user is able to add widget into Text Content Type and see it on storefront"/>
+        <severity value="MAJOR"/>
+        <useCaseId value="MC-41442"/>
+        <testCaseId value="MC-41793"/>
+        <group value="pagebuilder"/>
+        <group value="pagebuilder-text"/>
+    </annotations>
+    <actionGroup ref="AddPageLinkWidgetToTinyMCEWithAnchorAndTitleActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
+        <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        <argument name="anchor" value="{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitleWithSpecialCharacter.anchorText}}"/>
+        <argument name="title" value="{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitleWithSpecialCharacter.title}}"/>
+    </actionGroup>
+    <assertEquals stepKey="assertAnchorTextCMSWidgetLink" message="pass">
+        <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitleWithSpecialCharacter.anchorText}}</expectedResult>
+        <actualResult type="string">{$grabAnchorText}</actualResult>
+    </assertEquals>
+    <assertEquals stepKey="assertTitleCMSWidgetLink" message="pass">
+        <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitleWithSpecialCharacter.title}}</expectedResult>
+        <actualResult type="string">{$grabTitleText}</actualResult>
+    </assertEquals>
+    <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
+    <grabTextFrom selector="div.block-cms-link a" stepKey="grabAnchorTextOnStorefront"/>
+    <grabAttributeFrom selector="div.block-cms-link a" userInput="title" stepKey="grabTitleTextOnStorefront"/>
+    <assertEquals stepKey="assertAnchorTextCMSWidgetLinkOnStorefront">
+        <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitleWithSpecialCharacter.anchorText}}</expectedResult>
+        <actualResult type="variable">grabAnchorTextOnStorefront</actualResult>
+    </assertEquals>
+    <assertEquals stepKey="assertTitleCMSWidgetLinkOnStorefront">
+        <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitleWithSpecialCharacter.title}}</expectedResult>
+        <actualResult type="variable">grabTitleTextOnStorefront</actualResult>
+    </assertEquals>
+</test>
+</tests>
