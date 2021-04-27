@@ -173,8 +173,18 @@ export function parseAttributesString(attributes: string): { [key: string]: stri
  */
 export function lockImageSize(element: HTMLElement) {
     [].slice.call(element.querySelectorAll("img")).forEach((image: HTMLImageElement) => {
-        image.style.width = `${image.width}px`;
-        image.style.height = `${image.height}px`;
+        if (image.style.width.length === 0) {
+            image.style.width = /^\d+$/.test(image.getAttribute("width")) ?
+                image.getAttribute("width") + "px" :
+                image.getAttribute("width");
+            image.setAttribute("data-width-locked", "true");
+        }
+        if (image.style.height.length === 0) {
+            image.style.height = /^\d+$/.test(image.getAttribute("height")) ?
+                image.getAttribute("height") + "px" :
+                image.getAttribute("height");
+            image.setAttribute("data-height-locked", "true");
+        }
     });
 }
 
@@ -185,8 +195,14 @@ export function lockImageSize(element: HTMLElement) {
  */
 export function unlockImageSize(element: HTMLElement) {
     [].slice.call(element.querySelectorAll("img")).forEach((image: HTMLImageElement) => {
-        image.style.width = null;
-        image.style.height = null;
+        if (image.getAttribute("data-width-locked")) {
+            image.style.width = null;
+            image.removeAttribute("data-width-locked");
+        }
+        if (image.getAttribute("data-height-locked")) {
+            image.style.height = null;
+            image.removeAttribute("data-height-locked");
+        }
     });
 }
 
