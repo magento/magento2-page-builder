@@ -9,9 +9,7 @@ define(["jquery"], function (_jquery) {
   /**
    * @api
    */
-  var StoreId =
-  /*#__PURE__*/
-  function () {
+  var StoreId = /*#__PURE__*/function () {
     "use strict";
 
     function StoreId() {}

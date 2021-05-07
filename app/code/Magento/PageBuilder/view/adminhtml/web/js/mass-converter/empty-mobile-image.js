@@ -5,9 +5,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var EmptyMobileImage =
-  /*#__PURE__*/
-  function () {
+  var EmptyMobileImage = /*#__PURE__*/function () {
     "use strict";
 
     function EmptyMobileImage() {}

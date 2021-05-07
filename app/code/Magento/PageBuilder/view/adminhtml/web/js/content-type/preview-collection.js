@@ -12,9 +12,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var PreviewCollection =
-  /*#__PURE__*/
-  function (_preview2) {
+  var PreviewCollection = /*#__PURE__*/function (_preview2) {
     "use strict";
 
     _inheritsLoose(PreviewCollection, _preview2);

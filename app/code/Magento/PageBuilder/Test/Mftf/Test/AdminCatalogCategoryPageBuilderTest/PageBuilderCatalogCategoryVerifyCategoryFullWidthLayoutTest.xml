@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryVerifyCategoryFullWidthLayoutTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify Category – Full Width Layout Width and Order of Contents"/>
+            <description value="Verify page builder Full Width layout renders storefront contents correctly for Catalog
+            Categories. Verify order of title, image, description, CMS block, and products grid. Verify correct width
+            of page builder contents in description and CMS block."/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="PB-876"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+
+        <before>
+            <!-- Create Products & Product Attribute -->
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="SimpleProduct2" stepKey="createProduct1"/>
+            <createData entity="SimpleProduct2" stepKey="createProduct2">
+                <field key="price">100</field>
+            </createData>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+
+            <!-- Add Row & Heading to CMS Block -->
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer1">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+            </actionGroup>
+            <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance1">
+                <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+            </actionGroup>
+            <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor1">
+                <argument name="property" value="PageBuilderBackgroundColor_Cornflower"/>
+            </actionGroup>
+            <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+                <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage1">
+                <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            </actionGroup>
+            <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage1">
+                <argument name="headingText" value="{{PageBuilderHeadingText_CMSBlock.value}}"/>
+            </actionGroup>
+            <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1"/>
+            <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        </before>
+
+        <after>
+            <!-- Delete Data -->
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Add Image to Category -->
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        <actionGroup ref="AddCategoryImageActionGroup" stepKey="addCategoryImage">
+            <argument name="image" value="PageBuilderImageProperty_PNG"/>
+        </actionGroup>
+
+        <!-- Add Row & Heading to Product Description -->
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Sprout"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
+            <argument name="headingText" value="{{PageBuilderHeadingText_Description.value}}"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+
+        <!-- Add Static Block to Category -->
+        <selectOption selector="{{AdminCategoryContentSection.AddCMSBlock}}" userInput="{{_emptyCmsBlock.title}}" stepKey="selectSavedBlock"/>
+
+        <!-- Set Display Mode: Static Block and Products -->
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySettingsSection">
+            <argument name="sectionSelector" value="{{AdminCategoryDisplaySettingsSection.settingsHeader}}"/>
+            <argument name="sectionDependentSelector" value="{{AdminCategoryDisplaySettingsSection.displayMode}}"/>
+        </actionGroup>
+        <selectOption userInput="Static block and products" selector="{{AdminCategoryDisplaySettingsSection.displayMode}}" stepKey="selectStaticBlockAndProductsOption"/>
+
+        <!-- Assign Products to Category -->
+        <comment userInput="BIC workaround" stepKey="openProductsInCategorySection"/>
+        <comment userInput="BIC workaround" stepKey="goToAddProductsBySearch"/>
+        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="searchFirstProductForCategoryByKeyword">
+            <argument name="productSku" value="$$createProduct1.sku$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminCategoryAssignProductActionGroup" stepKey="searchSecondProductForCategoryByKeyword">
+            <argument name="productSku" value="$$createProduct2.sku$$"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="saveAndCloseModal"/>
+
+        <!-- Set Category - Full Width layout -->
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
+        </actionGroup>
+
+        <!-- Save Category -->
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory2"/>
+
+        <!-- Storefront 1600px: Verify Contents Visible -->
+        <actionGroup ref="StorefrontGoToCategoryPageActionGroup" stepKey="openStorefrontCategoryPage">
+            <argument name="categoryName" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <resizeWindow width="1600" height="1024" stepKey="resizeWindowWidth1"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.CategoryTitle}}" stepKey="waitForCategoryTitle"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="waitForCategoryImage"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingText_Description.value, '1')}}" stepKey="waitForDescriptionHeading"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingText_CMSBlock.value, '1')}}" stepKey="waitForCMSBlockHeading"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.productGrid}}" stepKey="waitForProductsGrid"/>
+        <see selector="{{StorefrontCategoryMainSection.productGrid}}" userInput="$$createProduct1.name$$" stepKey="waitForFirstProductInCategory"/>
+        <see selector="{{StorefrontCategoryMainSection.productGrid}}" userInput="$$createProduct2.name$$" stepKey="waitForSecondProductInCategory"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.sidebarFilters}}" stepKey="waitForSidebarFilters"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.sidebarAdditional}}" stepKey="waitForSidebarAdditional"/>
+
+        <!-- Storefront 1600px: Assert Sections on Page are in Correct Order: Left/Right -->
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryTitleWrapper}}').getBoundingClientRect().x" stepKey="categoryTitleXPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryImage}}').getBoundingClientRect().x" stepKey="categoryImageXPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryDescription}}').getBoundingClientRect().x" stepKey="categoryDescriptionXPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryCMS}}').getBoundingClientRect().x" stepKey="categoryCMSBlockXPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.productGrid}}').getBoundingClientRect().x" stepKey="categoryProductsGridXPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarFilters}}').getBoundingClientRect().x" stepKey="categoryProductsSidebarFiltersXPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarAdditional}}').getBoundingClientRect().x" stepKey="categoryProductsSidebarAdditionalXPosition"/>
+        <assertEquals stepKey="assertImageXSameAsTitle">
+            <expectedResult type="variable">categoryTitleXPosition</expectedResult>
+            <actualResult type="variable">categoryImageXPosition</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertDescriptionLeftOfTitle">
+            <expectedResult type="variable">categoryDescriptionXPosition</expectedResult>
+            <actualResult type="variable">categoryTitleXPosition</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertCMSBlockXSameAsTitle">
+            <expectedResult type="variable">categoryTitleXPosition</expectedResult>
+            <actualResult type="variable">categoryCMSBlockXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertProductsGridSidebarFiltersXSameAsTitle">
+            <expectedResult type="variable">categoryTitleXPosition</expectedResult>
+            <actualResult type="variable">categoryProductsSidebarFiltersXPosition</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertProductsGridSidebarAdditionalXSameAsSidebarFilters">
+            <expectedResult type="variable">categoryProductsSidebarFiltersXPosition</expectedResult>
+            <actualResult type="variable">categoryProductsSidebarAdditionalXPosition</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertSidebarLeftOfProductsGrid">
+            <expectedResult type="variable">categoryProductsSidebarFiltersXPosition</expectedResult>
+            <actualResult type="variable">categoryProductsGridXPosition</actualResult>
+        </assertGreaterThan>
+
+        <!-- Storefront 1600px: Assert Sections on Page are in Correct Order: Up/Down -->
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryTitleWrapper}}').getBoundingClientRect().y" stepKey="categoryTitleYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryImage}}').getBoundingClientRect().y" stepKey="categoryImageYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryDescription}}').getBoundingClientRect().y" stepKey="categoryDescriptionYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryCMS}}').getBoundingClientRect().y" stepKey="categoryCMSBlockYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.productGrid}}').getBoundingClientRect().y" stepKey="categoryProductsGridYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarFilters}}').getBoundingClientRect().y" stepKey="categoryProductsSidebarFiltersYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarAdditional}}').getBoundingClientRect().y" stepKey="categoryProductsSidebarAdditionalYPosition"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.productName}}').getBoundingClientRect().y" stepKey="categoryProduct1YPosition"/>
+        <assertGreaterThan stepKey="assertImageBelowTitle">
+            <expectedResult type="variable">categoryTitleYPosition</expectedResult>
+            <actualResult type="variable">categoryImageYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertDescriptionBelowImage">
+            <expectedResult type="variable">categoryImageYPosition</expectedResult>
+            <actualResult type="variable">categoryDescriptionYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCMSBlockBelowDescription">
+            <expectedResult type="variable">categoryDescriptionYPosition</expectedResult>
+            <actualResult type="variable">categoryCMSBlockYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertProductsGridBelowCMSBlock">
+            <expectedResult type="variable">categoryCMSBlockYPosition</expectedResult>
+            <actualResult type="variable">categoryProductsGridYPosition</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertProductsGridSidebarFiltersYSameAsProductsGrid">
+            <expectedResult type="variable">categoryProductsGridYPosition</expectedResult>
+            <actualResult type="variable">categoryProductsSidebarFiltersYPosition</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertSidebarAdditionalBelowSidebarFilters">
+            <expectedResult type="variable">categoryProductsSidebarFiltersYPosition</expectedResult>
+            <actualResult type="variable">categoryProductsSidebarAdditionalYPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertProduct1BelowProductsGrid">
+            <expectedResult type="variable">categoryProductsGridYPosition</expectedResult>
+            <actualResult type="variable">categoryProduct1YPosition</actualResult>
+        </assertGreaterThan>
+
+        <!-- Storefront 1600px: Assert Page Builder Contents Are Correct Width -->
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryTitleWrapper}}').clientWidth" stepKey="categoryTitleWidth"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[0].clientWidth" stepKey="descriptionRowWidth"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[0].clientWidth" stepKey="descriptionHeadingWidth"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[1].clientWidth" stepKey="cmsBlockRowWidth"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[1].clientWidth" stepKey="cmsHeadingWidth"/>
+        <assertEquals stepKey="assertDescriptionRowWidthEqualsWindowWidth">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">descriptionRowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertDescriptionHeadingWidthEqualsRowWidth">
+            <expectedResult type="variable">descriptionRowWidth</expectedResult>
+            <actualResult type="variable">descriptionHeadingWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCMSBlockRowWidthEqualsCategoryTitle">
+            <expectedResult type="variable">categoryTitleWidth</expectedResult>
+            <actualResult type="variable">cmsBlockRowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCMSBlockHeadingWidthEqualsRowWidth">
+            <expectedResult type="variable">cmsBlockRowWidth</expectedResult>
+            <actualResult type="variable">cmsHeadingWidth</actualResult>
+        </assertEquals>
+
+        <!-- Storefront 767px: Verify Contents Visible -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowWidth2"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.CategoryTitle}}" stepKey="waitForCategoryTitle2"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.imageSource(PageBuilderImageProperty_PNG.filename)}}" stepKey="waitForCategoryImage2"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingText_Description.value, '1')}}" stepKey="waitForDescriptionHeading2"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingText_CMSBlock.value, '1')}}" stepKey="waitForCMSBlockHeading2"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.productGrid}}" stepKey="waitForProductsGrid2"/>
+        <see selector="{{StorefrontCategoryMainSection.productGrid}}" userInput="$$createProduct1.name$$" stepKey="waitForFirstProductInCategory2"/>
+        <see selector="{{StorefrontCategoryMainSection.productGrid}}" userInput="$$createProduct2.name$$" stepKey="waitForSecondProductInCategory2"/>
+        <waitForElementVisible selector="{{StorefrontCategoryMainSection.sidebarAdditional}}" stepKey="waitForSidebarAdditional2"/>
+
+        <!-- Storefront 767px: Assert Sections on Page are in Correct Order: Left/Right -->
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryTitleWrapper}}').getBoundingClientRect().x" stepKey="categoryTitleXPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryImage}}').getBoundingClientRect().x" stepKey="categoryImageXPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryDescription}}').getBoundingClientRect().x" stepKey="categoryDescriptionXPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryCMS}}').getBoundingClientRect().x" stepKey="categoryCMSBlockXPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.productGrid}}').getBoundingClientRect().x" stepKey="categoryProductsGridXPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarAdditional}}').getBoundingClientRect().x" stepKey="categoryProductsSidebarAdditionalXPosition2"/>
+        <assertEquals stepKey="assertImageXSameAsTitle2">
+            <expectedResult type="variable">categoryTitleXPosition2</expectedResult>
+            <actualResult type="variable">categoryImageXPosition2</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertDescriptionLeftOfTitle2">
+            <expectedResult type="variable">categoryDescriptionXPosition2</expectedResult>
+            <actualResult type="variable">categoryTitleXPosition2</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertCMSBlockXSameAsTitle2">
+            <expectedResult type="variable">categoryTitleXPosition2</expectedResult>
+            <actualResult type="variable">categoryCMSBlockXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertProductsGridXSameAsTitle2">
+            <expectedResult type="variable">categoryTitleXPosition2</expectedResult>
+            <actualResult type="variable">categoryProductsGridXPosition2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertProductsGridSidebarAdditionalXSameAsTitle2">
+            <expectedResult type="variable">categoryTitleXPosition2</expectedResult>
+            <actualResult type="variable">categoryProductsSidebarAdditionalXPosition2</actualResult>
+        </assertEquals>
+
+        <!-- Storefront 767px: Assert Sections on Page are in Correct Order: Up/Down -->
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryTitleWrapper}}').getBoundingClientRect().y" stepKey="categoryTitleYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryImage}}').getBoundingClientRect().y" stepKey="categoryImageYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryDescription}}').getBoundingClientRect().y" stepKey="categoryDescriptionYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryCMS}}').getBoundingClientRect().y" stepKey="categoryCMSBlockYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.productGrid}}').getBoundingClientRect().y" stepKey="categoryProductsGridYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarFilters}}').getBoundingClientRect().y" stepKey="categoryProductsSidebarFiltersYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.sidebarAdditional}}').getBoundingClientRect().y" stepKey="categoryProductsSidebarAdditionalYPosition2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.productName}}').getBoundingClientRect().y" stepKey="categoryProduct1YPosition2"/>
+        <assertGreaterThan stepKey="assertImageBelowTitle2">
+            <expectedResult type="variable">categoryTitleYPosition2</expectedResult>
+            <actualResult type="variable">categoryImageYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertDescriptionBelowImage2">
+            <expectedResult type="variable">categoryImageYPosition2</expectedResult>
+            <actualResult type="variable">categoryDescriptionYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertCMSBlockBelowDescription2">
+            <expectedResult type="variable">categoryDescriptionYPosition2</expectedResult>
+            <actualResult type="variable">categoryCMSBlockYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertProductsGridBelowCMSBlock2">
+            <expectedResult type="variable">categoryCMSBlockYPosition2</expectedResult>
+            <actualResult type="variable">categoryProductsGridYPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertProduct1BelowProductsGrid2">
+            <expectedResult type="variable">categoryProductsGridYPosition2</expectedResult>
+            <actualResult type="variable">categoryProduct1YPosition2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertSidebarAdditionalBelowProductsGrid">
+            <expectedResult type="variable">categoryProductsGridYPosition2</expectedResult>
+            <actualResult type="variable">categoryProductsSidebarAdditionalYPosition</actualResult>
+        </assertGreaterThan>
+
+        <!-- Storefront 767px: Assert Page Builder Contents Are Correct Width -->
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth2"/>
+        <executeJS function="return document.querySelector('{{StorefrontCategoryMainSection.categoryTitleWrapper}}').clientWidth" stepKey="categoryTitleWidth2"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[0].clientWidth" stepKey="descriptionRowWidth2"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[0].clientWidth" stepKey="descriptionHeadingWidth2"/>
+        <executeJS function="return document.querySelectorAll('{{RowOnStorefront.baseCSS}}')[1].clientWidth" stepKey="cmsBlockRowWidth2"/>
+        <executeJS function="return document.querySelectorAll(&quot;{{HeadingOnStorefront.all}}&quot;)[1].clientWidth" stepKey="cmsHeadingWidth2"/>
+        <assertEquals stepKey="assertDescriptionRowWidthEqualsWindowWidth2">
+            <expectedResult type="variable">pageWidth2</expectedResult>
+            <actualResult type="variable">descriptionRowWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertDescriptionHeadingWidthEqualsRowWidth2">
+            <expectedResult type="variable">descriptionRowWidth2</expectedResult>
+            <actualResult type="variable">descriptionHeadingWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCMSBlockRowWidthEqualsCategoryTitle2">
+            <expectedResult type="variable">categoryTitleWidth2</expectedResult>
+            <actualResult type="variable">cmsBlockRowWidth2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertCMSBlockHeadingWidthEqualsRowWidth2">
+            <expectedResult type="variable">cmsBlockRowWidth2</expectedResult>
+            <actualResult type="variable">cmsHeadingWidth2</actualResult>
+        </assertEquals>
+    </test>
+</tests>

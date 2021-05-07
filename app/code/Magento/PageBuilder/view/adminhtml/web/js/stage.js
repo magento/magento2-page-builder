@@ -1,13 +1,11 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "mageUtils", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _mageUtils, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "mageUtils", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _mageUtils, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _editor, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Stage =
-  /*#__PURE__*/
-  function () {
+  var Stage = /*#__PURE__*/function () {
     "use strict";
 
     /**
@@ -42,7 +40,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
           if (_this.lastRenderId === renderId) {
             _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
-              value: renderedOutput
+              value: (0, _editor.unescapeDoubleQuoteWithinWidgetDirective)(renderedOutput)
             });
 
             _this.renderingLocks.forEach(function (lock) {
@@ -69,7 +67,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         });
       }); // Wait for the stage to be built alongside the stage being rendered
 
-      Promise.all([(0, _stageBuilder)(this, this.pageBuilder.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
+      Promise.all([(0, _stageBuilder)(this, (0, _editor.escapeDoubleQuoteWithinWidgetDirective)(this.pageBuilder.initialValue)), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
         console.error(error);
       });
     }

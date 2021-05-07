@@ -13,12 +13,14 @@ import delayUntil from "../../utils/delay-until";
 import {
     createBookmark,
     createDoubleClickEvent,
+    escapeDoubleQuoteWithinWidgetDirective,
     findNodeIndex,
     getActiveEditor,
     getNodeByIndex,
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
+    replaceDoubleQuoteWithSingleQuoteWithinVariableDirective,
     unlockImageSize,
 } from "../../utils/editor";
 import WysiwygFactory from "../../wysiwyg/factory";
@@ -307,12 +309,10 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         this.contentType.dataStore.subscribe((state: DataObject) => {
-            // Find html elements which attributes contain magento variables directives
-            const sanitizedContent = state.content.replace(/<([a-z0-9\-\_]+)([^>]+?[a-z0-9\-\_]+="[^"]*?\{\{.+?\}\}.*?".*?)>/gi, (match1: string, tag: string, attributes: string) => {
-                // Replace double quote with single quote within magento variable directive
-                const sanitizedAttributes = attributes.replace(/\{\{[^\{\}]+\}\}/gi, (match2: string) => match2.replace(/"/g, "'"));
-                return "<" + tag + sanitizedAttributes + ">";
-            });
+            const sanitizedContent = replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(
+                escapeDoubleQuoteWithinWidgetDirective(state.content),
+            );
+
             if (sanitizedContent !== state.content) {
                 state.content = sanitizedContent;
             }

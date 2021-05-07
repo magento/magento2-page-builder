@@ -9,9 +9,7 @@ define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils
   /**
    * @api
    */
-  var Decode =
-  /*#__PURE__*/
-  function () {
+  var Decode = /*#__PURE__*/function () {
     "use strict";
 
     function Decode() {}

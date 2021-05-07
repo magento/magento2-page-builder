@@ -30,6 +30,10 @@
             </actionGroup>
         </before>
         <after>
+            <actionGroup ref="DeleteProductBySkuActionGroup" stepKey="deleteProduct">
+                <argument name="sku" value="{{_defaultProduct.sku}}"/>
+            </actionGroup>
+            <actionGroup ref="ClearFiltersAdminDataGridActionGroup" stepKey="clearFilter"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <closeTab stepKey="closeTab"/>
@@ -65,9 +69,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
-            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
-        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
         <!-- Set Layout to Category - Full Width -->

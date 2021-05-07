@@ -11,9 +11,7 @@ define([], function () {
    *
    * @api
    */
-  var OverlayBorderRadius =
-  /*#__PURE__*/
-  function () {
+  var OverlayBorderRadius = /*#__PURE__*/function () {
     "use strict";
 
     function OverlayBorderRadius() {}
