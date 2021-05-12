@@ -151,15 +151,12 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
   function lockImageSize(element) {
     [].slice.call(element.querySelectorAll("img")).forEach(function (image) {
       if (image.style.width.length === 0) {
-        image.style.width = /^\d+$/.test(image.getAttribute("width")) ?
-            image.getAttribute("width") + "px" :
-            image.getAttribute("width");
+        image.style.width = /^\d+$/.test(image.getAttribute("width")) ? image.getAttribute("width") + "px" : image.getAttribute("width");
         image.setAttribute("data-width-locked", "true");
       }
+
       if (image.style.height.length === 0) {
-        image.style.height = /^\d+$/.test(image.getAttribute("height")) ?
-            image.getAttribute("height") + "px" :
-            image.getAttribute("height");
+        image.style.height = /^\d+$/.test(image.getAttribute("height")) ? image.getAttribute("height") + "px" : image.getAttribute("height");
         image.setAttribute("data-height-locked", "true");
       }
     });
@@ -177,6 +174,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
         image.style.width = null;
         image.removeAttribute("data-width-locked");
       }
+
       if (image.getAttribute("data-height-locked")) {
         image.style.height = null;
         image.removeAttribute("data-height-locked");
