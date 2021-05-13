@@ -265,6 +265,7 @@
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
         </arguments>
     </virtualType>
+    <!-- @deprecated no longer used -->
     <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Position</argument>
@@ -290,10 +291,17 @@
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\Category\Position">
+        <arguments>
+            <argument name="label" xsi:type="string">Position</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="secondarySortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\PageBuilder\Model\Catalog\Sorting">
         <arguments>
             <argument name="sortClasses" xsi:type="array">
-                <item name="position" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position</item>
+                <item name="position" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position\Ascending</item>
                 <item name="position_by_sku" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku</item>
                 <item name="date_newest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop</item>
                 <item name="date_oldest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop</item>
