@@ -11,7 +11,7 @@ The Magento 2 development team will review all issues and contributions submitte
 
 ## Contribution requirements
 
-1. Contributions must adhere to [Magento coding standards](http://devdocs.magento.com/guides/v2.0/coding-standards/bk-coding-standards.html).
+1. Contributions must adhere to [Magento coding standards](https://devdocs.magento.com/guides/v2.3/coding-standards/bk-coding-standards.html).
 2. Pull requests (PRs) must be accompanied by a meaningful description of their purpose. Comprehensive descriptions increase the chances of a pull request to be merged quickly and without additional clarification requests.
 3. Commits must be accompanied by meaningful commit messages.
 4. PRs which include bug fixing, must be accompanied with step-by-step description of how to reproduce the bug.
@@ -28,7 +28,7 @@ If you are a new GitHub user, we recommend that you create your own [free github
 1. Search current [listed issues](https://github.com/magento/magento2-page-builder/issues) on GitHub (open or closed) before starting work on a new contribution.
 2. Review the [Contributor License Agreement](https://magento.com/legaldocuments/mca) if this is your first time contributing.
 3. Create and test your work.
-4. Fork the Magento 2 repository according to [Fork a repository instructions](http://devdocs.magento.com/guides/v2.0/contributor-guide/contributing.html#fork) and when you are ready to send us a pull request – follow [Create a pull request instructions](http://devdocs.magento.com/guides/v2.0/contributor-guide/contributing.html#pull_request). Instructions written for `https://github.com/magento/magento2` repository, but they also apply to `https://github.com/magento/magento2-page-builder`.
+4. Fork the Magento 2 repository according to [Fork a repository instructions](https://devdocs.magento.com/guides/v2.3/contributor-guide/contributing.html#fork) and when you are ready to send us a pull request – follow [Create a pull request instructions](https://devdocs.magento.com/guides/v2.3/contributor-guide/contributing.html#pull_request). Instructions written for `https://github.com/magento/magento2` repository, but they also apply to `https://github.com/magento/magento2-page-builder`.
 5. Once your contribution is received, Magento 2 development team will review the contribution and collaborate with you as needed to improve the quality of the contribution.
 
 ## Code of Conduct
