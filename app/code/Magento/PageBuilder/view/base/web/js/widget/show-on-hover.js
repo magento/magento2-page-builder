@@ -16,14 +16,13 @@ define(['jquery'], function ($) {
             var overlayEl = $(element).find('.pagebuilder-overlay'),
                 overlayColor = overlayEl.attr('data-overlay-color');
 
-            $(element).hover(
-                function () {
-                    overlayEl.css('background-color', overlayColor);
-                },
-                function () {
-                    overlayEl.css('background-color', 'transparent');
-                }
-            );
+            $(element).on('mouseenter', function () {
+                overlayEl.css('background-color', overlayColor);
+            });
+
+            $(element).on('mouseleave', function () {
+                overlayEl.css('background-color', 'transparent');
+            });
         });
     }
 
@@ -37,19 +36,19 @@ define(['jquery'], function ($) {
         $elements.each(function (index, element) {
             var buttonEl = $(element).find(buttonClass);
 
-            $(element).hover(
-                function () {
-                    buttonEl.css({
-                        'opacity': '1',
-                        'visibility': 'visible'
-                    });
-                }, function () {
-                    buttonEl.css({
-                        'opacity': '0',
-                        'visibility': 'hidden'
-                    });
-                }
-            );
+            $(element).on('mouseenter', function () {
+                buttonEl.css({
+                    'opacity': '1',
+                    'visibility': 'visible'
+                });
+            });
+
+            $(element).on('mouseleave', function () {
+                buttonEl.css({
+                    'opacity': '0',
+                    'visibility': 'hidden'
+                });
+            });
         });
     }
 
