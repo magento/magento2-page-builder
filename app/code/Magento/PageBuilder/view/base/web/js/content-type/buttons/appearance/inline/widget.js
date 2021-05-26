@@ -33,7 +33,7 @@ define([
 
         if ($element.data('sameWidth')) {
             equalizeButtonWidth($element.find(buttonSelector));
-            $(window).resize(function () {
+            $(window).on('resize', function () {
                 equalizeButtonWidth($element.find(buttonSelector));
             });
             events.on('contentType:redrawAfter', function (eventData) {

@@ -61,7 +61,7 @@ define([
                      */
                     cancel: function () {
                         $attributeDropDownEl.val('pagebuilder');
-                        $attributeDropDownEl.change();
+                        $attributeDropDownEl.trigger('change');
                     }
                 }
             });
