@@ -35,6 +35,7 @@ define([
                 $element.slick('setPosition');
             }
         });
+        // eslint-disable-next-line jquery-no-bind-unbind
         events.on('stage:viewportChangeAfter', $element.slick.bind($element, 'setPosition'));
     };
 });

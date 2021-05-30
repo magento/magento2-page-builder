@@ -62,6 +62,7 @@ define([
          * @param {Object} jqXHR
          */
         callSuperError: function (jqXHR) {
+            // eslint-disable-next-line jquery-no-bind-unbind
             var superError = $.ajaxSettings.error.bind(window, jqXHR);
 
             superError();
