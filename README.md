@@ -24,7 +24,7 @@ Complete documentation located on the [Magento DevDocs](https://devdocs.magento.
 
 ## Community Engineering Slack
 
-To connect with Magento team and the Community, join us on the [Magento Community Engineering Slack](https://magentocommeng.slack.com).
+To connect with Adobe Commerce team and the Community, join us on the [Magento Community Engineering Slack](https://magentocommeng.slack.com).
 If you are interested in joining Slack, or a specific channel, use our [self signup](https://opensource.magento.com/slack) link.
 
 Magento 2 Page Builder project slack channel: [#pagebuilder](https://magentocommeng.slack.com/archives/CHB455HPF)
