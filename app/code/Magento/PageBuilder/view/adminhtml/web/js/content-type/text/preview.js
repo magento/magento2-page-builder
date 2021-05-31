@@ -1,7 +1,9 @@
 /*eslint-disable */
 /* jscs:disable */
 
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _hideShowOption, _delayUntil, _editor, _factory, _preview) {
   /**
@@ -291,14 +293,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       _preview2.prototype.bindEvents.call(this);
 
       this.contentType.dataStore.subscribe(function (state) {
-        // Find html elements which attributes contain magento variables directives
-        var sanitizedContent = state.content.replace(/<([a-z0-9\-\_]+)([^>]+?[a-z0-9\-\_]+="[^"]*?\{\{.+?\}\}.*?".*?)>/gi, function (match1, tag, attributes) {
-          // Replace double quote with single quote within magento variable directive
-          var sanitizedAttributes = attributes.replace(/\{\{[^\{\}]+\}\}/gi, function (match2) {
-            return match2.replace(/"/g, "'");
-          });
-          return "<" + tag + sanitizedAttributes + ">";
-        });
+        var sanitizedContent = (0, _editor.replaceDoubleQuoteWithSingleQuoteWithinVariableDirective)((0, _editor.escapeDoubleQuoteWithinWidgetDirective)(state.content));
 
         if (sanitizedContent !== state.content) {
           state.content = sanitizedContent;

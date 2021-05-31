@@ -17,7 +17,7 @@ define([
     });
 
     describe('Magento_PageBuilder/js/widget/show-on-hover', function () {
-        it('Should call hover twice if both data attributes match config value', function () {
+        it('Should call "on" four times if both data attributes match config value', function () {
             var config = {
                 dataRole: 'thing',
                 buttonSelector: '.button-selector',
@@ -37,14 +37,16 @@ define([
 
             el.appendTo('body');
 
-            spyOn($.fn, 'hover');
+            spyOn($.fn, 'on');
 
             showOnHoverInitializerWidget(config);
 
-            expect($.fn.hover).toHaveBeenCalledTimes(2);
+            expect($.fn.on).toHaveBeenCalledWith('mouseenter', jasmine.any(Function));
+            expect($.fn.on).toHaveBeenCalledWith('mouseleave', jasmine.any(Function));
+            expect($.fn.on).toHaveBeenCalledTimes(4);
         });
 
-        it('Should call hover zero times if no data attributes match config value', function () {
+        it('Should call "on" zero times if no data attributes match config value', function () {
             var config = {
                 dataRole: 'thing',
                 buttonSelector: '.button-selector',
@@ -64,14 +66,15 @@ define([
 
             el.appendTo('body');
 
-            spyOn($.fn, 'hover');
+            spyOn($.fn, 'on');
 
             showOnHoverInitializerWidget(config);
 
-            expect($.fn.hover).not.toHaveBeenCalled();
+            expect($.fn.on).not.toHaveBeenCalledWith('mouseenter', jasmine.any(Function));
+            expect($.fn.on).not.toHaveBeenCalledWith('mouseleave', jasmine.any(Function));
         });
 
-        it('Should call hover one time if only data-show-overlay matches config value', function () {
+        it('Should call "on" twice if only data-show-overlay matches config value', function () {
             var config = {
                 dataRole: 'thing',
                 buttonSelector: '.button-selector',
@@ -91,14 +94,16 @@ define([
 
             el.appendTo('body');
 
-            spyOn($.fn, 'hover');
+            spyOn($.fn, 'on');
 
             showOnHoverInitializerWidget(config);
 
-            expect($.fn.hover).toHaveBeenCalledTimes(1);
+            expect($.fn.on).toHaveBeenCalledWith('mouseenter', jasmine.any(Function));
+            expect($.fn.on).toHaveBeenCalledWith('mouseleave', jasmine.any(Function));
+            expect($.fn.on).toHaveBeenCalledTimes(2);
         });
 
-        it('Should call hover one time if only data-show-button matches config value', function () {
+        it('Should call "on" twice if only data-show-button matches config value', function () {
             var config = {
                 dataRole: 'thing',
                 buttonSelector: '.button-selector',
@@ -118,14 +123,16 @@ define([
 
             el.appendTo('body');
 
-            spyOn($.fn, 'hover');
+            spyOn($.fn, 'on');
 
             showOnHoverInitializerWidget(config);
 
-            expect($.fn.hover).toHaveBeenCalledTimes(1);
+            expect($.fn.on).toHaveBeenCalledWith('mouseenter', jasmine.any(Function));
+            expect($.fn.on).toHaveBeenCalledWith('mouseleave', jasmine.any(Function));
+            expect($.fn.on).toHaveBeenCalledTimes(2);
         });
 
-        it('Should call hover zero times if data-content-type does not match config value', function () {
+        it('Should call "on" zero times if data-content-type does not match config value', function () {
             var config = {
                 dataRole: 'thing2',
                 buttonSelector: '.button-selector',
@@ -145,11 +152,12 @@ define([
 
             el.appendTo('body');
 
-            spyOn($.fn, 'hover');
+            spyOn($.fn, 'on');
 
             showOnHoverInitializerWidget(config);
 
-            expect($.fn.hover).not.toHaveBeenCalled();
+            expect($.fn.on).not.toHaveBeenCalledWith('mouseenter', jasmine.any(Function));
+            expect($.fn.on).not.toHaveBeenCalledWith('mouseleave', jasmine.any(Function));
         });
     });
 });

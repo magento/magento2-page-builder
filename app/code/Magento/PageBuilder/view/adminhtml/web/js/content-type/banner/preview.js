@@ -1,7 +1,9 @@
 /*eslint-disable */
 /* jscs:disable */
 
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/utils/nesting-widget-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _translate, _events, _mageUtils, _underscore, _vimeoWrapper, _hideShowOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _nestingWidgetDialog, _factory, _preview) {
   /**

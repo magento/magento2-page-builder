@@ -5,7 +5,9 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _events, _ResizeObserver, _underscore, _vimeoWrapper, _hideShowOption, _previewCollection) {
   /**

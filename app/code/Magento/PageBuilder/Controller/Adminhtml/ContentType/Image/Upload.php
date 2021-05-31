@@ -11,7 +11,9 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Filesystem;
 
 /**
- * Class Upload
+ * Image upload controller
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
@@ -115,7 +117,7 @@ class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterf
             }
 
             $result = $fileUploader->save($this->getUploadDir());
-            $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            $baseUrl = $this->_backendUrl->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]);
             $result['id'] = $this->cmsWysiwygImages->idEncode($result['file']);
             $result['url'] = $baseUrl . $this->getFilePath(self::UPLOAD_DIR, $result['file']);
         } catch (\Exception $e) {
