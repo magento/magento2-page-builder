@@ -18,10 +18,13 @@
                 <div ifnot="$data.icon" class="admin__field-visual-select-spacer"></div>
                 <br>
             <!-- /ko -->
-            <span translate="$data.title"/>
+            <span translate="$data.title"></span>
         </li>
     </ol>
     <div if="noticeMessage" class="message message-notice notice">
-        <div data-ui-id="messages-message-notice" html="noticeMessage"></div>
+        <!-- ko with: {noticeMessageUnsanitizedHtml: noticeMessage} -->
+            <div data-ui-id="messages-message-notice" html="noticeMessageUnsanitizedHtml"></div>
+        <!-- /ko -->
+
     </div>
 </div>

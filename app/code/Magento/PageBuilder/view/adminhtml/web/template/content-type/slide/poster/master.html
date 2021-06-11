@@ -18,25 +18,30 @@
             <div if="data.video_overlay.attributes()['data-video-overlay-color']"
                  class="video-overlay"
                  attr="data.video_overlay.attributes"
-                 ko-style="data.video_overlay.style" />
+                 ko-style="data.video_overlay.style"></div>
             <div class="pagebuilder-overlay pagebuilder-poster-overlay"
                  attr="data.overlay.attributes"
                  ko-style="data.overlay.style"
                  css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
-                    <div attr="data.content.attributes"
-                         ko-style="data.content.style"
-                         css="data.content.css"
-                         html="data.content.html">
-                    </div>
-                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
-                            type="button"
+                    <!-- ko with: data.content -->
+                    <!-- ko with: {attributes: attributes, style: style, css: css, dataContentUnsanitizedHtml: html} -->
+                    <div attr="attributes" ko-style="style" css="css" html="dataContentUnsanitizedHtml"></div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: data.main.attributes()['data-show-button'] !== 'never' -->
+                    <!-- ko with: data.button -->
+                    <!-- ko with: {attributes: attributes, style: style, css: css, dataButtonUnsanitizedHtml: html} -->
+                    <button type="button"
                             class="pagebuilder-slide-button"
-                            attr="data.button.attributes"
-                            ko-style="data.button.style"
-                            css="data.button.css"
-                            html="data.button.html">
+                            attr="attributes"
+                            ko-style="style"
+                            css="css"
+                            html="dataButtonUnsanitizedHtml">
                     </button>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
@@ -51,25 +56,30 @@
             <div if="data.video_overlay.attributes()['data-video-overlay-color']"
                  class="video-overlay"
                  attr="data.video_overlay.attributes"
-                 ko-style="data.video_overlay.style" />
+                 ko-style="data.video_overlay.style"></div>
             <div class="pagebuilder-overlay pagebuilder-poster-overlay"
                  attr="data.overlay.attributes"
                  ko-style="data.overlay.style"
                  css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
-                    <div attr="data.content.attributes"
-                         ko-style="data.content.style"
-                         css="data.content.css"
-                         html="data.content.html">
-                    </div>
-                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
-                            type="button"
+                    <!-- ko with: data.content -->
+                    <!-- ko with: {attributes: attributes, style: style, css: css, dataContentUnsanitizedHtml: html} -->
+                    <div attr="attributes" ko-style="style" css="css" html="dataContentUnsanitizedHtml"></div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: data.main.attributes()['data-show-button'] !== 'never' -->
+                    <!-- ko with: data.button -->
+                    <!-- ko with: {attributes: attributes, style: style, css: css, dataButtonUnsanitizedHtml: html} -->
+                    <button type="button"
                             class="pagebuilder-slide-button"
-                            attr="data.button.attributes"
-                            ko-style="data.button.style"
-                            css="data.button.css"
-                            html="data.button.html">
+                            attr="attributes"
+                            ko-style="style"
+                            css="css"
+                            html="dataButtonUnsanitizedHtml">
                     </button>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
