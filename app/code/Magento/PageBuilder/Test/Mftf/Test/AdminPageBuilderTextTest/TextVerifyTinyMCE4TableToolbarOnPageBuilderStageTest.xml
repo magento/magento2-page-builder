@@ -23,7 +23,7 @@
         <before>
             <!-- Enable WYSIWYG & TinyMCE4 -->
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE" />
             <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
                 <argument name="tags" value="config full_page"/>
             </actionGroup>
