@@ -88,17 +88,17 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage3" after="exitPageBuilderFullScreen2"/>
         <!-- Switch to TinyMCE4 -->
-        <comment userInput="Switch to TinyMCE4 " stepKey="comment4"/>
+        <comment userInput="Switch to TinyMCE " stepKey="comment4"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
         <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE" >
             <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
         </actionGroup>
-        <!-- Verify data on TinyMCE4 -->
-        <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
+        <!-- Verify data on TinyMCE -->
+        <comment userInput="Verify data on TinyMCE" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
+        <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURL"/>
         <seeElement selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariablePlaceholder"/>
@@ -137,7 +137,7 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen4"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage5" after="exitPageBuilderFullScreen4"/>
         <!-- Switch to TinyMCE4 -->
-        <comment userInput="Switch to TinyMCE4 " stepKey="comment9"/>
+        <comment userInput="Switch to TinyMCE " stepKey="comment9"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
         <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE2" >
             <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>

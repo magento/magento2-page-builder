@@ -23,7 +23,9 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE" >
+                <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
+            </actionGroup>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
