@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextVerifyTinyMCE4ToolbarOnPageBuilderStageTest">
+    <test name="TextVerifyTinyMCEToolbarOnPageBuilderStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -45,7 +45,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4"/>
+        <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE"/>
         <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntities"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.undo}}" stepKey="seeUndo"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.redo}}" stepKey="seeRedo"/>
@@ -159,6 +159,6 @@
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
             <argument name="section" value="TextOnStage"/>
         </actionGroup>
-        <actionGroup ref="AdminVerifyTinyMCEToolbarButtonsActionGroup" stepKey="verifyTinyMCE4InColumnContentType"/>
+        <actionGroup ref="AdminVerifyTinyMCEToolbarButtonsActionGroup" stepKey="verifyTinyMCEInColumnContentType"/>
     </test>
 </tests>

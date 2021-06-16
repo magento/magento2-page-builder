@@ -27,7 +27,9 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE" >
+                <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
+            </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -88,7 +90,9 @@
         <!-- Switch to TinyMCE4 -->
         <comment userInput="Switch to TinyMCE4 " stepKey="comment4"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE" >
+            <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
+        </actionGroup>
         <!-- Verify data on TinyMCE4 -->
         <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
@@ -105,7 +109,9 @@
         <!-- Switch to Textarea -->
         <comment userInput="Switch to Textarea" stepKey="comment7"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE1" >
+            <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
+        </actionGroup>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageToBeLoaded2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_1"/>
@@ -133,7 +139,9 @@
         <!-- Switch to TinyMCE4 -->
         <comment userInput="Switch to TinyMCE4 " stepKey="comment9"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_2"/>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE2" >
+            <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
+        </actionGroup>
         <!-- Verify image on TinyMCE4 -->
         <comment userInput="Verify data on TinyMCE4" stepKey="comment10"/>
         <reloadPage stepKey="reloadPage3"/>
