@@ -21,7 +21,7 @@
         </annotations>
 
         <before>
-            <!-- Enable WYSIWYG & TinyMCE4 -->
+            <!-- Enable WYSIWYG & TinyMCE -->
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="switchToTinyMCE">
                 <argument name="TinyMCEValue" value="{{TinyMCE.value}}"/>
@@ -58,7 +58,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
 
-        <!-- Add TinyMCE4 Table to Text Editor -->
+        <!-- Add TinyMCE Table to Text Editor -->
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="waitForTableMenuItem"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="clickOnTableMenuItem"/>
