@@ -15,7 +15,11 @@
                 <div class="grid-panel-wrapper">
                     <ul class="grid-panel-items">
                         <li class="grid-panel-item">
-                            <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
+                            <!-- ko if: gridSizeError -->
+                                <!-- ko with: {gridSizeErrorUnsanitizedHtml: gridSizeError} -->
+                                    <div html="gridSizeErrorUnsanitizedHtml" class="admin__field-error"></div>
+                                <!-- /ko -->
+                            <!-- /ko -->
                         </li>
                     </ul>
                     <ul class="grid-panel-items">
@@ -39,7 +43,9 @@
                                           role="tooltip"
                                           css="{'tooltip-down': gridToolTipOverFlow}">
                                         <p translate="'Grid size determines the maximum number of columns available.'"></p>
-                                        <p><span translate="'Select a value between 2 and'"></span> <span html="gridSizeMax"></span>.</p>
+                                        <!-- ko with: {getGridSizeMaxUnsanitizedHtml: gridSizeMax} -->
+                                        <p><span translate="'Select a value between 2 and'"></span> <span html="getGridSizeMaxUnsanitizedHtml"></span>.</p>
+                                        <!-- /ko -->
                                     </span>
                                 </div>
                             </div>

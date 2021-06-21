@@ -21,7 +21,7 @@ define(['jquery'], function ($) {
             $(el).attr('disabled', false);
         }
 
-        $(el).click(function () {
+        $(el).on('click', function () {
             var resultText = config.invalidLabel,
                 resultIcon = 'icon-admin-pagebuilder-error',
                 resultHtml;
