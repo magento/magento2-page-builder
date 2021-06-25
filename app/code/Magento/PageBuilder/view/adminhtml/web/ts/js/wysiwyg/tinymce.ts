@@ -94,7 +94,7 @@ export default class Wysiwyg implements WysiwygInterface {
              *
              * The styles for typography in the inline editor are scoped within _typography.less
              */
-            this.config.adapter.tinymce4.content_css = [];
+            this.config.adapter.tinymce.content_css = [];
         }
 
         const wysiwygSetup = new WysiwygSetup(this.elementId, this.config.adapter);
