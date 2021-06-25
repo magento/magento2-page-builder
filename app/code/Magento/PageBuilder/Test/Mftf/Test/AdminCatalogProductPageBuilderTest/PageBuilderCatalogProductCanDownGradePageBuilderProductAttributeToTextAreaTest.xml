@@ -67,6 +67,6 @@
         <click selector="{{AdminProductGridActionSection.productName(SimpleProduct.name)}}" stepKey="navigateToEditProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad9"/>
         <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE4"/>
-        <seeElement selector="{{ProductAttributeWYSIWYGSection.TextArea($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seeTextAreaAttribute"/>
+        <seeElement selector="{{AdminProductFormSection.divByDataIndex($$myProductAttributeCreation.attribute_code$$)}} {{TinyMCESection.Content}}" stepKey="seeTextAreaAttribute"/>
     </test>
 </tests>

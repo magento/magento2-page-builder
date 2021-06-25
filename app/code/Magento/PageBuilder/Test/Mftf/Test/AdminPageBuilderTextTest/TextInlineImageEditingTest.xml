@@ -66,7 +66,7 @@
         </actionGroup>
         <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
         <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage1"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage1"/>
         <!--Verify inputed image on slideout-->
         <comment userInput="Verify inputed image on slideout" stepKey="commentVerifyImageOnSlideout"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
@@ -82,7 +82,7 @@
         <!--Verify image on stage after saving cms page-->
         <comment userInput="Verify image on stage" stepKey="commentVerifyImageOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
         <!--Verify image on storefront-->
         <comment userInput="Verify image on storefront" stepKey="commentVerifyImageOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
