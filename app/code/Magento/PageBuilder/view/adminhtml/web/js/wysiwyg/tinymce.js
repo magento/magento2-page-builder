@@ -70,7 +70,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
          *
          * The styles for typography in the inline editor are scoped within _typography.less
          */
-        this.config.adapter.tinymce4.content_css = [];
+        this.config.adapter.tinymce.content_css = [];
       }
 
       var wysiwygSetup = new _setup(this.elementId, this.config.adapter);
@@ -212,4 +212,4 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
   return Wysiwyg;
 });
-//# sourceMappingURL=tinymce4.js.map
+//# sourceMappingURL=tinymce.js.map
