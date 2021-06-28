@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextDataConsistencyBetweenTextEditorWithoutTinyMCE3Test">
+    <test name="TextDataConsistencyBetweenTextEditorWithoutTinyMCETest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -139,7 +139,7 @@
         <!-- Switch to TinyMCE -->
         <comment userInput="Switch to TinyMCE " stepKey="comment9"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE3" >
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
             <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
         </actionGroup>
         <!-- Verify image on TinyMCE -->
