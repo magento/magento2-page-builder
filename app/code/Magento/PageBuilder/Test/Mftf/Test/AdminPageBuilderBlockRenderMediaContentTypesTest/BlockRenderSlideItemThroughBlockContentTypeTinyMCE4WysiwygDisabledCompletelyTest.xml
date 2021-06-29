@@ -7,12 +7,12 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygDisabledCompletelyTest">
+    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCEWysiwygDisabledCompletelyTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Slide Item Through Block Content Type With TinyMCE4 and Wysiwyg Disabled Completely"/>
-            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE4 and Wysiwyg Disabled Completely."/>
+            <title value="Render Slide Item Through Block Content Type With TinyMCE and Wysiwyg Disabled Completely"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE and Wysiwyg Disabled Completely."/>
             <severity value="AVERAGE"/>
             <testCaseId value="MC-15213"/>
             <useCaseId value="MC-13769"/>
@@ -24,7 +24,9 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
+                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            </actionGroup>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>

@@ -7,11 +7,11 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextDataConsistencyBetweenTextEditorWithoutTinyMCE3Test">
+    <test name="TextDataConsistencyBetweenTextEditorWithoutTinyMCETest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Data consistency between TextArea, TinyMCE4, TinyMCE4 in PageBuilder stage"/>
+            <title value="Data consistency between TextArea, TinyMCE, TinyMCE in PageBuilder stage"/>
             <description value="Verify data consistent when switching between TinyMCE versions and TextArea"/>
             <severity value="AVERAGE"/>
             <useCaseId value="MC-36390"/>
@@ -27,7 +27,9 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
+                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -85,16 +87,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage3" after="exitPageBuilderFullScreen2"/>
-        <!-- Switch to TinyMCE4 -->
-        <comment userInput="Switch to TinyMCE4 " stepKey="comment4"/>
+        <!-- Switch to TinyMCE -->
+        <comment userInput="Switch to TinyMCE " stepKey="comment4"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
-        <!-- Verify data on TinyMCE4 -->
-        <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE1" >
+            <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+        </actionGroup>
+        <!-- Verify data on TinyMCE -->
+        <comment userInput="Verify data on TinyMCE" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
+        <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURL"/>
         <seeElement selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariablePlaceholder"/>
@@ -105,7 +109,9 @@
         <!-- Switch to Textarea -->
         <comment userInput="Switch to Textarea" stepKey="comment7"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE2" >
+            <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+        </actionGroup>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageToBeLoaded2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_1"/>
@@ -130,12 +136,14 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen4"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage5" after="exitPageBuilderFullScreen4"/>
-        <!-- Switch to TinyMCE4 -->
-        <comment userInput="Switch to TinyMCE4 " stepKey="comment9"/>
+        <!-- Switch to TinyMCE -->
+        <comment userInput="Switch to TinyMCE " stepKey="comment9"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_2"/>
-        <!-- Verify image on TinyMCE4 -->
-        <comment userInput="Verify data on TinyMCE4" stepKey="comment10"/>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE3" >
+            <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+        </actionGroup>
+        <!-- Verify image on TinyMCE -->
+        <comment userInput="Verify data on TinyMCE" stepKey="comment10"/>
         <reloadPage stepKey="reloadPage3"/>
         <waitForPageLoad stepKey="waitForPageToBeLoaded3"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_2"/>

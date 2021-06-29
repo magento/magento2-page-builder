@@ -9,7 +9,7 @@
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="AdminAddImageToWYSIWYGBlockTest">
         <before>
-            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="enableTinyMCE"/>
             <magentoCLI command="cache:clean config" stepKey="flushCache" after="disablePageBuilder"/>
         </before>
         <after>
