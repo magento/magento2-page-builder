@@ -7,14 +7,12 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="VerifyTinyMCEv4IsNativeWYSIWYGOnBlockTest">
+    <test name="VerifyTinyMCEIsNativeWYSIWYGOnCMSPageTest">
         <before>
-            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="disablePageBuilder"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="enableTinyMCE"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enablePageBuilder"/>
         </after>
     </test>
 </tests>

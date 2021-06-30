@@ -6,24 +6,25 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefaultTest">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ViewportSwitcherMobileTextThroughBlockContentTypeTinyMCEWysiwygEnabledByDefaultTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Text Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the Text content type through the Block content type with TinyMCE4 and Wysiwyg Enabled By Default."/>
-            <severity value="BLOCKER"/>
-            <testCaseId value="MC-15159"/>
-            <useCaseId value="MC-13769"/>
+            <stories value="Viewport Switcher"/>
+            <title value="Mobile Viewport: Render Text Through Block Content Type With TinyMCE and Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Text content type through the Block content type in the mobile viewport with TinyMCE and Wysiwyg Enabled By Default."/>
+            <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-text"/>
+            <group value="pagebuilder-viewport-switcher"/>
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
+                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            </actionGroup>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
@@ -36,8 +37,13 @@
                 <argument name="contentType" value="PageBuilderRowContentType"/>
                 <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             </actionGroup>
+            <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
+                <argument name="viewportButton" value="mobile"/>
+                <argument name="viewportStage" value="mobile"/>
+            </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCMSPageB"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
@@ -51,7 +57,6 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Text -->
-        <comment userInput="Add Text" stepKey="commentAddText"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -59,7 +64,6 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Inline Edit: Add Text -->
-        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor"/>
         <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd"/>
         <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
@@ -67,7 +71,6 @@
             <argument name="text" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Variable -->
-        <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2">
             <argument name="contentTypeXCoordinate" value="250"/>
             <argument name="contentTypeYCoordinate" value="0"/>
@@ -77,7 +80,6 @@
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <!-- Inline Edit: Add Widget -->
-        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3">
             <argument name="contentTypeXCoordinate" value="250"/>
             <argument name="contentTypeYCoordinate" value="0"/>
@@ -88,7 +90,6 @@
             <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Inline Edit: Add Image -->
-        <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4"/>
         <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd4"/>
         <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
@@ -103,18 +104,35 @@
         </actionGroup>
         <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
         <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen1"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
-        <!-- Validate CMS Block Stage -->
-        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+
+        <!-- Validate CMS Block Stage Mobile Viewport -->
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen1"/>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportBlock">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
+        </actionGroup>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSBlockStageMobile"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStageMobile"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStageMobile"/>
+        <seeElement selector="{{TextOnStage.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStageMobile"/>
+        <seeElement selector="{{TextOnStage.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStageMobile"/>
+        <seeElement selector="{{TextOnStage.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStageMobile"/>
+
+        <!-- Validate CMS Block Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportBlock">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
+
         <!-- Add Block to CMS Page -->
-        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
@@ -122,6 +140,10 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewportPage">
+            <argument name="viewportButton" value="mobile"/>
+            <argument name="viewportStage" value="mobile"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
@@ -136,18 +158,29 @@
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
-        <!-- Validate CMS Page Stage -->
-        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <!-- Validate CMS Page Stage Mobile Viewport -->
+        <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStageMobile"/>
+        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStageMobile"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStageMobile"/>
+        <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStageMobile"/>
+        <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStageMobile"/>
+        <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStageMobile"/>
+
+        <!-- Validate CMS Page Stage Desktop Viewport -->
+        <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToDesktopViewportPage">
+            <argument name="viewportButton" value="desktop"/>
+            <argument name="viewportStage" value="desktop"/>
+        </actionGroup>
         <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStage"/>
+
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -158,9 +191,19 @@
         <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefront"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefront"/>
         <!-- Click Page Link Widget -->
-        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
         <click selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="clickWidgetCMSPageStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createPreReqCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefrontMobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStorefrontMobile"/>
+        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefrontMobile"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStorefrontMobile"/>
+        <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefrontMobile"/>
+        <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefrontMobile"/>
+        <seeElement selector="{{TextOnStorefront.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefrontMobile"/>
     </test>
 </tests>

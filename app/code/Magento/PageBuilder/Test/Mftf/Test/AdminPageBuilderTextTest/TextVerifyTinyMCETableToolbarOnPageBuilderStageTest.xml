@@ -7,11 +7,11 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="TextVerifyTinyMCE4TableToolbarOnPageBuilderStageTest">
+    <test name="TextVerifyTinyMCETableToolbarOnPageBuilderStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="TinyMCE4 Table Toolbar Doesn't Overlay TextArea and Is Always Visible"/>
+            <title value="TinyMCE Table Toolbar Doesn't Overlay TextArea and Is Always Visible"/>
             <description value="Verify that WYSIWYG table toolbar doesn't overlap textarea, overlays other toolbars,
             overlays other content types, and always has its buttons visible."/>
             <severity value="MAJOR"/>
@@ -21,9 +21,11 @@
         </annotations>
 
         <before>
-            <!-- Enable WYSIWYG & TinyMCE4 -->
+            <!-- Enable WYSIWYG & TinyMCE -->
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE">
+                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            </actionGroup>
             <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
                 <argument name="tags" value="config full_page"/>
             </actionGroup>
@@ -56,7 +58,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
 
-        <!-- Add TinyMCE4 Table to Text Editor -->
+        <!-- Add TinyMCE Table to Text Editor -->
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="waitForTableMenuItem"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="clickOnTableMenuItem"/>
