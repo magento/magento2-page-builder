@@ -28,7 +28,7 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
-                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+                <argument name="TinyMCEValue"/>
             </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
@@ -91,7 +91,7 @@
         <comment userInput="Switch to TinyMCE " stepKey="comment4"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
         <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE1" >
-            <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            <argument name="TinyMCEValue"/>
         </actionGroup>
         <!-- Verify data on TinyMCE -->
         <comment userInput="Verify data on TinyMCE" stepKey="comment5"/>
@@ -110,7 +110,7 @@
         <comment userInput="Switch to Textarea" stepKey="comment7"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
         <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE2" >
-            <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            <argument name="TinyMCEValue"/>
         </actionGroup>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageToBeLoaded2"/>
@@ -140,7 +140,7 @@
         <comment userInput="Switch to TinyMCE " stepKey="comment9"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
         <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE3" >
-            <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
+            <argument name="TinyMCEValue"/>
         </actionGroup>
         <!-- Verify image on TinyMCE -->
         <comment userInput="Verify data on TinyMCE" stepKey="comment10"/>
