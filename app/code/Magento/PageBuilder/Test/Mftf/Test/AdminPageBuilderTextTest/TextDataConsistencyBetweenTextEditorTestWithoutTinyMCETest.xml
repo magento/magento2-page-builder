@@ -27,9 +27,7 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
-                <argument name="TinyMCEValue"/>
-            </actionGroup>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -90,9 +88,7 @@
         <!-- Switch to TinyMCE -->
         <comment userInput="Switch to TinyMCE " stepKey="comment4"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE1" >
-            <argument name="TinyMCEValue"/>
-        </actionGroup>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE1" />
         <!-- Verify data on TinyMCE -->
         <comment userInput="Verify data on TinyMCE" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
@@ -109,9 +105,7 @@
         <!-- Switch to Textarea -->
         <comment userInput="Switch to Textarea" stepKey="comment7"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
-        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE2" >
-            <argument name="TinyMCEValue"/>
-        </actionGroup>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE2" />
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageToBeLoaded2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_1"/>
@@ -139,9 +133,7 @@
         <!-- Switch to TinyMCE -->
         <comment userInput="Switch to TinyMCE " stepKey="comment9"/>
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE3" >
-            <argument name="TinyMCEValue"/>
-        </actionGroup>
+        <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE3" />
         <!-- Verify image on TinyMCE -->
         <comment userInput="Verify data on TinyMCE" stepKey="comment10"/>
         <reloadPage stepKey="reloadPage3"/>
