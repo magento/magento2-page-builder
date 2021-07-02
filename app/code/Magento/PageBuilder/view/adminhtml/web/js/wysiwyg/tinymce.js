@@ -131,7 +131,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
 
       _underscore.defer(function () {
-        _this2.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
+        _this2.getFixedToolbarContainer().find(".tox-tinymce-inline").css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
 
         _this2.invertInlineEditorToAccommodateOffscreenToolbar();
       });
@@ -151,7 +151,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.onBlur = function onBlur() {
-      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").css("transform", "");
+      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".tox-tinymce-inline").css("transform", "");
 
       _events2.trigger("stage:interactionStop");
     }
@@ -181,7 +181,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         return;
       }
 
-      var $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
+      var $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
 
       if (!$inlineToolbar.length) {
         return;
@@ -190,7 +190,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       var inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top - (0, _pagebuilderHeaderHeight)(this.stageId);
 
       if (!(0, _checkStageFullScreen)(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
-        $inlineToolbar.css("transform", "translateY(-100%)");
+        $inlineToolbar.css("transform", "translateY(-178%)");
         return;
       }
 

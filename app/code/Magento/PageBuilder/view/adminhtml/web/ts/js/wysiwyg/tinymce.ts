@@ -164,7 +164,7 @@ export default class Wysiwyg implements WysiwygInterface {
         // Wait for everything else to finish
         _.defer(() => {
             this.getFixedToolbarContainer()
-                .find(".mce-tinymce-inline")
+                .find(".tox-tinymce-inline")
                 .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
 
             this.invertInlineEditorToAccommodateOffscreenToolbar();
@@ -185,7 +185,7 @@ export default class Wysiwyg implements WysiwygInterface {
     private onBlur() {
         this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active")
-            .find(".mce-tinymce-inline")
+            .find(".tox-tinymce-inline")
             .css("transform", "");
 
         events.trigger("stage:interactionStop");
@@ -218,7 +218,7 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
+        const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
 
         if (!$inlineToolbar.length) {
             return;
@@ -228,7 +228,7 @@ export default class Wysiwyg implements WysiwygInterface {
                                          - pageBuilderHeaderHeight(this.stageId);
 
         if (!checkStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
-            $inlineToolbar.css("transform", "translateY(-100%)");
+            $inlineToolbar.css("transform", "translateY(-178%)");
             return;
         }
         $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
