@@ -6,8 +6,9 @@
   */
 -->
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Suite/etc/suiteSchema.xsd">
-    <suite name="PageBuilderWithWYSIWYG">
+    <suite name="AwsS3PageBuilderSuite">
         <before>
+            <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.enable_options}}" stepKey="enableRemoteStorage"/>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
@@ -20,6 +21,7 @@
             <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </before>
         <after>
+            <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.disable_options}}" stepKey="disableRemoteStorage"/>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
                 <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
@@ -29,11 +31,7 @@
             <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </after>
         <include>
-            <group name="pagebuilder"/>
-        </include>
-        <exclude>
-            <group name="pagebuilder-requiresValidMapAPIKey"/>
             <group name="remote_storage_aws_s3_pagebuilder"/>
-        </exclude>
+        </include>
     </suite>
 </suites>
