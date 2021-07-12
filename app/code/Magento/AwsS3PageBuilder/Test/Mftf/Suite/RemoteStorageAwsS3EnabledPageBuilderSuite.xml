@@ -6,7 +6,7 @@
   */
 -->
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Suite/etc/suiteSchema.xsd">
-    <suite name="AwsS3PageBuilderSuite">
+    <suite name="RemoteStorageAwsS3EnabledPageBuilderSuite">
         <before>
             <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.enable_options}}" stepKey="enableRemoteStorage"/>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
