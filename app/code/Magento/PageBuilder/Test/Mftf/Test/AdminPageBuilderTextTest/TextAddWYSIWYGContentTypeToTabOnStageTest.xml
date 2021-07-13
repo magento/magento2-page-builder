@@ -22,9 +22,7 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
-                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
-            </actionGroup>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
         </before>
@@ -131,7 +129,7 @@
         </actionGroup>
         <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
         <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
-        <seeElement selector="{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="assertMediaSourceOnStage"/>
+        <seeElement selector="{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="assertMediaSourceOnStage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Text in Tab on storefront -->

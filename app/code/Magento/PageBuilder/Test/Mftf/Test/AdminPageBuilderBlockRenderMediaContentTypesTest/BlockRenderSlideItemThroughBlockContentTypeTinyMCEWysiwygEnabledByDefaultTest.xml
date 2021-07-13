@@ -24,9 +24,7 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
-            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" >
-                <argument name="TinyMCEValue" value="{{EnableTinyMCE.value}}"/>
-            </actionGroup>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
@@ -130,9 +128,9 @@
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
@@ -161,9 +159,9 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStage"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
         <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStage"/>
-        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
-        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStage"/>
-        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
@@ -174,9 +172,9 @@
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{TinyMCESection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{TinyMCESection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefront"/>
         <!-- Click Page Link Widget -->
         <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
         <click selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="clickWidgetCMSPageStorefront"/>
