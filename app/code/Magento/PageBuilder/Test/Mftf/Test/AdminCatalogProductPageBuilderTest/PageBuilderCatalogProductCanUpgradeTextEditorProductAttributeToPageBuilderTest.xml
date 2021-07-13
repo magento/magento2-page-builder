@@ -40,7 +40,7 @@
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <seeElement selector="{{ProductAttributeWYSIWYGSection.TinyMCE4($$myProductAttributeCreation.attribute_code$$)}}" stepKey="waitForPageLoad10"/>
+        <seeElement selector="{{AdminProductFormSection.divByDataIndex($$myProductAttributeCreation.attribute_code$$)}} {{TinyMCESection.TinyMCE}}" stepKey="waitForPageLoad10"/>
         <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
