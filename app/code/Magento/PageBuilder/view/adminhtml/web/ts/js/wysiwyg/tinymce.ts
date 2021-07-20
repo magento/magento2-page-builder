@@ -183,7 +183,7 @@ export default class Wysiwyg implements WysiwygInterface {
             // Update toolbar when the height changes
             this.toolbarHeight = $inlineToolbar.height();
             if ($inlineToolbar.length) {
-                this.resizeObserver = new ResizeObserver(function(entries) {
+                this.resizeObserver = new ResizeObserver((entries) => {
                     for (const entry of entries) {
                         if (entry.target === $inlineToolbar.get(0)
                             && entry.target.clientHeight !== self.toolbarHeight
