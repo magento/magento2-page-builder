@@ -65,6 +65,16 @@ export default class Wysiwyg implements WysiwygInterface {
     );
 
     /**
+     * ResizeObserver to detect the toolbar height change
+     */
+    private resizeObserver: ResizeObserver;
+
+    /**
+     * Height of WYSIWYG toolbar
+     */
+    private toolbarHeight: number;
+
+    /**
      * @param {String} contentTypeId The ID in the registry of the content type.
      * @param {String} elementId The ID of the editor element in the DOM.
      * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
@@ -163,11 +173,28 @@ export default class Wysiwyg implements WysiwygInterface {
 
         // Wait for everything else to finish
         _.defer(() => {
-            this.getFixedToolbarContainer()
-                .find(".tox-tinymce-inline")
-                .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
+            const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
+            const self = this;
+
+            $inlineToolbar.css("min-width", this.config.adapter_config.minToolbarWidth + "px");
 
             this.invertInlineEditorToAccommodateOffscreenToolbar();
+
+            // Update toolbar when the height changes
+            this.toolbarHeight = $inlineToolbar.height();
+            if ($inlineToolbar.length) {
+                this.resizeObserver = new ResizeObserver(function(entries) {
+                    for (const entry of entries) {
+                        if (entry.target === $inlineToolbar.get(0)
+                            && entry.target.clientHeight !== self.toolbarHeight
+                        ) {
+                            self.invertInlineEditorToAccommodateOffscreenToolbar();
+                            self.toolbarHeight = entry.target.clientHeight;
+                        }
+                    }
+                });
+                this.resizeObserver.observe($inlineToolbar.get(0));
+            }
         });
     }
 
@@ -186,7 +213,10 @@ export default class Wysiwyg implements WysiwygInterface {
         this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active")
             .find(".tox-tinymce-inline")
-            .css("transform", "");
+            .css("top", "");
+
+        this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+        this.toolbarHeight = 0;
 
         events.trigger("stage:interactionStop");
     }
@@ -228,10 +258,17 @@ export default class Wysiwyg implements WysiwygInterface {
                                          - pageBuilderHeaderHeight(this.stageId);
 
         if (!checkStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
-            $inlineToolbar.css("transform", "translateY(-178%)");
+            let extraHeight = 0;
+            if ($inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-left']").length
+                || $inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-right']").length
+                || $inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-centered']").length
+            ) {
+                extraHeight = 29;
+            }
+            $inlineToolbar.css("top", ($inlineToolbar.height() - extraHeight) * -1);
             return;
         }
-        $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
+        $inlineToolbar.css("top", "");
     }
 
     /**
