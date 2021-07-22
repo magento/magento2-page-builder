@@ -19,12 +19,13 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-templates"/>
             <group value="remote_storage_aws_s3"/>
+            <group value="remote_storage_aws_s3_pagebuilder"/>
         </annotations>
         <before>
-            <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.enable_options}}" stepKey="enableRemoteStorage" after="loginAsAdmin"/>
+            <comment userInput="BIC workaround" stepKey="enableRemoteStorage"/>
         </before>
         <after>
-            <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.disable_options}}" stepKey="disableRemoteStorage" after="logout"/>
+            <comment userInput="BIC workaround" stepKey="disableRemoteStorage"/>
         </after>
     </test>
 </tests>
