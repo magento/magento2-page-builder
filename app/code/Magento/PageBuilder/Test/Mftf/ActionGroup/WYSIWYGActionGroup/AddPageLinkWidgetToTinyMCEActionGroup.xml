@@ -12,6 +12,8 @@
             <argument name="page" defaultValue="" type="string"/>
         </arguments>
         <comment userInput="Adding Widget To Tiny MCE" stepKey="commentAddWidget"/>
+        <waitForElementVisible selector="{{TinyMCESection.MoreIcon}}" stepKey="waitForMoreIcon"/>
+        <click selector="{{TinyMCESection.MoreIcon}}" stepKey="expandMenuBar"/>
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
