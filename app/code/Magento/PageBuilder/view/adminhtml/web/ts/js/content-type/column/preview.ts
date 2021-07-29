@@ -89,7 +89,7 @@ export default class Preview extends PreviewCollection {
         if (Config.getContentTypeConfig("column-group")) {
             events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.contentType.id) {
-                    this.createColumnGroup();
+                   // this.createColumnGroup();
                 }
             });
         }
@@ -162,6 +162,7 @@ export default class Preview extends PreviewCollection {
                 const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
                     Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,
                 );
+
                 return Promise.all([
                     createContentType(
                         this.contentType.config,

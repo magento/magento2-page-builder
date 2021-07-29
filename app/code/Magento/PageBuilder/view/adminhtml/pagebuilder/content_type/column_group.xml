@@ -7,23 +7,24 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="column-group"
-          label="Column Group"
+          label="Columns"
           component="Magento_PageBuilder/js/content-type-collection"
           preview_component="Magento_PageBuilder/js/content-type/column-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
-          form=""
+          form="pagebuilder_column_group_form"
           menu_section="layout"
           icon="icon-pagebuilder-column"
           sortOrder="10"
           translate="label">
         <parents default_policy="deny">
+            <parent name="root-container" policy="allow"/>
             <parent name="row" policy="allow"/>
+            <parent name="column-group" policy="allow"/>
             <parent name="tab-item" policy="allow"/>
         </parents>
         <children default_policy="deny">
             <child name="column" policy="allow"/>
         </children>
-        <is_system>false</is_system>
         <appearances>
             <appearance default="true"
                         name="default"
