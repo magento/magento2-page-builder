@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils/delay-until"], function (_jquery, _events, _delayUntil) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils/delay-until", "underscore"], function (_jquery, _events, _delayUntil, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -81,7 +81,12 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils
         $slider.css("overflow", "visible");
       }, function () {
         return !_this2.slideChanging;
-      }, 10);
+      }, 10); // Wait for everything else to finish
+
+      _underscore.defer(function () {
+        // Add width for tinymce modal
+        (0, _jquery)(_this2.activeSlideSelector).find('.tox-tinymce-aux').css('width', (0, _jquery)(_this2.activeSlideSelector).width());
+      });
     }
     /**
      * Event handler for wysiwyg blur
@@ -109,7 +114,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils
 
       if (this.autoplay) {
         $slider.parent().slick("slickPlay");
-      }
+      } // Revert width for tinymce modal
+
+
+      (0, _jquery)(this.activeSlideSelector).find('.tox-tinymce-aux').css('width', '');
     };
 
     return ComponentInitializer;
