@@ -33,6 +33,9 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
+import createContentType from "../../content-type-factory";
+import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
+
 
 /**
  * @api
@@ -135,6 +138,51 @@ export default class Preview extends PreviewCollection {
                 this.removeIfEmpty.bind(this),
                 50,
             ),
+        );
+    }
+
+
+    /**
+     * Bind events
+     */
+    public bindEvents() {
+        super.bindEvents();
+
+        if (Config.getContentTypeConfig("column")) {
+            events.on("column-group:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
+                if (args.id === this.contentType.id) {
+                    this.createColumns();
+                }
+            });
+        }
+    }
+
+
+    /**
+     * Add Columns to the current Column Group
+     *
+     * @returns {Promise<ContentTypeCollectionInterface>}
+     */
+    public createColumns(): void {
+
+        Promise.all([
+            createContentType(
+                Config.getContentTypeConfig("column"),
+                this.contentType,
+                this.contentType.stageId,
+                {width: 50 + "%"},
+            ),
+            createContentType(
+                Config.getContentTypeConfig("column"),
+                this.contentType,
+                this.contentType.stageId,
+                {width: 50 + "%"},
+            ),
+        ]).then(
+            (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
+                this.contentType.addChild(columns[0], 0);
+                this.contentType.addChild(columns[1], 1);
+            },
         );
     }
 
