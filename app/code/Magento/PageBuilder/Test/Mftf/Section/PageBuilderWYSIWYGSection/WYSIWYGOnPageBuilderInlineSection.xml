@@ -13,7 +13,7 @@
         <element name="notCss" type="button" selector=".tox-tinymce:not(.tox-tinymce-inline)"/>
         <element name="undo" type="button" selector=".tox-tinymce-inline button[aria-label='Undo']"/>
         <element name="redo" type="button" selector=".tox-tinymce-inline button[aria-label='Redo']"/>
-        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce')]//span[text()='Formats']"/>
+        <element name="formatSelector" type="button" selector=".tox-tinymce-inline button[aria-label='Formats']"/>
         <element name="fontSize" type="button" selector=".tox-tinymce-inline button[aria-label='Font sizes']"/>
         <element name="lineHeight" type="button" selector=".tox-tinymce-inline button[aria-label='Line height']"/>
         <element name="textColor" type="button" selector=".tox-tinymce-inline div[aria-label='Text color']"/>
@@ -29,8 +29,8 @@
         <element name="insertLink" type="button" selector=".tox-tinymce-inline button[aria-label='Insert/edit link']"/>
         <element name="imageSelector" type="button" selector=".tox-tinymce-inline button[aria-label='Insert/edit image']"/>
         <element name="table" type="button" selector=".tox-tinymce-inline button[aria-label='Table']"/>
-        <element name="tableMenuFirstItem" type="text" parameterized="true" selector="(//i[contains(@class, 'mce-i-table')])[{{index}}]"/>
-        <element name="tableGrid" type="text" parameterized="true" selector="//a[@data-mce-x={{xSize}}][@data-mce-y={{ySize}}]"/>
+        <element name="tableMenuFirstItem" type="text" selector="div[title='Table']"/>
+        <element name="tableGrid" type="text" parameterized="true" selector="//div[@class='tox-insert-table-picker']//div[{{size}}]"/>
         <element name="tableToolbar" type="text" selector=".mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel[aria-label='Inline toolbar']"/>
         <element name="tableProperties" type="button" selector="div[aria-label='Table properties'] button"/>
         <element name="deleteTable" type="button" selector="div[aria-label='Delete table'] button"/>
