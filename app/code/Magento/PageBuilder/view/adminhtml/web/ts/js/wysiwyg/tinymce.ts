@@ -215,7 +215,9 @@ export default class Wysiwyg implements WysiwygInterface {
             .find(".tox-tinymce-inline")
             .css("top", "");
 
-        this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+        if (this.resizeObserver) {
+            this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+        }
         this.toolbarHeight = 0;
 
         events.trigger("stage:interactionStop");
