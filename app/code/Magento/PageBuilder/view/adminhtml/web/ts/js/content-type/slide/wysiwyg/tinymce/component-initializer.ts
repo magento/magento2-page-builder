@@ -5,11 +5,11 @@
 
 import $ from "jquery";
 import WysiwygEvents from "mage/adminhtml/wysiwyg/events";
+import _ from "underscore";
 import {AdditionalDataConfigInterface} from "../../../../content-type-config.types";
 import delayUntil from "../../../../utils/delay-until";
 import WysiwygComponentInitializerInterface from "../../../../wysiwyg/component-initializer-interface";
 import WysiwygInterface from "../../../../wysiwyg/wysiwyg-interface";
-import _ from "underscore";
 
 export default class ComponentInitializer implements WysiwygComponentInitializerInterface {
     /**
@@ -132,9 +132,9 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         // Wait for everything else to finish
         _.defer(() => {
             // Add width for tinymce modal
-            $(this.activeSlideSelector).find('.tox-tinymce-aux').css(
-                'width',
-                $(this.activeSlideSelector).width()
+            $(this.activeSlideSelector).find(".tox-tinymce-aux").css(
+                "width",
+                $(this.activeSlideSelector).width(),
             );
         });
     }
@@ -163,6 +163,6 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         }
 
         // Revert width for tinymce modal
-        $(this.activeSlideSelector).find('.tox-tinymce-aux').css('width','');
+        $(this.activeSlideSelector).find(".tox-tinymce-aux").css("width", "");
     }
 }
