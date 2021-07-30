@@ -133,10 +133,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (_config.getContentTypeConfig("column")) {
         _events.on("column-group:dropAfter", function (args) {
           if (args.id === _this2.contentType.id) {
+            _this2.setDefaultGridSizeOnColumnGroup();
+
             _this2.createColumns();
           }
         });
       }
+    }
+    /**
+     * Set default grid size on current column group
+     */
+    ;
+
+    _proto.setDefaultGridSizeOnColumnGroup = function setDefaultGridSizeOnColumnGroup() {
+      this.contentType.dataStore.set('grid_size', (0, _gridSize.getDefaultGridSize)());
     }
     /**
      * Add Columns to the current Column Group

@@ -31,7 +31,7 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
-import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
+import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import createContentType from "../../content-type-factory";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
@@ -151,10 +151,18 @@ export default class Preview extends PreviewCollection {
         if (Config.getContentTypeConfig("column")) {
             events.on("column-group:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.contentType.id) {
+                    this.setDefaultGridSizeOnColumnGroup();
                     this.createColumns();
                 }
             });
         }
+    }
+
+    /**
+     * Set default grid size on current column group
+     */
+    public setDefaultGridSizeOnColumnGroup(): void {
+        this.contentType.dataStore.set('grid_size', getDefaultGridSize());
     }
 
 
