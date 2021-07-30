@@ -187,6 +187,18 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyle(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
+    }
+
+    /**
      * Retrieve the resize utils
      *
      * @returns {Resize}

@@ -86,14 +86,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this2.updateDisplayLabel();
         }
       });
-
-      if (_config.getContentTypeConfig("column-group")) {
-        _events.on("column:dropAfter", function (args) {
-          if (args.id === _this2.contentType.id) {
-            _this2.createColumnGroup();
-          }
-        });
-      }
     }
     /**
      * Make a reference to the element in the column

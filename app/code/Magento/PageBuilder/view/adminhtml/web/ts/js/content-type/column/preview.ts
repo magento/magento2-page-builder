@@ -85,14 +85,6 @@ export default class Preview extends PreviewCollection {
                 this.updateDisplayLabel();
             }
         });
-
-        if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
-                if (args.id === this.contentType.id) {
-                   // this.createColumnGroup();
-                }
-            });
-        }
     }
 
     /**
