@@ -39,6 +39,10 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToCreatedImageFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
@@ -70,8 +74,15 @@
         </actionGroup>
         <actionGroup ref="clickHtmlInsertImageButton" stepKey="clickInsertImageInHtmlCode"/>
         <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToCreatedImageFolder">
+            <argument name="FolderName" value="{{ImageFolder.name}}"/>
         </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="attachImage1">
             <argument name="Image" value="ImageUpload3"/>
