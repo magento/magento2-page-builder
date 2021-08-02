@@ -19,7 +19,6 @@ use Magento\Framework\Controller\Result\JsonFactory;
  */
 class ProductTotals extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Catalog::products';
 
     /**
      * @var \Magento\PageBuilder\Model\Catalog\ProductTotals
