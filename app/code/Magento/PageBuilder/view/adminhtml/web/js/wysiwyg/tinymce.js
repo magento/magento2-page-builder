@@ -180,7 +180,11 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.onBlur = function onBlur() {
       this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".tox-tinymce-inline").css("top", "");
-      this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+
+      if (this.resizeObserver) {
+        this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+      }
+
       this.toolbarHeight = 0;
 
       _events2.trigger("stage:interactionStop");
