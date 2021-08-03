@@ -41,7 +41,9 @@
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
                 <argument name="FolderName" value="wysiwyg"/>
             </actionGroup>
-            <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToCreatedImageFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
@@ -80,7 +82,9 @@
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToCreatedImageFolder">
             <argument name="FolderName" value="{{ImageFolder.name}}"/>
         </actionGroup>
