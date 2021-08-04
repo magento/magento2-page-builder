@@ -21,6 +21,9 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openMediaGalleryBefore"/>
             <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridBefore"/>
+            <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="openWysiwygFolder">
+                <argument name="name" value="wysiwyg"/>
+            </actionGroup>
             <actionGroup ref="AdminMediaGalleryOpenNewFolderFormActionGroup" stepKey="openNewFolderForm"/>
             <actionGroup ref="AdminMediaGalleryCreateNewFolderActionGroup" stepKey="createNewFolder">
                 <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
@@ -35,7 +38,8 @@
             <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectFolderAfter">
                 <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
             </actionGroup>
-            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage"/>
+            <comment userInput="BIC workaround" stepKey="deleteImage"/>
+<!--            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage"/>-->
             <actionGroup ref="AdminMediaGalleryFolderDeleteActionGroup" stepKey="deleteFolder"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCmsPage"/>
@@ -79,7 +83,6 @@
             <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
         </actionGroup>
         <actionGroup ref="AdminEnhancedMediaGalleryViewImageDetails" stepKey="openViewImageDetails"/>
-        <actionGroup ref="AssertAdminEnhancedMediaGalleryUsedInSectionDisplayedActionGroup"
-                     stepKey="assertUsedInSectionDisplayed"/>
+        <actionGroup ref="AssertAdminEnhancedMediaGalleryUsedInSectionDisplayedActionGroup" stepKey="assertUsedInSectionDisplayed"/>
     </test>
 </tests>
