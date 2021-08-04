@@ -38,9 +38,19 @@
             <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectFolderAfter">
                 <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
             </actionGroup>
-            <comment userInput="BIC workaround" stepKey="deleteImage"/>
-<!--            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage"/>-->
             <actionGroup ref="AdminMediaGalleryFolderDeleteActionGroup" stepKey="deleteFolder"/>
+            <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectWysiwygFolder">
+                <argument name="name" value="wysiwyg"/>
+            </actionGroup>
+            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage1">
+                <argument name="imageName" value="{{ImageUpload3.fileName}}"/>
+            </actionGroup>
+            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage2">
+                <argument name="imageName" value="{{ImageUpload3.fileName}}"/>
+            </actionGroup>
+            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage3">
+                <argument name="imageName" value="{{ImageUpload3.fileName}}"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCmsPage"/>
         </after>
