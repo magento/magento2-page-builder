@@ -5,8 +5,11 @@
  */
 -->
 
-<div class="pagebuilder-column-group"
-     css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}">
+<div class="pagebuilder-column-group pagebuilder-content-type-affordance"
+     css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}"
+     ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight'])"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
+     css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})" >
     <div class="pagebuilder-grid-size-indicator">
         <div class="indicator-wrapper" event="{ click: openGridForm }">
             <i class="icon-pagebuilder-grid-options"></i>
@@ -49,12 +52,17 @@
             </div>
         </div>
     </div>
+    <render args="getOptions().template" />
     <div class="resize-grid" each="gridSizeArray">
         <div class="grid-line"></div>
     </div>
     <div class="resize-ghost" afterRender="function (element) { bindGhost.call($data, element); }"></div>
     <div class="drop-placeholder" afterRender="function (element) { bindDropPlaceholder.call($data, element); }"></div>
     <div class="move-placeholder" afterRender="function (element) { bindMovePlaceholder.call($data, element); }"></div>
+    <div class="pagebuilder-display-label"
+         text="displayLabel().toUpperCase()">
+    </div>
+
     <div class="element-children"
          each="$parent.getChildren()"
          afterRender="function (element) { bindInteractions.call($data, element); }">
