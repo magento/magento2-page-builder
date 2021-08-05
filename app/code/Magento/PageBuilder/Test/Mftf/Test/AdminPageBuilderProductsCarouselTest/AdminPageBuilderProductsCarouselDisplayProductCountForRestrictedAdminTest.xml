@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselDisplayProductCountForRestrictedAdminTest" extends="AdminPageBuilderProductsGridValidateAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Restricted admin with access to CMS Page Edits and Widgets should be able to add product widget without errors"/>
+            <description value="Restricted admin with access to CMS Page Edits and Widgets should be able to add product widget on CMS Page using Page Builder without errors"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-42779"/>
+            <testCaseId value="MC-43007"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+
+        <before>
+            <!-- Create a restricted role with access only to CMS and Widgets -->
+            <createData entity="rolePageBuilderProductWidgetEdit" after="createCMSPage" stepKey="role2"/>
+
+            <!-- Create an restricted admin user assigned to role -->
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" after="loginAsAdmin" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderProductWidgetEdit"/>
+            </actionGroup>
+
+            <!-- Log out main Admin user -->
+            <actionGroup ref="AdminLogoutActionGroup" after="adminCreateUser" stepKey="logout"/>
+
+            <!-- Log in restricted Admin user -->
+            <actionGroup ref="AdminLoginActionGroup" after="logout" stepKey="loginAsRestrictedAdmin">
+                <argument name="username" value="{{NewAdminUser.username}}"/>
+                <argument name="password" value="{{NewAdminUser.password}}"/>
+            </actionGroup>
+        </before>
+
+        <after>
+            <!-- Log in main Admin user after restricted Admin was logged out -->
+            <actionGroup ref="AdminLoginActionGroup" after="logout" stepKey="loginAsAdmin"/>
+
+            <!-- Delete restricted Admin user -->
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" after="loginAsAdmin" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+
+            <!-- Delete restricted role -->
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" after="deleteUser" stepKey="deleteRole2">
+                <argument name="role" value="rolePageBuilderProductWidgetEdit"/>
+            </actionGroup>
+        </after>
+
+        <!-- Confirm there is no error message on screen -->
+        <dontSeeElement selector="{{EditPanelForm.panelSectionGenericError}}" after="openEditAfterDrop" stepKey="validateNoErrorMessageVisible"/>
+
+        <!-- Validate product total count for product selection conditions shows correct value -->
+        <actionGroup ref="validateProductTotals" after="selectCategory" stepKey="assertProductCountOnPanel">
+            <argument name="productsTotals" value="of 6 total"/>
+        </actionGroup>
+    </test>
+</tests>
