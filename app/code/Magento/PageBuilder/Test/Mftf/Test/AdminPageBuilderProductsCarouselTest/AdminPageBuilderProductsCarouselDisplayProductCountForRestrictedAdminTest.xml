@@ -23,7 +23,7 @@
 
         <before>
             <!-- Create a restricted role with access only to CMS and Widgets -->
-            <createData entity="rolePageBuilderProductWidgetEdit" after="createCMSPage" stepKey="role2"/>
+            <createData entity="rolePageBuilderProductWidgetEdit" after="createCMSPage" stepKey="createRestrictedRole"/>
 
             <!-- Create an restricted admin user assigned to role -->
             <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" after="loginAsAdmin" stepKey="adminCreateUser">
@@ -32,10 +32,10 @@
             </actionGroup>
 
             <!-- Log out main Admin user -->
-            <actionGroup ref="AdminLogoutActionGroup" after="adminCreateUser" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" after="adminCreateUser" stepKey="adminLogout"/>
 
             <!-- Log in restricted Admin user -->
-            <actionGroup ref="AdminLoginActionGroup" after="logout" stepKey="loginAsRestrictedAdmin">
+            <actionGroup ref="AdminLoginActionGroup" after="adminLogout" stepKey="loginAsRestrictedAdmin">
                 <argument name="username" value="{{NewAdminUser.username}}"/>
                 <argument name="password" value="{{NewAdminUser.password}}"/>
             </actionGroup>
@@ -51,9 +51,12 @@
             </actionGroup>
 
             <!-- Delete restricted role -->
-            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" after="deleteUser" stepKey="deleteRole2">
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" after="deleteUser" stepKey="deleteRestrictedRole">
                 <argument name="role" value="rolePageBuilderProductWidgetEdit"/>
             </actionGroup>
+
+            <!-- Log out the restricted Admin User -->
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="adminLogoutRestricted"/>
         </after>
 
         <!-- Confirm there is no error message on screen -->
