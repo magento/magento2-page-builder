@@ -60,10 +60,11 @@
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="waitForTableMenuItem"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.table}}" stepKey="clickOnTableMenuItem"/>
-        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem('2')}}" stepKey="waitForTableMenuIFirstItem"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem('2')}}" stepKey="clickOnTableMenuFirstItem"/>
-        <waitForElement selector="{{WYSIWYGOnPageBuilderInline.tableGrid('6', '1')}}" stepKey="waitForTableGrid"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.tableGrid('6', '1')}}" stepKey="chooseTableSize"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem}}" stepKey="waitForTableMenuIFirstItem"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem}}" stepKey="clickOnTableMenuFirstItem"/>
+        <waitForElement selector="{{WYSIWYGOnPageBuilderInline.tableGrid('17')}}" stepKey="waitForTableGrid"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.tableGrid('17')}}" stepKey="chooseTableSize"/>
+        <click selector="{{TextOnStage.elementInText('1', 'td', '1')}}" stepKey="setFocusInTable"/>
 
         <!-- Validate Table Size is 7 x 2 -->
         <seeElement selector="{{TextOnStage.elementInText('1', 'table', '1')}}" stepKey="seeTable"/>
@@ -87,19 +88,17 @@
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar"/>
         <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().bottom" stepKey="tableToolbarBottomPosition"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="tableElementTopPosition"/>
-        <executeJS function="return Math.abs({$tableToolbarBottomPosition} - {$tableElementTopPosition})" stepKey="tableToolbarVsTablePositionDifference"/>
         <assertLessThanOrEqual stepKey="verifyTableToolbarDoesNotOverlapTable">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">tableToolbarVsTablePositionDifference</actualResult>
+            <expectedResult type="variable">tableElementTopPosition</expectedResult>
+            <actualResult type="variable">tableToolbarBottomPosition</actualResult>
         </assertLessThanOrEqual>
 
         <!-- Validate Main Toolbar Doesn't Overlap Table Content -->
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="mainToolbarTopPosition"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="tableElementBottomPosition"/>
-        <executeJS function="return Math.abs({$mainToolbarTopPosition} - {$tableElementBottomPosition})" stepKey="mainToolbarVsTablePositionDifference"/>
         <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">mainToolbarVsTablePositionDifference</actualResult>
+            <expectedResult type="variable">mainToolbarTopPosition</expectedResult>
+            <actualResult type="variable">tableElementBottomPosition</actualResult>
         </assertLessThan>
 
         <!-- Move Text to 6/12 Column -->
@@ -131,19 +130,17 @@
         <!-- Validate Table Toolbar Doesn't Overlap Table Content 2 -->
         <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().top" stepKey="tableToolbarTopPosition2"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="tableElementBottomPosition2"/>
-        <executeJS function="return Math.abs({$tableToolbarTopPosition2} - {$tableElementBottomPosition2})" stepKey="tableToolbarVsTablePositionDifference2"/>
         <assertLessThanOrEqual stepKey="verifyTableToolbarDoesNotOverlapTable2">
-            <expectedResult type="int">15</expectedResult>
-            <actualResult type="variable">tableToolbarVsTablePositionDifference2</actualResult>
+            <expectedResult type="variable">tableElementBottomPosition2</expectedResult>
+            <actualResult type="variable">tableToolbarTopPosition2</actualResult>
         </assertLessThanOrEqual>
 
         <!-- Validate Main Toolbar Doesn't Overlap Table Content 2 -->
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="mainToolbarTopPosition2"/>
-        <executeJS function="return Math.abs({$mainToolbarTopPosition2} - {$tableElementBottomPosition2})" stepKey="mainToolbarVsTablePositionDifference2"/>
-        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable2">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">mainToolbarVsTablePositionDifference2</actualResult>
-        </assertLessThan>
+        <assertLessThanOrEqual stepKey="verifyMainToolbarDoesNotOverlapTable2">
+            <expectedResult type="variable">mainToolbarTopPosition2</expectedResult>
+            <actualResult type="variable">tableElementBottomPosition2</actualResult>
+        </assertLessThanOrEqual>
 
         <!-- Add Video to Column 1 & Move Text Back to Column 1 -->
         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor2">
@@ -192,18 +189,16 @@
         <!-- Validate Table Toolbar Doesn't Overlap Table Content 3 -->
         <executeJS function="return document.querySelector(&quot;{{WYSIWYGOnPageBuilderInline.tableToolbar}}&quot;).getBoundingClientRect().bottom" stepKey="tableToolbarBottomPosition3"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().top" stepKey="tableElementTopPosition3"/>
-        <executeJS function="return Math.abs({$tableToolbarBottomPosition3} - {$tableElementTopPosition3})" stepKey="tableToolbarVsTablePositionDifference3"/>
         <assertLessThanOrEqual stepKey="verifyTableToolbarDoesNotOverlapTable3">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">tableToolbarVsTablePositionDifference3</actualResult>
+            <expectedResult type="variable">tableToolbarBottomPosition3</expectedResult>
+            <actualResult type="variable">tableElementTopPosition3</actualResult>
         </assertLessThanOrEqual>
 
         <!-- Validate Main Toolbar Doesn't Overlap Table Content 3 -->
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="mainToolbarBottomPosition3"/>
-        <executeJS function="return Math.abs({$mainToolbarBottomPosition3} - {$tableElementTopPosition3})" stepKey="mainToolbarVsTablePositionDifference3"/>
-        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable3">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">mainToolbarVsTablePositionDifference3</actualResult>
-        </assertLessThan>
+        <assertLessThanOrEqual stepKey="verifyMainToolbarDoesNotOverlapTable3">
+            <expectedResult type="variable">tableElementTopPosition3</expectedResult>
+            <actualResult type="variable">mainToolbarBottomPosition3</actualResult>
+        </assertLessThanOrEqual>
     </test>
 </tests>

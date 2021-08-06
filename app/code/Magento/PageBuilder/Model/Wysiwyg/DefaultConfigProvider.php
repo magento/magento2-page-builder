@@ -42,7 +42,7 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
         $config->addData(
             [
                 'tinymce' => [
-                    'toolbar' => 'undo redo | styleselect | fontsizeselect | lineheightselect | forecolor backcolor ' .
+                    'toolbar' => 'undo redo | styleselect | fontsizeselect | lineheight | forecolor backcolor ' .
                         '| bold italic underline | alignleft aligncenter alignright | numlist bullist ' .
                         '| link image table charmap',
 
@@ -57,15 +57,11 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
                             'media',
                             'noneditable',
                             'table',
-                            'contextmenu',
                             'paste',
                             'code',
                             'help',
                             'table',
-                            'textcolor',
-                            'image',
-                            'colorpicker',
-                            'lineheight'
+                            'image'
                         ]
                     ),
                     'content_css' => [
