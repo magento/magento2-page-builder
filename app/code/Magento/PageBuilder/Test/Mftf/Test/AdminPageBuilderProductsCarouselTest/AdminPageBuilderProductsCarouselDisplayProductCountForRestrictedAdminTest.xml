@@ -23,12 +23,14 @@
 
         <before>
             <!-- Create a restricted role with access only to CMS and Widgets -->
-            <createData entity="rolePageBuilderProductWidgetEdit" after="createCMSPage" stepKey="createRestrictedRole"/>
+            <actionGroup ref="AdminCreateRoleActionGroup" after="loginAsAdmin" stepKey="createRestrictedRole">
+                <argument name="restrictedRole" value="Content"/>
+                <argument name="User" value="adminRole"/>
+            </actionGroup>
 
             <!-- Create an restricted admin user assigned to role -->
-            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" after="loginAsAdmin" stepKey="adminCreateUser">
-                <argument name="user" value="NewAdminUser"/>
-                <argument name="role" value="rolePageBuilderProductWidgetEdit"/>
+            <actionGroup ref="AdminCreateUserActionGroup" after="createRestrictedRole" stepKey="adminCreateUser">
+                <argument name="role" value="adminRole"/>
             </actionGroup>
 
             <!-- Log out main Admin user -->
@@ -36,8 +38,8 @@
 
             <!-- Log in restricted Admin user -->
             <actionGroup ref="AdminLoginActionGroup" after="adminLogout" stepKey="loginAsRestrictedAdmin">
-                <argument name="username" value="{{NewAdminUser.username}}"/>
-                <argument name="password" value="{{NewAdminUser.password}}"/>
+                <argument name="username" value="{{newAdmin.username}}"/>
+                <argument name="password" value="{{newAdmin.password}}"/>
             </actionGroup>
         </before>
 
@@ -47,12 +49,12 @@
 
             <!-- Delete restricted Admin user -->
             <actionGroup ref="AdminDeleteCustomUserActionGroup" after="loginAsAdmin" stepKey="deleteUser">
-                <argument name="user" value="NewAdminUser"/>
+                <argument name="user" value="newAdmin"/>
             </actionGroup>
 
             <!-- Delete restricted role -->
-            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" after="deleteUser" stepKey="deleteRestrictedRole">
-                <argument name="role" value="rolePageBuilderProductWidgetEdit"/>
+            <actionGroup ref="AdminDeleteUserRoleActionGroup" after="deleteUser" stepKey="deleteRestrictedRole">
+                <argument name="roleName" value="{{adminRole.name}}"/>
             </actionGroup>
 
             <!-- Log out the restricted Admin User -->
