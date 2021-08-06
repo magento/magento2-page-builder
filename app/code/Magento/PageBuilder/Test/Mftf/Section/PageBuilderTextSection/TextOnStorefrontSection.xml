@@ -25,6 +25,7 @@
         <element name="textInImportantStyle" type="text" selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='{{arg1}}']" parameterized="true"/>
         <element name="emptyTextInImportantStyle" type="text" selector="//div[@data-content-type='text'][{{arg1}}]//div[@class='cms-content-important'][not(*)]" parameterized="true"/>
         <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=text][data-element=main]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="emptyTextInHeading1Style" selector="//div[@data-content-type='text'][1]//h1" type="text" />
         <!-- Advanced Configuration -->
         <element name="advancedConfigurationPath" type="text" parameterized="true" selector="(//div[@data-content-type=&quot;text&quot;])[{{arg1}}]"/>
         <element name="alignment" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true" deprecated="Styles are not inline"/>
