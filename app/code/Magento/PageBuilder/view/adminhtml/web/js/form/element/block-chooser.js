@@ -84,7 +84,7 @@ define([
                         this.errorMessage(this.messages.UNKOWN_ERROR);
 
                         return;
-                    } else if ($.isArray(response)) {
+                    } else if (Array.isArray(response)) {
                         this.meta({});
                         this.errorMessage(this.messages.UNKNOWN_SELECTION);
 

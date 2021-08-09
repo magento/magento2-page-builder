@@ -42,10 +42,10 @@ define([
                 this.elements.push(el);
                 $(el).on('change', this.updateValue.bind(this));
                 $(el).nextAll('.rule-param-apply').on('click', function () {
-                    $(el).change();
+                    $(el).trigger('change');
                 });
                 $(el).closest('li').find('.rule-param-remove').on('click', function () {
-                    $(el).val('').change();
+                    $(el).val('').trigger('change');
                 });
                 this.updateValue(this);
             }.bind(this));
