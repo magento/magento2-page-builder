@@ -1087,6 +1087,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         });
         this.gridSizeHistory.set(newGridSize, columnWidths);
       }
+    }
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    ;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
+
+      delete options.duplicate;
+      return options;
     };
 
     return Preview;
