@@ -35,6 +35,8 @@ import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./g
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import createContentType from "../../content-type-factory";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
+import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
+import Option from "Magento_PageBuilder/js/content-type-menu/option";
 
 
 /**
@@ -1128,6 +1130,17 @@ export default class Preview extends PreviewCollection {
                 });
             this.gridSizeHistory.set(newGridSize, columnWidths);
         }
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+        delete options.duplicate;
+        return options;
     }
 }
 
