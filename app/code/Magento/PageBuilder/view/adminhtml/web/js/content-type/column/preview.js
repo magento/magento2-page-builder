@@ -86,6 +86,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this2.updateDisplayLabel();
         }
       });
+
+      _events.on("column:removeAfter", function (args) {
+        if (args.contentType.id === _this2.contentType.id) {
+          _this2.disableRemoveOnLastColumn(args);
+        }
+      });
     }
     /**
      * Make a reference to the element in the column
@@ -252,6 +258,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
         this.displayLabel((0, _translate)("Column") + " " + columnNumber + "(" + newLabel + ")");
       }
+    };
+
+    _proto.disableRemoveOnLastColumn = function disableRemoveOnLastColumn(args) {
+      if (args.parentContentType.children().length !== 1) {
+        return;
+      }
+
+      var lastColumn = args.parentContentType.children()[0];
+      var removeOption = lastColumn.preview.getOptions().getOption('remove');
+      removeOption.isDisabled(true);
     }
     /**
      * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
