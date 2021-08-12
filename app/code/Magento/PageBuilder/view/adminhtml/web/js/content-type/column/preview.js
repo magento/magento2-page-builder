@@ -87,6 +87,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
+      _events.on("column:removeAfter", function (args) {
+        if (args.contentType.id === _this2.contentType.id) {
+          _this2.disableRemoveOnLastColumn(args);
+        }
+      });
+
       if (_config.getContentTypeConfig("column-group")) {
         _events.on("column:dropAfter", function (args) {
           if (args.id === _this2.contentType.id) {
