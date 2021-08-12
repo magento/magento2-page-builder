@@ -185,6 +185,37 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }, {});
     }
     /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    ;
+
+    _proto.getStyleWithout = function getStyleWithout(element, styleProperties) {
+      var stylesObject = element.style();
+      return Object.keys(stylesObject).filter(function (key) {
+        return !styleProperties.includes(key);
+      }).reduce(function (obj, key) {
+        var _extends3;
+
+        return _extends({}, obj, (_extends3 = {}, _extends3[key] = stylesObject[key], _extends3));
+      }, {});
+    }
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    ;
+
+    _proto.getBackgroundImage = function getBackgroundImage() {
+      var mobileImage = this.contentType.dataStore.get("mobile_image");
+      var desktopImage = this.contentType.dataStore.get("background_image");
+      var backgroundImage = this.viewport() === "mobile" && mobileImage.length ? mobileImage : desktopImage;
+      return backgroundImage.length ? "url(\"" + backgroundImage[0].url + "\")" : "none";
+    }
+    /**
      * Retrieve the resize utils
      *
      * @returns {Resize}

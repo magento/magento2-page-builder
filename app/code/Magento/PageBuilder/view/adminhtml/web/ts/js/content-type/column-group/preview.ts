@@ -209,6 +209,40 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return Object.keys(stylesObject)
+            .filter((key) => !styleProperties.includes(key))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: stylesObject[key],
+                };
+            }, {});
+    }
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
+    }
+
+    /**
      * Retrieve the resize utils
      *
      * @returns {Resize}

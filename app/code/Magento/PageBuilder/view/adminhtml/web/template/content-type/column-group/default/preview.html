@@ -6,10 +6,10 @@
 -->
 
 <div class="pagebuilder-column-group pagebuilder-content-type-affordance pagebuilder-content-type"
-     css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}"
      ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight'])"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-     css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})" >
+     css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})"
+     attr="data.main.attributes">
 
     <render args="getOptions().template" />
     <div class="resize-grid" each="gridSizeArray">
@@ -22,11 +22,13 @@
          text="displayLabel().toUpperCase()">
     </div>
 
-    <div class="element-children content-type-container"
-         each="$parent.getChildren()"
-         data-bind="sortable: getSortableOptions()"
-         afterRender="function (element) { bindInteractions.call($data, element); }">
-        <render args="{name: preview.template, data: preview}"/>
 
-    </div>
+        <div class="element-children content-type-container"
+             ko-style="Object.assign({}, getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight']), {backgroundImage: getBackgroundImage()})"
+             each="$parent.getChildren()"
+             data-bind="sortable: getSortableOptions()"
+             afterRender="function (element) { bindInteractions.call($data, element); }">
+            <render args="{name: preview.template, data: preview}"/>
+
+        </div>
 </div>
