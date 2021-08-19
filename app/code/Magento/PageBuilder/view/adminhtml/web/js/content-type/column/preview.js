@@ -86,6 +86,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this2.updateDisplayLabel();
         }
       });
+
+      _events.on("column:removeAfter", function (args) {
+        if (args.contentType.id === _this2.contentType.id) {
+          _this2.disableRemoveOnLastColumn(args);
+        }
+      });
     }
     /**
      * Make a reference to the element in the column

@@ -17,7 +17,10 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
-import {ContentTypeMountEventParamsInterface, ContentTypeMoveEventParamsInterface} from "../content-type-events.types";
+import {
+    ContentTypeMoveEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {updateColumnWidth} from "./resize";
@@ -85,6 +88,13 @@ export default class Preview extends PreviewCollection {
                 this.updateDisplayLabel();
             }
         });
+
+        events.on("column:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
+            if (args.contentType.id === this.contentType.id) {
+                this.disableRemoveOnLastColumn(args);
+            }
+        });
+
     }
 
     /**
@@ -154,7 +164,6 @@ export default class Preview extends PreviewCollection {
                 const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
                     Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,
                 );
-
                 return Promise.all([
                     createContentType(
                         this.contentType.config,
@@ -272,6 +281,15 @@ export default class Preview extends PreviewCollection {
             const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
             this.displayLabel(`${$t("Column")} ${columnNumber}(${newLabel})`);
         }
+    }
+    public disableRemoveOnLastColumn(args: ContentTypeRemovedEventParamsInterface) {
+        if (args.parentContentType.children().length !== 1) {
+            return;
+        }
+        let lastColumn = args.parentContentType.children()[0];
+        let removeOption = lastColumn.preview.getOptions().getOption('remove');
+        removeOption.isDisabled(true);
+
     }
 
     /**
