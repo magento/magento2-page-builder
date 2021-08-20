@@ -35,6 +35,8 @@ import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./g
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import createContentType from "../../content-type-factory";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
+import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
+import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
 
 
 /**
@@ -192,6 +194,26 @@ export default class Preview extends PreviewCollection {
                 this.contentType.addChild(columns[1], 1);
             },
         );
+    }
+
+    /**
+     * Use the conditional remove to disable the option when the content type has a single child
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
     }
 
     /**

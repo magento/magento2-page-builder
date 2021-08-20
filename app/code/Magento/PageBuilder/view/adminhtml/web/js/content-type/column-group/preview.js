@@ -15,7 +15,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/utils/pagebuilder-header-height", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type-factory"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _pagebuilderHeaderHeight, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2, _contentTypeFactory) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/utils/pagebuilder-header-height", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _pagebuilderHeaderHeight, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2, _contentTypeFactory, _hideShowOption) {
   function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
   /**
@@ -167,6 +167,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         _this3.contentType.addChild(columns[1], 1);
       });
+    }
+    /**
+     * Use the conditional remove to disable the option when the content type has a single child
+     *
+     * @returns {OptionsInterface}
+     */
+    ;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
+
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
+      return options;
     }
     /**
      * Return selected element styles
