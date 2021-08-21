@@ -240,8 +240,14 @@
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="clickSelectFromGalleryBtn"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <comment userInput="BIC workaround" stepKey="clickStorageRoot"/>
+        <comment userInput="BIC workaround" stepKey="waitForPageLoad"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
