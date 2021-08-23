@@ -8,14 +8,21 @@
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Suite/etc/suiteSchema.xsd">
     <suite name="PageBuilderNewMediaGalleryRenditionsSuite">
         <before>
-            <actionGroup ref="AdminEnableWYSIWYGActionGroup" stepKey="disableWYSIWYG" />
+            <actionGroup ref="AdminDisableWYSIWYGActionGroup" stepKey="disableWYSIWYG" />
             <magentoCLI command="config:set {{MediaGalleryConfigDataEnabled.path}} {{MediaGalleryConfigDataEnabled.value}}" stepKey="enableEnhancedMediaGallery"/>
             <magentoCLI command="config:set {{MediaGalleryRenditionsDataEnabled.path}} {{MediaGalleryRenditionsDataEnabled.value}}" stepKey="enableMediaGalleryRenditions"/>
+
+            <!-- Create Media Gallery Directories for `wysiwyg` -->
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminOpenCreateNewCMSPageActionGroup" stepKey="openNewPage"/>
+            <actionGroup ref="AdminOpenMediaGalleryFromPageNoEditorActionGroup" stepKey="openMediaGalleryForPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminEnableWYSIWYGActionGroup" stepKey="enableWYSIWYG"/>
         </before>
         <after>
             <magentoCLI command="config:set {{MediaGalleryRenditionsDataDisabled.path}} {{MediaGalleryRenditionsDataDisabled.value}}" stepKey="disableMediaGalleryRenditions"/>
             <magentoCLI command="config:set {{MediaGalleryConfigDataDisabled.path}} {{MediaGalleryConfigDataDisabled.value}}" stepKey="disableEnhancedMediaGallery"/>
-            <actionGroup ref="AdminEnableWYSIWYGActionGroup" stepKey="enableWYSIWYG" />
+            <actionGroup ref="AdminEnableWYSIWYGActionGroup" stepKey="enableWYSIWYG"/>
         </after>
         <include>
             <group name="page_builder_new_media_gallery_renditions"/>
