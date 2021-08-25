@@ -38,6 +38,7 @@
         <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo6">
             <argument name="gridSize" value="6"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="validateLeftColumnWidth"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="validateRightColumnWidth"/>
@@ -62,6 +63,7 @@
         <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo12">
             <argument name="gridSize" value="12"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSecondEditPanelSettings"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateLeftColumnWidth3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','10/12')}}" stepKey="validateRightColumnWidth3"/>
     </test>
