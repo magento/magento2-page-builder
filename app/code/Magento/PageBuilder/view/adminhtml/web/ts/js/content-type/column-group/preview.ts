@@ -189,9 +189,6 @@ export default class Preview extends PreviewCollection {
             modifyOldNeighbour = getAdjacentColumn(column, "-1");
         }
 
-        // Set the column to it's smallest column width
-        updateColumnWidth(column, this.resizeUtils.getSmallestColumnWidth());
-
         // Move the content type
         moveContentType(column, movePosition.insertIndex, this.contentType);
 
@@ -205,8 +202,7 @@ export default class Preview extends PreviewCollection {
 
         // Modify the columns new neighbour
         const newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
-            (this.resizeUtils.getColumnWidth(movePosition.affectedColumn) -
-                this.resizeUtils.getSmallestColumnWidth()).toString(),
+            (this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - oldWidth).toString(),
         );
 
         // Reduce the affected columns width by the smallest column width

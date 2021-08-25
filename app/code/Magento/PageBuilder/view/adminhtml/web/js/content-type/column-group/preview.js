@@ -164,10 +164,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         modifyOldNeighbour = (0, _resize.getAdjacentColumn)(column, "+1");
       } else if ((0, _resize.getAdjacentColumn)(column, "-1")) {
         modifyOldNeighbour = (0, _resize.getAdjacentColumn)(column, "-1");
-      } // Set the column to it's smallest column width
+      } // Move the content type
 
-
-      (0, _resize.updateColumnWidth)(column, this.resizeUtils.getSmallestColumnWidth()); // Move the content type
 
       (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.contentType); // Modify the old neighbour
 
@@ -177,7 +175,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       } // Modify the columns new neighbour
 
 
-      var newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - this.resizeUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
+      var newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - oldWidth).toString()); // Reduce the affected columns width by the smallest column width
 
       (0, _resize.updateColumnWidth)(movePosition.affectedColumn, newNeighbourWidth);
     }
