@@ -34,9 +34,10 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo8">
+            <argument name="gridSize" value="8"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
     </test>
