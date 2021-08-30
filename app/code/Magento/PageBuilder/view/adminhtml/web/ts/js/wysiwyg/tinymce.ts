@@ -195,6 +195,11 @@ export default class Wysiwyg implements WysiwygInterface {
                 });
                 this.resizeObserver.observe($inlineToolbar.get(0));
             }
+            const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-tinymce-aux`);
+            if (!!dialogContainer) {
+                dialogContainer.setAttribute('data-editor-aux', this.elementId);
+                document.body.appendChild(dialogContainer);
+            }
         });
     }
 
@@ -219,6 +224,12 @@ export default class Wysiwyg implements WysiwygInterface {
             this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
         }
         this.toolbarHeight = 0;
+
+        const dialogContainer = document.querySelector(`[data-editor-aux=${this.elementId}]`);
+        if (!!dialogContainer) {
+            dialogContainer.removeAttribute('data-editor-aux');
+            document.querySelector(`#${this.elementId}`).parentNode.appendChild(dialogContainer);
+        }
 
         events.trigger("stage:interactionStop");
     }
