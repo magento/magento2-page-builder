@@ -89,7 +89,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("column:removeAfter", function (args) {
         if (args.contentType.id === _this2.contentType.id) {
-          _this2.disableRemoveOnLastColumn(args);
+          _this2.resetRemoveOnLastColumn(args.parentContentType);
         }
       });
     }
@@ -258,15 +258,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
         this.displayLabel((0, _translate)("Column") + " " + columnNumber + "(" + newLabel + ")");
       }
-    };
+    }
+    /**
+     * Reset remove option on Last Column depending on remaining child columns of the parent content type
+     * @param parentContentType
+     */
+    ;
 
-    _proto.disableRemoveOnLastColumn = function disableRemoveOnLastColumn(args) {
-      if (args.parentContentType.children().length !== 1) {
+    _proto.resetRemoveOnLastColumn = function resetRemoveOnLastColumn(parentContentType) {
+      var lastColumn = parentContentType.children()[parentContentType.children().length - 1];
+      var removeOption = lastColumn.preview.getOptions().getOption('remove');
+
+      if (parentContentType.children().length !== 1) {
+        removeOption.isDisabled(false);
         return;
       }
 
-      var lastColumn = args.parentContentType.children()[0];
-      var removeOption = lastColumn.preview.getOptions().getOption('remove');
       removeOption.isDisabled(true);
     }
     /**

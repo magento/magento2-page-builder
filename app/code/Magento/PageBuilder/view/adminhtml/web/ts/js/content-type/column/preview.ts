@@ -18,6 +18,7 @@ import ContentTypeInterface from "../../content-type.types";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import {
+    ContentTypeMountEventParamsInterface,
     ContentTypeMoveEventParamsInterface,
     ContentTypeRemovedEventParamsInterface
 } from "../content-type-events.types";
@@ -91,7 +92,7 @@ export default class Preview extends PreviewCollection {
 
         events.on("column:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.contentType.id === this.contentType.id) {
-                this.disableRemoveOnLastColumn(args);
+                this.resetRemoveOnLastColumn(args.parentContentType);
             }
         });
 
@@ -282,14 +283,19 @@ export default class Preview extends PreviewCollection {
             this.displayLabel(`${$t("Column")} ${columnNumber}(${newLabel})`);
         }
     }
-    public disableRemoveOnLastColumn(args: ContentTypeRemovedEventParamsInterface) {
-        if (args.parentContentType.children().length !== 1) {
+
+    /**
+     * Reset remove option on Last Column depending on remaining child columns of the parent content type
+     * @param parentContentType
+     */
+    public resetRemoveOnLastColumn(parentContentType: ContentTypeCollectionInterface) {
+        let lastColumn = parentContentType.children()[parentContentType.children().length - 1];
+        let removeOption = lastColumn.preview.getOptions().getOption('remove');
+        if (parentContentType.children().length !== 1) {
+            removeOption.isDisabled(false);
             return;
         }
-        let lastColumn = args.parentContentType.children()[0];
-        let removeOption = lastColumn.preview.getOptions().getOption('remove');
         removeOption.isDisabled(true);
-
     }
 
     /**
