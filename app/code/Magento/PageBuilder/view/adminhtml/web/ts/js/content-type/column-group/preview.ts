@@ -26,7 +26,10 @@ import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
-import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
+import {
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
@@ -151,7 +154,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column")) {
-            events.on("column-group:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("column-group:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
                 if (args.id === this.contentType.id) {
                     this.setDefaultGridSizeOnColumnGroup();
                     this.createColumns();
