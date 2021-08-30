@@ -166,7 +166,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         var dialogContainer = document.querySelector("#" + _this2.elementId + " ~ .tox-tinymce-aux");
 
         if (!!dialogContainer) {
-          dialogContainer.setAttribute('data-editor-aux', _this2.elementId);
+          dialogContainer.setAttribute("data-editor-aux", _this2.elementId);
           document.body.appendChild(dialogContainer);
         }
       });
@@ -196,7 +196,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       var dialogContainer = document.querySelector("[data-editor-aux=" + this.elementId + "]");
 
       if (!!dialogContainer) {
-        dialogContainer.removeAttribute('data-editor-aux');
+        dialogContainer.removeAttribute("data-editor-aux");
         document.querySelector("#" + this.elementId).parentNode.appendChild(dialogContainer);
       }
 

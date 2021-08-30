@@ -197,7 +197,7 @@ export default class Wysiwyg implements WysiwygInterface {
             }
             const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-tinymce-aux`);
             if (!!dialogContainer) {
-                dialogContainer.setAttribute('data-editor-aux', this.elementId);
+                dialogContainer.setAttribute("data-editor-aux", this.elementId);
                 document.body.appendChild(dialogContainer);
             }
         });
@@ -227,7 +227,7 @@ export default class Wysiwyg implements WysiwygInterface {
 
         const dialogContainer = document.querySelector(`[data-editor-aux=${this.elementId}]`);
         if (!!dialogContainer) {
-            dialogContainer.removeAttribute('data-editor-aux');
+            dialogContainer.removeAttribute("data-editor-aux");
             document.querySelector(`#${this.elementId}`).parentNode.appendChild(dialogContainer);
         }
 
