@@ -18,6 +18,7 @@ import ContentTypeInterface from "../../content-type.types";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import {
+    ContentTypeDroppedCreateEventParamsInterface, ContentTypeDuplicateEventParamsInterface,
     ContentTypeMountEventParamsInterface,
     ContentTypeMoveEventParamsInterface,
     ContentTypeRemovedEventParamsInterface
@@ -88,8 +89,15 @@ export default class Preview extends PreviewCollection {
             if (args.contentType.id === this.contentType.id) {
                 this.updateDisplayLabel();
             }
+            this.resetRemoveOnLastColumn(args.targetParent);
+            this.resetRemoveOnLastColumn(args.sourceParent);
         });
-
+        events.on("column:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            this.resetRemoveOnLastColumn(this.contentType.parentContentType);
+        });
+        events.on("column:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
+            this.resetRemoveOnLastColumn(args.duplicateContentType.parentContentType);
+        });
         events.on("column:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.contentType.id === this.contentType.id) {
                 this.resetRemoveOnLastColumn(args.parentContentType);
@@ -289,13 +297,20 @@ export default class Preview extends PreviewCollection {
      * @param parentContentType
      */
     public resetRemoveOnLastColumn(parentContentType: ContentTypeCollectionInterface) {
-        let lastColumn = parentContentType.children()[parentContentType.children().length - 1];
-        let removeOption = lastColumn.preview.getOptions().getOption('remove');
-        if (parentContentType.children().length !== 1) {
-            removeOption.isDisabled(false);
+        const siblings = parentContentType.children();
+        if (siblings.length < 1) {
             return;
         }
-        removeOption.isDisabled(true);
+        if (siblings.length == 1) {
+            const lastColumn = siblings[0];
+            const options = lastColumn.preview.getOptions();
+            options.getOption('remove').isDisabled(true)
+            return;
+        }
+        siblings.forEach( function(column) {
+            const removeOption = column.preview.getOptions().getOption('remove');
+            removeOption.isDisabled(false);
+        });
     }
 
     /**

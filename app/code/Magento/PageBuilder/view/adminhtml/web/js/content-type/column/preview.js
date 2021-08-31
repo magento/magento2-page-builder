@@ -85,6 +85,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (args.contentType.id === _this2.contentType.id) {
           _this2.updateDisplayLabel();
         }
+
+        _this2.resetRemoveOnLastColumn(args.targetParent);
+
+        _this2.resetRemoveOnLastColumn(args.sourceParent);
+      });
+
+      _events.on("column:dropAfter", function (args) {
+        _this2.resetRemoveOnLastColumn(_this2.contentType.parentContentType);
+      });
+
+      _events.on("column:duplicateAfter", function (args) {
+        _this2.resetRemoveOnLastColumn(args.duplicateContentType.parentContentType);
       });
 
       _events.on("column:removeAfter", function (args) {
@@ -266,15 +278,23 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.resetRemoveOnLastColumn = function resetRemoveOnLastColumn(parentContentType) {
-      var lastColumn = parentContentType.children()[parentContentType.children().length - 1];
-      var removeOption = lastColumn.preview.getOptions().getOption('remove');
+      var siblings = parentContentType.children();
 
-      if (parentContentType.children().length !== 1) {
-        removeOption.isDisabled(false);
+      if (siblings.length < 1) {
         return;
       }
 
-      removeOption.isDisabled(true);
+      if (siblings.length == 1) {
+        var lastColumn = siblings[0];
+        var options = lastColumn.preview.getOptions();
+        options.getOption('remove').isDisabled(true);
+        return;
+      }
+
+      siblings.forEach(function (column) {
+        var removeOption = column.preview.getOptions().getOption('remove');
+        removeOption.isDisabled(false);
+      });
     }
     /**
      * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
