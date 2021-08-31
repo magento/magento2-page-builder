@@ -97,10 +97,10 @@
         <!-- Validate Main Toolbar Doesn't Overlap Table Content -->
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="mainToolbarTopPosition"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="tableElementBottomPosition"/>
-        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable">
+        <assertLessThanOrEqual stepKey="verifyMainToolbarDoesNotOverlapTable">
             <expectedResult type="variable">mainToolbarTopPosition</expectedResult>
             <actualResult type="variable">tableElementBottomPosition</actualResult>
-        </assertLessThan>
+        </assertLessThanOrEqual>
 
         <!-- Move Text to 6/12 Column -->
         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
