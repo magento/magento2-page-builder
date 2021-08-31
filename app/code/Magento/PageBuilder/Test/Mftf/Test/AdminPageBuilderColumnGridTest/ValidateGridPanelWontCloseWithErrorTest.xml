@@ -40,11 +40,10 @@
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
             <argument name="gridSize" value="50"/>
-            <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
         </actionGroup>
         <click selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="clickOtherArea"/>
-        <seeElement selector="{{ColumnOnBackend.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
+        <seeElement selector="{{ColumnOnBackend.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError2"/>
         <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2"/>
         <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
