@@ -21,6 +21,9 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openMediaGalleryBefore"/>
             <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridBefore"/>
+            <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="openWysiwygFolder">
+                <argument name="name" value="wysiwyg"/>
+            </actionGroup>
             <actionGroup ref="AdminMediaGalleryOpenNewFolderFormActionGroup" stepKey="openNewFolderForm"/>
             <actionGroup ref="AdminMediaGalleryCreateNewFolderActionGroup" stepKey="createNewFolder">
                 <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
@@ -32,10 +35,13 @@
         <after>
             <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openStandaloneMediaGalleryAfter"/>
             <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridToDefaultViewAfter"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
             <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectFolderAfter">
                 <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
             </actionGroup>
-            <actionGroup ref="AdminEnhancedMediaGalleryImageDeleteActionGroup" stepKey="deleteImage"/>
+            <comment userInput="BIC workaround" stepKey="deleteImage"/>
             <actionGroup ref="AdminMediaGalleryFolderDeleteActionGroup" stepKey="deleteFolder"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCmsPage"/>
@@ -60,6 +66,9 @@
         </actionGroup>
         <actionGroup ref="AdminOpenSelectImageFromGalleryActionGroup" stepKey="openMediaGallery"/>
         <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGrid"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectMediaGalleryFolder">
             <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
         </actionGroup>
@@ -75,11 +84,13 @@
         <!-- Check if Image have "used in" data section -->
         <actionGroup ref="AdminOpenStandaloneMediaGalleryActionGroup" stepKey="openStandaloneMediaGallery"/>
         <actionGroup ref="ResetAdminDataGridToDefaultViewActionGroup" stepKey="resetAdminDataGridToDefaultView"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder2">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="AdminMediaGalleryFolderSelectActionGroup" stepKey="selectMediaGalleryFolderToCheck">
             <argument name="name" value="{{AdminMediaGalleryFolderData.name}}"/>
         </actionGroup>
         <actionGroup ref="AdminEnhancedMediaGalleryViewImageDetails" stepKey="openViewImageDetails"/>
-        <actionGroup ref="AssertAdminEnhancedMediaGalleryUsedInSectionDisplayedActionGroup"
-                     stepKey="assertUsedInSectionDisplayed"/>
+        <actionGroup ref="AssertAdminEnhancedMediaGalleryUsedInSectionDisplayedActionGroup" stepKey="assertUsedInSectionDisplayed"/>
     </test>
 </tests>

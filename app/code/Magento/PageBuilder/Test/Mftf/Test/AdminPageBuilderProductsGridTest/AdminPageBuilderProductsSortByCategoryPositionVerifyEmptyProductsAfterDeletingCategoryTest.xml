@@ -30,7 +30,8 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
-        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
+        <waitForElement selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="waitForEmptyProductsPlaceholder" after="switchToPageBuilderStage2"/>
+        <waitForText userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="waitForEmptyProductsPlaceholder"/>
         <!-- Storefront: Validate Sort Order Changed -->
         <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="seeNoProductsMessage"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
