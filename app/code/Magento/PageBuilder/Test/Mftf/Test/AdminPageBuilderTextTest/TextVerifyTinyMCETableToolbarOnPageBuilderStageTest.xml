@@ -64,7 +64,6 @@
         <click selector="{{WYSIWYGOnPageBuilderInline.tableMenuFirstItem}}" stepKey="clickOnTableMenuFirstItem"/>
         <waitForElement selector="{{WYSIWYGOnPageBuilderInline.tableGrid('17')}}" stepKey="waitForTableGrid"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.tableGrid('17')}}" stepKey="chooseTableSize"/>
-        <click selector="{{TextOnStage.elementInText('1', 'td', '1')}}" stepKey="setFocusInTable"/>
 
         <!-- Validate Table Size is 7 x 2 -->
         <seeElement selector="{{TextOnStage.elementInText('1', 'table', '1')}}" stepKey="seeTable"/>
@@ -96,10 +95,10 @@
         <!-- Validate Main Toolbar Doesn't Overlap Table Content -->
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="mainToolbarTopPosition"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.tinymce('1')}}//table&quot;, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="tableElementBottomPosition"/>
-        <assertLessThan stepKey="verifyMainToolbarDoesNotOverlapTable">
+        <assertLessThanOrEqual stepKey="verifyMainToolbarDoesNotOverlapTable">
             <expectedResult type="variable">mainToolbarTopPosition</expectedResult>
             <actualResult type="variable">tableElementBottomPosition</actualResult>
-        </assertLessThan>
+        </assertLessThanOrEqual>
 
         <!-- Move Text to 6/12 Column -->
         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
