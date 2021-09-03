@@ -272,12 +272,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     }
     /**
-     * Reset remove option on Last Column depending on remaining child columns of the parent content type
+     * Reset remove option on all columns in a column-group parentContentType depending on the number of remaining child columns
      * @param parentContentType
      */
     ;
 
     _proto.resetRemoveOnLastColumn = function resetRemoveOnLastColumn(parentContentType) {
+      if (!parentContentType) {
+        //can happen if the column is moved within the same column group
+        return;
+      }
+
       var siblings = parentContentType.children();
 
       if (siblings.length < 1) {

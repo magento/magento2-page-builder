@@ -293,10 +293,14 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Reset remove option on Last Column depending on remaining child columns of the parent content type
+     * Reset remove option on all columns in a column-group parentContentType depending on the number of remaining child columns
      * @param parentContentType
      */
     public resetRemoveOnLastColumn(parentContentType: ContentTypeCollectionInterface) {
+        if (!parentContentType) {
+            //can happen if the column is moved within the same column group
+            return;
+        }
         const siblings = parentContentType.children();
         if (siblings.length < 1) {
             return;
