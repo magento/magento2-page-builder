@@ -3,6 +3,12 @@
 //  * See COPYING.txt for license details.
 //  */
 
+& when (@media-common = true) {
+    .pagebuilder-column-group {
+        display: flex;
+    }
+}
+
 //
 //  Mobile (style-m.css)
 //  _____________________________________________
@@ -10,6 +16,5 @@
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .pagebuilder-column-group {
         flex-wrap: wrap;
-        display: flex;
     }
 }
