@@ -46,7 +46,7 @@ export function resizeGrid(
     newGridSize: number,
     gridSizeHistory: Map<number, number[]>,
 ) {
-    if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
+    if (newGridSize === columnGroup.preview.getResizeUtils().getInitialGridSize()) {
         return;
     }
 
@@ -56,7 +56,6 @@ export function resizeGrid(
     if (newGridSize < columnGroup.getChildren()().length) {
         removeEmptyColumnsToFit(columnGroup, newGridSize);
     }
-    columnGroup.preview.gridSize(newGridSize);
 
     // update column widths
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
@@ -78,7 +77,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
 
     // Validate that the operation will be successful
     const numCols = columnGroup.getChildren()().length;
-    const currentGridSize = columnGroup.preview.getResizeUtils().getGridSize();
+    const currentGridSize = columnGroup.preview.getResizeUtils().getInitialGridSize();
     if (newGridSize < currentGridSize && numCols > newGridSize) {
         let numEmptyColumns = 0;
         columnGroup.getChildren()().forEach(
@@ -140,7 +139,7 @@ function redistributeColumnWidths(
     }
 
     const resizeUtils = columnGroup.preview.getResizeUtils();
-    const existingGridSize = resizeUtils.getGridSize();
+    const existingGridSize = resizeUtils.getInitialGridSize();
     const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
         Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
     );
@@ -214,6 +213,8 @@ function redistributeColumnWidths(
 
     // persist new grid size so upcoming calls to get column widths are calculated correctly
     columnGroup.dataStore.set("grid_size", newGridSize);
+    columnGroup.dataStore.unset("initial_grid_size");
+   // columnGroup.dataStore.set("initial_grid_size", newGridSize);
 
     // apply leftover columns if the new grid size did not distribute evenly into existing columns
     if (Math.round(resizeUtils.getColumnsWidth()) < 100) {

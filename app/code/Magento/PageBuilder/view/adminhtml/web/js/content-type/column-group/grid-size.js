@@ -63,7 +63,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
 
   function resizeGrid(columnGroup, newGridSize, gridSizeHistory) {
-    if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
+    if (newGridSize === columnGroup.preview.getResizeUtils().getInitialGridSize()) {
       return;
     }
 
@@ -71,9 +71,8 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
     if (newGridSize < columnGroup.getChildren()().length) {
       removeEmptyColumnsToFit(columnGroup, newGridSize);
-    }
+    } // update column widths
 
-    columnGroup.preview.gridSize(newGridSize); // update column widths
 
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
   }
@@ -95,7 +94,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
 
     var numCols = columnGroup.getChildren()().length;
-    var currentGridSize = columnGroup.preview.getResizeUtils().getGridSize();
+    var currentGridSize = columnGroup.preview.getResizeUtils().getInitialGridSize();
 
     if (newGridSize < currentGridSize && numCols > newGridSize) {
       var numEmptyColumns = 0;
@@ -154,7 +153,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     }
 
     var resizeUtils = columnGroup.preview.getResizeUtils();
-    var existingGridSize = resizeUtils.getGridSize();
+    var existingGridSize = resizeUtils.getInitialGridSize();
     var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
     var totalNewWidths = 0;
     var numColumns = columnGroup.getChildren()().length;
@@ -214,7 +213,9 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
       column.preview.updateDisplayLabel();
     }); // persist new grid size so upcoming calls to get column widths are calculated correctly
 
-    columnGroup.dataStore.set("grid_size", newGridSize); // apply leftover columns if the new grid size did not distribute evenly into existing columns
+    columnGroup.dataStore.set("grid_size", newGridSize);
+    columnGroup.dataStore.unset("initial_grid_size"); // columnGroup.dataStore.set("initial_grid_size", newGridSize);
+    // apply leftover columns if the new grid size did not distribute evenly into existing columns
 
     if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
       applyLeftoverColumns(columnGroup, newGridSize);
