@@ -86,7 +86,7 @@
                 </validation>
             </settings>
         </field>
-        <field name="grid_size" sortOrder="20" formElement="input">
+        <field name="grid_size" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/grid-size">
             <settings>
                 <label translate="true">Grid Size</label>
                 <additionalClasses>
@@ -96,6 +96,7 @@
                     <rule name="validate-number" xsi:type="boolean">true</rule>
                     <rule name="greater-than-equals-to" xsi:type="number">2</rule>
                     <rule name="less-than-equals-to" xsi:type="number">16</rule>
+                    <rule name="validate-grid-size" xsi:type="boolean">true</rule>
                 </validation>
                 <tooltip>
                     <description translate="true">
@@ -105,6 +106,11 @@
                         ]]>
                     </description>
                 </tooltip>
+            </settings>
+        </field>
+        <field name="non_empty_column_count" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
             </settings>
         </field>
     </fieldset>

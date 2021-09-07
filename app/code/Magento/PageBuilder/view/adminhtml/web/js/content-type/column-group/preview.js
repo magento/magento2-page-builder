@@ -119,11 +119,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _this;
     }
     /**
-     * Bind events
+     * Handle user editing an instance
      */
 
 
     var _proto = Preview.prototype;
+
+    _proto.onOptionEdit = function onOptionEdit() {
+      var numCols = this.contentType.getChildren()().length; //count the number of non empty columns
+
+      var numEmptyColumns = 0;
+      this.contentType.getChildren()().forEach(function (column) {
+        if (column.getChildren()().length === 0) {
+          numEmptyColumns++;
+        }
+      });
+      this.contentType.dataStore.set('non_empty_column_count', numCols - numEmptyColumns);
+      this.contentType.dataStore.set('initial_grid_size', this.contentType.dataStore.get('grid_size'));
+
+      _previewCollection2.prototype.openEdit.call(this);
+    }
+    /**
+     * Bind events
+     */
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
@@ -139,6 +158,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         });
       }
+
+      _events.on("form:" + this.contentType.id + ":saveAfter", function () {
+        if (_this2.contentType.dataStore.get('grid_size') != _this2.contentType.dataStore.get('initial_grid_size')) {
+          _this2.updateGridSize();
+        }
+      });
     }
     /**
      * Set default grid size on current column group
@@ -505,7 +530,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var newGridSize = parseInt(this.gridSizeInput().toString(), 10);
 
       if (newGridSize || newGridSize === 0) {
-        if (newGridSize !== this.resizeUtils.getGridSize()) {
+        if (newGridSize !== this.resizeUtils.getGridSize() || true) {
           try {
             (0, _gridSize.resizeGrid)(this.contentType, newGridSize, this.gridSizeHistory);
             this.recordGridResize(newGridSize);

@@ -6,8 +6,9 @@
 define([
     'jquery',
     'underscore',
+    'Magento_PageBuilder/js/content-type/column-group/grid-size',
     'Magento_Ui/js/lib/validation/utils'
-], function ($, _, utils) {
+], function ($, _, gridSizeUtil ,utils) {
     'use strict';
 
     /**
@@ -291,6 +292,18 @@ define([
                 return validateCalc(value);
             },
             $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
+        );
+
+        validator.addRule(
+            'validate-grid-size',
+            function (value, params, additionalParams) {
+                if (value < additionalParams.non_empty_column_count) {
+                    return false;
+                }
+
+                return true;
+            },
+            $.mage.__('Grid size cannot be smaller than the current total amount of columns, minus any empty columns.')
         );
 
         validateObjectField(validator, 'validate-number');

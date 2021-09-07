@@ -37,7 +37,6 @@ import {createColumn} from "./factory";
 import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import createContentType from "../../content-type-factory";
-import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
 import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
 
@@ -146,6 +145,25 @@ export default class Preview extends PreviewCollection {
         );
     }
 
+    /**
+     * Handle user editing an instance
+     */
+    public onOptionEdit(): void {
+        const numCols = this.contentType.getChildren()().length;
+        //count the number of non empty columns
+        let numEmptyColumns = 0;
+        this.contentType.getChildren()().forEach(
+            (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                if (column.getChildren()().length === 0) {
+                    numEmptyColumns++;
+                }
+            });
+
+        this.contentType.dataStore.set('non_empty_column_count', numCols - numEmptyColumns);
+        this.contentType.dataStore.set('initial_grid_size', this.contentType.dataStore.get('grid_size'));
+        super.openEdit();
+    }
+
 
     /**
      * Bind events
@@ -161,6 +179,12 @@ export default class Preview extends PreviewCollection {
                 }
             });
         }
+
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            if (this.contentType.dataStore.get('grid_size') != this.contentType.dataStore.get('initial_grid_size')) {
+                this.updateGridSize();
+            }
+        });
     }
 
     /**
@@ -525,7 +549,7 @@ export default class Preview extends PreviewCollection {
 
         const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
         if (newGridSize || newGridSize === 0) {
-            if (newGridSize !== this.resizeUtils.getGridSize()) {
+            if (newGridSize !== this.resizeUtils.getGridSize() || true) {
                 try {
                     resizeGrid(
                         this.contentType,
