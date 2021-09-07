@@ -1108,8 +1108,8 @@ export default class Preview extends PreviewCollection {
                 self.dropPlaceholder.removeClass("left right");
             },
             over() {
-                // Is the element currently being dragged a column?
-                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                // Is the element currently being dragged a column group?
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
                     // Always calculate drop positions when an element is dragged over
                     self.dropPositions = calculateDropPositions(
                         self.contentType as ContentTypeCollectionInterface<ColumnGroupPreview>,
