@@ -74,13 +74,14 @@
         <!-- Validate Light/Dark Slider -->
         <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
         <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName)}}" stepKey="waitForColorSwatchColor4"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName)}}//div&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
-        <assertRegExp stepKey="assertColorSwatchColor">
+        <assertRegExp stepKey="seeColorInSwatch">
             <expectedResult type="string">/{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSliderRegex}}/</expectedResult>
             <actualResult type="variable">grabBackgroundColorValue</actualResult>
         </assertRegExp>
         <grabValueFrom selector="{{ColorPicker.inputField}}" stepKey="grabColorFromInput" />
-        <assertRegExp stepKey="assertColorInInputField">
+        <assertRegExp stepKey="seeColorInInputField4">
             <expectedResult type="string">/{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSliderRegex}}/</expectedResult>
             <actualResult type="variable">grabColorFromInput</actualResult>
         </assertRegExp>
