@@ -14,10 +14,14 @@ define([
 
     return Abstract.extend({
         validate: function () {
-            var formQuery = 'index=' + this.ns;
-            var externalForm = this.requestModule(formQuery)();
-            var nonEmptyColumnCount = externalForm.source.data.non_empty_column_count;
-            this.validationParams = {'non_empty_column_count': nonEmptyColumnCount};
+            const formQuery = 'index=' + this.ns;
+            const externalForm = this.requestModule(formQuery)();
+            const nonEmptyColumnCount = externalForm.source.data.non_empty_column_count;
+            const maxGridSize = externalForm.source.data.max_grid_size;
+            this.validationParams = {
+                'non_empty_column_count': nonEmptyColumnCount,
+                'max_grid_size': maxGridSize
+            };
             return this._super();
         }
     });

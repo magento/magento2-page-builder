@@ -306,6 +306,18 @@ define([
             $.mage.__('Grid size cannot be smaller than the current total amount of columns, minus any empty columns.')
         );
 
+        validator.addRule(
+            'validate-max-grid-size',
+            function (value, params, additionalParams) {
+                if (value > additionalParams.max_grid_size) {
+                    return false;
+                }
+
+                return true;
+            },
+            $.mage.__('Grid size cannot be greater than the Maximum Column Grid Size setting in Content Management configuration.')
+        );
+
         validateObjectField(validator, 'validate-number');
         validateObjectField(validator, 'less-than-equals-to');
         validateObjectField(validator, 'greater-than-equals-to');

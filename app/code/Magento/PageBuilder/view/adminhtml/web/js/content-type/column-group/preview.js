@@ -135,6 +135,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
       this.contentType.dataStore.set('non_empty_column_count', numCols - numEmptyColumns);
+      this.contentType.dataStore.set('max_grid_size', (0, _gridSize.getMaxGridSize)());
       this.contentType.dataStore.set('initial_grid_size', this.contentType.dataStore.get('grid_size'));
 
       _previewCollection2.prototype.openEdit.call(this);
@@ -1065,8 +1066,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           self.dropPlaceholder.removeClass("left right");
         },
         over: function over() {
-          // Is the element currently being dragged a column?
-          if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
+          // Is the element currently being dragged a column group?
+          if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column-group")) {
             // Always calculate drop positions when an element is dragged over
             self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.contentType);
             self.dropOverElement = true;

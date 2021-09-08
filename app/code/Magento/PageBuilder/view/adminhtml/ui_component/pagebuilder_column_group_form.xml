@@ -94,21 +94,27 @@
                 </additionalClasses>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
                     <rule name="greater-than-equals-to" xsi:type="number">2</rule>
-                    <rule name="less-than-equals-to" xsi:type="number">16</rule>
+                    <rule name="validate-max-grid-size" xsi:type="boolean">true</rule>
                     <rule name="validate-grid-size" xsi:type="boolean">true</rule>
                 </validation>
                 <tooltip>
                     <description translate="true">
                         <![CDATA[
                         <p>Grid Size determines the maximum number of columns available.</p>
-                         <p>Select a value between 2 and 16.</p>
+                         <p>Select a value between 2 and the value set in Maximum Column Grid Size setting in Content Management configuration.</p>
                         ]]>
                     </description>
                 </tooltip>
             </settings>
         </field>
         <field name="non_empty_column_count" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="max_grid_size" formElement="hidden">
             <settings>
                 <dataType>text</dataType>
             </settings>
