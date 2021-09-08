@@ -110,7 +110,7 @@ define([
             ).show();
 
             // Enable the button so the user can save
-            this.modal.find(this.options.saveButton).removeProp('disabled');
+            this.modal.find(this.options.saveButton).prop('disabled', false);
         },
 
         /**
