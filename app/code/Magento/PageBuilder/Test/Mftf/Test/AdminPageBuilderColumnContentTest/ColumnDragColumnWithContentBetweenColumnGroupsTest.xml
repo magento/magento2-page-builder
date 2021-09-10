@@ -37,7 +37,7 @@
         <comment userInput="Drag Column beneath existing columns to make a new column group" stepKey="commentDragColumnBelowColumns"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
-            <argument name="contentTypeIndex" value="4"/>
+            <argument name="contentTypeIndex" value="2"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="dropZoneIndex" value="2"/>
@@ -46,11 +46,9 @@
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('2')}}" userInput="2" stepKey="seeTwoColumnsSecondGroup"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="validateColumnGroupAdded"/>
         <comment userInput="Drag new column onto first group" stepKey="commentDragColumnToFirstColumnGroup"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoFirstColumnGroup">
-            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        <actionGroup ref="dragColumnToColumnGroup" stepKey="dragColumnIntoFirstColumnGroup">
+            <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="3"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="3" stepKey="seeThreeColumnsFirstGroup"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="5" stepKey="validateFiveTotalColumns"/>

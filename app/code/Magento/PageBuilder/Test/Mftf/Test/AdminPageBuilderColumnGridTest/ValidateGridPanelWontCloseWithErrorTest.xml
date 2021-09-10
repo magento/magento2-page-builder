@@ -44,9 +44,9 @@
         </actionGroup>
         <click selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="clickOtherArea"/>
         <seeElement selector="{{ColumnOnBackend.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError2"/>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput()}}" userInput="8" stepKey="enterValidGridSize"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2"/>
-        <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
-        <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
+        <waitForElement selector="{{ColumnOnBackend.gridSizeInput()}}" stepKey="waitForValidatePanelClosed"/>
+        <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput()}}" stepKey="validatePanelClosed"/>
     </test>
 </tests>

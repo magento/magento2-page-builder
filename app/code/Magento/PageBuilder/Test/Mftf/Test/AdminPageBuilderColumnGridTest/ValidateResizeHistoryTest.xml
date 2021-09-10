@@ -53,8 +53,8 @@
             <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
             <actualResult type="variable">columnOneWidthGrid13</actualResult>
         </assertGreaterThan>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="12" stepKey="resetGridSizeTo12"/>
-        <pressKey selector="{{ColumnOnBackend.gridSizeInput('1')}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput()}}" userInput="12" stepKey="resetGridSizeTo12"/>
+        <pressKey selector="{{ColumnOnBackend.gridSizeInput()}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForPageLoad stepKey="waitForUpdate"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>

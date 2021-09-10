@@ -315,7 +315,7 @@ define([
 
                 return true;
             },
-            $.mage.__('Grid size cannot be greater than the Maximum Column Grid Size setting in Content Management configuration.')
+            $.mage.__('Please enter a value less than or equal to the Maximum Column Grid Size configuration.')
         );
 
         validateObjectField(validator, 'validate-number');
