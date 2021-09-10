@@ -7,7 +7,11 @@
 
 <div class="pagebuilder-content-type pagebuilder-block" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false" css="{'pagebuilder-block-overlay': displayingBlockPreview()}">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-        <div if="displayingBlockPreview" class="rendered-content" html="data.main.html" afterRender="initializeWidgets"></div>
+        <!-- ko if: displayingBlockPreview -->
+            <!-- ko with: {dataMainUnsanitizedHtml: html, initializeWidgets: initializeWidgets} -->
+                <div class="rendered-content" html="dataMainUnsanitizedHtml" afterRender="initializeWidgets"></div>
+            <!-- /ko -->
+        <!-- /ko -->
         <div ifnot="displayingBlockPreview" class="pagebuilder-block-placeholder">
             <span class="placeholder-text" text="placeholderText"></span>
         </div>

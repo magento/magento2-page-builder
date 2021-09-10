@@ -16,11 +16,15 @@
              class="preview-image"
              css="getViewportImageData().css"
              ko-style="getViewportImageData().style" />
-        <figcaption if="data.caption.html()"
-                    attr="data.caption.attributes"
-                    css="data.caption.css"
-                    html="data.caption.html"
-                    ko-style="data.caption.style">
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: data.caption.html() -->
+        <!-- ko with: data.caption -->
+        <!-- ko with: {attributes: attributes, css: css, dataCaptionUnsanitizedHtml: html, style: style} -->
+        <figcaption attr="attributes"
+                    css="css"
+                    html="dataCaptionUnsanitizedHtml"
+                    ko-style="style">
         </figcaption>
     </figure>
 </div>
