@@ -7,7 +7,8 @@
 
 <div class="pagebuilder-content-type pagebuilder-map" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko with: {apiKeyErrorMessageUnsanitizedHtml: apiKeyErrorMessage} -->
-    <div visible="!apiKeyValid()" class="google-map-auth-failure-placeholder"><p html="apiKeyErrorMessageUnsanitizedHtml"></p></div>
+        <div visible="!apiKeyValid()" class="google-map-auth-failure-placeholder"><p html="apiKeyErrorMessageUnsanitizedHtml"></p></div>
+    <!-- /ko -->
     <div visible="apiKeyValid" attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" afterRender="renderMap"></div>
     <render args="getOptions().template" ></render>
 </div>
