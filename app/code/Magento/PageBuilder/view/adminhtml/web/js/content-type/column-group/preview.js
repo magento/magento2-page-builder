@@ -15,7 +15,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/utils/pagebuilder-header-height", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _pagebuilderHeaderHeight, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2, _contentTypeFactory, _hideShowOption) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2, _contentTypeFactory, _hideShowOption) {
   function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
   /**
@@ -69,14 +69,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.dropPositions = [];
       _this.gridSizeHistory = new Map();
       _this.interactionLevel = 0;
-
-      _this.onDocumentClick = function (event) {
-        // Verify the click event wasn't within our form
-        if (!_jquery.contains((0, _jquery)(_this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], (0, _jquery)(event.target)[0])) {
-          _this.closeGridForm();
-        }
-      };
-
       _this.resizeUtils = new _resize(_this.contentType); // Keep track of the grid size in an observable
 
       _this.contentType.dataStore.subscribe(function (state) {
@@ -184,14 +176,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.createColumns = function createColumns() {
       var _this3 = this;
 
+      var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
+      var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
       Promise.all([(0, _contentTypeFactory)(_config.getContentTypeConfig("column"), this.contentType, this.contentType.stageId, {
-        width: 50 + "%"
+        width: col1Width + "%"
       }), (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), this.contentType, this.contentType.stageId, {
-        width: 50 + "%"
+        width: 100 - parseFloat(col1Width) + "%"
       })]).then(function (columns) {
         _this3.contentType.addChild(columns[0], 0);
 
         _this3.contentType.addChild(columns[1], 1);
+
+        _this3.fireMountEvent(_this3.contentType, columns[0], columns[1]);
       });
     }
     /**
@@ -287,6 +283,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
         (0, _resize.updateColumnWidth)(dropPosition.affectedColumn, newWidth);
+      });
+    }
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    ;
+
+    _proto.fireMountEvent = function fireMountEvent() {
+      for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
+        contentTypes[_key] = arguments[_key];
+      }
+
+      contentTypes.forEach(function (contentType) {
+        _events.trigger("contentType:mountAfter", {
+          id: contentType.id,
+          contentType: contentType
+        });
+
+        _events.trigger(contentType.config.name + ":mountAfter", {
+          id: contentType.id,
+          contentType: contentType
+        });
       });
     }
     /**
@@ -555,93 +575,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     }
     /**
-     * On grid input key up, check if the enter key was used and submit
-     *
-     * @param {Preview} context
-     * @param {KeyboardEvent} event
-     */
-    ;
-
-    _proto.onGridInputKeyUp = function onGridInputKeyUp(context, event) {
-      if (event.which === 13 || event.keyCode === 13) {
-        this.updateGridSize();
-      }
-    }
-    /**
-     * On grid input blur, update the grid size
-     */
-    ;
-
-    _proto.onGridInputBlur = function onGridInputBlur() {
-      this.updateGridSize();
-    }
-    /**
-     * Hide grid size panel on focus out
-     */
-    ;
-
-    _proto.closeGridForm = function closeGridForm() {
-      this.updateGridSize();
-
-      if (!this.gridSizeError()) {
-        this.gridFormOpen(false);
-        this.gridToolTipOverFlow(false);
-
-        _events.trigger("stage:interactionStop");
-
-        _events.trigger("stage:childFocusStop");
-
-        (0, _jquery)(document).off("click focusin", this.onDocumentClick);
-      }
-    }
-    /**
-     * Show grid size panel on click and start interaction
-     */
-    ;
-
-    _proto.openGridForm = function openGridForm() {
-      var _this8 = this;
-
-      var tooltip = (0, _jquery)(this.wrapperElement).find("[role='tooltip']");
-
-      if (!this.gridFormOpen()) {
-        this.gridSizeHistory = new Map();
-        this.recordGridResize(this.gridSize()); // inline tooltip out of bounds
-
-        var tooltipClientRectTop = tooltip[0].getBoundingClientRect().top - (0, _pagebuilderHeaderHeight)(this.contentType.stageId);
-
-        if ((0, _checkStageFullScreen)(this.contentType.stageId) && tooltip[0].getBoundingClientRect().height > tooltipClientRectTop) {
-          this.gridToolTipOverFlow(true);
-        }
-
-        this.gridFormOpen(true); // Wait for animation to complete
-
-        _underscore.delay(function () {
-          (0, _jquery)(_this8.wrapperElement).find(".grid-panel-item-wrapper input").focus().select();
-        }, 200);
-
-        (0, _jquery)(document).on("click focusin", this.onDocumentClick);
-
-        _events.trigger("stage:interactionStart");
-
-        _events.trigger("stage:childFocusStart");
-      }
-    }
-    /**
-     * Handle a click on the document closing the grid form
-     *
-     * @param {Event} event
-     */
-    ;
-
-    /**
      * Set columns in the group as resizing
      *
      * @param {Array<ContentTypeCollectionInterface<ColumnPreview>>} columns
      */
+    ;
+
     _proto.setColumnsAsResizing = function setColumnsAsResizing() {
-      for (var _len = arguments.length, columns = new Array(_len), _key = 0; _key < _len; _key++) {
-        columns[_key] = arguments[_key];
+      for (var _len2 = arguments.length, columns = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        columns[_key2] = arguments[_key2];
       }
 
       columns.forEach(function (column) {
@@ -702,7 +644,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.initMouseMove = function initMouseMove(group) {
-      var _this9 = this;
+      var _this8 = this;
 
       var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
@@ -710,7 +652,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return;
         }
 
-        var groupPosition = _this9.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
+        var groupPosition = _this8.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
 
         if (event.type === "touchmove") {
@@ -718,32 +660,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           event.pageY = event.originalEvent.pageY;
         }
 
-        if (_this9.eventIntersectsGroup(event, groupPosition)) {
+        if (_this8.eventIntersectsGroup(event, groupPosition)) {
           intersects = true;
 
-          _this9.onResizingMouseMove(event, group, groupPosition);
+          _this8.onResizingMouseMove(event, group, groupPosition);
 
-          _this9.onDraggingMouseMove(event, group, groupPosition);
+          _this8.onDraggingMouseMove(event, group, groupPosition);
 
-          _this9.onDroppingMouseMove(event, group, groupPosition);
+          _this8.onDroppingMouseMove(event, group, groupPosition);
         } else {
           intersects = false;
-          _this9.groupPositionCache = null;
-          _this9.dropPosition = null;
+          _this8.groupPositionCache = null;
+          _this8.dropPosition = null;
 
-          _this9.dropPlaceholder.removeClass("left right");
+          _this8.dropPlaceholder.removeClass("left right");
 
-          _this9.movePlaceholder.css("left", "").removeClass("active");
+          _this8.movePlaceholder.css("left", "").removeClass("active");
         }
       }).on("mouseup touchend", function () {
         if (intersects) {
-          _this9.handleMouseUp();
+          _this8.handleMouseUp();
         }
 
         intersects = false;
-        _this9.dropPosition = null;
+        _this8.dropPosition = null;
 
-        _this9.endAllInteractions();
+        _this8.endAllInteractions();
 
         _underscore.defer(function () {
           // Re-enable any disabled sortable areas
@@ -842,7 +784,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.onResizingMouseMove = function onResizingMouseMove(event, group, groupPosition) {
-      var _this10 = this;
+      var _this9 = this;
 
       var newColumnWidth;
 
@@ -902,8 +844,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
-                _this10.resizeColumnWidths = _this10.resizeUtils.determineColumnWidths(_this10.resizeColumnInstance, groupPosition);
-                _this10.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this10.resizeColumnWidths);
+                _this9.resizeColumnWidths = _this9.resizeUtils.determineColumnWidths(_this9.resizeColumnInstance, groupPosition);
+                _this9.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this9.resizeColumnWidths);
               });
             }
           }
@@ -1155,12 +1097,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.recordGridResize = function recordGridResize(newGridSize) {
-      var _this11 = this;
+      var _this10 = this;
 
       if (!this.gridSizeHistory.has(newGridSize)) {
         var columnWidths = [];
         this.contentType.getChildren()().forEach(function (column) {
-          columnWidths.push(_this11.resizeUtils.getColumnWidth(column));
+          columnWidths.push(_this10.resizeUtils.getColumnWidth(column));
         });
         this.gridSizeHistory.set(newGridSize, columnWidths);
       }

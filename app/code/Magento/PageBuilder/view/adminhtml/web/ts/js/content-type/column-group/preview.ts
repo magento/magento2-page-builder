@@ -16,9 +16,7 @@ import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
-import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
-import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
@@ -39,6 +37,7 @@ import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import createContentType from "../../content-type-factory";
 import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
 import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
+import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
 
 
 /**
@@ -202,25 +201,30 @@ export default class Preview extends PreviewCollection {
      * @returns {Promise<ContentTypeCollectionInterface>}
      */
     public createColumns(): void {
+        const defaultGridSize = getDefaultGridSize();
+        const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
+            Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,
+        );
 
         Promise.all([
             createContentType(
                 Config.getContentTypeConfig("column"),
                 this.contentType,
                 this.contentType.stageId,
-                {width: 50 + "%"},
+                {width: col1Width + "%"},
             ),
             createContentType(
                 Config.getContentTypeConfig("column"),
                 this.contentType,
                 this.contentType.stageId,
-                {width: 50 + "%"},
+                {width: (100 - parseFloat(col1Width)) + "%"},
             ),
         ]).then(
             (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
                 this.contentType.addChild(columns[0], 0);
                 this.contentType.addChild(columns[1], 1);
-            },
+                this.fireMountEvent(this.contentType, columns[0], columns[1]);
+                },
         );
     }
 
@@ -318,6 +322,18 @@ export default class Preview extends PreviewCollection {
 
             // Reduce the affected columns width by the smallest column width
             updateColumnWidth(dropPosition.affectedColumn, newWidth);
+        });
+    }
+
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
+        contentTypes.forEach((contentType) => {
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
         });
     }
 
@@ -575,79 +591,6 @@ export default class Preview extends PreviewCollection {
             } else {
                 this.gridSizeError(null);
             }
-        }
-    }
-
-    /**
-     * On grid input key up, check if the enter key was used and submit
-     *
-     * @param {Preview} context
-     * @param {KeyboardEvent} event
-     */
-    public onGridInputKeyUp(context: Preview, event: KeyboardEvent) {
-        if (event.which === 13 || event.keyCode === 13) {
-            this.updateGridSize();
-        }
-    }
-
-    /**
-     * On grid input blur, update the grid size
-     */
-    public onGridInputBlur() {
-        this.updateGridSize();
-    }
-
-    /**
-     * Hide grid size panel on focus out
-     */
-    public closeGridForm(): void {
-        this.updateGridSize();
-        if (!this.gridSizeError()) {
-            this.gridFormOpen(false);
-            this.gridToolTipOverFlow(false);
-            events.trigger("stage:interactionStop");
-            events.trigger("stage:childFocusStop");
-            $(document).off("click focusin", this.onDocumentClick);
-        }
-    }
-
-    /**
-     * Show grid size panel on click and start interaction
-     */
-    public openGridForm(): void {
-        const tooltip = $(this.wrapperElement).find("[role='tooltip']");
-        if (!this.gridFormOpen()) {
-            this.gridSizeHistory = new Map();
-            this.recordGridResize(this.gridSize());
-            // inline tooltip out of bounds
-            const tooltipClientRectTop = tooltip[0].getBoundingClientRect().top
-                                     - pageBuilderHeaderHeight(this.contentType.stageId);
-
-            if (checkStageFullScreen(this.contentType.stageId)
-                && tooltip[0].getBoundingClientRect().height > tooltipClientRectTop
-            ) {
-                this.gridToolTipOverFlow(true);
-            }
-            this.gridFormOpen(true);
-            // Wait for animation to complete
-            _.delay(() => {
-                $(this.wrapperElement).find(".grid-panel-item-wrapper input").focus().select();
-            }, 200);
-            $(document).on("click focusin", this.onDocumentClick);
-            events.trigger("stage:interactionStart");
-            events.trigger("stage:childFocusStart");
-        }
-    }
-
-    /**
-     * Handle a click on the document closing the grid form
-     *
-     * @param {Event} event
-     */
-    private onDocumentClick = (event: JQueryEventObject) => {
-        // Verify the click event wasn't within our form
-        if (!$.contains($(this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], $(event.target)[0])) {
-            this.closeGridForm();
         }
     }
 
