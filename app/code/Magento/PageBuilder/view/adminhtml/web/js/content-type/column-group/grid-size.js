@@ -149,6 +149,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         (0, _resize.updateColumnWidth)(column, columnWidths[index]);
       });
       columnGroup.dataStore.set("grid_size", newGridSize);
+      columnGroup.dataStore.unset("initial_grid_size");
       return;
     }
 
@@ -214,8 +215,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     }); // persist new grid size so upcoming calls to get column widths are calculated correctly
 
     columnGroup.dataStore.set("grid_size", newGridSize);
-    columnGroup.dataStore.unset("initial_grid_size"); // columnGroup.dataStore.set("initial_grid_size", newGridSize);
-    // apply leftover columns if the new grid size did not distribute evenly into existing columns
+    columnGroup.dataStore.unset("initial_grid_size"); // apply leftover columns if the new grid size did not distribute evenly into existing columns
 
     if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
       applyLeftoverColumns(columnGroup, newGridSize);
