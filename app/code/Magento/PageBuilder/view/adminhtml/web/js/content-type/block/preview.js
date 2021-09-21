@@ -169,11 +169,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         var content = "";
 
         if (response.data.content) {
-          _this2.showBlockPreview(true);
-
           content = _this2.processContent(response.data.content);
 
           _this2.data.main.html(content);
+
+          _this2.showBlockPreview(true);
 
           _this2.initializeWidgets(_this2.element);
         } else if (response.data.error) {

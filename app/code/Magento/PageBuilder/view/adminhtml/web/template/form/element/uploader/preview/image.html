@@ -48,13 +48,13 @@
                         disable="disabled"
                         data-force_static_path="1"
                         translate="translations.selectFromGallery"></label>
-                    <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"/>
+                    <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"></render>
                     <p class="image-upload-requirements">
                         <span if="$data.maxFileSize">
-                            <span translate="translations.maximumFileSize"></span>: <text args="formatSize($data.maxFileSize)"/>.
+                            <span translate="translations.maximumFileSize"></span>: <text args="formatSize($data.maxFileSize)"></text>.
                         </span>
                         <span if="$data.allowedExtensions">
-                            <span translate="translations.allowedFileTypes"></span>: <text args="getAllowedFileExtensionsInCommaDelimitedFormat()"/>.
+                            <span translate="translations.allowedFileTypes"></span>: <text args="getAllowedFileExtensionsInCommaDelimitedFormat()"></text>.
                         </span>
                     </p>
                 </div>
