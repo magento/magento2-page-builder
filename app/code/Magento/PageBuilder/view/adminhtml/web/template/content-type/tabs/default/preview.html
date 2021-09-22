@@ -6,7 +6,7 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-tabs children-min-height" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <render args="getOptions().template" visible="focusedTab() === null" />
+    <render args="getOptions().template" visible="focusedTab() === null" ></render>
     <div class="tabs-container" afterRender="function (element) { onContainerRender.call(this, element); }">
         <ul role="tablist" class="tabs-navigation" each="contentType.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css" data-bind="sortableChildren: getSortableOptions()">
             <with args="preview">
@@ -18,7 +18,7 @@
                     <a href="#no-tab"
                        class="tab-title focus-options"
                        attr="{ href: '#' + contentType.id }" event="{ dragstart: function(context, event) { event.preventDefault(); }}">
-                        <render args="getOptions().template" />
+                        <render args="getOptions().template" ></render>
                         <span class="tab-drag-handle" css="{disabled: contentType.parentContentType.children().length <= 1}"></span>
                         <span class="tab-title tab-name"
                               data-tab-title="true"
@@ -28,7 +28,7 @@
             </with>
         </ul>
         <div class="tabs-content children-min-height" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css">
-            <render args="childTemplate" />
+            <render args="childTemplate" ></render>
         </div>
     </div>
 </div>
