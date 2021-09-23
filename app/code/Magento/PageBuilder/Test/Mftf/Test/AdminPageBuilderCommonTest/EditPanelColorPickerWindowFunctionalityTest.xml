@@ -74,8 +74,17 @@
         <!-- Validate Light/Dark Slider -->
         <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
         <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
-        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider}}" stepKey="seeColorInInputField4"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName)}}" stepKey="waitForColorSwatchColor4"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName)}}//div&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabBackgroundColorValue"/>
+        <assertRegExp stepKey="seeColorInSwatch">
+            <expectedResult type="string">/{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSliderRegex}}/</expectedResult>
+            <actualResult type="variable">grabBackgroundColorValue</actualResult>
+        </assertRegExp>
+        <grabValueFrom selector="{{ColorPicker.inputField}}" stepKey="grabColorFromInput" />
+        <assertRegExp stepKey="seeColorInInputField4">
+            <expectedResult type="string">/{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSliderRegex}}/</expectedResult>
+            <actualResult type="variable">grabColorFromInput</actualResult>
+        </assertRegExp>
         <!-- Validate Hex Input Field -->
         <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
         <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
