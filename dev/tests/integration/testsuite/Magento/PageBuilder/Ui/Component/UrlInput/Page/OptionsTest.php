@@ -34,7 +34,7 @@ class OptionsTest extends \PHPUnit\Framework\TestCase
             $options[$pageId] = [
                 'value' => $pageId,
                 'label' => $item->getTitle(),
-                'identifier' => sprintf(__('ID: %s'), $pageId)
+                'identifier' => sprintf(__('ID: %s')->render(), $pageId)
             ];
         }
         return $options;
