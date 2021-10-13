@@ -19,7 +19,7 @@ define([
             this._super();
 
             if (this.overlay) {
-                this.overlay.zIndex('');
+                this.overlay.css('z-index', '');
             }
         }
     });

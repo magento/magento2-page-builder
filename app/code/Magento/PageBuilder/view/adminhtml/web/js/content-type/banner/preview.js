@@ -193,10 +193,10 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
 
         wysiwygConfig.adapter.settings.init_instance_callback = function (editor) {
           editor.on("focus", function () {
-            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.activeEditorOverlayZIndex);
+            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).css("z-index", _this3.activeEditorOverlayZIndex);
           });
           editor.on("blur", function () {
-            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.defaultOverlayZIndex);
+            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).css("z-index", _this3.defaultOverlayZIndex);
             (0, _nestingLinkDialog)(_this3.contentType.dataStore, _this3.wysiwyg, "message", "link_url");
             (0, _nestingWidgetDialog)(_this3.contentType.dataStore, _this3.wysiwyg, "message", "link_url");
           });
