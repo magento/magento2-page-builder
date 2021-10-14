@@ -6,7 +6,8 @@
 define([
     'jquery',
     'jquery-ui-modules/widget',
-    'Magento_Ui/js/modal/alert'
+    'Magento_Ui/js/modal/alert',
+    'jquery/z-index'
 ], function ($) {
     'use strict';
 
@@ -19,7 +20,7 @@ define([
             this._super();
 
             if (this.overlay) {
-                this.overlay.css('z-index', '');
+                this.overlay.zIndex('');
             }
         }
     });

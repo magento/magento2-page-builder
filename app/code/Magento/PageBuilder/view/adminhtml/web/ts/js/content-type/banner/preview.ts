@@ -6,6 +6,7 @@
 import "jarallax";
 import "jarallaxVideo";
 import $ from "jquery";
+import "jquery/z-index";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";
@@ -263,16 +264,10 @@ export default class Preview extends BasePreview {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
             wysiwygConfig.adapter.settings.init_instance_callback = (editor: Editor) => {
                 editor.on("focus", () => {
-                    $(this.element).parents(this.bannerOverlaySelector).css(
-                        "z-index",
-                        this.activeEditorOverlayZIndex,
-                    );
+                    $(this.element).parents(this.bannerOverlaySelector).zIndex(this.activeEditorOverlayZIndex);
                 });
                 editor.on("blur", () => {
-                    $(this.element).parents(this.bannerOverlaySelector).css(
-                        "z-index",
-                        this.defaultOverlayZIndex,
-                    );
+                    $(this.element).parents(this.bannerOverlaySelector).zIndex(this.defaultOverlayZIndex);
                     nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
                     nestingWidgetDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
                 });
