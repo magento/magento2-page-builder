@@ -70,6 +70,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setSlideName">
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltText">
+            <argument name="property" value="PageBuilderSlideAltTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleAttribute">
+            <argument name="property" value="PageBuilderSlideTitleAttributeProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
             <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
@@ -123,6 +129,8 @@
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusSlideOptions"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSBlockStage"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
@@ -205,6 +213,8 @@
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStage"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
@@ -256,6 +266,8 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStorefront"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefront">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
@@ -332,6 +344,8 @@
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStorefrontMobile"/>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStorefrontMobile">
