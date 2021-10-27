@@ -66,4 +66,5 @@ https://github.com/magento/magento2ce/pull/<related_pr>
  - [ ] Pull request has a meaningful description of its purpose
  - [ ] All commits are accompanied by meaningful commit messages
  - [ ] All new or changed code is covered with unit/integration tests (if applicable)
+ - [ ] README.md files for modified modules are updated and included in the pull request if any [README.md predefined sections](https://github.com/magento/devdocs/wiki/Magento-module-README.md) require an update
  - [ ] All automated tests passed successfully (all builds are green)

@@ -13,11 +13,10 @@
             <argument name="url" type="string"/>
             <argument name="textToDisplay" type="string"/>
             <argument name="title" type="string" defaultValue=""/>
-            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
         </arguments>
         <comment userInput="insertLinkInWYSIWYG" stepKey="comment"/>
-        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
-        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForElementVisible selector="{{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>

@@ -65,6 +65,16 @@ export default class Wysiwyg implements WysiwygInterface {
     );
 
     /**
+     * ResizeObserver to detect the toolbar height change
+     */
+    private resizeObserver: ResizeObserver;
+
+    /**
+     * Height of WYSIWYG toolbar
+     */
+    private toolbarHeight: number;
+
+    /**
      * @param {String} contentTypeId The ID in the registry of the content type.
      * @param {String} elementId The ID of the editor element in the DOM.
      * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
@@ -163,11 +173,33 @@ export default class Wysiwyg implements WysiwygInterface {
 
         // Wait for everything else to finish
         _.defer(() => {
-            this.getFixedToolbarContainer()
-                .find(".mce-tinymce-inline")
-                .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
+            const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
+            const self = this;
+
+            $inlineToolbar.css("min-width", this.config.adapter_config.minToolbarWidth + "px");
 
             this.invertInlineEditorToAccommodateOffscreenToolbar();
+
+            // Update toolbar when the height changes
+            this.toolbarHeight = $inlineToolbar.height();
+            if ($inlineToolbar.length) {
+                this.resizeObserver = new ResizeObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.target === $inlineToolbar.get(0)
+                            && entry.target.clientHeight !== self.toolbarHeight
+                        ) {
+                            self.invertInlineEditorToAccommodateOffscreenToolbar();
+                            self.toolbarHeight = entry.target.clientHeight;
+                        }
+                    }
+                });
+                this.resizeObserver.observe($inlineToolbar.get(0));
+            }
+            const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-tinymce-aux`);
+            if (!!dialogContainer) {
+                dialogContainer.setAttribute("data-editor-aux", this.elementId);
+                document.body.appendChild(dialogContainer);
+            }
         });
     }
 
@@ -185,8 +217,19 @@ export default class Wysiwyg implements WysiwygInterface {
     private onBlur() {
         this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active")
-            .find(".mce-tinymce-inline")
-            .css("transform", "");
+            .find(".tox-tinymce-inline")
+            .css("top", "");
+
+        if (this.resizeObserver) {
+            this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+        }
+        this.toolbarHeight = 0;
+
+        const dialogContainer = document.querySelector(`[data-editor-aux=${this.elementId}]`);
+        if (!!dialogContainer) {
+            dialogContainer.removeAttribute("data-editor-aux");
+            document.querySelector(`#${this.elementId}`).parentNode.appendChild(dialogContainer);
+        }
 
         events.trigger("stage:interactionStop");
     }
@@ -218,7 +261,7 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
+        const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
 
         if (!$inlineToolbar.length) {
             return;
@@ -228,10 +271,17 @@ export default class Wysiwyg implements WysiwygInterface {
                                          - pageBuilderHeaderHeight(this.stageId);
 
         if (!checkStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
-            $inlineToolbar.css("transform", "translateY(-100%)");
+            let extraHeight = 0;
+            if ($inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-left']").length
+                || $inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-right']").length
+                || $inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-centered']").length
+            ) {
+                extraHeight = 29;
+            }
+            $inlineToolbar.css("top", ($inlineToolbar.height() - extraHeight) * -1);
             return;
         }
-        $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
+        $inlineToolbar.css("top", "");
     }
 
     /**

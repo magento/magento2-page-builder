@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import WysiwygEvents from "mage/adminhtml/wysiwyg/events";
+import _ from "underscore";
 import {AdditionalDataConfigInterface} from "../../../../content-type-config.types";
 import delayUntil from "../../../../utils/delay-until";
 import WysiwygComponentInitializerInterface from "../../../../wysiwyg/component-initializer-interface";

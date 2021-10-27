@@ -1,5 +1,12 @@
 /*eslint-disable */
 /* jscs:disable */
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/pagebuilder-header-height"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen, _pagebuilderHeaderHeight) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -131,9 +138,37 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
 
       _underscore.defer(function () {
-        _this2.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
+        var $inlineToolbar = _this2.getFixedToolbarContainer().find(".tox-tinymce-inline");
 
-        _this2.invertInlineEditorToAccommodateOffscreenToolbar();
+        var self = _this2;
+        $inlineToolbar.css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
+
+        _this2.invertInlineEditorToAccommodateOffscreenToolbar(); // Update toolbar when the height changes
+
+
+        _this2.toolbarHeight = $inlineToolbar.height();
+
+        if ($inlineToolbar.length) {
+          _this2.resizeObserver = new ResizeObserver(function (entries) {
+            for (var _iterator = _createForOfIteratorHelperLoose(entries), _step; !(_step = _iterator()).done;) {
+              var entry = _step.value;
+
+              if (entry.target === $inlineToolbar.get(0) && entry.target.clientHeight !== self.toolbarHeight) {
+                self.invertInlineEditorToAccommodateOffscreenToolbar();
+                self.toolbarHeight = entry.target.clientHeight;
+              }
+            }
+          });
+
+          _this2.resizeObserver.observe($inlineToolbar.get(0));
+        }
+
+        var dialogContainer = document.querySelector("#" + _this2.elementId + " ~ .tox-tinymce-aux");
+
+        if (!!dialogContainer) {
+          dialogContainer.setAttribute("data-editor-aux", _this2.elementId);
+          document.body.appendChild(dialogContainer);
+        }
       });
     }
     /**
@@ -151,7 +186,19 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.onBlur = function onBlur() {
-      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").css("transform", "");
+      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".tox-tinymce-inline").css("top", "");
+
+      if (this.resizeObserver) {
+        this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+      }
+
+      this.toolbarHeight = 0;
+      var dialogContainer = document.querySelector("[data-editor-aux=" + this.elementId + "]");
+
+      if (!!dialogContainer) {
+        dialogContainer.removeAttribute("data-editor-aux");
+        document.querySelector("#" + this.elementId).parentNode.appendChild(dialogContainer);
+      }
 
       _events2.trigger("stage:interactionStop");
     }
@@ -181,7 +228,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         return;
       }
 
-      var $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
+      var $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
 
       if (!$inlineToolbar.length) {
         return;
@@ -190,11 +237,17 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       var inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top - (0, _pagebuilderHeaderHeight)(this.stageId);
 
       if (!(0, _checkStageFullScreen)(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
-        $inlineToolbar.css("transform", "translateY(-100%)");
+        var extraHeight = 0;
+
+        if ($inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-left']").length || $inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-right']").length || $inlineToolbar.parents(".pagebuilder-slide[data-appearance='collage-centered']").length) {
+          extraHeight = 29;
+        }
+
+        $inlineToolbar.css("top", ($inlineToolbar.height() - extraHeight) * -1);
         return;
       }
 
-      $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
+      $inlineToolbar.css("top", "");
     }
     /**
      * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
