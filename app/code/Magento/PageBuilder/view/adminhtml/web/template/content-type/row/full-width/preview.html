@@ -9,7 +9,7 @@
      ko-style="getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <div class="pagebuilder-display-label"
-         text="function () { return displayLabel().toUpperCase(); }()"/>
+         text="function () { return displayLabel().toUpperCase(); }()"></div>
     <div class="pagebuilder-content-type pagebuilder-row type-container no-system-border children-min-height"
          attr="data.main.attributes"
          ko-style="Object.assign({}, getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight']), {backgroundImage: getBackgroundImage()})"
@@ -21,8 +21,8 @@
         <div if="data.video_overlay.attributes()['data-video-overlay-color']"
              class="video-overlay"
              attr="data.video_overlay.attributes"
-             ko-style="data.video_overlay.style" />
-        <render args="getOptions().template"/>
+             ko-style="data.video_overlay.style"></div>
+        <render args="getOptions().template"></render>
         <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
             <if args="$parent.isContainer()">
                 <div class="pagebuilder-drop-indicator"></div>
@@ -34,6 +34,6 @@
         </div>
         <div class="pagebuilder-empty-container empty-placeholder"
              css="placeholderCss()"
-             translate="'Drag content types or columns here'"/>
+             translate="'Drag content types or columns here'"></div>
     </div>
 </div>

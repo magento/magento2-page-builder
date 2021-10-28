@@ -43,7 +43,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @return array
      */
@@ -59,7 +59,7 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
                 $this->options[$pageId] = [
                     'value' => $pageId,
                     'label' => $item->getTitle(),
-                    'identifier' => sprintf(__('ID: %s'), $pageId)
+                    'identifier' => sprintf(__('ID: %s')->render(), $pageId)
                 ];
             }
         }
