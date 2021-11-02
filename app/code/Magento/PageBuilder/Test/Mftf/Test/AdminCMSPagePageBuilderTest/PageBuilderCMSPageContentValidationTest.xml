@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="HtmlCMSPageValidationTest">
+    <test name="PageBuilderCMSPageContentValidationTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -48,6 +48,7 @@
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="addTextToHtmlCodeWYSIWYGActionGroup" stepKey="enterWrongHtmlContent">
+            <argument name="selector" value="{{EditPanelForm.panelFieldControl('general', 'html')}}"/>
             <argument name="text" value="\u{1F600}"/>
         </actionGroup>
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveButton"/>
@@ -58,10 +59,26 @@
             <actualResult type="variable">grabTextFromErrorLabel</actualResult>
         </assertStringContainsString>
         <actionGroup ref="removeTextFromHtmlCodeWYSIWYGActionGroup" stepKey="removeWrongHtmlContent">
+            <argument name="selector" value="{{EditPanelForm.panelFieldControl('general', 'html')}}"/>
             <argument name="text" value="\u{1F600}"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementNotVisible selector="{{HtmlOnStage.baseErrorLabel}}" stepKey="waitForHtmlBaseErrorLabelRemovedStage1"/>
+
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openTextEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Page From PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="addTextToHtmlCodeWYSIWYGActionGroup" stepKey="enterWrongTextContent">
+            <argument name="selector" value="//textarea[@id=&quot;{{TextOnConfiguration.textAreaId}}&quot;][1]"/>
+            <argument name="text" value="\u{1F600}"/>
+        </actionGroup>
+
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveTextEditPanelSettings"/>
+
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlBaseStage1"/>
@@ -72,18 +89,30 @@
             <actualResult type="variable">actualTextFromHtmlCode</actualResult>
         </assertStringContainsString>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+
+        <!-- Cannot save invalid text-->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlBaseStage2"/>
-        <waitForElementVisible selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForHtmlStage2"/>
-        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeAfterSave"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        <waitForElementVisible selector="//div[contains(@class, &quot;field-page-builder&quot;)]//label[@class=&quot;admin__field-error&quot;]" stepKey="waitForErrorLabelVisible"/>
+        <grabTextFrom selector="//div[contains(@class, &quot;field-page-builder&quot;)]//label[@class=&quot;admin__field-error&quot;]" stepKey="grabTextFromErrorLabel2"/>
+        <assertStringContainsString stepKey="assertErrorMessage2">
+            <expectedResult type="string">Please remove invalid characters</expectedResult>
+            <actualResult type="variable">grabTextFromErrorLabel2</actualResult>
+        </assertStringContainsString>
+
+        <!-- Fix error and save again -->
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageToFixText"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openTextEditMenuOnStageToFixText">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!-- Validate Edit Panel After Save -->
-        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="removeTextFromHtmlCodeWYSIWYGActionGroup" stepKey="removeWrongTextContent">
+            <argument name="selector" value="//textarea[@id=&quot;{{TextOnConfiguration.textAreaId}}&quot;][1]"/>
+            <argument name="text" value="\u{1F600}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveTextEditPanelSettings2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2"/>
+        <waitForElementNotVisible selector="//div[contains(@class, &quot;field-page-builder&quot;)]//label[@class=&quot;admin__field-error&quot;]" stepKey="waitForErrorLabelNotVisible"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -91,5 +120,11 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForHtmlStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.allText}}" stepKey="waitForTextStorefront"/>
+        <grabTextFrom selector="{{TextOnStorefront.allText}}" stepKey="grabTextFromText"/>
+        <assertStringContainsString stepKey="assertTextOnStoreFront">
+            <expectedResult type="string">Hello Page From PageBuilder</expectedResult>
+            <actualResult type="variable">grabTextFromText</actualResult>
+        </assertStringContainsString>
     </test>
 </tests>
