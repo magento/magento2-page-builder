@@ -15,7 +15,10 @@
             <argument name="offsetYCoordinate" defaultValue="5" type="string"/>
         </arguments>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver stepKey="moveMouseOverSearch" selector="{{PageBuilderPanel.searchPanel}}" />
+        <executeJS function="return ['row', 'column'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.role}}'.toUpperCase()+'&quot;)]' : ['tabs'].include('{{contentType.role}}') ? '//ul[@data-element=&quot;navigation&quot;]' : '';" stepKey="contentTypeLabelSelector" />
+        <executeJS function="return ['row'].include('{{contentType.role}}') ? '(//div[contains(@class, &quot;pagebuilder-content-type-affordance&quot;) and contains(@class, &quot;pagebuilder-affordance-{{contentType.role}}&quot;)])' : '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{contentType.role}}&quot;)])';" stepKey="contentTypeSelector" />
+        <moveMouseOver selector="{$contentTypeSelector}{$contentTypeLabelSelector}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForOptionsAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, '1')}}" stepKey="waitForOptions"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="clickRemoveContentType"/>
