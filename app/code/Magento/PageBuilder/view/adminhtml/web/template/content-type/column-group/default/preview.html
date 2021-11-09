@@ -11,7 +11,7 @@
      css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})"
      attr="data.main.attributes">
 
-    <render args="getOptions().template" />
+    <render args="getOptions().template"></render>
     <div class="resize-grid" each="gridSizeArray">
         <div class="grid-line"></div>
     </div>
@@ -28,7 +28,7 @@
              each="$parent.getChildren()"
              data-bind="sortable: getSortableOptions()"
              afterRender="function (element) { bindInteractions.call($data, element); }">
-            <render args="{name: preview.template, data: preview}"/>
+            <render args="{name: preview.template, data: preview}"></render>
 
         </div>
 </div>
