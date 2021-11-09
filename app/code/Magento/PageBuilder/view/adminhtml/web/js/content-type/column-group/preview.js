@@ -690,7 +690,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _underscore.defer(function () {
           // Re-enable any disabled sortable areas
           group.find(".ui-sortable").each(function () {
-            if ((0, _jquery)(this).data("sortable")) {
+            if ((0, _jquery)(this).data("ui-sortable")) {
               (0, _jquery)(this).sortable("option", "disabled", false);
             }
           });
@@ -929,7 +929,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (this.dropOverElement && event.pageY > groupPosition.top + 20 && event.pageY < groupPosition.top + groupPosition.outerHeight - 20) {
         // Disable the column group sortable instance
-        if (elementChildrenParent.data("sortable")) {
+        if (elementChildrenParent.data("ui-sortable")) {
           elementChildrenParent.sortable("option", "disabled", true);
         }
 
@@ -947,7 +947,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       } else if (this.dropOverElement) {
         // Re-enable the column group sortable instance
-        if (elementChildrenParent.data("sortable")) {
+        if (elementChildrenParent.data("ui-sortable")) {
           elementChildrenParent.sortable("option", "disabled", false);
         }
 
@@ -973,7 +973,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _underscore.defer(function () {
             // Re-enable the column group sortable instance & all children sortable instances
             group.parents(".element-children").each(function () {
-              if ((0, _jquery)(this).data("sortable")) {
+              if ((0, _jquery)(this).data("ui-sortable")) {
                 (0, _jquery)(this).sortable("option", "disabled", false);
               }
             });
@@ -984,7 +984,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             var _ref;
 
             group.find(".ui-sortable").each(function () {
-              if ((0, _jquery)(this).data("sortable")) {
+              if ((0, _jquery)(this).data("ui-sortable")) {
                 (0, _jquery)(this).sortable("option", "disabled", true);
               }
             });

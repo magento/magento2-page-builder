@@ -690,7 +690,7 @@ export default class Preview extends PreviewCollection {
             _.defer(() => {
                 // Re-enable any disabled sortable areas
                 group.find(".ui-sortable").each(function() {
-                    if ($(this).data("sortable")) {
+                    if ($(this).data("ui-sortable")) {
                         $(this).sortable("option", "disabled", false);
                     }
                 });
@@ -968,7 +968,7 @@ export default class Preview extends PreviewCollection {
             event.pageY < (groupPosition.top + groupPosition.outerHeight) - 20
         ) {
             // Disable the column group sortable instance
-            if (elementChildrenParent.data("sortable")) {
+            if (elementChildrenParent.data("ui-sortable")) {
                 elementChildrenParent.sortable("option", "disabled", true);
             }
 
@@ -987,7 +987,7 @@ export default class Preview extends PreviewCollection {
             }
         } else if (this.dropOverElement) {
             // Re-enable the column group sortable instance
-            if (elementChildrenParent.data("sortable")) {
+            if (elementChildrenParent.data("ui-sortable")) {
                 elementChildrenParent.sortable("option", "disabled", false);
             }
             this.dropPosition = null;
@@ -1012,7 +1012,7 @@ export default class Preview extends PreviewCollection {
                 _.defer(() => {
                     // Re-enable the column group sortable instance & all children sortable instances
                     group.parents(".element-children").each(function() {
-                        if ($(this).data("sortable")) {
+                        if ($(this).data("ui-sortable")) {
                             $(this).sortable("option", "disabled", false);
                         }
                     });
@@ -1021,7 +1021,7 @@ export default class Preview extends PreviewCollection {
             activate() {
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
                     group.find(".ui-sortable").each(function() {
-                        if ($(this).data("sortable")) {
+                        if ($(this).data("ui-sortable")) {
                             $(this).sortable("option", "disabled", true);
                         }
                     });
