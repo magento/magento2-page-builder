@@ -41,7 +41,7 @@
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup"/>
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn2">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <dontSeeElement selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElement selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>

@@ -53,9 +53,10 @@
             <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
             <actualResult type="variable">columnOneWidthGrid13</actualResult>
         </assertGreaterThan>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput()}}" userInput="12" stepKey="resetGridSizeTo12"/>
-        <pressKey selector="{{ColumnOnBackend.gridSizeInput()}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
-        <waitForPageLoad stepKey="waitForUpdate"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo12">
+            <argument name="gridSize" value="12"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForGridSize12"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
         <!-- Validate columns are equal again -->
