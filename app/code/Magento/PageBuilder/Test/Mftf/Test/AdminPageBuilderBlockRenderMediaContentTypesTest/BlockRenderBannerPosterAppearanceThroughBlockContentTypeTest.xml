@@ -34,22 +34,22 @@
                 <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             </actionGroup>
         </before>
-<!--        <after>-->
-<!--            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>-->
-<!--            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>-->
-<!--            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>-->
-<!--            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>-->
-<!--            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">-->
-<!--                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>-->
-<!--            </actionGroup>-->
-<!--            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage">-->
-<!--                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>-->
-<!--            </actionGroup>-->
-<!--            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">-->
-<!--                <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>-->
-<!--            </actionGroup>-->
-<!--            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>-->
-<!--        </after>-->
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
         <!-- Add Banner -->
         <comment userInput="Add Banner" stepKey="commentAddBanner"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
