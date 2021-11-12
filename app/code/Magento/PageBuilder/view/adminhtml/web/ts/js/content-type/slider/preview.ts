@@ -533,7 +533,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} index
      */
     private focusElement(event: JQueryEventObject, index: number) {
-        const handleClassName = $(event.target).data("sortable").options.handle;
+        const handleClassName = $(event.target).data("ui-sortable").options.handle;
 
         $($(event.target).find(handleClassName)[index]).focus();
     }
