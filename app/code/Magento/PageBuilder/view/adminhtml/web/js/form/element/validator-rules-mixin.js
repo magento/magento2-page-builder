@@ -6,9 +6,8 @@
 define([
     'jquery',
     'underscore',
-    'Magento_PageBuilder/js/content-type/column-group/grid-size',
     'Magento_Ui/js/lib/validation/utils'
-], function ($, _, gridSizeUtil ,utils) {
+], function ($, _, utils) {
     'use strict';
 
     /**
