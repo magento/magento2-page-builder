@@ -980,7 +980,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         },
         activate: function activate() {
-          if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
+          if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column-group")) {
             var _ref;
 
             group.find(".ui-sortable").each(function () {

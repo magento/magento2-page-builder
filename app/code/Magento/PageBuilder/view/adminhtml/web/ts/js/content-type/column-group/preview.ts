@@ -1019,7 +1019,7 @@ export default class Preview extends PreviewCollection {
                 });
             },
             activate() {
-                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
                     group.find(".ui-sortable").each(function() {
                         if ($(this).data("ui-sortable")) {
                             $(this).sortable("option", "disabled", true);
