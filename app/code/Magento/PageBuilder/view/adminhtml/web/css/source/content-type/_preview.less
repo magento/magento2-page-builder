@@ -196,8 +196,12 @@
     box-shadow: @pagebuilder-affordance-box-shadow; // #ebebeb
     padding: 0;
 
-    &:not(.pagebuilder-column):not(.pagebuilder-column-group):before {
-        display: none;
+    &:not(
+    .pagebuilder-column,
+    .pagebuilder-column-group) {
+        &:before {
+            display: none;
+        }
     }
 
     > .pagebuilder-content-type.type-container.pagebuilder-row {

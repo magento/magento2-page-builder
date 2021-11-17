@@ -59,19 +59,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForGridSize12"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
-        <!-- Validate columns are equal again -->
-        <comment userInput="Validate columns are equal again" stepKey="commentValidateColumnsEqual"/>
-        <assertEquals stepKey="assertColumnsAreEqualAgain">
-            <expectedResult type="variable">columnOneWidthGrid12Restored</expectedResult>
-            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
-        </assertEquals>
-        <assertEquals stepKey="assertColumn1IsRestored">
-            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
-            <actualResult type="variable">columnOneWidthGrid12Restored</actualResult>
-        </assertEquals>
-        <assertEquals stepKey="assertColumn2IsRestored">
-            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
-            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
-        </assertEquals>
+        <!-- Validate columns are now 7/12 and 5/12 - see PB-1194 -->
+        <comment userInput="Validate columns are restored back" stepKey="commentValidateColumnsRestored"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','7/12')}}" stepKey="validateLeftColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/12')}}" stepKey="validateRightColumnWidth"/>
     </test>
 </tests>
