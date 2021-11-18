@@ -272,14 +272,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     }
     /**
-     * Reset remove option on all columns in a column-group parentContentType depending on the number of remaining child columns
+     * Reset remove option on all columns within a column-group depending on the number of remaining child columns
      * @param parentContentType
      */
     ;
 
     _proto.resetRemoveOnLastColumn = function resetRemoveOnLastColumn(parentContentType) {
       if (!parentContentType) {
-        //can happen if the column is moved within the same column group
+        // can happen if the column is moved within the same column group
         return;
       }
 
@@ -289,15 +289,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return;
       }
 
-      if (siblings.length == 1) {
+      if (siblings.length === 1) {
         var lastColumn = siblings[0];
         var options = lastColumn.preview.getOptions();
-        options.getOption('remove').isDisabled(true);
+        options.getOption("remove").isDisabled(true);
         return;
       }
 
       siblings.forEach(function (column) {
-        var removeOption = column.preview.getOptions().getOption('remove');
+        var removeOption = column.preview.getOptions().getOption("remove");
         removeOption.isDisabled(false);
       });
     }

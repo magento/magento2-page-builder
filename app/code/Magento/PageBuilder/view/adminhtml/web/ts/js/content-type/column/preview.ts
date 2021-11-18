@@ -21,7 +21,7 @@ import {
     ContentTypeDroppedCreateEventParamsInterface, ContentTypeDuplicateEventParamsInterface,
     ContentTypeMountEventParamsInterface,
     ContentTypeMoveEventParamsInterface,
-    ContentTypeRemovedEventParamsInterface
+    ContentTypeRemovedEventParamsInterface,
 } from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -293,26 +293,26 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Reset remove option on all columns in a column-group parentContentType depending on the number of remaining child columns
+     * Reset remove option on all columns within a column-group depending on the number of remaining child columns
      * @param parentContentType
      */
     public resetRemoveOnLastColumn(parentContentType: ContentTypeCollectionInterface) {
         if (!parentContentType) {
-            //can happen if the column is moved within the same column group
+            // can happen if the column is moved within the same column group
             return;
         }
         const siblings = parentContentType.children();
         if (siblings.length < 1) {
             return;
         }
-        if (siblings.length == 1) {
+        if (siblings.length === 1) {
             const lastColumn = siblings[0];
             const options = lastColumn.preview.getOptions();
-            options.getOption('remove').isDisabled(true)
+            options.getOption("remove").isDisabled(true);
             return;
         }
-        siblings.forEach( function(column) {
-            const removeOption = column.preview.getOptions().getOption('remove');
+        siblings.forEach((column) => {
+            const removeOption = column.preview.getOptions().getOption("remove");
             removeOption.isDisabled(false);
         });
     }

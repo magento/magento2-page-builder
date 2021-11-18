@@ -118,7 +118,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Preview.prototype;
 
     _proto.onOptionEdit = function onOptionEdit() {
-      var numCols = this.contentType.getChildren()().length; //count the number of non empty columns
+      var numCols = this.contentType.getChildren()().length; // count the number of non empty columns
 
       var numEmptyColumns = 0;
       this.contentType.getChildren()().forEach(function (column) {
@@ -126,9 +126,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           numEmptyColumns++;
         }
       });
-      this.contentType.dataStore.set('non_empty_column_count', numCols - numEmptyColumns);
-      this.contentType.dataStore.set('max_grid_size', (0, _gridSize.getMaxGridSize)());
-      this.contentType.dataStore.set('initial_grid_size', this.contentType.dataStore.get('grid_size'));
+      this.contentType.dataStore.set("non_empty_column_count", numCols - numEmptyColumns);
+      this.contentType.dataStore.set("max_grid_size", (0, _gridSize.getMaxGridSize)());
+      this.contentType.dataStore.set("initial_grid_size", this.contentType.dataStore.get("grid_size"));
 
       _previewCollection2.prototype.openEdit.call(this);
     }
@@ -153,7 +153,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        if (_this2.contentType.dataStore.get('grid_size') != _this2.contentType.dataStore.get('initial_grid_size')) {
+        if (_this2.contentType.dataStore.get("grid_size") !== _this2.contentType.dataStore.get("initial_grid_size")) {
           _this2.updateGridSize();
         }
       });
@@ -164,7 +164,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.setDefaultGridSizeOnColumnGroup = function setDefaultGridSizeOnColumnGroup() {
-      this.contentType.dataStore.set('grid_size', (0, _gridSize.getDefaultGridSize)());
+      this.contentType.dataStore.set("grid_size", (0, _gridSize.getDefaultGridSize)());
     }
     /**
      * Add Columns to the current Column Group
@@ -283,30 +283,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
         (0, _resize.updateColumnWidth)(dropPosition.affectedColumn, newWidth);
-      });
-    }
-    /**
-     * Fire the mount event for content types
-     *
-     * @param {ContentTypeInterface[]} contentTypes
-     */
-    ;
-
-    _proto.fireMountEvent = function fireMountEvent() {
-      for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
-        contentTypes[_key] = arguments[_key];
-      }
-
-      contentTypes.forEach(function (contentType) {
-        _events.trigger("contentType:mountAfter", {
-          id: contentType.id,
-          contentType: contentType
-        });
-
-        _events.trigger(contentType.config.name + ":mountAfter", {
-          id: contentType.id,
-          contentType: contentType
-        });
       });
     }
     /**
@@ -573,6 +549,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           this.gridSizeError(null);
         }
       }
+    }
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    ;
+
+    _proto.fireMountEvent = function fireMountEvent() {
+      for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
+        contentTypes[_key] = arguments[_key];
+      }
+
+      contentTypes.forEach(function (contentType) {
+        _events.trigger("contentType:mountAfter", {
+          id: contentType.id,
+          contentType: contentType
+        });
+
+        _events.trigger(contentType.config.name + ":mountAfter", {
+          id: contentType.id,
+          contentType: contentType
+        });
+      });
     }
     /**
      * Set columns in the group as resizing

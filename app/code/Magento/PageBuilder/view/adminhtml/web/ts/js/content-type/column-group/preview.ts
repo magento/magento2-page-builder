@@ -26,7 +26,7 @@ import Resize, {
 } from "../column/resize";
 import {
     ContentTypeDroppedCreateEventParamsInterface,
-    ContentTypeRemovedEventParamsInterface
+    ContentTypeRemovedEventParamsInterface,
 } from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -38,7 +38,6 @@ import createContentType from "../../content-type-factory";
 import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
 import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
 import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
-
 
 /**
  * @api
@@ -149,7 +148,7 @@ export default class Preview extends PreviewCollection {
      */
     public onOptionEdit(): void {
         const numCols = this.contentType.getChildren()().length;
-        //count the number of non empty columns
+        // count the number of non empty columns
         let numEmptyColumns = 0;
         this.contentType.getChildren()().forEach(
             (column: ContentTypeCollectionInterface<ColumnPreview>) => {
@@ -158,12 +157,11 @@ export default class Preview extends PreviewCollection {
                 }
             });
 
-        this.contentType.dataStore.set('non_empty_column_count', numCols - numEmptyColumns);
-        this.contentType.dataStore.set('max_grid_size', getMaxGridSize());
-        this.contentType.dataStore.set('initial_grid_size', this.contentType.dataStore.get('grid_size'));
+        this.contentType.dataStore.set("non_empty_column_count", numCols - numEmptyColumns);
+        this.contentType.dataStore.set("max_grid_size", getMaxGridSize());
+        this.contentType.dataStore.set("initial_grid_size", this.contentType.dataStore.get("grid_size"));
         super.openEdit();
     }
-
 
     /**
      * Bind events
@@ -181,7 +179,7 @@ export default class Preview extends PreviewCollection {
         }
 
         events.on(`form:${this.contentType.id}:saveAfter`, () => {
-            if (this.contentType.dataStore.get('grid_size') != this.contentType.dataStore.get('initial_grid_size')) {
+            if (this.contentType.dataStore.get("grid_size") !== this.contentType.dataStore.get("initial_grid_size")) {
                 this.updateGridSize();
             }
         });
@@ -191,9 +189,8 @@ export default class Preview extends PreviewCollection {
      * Set default grid size on current column group
      */
     public setDefaultGridSizeOnColumnGroup(): void {
-        this.contentType.dataStore.set('grid_size', getDefaultGridSize());
+        this.contentType.dataStore.set("grid_size", getDefaultGridSize());
     }
-
 
     /**
      * Add Columns to the current Column Group
@@ -322,18 +319,6 @@ export default class Preview extends PreviewCollection {
 
             // Reduce the affected columns width by the smallest column width
             updateColumnWidth(dropPosition.affectedColumn, newWidth);
-        });
-    }
-
-    /**
-     * Fire the mount event for content types
-     *
-     * @param {ContentTypeInterface[]} contentTypes
-     */
-    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
-        contentTypes.forEach((contentType) => {
-            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
-            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
         });
     }
 
@@ -592,6 +577,18 @@ export default class Preview extends PreviewCollection {
                 this.gridSizeError(null);
             }
         }
+    }
+
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
+        contentTypes.forEach((contentType) => {
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
+        });
     }
 
     /**
