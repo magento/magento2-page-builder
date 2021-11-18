@@ -6,12 +6,16 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
+import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
+import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";
+import createContentType from "../../content-type-factory";
 import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
@@ -34,10 +38,6 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
-import createContentType from "../../content-type-factory";
-import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
-import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
-import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
 
 /**
  * @api
