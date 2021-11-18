@@ -7,21 +7,19 @@
  * @api
  */
 define([
-    'Magento_Ui/js/form/element/abstract',
-    'Magento_Ui/js/lib/validation/validator'
-], function (Abstract, validator) {
+    'Magento_Ui/js/form/element/abstract'
+], function (Abstract) {
     'use strict';
 
     return Abstract.extend({
         validate: function () {
-            var formQuery = 'index=' + this.ns;
-            var externalForm = this.requestModule(formQuery)();
-            var nonEmptyColumnCount = externalForm.source.data.non_empty_column_count;
-            var maxGridSize = externalForm.source.data.max_grid_size;
+            var externalFormSourceData = this.requestModule('index=' + this.ns)().source.data;
+
             this.validationParams = {
-                'non_empty_column_count': nonEmptyColumnCount,
-                'max_grid_size': maxGridSize
+                'non_empty_column_count': externalFormSourceData.non_empty_column_count,
+                'max_grid_size': externalFormSourceData.max_grid_size
             };
+
             return this._super();
         }
     });
