@@ -14,10 +14,10 @@ define([
 
     return Abstract.extend({
         validate: function () {
-            const formQuery = 'index=' + this.ns;
-            const externalForm = this.requestModule(formQuery)();
-            const nonEmptyColumnCount = externalForm.source.data.non_empty_column_count;
-            const maxGridSize = externalForm.source.data.max_grid_size;
+            let formQuery = 'index=' + this.ns;
+            let externalForm = this.requestModule(formQuery)();
+            let nonEmptyColumnCount = externalForm.source.data.non_empty_column_count;
+            let maxGridSize = externalForm.source.data.max_grid_size;
             this.validationParams = {
                 'non_empty_column_count': nonEmptyColumnCount,
                 'max_grid_size': maxGridSize
