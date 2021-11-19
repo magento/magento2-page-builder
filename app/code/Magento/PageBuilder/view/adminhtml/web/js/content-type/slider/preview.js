@@ -536,7 +536,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.focusElement = function focusElement(event, index) {
-      var handleClassName = (0, _jquery)(event.target).data("sortable").options.handle;
+      var handleClassName = (0, _jquery)(event.target).data("ui-sortable").options.handle;
       (0, _jquery)((0, _jquery)(event.target).find(handleClassName)[index]).focus();
     }
     /**
