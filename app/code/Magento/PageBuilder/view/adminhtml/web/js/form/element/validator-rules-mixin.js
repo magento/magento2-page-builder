@@ -231,6 +231,10 @@ define([
         validator.addRule(
             'required-entry',
             function (value) {
+                if (!value) {
+                    return true;
+                }
+
                 var allFilled;
 
                 // Validation only for margins and paddings
