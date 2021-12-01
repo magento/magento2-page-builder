@@ -51,7 +51,7 @@
         <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{backgroundAttachment}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]"/>
-        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
+        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="((//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//iframe)[last()]|((//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//video)[last()]"/>
         <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
         <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='video_overlay']"/>
         <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-video-loop='{{infiniteLoopValue}}']"/>
