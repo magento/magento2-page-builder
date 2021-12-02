@@ -17,6 +17,7 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="acceptableOffset" defaultValue="5" type="string"/>
         </arguments>
+        <wait time="5" stepKey="waitToPreventVideoFlakiness"/>
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoBackgroundElement"/>
         <executeJS function="return document.evaluate(&quot;{{section.videoBackgroundVideoElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().width" stepKey="actualVideoWidth"/>
         <executeJS function="return document.evaluate(&quot;{{section.videoBackgroundVideoElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="actualVideoHeight"/>
