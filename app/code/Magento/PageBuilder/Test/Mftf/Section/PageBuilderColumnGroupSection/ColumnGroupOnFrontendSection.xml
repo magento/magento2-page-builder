@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ColumnGroupOnFrontend">
+        <element name="base" type="block" selector="(//div[@data-content-type=&quot;column-group&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=column-group]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="baseCSS" type="text" selector="[data-content-type=column-group]"/>
+
+        <!-- Background Configuration -->
+        <element name="backgroundPath" type="button" selector="(//div[@data-content-type=&quot;column-group&quot;])[{{arg1}}]" parameterized="true"/>
+    </section>
+</sections>

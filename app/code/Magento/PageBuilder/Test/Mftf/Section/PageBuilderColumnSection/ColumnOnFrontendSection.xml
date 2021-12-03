@@ -13,6 +13,7 @@
         <element name="baseCSS" type="text" selector="[data-content-type=column]"/>
         <element name="elementChildren" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]" parameterized="true"/>
+        <element name="columnGroupWithGridSize" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group') and @data-grid-size={{arg1}}])[{{arg2}}]" parameterized="true"/>
         <element name="allColumnGroups" type="block" selector=".pagebuilder-column-group"/>
         <element name="allColumns" type="block" selector="(//div[@data-content-type='column'])"/>
         <element name="columnX" type="block" selector="[data-content-type=column]:nth-child({{arg1}})" parameterized="true"/>
