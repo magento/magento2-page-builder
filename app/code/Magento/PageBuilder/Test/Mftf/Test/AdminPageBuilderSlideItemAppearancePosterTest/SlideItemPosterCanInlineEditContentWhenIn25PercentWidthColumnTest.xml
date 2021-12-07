@@ -82,6 +82,7 @@
             <argument name="contentType" value="PageBuilderSlideContentType"/>
             <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
+        <waitForElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStageAfterEdit"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
