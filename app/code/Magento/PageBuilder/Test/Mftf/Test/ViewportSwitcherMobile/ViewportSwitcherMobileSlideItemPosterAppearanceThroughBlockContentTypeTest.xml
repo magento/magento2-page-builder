@@ -71,6 +71,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setSlideName">
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltText">
+            <argument name="property" value="PageBuilderSlideAltTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleAttribute">
+            <argument name="property" value="PageBuilderSlideTitleAttributeProperty"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
             <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
@@ -130,6 +136,8 @@
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStageMobile"/>
+        <seeElement selector="{{SlideOnBackend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSBlockStageMobile"/>
+        <seeElement selector="{{SlideOnBackend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSBlockStageMobile"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStageMobile"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStageMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStageMobile">
@@ -192,6 +200,8 @@
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSBlockStage"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSBlockStage">
@@ -272,6 +282,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage Mobile Viewport-->
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStageMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStageMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStageMobile"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStageMobile">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
@@ -322,6 +334,8 @@
             <argument name="viewportStage" value="desktop"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStageAfterSave"/>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStageAfterSave"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStageAfterSave"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStageAfterSave">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
@@ -377,6 +391,8 @@
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeMinimumHeightCMSPageStorefront">
             <argument name="selector" value="{{SlideOnFrontend.advancedConfigurationPath('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
@@ -464,6 +480,8 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideAltText('1', PageBuilderSlideAltTextProperty.value)}}" stepKey="seeSlideAltTextCMSPageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideTitleAttribute('1', PageBuilderSlideTitleAttributeProperty.value)}}" stepKey="seeSlideTitleAttributeCMSPageStorefrontMobile"/>
         <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayCMSPageStorefrontMobile">
