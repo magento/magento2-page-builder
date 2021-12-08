@@ -17,6 +17,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <fillField selector="{{PageBuilderStage.inlineTextAreaEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForText userInput="{{content}}" stepKey="waitForContent"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
 </actionGroups>
