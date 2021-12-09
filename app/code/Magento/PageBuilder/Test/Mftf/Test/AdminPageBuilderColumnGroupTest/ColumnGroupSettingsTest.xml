@@ -37,11 +37,12 @@
         </actionGroup>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
+        <!-- Edit Column Group values -->
         <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo6">
             <argument name="gridSize" value="6"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_345"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FC0009"/>
@@ -80,20 +81,27 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty60"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique5678"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1GridSize6"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2GridSize6"/>
+        <!-- Add Column 1 values -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterColumnAppearancePropertyColumn1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightPropertyColumn1">
+            <argument name="property" value="PageBuilderMinHeightProperty_100"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopPropertyColumn1">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
@@ -132,18 +140,22 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClassesColumn1">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnOneClass"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMarginsColumn1">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="property" value="PageBuilderMarginsPropertyUnique2345"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingColumn1">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique6789"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn1"/>
+        <!-- Add Column 2 values -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="addColumnAppearancePropertyColumn2">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightPropertyColumn2">
             <argument name="property" value="PageBuilderMinHeightProperty_200"/>
@@ -185,13 +197,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClassesColumn2">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnTwoClass"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMarginsColumn2">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="property" value="PageBuilderMarginsPropertyUnique3456"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingColumn2">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique78910"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn2"/>
         <!-- Save Page and Verify Expected Content Types on Stage -->
@@ -202,8 +214,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForColumnGroupToVerify">
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupMinHeightProperty_500">
-            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_500"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupMinHeightProperty">
+            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_345"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FC0009"/>
@@ -242,20 +254,26 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty60"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupCssClass">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeColumnGroupMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeColumnGroupPadding">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique5678"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="afterSeeCloseColumnGroupSettings"/>
         <!-- Verify Column 1 values -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForColumnOneToVerify">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneVerticalAlignProperty">
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneColumnAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneMinHeightProperty_100">
+            <argument name="property" value="PageBuilderMinHeightProperty_100"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneVerticalAlignmentProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneBackgroundColorProperty">
@@ -292,13 +310,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneCssClass">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnOneClass"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeColumnOneMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="property" value="PageBuilderMarginsPropertyUnique2345"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel"  stepKey="seeColumnOnePadding">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique6789"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="afterSeeCloseColumnOneSettings"/>
         <!-- Verify Column 2 values -->
@@ -306,10 +324,13 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoMinHeightProperty_500">
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoColumnAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoVerticalAlignment">
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoVerticalAlignmentProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoBackgroundColorProperty">
@@ -346,13 +367,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoCssClass">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnTwoClass"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeColumnTwoMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="property" value="PageBuilderMarginsPropertyUnique3456"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel"  stepKey="seeColumnTwoPadding">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique78910"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="afterSeeCloseColumnTwoSettings"/>
     </test>
