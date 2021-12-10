@@ -34,6 +34,11 @@
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
         <seeNumberOfElements selector="{{ColumnOnFrontend.columnGroupWithGridSize('6','1')}}" userInput="1" stepKey="seeColumnGroupWithGridSize6"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnGroupMinHeightApplied">
+            <argument name="selector" value="{{ColumnGroupOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnGroupMinHeightProperty_345.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundOnStorefront">
             <argument name="section" value="ColumnGroupOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_FC0009"/>
@@ -43,10 +48,6 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-       <!-- <actionGroup ref="validateBackgroundMobileImage" stepKey="validateBackgroundMobileImage">
-            <argument name="section" value="ColumnGroupOnFrontend"/>
-            <argument name="backgroundMobileImage" value="PageBuilderColumnGroupMobileImage_PNG"/>
-        </actionGroup> -->
         <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ColumnGroupOnFrontend"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
@@ -59,6 +60,16 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique5678"/>
         </actionGroup>
         <!-- Verify Column One -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnOneMinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_100.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnOneColumnAppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentCenter}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnOneBackgroundOnStorefront">
             <argument name="section" value="ColumnOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
@@ -80,6 +91,16 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique6789"/>
         </actionGroup>
         <!-- Verify Column Two -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnTwoMinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnTwoColumnAppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentBottom}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnTwoBackgroundOnStorefront">
             <argument name="section" value="ColumnOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
@@ -89,10 +110,6 @@
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
             <argument name="index" value="2"/>
         </actionGroup>
-     <!--   <actionGroup ref="validateBackgroundMobileImage" stepKey="validateColumnTwoBackgroundMobileImage">
-            <argument name="section" value="ColumnOnFrontend"/>
-            <argument name="backgroundMobileImage" value="PageBuilderColumnTwoMobileImage_PNG"/>
-        </actionGroup> -->
         <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateColumnTwoAllAdvancedStorefront">
             <argument name="page" value="ColumnOnFrontend"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
