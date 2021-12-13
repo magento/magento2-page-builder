@@ -157,6 +157,8 @@ export default class Preview extends PreviewCollection {
                 }
             });
 
+        const appearance = this.contentType.dataStore.get("appearance") ? this.contentType.dataStore.get("appearance") : 'default';
+        this.contentType.dataStore.set("appearance", appearance);
         this.contentType.dataStore.set("non_empty_column_count", numCols - numEmptyColumns);
         this.contentType.dataStore.set("max_grid_size", getMaxGridSize());
         this.contentType.dataStore.set("initial_grid_size", this.contentType.dataStore.get("grid_size"));
