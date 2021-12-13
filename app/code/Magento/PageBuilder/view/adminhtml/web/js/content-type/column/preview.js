@@ -91,6 +91,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this2.resetRemoveOnLastColumn(args.sourceParent);
       });
 
+      _events.on("column:initializeAfter", function (args) {
+        _this2.resetRemoveOnLastColumn(args.columnGroup);
+      });
+
       _events.on("column:dropAfter", function (args) {
         _this2.resetRemoveOnLastColumn(_this2.contentType.parentContentType);
       });

@@ -26,6 +26,7 @@ import {
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {updateColumnWidth} from "./resize";
+import {InitElementEventParamsInterface} from "./column-events.types";
 
 /**
  * @api
@@ -91,6 +92,9 @@ export default class Preview extends PreviewCollection {
             }
             this.resetRemoveOnLastColumn(args.targetParent);
             this.resetRemoveOnLastColumn(args.sourceParent);
+        });
+        events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
+            this.resetRemoveOnLastColumn(args.columnGroup);
         });
         events.on("column:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             this.resetRemoveOnLastColumn(this.contentType.parentContentType);
