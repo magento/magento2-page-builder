@@ -25,8 +25,8 @@ import {
 } from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import {updateColumnWidth} from "./resize";
 import {InitElementEventParamsInterface} from "./column-events.types";
+import {updateColumnWidth} from "./resize";
 
 /**
  * @api

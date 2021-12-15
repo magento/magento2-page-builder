@@ -126,7 +126,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           numEmptyColumns++;
         }
       });
-      var appearance = this.contentType.dataStore.get("appearance") ? this.contentType.dataStore.get("appearance") : 'default';
+      var appearance = this.contentType.dataStore.get("appearance") ? this.contentType.dataStore.get("appearance") : "default";
       this.contentType.dataStore.set("appearance", appearance);
       this.contentType.dataStore.set("non_empty_column_count", numCols - numEmptyColumns);
       this.contentType.dataStore.set("max_grid_size", (0, _gridSize.getMaxGridSize)());
