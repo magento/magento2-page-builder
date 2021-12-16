@@ -91,6 +91,27 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor3">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty50"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Open Column One Edit Panel -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
@@ -169,6 +190,29 @@
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumnGroups}}" userInput="2" stepKey="seeNumberOfColumnGroups2"/>
         <seeNumberOfElements selector="{{ColumnGroupOnFrontend.columnsInGroup('1')}}" userInput="1" stepKey="seeNumberOfColumnsInGroupOne"/>
         <seeNumberOfElements selector="{{ColumnGroupOnFrontend.columnsInGroup('2')}}" userInput="2" stepKey="seeNumberOfColumnsInGroupTwo"/>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefrontColumnGroupOne">
+            <argument name="page" value="ColumnGroupOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty50"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefrontColumnGroup2">
+            <argument name="page" value="ColumnGroupOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty50"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique5678"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <!-- Open CMS page in Admin -->
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPageAgain">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -181,6 +225,7 @@
         <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '1')}}" stepKey="waitSecondTimeForColumnOneDuplicateButton"/>
         <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveDisabled(PageBuilderColumnContentType.role,'1')}}" stepKey="waitSecondForColumnOneRemoveButton"/>
         <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="doNotSeeSecondTimeColumnOneHideButton"/>
+       <!-- Hide Column Group One -->
         <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnGroupSecondTime">
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>

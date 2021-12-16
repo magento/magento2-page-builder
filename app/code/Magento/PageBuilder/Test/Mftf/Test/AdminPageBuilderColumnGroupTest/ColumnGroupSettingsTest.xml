@@ -29,6 +29,22 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderColumnGroupDesktopImage_PNG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteDesktopImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnGroupMobileImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnGroupMobileImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnOneDesktopImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnOneDesktopImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnTwoMobileImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnTwoMobileImage_PNG"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnsToRootContainer">

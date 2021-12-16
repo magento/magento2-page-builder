@@ -20,6 +20,9 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-column-group"/>
         </annotations>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop" before="logout"/>
+        </after>
         <!-- Verify Storefront -->
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
@@ -120,6 +123,27 @@
             <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnTwoClass"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique3456"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique78910"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Mobile Background Images -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateMobileViewBackgroundOnStorefront">
+            <argument name="section" value="ColumnGroupOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_FC0009"/>
+            <argument name="backgroundImage" value="PageBuilderColumnGroupMobileImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopCenter"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnTwoMobileViewBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+            <argument name="backgroundImage" value="PageBuilderColumnTwoMobileImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
