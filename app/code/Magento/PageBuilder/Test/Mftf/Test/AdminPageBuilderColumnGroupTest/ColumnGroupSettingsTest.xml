@@ -11,24 +11,24 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Columns"/>
-            <title value="Test Column groups and Column content type settings"/>
+            <title value="[Columns] Create Column Group with two columns and check in Admin Panel"/>
             <description value="A user should be able to change settings for a column group and its columns"/>
             <severity value="MAJOR"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="PB-1196"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-column-group"/>
         </annotations>
         <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-                <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderColumnGroupDesktopImage_PNG.path}}"/>

@@ -11,21 +11,17 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Columns"/>
-            <title value="Test Column groups and Column content type settings on the front-end"/>
-            <description value="A user should be able to see column group settings changes on the front-end"/>
+            <title value="[Columns] Verify Column Group with two columns on Storefront"/>
+            <description value="A user should be able to see effects of column and column group settings changes on the front-end"/>
             <severity value="MAJOR"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="PB-1197"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-column-group"/>
         </annotations>
-        <after>
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop" before="logout"/>
-        </after>
         <!-- Verify Storefront -->
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Verify Column Group -->
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
@@ -146,5 +142,6 @@
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
 </tests>

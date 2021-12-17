@@ -11,11 +11,10 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Columns"/>
-            <title value="Edit existing Column Group and Column content type settings and verify"/>
-            <description value="A user should be able edit Column and Column Group content type settings"/>
+            <title value="[Columns] Edit/Update Column Group with two columns and verify on Storefront"/>
+            <description value="A user should be able edit Column and Column Group content type settings and see the changes on Storefront"/>
             <severity value="MAJOR"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="PB-1198"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-column-group"/>
@@ -100,8 +99,8 @@
         <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveSecondTimeAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchSecondTimeToPageBuilderStage"/>
         <!-- Verify Storefront -->
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Verify Column One -->
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnOneBackgroundOnStorefront">
