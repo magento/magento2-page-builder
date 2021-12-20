@@ -19,7 +19,7 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
         let attributes: object = {};
 
         get<string>(data, config.html_variable)
-            .replace(/\{\{widget(.*?)\}\}/i, ((match: string, attributeString: string) => {
+            .replace(/\{\{widget([\S\s]*?)\}\}/i, ((match: string, attributeString: string) => {
                 attributes = this.parseAttributesString(attributeString);
             }).bind(this));
 
