@@ -23,7 +23,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
       var _this = this;
 
       var attributes = {};
-      (0, _object.get)(data, config.html_variable).replace(/\{\{widget(.*?)\}\}/i, function (match, attributeString) {
+      (0, _object.get)(data, config.html_variable).replace(/\{\{widget([\S\s]*?)\}\}/i, function (match, attributeString) {
         attributes = _this.parseAttributesString(attributeString);
       }.bind(this));
       return attributes;
