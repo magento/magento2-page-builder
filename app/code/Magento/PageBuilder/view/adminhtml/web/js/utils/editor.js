@@ -99,7 +99,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
   function convertWidgetsToHtmlPreview(content) {
     var config = _config.getConfig("tinymce").widgets;
 
-    return content.replace(/\{\{widget(.*?)\}\}/ig, function (match, widgetBody) {
+    return content.replace(/\{\{widget([\S\s]*?)\}\}/ig, function (match, widgetBody) {
       var attributes = parseAttributesString(widgetBody);
       var imageSrc;
 
@@ -397,7 +397,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
 
 
   function escapeDoubleQuoteWithinWidgetDirective(content) {
-    return content.replace(/\{\{widget.*?\}\}/ig, function (match) {
+    return content.replace(/\{\{widget[\S\s]*?\}\}/ig, function (match) {
       return match.replace(/&quot;/g, "\\\"");
     });
   }
@@ -410,7 +410,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
 
 
   function unescapeDoubleQuoteWithinWidgetDirective(content) {
-    return content.replace(/\{\{widget.*?\}\}/ig, function (match) {
+    return content.replace(/\{\{widget[\S\s]*?\}\}/ig, function (match) {
       return match.replace(/\\+"/g, "&quot;");
     });
   }
