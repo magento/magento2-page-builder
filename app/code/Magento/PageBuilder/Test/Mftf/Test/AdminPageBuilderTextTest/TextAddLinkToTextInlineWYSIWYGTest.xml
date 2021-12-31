@@ -18,6 +18,7 @@
             <testCaseId value="MC-18694"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
@@ -46,8 +47,7 @@
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillWysiwygField"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextOnStage"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="seeTextOnStage"/>
-        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText"/>
-        <waitForPageLoad stepKey="waitForTextSelect"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, 'a']" stepKey="selectAllText"/>
         <actionGroup ref="insertLinkInWYSIWYGExistingText" stepKey="insertLinkInWYSIWYG">
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="wysiwygArea" value="{{WYSIWYGOnPageBuilderInline.inlineCss}}"/>

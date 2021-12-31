@@ -17,6 +17,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-stage"/>
             <group value="pagebuilder-cms-page"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -76,6 +77,7 @@
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
         <!-- Verify Can Add HTML Code to Stage Directly -->
+        <executeJS function="document.evaluate('{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '4')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView();" stepKey="scrollToBottom"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragHTMLIntoContainer">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
@@ -113,6 +115,7 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
+        <executeJS function="document.evaluate('{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '5')}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView();" stepKey="scrollToBottom2"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragBlockIntoContainer">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>

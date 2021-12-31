@@ -19,6 +19,8 @@
         <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=slider] div.pagebuilder-overlay')[{{slideOverlayIndex}} - 1]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="imageSourceByIndex" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[contains(@data-background-images,'{{image}}')]" parameterized="true" deprecated="Styles are not inline"/>
+        <element name="slideAltText" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@aria-label='{{arg2}}']" parameterized="true"/>
+        <element name="slideTitleAttribute" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@title='{{arg2}}']" parameterized="true"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{buttonClass}}')]" parameterized="true"/>
@@ -29,7 +31,7 @@
         <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//*[contains(@class, 'magento-placeholder') and contains(@class, 'magento-widget')]" parameterized="true"/>
         <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
-        <element name="slideOverflowPropertyJS" type="button" selector="return window.getComputedStyle(document.querySelectorAll('[data-content-type=slide] div.mce-tinymce-inline')[{{tinyMCEIndex}}]).overflow" parameterized="true"/>
+        <element name="slideOverflowPropertyJS" type="button" selector="return window.getComputedStyle(document.querySelectorAll('.element-children.content-type-container.slider-container')[{{tinyMCEIndex}}]).overflow" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-slide-name='{{slideName}}']" parameterized="true"/>
@@ -51,7 +53,7 @@
         <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{backgroundAttachment}};')]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]"/>
-        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
+        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="((//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//iframe)[last()]|((//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//video)[last()]"/>
         <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
         <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='video_overlay']"/>
         <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-video-loop='{{infiniteLoopValue}}']"/>

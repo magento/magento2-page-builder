@@ -37,7 +37,7 @@
         <element name="parallaxJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('[id*=jarallax-container] &gt; div')" parameterized="true"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]"/>
-        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
+        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="((//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//iframe)[last()]|((//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//video)[last()]"/>
         <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
         <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[@data-element='video_overlay']"/>
         <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}][@data-video-loop='{{infiniteLoopValue}}']"/>

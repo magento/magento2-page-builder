@@ -8,7 +8,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BlockOnStage">
-        <element name="html" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@data-bind,'html: data.main.html')])[{{arg2}}]//div[contains(@class,'placeholder-html-code')]" parameterized="true"/>
+        <element name="html" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@data-bind,'html: dataMainUnsanitizedHtml')])[{{arg2}}]//div[contains(@class,'placeholder-html-code')]" parameterized="true"/>
         <element name="allBlocks" type="text" selector="[data-content-type='block']"/>
         <element name="status" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//span[contains(@class,'placeholder') and text()='{{arg}}'])" parameterized="true"/>
         <element name="deleted" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//span[contains(@class,'placeholder') and contains(text(),'Block with ID: {{arg}} doesn')])" parameterized="true"/>

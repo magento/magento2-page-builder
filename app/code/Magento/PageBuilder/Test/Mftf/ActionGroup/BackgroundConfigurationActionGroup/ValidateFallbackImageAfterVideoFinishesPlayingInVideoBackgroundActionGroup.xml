@@ -18,6 +18,7 @@
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
+        <wait time="5" stepKey="waitToPreventVideoFlakiness"/>
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideo"/>
         <waitForElementVisible selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImageVisible"/>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="src" stepKey="fallbackImageSource"/>

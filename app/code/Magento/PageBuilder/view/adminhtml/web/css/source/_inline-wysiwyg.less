@@ -15,6 +15,11 @@
     }
 }
 
+.tox .tox-menu.tox-collection.tox-collection--list {
+    max-height: 285px !important;
+    width: max-content !important;
+}
+
 .inline-wysiwyg {
     .magento-placeholder {
         height: auto;
@@ -22,7 +27,7 @@
         min-height: 20px;
         vertical-align: baseline;
     }
-    ~ .mce-tinymce-inline {
+    ~ .tox-tinymce-inline {
         display: block !important;
         height: auto !important;
         opacity: 0;
@@ -32,27 +37,17 @@
         transition: transform 200ms, opacity 200ms, visibility 200ms;
         visibility: hidden;
         width: auto !important;
-
-        .mce-container,
-        .mce-container-body {
-            display: flex;
-            flex-wrap: wrap;
-            height: auto !important;
-            width: auto !important;
-        }
-        .mce-abs-layout-item {
-            position: static;
-        }
     }
+
     &.mce-edit-focus {
         outline: none;
-        ~ .mce-tinymce-inline {
+        ~ .tox-tinymce-inline {
             opacity: 1;
             pointer-events: all;
             visibility: visible !important;
         }
     }
-    &._right-aligned-toolbar ~ div.mce-tinymce-inline {
+    &._right-aligned-toolbar ~ div.tox-tinymce-inline {
         left: auto !important;
     }
     ul,
@@ -72,10 +67,9 @@
     }
 }
 
-.mce-tinymce-inline.mce-arrow.mce-container.mce-floatpanel[aria-label*='toolbar'] {
-    transition: transform 200ms;
-
-    &:not(.mce-arrow-up):not(.mce-arrow-down) {
-        transform: translate(-1px, -36px); // table toolbar position fix
+.tox-tinymce-aux {
+    .tox-pop {
+        max-width: none !important;
+        min-width: 300px;
     }
 }
