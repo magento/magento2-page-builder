@@ -11,6 +11,7 @@
         <element name="allHtml" type="text" selector="[data-content-type=html]"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
         <element name="baseCSS" type="text" selector="[data-content-type=html][data-element=main]"/>
+        <element name="baseErrorLabel" type="text" selector="//aside//div[@data-index='general']/descendant::*[@name='html']/following-sibling::label"/>
         <element name="hidden" type="text" selector="(//*[@data-content-type='html'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-html')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="empty" type="text" selector="(//div[contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
