@@ -37,6 +37,7 @@
         <moveMouseOver selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="hoverToResizeHandle"/>
         <!-- Assert column resize handle is visible -->
         <waitForElementVisible selector="{{ColumnOnBackend.columnResizeHandle}}" stepKey="columnResizeHandleVisible"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="columnGridSizeVisible"/>
         <actionGroup ref="AdminSwitchPageBuilderViewportActionGroup" stepKey="switchToMobileViewport">
             <argument name="viewportButton" value="mobile"/>
             <argument name="viewportStage" value="mobile"/>
@@ -47,5 +48,6 @@
             <expectedResult type="string">none</expectedResult>
             <actualResult type="variable">grabComputedDisplayPropertyCMSPageStage</actualResult>
         </assertEquals>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="columnGridSizeNotVisible"/>
     </test>
 </tests>

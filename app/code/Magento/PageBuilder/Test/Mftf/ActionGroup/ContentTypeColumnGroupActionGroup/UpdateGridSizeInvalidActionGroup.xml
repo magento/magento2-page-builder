@@ -15,6 +15,9 @@
         <see userInput="Grid Size" selector="{{EditPanelForm.panelFieldLabel('general', 'grid_size', 'general', 'grid_size')}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{EditPanelForm.panelFieldControl('general', 'grid_size')}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
         <click selector="{{EditPanelForm.panelFieldLabel('general', 'grid_size', 'general', 'grid_size')}}" stepKey="clickOnFieldLabel"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="enterGridSize"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="clickColumn"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="waitForAnimation"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeError(errorMessage)}}" stepKey="verifyError"/>
     </actionGroup>
 </actionGroups>
