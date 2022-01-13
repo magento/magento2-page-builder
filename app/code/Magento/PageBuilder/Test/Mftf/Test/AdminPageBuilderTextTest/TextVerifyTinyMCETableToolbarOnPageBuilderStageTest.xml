@@ -113,10 +113,10 @@
 
         <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible -->
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType"/>
-        <waitForPageLoad stepKey="waitForTinyMCEToolbar"/>
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickAgainToOpenTableToolbar"/>
-        <waitForPageLoad stepKey="waitForTinyMCETableToolbar"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar2"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.toolbar}}" stepKey="waitForTinyMCEToolbar"/>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="clickAgainToOpenTableToolbar"/>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinyMCETableToolbar"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore2"/>
@@ -172,10 +172,10 @@
 
         <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible Again -->
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType2"/>
-        <waitForPageLoad stepKey="waitForTinymceToolbar2"/>
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickAgainToOpenTableToolbar2"/>
-        <waitForPageLoad stepKey="waitForTinymceTableToolbar2"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar3"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.toolbar}}" stepKey="waitForTinymceToolbar2"/>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="clickAgainToOpenTableToolbar2"/>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinymceTableToolbar2"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore3"/>
