@@ -35,22 +35,22 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterNegativeGridSize">
+        <actionGroup ref="openGridSizeFormInColumnGroup" stepKey="openGridSizeForm"/>
+        <actionGroup ref="updateGridSizeInvalidInForm" stepKey="enterNegativeGridSize">
             <argument name="gridSize" value="-50"/>
             <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize1">
+        <actionGroup ref="updateGridSizeInvalidInForm" stepKey="enterGridSize1">
             <argument name="gridSize" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize0">
+        <actionGroup ref="updateGridSizeInvalidInForm" stepKey="enterGridSize0">
             <argument name="gridSize" value="0"/>
             <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
         <!-- Check validation occurs when entering as text -->
         <comment userInput="Check validation occurs when entering as text" stepKey="commentValidateStringInput"/>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSizeString">
+        <actionGroup ref="updateGridSizeInvalidInForm" stepKey="enterInvalidGridSizeString">
             <argument name="gridSize" value="InvalidString"/>
             <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>
         </actionGroup>
