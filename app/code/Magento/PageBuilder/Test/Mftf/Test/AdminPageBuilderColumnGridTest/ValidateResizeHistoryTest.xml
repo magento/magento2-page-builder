@@ -53,12 +53,19 @@
             <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
             <actualResult type="variable">columnOneWidthGrid13</actualResult>
         </assertGreaterThan>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="resetGridSizeTo12"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="pressKeyEnter"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="waitForUpdate"/>
         <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo12">
             <argument name="gridSize" value="12"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForGridSize12"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="commentValidateColumnsEqual"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="assertColumnsAreEqualAgain"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="assertColumn1IsRestored"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="assertColumn2IsRestored"/>
         <!-- Validate columns are now 7/12 and 5/12 - see PB-1194 -->
         <comment userInput="Validate columns are restored back" stepKey="commentValidateColumnsRestored"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
