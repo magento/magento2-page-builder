@@ -40,7 +40,8 @@
             <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <actionGroup ref="openGridSizeFormInColumnGroup" stepKey="openGridSizeForm"/>
-        <click selector="{{ColumnOnBackend.gridSizeTooltip}}" stepKey="clickToolTip"/>
-        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax}}" stepKey="verifyTooltip"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="clickWithinPanel"/>
+        <click selector="{{ColumnOnBackend.gridSizeTooltipInForm}}" stepKey="clickToolTip"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMaxInForm}}" stepKey="verifyTooltip"/>
     </test>
 </tests>
