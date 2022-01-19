@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ValidateDifferentGridSizePerGroupTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -37,25 +36,27 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumn1IntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumn2IntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSize1">
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSize1">
             <argument name="index" value="1"/>
             <argument name="gridSize" value="6"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="checkWidthFirstColumnGroupColumn1"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="checkWidthFirstColumnGroupColumn2"/>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSize2">
-            <argument name="index" value="2"/>
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSize2">
+            <argument name="contentTypeIndex" value="2"/>
             <argument name="gridSize" value="8"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSecondEditPanelSettings"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('3','4/8')}}" stepKey="checkWidthSecondColumnGroupColumn1"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('4','4/8')}}" stepKey="checkWidthSecondColumnGroupColumn2"/>
     </test>

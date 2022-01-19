@@ -85,15 +85,29 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (args.contentType.id === _this2.contentType.id) {
           _this2.updateDisplayLabel();
         }
+
+        _this2.resetRemoveOnLastColumn(args.targetParent);
+
+        _this2.resetRemoveOnLastColumn(args.sourceParent);
       });
 
-      if (_config.getContentTypeConfig("column-group")) {
-        _events.on("column:dropAfter", function (args) {
-          if (args.id === _this2.contentType.id) {
-            _this2.createColumnGroup();
-          }
-        });
-      }
+      _events.on("column:initializeAfter", function (args) {
+        _this2.resetRemoveOnLastColumn(args.columnGroup);
+      });
+
+      _events.on("column:dropAfter", function (args) {
+        _this2.resetRemoveOnLastColumn(_this2.contentType.parentContentType);
+      });
+
+      _events.on("column:duplicateAfter", function (args) {
+        _this2.resetRemoveOnLastColumn(args.duplicateContentType.parentContentType);
+      });
+
+      _events.on("column:removeAfter", function (args) {
+        if (args.contentType.id === _this2.contentType.id) {
+          _this2.resetRemoveOnLastColumn(args.parentContentType);
+        }
+      });
     }
     /**
      * Make a reference to the element in the column
@@ -260,6 +274,36 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
         this.displayLabel((0, _translate)("Column") + " " + columnNumber + "(" + newLabel + ")");
       }
+    }
+    /**
+     * Reset remove option on all columns within a column-group depending on the number of remaining child columns
+     * @param parentContentType
+     */
+    ;
+
+    _proto.resetRemoveOnLastColumn = function resetRemoveOnLastColumn(parentContentType) {
+      if (!parentContentType) {
+        // can happen if the column is moved within the same column group
+        return;
+      }
+
+      var siblings = parentContentType.children();
+
+      if (siblings.length < 1) {
+        return;
+      }
+
+      if (siblings.length === 1) {
+        var lastColumn = siblings[0];
+        var options = lastColumn.preview.getOptions();
+        options.getOption("remove").isDisabled(true);
+        return;
+      }
+
+      siblings.forEach(function (column) {
+        var removeOption = column.preview.getOptions().getOption("remove");
+        removeOption.isDisabled(false);
+      });
     }
     /**
      * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
