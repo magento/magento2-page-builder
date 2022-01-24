@@ -134,7 +134,13 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
       this.getFixedToolbarContainer().addClass("pagebuilder-toolbar-active");
 
-      _events2.trigger("stage:interactionStart"); // Wait for everything else to finish
+      _events2.trigger("stage:interactionStart");
+
+      var element = document.querySelector("#" + this.elementId);
+
+      if (!element) {
+        return;
+      } // Wait for everything else to finish
 
 
       _underscore.defer(function () {
@@ -171,7 +177,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
             document.body.appendChild(dialogContainer);
           }
         }, function () {
-          return document.querySelector("#" + _this2.elementId).classList.contains("mce-edit-focus");
+          return element.classList.contains("mce-edit-focus");
         }, 10);
       });
     }

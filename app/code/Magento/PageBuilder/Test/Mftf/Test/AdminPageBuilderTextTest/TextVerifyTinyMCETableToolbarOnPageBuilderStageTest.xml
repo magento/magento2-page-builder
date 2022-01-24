@@ -112,10 +112,13 @@
         </actionGroup>
 
         <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible -->
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType"/>
-        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.toolbar}}" stepKey="waitForTinyMCEToolbar"/>
-        <comment userInput="Step key preserved for backwards compatibility" stepKey="clickAgainToOpenTableToolbar"/>
-        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinyMCETableToolbar"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="clickOnTextContentType">
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinyMCEToolbar"/>
+        <conditionalClick selector="{{TextOnStage.tinymce('1')}}" dependentSelector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" visible="false" stepKey="clickAgainToOpenTableToolbar"/>
+        <waitForPageLoad stepKey="waitForTinyMCETableToolbar"/>
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable2"/>
@@ -171,10 +174,13 @@
         </actionGroup>
 
         <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible Again -->
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType2"/>
-        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.toolbar}}" stepKey="waitForTinymceToolbar2"/>
-        <comment userInput="Step key preserved for backwards compatibility" stepKey="clickAgainToOpenTableToolbar2"/>
-        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinymceTableToolbar2"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="clickOnTextContentType2">
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinymceToolbar2"/>
+        <conditionalClick selector="{{TextOnStage.tinymce('1')}}" dependentSelector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" visible="false" stepKey="clickAgainToOpenTableToolbar2"/>
+        <waitForPageLoad stepKey="waitForTinymceTableToolbar2"/>
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable3"/>

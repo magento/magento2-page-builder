@@ -172,6 +172,11 @@ export default class Wysiwyg implements WysiwygInterface {
 
         events.trigger("stage:interactionStart");
 
+        const element = document.querySelector(`#${this.elementId}`);
+        if (!element) {
+            return;
+        }
+
         // Wait for everything else to finish
         _.defer(() => delayUntil(
             () => {
@@ -203,7 +208,7 @@ export default class Wysiwyg implements WysiwygInterface {
                     document.body.appendChild(dialogContainer);
                 }
             },
-            () => document.querySelector(`#${this.elementId}`).classList.contains("mce-edit-focus"),
+            () => element.classList.contains("mce-edit-focus"),
             10,
         ));
     }
