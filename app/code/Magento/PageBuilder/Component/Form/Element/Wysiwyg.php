@@ -45,11 +45,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
-     * @param Repository $assetRepo
+     * @param Repository|null $assetRepo
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function __construct(
         ContextInterface $context,
@@ -66,10 +65,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         Repository $assetRepo = null
     ) {
         $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
-        $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
+        $wysiwygConfigData = $config['wysiwygConfigData'] ?? [];
 
         // If a dataType is present we're dealing with an attribute
-        if (isset($config['dataType'])) {
+        if (isset($config['dataType']) && $context->getNamespace() === 'category_form') {
             try {
                 $attribute = $attrRepository->get($data['name']);
 
