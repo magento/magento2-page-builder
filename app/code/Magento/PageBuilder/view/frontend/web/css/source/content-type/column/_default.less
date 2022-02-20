@@ -23,4 +23,24 @@
         flex-basis: 100%;
         max-width: 100%;
     }
+
+    [data-content-type='row'][data-appearance='contained'] {
+        .pagebuilder-column {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    [data-content-type='row'][data-appearance='contained'] {
+        .pagebuilder-column {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
 }
