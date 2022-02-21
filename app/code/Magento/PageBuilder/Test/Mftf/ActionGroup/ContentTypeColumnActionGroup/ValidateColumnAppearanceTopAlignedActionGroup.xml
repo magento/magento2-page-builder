@@ -29,7 +29,7 @@
         </assertLessThanOrEqual>
         <executeJS function="return document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().top" stepKey="topOfColumnGroup"/>
         <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top" stepKey="topOfIndividualColumn"/>
-        <executeJS function="return Math.round(Math.abs({$topOfColumnGroup}-{$topOfIndividualColumn}))" stepKey="topOfColumnDifference"/>
+        <executeJS function="return Math.round(Math.abs({$topOfColumnGroup}-{$topOfIndividualColumn}) - 15)" stepKey="topOfColumnDifference"/>
 
         <!-- Validate Position of Column -->
         <assertLessThan stepKey="assertTopOfColumnAcceptable">

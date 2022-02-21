@@ -20,6 +20,9 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
             <group value="pr_exclude"/>
+            <skip>
+                <issueId value="DEPRECATED">Not applicable anymore after moving the grid size field to the settings form - PB-500</issueId>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -34,19 +37,18 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
+        <actionGroup ref="openGridSizeFormInColumnGroup" stepKey="openGridSizeForm"/>
+        <actionGroup ref="updateGridSizeInvalidInForm" stepKey="enterInvalidGridSize">
             <argument name="gridSize" value="50"/>
-            <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
         </actionGroup>
         <click selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="clickOtherArea"/>
-        <seeElement selector="{{ColumnOnBackend.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
+        <seeElement selector="{{ColumnOnBackend.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError2"/>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput()}}" userInput="8" stepKey="enterValidGridSize"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2"/>
-        <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
-        <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
+        <waitForElement selector="{{ColumnOnBackend.gridSizeInput()}}" stepKey="waitForValidatePanelClosed"/>
+        <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput()}}" stepKey="validatePanelClosed"/>
     </test>
 </tests>

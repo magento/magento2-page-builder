@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="updateGridSizeInForm">
+        <arguments>
+            <argument name="gridSize"  type="string"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <executeJS function="return '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;COLUMNS&quot;)]';" stepKey="contentTypeLabelSelector" />
+        <executeJS function="return '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(concat(&quot; &quot;, @class, &quot; &quot;), &quot; pagebuilder-affordance-column-group &quot;)])[{{contentTypeIndex}}]';" stepKey="contentTypeByIndexSelector" />
+        <waitForElementVisible time="20" selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver stepKey="moveMouseOverSearch" selector="{{PageBuilderPanel.searchPanel}}" />
+        <moveMouseOver selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex('column-group', contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex('column-group', contentTypeIndex)}}" stepKey="waitForEditButton"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex('column-group', contentTypeIndex)}}" stepKey="clickEditContentType"/>
+        <waitForPageLoad stepKey="waitForAnimation1" time="30"/>
+        <waitForElementVisible selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm"/>
+        <see userInput="Edit Columns" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
+        <see userInput="Grid Size" selector="{{EditPanelForm.panelFieldLabel('general', 'grid_size', 'general', 'grid_size')}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{EditPanelForm.panelFieldControl('general', 'grid_size')}}" userInput="{{gridSize}}" stepKey="fillPropertyField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel('general', 'grid_size', 'general', 'grid_size')}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+</actionGroups>
