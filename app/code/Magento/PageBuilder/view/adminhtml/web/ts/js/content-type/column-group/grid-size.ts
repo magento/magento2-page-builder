@@ -7,6 +7,7 @@ import $t from "mage/translate";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ColumnPreview from "../column/preview";
+import ColumnLinePreview from "../column-line/preview";
 import {updateColumnWidth} from "../column/resize";
 import ColumnGroupPreview from "./preview";
 
@@ -139,87 +140,92 @@ function redistributeColumnWidths(
         return;
     }
 
-    const resizeUtils = columnGroup.preview.getResizeUtils();
-    const existingGridSize = resizeUtils.getInitialGridSize();
+    let columnGroupResizeUtil = columnGroup.preview.getResizeUtils();
+    const existingGridSize = columnGroupResizeUtil.getInitialGridSize();
     const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
         Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
     );
-    let totalNewWidths = 0;
-    const numColumns = columnGroup.getChildren()().length;
-    let remainingWidth: number = 0;
+
     columnGroup.getChildren()().forEach(
-        (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
-            const existingWidth = resizeUtils.getColumnWidth(column);
-            const fractionColumnWidth = Math.round(existingWidth / (100 / existingGridSize));
-            /**
-             * Determine if the grid & column are directly compatible with the new defined grid size, this will directly
-             * convert fractions to their equivalent of the new grid size.
-             *
-             * For instance changing a 12 column grid with 2 x 6 / 12 columns to a 6 grid is fully compatible.
-             *
-             * Check the existing grid size and new grid size are divisible, verify the amount of columns will fit
-             * in the new grid size and finally check the calculation to convert the existing column width results in a
-             * positive integer.
-             */
-            if (((existingGridSize > newGridSize && existingGridSize % newGridSize === 0)
-                || (existingGridSize < newGridSize && newGridSize % existingGridSize === 0))
-                && newGridSize % numColumns === 0
-                && ((newGridSize / existingGridSize) * fractionColumnWidth) % 1 === 0
-            ) {
-                // We don't need to modify the columns width as it's directly compatible, we will however increment the
-                // width counter as some other columns may not be compatible.
-                totalNewWidths += existingWidth;
-            } else {
-                let newWidth = (100 * Math.floor((existingWidth / 100) * newGridSize) / newGridSize)
-                    .toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
+        (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+            let totalNewWidths = 0;
+            let remainingWidth: number = 0;
+            const numColumns = columnLine.getChildren()().length;
+            let resizeUtils = columnLine.preview.getResizeUtils();
+            columnLine.getChildren()().forEach(
+            (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
 
-                // make sure the column is at least one grid size wide
-                if (parseFloat(newWidth) < parseFloat(minColWidth)) {
-                    newWidth = minColWidth;
-                }
-
-                // make sure we leave enough space for other columns
-                const maxAvailableWidth = 100 - totalNewWidths - ((numColumns - index - 1) * parseFloat(minColWidth));
-                if (parseFloat(newWidth) > maxAvailableWidth) {
-                    newWidth = maxAvailableWidth.toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
-                }
-
-                // Calculate any width lost from the column, if a 5 / 12 is becoming a 2 / 6 then it's lost 1 / 12
-                remainingWidth += (existingWidth - parseFloat(newWidth));
-
+                const existingWidth = resizeUtils.getColumnWidth(column);
+                const fractionColumnWidth = Math.round(existingWidth / (100 / existingGridSize));
                 /**
-                 * Determine if we have enough remaining width, and apply it to the current column, this results in a
-                 * subsequent column always receiving any additional width from the previous column
+                 * Determine if the grid & column are directly compatible with the new defined grid size, this will directly
+                 * convert fractions to their equivalent of the new grid size.
+                 *
+                 * For instance changing a 12 column grid with 2 x 6 / 12 columns to a 6 grid is fully compatible.
+                 *
+                 * Check the existing grid size and new grid size are divisible, verify the amount of columns will fit
+                 * in the new grid size and finally check the calculation to convert the existing column width results in a
+                 * positive integer.
                  */
-                if (resizeUtils.getSmallestColumnWidth(newGridSize)
-                    === resizeUtils.getAcceptedColumnWidth(remainingWidth.toString(), newGridSize)
+                if (((existingGridSize > newGridSize && existingGridSize % newGridSize === 0)
+                        || (existingGridSize < newGridSize && newGridSize % existingGridSize === 0))
+                    && newGridSize % numColumns === 0
+                    && ((newGridSize / existingGridSize) * fractionColumnWidth) % 1 === 0
                 ) {
-                    const widthWithRemaining = resizeUtils.getAcceptedColumnWidth(
-                        (parseFloat(newWidth) + remainingWidth).toString(),
-                        newGridSize,
-                    );
-                    if (widthWithRemaining > 0) {
-                        newWidth = widthWithRemaining
-                            .toFixed(Math.round(100 / widthWithRemaining) !== 100 / widthWithRemaining ? 8 : 0);
-                        remainingWidth = 0;
-                    }
-                }
+                    // We don't need to modify the columns width as it's directly compatible, we will however increment the
+                    // width counter as some other columns may not be compatible.
+                    totalNewWidths += existingWidth;
+                } else {
+                    let newWidth = (100 * Math.floor((existingWidth / 100) * newGridSize) / newGridSize)
+                        .toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
 
-                totalNewWidths += parseFloat(newWidth);
-                updateColumnWidth(column, parseFloat(newWidth));
+                    // make sure the column is at least one grid size wide
+                    if (parseFloat(newWidth) < parseFloat(minColWidth)) {
+                        newWidth = minColWidth;
+                    }
+
+                    // make sure we leave enough space for other columns
+                    const maxAvailableWidth = 100 - totalNewWidths - ((numColumns - index - 1) * parseFloat(minColWidth));
+                    if (parseFloat(newWidth) > maxAvailableWidth) {
+                        newWidth = maxAvailableWidth.toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
+                    }
+
+                    // Calculate any width lost from the column, if a 5 / 12 is becoming a 2 / 6 then it's lost 1 / 12
+                    remainingWidth += (existingWidth - parseFloat(newWidth));
+
+                    /**
+                     * Determine if we have enough remaining width, and apply it to the current column, this results in a
+                     * subsequent column always receiving any additional width from the previous column
+                     */
+                    if (resizeUtils.getSmallestColumnWidth(newGridSize)
+                        === resizeUtils.getAcceptedColumnWidth(remainingWidth.toString(), newGridSize)
+                    ) {
+                        const widthWithRemaining = resizeUtils.getAcceptedColumnWidth(
+                            (parseFloat(newWidth) + remainingWidth).toString(),
+                            newGridSize,
+                        );
+                        if (widthWithRemaining > 0) {
+                            newWidth = widthWithRemaining
+                                .toFixed(Math.round(100 / widthWithRemaining) !== 100 / widthWithRemaining ? 8 : 0);
+                            remainingWidth = 0;
+                        }
+                    }
+
+                    totalNewWidths += parseFloat(newWidth);
+                    updateColumnWidth(column, parseFloat(newWidth));
+                }
+                (column.preview as ColumnPreview).updateDisplayLabel();
+
+            });
+            if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+                applyLeftoverColumnsInColumnLine(columnLine, newGridSize);
             }
-            (column.preview as ColumnPreview).updateDisplayLabel();
-        },
+            },
     );
 
     // persist new grid size so upcoming calls to get column widths are calculated correctly
     columnGroup.dataStore.set("grid_size", newGridSize);
     columnGroup.dataStore.unset("initial_grid_size");
-
-    // apply leftover columns if the new grid size did not distribute evenly into existing columns
-    if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-        applyLeftoverColumns(columnGroup, newGridSize);
-    }
 }
 
 /**
@@ -235,6 +241,31 @@ function applyLeftoverColumns(columnGroup: ContentTypeCollectionInterface<Column
     );
     let column: ContentTypeCollectionInterface<ColumnPreview>;
     for (column of (columnGroup.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>)) {
+        if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+            updateColumnWidth(
+                column,
+                parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth),
+            );
+        } else {
+            break;
+        }
+    }
+}
+
+
+/**
+ * Make sure the full grid size is distributed across the columns
+ *
+ * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+ * @param {number} newGridSize
+ */
+function applyLeftoverColumnsInColumnLine(columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, newGridSize: number) {
+    const resizeUtils = columnLine.preview.getResizeUtils();
+    const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
+        Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
+    );
+    let column: ContentTypeCollectionInterface<ColumnPreview>;
+    for (column of (columnLine.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>)) {
         if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
             updateColumnWidth(
                 column,

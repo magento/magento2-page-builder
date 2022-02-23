@@ -9,7 +9,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-line/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -123,7 +123,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("column:initializeAfter", {
         column: this.contentType,
         element: (0, _jquery)(element),
-        columnGroup: this.contentType.parentContentType
+        columnLine: this.contentType.parentContentType,
+        columnGroup: this.contentType.parentContentType.parentContentType
       });
 
       this.updateDisplayLabel();
@@ -158,7 +159,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("column:resizeHandleBindAfter", {
         column: this.contentType,
         handle: (0, _jquery)(handle),
-        columnGroup: this.contentType.parentContentType
+        columnLine: this.contentType.parentContentType
       });
     }
     /**
@@ -268,7 +269,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.updateDisplayLabel = function updateDisplayLabel() {
       if (this.contentType.parentContentType.preview instanceof _preview) {
         var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-        var gridSize = this.contentType.parentContentType.preview.gridSize();
+        var gridSize = this.contentType.parentContentType.parentContentType.preview.gridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         var columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
         var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";

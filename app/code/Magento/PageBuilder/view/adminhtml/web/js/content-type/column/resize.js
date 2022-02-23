@@ -7,9 +7,10 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    */
   var Resize = /*#__PURE__*/function () {
     "use strict";
-
-    function Resize(columnGroup) {
+//@todo fix minimum column width validation for 1/12 column when grid size changes from 12 to 8
+    function Resize(columnGroup, columnLine) {
       this.columnGroup = columnGroup;
+      this.columnLine = columnLine;
     }
     /**
      * Get the grid size for this columnGroup
@@ -81,7 +82,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       return this.getAcceptedColumnWidth(column.dataStore.get("width").toString());
     }
     /**
-     * Get the total width of all columns in the group
+     * Get the total width of all columns in the column line
      *
      * @returns {number}
      */
@@ -90,7 +91,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.getColumnsWidth = function getColumnsWidth() {
       var _this = this;
 
-      return this.getAcceptedColumnWidth(this.columnGroup.children().map(function (column) {
+      return this.getAcceptedColumnWidth(this.columnLine.children().map(function (column) {
         return _this.getColumnWidth(column);
       }).reduce(function (widthA, widthB) {
         return widthA + (widthB ? widthB : 0);
@@ -355,13 +356,24 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   }();
   /**
    * Retrieve the index of the column within it's group
-   *
+   * @deprecated use getColumnIndexInLine
    * @param {ContentTypeCollectionInterface<ColumnPreview>} column
    * @returns {number}
    */
 
 
   function getColumnIndexInGroup(column) {
+    return column.parentContentType.children().indexOf(column);
+  }
+  /**
+   * Retrieve the index of the column within it's column line
+   *
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @returns {number}
+   */
+
+
+  function getColumnIndexInLine(column) {
     return column.parentContentType.children().indexOf(column);
   }
   /**
@@ -443,6 +455,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
   return Object.assign(Resize, {
     getColumnIndexInGroup: getColumnIndexInGroup,
+    getColumnIndexInLine: getColumnIndexInLine,
     getAdjacentColumn: getAdjacentColumn,
     determineMaxGhostWidth: determineMaxGhostWidth,
     getRoundedColumnWidth: getRoundedColumnWidth,

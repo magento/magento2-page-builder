@@ -17,6 +17,7 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
+import ColumnLinePreview from "../column-line/preview";
 import {
     ContentTypeDroppedCreateEventParamsInterface, ContentTypeDuplicateEventParamsInterface,
     ContentTypeMountEventParamsInterface,
@@ -121,7 +122,8 @@ export default class Preview extends PreviewCollection {
         events.trigger("column:initializeAfter", {
             column: this.contentType,
             element: $(element),
-            columnGroup: this.contentType.parentContentType,
+            columnLine: this.contentType.parentContentType,
+            columnGroup: this.contentType.parentContentType.parentContentType
         });
         this.updateDisplayLabel();
     }
@@ -152,7 +154,7 @@ export default class Preview extends PreviewCollection {
         events.trigger("column:resizeHandleBindAfter", {
             column: this.contentType,
             handle: $(handle),
-            columnGroup: this.contentType.parentContentType,
+            columnLine: this.contentType.parentContentType,
         });
     }
 
@@ -286,9 +288,9 @@ export default class Preview extends PreviewCollection {
      * Update the display label for the column
      */
     public updateDisplayLabel() {
-        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+        if (this.contentType.parentContentType.preview instanceof ColumnLinePreview) {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-            const gridSize = (this.contentType.parentContentType.preview as ColumnGroupPreview).gridSize();
+            const gridSize = (this.contentType.parentContentType.parentContentType.preview as ColumnGroupPreview).gridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
             const columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
             const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
@@ -388,7 +390,7 @@ export default class Preview extends PreviewCollection {
      * Delegate trigger call on children elements.
      */
     private triggerChildren() {
-        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+        if (this.contentType.parentContentType.preview instanceof ColumnLinePreview) {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
 
             this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
