@@ -435,6 +435,7 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Init the drop placeholder
+     * @deprecated - dropPlaceholder functionality moved to column-line
      *
      * @param {Element} element
      */
@@ -544,7 +545,6 @@ export default class Preview extends PreviewCollection {
 
                 removeDragColumn();
 
-                this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
                 this.startDragEvent = null;
 
@@ -651,7 +651,6 @@ export default class Preview extends PreviewCollection {
         // Change the cursor back
         $("body").css("cursor", "");
 
-        this.dropPlaceholder.removeClass("left right");
         this.movePlaceholder.css("left", "").removeClass("active");
         this.resizeGhost.removeClass("active");
 
@@ -687,7 +686,6 @@ export default class Preview extends PreviewCollection {
                 intersects = false;
                 this.groupPositionCache = null;
                 this.dropPosition = null;
-                this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.css("left", "").removeClass("active");
             }
         }).on("mouseup touchend", () => {
@@ -926,7 +924,6 @@ export default class Preview extends PreviewCollection {
                 }
 
                 if (this.movePosition) {
-                    this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right"
@@ -945,15 +942,6 @@ export default class Preview extends PreviewCollection {
                 if (this.movePosition) {
                     const classToRemove = (this.movePosition.placement === "left" ? "right" : "left");
                     this.movePlaceholder.removeClass("active");
-                    this.dropPlaceholder.removeClass(classToRemove).css({
-                        left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
-                        right: (this.movePosition.placement === "right" ?
-                                groupPosition.width - this.movePosition.right : ""
-                        ),
-                        width: groupPosition.width / this.resizeUtils.getGridSize() + "px",
-                    }).addClass(this.movePosition.placement);
-                } else {
-                    this.dropPlaceholder.removeClass("left right");
                 }
             }
         }
@@ -985,21 +973,12 @@ export default class Preview extends PreviewCollection {
                 return currentX > position.left && currentX <= position.right && position.canShrink;
             });
 
-            if (this.dropPosition) {
-                this.dropPlaceholder.removeClass("left right").css({
-                    left: (this.dropPosition.placement === "left" ? this.dropPosition.left : ""),
-                    right:
-                        (this.dropPosition.placement === "right" ? groupPosition.width - this.dropPosition.right : ""),
-                    width: groupPosition.width / this.resizeUtils.getGridSize() + "px",
-                }).addClass(this.dropPosition.placement);
-            }
         } else if (this.dropOverElement) {
             // Re-enable the column group sortable instance
             if (elementChildrenParent.data("ui-sortable")) {
                 elementChildrenParent.sortable("option", "disabled", false);
             }
             this.dropPosition = null;
-            this.dropPlaceholder.removeClass("left right");
         }
     }
 
@@ -1015,7 +994,6 @@ export default class Preview extends PreviewCollection {
         group.droppable({
             deactivate() {
                 self.dropOverElement = null;
-                self.dropPlaceholder.removeClass("left right");
 
                 _.defer(() => {
                     // Re-enable the column group sortable instance & all children sortable instances
@@ -1053,20 +1031,14 @@ export default class Preview extends PreviewCollection {
             },
             drop() {
                 self.dropPositions = [];
-                self.dropPlaceholder.removeClass("left right");
             },
             out() {
                 self.dropOverElement = null;
-                self.dropPlaceholder.removeClass("left right");
             },
             over() {
                 // Is the element currently being dragged a column group?
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
                     // Always calculate drop positions when an element is dragged over
-                    self.dropPositions = calculateDropPositions(
-                        self.contentType as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                    );
-
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;

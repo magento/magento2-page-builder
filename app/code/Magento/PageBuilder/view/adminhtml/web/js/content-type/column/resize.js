@@ -7,7 +7,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    */
   var Resize = /*#__PURE__*/function () {
     "use strict";
-//@todo fix minimum column width validation for 1/12 column when grid size changes from 12 to 8
+
     function Resize(columnGroup, columnLine) {
       this.columnGroup = columnGroup;
       this.columnLine = columnLine;

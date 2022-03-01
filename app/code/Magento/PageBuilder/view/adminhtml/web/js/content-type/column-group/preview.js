@@ -388,6 +388,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     }
     /**
      * Init the drop placeholder
+     * @deprecated - dropPlaceholder functionality moved to column-line
      *
      * @param {Element} element
      */
@@ -513,8 +514,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           }
 
           (0, _registry2.removeDragColumn)();
-
-          _this7.dropPlaceholder.removeClass("left right");
 
           _this7.movePlaceholder.removeClass("active");
 
@@ -649,7 +648,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       // Change the cursor back
 
       (0, _jquery)("body").css("cursor", "");
-      this.dropPlaceholder.removeClass("left right");
       this.movePlaceholder.css("left", "").removeClass("active");
       this.resizeGhost.removeClass("active"); // Reset the group positions cache
 
@@ -687,8 +685,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           intersects = false;
           _this9.groupPositionCache = null;
           _this9.dropPosition = null;
-
-          _this9.dropPlaceholder.removeClass("left right");
 
           _this9.movePlaceholder.css("left", "").removeClass("active");
         }
@@ -898,7 +894,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           }
 
           if (this.movePosition) {
-            this.dropPlaceholder.removeClass("left right");
             this.movePlaceholder.css({
               left: this.movePosition.placement === "left" ? this.movePosition.left : "",
               right: this.movePosition.placement === "right" ? groupPosition.width - this.movePosition.right : "",
@@ -916,13 +911,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           if (this.movePosition) {
             var classToRemove = this.movePosition.placement === "left" ? "right" : "left";
             this.movePlaceholder.removeClass("active");
-            this.dropPlaceholder.removeClass(classToRemove).css({
-              left: this.movePosition.placement === "left" ? this.movePosition.left : "",
-              right: this.movePosition.placement === "right" ? groupPosition.width - this.movePosition.right : "",
-              width: groupPosition.width / this.resizeUtils.getGridSize() + "px"
-            }).addClass(this.movePosition.placement);
-          } else {
-            this.dropPlaceholder.removeClass("left right");
           }
         }
       }
@@ -950,14 +938,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
         this.dropPosition = this.dropPositions.find(function (position) {
           return currentX > position.left && currentX <= position.right && position.canShrink;
         });
-
-        if (this.dropPosition) {
-          this.dropPlaceholder.removeClass("left right").css({
-            left: this.dropPosition.placement === "left" ? this.dropPosition.left : "",
-            right: this.dropPosition.placement === "right" ? groupPosition.width - this.dropPosition.right : "",
-            width: groupPosition.width / this.resizeUtils.getGridSize() + "px"
-          }).addClass(this.dropPosition.placement);
-        }
       } else if (this.dropOverElement) {
         // Re-enable the column group sortable instance
         if (elementChildrenParent.data("ui-sortable")) {
@@ -965,7 +945,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
         }
 
         this.dropPosition = null;
-        this.dropPlaceholder.removeClass("left right");
       }
     }
     /**
@@ -981,7 +960,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       group.droppable({
         deactivate: function deactivate() {
           self.dropOverElement = null;
-          self.dropPlaceholder.removeClass("left right");
 
           _underscore.defer(function () {
             // Re-enable the column group sortable instance & all children sortable instances
@@ -1014,17 +992,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
         },
         drop: function drop() {
           self.dropPositions = [];
-          self.dropPlaceholder.removeClass("left right");
         },
         out: function out() {
           self.dropOverElement = null;
-          self.dropPlaceholder.removeClass("left right");
         },
         over: function over() {
           // Is the element currently being dragged a column group?
           if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column-group")) {
             // Always calculate drop positions when an element is dragged over
-            self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.contentType);
             self.dropOverElement = true;
           } else {
             self.dropOverElement = null;
