@@ -33,7 +33,7 @@ import {getDraggedContentTypeConfig} from "Magento_PageBuilder/js/drag-drop/regi
 import {createStyleSheet} from "Magento_PageBuilder/js/utils/create-stylesheet";
 import {
     ColumnWidth,
-    default as ColumnGroupPreview, MaxGhostWidth, LinePositionCache
+    default as ColumnGroupPreview, MaxGhostWidth, LinePositionCache, GroupPositionCache, ResizeHistory
 } from "Magento_PageBuilder/js/content-type/column-group/preview";
 import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnIndexInLine,
@@ -68,11 +68,18 @@ export default class Preview extends PreviewCollection {
     private resizeColumnInstance: ContentTypeCollectionInterface<Preview>;
     private resizeColumnWidths: ColumnWidth[];
     private resizeMaxGhostWidth: MaxGhostWidth;
-    private resizeHistory: { left: any[]; right: any[] };
-    private resizeLastPosition: null;
+    private resizeHistory: ResizeHistory = {
+        left: [],
+        right: [],
+    };
+    private resizeLastPosition: number;
+    private resizeLastColumnInPair: string;
     private resizeMouseDown: boolean;
-    private interactionLevel: number;
+    private interactionLevel: number = 0;
     private lineDropperHeight: number = 50;
+    private resizeGhost: JQuery;
+    private resizeLeftLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
+    private resizeRightLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
 
 
 
@@ -102,7 +109,6 @@ export default class Preview extends PreviewCollection {
         events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
             // Does the events content type match the previews column group?
             if (args.columnLine.id === this.contentType.id) {
-                //@todo fix resize handle bar
                 this.registerResizeHandle(args.column, args.handle);
             }
         });
@@ -183,6 +189,15 @@ export default class Preview extends PreviewCollection {
      */
     public bindMovePlaceholder(element: Element) {
         this.movePlaceholder = $(element);
+    }
+
+    /**
+     * Retrieve the ghost element from the template
+     *
+     * @param {Element} ghost
+     */
+    public bindGhost(ghost: Element) {
+        this.resizeGhost = $(ghost);
     }
 
     /**
@@ -351,7 +366,7 @@ export default class Preview extends PreviewCollection {
             if (this.eventIntersectsLine(event, linePosition)) {
                 intersects = true;
                 //@todo re-instate onResizingMouseMove
-              //  this.onResizingMouseMove(event, line, linePosition);
+                this.onResizingMouseMove(event, line, linePosition);
                 this.onDraggingMouseMove(event, line, linePosition);
                 this.onDroppingMouseMove(event, line, linePosition);
             } else {
@@ -389,11 +404,31 @@ export default class Preview extends PreviewCollection {
      * End all current interactions
      */
     private endAllInteractions(): void {
+        if (this.resizing() === true) {
+            for (; this.interactionLevel > 0; this.interactionLevel--) {
+                events.trigger("stage:interactionStop", {stageId: this.contentType.stageId});
+            }
+        }
         this.linePositionCache = null;
         this.dropPosition = null;
         this.dropPlaceholder.removeClass("left right");
         this.columnLineDropPlaceholder.removeClass("active");
         this.columnLineDropPlaceholder.hide();
+        this.resizing(false);
+        this.resizeMouseDown = null;
+        this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
+        this.dropPositions = [];
+
+        this.unsetResizingColumns();
+
+        // Change the cursor back
+        $("body").css("cursor", "");
+
+        this.movePlaceholder.css("left", "").removeClass("active");
+        this.resizeGhost.removeClass("active");
+
+        // Reset the line positions cache
+        this.linePositionCache = null;
     }
 
     /**
@@ -522,6 +557,119 @@ export default class Preview extends PreviewCollection {
                 }
             }
         }
+    }
+
+    /**
+     * Handle the resizing on mouse move, we always resize a pair of columns at once
+     *
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
+     * @param {GroupPositionCache} groupPosition
+     */
+    private onResizingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache): void {
+        let newColumnWidth: ColumnWidth;
+
+        if (this.resizeMouseDown) {
+            event.preventDefault();
+            const currentPos = event.pageX;
+            const resizeColumnLeft = this.resizeColumnInstance.preview.element.offset().left;
+            const resizeColumnWidth = this.resizeColumnInstance.preview.element.outerWidth();
+            const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
+            const direction = (currentPos >= resizeHandlePosition) ? "right" : "left";
+
+            let adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>;
+            let modifyColumnInPair: string; // We need to know if we're modifying the left or right column in the pair
+            let usedHistory: string; // Was the adjusted column pulled from history?
+
+            // Determine which column in the group should be adjusted for this action
+            [adjustedColumn, modifyColumnInPair, usedHistory] = this.resizeUtils.determineAdjustedColumn(
+                currentPos,
+                this.resizeColumnInstance,
+                this.resizeHistory,
+            );
+
+            // Calculate the ghost width based on mouse position and bounds of allowed sizes
+            const ghostWidth = this.resizeUtils.calculateGhostWidth(
+                groupPosition,
+                currentPos,
+                this.resizeColumnInstance,
+                modifyColumnInPair,
+                this.resizeMaxGhostWidth,
+            );
+
+            this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
+
+            if (adjustedColumn && this.resizeColumnWidths) {
+                newColumnWidth = this.resizeColumnWidths.find((val) => {
+                    return comparator(currentPos, val.position, 35)
+                        && val.forColumn === modifyColumnInPair;
+                });
+
+                if (newColumnWidth) {
+                    let mainColumn = this.resizeColumnInstance;
+                    // If we're using the left data set, we're actually resizing the right column of the group
+                    if (modifyColumnInPair === "right") {
+                        mainColumn = getAdjacentColumn(this.resizeColumnInstance, "+1");
+                    }
+
+                    // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
+                    // one being performed now. This occurs as we re-calculate the column positions on resize, we have
+                    // to use the comparator as the calculation may result in slightly different numbers due to rounding
+                    if (this.resizeUtils.getColumnWidth(mainColumn) !== newColumnWidth.width &&
+                        !comparator(this.resizeLastPosition, newColumnWidth.position, 10)
+                    ) {
+                        // If our previous action was to resize the right column in pair, and we're now dragging back
+                        // to the right, but have matched a column for the left we need to fix the columns being
+                        // affected
+                        if (usedHistory && this.resizeLastColumnInPair === "right" && direction === "right" &&
+                            newColumnWidth.forColumn === "left"
+                        ) {
+                            const originalMainColumn = mainColumn;
+                            mainColumn = adjustedColumn;
+                            adjustedColumn = getAdjacentColumn(originalMainColumn, "+1");
+                        }
+
+                        this.recordResizeHistory(
+                            usedHistory,
+                            direction,
+                            adjustedColumn,
+                            modifyColumnInPair,
+                        );
+                        this.resizeLastPosition = newColumnWidth.position;
+
+                        this.resizeLastColumnInPair = modifyColumnInPair;
+
+                        // Ensure the adjusted column is marked as resizing to animate correctly
+                        this.setColumnsAsResizing(mainColumn, adjustedColumn);
+
+                        this.onColumnResize(
+                            mainColumn,
+                            newColumnWidth.width,
+                            adjustedColumn,
+                        );
+
+                        // Wait for the render cycle to finish from the above resize before re-calculating
+                        _.defer(() => {
+                            // If we do a resize, re-calculate the column widths
+                            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(this.resizeColumnInstance, groupPosition);
+                            this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Unset resizing flag on all child columns
+     */
+    private unsetResizingColumns(): void {
+        this.contentType.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+            column.preview.resizing(false);
+            if (column.preview.element) {
+                column.preview.element.css({transition: ""});
+            }
+        });
     }
 
     /**
@@ -885,6 +1033,55 @@ export default class Preview extends PreviewCollection {
         );
     }
 
+    /**
+     * Record the resizing history for this action
+     *
+     * @param {string} usedHistory
+     * @param {string} direction
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
+     * @param {string} modifyColumnInPair
+     */
+    private recordResizeHistory(
+        usedHistory: string,
+        direction: string,
+        adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>,
+        modifyColumnInPair: string,
+    ): void {
+        if (usedHistory) {
+            this.resizeHistory[usedHistory].pop();
+        }
+        this.resizeHistory[direction].push({
+            adjustedColumn,
+            modifyColumnInPair,
+        });
+    }
+
+    /**
+     * Set columns in the group as resizing
+     *
+     * @param {Array<ContentTypeCollectionInterface<ColumnPreview>>} columns
+     */
+    private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>): void {
+        columns.forEach((column) => {
+            column.preview.resizing(true);
+            column.preview.element.css({transition: `width 350ms ease-in-out`});
+        });
+    }
+
+    /**
+     * Handle a column being resized
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {number} width
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
+     */
+    private onColumnResize(
+        column: ContentTypeCollectionInterface<ColumnPreview>,
+        width: number,
+        adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>,
+    ) {
+        this.resizeUtils.resizeColumn(column, width, adjustedColumn);
+    }
 
     /**
      * Fire the mount event for content types

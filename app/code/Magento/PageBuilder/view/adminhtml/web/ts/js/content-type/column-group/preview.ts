@@ -124,13 +124,6 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        // Listen for resizing events from child columns
-        events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
-            // Does the events content type match the previews column group?
-            if (args.columnLine.id === this.contentType.id) {
-                this.registerResizeHandle(args.column, args.handle);
-            }
-        });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
             // Does the events parent match the previews column group?
             if (args.columnGroup.id === this.contentType.id) {

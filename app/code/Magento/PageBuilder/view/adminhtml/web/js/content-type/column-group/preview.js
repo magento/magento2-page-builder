@@ -89,14 +89,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
             _this.spreadWidth(args.index);
           });
         }
-      }); // Listen for resizing events from child columns
-
-
-      _events.on("column:resizeHandleBindAfter", function (args) {
-        // Does the events content type match the previews column group?
-        if (args.columnLine.id === _this.contentType.id) {
-          _this.registerResizeHandle(args.column, args.handle);
-        }
       });
 
       _events.on("column:initializeAfter", function (args) {

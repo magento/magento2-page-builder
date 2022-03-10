@@ -41,6 +41,11 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       _this = _previewCollection2.call(this, contentType, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
       _this.dropPositions = [];
+      _this.resizeHistory = {
+        left: [],
+        right: []
+      };
+      _this.interactionLevel = 0;
       _this.lineDropperHeight = 50;
       _this.resizeUtils = new _resize(_this.contentType.parentContentType, _this.contentType);
 
@@ -56,7 +61,6 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       _events.on("column:resizeHandleBindAfter", function (args) {
         // Does the events content type match the previews column group?
         if (args.columnLine.id === _this.contentType.id) {
-          //@todo fix resize handle bar
           _this.registerResizeHandle(args.column, args.handle);
         }
       });
@@ -141,6 +145,16 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
 
     _proto.bindMovePlaceholder = function bindMovePlaceholder(element) {
       this.movePlaceholder = (0, _jquery)(element);
+    }
+    /**
+     * Retrieve the ghost element from the template
+     *
+     * @param {Element} ghost
+     */
+    ;
+
+    _proto.bindGhost = function bindGhost(ghost) {
+      this.resizeGhost = (0, _jquery)(ghost);
     }
     /**
      * Retrieve the resize utils
@@ -308,7 +322,8 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
 
         if (_this5.eventIntersectsLine(event, linePosition)) {
           intersects = true; //@todo re-instate onResizingMouseMove
-          //  this.onResizingMouseMove(event, line, linePosition);
+
+          _this5.onResizingMouseMove(event, line, linePosition);
 
           _this5.onDraggingMouseMove(event, line, linePosition);
 
@@ -352,11 +367,30 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
     ;
 
     _proto.endAllInteractions = function endAllInteractions() {
+      if (this.resizing() === true) {
+        for (; this.interactionLevel > 0; this.interactionLevel--) {
+          _events.trigger("stage:interactionStop", {
+            stageId: this.contentType.stageId
+          });
+        }
+      }
+
       this.linePositionCache = null;
       this.dropPosition = null;
       this.dropPlaceholder.removeClass("left right");
       this.columnLineDropPlaceholder.removeClass("active");
       this.columnLineDropPlaceholder.hide();
+      this.resizing(false);
+      this.resizeMouseDown = null;
+      this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
+      this.dropPositions = [];
+      this.unsetResizingColumns(); // Change the cursor back
+
+      (0, _jquery)("body").css("cursor", "");
+      this.movePlaceholder.css("left", "").removeClass("active");
+      this.resizeGhost.removeClass("active"); // Reset the line positions cache
+
+      this.linePositionCache = null;
     }
     /**
      * Handle the mouse up action, either adding a new column or moving an existing
@@ -477,6 +511,100 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
           }
         }
       }
+    }
+    /**
+     * Handle the resizing on mouse move, we always resize a pair of columns at once
+     *
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
+     * @param {GroupPositionCache} groupPosition
+     */
+    ;
+
+    _proto.onResizingMouseMove = function onResizingMouseMove(event, group, groupPosition) {
+      var _this6 = this;
+
+      var newColumnWidth;
+
+      if (this.resizeMouseDown) {
+        event.preventDefault();
+        var currentPos = event.pageX;
+        var resizeColumnLeft = this.resizeColumnInstance.preview.element.offset().left;
+        var resizeColumnWidth = this.resizeColumnInstance.preview.element.outerWidth();
+        var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
+        var direction = currentPos >= resizeHandlePosition ? "right" : "left";
+        var adjustedColumn;
+        var modifyColumnInPair; // We need to know if we're modifying the left or right column in the pair
+
+        var usedHistory; // Was the adjusted column pulled from history?
+        // Determine which column in the group should be adjusted for this action
+
+        var _this$resizeUtils$det = this.resizeUtils.determineAdjustedColumn(currentPos, this.resizeColumnInstance, this.resizeHistory);
+
+        adjustedColumn = _this$resizeUtils$det[0];
+        modifyColumnInPair = _this$resizeUtils$det[1];
+        usedHistory = _this$resizeUtils$det[2];
+        // Calculate the ghost width based on mouse position and bounds of allowed sizes
+        var ghostWidth = this.resizeUtils.calculateGhostWidth(groupPosition, currentPos, this.resizeColumnInstance, modifyColumnInPair, this.resizeMaxGhostWidth);
+        this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
+
+        if (adjustedColumn && this.resizeColumnWidths) {
+          newColumnWidth = this.resizeColumnWidths.find(function (val) {
+            return (0, _resize.comparator)(currentPos, val.position, 35) && val.forColumn === modifyColumnInPair;
+          });
+
+          if (newColumnWidth) {
+            var mainColumn = this.resizeColumnInstance; // If we're using the left data set, we're actually resizing the right column of the group
+
+            if (modifyColumnInPair === "right") {
+              mainColumn = (0, _resize.getAdjacentColumn)(this.resizeColumnInstance, "+1");
+            } // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
+            // one being performed now. This occurs as we re-calculate the column positions on resize, we have
+            // to use the comparator as the calculation may result in slightly different numbers due to rounding
+
+
+            if (this.resizeUtils.getColumnWidth(mainColumn) !== newColumnWidth.width && !(0, _resize.comparator)(this.resizeLastPosition, newColumnWidth.position, 10)) {
+              // If our previous action was to resize the right column in pair, and we're now dragging back
+              // to the right, but have matched a column for the left we need to fix the columns being
+              // affected
+              if (usedHistory && this.resizeLastColumnInPair === "right" && direction === "right" && newColumnWidth.forColumn === "left") {
+                var originalMainColumn = mainColumn;
+                mainColumn = adjustedColumn;
+                adjustedColumn = (0, _resize.getAdjacentColumn)(originalMainColumn, "+1");
+              }
+
+              this.recordResizeHistory(usedHistory, direction, adjustedColumn, modifyColumnInPair);
+              this.resizeLastPosition = newColumnWidth.position;
+              this.resizeLastColumnInPair = modifyColumnInPair; // Ensure the adjusted column is marked as resizing to animate correctly
+
+              this.setColumnsAsResizing(mainColumn, adjustedColumn);
+              this.onColumnResize(mainColumn, newColumnWidth.width, adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
+
+              _underscore.defer(function () {
+                // If we do a resize, re-calculate the column widths
+                _this6.resizeColumnWidths = _this6.resizeUtils.determineColumnWidths(_this6.resizeColumnInstance, groupPosition);
+                _this6.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this6.resizeColumnWidths);
+              });
+            }
+          }
+        }
+      }
+    }
+    /**
+     * Unset resizing flag on all child columns
+     */
+    ;
+
+    _proto.unsetResizingColumns = function unsetResizingColumns() {
+      this.contentType.children().forEach(function (column) {
+        column.preview.resizing(false);
+
+        if (column.preview.element) {
+          column.preview.element.css({
+            transition: ""
+          });
+        }
+      });
     }
     /**
      *
@@ -762,33 +890,33 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
     ;
 
     _proto.registerResizeHandle = function registerResizeHandle(column, handle) {
-      var _this6 = this;
+      var _this7 = this;
 
       handle.off("mousedown touchstart");
       handle.on("mousedown touchstart", function (event) {
         event.preventDefault();
 
-        var groupPosition = _this6.getLinePosition(_this6.element);
+        var groupPosition = _this7.getLinePosition(_this7.element);
 
-        _this6.resizing(true); // @ts-ignore
+        _this7.resizing(true); // @ts-ignore
 
 
-        _this6.resizeColumnInstance = column;
-        _this6.resizeColumnWidths = _this6.resizeUtils.determineColumnWidths(_this6.resizeColumnInstance, groupPosition);
-        _this6.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this6.resizeColumnWidths); // Force the cursor to resizing
+        _this7.resizeColumnInstance = column;
+        _this7.resizeColumnWidths = _this7.resizeUtils.determineColumnWidths(_this7.resizeColumnInstance, groupPosition);
+        _this7.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this7.resizeColumnWidths); // Force the cursor to resizing
 
         (0, _jquery)("body").css("cursor", "col-resize"); // Reset the resize history
 
-        _this6.resizeHistory = {
+        _this7.resizeHistory = {
           left: [],
           right: []
         };
-        _this6.resizeLastPosition = null;
-        _this6.resizeMouseDown = true;
-        ++_this6.interactionLevel;
+        _this7.resizeLastPosition = null;
+        _this7.resizeMouseDown = true;
+        ++_this7.interactionLevel;
 
         _events.trigger("stage:interactionStart", {
-          stageId: _this6.contentType.stageId
+          stageId: _this7.contentType.stageId
         });
       });
     }
@@ -800,7 +928,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
     ;
 
     _proto.createColumns = function createColumns() {
-      var _this7 = this;
+      var _this8 = this;
 
       var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
       var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
@@ -809,12 +937,63 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       }), (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), this.contentType, this.contentType.stageId, {
         width: 100 - parseFloat(col1Width) + "%"
       })]).then(function (columns) {
-        _this7.contentType.addChild(columns[0], 0);
+        _this8.contentType.addChild(columns[0], 0);
 
-        _this7.contentType.addChild(columns[1], 1);
+        _this8.contentType.addChild(columns[1], 1);
 
-        _this7.fireMountEvent(_this7.contentType, columns[0], columns[1]);
+        _this8.fireMountEvent(_this8.contentType, columns[0], columns[1]);
       });
+    }
+    /**
+     * Record the resizing history for this action
+     *
+     * @param {string} usedHistory
+     * @param {string} direction
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
+     * @param {string} modifyColumnInPair
+     */
+    ;
+
+    _proto.recordResizeHistory = function recordResizeHistory(usedHistory, direction, adjustedColumn, modifyColumnInPair) {
+      if (usedHistory) {
+        this.resizeHistory[usedHistory].pop();
+      }
+
+      this.resizeHistory[direction].push({
+        adjustedColumn: adjustedColumn,
+        modifyColumnInPair: modifyColumnInPair
+      });
+    }
+    /**
+     * Set columns in the group as resizing
+     *
+     * @param {Array<ContentTypeCollectionInterface<ColumnPreview>>} columns
+     */
+    ;
+
+    _proto.setColumnsAsResizing = function setColumnsAsResizing() {
+      for (var _len = arguments.length, columns = new Array(_len), _key = 0; _key < _len; _key++) {
+        columns[_key] = arguments[_key];
+      }
+
+      columns.forEach(function (column) {
+        column.preview.resizing(true);
+        column.preview.element.css({
+          transition: "width 350ms ease-in-out"
+        });
+      });
+    }
+    /**
+     * Handle a column being resized
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {number} width
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
+     */
+    ;
+
+    _proto.onColumnResize = function onColumnResize(column, width, adjustedColumn) {
+      this.resizeUtils.resizeColumn(column, width, adjustedColumn);
     }
     /**
      * Fire the mount event for content types
@@ -824,8 +1003,8 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
     ;
 
     _proto.fireMountEvent = function fireMountEvent() {
-      for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
-        contentTypes[_key] = arguments[_key];
+      for (var _len2 = arguments.length, contentTypes = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        contentTypes[_key2] = arguments[_key2];
       }
 
       contentTypes.forEach(function (contentType) {
