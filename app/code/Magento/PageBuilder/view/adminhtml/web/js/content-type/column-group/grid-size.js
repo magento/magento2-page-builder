@@ -215,14 +215,16 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
         column.preview.updateDisplayLabel();
       });
+    });
+    columnGroup.dataStore.set("grid_size", newGridSize);
+    columnGroup.dataStore.unset("initial_grid_size");
+    columnGroup.getChildren()().forEach(function (columnLine, index) {
+      var resizeUtils = columnLine.preview.getResizeUtils();
 
       if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
         applyLeftoverColumnsInColumnLine(columnLine, newGridSize);
       }
-    }); // persist new grid size so upcoming calls to get column widths are calculated correctly
-
-    columnGroup.dataStore.set("grid_size", newGridSize);
-    columnGroup.dataStore.unset("initial_grid_size");
+    });
   }
   /**
    * Make sure the full grid size is distributed across the columns

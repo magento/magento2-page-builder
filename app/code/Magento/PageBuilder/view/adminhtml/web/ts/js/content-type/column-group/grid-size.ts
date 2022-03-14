@@ -217,15 +217,19 @@ function redistributeColumnWidths(
                 (column.preview as ColumnPreview).updateDisplayLabel();
 
             });
-            if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-                applyLeftoverColumnsInColumnLine(columnLine, newGridSize);
-            }
             },
     );
 
-    // persist new grid size so upcoming calls to get column widths are calculated correctly
     columnGroup.dataStore.set("grid_size", newGridSize);
     columnGroup.dataStore.unset("initial_grid_size");
+    columnGroup.getChildren()().forEach(
+        (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+            let resizeUtils = columnLine.preview.getResizeUtils();
+            if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+                applyLeftoverColumnsInColumnLine(columnLine, newGridSize);
+            }
+        },
+    );
 }
 
 /**
