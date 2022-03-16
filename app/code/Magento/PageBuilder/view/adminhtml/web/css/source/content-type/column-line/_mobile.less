@@ -2,18 +2,20 @@
 //  * Copyright © Magento, Inc. All rights reserved.
 //  * See COPYING.txt for license details.
 //  */
+
 //
 //  Default appearance styles rendered through Mobile viewport
 //  _____________________________________________________
 .mobile-viewport {
-    .pagebuilder-content-type.pagebuilder-block {
-        .rendered-content {
-            .pagebuilder-column-group, .pagebuilder-column-line {
+    .pagebuilder-content-type {
+        .pagebuilder-column-line {
+            > .element-children {
                 flex-wrap: wrap;
-                .pagebuilder-column {
-                    flex-basis: 100%;
-                }
             }
+        }
+
+        &.children-min-height.pagebuilder-column {
+            width: 100% !important;
         }
     }
 }
