@@ -93,21 +93,26 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     } // Validate that the operation will be successful
 
 
-    var numCols = columnGroup.getChildren()().length;
-    var currentGridSize = columnGroup.preview.getResizeUtils().getInitialGridSize();
-
-    if (newGridSize < currentGridSize && numCols > newGridSize) {
+    columnGroup.getChildren()().forEach(function (columnLine, index) {
       var numEmptyColumns = 0;
-      columnGroup.getChildren()().forEach(function (column) {
-        if (column.getChildren()().length === 0) {
-          numEmptyColumns++;
-        }
-      });
+      var numCols = columnLine.getChildren()().length;
+      var currentGridSize = columnLine.preview.getResizeUtils().getInitialGridSize();
 
-      if (newGridSize < numCols - numEmptyColumns) {
-        throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
+      if (newGridSize < currentGridSize && numCols > newGridSize) {
+        columnLine.getChildren()().forEach(function (column) {
+          if (column.getChildren()().length === 0) {
+            numEmptyColumns++;
+          }
+        });
+
+        if (newGridSize < numCols - numEmptyColumns) {
+          throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
+        }
       }
-    }
+    });
+    columnGroup.getChildren()().forEach(function (column, index) {
+      (0, _resize.updateColumnWidth)(column, columnWidths[index]);
+    });
   }
   /**
    * Remove empty columns so we can accommodate the new grid size
@@ -144,9 +149,10 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
   function redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory) {
     // apply known column widths if we have resized before
     if (gridSizeHistory.has(newGridSize) && gridSizeHistory.get(newGridSize).length === columnGroup.getChildren()().length) {
-      var columnWidths = gridSizeHistory.get(newGridSize);
+      var _columnWidths = gridSizeHistory.get(newGridSize);
+
       columnGroup.getChildren()().forEach(function (column, index) {
-        (0, _resize.updateColumnWidth)(column, columnWidths[index]);
+        (0, _resize.updateColumnWidth)(column, _columnWidths[index]);
       });
       columnGroup.dataStore.set("grid_size", newGridSize);
       columnGroup.dataStore.unset("initial_grid_size");

@@ -77,22 +77,32 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
     }
 
     // Validate that the operation will be successful
-    const numCols = columnGroup.getChildren()().length;
-    const currentGridSize = columnGroup.preview.getResizeUtils().getInitialGridSize();
-    if (newGridSize < currentGridSize && numCols > newGridSize) {
-        let numEmptyColumns = 0;
-        columnGroup.getChildren()().forEach(
-            (column: ContentTypeCollectionInterface<ColumnPreview>) => {
-                if (column.getChildren()().length === 0) {
-                    numEmptyColumns++;
+
+
+    columnGroup.getChildren()().forEach(
+        (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+            let numEmptyColumns = 0;
+            const numCols = columnLine.getChildren()().length;
+            const currentGridSize = columnLine.preview.getResizeUtils().getInitialGridSize();
+            if (newGridSize < currentGridSize && numCols > newGridSize) {
+                columnLine.getChildren()().forEach(
+                    (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                    if (column.getChildren()().length === 0) {
+                        numEmptyColumns++;
+                    }
+                });
+                if (newGridSize < numCols - numEmptyColumns) {
+                    throw new GridSizeError(
+                        $t("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."),
+                    );
                 }
-            });
-        if (newGridSize < numCols - numEmptyColumns) {
-            throw new GridSizeError(
-                $t("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."),
-            );
-        }
-    }
+            }
+        });
+
+    columnGroup.getChildren()().forEach(
+        (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
+            updateColumnWidth(column, columnWidths[index]);
+        });
 }
 
 /**
