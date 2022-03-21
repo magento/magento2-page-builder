@@ -80,6 +80,7 @@ export default class Preview extends PreviewCollection {
     private resizeGhost: JQuery;
     private resizeLeftLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
     private resizeRightLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
+    private columnLineBottomDropPlaceholder: JQuery;
 
 
 
@@ -171,6 +172,15 @@ export default class Preview extends PreviewCollection {
      */
     public bindDropPlaceholder(element: Element) {
         this.dropPlaceholder = $(element);
+    }
+
+    /**
+     * Init the drop placeholder
+     *
+     * @param {Element} element
+     */
+    public bindColumnLineBottomDropPlaceholder(element: Element) {
+        this.columnLineBottomDropPlaceholder = $(element);
     }
 
     /**
@@ -375,6 +385,8 @@ export default class Preview extends PreviewCollection {
                 this.dropPosition = null;
                 this.dropPlaceholder.removeClass("left right");
                 this.columnLineDropPlaceholder.removeClass("active");
+                this.columnLineBottomDropPlaceholder.removeClass("active");
+                this.columnLineBottomDropPlaceholder.hide();
                 this.columnLineDropPlaceholder.hide();
                 //@todo combine active and show/hide functionality for columnLineDropPlaceholder
               //  this.movePlaceholder.css("left", "").removeClass("active");
@@ -413,6 +425,8 @@ export default class Preview extends PreviewCollection {
         this.dropPosition = null;
         this.dropPlaceholder.removeClass("left right");
         this.columnLineDropPlaceholder.removeClass("active");
+        this.columnLineBottomDropPlaceholder.removeClass("active");
+        this.columnLineBottomDropPlaceholder.hide();
         this.columnLineDropPlaceholder.hide();
         this.resizing(false);
         this.resizeMouseDown = null;
@@ -438,13 +452,17 @@ export default class Preview extends PreviewCollection {
 
         let index = -1;
         let self = this;
-        if (this.columnLineDropPlaceholder.hasClass('active')) {
+        if (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass("active")) {
 
             for (var child of this.contentType.parentContentType.children()) {
                 index++;
                 if (child.id == self.contentType.id) {
                     break;
                 }
+            }
+            if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
+                //show the bottom drop placeholder
+                index++;
             }
             createColumnLine(
                 this.contentType.parentContentType,
@@ -680,9 +698,35 @@ export default class Preview extends PreviewCollection {
      */
     private isNewLinePlaceDropPlaceholderVisible(event: JQueryEventObject, linePosition: LinePositionCache): boolean {
 
-        return this.dropOverElement &&
+        const siblings = this.contentType.parentContentType.children();
+        const id = this.contentType.id;
+        let index = 0;
+        siblings.forEach(columnLine => {
+            if (columnLine.id == id){
+                return false;
+            }
+            index++;
+        });
+        //show column line drop placeholder only for top column line in a group
+
+        return index === 0 && this.dropOverElement &&
             event.pageY > linePosition.top &&
             event.pageY < linePosition.top + this.lineDropperHeight
+    }
+
+
+    /**
+     *
+     * @param event
+     * @param linePosition
+     * @private
+     */
+    private isNewLineBottomPlaceDropPlaceholderVisible(event: JQueryEventObject, linePosition: LinePositionCache): boolean {
+
+        return this.dropOverElement &&
+             (event.pageY < linePosition.top + this.element.outerHeight() &&
+                event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight )
+
     }
 
     /**
@@ -693,9 +737,9 @@ export default class Preview extends PreviewCollection {
      */
     private isNewColumnDropPlaceholderVisible(event: JQueryEventObject, linePosition: LinePositionCache): boolean {
 
-         return this.dropOverElement &&
-        event.pageY > linePosition.top + 50 &&
-        event.pageY < linePosition.top + linePosition.outerHeight
+        return this.dropOverElement &&
+        event.pageY > linePosition.top + this.lineDropperHeight &&
+        event.pageY < linePosition.top + linePosition.outerHeight - this.lineDropperHeight;
     }
     /**
      * Handle mouse move events on when dropping elements
@@ -711,15 +755,27 @@ export default class Preview extends PreviewCollection {
             this.dropPosition = null;
             this.dropPlaceholder.removeClass("left right");
             this.columnLineDropPlaceholder.addClass("active");
+            this.columnLineDropPlaceholder.show();
             return this.handleLineDropMouseMove(event, line, linePosition);
-        } else if(this.dropOverElement) {
+        } else if (this.isNewLineBottomPlaceDropPlaceholderVisible(event, linePosition)) {
+            this.dropPosition = null;
+            this.dropPlaceholder.removeClass("left right");
+            this.columnLineBottomDropPlaceholder.addClass("active");
+            this.columnLineBottomDropPlaceholder.show();
+            return this.handleLineDropMouseMove(event, line, linePosition);
+        }
+        else if(this.dropOverElement) {
             this.columnLineDropPlaceholder.hide();
+            this.columnLineBottomDropPlaceholder.hide();
+            this.columnLineBottomDropPlaceholder.removeClass("active");
             this.columnLineDropPlaceholder.removeClass("active");
 
         }
         if (this.isNewColumnDropPlaceholderVisible(event, linePosition)) {
             this.columnLineDropPlaceholder.hide();
             this.columnLineDropPlaceholder.removeClass("active");
+            this.columnLineBottomDropPlaceholder.hide();
+            this.columnLineBottomDropPlaceholder.removeClass("active");
             return this.handleColumnDropMouseMove(event, line, linePosition);
         }
     }
@@ -739,8 +795,6 @@ export default class Preview extends PreviewCollection {
         if (elementChildrenParent.data("ui-sortable")) {
             elementChildrenParent.sortable("option", "disabled", true);
         }
-
-        this.columnLineDropPlaceholder.show();
     }
 
     /**

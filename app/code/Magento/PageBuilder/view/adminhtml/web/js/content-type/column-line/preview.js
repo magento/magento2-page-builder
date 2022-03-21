@@ -133,6 +133,16 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
      */
     ;
 
+    _proto.bindColumnLineBottomDropPlaceholder = function bindColumnLineBottomDropPlaceholder(element) {
+      this.columnLineBottomDropPlaceholder = (0, _jquery)(element);
+    }
+    /**
+     * Init the drop placeholder
+     *
+     * @param {Element} element
+     */
+    ;
+
     _proto.bindColumnLineDropPlaceholder = function bindColumnLineDropPlaceholder(element) {
       this.columnLineDropPlaceholder = (0, _jquery)(element);
     }
@@ -337,6 +347,10 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
 
           _this5.columnLineDropPlaceholder.removeClass("active");
 
+          _this5.columnLineBottomDropPlaceholder.removeClass("active");
+
+          _this5.columnLineBottomDropPlaceholder.hide();
+
           _this5.columnLineDropPlaceholder.hide(); //@todo combine active and show/hide functionality for columnLineDropPlaceholder
           //  this.movePlaceholder.css("left", "").removeClass("active");
 
@@ -379,6 +393,8 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       this.dropPosition = null;
       this.dropPlaceholder.removeClass("left right");
       this.columnLineDropPlaceholder.removeClass("active");
+      this.columnLineBottomDropPlaceholder.removeClass("active");
+      this.columnLineBottomDropPlaceholder.hide();
       this.columnLineDropPlaceholder.hide();
       this.resizing(false);
       this.resizeMouseDown = null;
@@ -401,7 +417,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       var index = -1;
       var self = this;
 
-      if (this.columnLineDropPlaceholder.hasClass('active')) {
+      if (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass("active")) {
         for (var _iterator = _createForOfIteratorHelperLoose(this.contentType.parentContentType.children()), _step; !(_step = _iterator()).done;) {
           var child = _step.value;
           index++;
@@ -409,6 +425,11 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
           if (child.id == self.contentType.id) {
             break;
           }
+        }
+
+        if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
+          //show the bottom drop placeholder
+          index++;
         }
 
         (0, _factory.createColumnLine)(this.contentType.parentContentType, this.resizeUtils.getSmallestColumnWidth(), index).then(function (columnLine) {
@@ -615,7 +636,29 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
     ;
 
     _proto.isNewLinePlaceDropPlaceholderVisible = function isNewLinePlaceDropPlaceholderVisible(event, linePosition) {
-      return this.dropOverElement && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
+      var siblings = this.contentType.parentContentType.children();
+      var id = this.contentType.id;
+      var index = 0;
+      siblings.forEach(function (columnLine) {
+        if (columnLine.id == id) {
+          return false;
+        }
+
+        index++;
+      }); //show column line drop placeholder only for top column line in a group
+
+      return index === 0 && this.dropOverElement && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
+    }
+    /**
+     *
+     * @param event
+     * @param linePosition
+     * @private
+     */
+    ;
+
+    _proto.isNewLineBottomPlaceDropPlaceholderVisible = function isNewLineBottomPlaceDropPlaceholderVisible(event, linePosition) {
+      return this.dropOverElement && event.pageY < linePosition.top + this.element.outerHeight() && event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight;
     }
     /**
      *
@@ -626,7 +669,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
     ;
 
     _proto.isNewColumnDropPlaceholderVisible = function isNewColumnDropPlaceholderVisible(event, linePosition) {
-      return this.dropOverElement && event.pageY > linePosition.top + 50 && event.pageY < linePosition.top + linePosition.outerHeight;
+      return this.dropOverElement && event.pageY > linePosition.top + this.lineDropperHeight && event.pageY < linePosition.top + linePosition.outerHeight - this.lineDropperHeight;
     }
     /**
      * Handle mouse move events on when dropping elements
@@ -644,15 +687,26 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
         this.dropPosition = null;
         this.dropPlaceholder.removeClass("left right");
         this.columnLineDropPlaceholder.addClass("active");
+        this.columnLineDropPlaceholder.show();
+        return this.handleLineDropMouseMove(event, line, linePosition);
+      } else if (this.isNewLineBottomPlaceDropPlaceholderVisible(event, linePosition)) {
+        this.dropPosition = null;
+        this.dropPlaceholder.removeClass("left right");
+        this.columnLineBottomDropPlaceholder.addClass("active");
+        this.columnLineBottomDropPlaceholder.show();
         return this.handleLineDropMouseMove(event, line, linePosition);
       } else if (this.dropOverElement) {
         this.columnLineDropPlaceholder.hide();
+        this.columnLineBottomDropPlaceholder.hide();
+        this.columnLineBottomDropPlaceholder.removeClass("active");
         this.columnLineDropPlaceholder.removeClass("active");
       }
 
       if (this.isNewColumnDropPlaceholderVisible(event, linePosition)) {
         this.columnLineDropPlaceholder.hide();
         this.columnLineDropPlaceholder.removeClass("active");
+        this.columnLineBottomDropPlaceholder.hide();
+        this.columnLineBottomDropPlaceholder.removeClass("active");
         return this.handleColumnDropMouseMove(event, line, linePosition);
       }
     }
@@ -672,8 +726,6 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       if (elementChildrenParent.data("ui-sortable")) {
         elementChildrenParent.sortable("option", "disabled", true);
       }
-
-      this.columnLineDropPlaceholder.show();
     }
     /**
      *
