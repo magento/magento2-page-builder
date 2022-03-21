@@ -98,11 +98,6 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
                 }
             }
         });
-
-    columnGroup.getChildren()().forEach(
-        (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
-            updateColumnWidth(column, columnWidths[index]);
-        });
 }
 
 /**

@@ -110,9 +110,6 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         }
       }
     });
-    columnGroup.getChildren()().forEach(function (column, index) {
-      (0, _resize.updateColumnWidth)(column, columnWidths[index]);
-    });
   }
   /**
    * Remove empty columns so we can accommodate the new grid size
@@ -149,10 +146,9 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
   function redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory) {
     // apply known column widths if we have resized before
     if (gridSizeHistory.has(newGridSize) && gridSizeHistory.get(newGridSize).length === columnGroup.getChildren()().length) {
-      var _columnWidths = gridSizeHistory.get(newGridSize);
-
+      var columnWidths = gridSizeHistory.get(newGridSize);
       columnGroup.getChildren()().forEach(function (column, index) {
-        (0, _resize.updateColumnWidth)(column, _columnWidths[index]);
+        (0, _resize.updateColumnWidth)(column, columnWidths[index]);
       });
       columnGroup.dataStore.set("grid_size", newGridSize);
       columnGroup.dataStore.unset("initial_grid_size");
