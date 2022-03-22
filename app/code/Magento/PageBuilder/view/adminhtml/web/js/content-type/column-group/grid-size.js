@@ -67,12 +67,15 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
       return;
     }
 
-    validateNewGridSize(columnGroup, newGridSize); // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+    validateNewGridSize(columnGroup, newGridSize);
+    columnGroup.getChildren()().forEach(function (columnLine, index) {
+      // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+      console.log(columnLine.getChildren()().length);
 
-    if (newGridSize < columnGroup.getChildren()().length) {
-      removeEmptyColumnsToFit(columnGroup, newGridSize);
-    } // update column widths
-
+      if (newGridSize < columnLine.getChildren()().length) {
+        removeEmptyColumnsToFit(columnLine, newGridSize);
+      }
+    }); // update column widths
 
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
   }
@@ -93,6 +96,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     } // Validate that the operation will be successful
 
 
+    var doThrowException = false;
     columnGroup.getChildren()().forEach(function (columnLine, index) {
       var numEmptyColumns = 0;
       var numCols = columnLine.getChildren()().length;
@@ -106,10 +110,14 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         });
 
         if (newGridSize < numCols - numEmptyColumns) {
-          throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
+          doThrowException = true;
         }
       }
     });
+
+    if (doThrowException) {
+      throw new Error((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
+    }
   }
   /**
    * Remove empty columns so we can accommodate the new grid size
@@ -119,8 +127,8 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
    */
 
 
-  function removeEmptyColumnsToFit(columnGroup, newGridSize) {
-    var columns = columnGroup.getChildren()();
+  function removeEmptyColumnsToFit(columnLine, newGridSize) {
+    var columns = columnLine.getChildren()();
     var numColumns = columns.length;
     var i;
 
@@ -128,7 +136,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
       var column = columns[i];
 
       if (newGridSize < numColumns && column.getChildren()().length === 0) {
-        columnGroup.removeChild(column);
+        columnLine.removeChild(column);
         numColumns--;
       }
     }

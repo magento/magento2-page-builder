@@ -41,6 +41,7 @@ import {
 import {createColumn, createColumnLine} from "./factory";
 import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
+import ColumnLinePreview from "Magento_PageBuilder/js/content-type/column-line/preview";
 
 /**
  * @api
@@ -155,7 +156,7 @@ export default class Preview extends PreviewCollection {
 
         const appearance = this.contentType.dataStore.get("appearance") ? this.contentType.dataStore.get("appearance") : "default";
         this.contentType.dataStore.set("appearance", appearance);
-        this.contentType.dataStore.set("non_empty_column_count", numCols - numEmptyColumns);
+        this.contentType.dataStore.set("non_empty_column_count", this.getNonEmptyColumnCount());
         this.contentType.dataStore.set("max_grid_size", getMaxGridSize());
         this.contentType.dataStore.set("initial_grid_size", this.contentType.dataStore.get("grid_size"));
         super.openEdit();
@@ -1130,6 +1131,33 @@ export default class Preview extends PreviewCollection {
                 });
             this.gridSizeHistory.set(newGridSize, columnWidths);
         }
+    }
+
+    /**
+     * Figure out the maximum number of non-empty columns in various column lines
+     * @private
+     */
+    private getNonEmptyColumnCount(): number {
+
+        let nonEmptyColumnCount = 0;
+        this.contentType.getChildren()().forEach(
+            (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+                let numEmptyColumns = 0;
+                const numCols = columnLine.getChildren()().length;
+                    columnLine.getChildren()().forEach(
+                        (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                            if (column.getChildren()().length === 0) {
+                                numEmptyColumns++;
+                            }
+                        });
+
+                if (numCols - numEmptyColumns > nonEmptyColumnCount) {
+                    nonEmptyColumnCount = numCols - numEmptyColumns;
+                }
+
+            });
+
+        return nonEmptyColumnCount;
     }
 }
 

@@ -53,10 +53,14 @@ export function resizeGrid(
 
     validateNewGridSize(columnGroup, newGridSize);
 
-    // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
-    if (newGridSize < columnGroup.getChildren()().length) {
-        removeEmptyColumnsToFit(columnGroup, newGridSize);
-    }
+    columnGroup.getChildren()().forEach(
+        (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+            // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+            console.log(columnLine.getChildren()().length);
+            if (newGridSize < columnLine.getChildren()().length) {
+                removeEmptyColumnsToFit(columnLine, newGridSize);
+            }
+        });
 
     // update column widths
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
@@ -78,7 +82,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
 
     // Validate that the operation will be successful
 
-
+    let doThrowException = false;
     columnGroup.getChildren()().forEach(
         (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
             let numEmptyColumns = 0;
@@ -92,12 +96,16 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
                     }
                 });
                 if (newGridSize < numCols - numEmptyColumns) {
-                    throw new GridSizeError(
-                        $t("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."),
-                    );
+                    doThrowException = true;
                 }
             }
         });
+
+    if (doThrowException) {
+        throw new Error(
+            $t("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."),
+        );
+    }
 }
 
 /**
@@ -106,14 +114,14 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
  * @param {ContentTypeCollectionInterface<Preview>} columnGroup
  * @param {number} newGridSize
  */
-function removeEmptyColumnsToFit(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
-    const columns = columnGroup.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>;
+function removeEmptyColumnsToFit(columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, newGridSize: number) {
+    const columns = columnLine.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>;
     let numColumns = columns.length;
     let i;
     for (i = numColumns - 1; i >= 0; i--) {
         const column: ContentTypeCollectionInterface<ColumnPreview> = columns[i];
         if (newGridSize < numColumns && column.getChildren()().length === 0) {
-            columnGroup.removeChild(column);
+            columnLine.removeChild(column);
             numColumns--;
         }
     }

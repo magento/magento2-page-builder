@@ -120,7 +120,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       });
       var appearance = this.contentType.dataStore.get("appearance") ? this.contentType.dataStore.get("appearance") : "default";
       this.contentType.dataStore.set("appearance", appearance);
-      this.contentType.dataStore.set("non_empty_column_count", numCols - numEmptyColumns);
+      this.contentType.dataStore.set("non_empty_column_count", this.getNonEmptyColumnCount());
       this.contentType.dataStore.set("max_grid_size", (0, _gridSize.getMaxGridSize)());
       this.contentType.dataStore.set("initial_grid_size", this.contentType.dataStore.get("grid_size"));
 
@@ -1089,6 +1089,29 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
         });
         this.gridSizeHistory.set(newGridSize, columnWidths);
       }
+    }
+    /**
+     * Figure out the maximum number of non-empty columns in various column lines
+     * @private
+     */
+    ;
+
+    _proto.getNonEmptyColumnCount = function getNonEmptyColumnCount() {
+      var nonEmptyColumnCount = 0;
+      this.contentType.getChildren()().forEach(function (columnLine, index) {
+        var numEmptyColumns = 0;
+        var numCols = columnLine.getChildren()().length;
+        columnLine.getChildren()().forEach(function (column) {
+          if (column.getChildren()().length === 0) {
+            numEmptyColumns++;
+          }
+        });
+
+        if (numCols - numEmptyColumns > nonEmptyColumnCount) {
+          nonEmptyColumnCount = numCols - numEmptyColumns;
+        }
+      });
+      return nonEmptyColumnCount;
     };
 
     return Preview;
