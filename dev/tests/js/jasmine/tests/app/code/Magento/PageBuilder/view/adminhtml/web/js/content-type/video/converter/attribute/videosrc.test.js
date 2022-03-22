@@ -21,9 +21,9 @@ define([
             it('Should remove non-youtube and preserve youtube tags in URL', function () {
                 var data = {
                         video_source: 'https://www.youtube.com/embed/ishbTyLs6ps?rel=1&non-youtube-tag=value',
-                        autoplay: "false"
+                        autoplay: 'false'
                     },
-                    result = model.toDom("video_source", data);
+                    result = model.toDom('video_source', data);
 
                 expect(result).toBe('https://www.youtube.com/embed/ishbTyLs6ps?rel=1');
             });
@@ -33,9 +33,9 @@ define([
             it('Should add autoplay and mute to URL if Autoplay enabled in UI', function () {
                 var data = {
                         video_source: 'https://www.youtube.com/embed/ishbTyLs6ps?rel=1&controls=0',
-                        autoplay: "true"
+                        autoplay: 'true'
                     },
-                    result = model.toDom("video_source", data);
+                    result = model.toDom('video_source', data);
 
                 expect(result).toBe('https://www.youtube.com/embed/ishbTyLs6ps?rel=1&controls=0&autoplay=1&mute=1');
             });
@@ -45,9 +45,9 @@ define([
             it('Should remove autoplay and mute from URL if Autoplay disabled in UI', function () {
                 var data = {
                         video_source: 'https://www.youtube.com/embed/ishbTyLs6ps?rel=1&controls=0&autoplay=1&mute=1',
-                        autoplay: "false"
+                        autoplay: 'false'
                     },
-                    result = model.toDom("video_source", data);
+                    result = model.toDom('video_source', data);
 
                 expect(result).toBe('https://www.youtube.com/embed/ishbTyLs6ps?rel=1&controls=0');
             });
@@ -60,7 +60,7 @@ define([
                 result = model.fromDom('https://www.youtube.com/embed/ishbTyLs6ps?rel=1&controls=0&autoplay=1&mute=1');
                 expect(result).toBe('https://www.youtube.com/embed/ishbTyLs6ps?rel=1&controls=0');
 
-                result = model.fromDom("https://www.youtube.com/embed/ishbTyLs6ps?autoplay=1&mute=1");
+                result = model.fromDom('https://www.youtube.com/embed/ishbTyLs6ps?autoplay=1&mute=1');
                 expect(result).toBe('https://www.youtube.com/embed/ishbTyLs6ps');
             });
         });
