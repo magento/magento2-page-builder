@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       _events.on("column:initializeAfter", function (args) {
-        _this2.resetRemoveOnLastColumn(args.columnGroup);
+        _this2.resetRemoveOnLastColumn(args.columnLine);
       });
 
       _events.on("column:dropAfter", function (args) {
@@ -289,21 +289,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       var siblings = parentContentType.children();
+      var siblingColumnLines = parentContentType.parentContentType.children();
 
       if (siblings.length < 1) {
         return;
       }
 
-      if (siblings.length === 1) {
+      if (siblings.length === 1 && siblingColumnLines.length === 1) {
         var lastColumn = siblings[0];
         var options = lastColumn.preview.getOptions();
         options.getOption("remove").isDisabled(true);
         return;
       }
 
-      siblings.forEach(function (column) {
-        var removeOption = column.preview.getOptions().getOption("remove");
-        removeOption.isDisabled(false);
+      debugger;
+      siblingColumnLines.forEach(function (columnLine) {
+        var columns = columnLine.children();
+        columns.forEach(function (column) {
+          var removeOption = column.preview.getOptions().getOption("remove");
+          removeOption.isDisabled(false);
+        });
       });
     }
     /**

@@ -95,7 +95,7 @@ export default class Preview extends PreviewCollection {
             this.resetRemoveOnLastColumn(args.sourceParent);
         });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
-            this.resetRemoveOnLastColumn(args.columnGroup);
+            this.resetRemoveOnLastColumn(args.columnLine);
         });
         events.on("column:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             this.resetRemoveOnLastColumn(this.contentType.parentContentType);
@@ -308,19 +308,25 @@ export default class Preview extends PreviewCollection {
             return;
         }
         const siblings = parentContentType.children();
-        if (siblings.length < 1) {
+        const siblingColumnLines = parentContentType.parentContentType.children();
+        if (siblings.length < 1 ) {
             return;
         }
-        if (siblings.length === 1) {
+        if (siblings.length === 1 && siblingColumnLines.length === 1) {
             const lastColumn = siblings[0];
             const options = lastColumn.preview.getOptions();
             options.getOption("remove").isDisabled(true);
             return;
         }
-        siblings.forEach((column) => {
-            const removeOption = column.preview.getOptions().getOption("remove");
-            removeOption.isDisabled(false);
-        });
+        debugger;
+        siblingColumnLines.forEach((columnLine) => {
+            let columns = columnLine.children();
+            columns.forEach((column : ContentTypeCollectionInterface) => {
+                const removeOption = column.preview.getOptions().getOption("remove");
+                removeOption.isDisabled(false);
+            });
+        })
+
     }
 
     /**
