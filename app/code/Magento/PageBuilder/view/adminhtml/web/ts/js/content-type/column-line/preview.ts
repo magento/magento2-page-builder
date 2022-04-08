@@ -3,50 +3,55 @@
  * See COPYING.txt for license details.
  */
 
-import PreviewCollection from "../preview-collection";
-import ContentTypeCollectionInterface from "../../content-type-collection.types";
-import {default as ColumnLinePreview} from "../column-line/preview";
-import events from "Magento_PageBuilder/js/events";
-import Config from "../../config";
-import {
-    ContentTypeDroppedCreateEventParamsInterface,
-    ContentTypeRemovedEventParamsInterface
-} from "Magento_PageBuilder/js/content-type/content-type-events.types";
-import createContentType from "Magento_PageBuilder/js/content-type-factory";
-import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "../column-group/grid-size";
-import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
 import $ from "jquery";
-import ColumnPreview from "Magento_PageBuilder/js/content-type/column/preview";
-import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import ko from "knockout";
+import ColumnLine from "Magento_PageBuilder/js/content-type-collection";
+import ContentTypeConfigInterface from "Magento_PageBuilder/js/content-type-config.types";
+import createContentType from "Magento_PageBuilder/js/content-type-factory";
+import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
+import {createColumn, createColumnLine} from "Magento_PageBuilder/js/content-type/column-group/factory";
+import {
+    ColumnWidth,
+    GroupPositionCache,
+    LinePositionCache,
+    MaxGhostWidth,
+    ResizeHistory,
+} from "Magento_PageBuilder/js/content-type/column-group/preview";
 import {
     getDragColumn,
     removeDragColumn,
-    setDragColumn
+    setDragColumn,
 } from "Magento_PageBuilder/js/content-type/column-group/registry";
 import {
     BindResizeHandleEventParamsInterface,
-    InitElementEventParamsInterface
+    InitElementEventParamsInterface,
 } from "Magento_PageBuilder/js/content-type/column/column-events.types";
-import _ from "underscore";
-import {getDraggedContentTypeConfig} from "Magento_PageBuilder/js/drag-drop/registry";
-import {createStyleSheet} from "Magento_PageBuilder/js/utils/create-stylesheet";
+import ColumnPreview from "Magento_PageBuilder/js/content-type/column/preview";
 import {
-    ColumnWidth,
-    default as ColumnGroupPreview, MaxGhostWidth, LinePositionCache, GroupPositionCache, ResizeHistory
-} from "Magento_PageBuilder/js/content-type/column-group/preview";
-import Resize, {
-    comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnIndexInLine,
-    getRoundedColumnWidth, updateColumnWidth,
-} from "../column/resize";
-import ColumnLine from "Magento_PageBuilder/js/content-type-collection";
-import ContentTypeConfigInterface from "Magento_PageBuilder/js/content-type-config.types";
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+} from "Magento_PageBuilder/js/content-type/content-type-events.types";
 import ObservableUpdater from "Magento_PageBuilder/js/content-type/observable-updater";
-import {DataObject} from "Magento_PageBuilder/js/data-store";
-import {hiddenClass} from "Magento_PageBuilder/js/drag-drop/sortable";
-import {createColumn, createColumnLine} from "Magento_PageBuilder/js/content-type/column-group/factory";
 import {moveContentType} from "Magento_PageBuilder/js/drag-drop/move-content-type";
-
+import {getDraggedContentTypeConfig} from "Magento_PageBuilder/js/drag-drop/registry";
+import {hiddenClass} from "Magento_PageBuilder/js/drag-drop/sortable";
+import events from "Magento_PageBuilder/js/events";
+import {createStyleSheet} from "Magento_PageBuilder/js/utils/create-stylesheet";
+import _ from "underscore";
+import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import {getDefaultGridSize} from "../column-group/grid-size";
+import {default as ColumnLinePreview} from "../column-line/preview";
+import Resize, {
+    comparator,
+    determineMaxGhostWidth,
+    getAdjacentColumn,
+    getColumnIndexInLine,
+    getRoundedColumnWidth,
+    updateColumnWidth,
+} from "../column/resize";
+import PreviewCollection from "../preview-collection";
+import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 
 /**
  * @api
@@ -81,8 +86,6 @@ export default class Preview extends PreviewCollection {
     private resizeLeftLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
     private resizeRightLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
     private columnLineBottomDropPlaceholder: JQuery;
-
-
 
     /**
      *
@@ -127,7 +130,6 @@ export default class Preview extends PreviewCollection {
             ),
         );
     }
-
 
     /**
      * Bind events
@@ -219,7 +221,6 @@ export default class Preview extends PreviewCollection {
         return this.resizeUtils;
     }
 
-
     /**
      * Bind draggable instances to the child columns
      *
@@ -265,7 +266,7 @@ export default class Preview extends PreviewCollection {
                     if (draggedColumn.parentContentType === this.contentType) {
                         this.onColumnSort(draggedColumn, this.movePosition.insertIndex);
                         this.movePosition = null;
-                        //todo see from column group
+                        // todo see from column group
                     }
                 }
 
@@ -283,6 +284,25 @@ export default class Preview extends PreviewCollection {
                 events.trigger("stage:interactionStop", {stageId: this.contentType.stageId});
             },
         });
+    }
+
+    /**
+     * Handle a column being sorted into a new position in the column line
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {number} newIndex
+     */
+    public onColumnSort(column: ContentTypeCollectionInterface<ColumnPreview>, newIndex: number) {
+        const currentIndex = getColumnIndexInLine(column);
+        if (currentIndex !== newIndex) {
+            if (currentIndex < newIndex) {
+                // As we're moving an array item the keys all reduce by 1
+                --newIndex;
+            }
+
+            // Move the content type
+            moveContentType(column, newIndex);
+        }
     }
 
     /**
@@ -351,8 +371,6 @@ export default class Preview extends PreviewCollection {
         updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
     }
 
-
-
     /**
      * Init the resizing events on the group
      *
@@ -375,7 +393,7 @@ export default class Preview extends PreviewCollection {
 
             if (this.eventIntersectsLine(event, linePosition)) {
                 intersects = true;
-                //@todo re-instate onResizingMouseMove
+                // @todo re-instate onResizingMouseMove
                 this.onResizingMouseMove(event, line, linePosition);
                 this.onDraggingMouseMove(event, line, linePosition);
                 this.onDroppingMouseMove(event, line, linePosition);
@@ -388,7 +406,7 @@ export default class Preview extends PreviewCollection {
                 this.columnLineBottomDropPlaceholder.removeClass("active");
                 this.columnLineBottomDropPlaceholder.hide();
                 this.columnLineDropPlaceholder.hide();
-                //@todo combine active and show/hide functionality for columnLineDropPlaceholder
+                // @todo combine active and show/hide functionality for columnLineDropPlaceholder
               //  this.movePlaceholder.css("left", "").removeClass("active");
             }
         }).on("mouseup touchend", () => {
@@ -410,7 +428,6 @@ export default class Preview extends PreviewCollection {
             });
         });
     }
-
 
     /**
      * End all current interactions
@@ -451,17 +468,18 @@ export default class Preview extends PreviewCollection {
     private handleMouseUp(): void {
 
         let index = -1;
-        let self = this;
-        if (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass("active")) {
+        const self = this;
+        if (this.columnLineDropPlaceholder.hasClass("active")
+            || this.columnLineBottomDropPlaceholder.hasClass("active")) {
 
-            for (var child of this.contentType.parentContentType.children()) {
+            for (const child of this.contentType.parentContentType.children()) {
                 index++;
                 if (child.id == self.contentType.id) {
                     break;
                 }
             }
             if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
-                //show the bottom drop placeholder
+                // show the bottom drop placeholder
                 index++;
             }
             createColumnLine(
@@ -469,7 +487,10 @@ export default class Preview extends PreviewCollection {
                 this.resizeUtils.getSmallestColumnWidth(),
                 index,
             ).then((columnLine) => {
-                events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine})
+                events.trigger(
+                    columnLine.config.name + ":dropAfter",
+                    {id: columnLine.id, columnLine},
+                );
             });
             return;
         }
@@ -669,7 +690,10 @@ export default class Preview extends PreviewCollection {
                         // Wait for the render cycle to finish from the above resize before re-calculating
                         _.defer(() => {
                             // If we do a resize, re-calculate the column widths
-                            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(this.resizeColumnInstance, groupPosition);
+                            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(
+                                this.resizeColumnInstance,
+                                groupPosition,
+                            );
                             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
                         });
                     }
@@ -701,19 +725,18 @@ export default class Preview extends PreviewCollection {
         const siblings = this.contentType.parentContentType.children();
         const id = this.contentType.id;
         let index = 0;
-        siblings.forEach(columnLine => {
-            if (columnLine.id == id){
+        siblings.forEach((columnLine) => {
+            if (columnLine.id === id){
                 return false;
             }
             index++;
         });
-        //show column line drop placeholder only for top column line in a group
+        // show column line drop placeholder only for top column line in a group
 
         return index === 0 && this.dropOverElement &&
             event.pageY > linePosition.top &&
-            event.pageY < linePosition.top + this.lineDropperHeight
+            event.pageY < linePosition.top + this.lineDropperHeight;
     }
-
 
     /**
      *
@@ -721,11 +744,14 @@ export default class Preview extends PreviewCollection {
      * @param linePosition
      * @private
      */
-    private isNewLineBottomPlaceDropPlaceholderVisible(event: JQueryEventObject, linePosition: LinePositionCache): boolean {
+    private isNewLineBottomPlaceDropPlaceholderVisible(
+        event: JQueryEventObject,
+        linePosition: LinePositionCache,
+    ): boolean {
 
         return this.dropOverElement &&
-             (event.pageY < linePosition.top + this.element.outerHeight() &&
-                event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight )
+            (event.pageY < linePosition.top + this.element.outerHeight() &&
+                event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight);
 
     }
 
@@ -764,7 +790,7 @@ export default class Preview extends PreviewCollection {
             this.columnLineBottomDropPlaceholder.show();
             return this.handleLineDropMouseMove(event, line, linePosition);
         }
-        else if(this.dropOverElement) {
+        else if (this.dropOverElement) {
             this.columnLineDropPlaceholder.hide();
             this.columnLineBottomDropPlaceholder.hide();
             this.columnLineBottomDropPlaceholder.removeClass("active");
@@ -779,7 +805,6 @@ export default class Preview extends PreviewCollection {
             return this.handleColumnDropMouseMove(event, line, linePosition);
         }
     }
-
 
     /**
      *
@@ -842,31 +867,12 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Handle a column being sorted into a new position in the column line
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {number} newIndex
-     */
-    public onColumnSort(column: ContentTypeCollectionInterface<ColumnPreview>, newIndex: number) {
-        const currentIndex = getColumnIndexInLine(column);
-        if (currentIndex !== newIndex) {
-            if (currentIndex < newIndex) {
-                // As we're moving an array item the keys all reduce by 1
-                --newIndex;
-            }
-
-            // Move the content type
-            moveContentType(column, newIndex);
-        }
-    }
-
-    /**
      * Cache the groups positions
      *
      * @param {JQuery} line
      * @returns {}
      */
-    private getLinePosition(line: JQuery):  LinePositionCache{
+    private getLinePosition(line: JQuery): LinePositionCache{
         if (!this.linePositionCache) {
             this.linePositionCache = {
                 top: line.offset().top,
@@ -941,7 +947,8 @@ export default class Preview extends PreviewCollection {
                 // Is the element currently being dragged a column group?
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
                     // Always calculate drop positions when an element is dragged over
-                    self.dropPositions = calculateDropPositions(self.contentType as ContentTypeCollectionInterface<ColumnLinePreview>);
+                    const ownContentType = self.contentType as ContentTypeCollectionInterface<ColumnLinePreview>;
+                    self.dropPositions = calculateDropPositions(ownContentType);
 
                     self.dropOverElement = true;
                 } else {
@@ -1014,7 +1021,6 @@ export default class Preview extends PreviewCollection {
             }
         }
     }
-
 
     /**
      * Register a resize handle within a child column
@@ -1159,4 +1165,3 @@ export default class Preview extends PreviewCollection {
         }
     }
 }
-

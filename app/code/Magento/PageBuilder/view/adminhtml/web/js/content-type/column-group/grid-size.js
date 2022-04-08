@@ -69,7 +69,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
     validateNewGridSize(columnGroup, newGridSize);
     columnGroup.getChildren()().forEach(function (columnLine, index) {
-      // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+      // if we have more columns than the new grid size allows, remove empty columns till the correct size
       console.log(columnLine.getChildren()().length);
 
       if (newGridSize < columnLine.getChildren()().length) {
@@ -175,18 +175,18 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         var existingWidth = resizeUtils.getColumnWidth(column);
         var fractionColumnWidth = Math.round(existingWidth / (100 / existingGridSize));
         /**
-         * Determine if the grid & column are directly compatible with the new defined grid size, this will directly
-         * convert fractions to their equivalent of the new grid size.
+         * Determine if the grid & column are directly compatible with the new defined grid size, this will
+         * directly convert fractions to their equivalent of the new grid size.
          *
          * For instance changing a 12 column grid with 2 x 6 / 12 columns to a 6 grid is fully compatible.
          *
          * Check the existing grid size and new grid size are divisible, verify the amount of columns will fit
-         * in the new grid size and finally check the calculation to convert the existing column width results in a
-         * positive integer.
+         * in the new grid size and finally check the calculation to convert the existing column width results
+         * in a positive integer.
          */
 
         if ((existingGridSize > newGridSize && existingGridSize % newGridSize === 0 || existingGridSize < newGridSize && newGridSize % existingGridSize === 0) && newGridSize % numColumns === 0 && newGridSize / existingGridSize * fractionColumnWidth % 1 === 0) {
-          // We don't need to modify the columns width as it's directly compatible, we will however increment the
+          // We don't need to modify the columns width as it's compatible, we will however increment the
           // width counter as some other columns may not be compatible.
           totalNewWidths += existingWidth;
         } else {
@@ -197,10 +197,12 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
           } // make sure we leave enough space for other columns
 
 
-          var maxAvailableWidth = 100 - totalNewWidths - (numColumns - index - 1) * parseFloat(minColWidth);
+          var widthTaken = totalNewWidths + (numColumns - index - 1) * parseFloat(minColWidth);
+          var maxAvailableWidth = 100 - totalNewWidths;
 
           if (parseFloat(newWidth) > maxAvailableWidth) {
-            newWidth = maxAvailableWidth.toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
+            var gridWidth = Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0;
+            newWidth = maxAvailableWidth.toFixed(gridWidth);
           } // Calculate any width lost from the column, if a 5 / 12 is becoming a 2 / 6 then it's lost 1 / 12
 
 

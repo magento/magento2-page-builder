@@ -123,7 +123,7 @@ export default class Preview extends PreviewCollection {
             column: this.contentType,
             element: $(element),
             columnLine: this.contentType.parentContentType,
-            columnGroup: this.contentType.parentContentType.parentContentType
+            columnGroup: this.contentType.parentContentType.parentContentType,
         });
         this.updateDisplayLabel();
     }
@@ -290,7 +290,9 @@ export default class Preview extends PreviewCollection {
     public updateDisplayLabel() {
         if (this.contentType.parentContentType.preview instanceof ColumnLinePreview) {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-            const gridSize = (this.contentType.parentContentType.parentContentType.preview as ColumnGroupPreview).gridSize();
+            const grandParent = this.contentType.parentContentType.parentContentType;
+            const columnGroupPreview = (grandParent.preview as ColumnGroupPreview);
+            const gridSize = columnGroupPreview.gridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
             const columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
             const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
@@ -318,14 +320,13 @@ export default class Preview extends PreviewCollection {
             options.getOption("remove").isDisabled(true);
             return;
         }
-        debugger;
         siblingColumnLines.forEach((columnLine) => {
-            let columns = columnLine.children();
-            columns.forEach((column : ContentTypeCollectionInterface) => {
+            const columns = columnLine.children();
+            columns.forEach((column: ContentTypeCollectionInterface) => {
                 const removeOption = column.preview.getOptions().getOption("remove");
                 removeOption.isDisabled(false);
             });
-        })
+        });
 
     }
 

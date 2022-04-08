@@ -636,7 +636,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       this.resizing(false);
       this.resizeMouseDown = null;
       this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
-      this.dropPositions = []; //this.unsetResizingColumns();
+      this.dropPositions = []; // this.unsetResizingColumns();
       // Change the cursor back
 
       (0, _jquery)("body").css("cursor", "");
@@ -670,7 +670,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
         }
 
         if (_this9.eventIntersectsGroup(event, groupPosition)) {
-          intersects = true; //@todo make column re-sizing work
+          intersects = true; // @todo make column re-sizing work
 
           _this9.onResizingMouseMove(event, group, groupPosition);
         } else {
@@ -1079,7 +1079,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     _proto.recordGridResize = function recordGridResize(newGridSize) {
       var _this11 = this;
 
-      //@todo evaluate utility of having a grid size history
+      // @todo evaluate utility of having a grid size history
       return;
 
       if (!this.gridSizeHistory.has(newGridSize)) {

@@ -4,8 +4,8 @@
  */
 
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
-import ColumnPreview from "../column/preview";
 import ColumnGroupPreview from "../column-group/preview";
+import ColumnPreview from "../column/preview";
 import ColumnLinePreview from "./preview";
 
 /**
@@ -41,10 +41,6 @@ export function calculateDropPositions(line: ContentTypeCollectionInterface<Colu
     return dropPositions;
 }
 
-
-
-
-
 export interface DropPosition {
     left: number;
     right: number;
@@ -52,7 +48,7 @@ export interface DropPosition {
     placement: string;
     affectedColumn: ContentTypeCollectionInterface<ColumnPreview>;
     canShrink: boolean;
-    orientation: string
+    orientation: string;
 }
 
 export interface ColumnLineDropPosition {

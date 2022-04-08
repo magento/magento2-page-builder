@@ -13,7 +13,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "jquery", "Magento_PageBuilder/js/content-type/column-line/drag-and-drop", "knockout", "Magento_PageBuilder/js/content-type/column-group/registry", "underscore", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/drag-drop/move-content-type"], function (_previewCollection, _events, _config, _contentTypeFactory, _gridSize, _jquery, _dragAndDrop, _knockout, _registry, _underscore, _registry2, _createStylesheet, _resize, _sortable, _factory, _moveContentType) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/create-stylesheet", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-line/drag-and-drop"], function (_jquery, _knockout, _contentTypeFactory, _factory, _registry, _moveContentType, _registry2, _sortable, _events, _createStylesheet, _underscore, _config, _gridSize, _resize, _previewCollection, _dragAndDrop) {
   function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
   /**
@@ -230,7 +230,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
             if (draggedColumn.parentContentType === _this3.contentType) {
               _this3.onColumnSort(draggedColumn, _this3.movePosition.insertIndex);
 
-              _this3.movePosition = null; //todo see from column group
+              _this3.movePosition = null; // todo see from column group
             }
           }
 
@@ -252,6 +252,27 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
           });
         }
       });
+    }
+    /**
+     * Handle a column being sorted into a new position in the column line
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {number} newIndex
+     */
+    ;
+
+    _proto.onColumnSort = function onColumnSort(column, newIndex) {
+      var currentIndex = (0, _resize.getColumnIndexInLine)(column);
+
+      if (currentIndex !== newIndex) {
+        if (currentIndex < newIndex) {
+          // As we're moving an array item the keys all reduce by 1
+          --newIndex;
+        } // Move the content type
+
+
+        (0, _moveContentType.moveContentType)(column, newIndex);
+      }
     }
     /**
      * Handle a new column being dropped into the group
@@ -331,7 +352,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
         }
 
         if (_this5.eventIntersectsLine(event, linePosition)) {
-          intersects = true; //@todo re-instate onResizingMouseMove
+          intersects = true; // @todo re-instate onResizingMouseMove
 
           _this5.onResizingMouseMove(event, line, linePosition);
 
@@ -351,7 +372,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
 
           _this5.columnLineBottomDropPlaceholder.hide();
 
-          _this5.columnLineDropPlaceholder.hide(); //@todo combine active and show/hide functionality for columnLineDropPlaceholder
+          _this5.columnLineDropPlaceholder.hide(); // @todo combine active and show/hide functionality for columnLineDropPlaceholder
           //  this.movePlaceholder.css("left", "").removeClass("active");
 
         }
@@ -417,7 +438,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       var index = -1;
       var self = this;
 
-      if (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass("active")) {
+      if (this.columnLineDropPlaceholder.hasClass("active") || this.columnLineBottomDropPlaceholder.hasClass("active")) {
         for (var _iterator = _createForOfIteratorHelperLoose(this.contentType.parentContentType.children()), _step; !(_step = _iterator()).done;) {
           var child = _step.value;
           index++;
@@ -428,7 +449,7 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
         }
 
         if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
-          //show the bottom drop placeholder
+          // show the bottom drop placeholder
           index++;
         }
 
@@ -640,12 +661,12 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       var id = this.contentType.id;
       var index = 0;
       siblings.forEach(function (columnLine) {
-        if (columnLine.id == id) {
+        if (columnLine.id === id) {
           return false;
         }
 
         index++;
-      }); //show column line drop placeholder only for top column line in a group
+      }); // show column line drop placeholder only for top column line in a group
 
       return index === 0 && this.dropOverElement && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
     }
@@ -768,27 +789,6 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
       }
     }
     /**
-     * Handle a column being sorted into a new position in the column line
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {number} newIndex
-     */
-    ;
-
-    _proto.onColumnSort = function onColumnSort(column, newIndex) {
-      var currentIndex = (0, _resize.getColumnIndexInLine)(column);
-
-      if (currentIndex !== newIndex) {
-        if (currentIndex < newIndex) {
-          // As we're moving an array item the keys all reduce by 1
-          --newIndex;
-        } // Move the content type
-
-
-        (0, _moveContentType.moveContentType)(column, newIndex);
-      }
-    }
-    /**
      * Cache the groups positions
      *
      * @param {JQuery} line
@@ -866,7 +866,8 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
           // Is the element currently being dragged a column group?
           if ((0, _registry2.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column-group")) {
             // Always calculate drop positions when an element is dragged over
-            self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.contentType);
+            var ownContentType = self.contentType;
+            self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(ownContentType);
             self.dropOverElement = true;
           } else {
             self.dropOverElement = null;

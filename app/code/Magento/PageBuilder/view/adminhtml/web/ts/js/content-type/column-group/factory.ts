@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import ColumnLinePreview from "Magento_PageBuilder/js/content-type/column-line/preview";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ColumnPreview from "../column/preview";
-import ColumnLinePreview from "Magento_PageBuilder/js/content-type/column-line/preview";
 
 /**
  * Create a column and add it to it's column group

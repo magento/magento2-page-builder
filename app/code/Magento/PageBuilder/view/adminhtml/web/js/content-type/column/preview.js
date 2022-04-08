@@ -269,7 +269,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.updateDisplayLabel = function updateDisplayLabel() {
       if (this.contentType.parentContentType.preview instanceof _preview) {
         var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-        var gridSize = this.contentType.parentContentType.parentContentType.preview.gridSize();
+        var grandParent = this.contentType.parentContentType.parentContentType;
+        var columnGroupPreview = grandParent.preview;
+        var gridSize = columnGroupPreview.gridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         var columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
         var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
@@ -302,7 +304,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return;
       }
 
-      debugger;
       siblingColumnLines.forEach(function (columnLine) {
         var columns = columnLine.children();
         columns.forEach(function (column) {

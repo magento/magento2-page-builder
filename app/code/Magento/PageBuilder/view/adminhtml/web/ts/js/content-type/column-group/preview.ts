@@ -9,6 +9,7 @@ import $t from "mage/translate";
 import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
 import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
 import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
+import ColumnLinePreview from "Magento_PageBuilder/js/content-type/column-line/preview";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
@@ -36,12 +37,11 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {
     calculateDropPositions,
-    DropPosition
+    DropPosition,
 } from "./drag-and-drop";
 import {createColumn, createColumnLine} from "./factory";
 import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
-import ColumnLinePreview from "Magento_PageBuilder/js/content-type/column-line/preview";
 
 /**
  * @api
@@ -229,13 +229,13 @@ export default class Preview extends PreviewCollection {
         createContentType(
             Config.getContentTypeConfig("column-line"),
             this.contentType,
-            this.contentType.stageId
-        ).then(columnLine => {
-            let contentType = this.contentType;
+            this.contentType.stageId,
+        ).then((columnLine) => {
+            const contentType = this.contentType;
             contentType.addChild(columnLine);
-            events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine})
+            events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine});
             this.fireMountEvent(contentType, columnLine);
-        })
+        });
     }
 
     /**
@@ -640,7 +640,7 @@ export default class Preview extends PreviewCollection {
         this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
         this.dropPositions = [];
 
-        //this.unsetResizingColumns();
+        // this.unsetResizingColumns();
 
         // Change the cursor back
         $("body").css("cursor", "");
@@ -674,7 +674,7 @@ export default class Preview extends PreviewCollection {
 
             if (this.eventIntersectsGroup(event, groupPosition)) {
                 intersects = true;
-                //@todo make column re-sizing work
+                // @todo make column re-sizing work
                 this.onResizingMouseMove(event, group, groupPosition);
             } else {
                 intersects = false;
@@ -873,7 +873,10 @@ export default class Preview extends PreviewCollection {
                         // Wait for the render cycle to finish from the above resize before re-calculating
                         _.defer(() => {
                             // If we do a resize, re-calculate the column widths
-                            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(this.resizeColumnInstance, groupPosition);
+                            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(
+                                this.resizeColumnInstance,
+                                groupPosition,
+                            );
                             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
                         });
                     }
@@ -1121,7 +1124,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} newGridSize
      */
     private recordGridResize(newGridSize: number): void {
-        //@todo evaluate utility of having a grid size history
+        // @todo evaluate utility of having a grid size history
         return;
         if (!this.gridSizeHistory.has(newGridSize)) {
             const columnWidths: number[] = [];
@@ -1144,7 +1147,7 @@ export default class Preview extends PreviewCollection {
             (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
                 let numEmptyColumns = 0;
                 const numCols = columnLine.getChildren()().length;
-                    columnLine.getChildren()().forEach(
+                columnLine.getChildren()().forEach(
                         (column: ContentTypeCollectionInterface<ColumnPreview>) => {
                             if (column.getChildren()().length === 0) {
                                 numEmptyColumns++;
