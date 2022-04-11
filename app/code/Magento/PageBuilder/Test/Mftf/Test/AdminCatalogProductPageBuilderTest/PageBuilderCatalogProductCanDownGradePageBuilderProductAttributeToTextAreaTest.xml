@@ -29,6 +29,9 @@
         </before>
         <after>
             <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute"/>
+            <actionGroup ref="CliIndexerReindexActionGroup" stepKey="reindex">
+                <argument name="indices" value=""/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
@@ -66,7 +69,7 @@
         <actionGroup ref="SortByIdDescendingActionGroup" stepKey="sortByIdDescending"/>
         <click selector="{{AdminProductGridActionSection.productName(SimpleProduct.name)}}" stepKey="navigateToEditProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad9"/>
-        <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE4"/>
-        <seeElement selector="{{ProductAttributeWYSIWYGSection.TextArea($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seeTextAreaAttribute"/>
+        <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE"/>
+        <seeElement selector="{{AdminProductFormSection.divByDataIndex($$myProductAttributeCreation.attribute_code$$)}} {{TinyMCESection.Content}}" stepKey="seeTextAreaAttribute"/>
     </test>
 </tests>

@@ -6,7 +6,7 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <render args="getOptions().template" />
+    <render args="getOptions().template"></render>
     <div class="pagebuilder-banner-wrapper"
          attr="data.wrapper.attributes"
          ko-style="Object.assign({}, data.wrapper.style(), {backgroundImage: getBackgroundImage()})"
@@ -18,9 +18,9 @@
         <div if="data.video_overlay.attributes()['data-video-overlay-color']"
              class="video-overlay"
              attr="data.video_overlay.attributes"
-             ko-style="data.video_overlay.style" />
+             ko-style="data.video_overlay.style"></div>
         <scope args="getUploader().getUiComponent()">
-            <render />
+            <render></render>
         </scope>
         <div class="pagebuilder-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
             <div class="pagebuilder-collage-content" event="mousedown: activateEditor">
@@ -35,7 +35,7 @@
                          event="mousedown: stopEvent, click: activateEditor, dblclick: handleDoubleClick">
                     </div>
                     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
-                    <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent}" attr="placeholder: $t('Edit Banner Text')"/>
+                    <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent}" attr="placeholder: $t('Edit Banner Text')"></textarea>
                 </div>
                 <a if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"

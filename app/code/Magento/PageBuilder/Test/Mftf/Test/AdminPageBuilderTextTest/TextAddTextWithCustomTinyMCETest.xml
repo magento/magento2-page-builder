@@ -18,11 +18,12 @@
             <testCaseId value="MC-1333"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
@@ -55,11 +56,12 @@
         <!--Verify FontStyle on preview-->
         <executeJS function="tinyMCE.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextContentTypeDefault.value}}');" stepKey="executeJSFillContent"/>
         <click selector="{{WYSIWYGOnPageBuilder.formatSelector}}" stepKey="expandFormatList"/>
-        <see userInput="Important" stepKey="seeImportantStyle"/>
-        <click selector="//span[text()='Important']" stepKey="selectFormatStyle"/>
+        <see userInput="Headings" stepKey="seeHeadingsStyle"/>
+        <click selector="{{TextOnStage.headingsList}}" stepKey="selectHeadingsList"/>
+        <click selector="{{TextOnStage.heading1Style}}" stepKey="selectHeading1Style"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="{{TextOnStage.emptyTextInImportantStyle('1')}}" stepKey="seeTextInImportantStyleOnPreview"/>
-        <grabValueFrom selector="{{TextOnStage.emptyTextInImportantStyle('1')}}" stepKey="grabTextFromEditor"/>
+        <seeElement selector="{{TextOnStage.emptyTextInHeading1Style}}" stepKey="seeTextInHeadingStyleOnPreview"/>
+        <grabValueFrom selector="{{TextOnStage.emptyTextInHeading1Style}}" stepKey="grabTextFromEditor"/>
         <assertEmpty stepKey="assertTextIsEmpty">
             <actualResult type="variable">grabTextFromEditor</actualResult>
         </assertEmpty>
@@ -68,6 +70,6 @@
         <!--Verify FontStyle on Storeview-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <seeElement selector="{{TextOnStorefront.emptyTextInImportantStyle('1')}}" stepKey="seeTextInImportantStyleOnStorefrontWithEmptyContent"/>
+        <seeElement selector="{{TextOnStorefront.emptyTextInHeading1Style}}" stepKey="seeTextInHeading1StyleOnStorefrontWithEmptyContent"/>
     </test>
 </tests>

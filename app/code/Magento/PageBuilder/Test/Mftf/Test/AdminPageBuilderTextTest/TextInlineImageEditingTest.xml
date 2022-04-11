@@ -22,16 +22,21 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <magentoCLI command="config:set cms/wysiwyg/use_static_urls_in_catalog 1" stepKey="useStaticURLForMediaContentInWYSIWYG"/>
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+                <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="ImageUpload3"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder"/>
+            <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage"/>
+            <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
+                <argument name="ImageFolder" value="ImageFolder"/>
             </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -56,8 +61,14 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="ClickBrowseBtnOnUploadPopupActionGroup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActionsActionGroup" stepKey="VerifyMediaGalleryStorageBtn"/>
-        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <comment userInput="BIC workaround" stepKey="clickStorageRoot"/>
+        <comment userInput="BIC workaround" stepKey="waitForPageLoad2"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -66,7 +77,7 @@
         </actionGroup>
         <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
         <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage1"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage1"/>
         <!--Verify inputed image on slideout-->
         <comment userInput="Verify inputed image on slideout" stepKey="commentVerifyImageOnSlideout"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
@@ -82,7 +93,7 @@
         <!--Verify image on stage after saving cms page-->
         <comment userInput="Verify image on stage" stepKey="commentVerifyImageOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{TinyMCESection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
         <!--Verify image on storefront-->
         <comment userInput="Verify image on storefront" stepKey="commentVerifyImageOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>

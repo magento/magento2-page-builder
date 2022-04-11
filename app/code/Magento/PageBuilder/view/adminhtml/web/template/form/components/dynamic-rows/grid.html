@@ -5,7 +5,7 @@
  */
 -->
 
-<render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"/>
+<render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"></render>
 
 <div class="admin__field admin__field-wide"
      visible="visible"
@@ -13,7 +13,7 @@
      css="element.setClasses(element)"
      attr="'data-index': index">
     <label if="element.label" class="admin__field-label" attr="for: element.uid">
-        <span translate="element.label"/>
+        <span translate="element.label"></span>
     </label>
     <div class="admin__field-control" data-role="grid-wrapper">
         <div class="admin__control-table-pagination">
@@ -22,7 +22,7 @@
                         class="action-secondary"
                         type="button"
                         click="processingAddChild.bind($data, false, false, false)">
-                    <span translate="addButtonLabel"/>
+                    <span translate="addButtonLabel"></span>
                 </button>
             </div>
             <div class="admin__data-grid-pager" visible="!!element.getRecordCount()">
@@ -37,14 +37,14 @@
                 <thead if="element.columnsHeader">
                 <tr>
                     <th if="$data.dndConfig.enabled"
-                        class="data-grid-draggable-row-cell"/>
+                        class="data-grid-draggable-row-cell"></th>
 
                     <th repeat="foreach: labels, item: '$label'"
                         class="data-grid-th"
                         visible="$label().visible"
                         disable="$label().disabled"
                         css="setClasses($label())">
-                        <span translate="$label().label"/>
+                        <span translate="$label().label"></span>
                     </th>
                 </tr>
                 </thead>
@@ -55,7 +55,7 @@
                     css="'_odd-row': $index % 2">
                     <td if="dndConfig.enabled"
                         class="data-grid-draggable-row-cell"
-                        template="name: dndConfig.template, data: dnd"/>
+                        template="name: dndConfig.template, data: dnd"></td>
 
                     <!-- ko foreach: { data: $record().elems(), as: 'elem' }  -->
                     <td if="elem.template"
@@ -63,7 +63,7 @@
                         disable="elem.disabled"
                         css="$parent.setClasses(elem)"
                         template="elem.template"
-                        attr="'data-index': index"/>
+                        attr="'data-index': index"></td>
                     <!-- /ko -->
                 </tr>
                 </tbody>

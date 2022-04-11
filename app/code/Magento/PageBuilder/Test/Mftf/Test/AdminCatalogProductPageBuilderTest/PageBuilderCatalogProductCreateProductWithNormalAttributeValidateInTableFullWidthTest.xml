@@ -30,6 +30,9 @@
         </before>
         <after>
             <deleteData createDataKey="createTextAttribute" stepKey="deletePreReqProductAttribute"/>
+            <actionGroup ref="CliIndexerReindexActionGroup" stepKey="reindex">
+                <argument name="indices" value=""/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Create a new product -->

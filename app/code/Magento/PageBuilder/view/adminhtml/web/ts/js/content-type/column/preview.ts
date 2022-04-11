@@ -17,9 +17,15 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
-import {ContentTypeMountEventParamsInterface, ContentTypeMoveEventParamsInterface} from "../content-type-events.types";
+import {
+    ContentTypeDroppedCreateEventParamsInterface, ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeMoveEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+import {InitElementEventParamsInterface} from "./column-events.types";
 import {updateColumnWidth} from "./resize";
 
 /**
@@ -84,15 +90,24 @@ export default class Preview extends PreviewCollection {
             if (args.contentType.id === this.contentType.id) {
                 this.updateDisplayLabel();
             }
+            this.resetRemoveOnLastColumn(args.targetParent);
+            this.resetRemoveOnLastColumn(args.sourceParent);
+        });
+        events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
+            this.resetRemoveOnLastColumn(args.columnGroup);
+        });
+        events.on("column:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            this.resetRemoveOnLastColumn(this.contentType.parentContentType);
+        });
+        events.on("column:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
+            this.resetRemoveOnLastColumn(args.duplicateContentType.parentContentType);
+        });
+        events.on("column:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
+            if (args.contentType.id === this.contentType.id) {
+                this.resetRemoveOnLastColumn(args.parentContentType);
+            }
         });
 
-        if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
-                if (args.id === this.contentType.id) {
-                    this.createColumnGroup();
-                }
-            });
-        }
     }
 
     /**
@@ -279,6 +294,31 @@ export default class Preview extends PreviewCollection {
             const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
             this.displayLabel(`${$t("Column")} ${columnNumber}(${newLabel})`);
         }
+    }
+
+    /**
+     * Reset remove option on all columns within a column-group depending on the number of remaining child columns
+     * @param parentContentType
+     */
+    public resetRemoveOnLastColumn(parentContentType: ContentTypeCollectionInterface) {
+        if (!parentContentType) {
+            // can happen if the column is moved within the same column group
+            return;
+        }
+        const siblings = parentContentType.children();
+        if (siblings.length < 1) {
+            return;
+        }
+        if (siblings.length === 1) {
+            const lastColumn = siblings[0];
+            const options = lastColumn.preview.getOptions();
+            options.getOption("remove").isDisabled(true);
+            return;
+        }
+        siblings.forEach((column) => {
+            const removeOption = column.preview.getOptions().getOption("remove");
+            removeOption.isDisabled(false);
+        });
     }
 
     /**

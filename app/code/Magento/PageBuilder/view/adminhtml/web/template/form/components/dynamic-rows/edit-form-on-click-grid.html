@@ -11,7 +11,7 @@
      css="$data.setClasses($data)"
      attr="'data-index': index">
     <label if="$data.label" class="admin__field-label" attr="for: $data.uid">
-        <span translate="$data.label"/>
+        <span translate="$data.label"></span>
     </label>
 
     <div class="admin__field-control" data-role="grid-wrapper">
@@ -29,14 +29,14 @@
                  class="admin__data-grid-loading-mask"
                  if="$data.showSpinner">
                 <div class="spinner">
-                    <span repeat="8"/>
+                    <span repeat="8"></span>
                 </div>
             </div>
             <table class="admin__dynamic-rows data-grid" data-role="grid">
                 <thead if="$data.columnsHeader">
                 <tr>
                     <th if="dndConfig.enabled"
-                        class="data-grid-draggable-row-cell"/>
+                        class="data-grid-draggable-row-cell"></th>
 
                     <th repeat="foreach: labels, item: '$label'"
                         class="data-grid-th _sortable"
@@ -44,7 +44,7 @@
                         disable="$label().disabled"
                         css="$label().columnsHeaderClasses"
                         click="sortByHeader.bind($data, $label)">
-                        <span translate="$label().label"/>
+                        <span translate="$label().label"></span>
                     </th>
                 </tr>
                 </thead>
@@ -58,7 +58,7 @@
                     css="'_odd-row': $index % 2">
                     <td if="dndConfig.enabled"
                         class="data-grid-draggable-row-cell"
-                        template="name: dndConfig.template, data: dnd"/>
+                        template="name: dndConfig.template, data: dnd"></td>
 
                     <!-- ko foreach: { data: $record().elems(), as: 'elem'}  -->
                         <td if="elem.template && elem.noClickEdit"
@@ -66,14 +66,14 @@
                             disable="elem.disabled"
                             css="$parent.setClasses(elem)"
                             template="elem.template"
-                            attr="'data-index': index"/>
+                            attr="'data-index': index"></td>
                         <td if="elem.template && !elem.noClickEdit"
                             visible="elem.visible"
                             disable="elem.disabled"
                             css="$parent.setClasses(elem)"
                             template="elem.template"
                             attr="'data-index': index"
-                            click="$parent.edit.bind($parent, $record())"/>
+                            click="$parent.edit.bind($parent, $record())"></td>
                     <!-- /ko -->
                 </tr>
                 </tbody>
@@ -83,9 +83,9 @@
             <button attr="{disabled: disabled}"
                     type="button"
                     click="addChild.bind($data, false, false)">
-                <span translate="addButtonLabel"/>
+                <span translate="addButtonLabel"></span>
             </button>
         </div>
-        <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"/>
+        <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"></render>
     </div>
 </div>

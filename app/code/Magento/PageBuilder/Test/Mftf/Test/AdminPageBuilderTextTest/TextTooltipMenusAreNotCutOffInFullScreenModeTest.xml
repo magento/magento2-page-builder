@@ -18,9 +18,10 @@
             <testCaseId value="MC-6491"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="enableWYSIWYG"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" before="enableWYSIWYG"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="navigateToAPageWithPageBuilder"/>
         </before>
         <!-- Add Text Content Type -->

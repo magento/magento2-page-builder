@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ImageTestCMSPageOnTabletTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Add Image with PageBuilder to the new CMS page and view it on Storefront with the screen size of 768x1024"/>
+            <description value="Mobile and desktop images added with Page Builder should not be visible at the same time with the viewport width of 786px"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-41760"/>
+            <testCaseId value="MC-42373"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Create a new CMS page and edit with Page Builder -->
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+
+        <!-- Validate Edit Panel -->
+        <waitForElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="waitForImageAppearanceField"/>
+        <dontSeeElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
+        <grabValueFrom selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
+        <assertEquals message="pass" stepKey="assertDefaultAppearanceValue">
+            <actualResult type="variable">defaultAppearanceValue</actualResult>
+            <expectedResult type="string">full-width</expectedResult>
+        </assertEquals>
+
+        <!-- Upload image from local machine -->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderImageProperty_JPG2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImageProperty_JPG2.value)}}" stepKey="waitForUploadImage"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed"/>
+
+        <!-- Save Changes to the page -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- Navigate to the newly created page on the storefront -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
+
+        <!-- Validate images with default window width -->
+        <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeMainImageOnDefaultRes"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="dontSeeMobileImageOnDefaultRes"/>
+
+        <!-- Validate images with window width of 768px -->
+        <resizeWindow width="769" height="1024" stepKey="resizeWindowTo768by1024"/>
+        <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeMainImageOn768by1024"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="dontSeeMobileImageOn768by1024"/>
+
+        <!-- Validate images with window width of 767px -->
+        <resizeWindow width="768" height="1024" stepKey="resizeWindowTo767by1024"/>
+        <seeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="seeMobileImageOn767by1024"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="dontSeeDesktopImageOn767by1024"/>
+    </test>
+</tests>

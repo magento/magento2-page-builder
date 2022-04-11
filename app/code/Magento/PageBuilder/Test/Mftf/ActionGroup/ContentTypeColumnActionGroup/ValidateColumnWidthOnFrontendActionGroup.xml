@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateColumnWidthOnFrontendActionGroup">
+        <annotations>
+            <description>Validates that Column Width is calculated properly</description>
+        </annotations>
+        <arguments>
+            <argument name="index" type="string" defaultValue="1"/>
+            <argument name="parentIndex" type="string" defaultValue="1"/>
+            <argument name="columnWidth" type="string" defaultValue="{{PageBuilderColumnStyles.widthHalf}}"/>
+            <argument name="section" defaultValue="ColumnOnFrontend"/>
+        </arguments>
+        <executeJS function="return Math.round(window.getComputedStyle(document.evaluate('{{section.columnConfigurationPath(index)}}', document.body).iterateNext()).width.replace(/px/g, &quot;&quot;))" stepKey="grabColumnWidthValue"/>
+        <executeJS function="return Math.round(window.getComputedStyle(document.evaluate('{{section.columnGroupPath(parentIndex)}}', document.body).iterateNext()).width.replace(/px/g, &quot;&quot;) * {{columnWidth}})" stepKey="grabCalculatedColumnWidthValue"/>
+        <executeJS function="return Math.abs({$grabColumnWidthValue}-{$grabCalculatedColumnWidthValue})" stepKey="columnWidthDifference"/>
+        <assertLessThanOrEqual stepKey="assertColumnWidthValue">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">columnWidthDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

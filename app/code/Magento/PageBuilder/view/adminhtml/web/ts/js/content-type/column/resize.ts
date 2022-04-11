@@ -25,13 +25,22 @@ export default class Resize {
     }
 
     /**
+     * Get the initial grid size for this columnGroup before it was updated
+     *
+     * @returns {number}
+     */
+    public getInitialGridSize(): number {
+        return parseInt(this.columnGroup.dataStore.get("initial_grid_size", 0).toString(), 10);
+    }
+
+    /**
      * Get the smallest column width possible
      *
      * @param {number} gridSize
      * @returns {number}
      */
     public getSmallestColumnWidth(gridSize?: number): number {
-        gridSize = gridSize || this.getGridSize();
+        gridSize = gridSize || this.getInitialGridSize() || this.getGridSize();
         return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(
             Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0,
         ));
@@ -45,7 +54,7 @@ export default class Resize {
      * @returns {number}
      */
     public getAcceptedColumnWidth(width: string, gridSize?: number): number {
-        gridSize = gridSize || this.getGridSize();
+        gridSize = gridSize || this.getInitialGridSize() || this.getGridSize();
         let newWidth = 0;
         for (let i = gridSize; i > 0; i--) {
             const percentage = parseFloat((100 / gridSize * i).toFixed(

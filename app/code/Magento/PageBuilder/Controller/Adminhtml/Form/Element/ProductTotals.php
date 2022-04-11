@@ -9,17 +9,16 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
 
 use Exception;
-use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\CatalogWidget\Controller\Adminhtml\Product\Widget;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 
 /**
  * Returns the number of products that match the provided conditions
  */
-class ProductTotals extends Action implements HttpPostActionInterface
+class ProductTotals extends Widget implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Catalog::products';
 
     /**
      * @var \Magento\PageBuilder\Model\Catalog\ProductTotals

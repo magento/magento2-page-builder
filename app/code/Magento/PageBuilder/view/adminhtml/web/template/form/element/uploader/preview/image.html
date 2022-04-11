@@ -14,7 +14,7 @@
                         class="file-uploader-button action-default"
                         attr="for: uid"
                         disable="disabled"
-                        translate="translations.uploadNewImage"/>
+                        translate="translations.uploadNewImage"></label>
                 </li>
                 <li class="pagebuilder-options-link">
                     <label
@@ -23,7 +23,7 @@
                         attr="id: mediaGalleryUid, 'data-id': getFileId()"
                         disable="disabled"
                         data-force_static_path="1"
-                        translate="translations.selectFromGallery"/>
+                        translate="translations.selectFromGallery"></label>
                 </li>
             </ul>
         </div>
@@ -39,7 +39,7 @@
                 <div class="file-uploader-area" if="visibleControls">
                     <p class="image-upload-instructions" translate="translations.dragImageHere"></p>
                     <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled"/>
-                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadImage"/>
+                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadImage"></label>
                     <span translate="translations.or"></span>
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
@@ -47,14 +47,14 @@
                         attr="id: mediaGalleryUid, 'data-id': getFileId()"
                         disable="disabled"
                         data-force_static_path="1"
-                        translate="translations.selectFromGallery"/>
-                    <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"/>
+                        translate="translations.selectFromGallery"></label>
+                    <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"></render>
                     <p class="image-upload-requirements">
                         <span if="$data.maxFileSize">
-                            <span translate="translations.maximumFileSize"/>: <text args="formatSize($data.maxFileSize)"/>.
+                            <span translate="translations.maximumFileSize"></span>: <text args="formatSize($data.maxFileSize)"></text>.
                         </span>
                         <span if="$data.allowedExtensions">
-                            <span translate="translations.allowedFileTypes"/>: <text args="getAllowedFileExtensionsInCommaDelimitedFormat()"/>.
+                            <span translate="translations.allowedFileTypes"></span>: <text args="getAllowedFileExtensionsInCommaDelimitedFormat()"></text>.
                         </span>
                     </p>
                 </div>

@@ -20,6 +20,7 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-heading"/>
             <group value="pagebuilder-row"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -34,7 +35,7 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <!-- Add Heading to Stage -->
         <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
@@ -74,11 +75,15 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Add additional row and column group" stepKey="commentAddNewRowAndColumn"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            <argument name="dropZoneIndex" value="1"/>
+            <argument name="offsetXCoordinate" value="1"/>
+            <argument name="offsetYCoordinate" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoNewRow">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>

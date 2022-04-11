@@ -11,7 +11,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="TinyMCE4 selection is preserved after initiation"/>
+            <title value="TinyMCE selection is preserved after initiation"/>
             <description value="Verify that a users selection is not lost between select and initiation"/>
             <severity value="AVERAGE"/>
             <useCaseId value="PB-170"/>
@@ -21,10 +21,11 @@
             <skip>
                 <issueId value="MQE-2288" />
             </skip>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>

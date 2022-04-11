@@ -13,11 +13,11 @@
          css="visible: panel.isVisible(), 'transition-out': isSnapshotTransition()"
          if="!isSnapshot()">
         <span class="viewport-buttons">
-              <render args="viewportTemplate"/>
+              <render args="viewportTemplate"></render>
         </span>
         <span class="template-buttons">
-            <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
-            <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
+            <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"></button>
+            <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"></button>
             <i click="toggleFullScreen.bind($data, {animate:true})"
                css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"
                attr="{title: isFullScreen() ? $t('Close Full Screen') : $t('Open in Full Screen')}">
@@ -25,11 +25,11 @@
         </span>
     </div>
     <with args="panel">
-        <render/>
+        <render></render>
     </with>
     <if args="isStageReady">
         <with args="stage">
-            <render/>
+            <render></render>
         </with>
         <iframe width="1" height="1" attr="id: 'render_frame_' + id" sandbox="allow-scripts" style="display: none;"></iframe>
     </if>

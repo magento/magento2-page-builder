@@ -19,12 +19,12 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
     var dataStoreContent = dataStore.getState();
     var inlineMessage = dataStoreContent[inlineMessageField];
     var linkUrl = dataStoreContent[linkUrlField];
-    var widgetRegex = /\{\{widget(.*?)\}\}/ig;
+    var widgetRegex = /\{\{widget([\S\s]*?)\}\}/ig;
     var widgetPlaceholderRegex = /<span.*(class=)(\"|\').*((magento-placeholder).*(magento-widget)|(magento-widget).*(magento-placeholder)).*<\/span>/igm;
 
     if (wysiwyg && inlineMessage.match(widgetRegex) && linkUrl && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
       var inlineEditor = (0, _jquery)("#" + wysiwyg.elementId);
-      inlineEditor.trigger('blur');
+      inlineEditor.trigger("blur");
       (0, _dismissibleConfirm)({
         actions: {
           always: function always() {

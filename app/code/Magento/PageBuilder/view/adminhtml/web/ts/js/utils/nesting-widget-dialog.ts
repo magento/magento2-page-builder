@@ -28,7 +28,7 @@ export default function nestingWidgetDialog(
     const dataStoreContent = dataStore.getState() as DataObject;
     const inlineMessage = dataStoreContent[inlineMessageField] as string;
     const linkUrl = dataStoreContent[linkUrlField] as FieldDefaultsInterface;
-    const widgetRegex = /\{\{widget(.*?)\}\}/ig;
+    const widgetRegex = /\{\{widget([\S\s]*?)\}\}/ig;
     const widgetPlaceholderRegex = /<span.*(class=)(\"|\').*((magento-placeholder).*(magento-widget)|(magento-widget).*(magento-placeholder)).*<\/span>/igm;
 
     if (wysiwyg &&
@@ -39,7 +39,7 @@ export default function nestingWidgetDialog(
         linkUrl[linkUrl.type].length !== 0
     ) {
         const inlineEditor = $("#" + wysiwyg.elementId);
-        inlineEditor.blur();
+        inlineEditor.trigger("blur");
         confirmationDialog({
             actions: {
                 always: () => {

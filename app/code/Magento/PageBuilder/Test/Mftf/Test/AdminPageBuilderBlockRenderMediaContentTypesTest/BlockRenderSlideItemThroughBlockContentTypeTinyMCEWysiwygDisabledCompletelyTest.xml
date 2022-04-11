@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCEWysiwygDisabledCompletelyTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Through Block Content Type With TinyMCE and Wysiwyg Disabled Completely"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE and Wysiwyg Disabled Completely."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MC-15213"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="goToEndOfLineTextAreaEditor" stepKey="goToEndOfLine">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="goToEndOfLineTextAreaEditor" stepKey="goToEndOfLine2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addVariableToTinyMCE">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor3">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="goToEndOfLineTextAreaEditor" stepKey="goToEndOfLine3">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderTextArea_WidgetCMSHomepageLink.identifier}}" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
+    </test>
+</tests>

@@ -14,6 +14,7 @@
         <waitForElementVisible selector="{{SlideOnConfigurationPanel.contentTinyMCEIFrame}}" stepKey="waitForIFrame"/>
         <executeJS function="jQuery('{{ContentManagementSection.configurationPopupContent}}').scrollTop(jQuery('{{SlideOnConfigurationPanel.contentTinyMCEIFrame}}').offset().top)" stepKey="expectedColumnSizeRatio"/>
         <switchToIFrame selector="{{SlideOnConfigurationPanel.contentTinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <wait time="5" stepKey="waitForIFrameSwitch"/>
         <see selector="body" userInput="{{text}}" stepKey="seeText"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>

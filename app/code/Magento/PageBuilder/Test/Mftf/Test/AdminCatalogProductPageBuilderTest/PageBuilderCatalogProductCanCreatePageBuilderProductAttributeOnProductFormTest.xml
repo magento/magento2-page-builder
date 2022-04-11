@@ -33,16 +33,16 @@
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{AdminProductFormSection.addAttributeBtn}}" stepKey="clickAddAtttributeBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading1"/>
+        <waitForPageLoad stepKey="waitForLoading1"/>
         <click selector="{{AdminProductFormSection.createNewAttributeBtn}}" stepKey="clickCreateNewAtttributeBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2"/>
+        <waitForPageLoad stepKey="waitForLoading2"/>
         <fillField selector="{{AdminProductFormSection.attributeLabel}}" userInput="{{ProductAttributeFrontendLabel.label}}" stepKey="fillDefaultLabel"/>
         <click selector="{{AdminProductFormSection.frontendInput}}" stepKey="openInputTypeDropdown"/>
         <see userInput="Page Builder" stepKey="seePageBuilderInputType"/>
         <selectOption selector="{{AdminProductFormSection.frontendInput}}" userInput="Page Builder" stepKey="selectOption1"/>
         <click selector="{{AdminProductFormSection.saveNewAttribute}}" stepKey="saveAttribute"/>
         <waitForElementNotVisible selector="{{AdminProductFormSection.saveNewAttribute}}" stepKey="waitForSlideOutCloses"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <click selector="{{AdminProductFormSection.attributeTab}}" stepKey="expandAttributeTab"/>
         <waitForElementVisible selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="waitForAttributeVisbile"/>
         <click selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="enablePageBuilder"/>

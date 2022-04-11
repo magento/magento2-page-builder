@@ -18,14 +18,14 @@
         <div if="data.video_overlay.attributes()['data-video-overlay-color']"
              class="video-overlay"
              attr="data.video_overlay.attributes"
-             ko-style="data.video_overlay.style" />
+             ko-style="data.video_overlay.style"></div>
         <div class="pagebuilder-overlay pagebuilder-poster-overlay"
              attr="data.overlay.attributes"
              ko-style="data.overlay.style"
              css="data.overlay.css"
              event="mousedown: activateEditor">
             <scope args="getUploader().getUiComponent()">
-                <render />
+                <render ></render>
             </scope>
             <div class="pagebuilder-poster-content wysiwyg-container">
                 <div class="inline-wysiwyg"
@@ -48,7 +48,7 @@
                     <textarea class="inline-wysiwyg-textarea"
                               afterRender="initTextarea"
                               event="keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent"
-                              data-bind="attr: { placeholder: $t('Edit Slide Text') }" />
+                              data-bind="attr: { placeholder: $t('Edit Slide Text') }"></textarea>
                 </div>
                 <a if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"
