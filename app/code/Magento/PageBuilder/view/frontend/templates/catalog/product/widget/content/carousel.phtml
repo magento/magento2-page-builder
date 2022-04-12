@@ -6,6 +6,7 @@
 use Magento\Framework\App\Action\Action;
 
 // phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 /** @var \Magento\CatalogWidget\Block\Product\ProductsList $block */
 ?>
@@ -77,6 +78,15 @@ use Magento\Framework\App\Action\Action;
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </div>
+                                    <script type="text/x-magento-init">
+                                    {
+                                        "[data-role=tocart-form], .form.map.checkout": {
+                                            "catalogAddToCart": {
+                                                "product_sku": "<?= $escaper->escapeJs($_item->getSku()); ?>"
+                                            }
+                                        }
+                                    }
+                                    </script>
                                 <?php endif; ?>
                                 <?php if ($showWishlist || $showCompare) : ?>
                                     <div class="actions-secondary" data-role="add-to-links">
@@ -102,13 +112,4 @@ use Magento\Framework\App\Action\Action;
             <?= ($iterator == count($items) + 1) ? '</li>' : '' ?>
         <?php endforeach ?>
     </ol>
-    <script type="text/x-magento-init">
-    {
-        "[data-role=tocart-form], .form.map.checkout": {
-            "catalogAddToCart": {
-                "product_sku": "<?= $escaper->escapeJs($_item->getSku()); ?>"
-            }
-        }
-    }
-    </script>
 <?php endif;?>
