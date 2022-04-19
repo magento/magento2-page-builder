@@ -10,6 +10,8 @@ namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
 /**
  * Interface OptionInterface
+ *
+ * @api
  */
 interface OptionInterface
 {
