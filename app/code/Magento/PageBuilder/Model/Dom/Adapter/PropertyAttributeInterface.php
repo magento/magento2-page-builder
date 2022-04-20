@@ -9,6 +9,8 @@ namespace Magento\PageBuilder\Model\Dom\Adapter;
 
 /**
  * Interface for PropertyAttribute wrappers
+ *
+ * @api
  */
 interface PropertyAttributeInterface
 {
