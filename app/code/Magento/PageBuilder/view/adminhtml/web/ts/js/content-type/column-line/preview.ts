@@ -275,6 +275,7 @@ export default class Preview extends PreviewCollection {
                 this.dropPlaceholder.removeClass("left right");
 
                 this.movePlaceholder.removeClass("active");
+                this.movePosition = null;
                 this.startDragEvent = null;
 
                 events.trigger("column:dragStop", {
@@ -328,7 +329,7 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Handle an existing column being dropped into a new column group
+     * Handle an existing column being dropped into a different column line
      *
      * @param {DropPosition} movePosition
      */
@@ -349,26 +350,49 @@ export default class Preview extends PreviewCollection {
 
         // Set the column to it's smallest column width
         updateColumnWidth(column, this.resizeUtils.getSmallestColumnWidth());
-
-        // Move the content type
-        moveContentType(column, movePosition.insertIndex, this.contentType);
-
         // Modify the old neighbour
+        let oldNeighbourWidth = 100;
         if (modifyOldNeighbour) {
-            const oldNeighbourWidth = sourceLinePreview.getResizeUtils().getAcceptedColumnWidth(
+            oldNeighbourWidth = sourceLinePreview.getResizeUtils().getAcceptedColumnWidth(
                 (oldWidth + sourceLinePreview.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString(),
             );
-            updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
+
         }
 
-        // Modify the columns new neighbour
-        const newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
-            (this.resizeUtils.getColumnWidth(movePosition.affectedColumn) -
-                this.resizeUtils.getSmallestColumnWidth()).toString(),
-        );
+        // Move the content type
+        if (this.columnLineDropPlaceholder.hasClass('active')
+            || this.columnLineBottomDropPlaceholder.hasClass('active')) {
+            // if new column line placeholders are visible, add new column line and move column there
+            createColumnLine(
+                this.contentType.parentContentType,
+                this.resizeUtils.getSmallestColumnWidth(),
+                this.getNewColumnLineIndex(),
+            ).then((columnLine) => {
 
-        // Reduce the affected columns width by the smallest column width
-        updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
+                moveContentType(column, 0, columnLine);
+                updateColumnWidth(column, 100);
+                if (modifyOldNeighbour) {
+                    updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
+                }
+                this.fireMountEvent(this.contentType, column);
+
+            });
+        } else  {
+            //@todo evaluate if this else is needed
+            moveContentType(column, movePosition.insertIndex, this.contentType);
+            if (modifyOldNeighbour) {
+                updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
+            }
+            const newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
+                (this.resizeUtils.getColumnWidth(movePosition.affectedColumn) -
+                    this.resizeUtils.getSmallestColumnWidth()).toString(),
+            );
+
+            // Reduce the affected columns width by the smallest column width
+            updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
+
+        }
+
     }
 
     /**
@@ -469,23 +493,16 @@ export default class Preview extends PreviewCollection {
 
         let index = -1;
         const self = this;
-        if (this.columnLineDropPlaceholder.hasClass("active")
-            || this.columnLineBottomDropPlaceholder.hasClass("active")) {
+        const dragColumn = getDragColumn();
+        if ((this.columnLineDropPlaceholder.hasClass("active")
+            || this.columnLineBottomDropPlaceholder.hasClass("active"))
+        && !dragColumn) {
 
-            for (const child of this.contentType.parentContentType.children()) {
-                index++;
-                if (child.id == self.contentType.id) {
-                    break;
-                }
-            }
-            if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
-                // show the bottom drop placeholder
-                index++;
-            }
+
             createColumnLine(
                 this.contentType.parentContentType,
                 this.resizeUtils.getSmallestColumnWidth(),
-                index,
+                this.getNewColumnLineIndex(),
             ).then((columnLine) => {
                 events.trigger(
                     columnLine.config.name + ":dropAfter",
@@ -509,9 +526,10 @@ export default class Preview extends PreviewCollection {
 
         const column = getDragColumn();
 
-        if (this.movePosition && column && column.parentContentType !== this.contentType) {
+        if (this.isColumnBeingMovedToAnotherColumnLine()) {
             this.onExistingColumnDrop(this.movePosition);
         }
+
     }
 
     /**
@@ -564,7 +582,9 @@ export default class Preview extends PreviewCollection {
                     this.movePosition = null;
                 }
 
-                if (this.movePosition) {
+                if (this.movePosition &&
+                    (!this.isNewLinePlaceDropPlaceholderVisible(event, linePosition)
+                        && !this.isNewLineBottomPlaceDropPlaceholderVisible(event, linePosition))) {
                     this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
@@ -724,16 +744,11 @@ export default class Preview extends PreviewCollection {
 
         const siblings = this.contentType.parentContentType.children();
         const id = this.contentType.id;
-        let index = 0;
-        siblings.forEach((columnLine) => {
-            if (columnLine.id === id){
-                return false;
-            }
-            index++;
-        });
+        const firstLine = siblings.shift();
         // show column line drop placeholder only for top column line in a group
+        const draggedColumn = getDragColumn();
 
-        return index === 0 && this.dropOverElement &&
+        return  (this.dropOverElement || draggedColumn) &&
             event.pageY > linePosition.top &&
             event.pageY < linePosition.top + this.lineDropperHeight;
     }
@@ -749,7 +764,8 @@ export default class Preview extends PreviewCollection {
         linePosition: LinePositionCache,
     ): boolean {
 
-        return this.dropOverElement &&
+        const draggedColumn = getDragColumn();
+        return (this.dropOverElement || draggedColumn) &&
             (event.pageY < linePosition.top + this.element.outerHeight() &&
                 event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight);
 
@@ -763,7 +779,8 @@ export default class Preview extends PreviewCollection {
      */
     private isNewColumnDropPlaceholderVisible(event: JQueryEventObject, linePosition: LinePositionCache): boolean {
 
-        return this.dropOverElement &&
+        const draggedColumn = getDragColumn();
+        return (this.dropOverElement || draggedColumn) &&
         event.pageY > linePosition.top + this.lineDropperHeight &&
         event.pageY < linePosition.top + linePosition.outerHeight - this.lineDropperHeight;
     }
@@ -945,7 +962,8 @@ export default class Preview extends PreviewCollection {
             },
             over() {
                 // Is the element currently being dragged a column group?
-                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group") ||
+                    getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
                     // Always calculate drop positions when an element is dragged over
                     const ownContentType = self.contentType as ContentTypeCollectionInterface<ColumnLinePreview>;
                     self.dropPositions = calculateDropPositions(ownContentType);
@@ -1164,4 +1182,46 @@ export default class Preview extends PreviewCollection {
             return;
         }
     }
+
+    private getNewColumnLineIndex(): number {
+        let index = -1;
+        const self = this;
+        alert(this.contentType.parentContentType.getChildren()().length);
+        for (const child of this.contentType.parentContentType.children()) {
+            index++;
+            if (child.id == self.contentType.id) {
+                break;
+            }
+        }
+        if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
+            // show the bottom drop placeholder
+            index++;
+        }
+        return index;
+    }
+
+
+    private isColumnBeingMovedToAnotherColumnLine(): boolean {
+        let column = getDragColumn();
+        if (!column) {
+            //if no move position, column is not being moved.
+            return false;
+        }
+
+        if (column.parentContentType !== this.contentType) {
+            //if the parent content type is not same as this column line, column is being moved to new column line
+            return true;
+        }
+
+        if (column.parentContentType === this.contentType
+            && (this.columnLineDropPlaceholder.hasClass('active')
+                 || this.columnLineBottomDropPlaceholder.hasClass('active'))) {
+            //since new column line drop placeholder is visible, column move will introduce a new column line
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

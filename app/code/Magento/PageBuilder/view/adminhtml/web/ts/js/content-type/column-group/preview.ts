@@ -231,10 +231,9 @@ export default class Preview extends PreviewCollection {
             this.contentType,
             this.contentType.stageId,
         ).then((columnLine) => {
-            const contentType = this.contentType;
-            contentType.addChild(columnLine);
+            this.contentType.addChild(columnLine, 0);
             events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine});
-            this.fireMountEvent(contentType, columnLine);
+            this.fireMountEvent(this.contentType, columnLine);
         });
     }
 

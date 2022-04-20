@@ -190,15 +190,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       var _this4 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("column-line"), this.contentType, this.contentType.stageId).then(function (columnLine) {
-        var contentType = _this4.contentType;
-        contentType.addChild(columnLine);
+        _this4.contentType.addChild(columnLine, 0);
 
         _events.trigger(columnLine.config.name + ":dropAfter", {
           id: columnLine.id,
           columnLine: columnLine
         });
 
-        _this4.fireMountEvent(contentType, columnLine);
+        _this4.fireMountEvent(_this4.contentType, columnLine);
       });
     }
     /**

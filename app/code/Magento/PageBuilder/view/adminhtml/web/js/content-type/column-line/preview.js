@@ -240,6 +240,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
 
           _this3.movePlaceholder.removeClass("active");
 
+          _this3.movePosition = null;
           _this3.startDragEvent = null;
 
           _events.trigger("column:dragStop", {
@@ -293,13 +294,15 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       });
     }
     /**
-     * Handle an existing column being dropped into a new column group
+     * Handle an existing column being dropped into a different column line
      *
      * @param {DropPosition} movePosition
      */
     ;
 
     _proto.onExistingColumnDrop = function onExistingColumnDrop(movePosition) {
+      var _this5 = this;
+
       var column = (0, _registry.getDragColumn)();
       var sourceLinePreview = column.parentContentType.preview;
       var modifyOldNeighbour; // Determine which old neighbour we should modify
@@ -313,19 +316,39 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       } // Set the column to it's smallest column width
 
 
-      (0, _resize.updateColumnWidth)(column, this.resizeUtils.getSmallestColumnWidth()); // Move the content type
+      (0, _resize.updateColumnWidth)(column, this.resizeUtils.getSmallestColumnWidth()); // Modify the old neighbour
 
-      (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.contentType); // Modify the old neighbour
+      var oldNeighbourWidth = 100;
 
       if (modifyOldNeighbour) {
-        var oldNeighbourWidth = sourceLinePreview.getResizeUtils().getAcceptedColumnWidth((oldWidth + sourceLinePreview.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString());
-        (0, _resize.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
-      } // Modify the columns new neighbour
+        oldNeighbourWidth = sourceLinePreview.getResizeUtils().getAcceptedColumnWidth((oldWidth + sourceLinePreview.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString());
+      } // Move the content type
 
 
-      var newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - this.resizeUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
+      if (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass('active')) {
+        // if new column line placeholders are visible, add new column line and move column there
+        (0, _factory.createColumnLine)(this.contentType.parentContentType, this.resizeUtils.getSmallestColumnWidth(), this.getNewColumnLineIndex()).then(function (columnLine) {
+          (0, _moveContentType.moveContentType)(column, 0, columnLine);
+          (0, _resize.updateColumnWidth)(column, 100);
 
-      (0, _resize.updateColumnWidth)(movePosition.affectedColumn, newNeighbourWidth);
+          if (modifyOldNeighbour) {
+            (0, _resize.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
+          }
+
+          _this5.fireMountEvent(_this5.contentType, column);
+        });
+      } else {
+        //@todo evaluate if this else is needed
+        (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.contentType);
+
+        if (modifyOldNeighbour) {
+          (0, _resize.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
+        }
+
+        var newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - this.resizeUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
+
+        (0, _resize.updateColumnWidth)(movePosition.affectedColumn, newNeighbourWidth);
+      }
     }
     /**
      * Init the resizing events on the group
@@ -335,7 +358,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.initMouseMove = function initMouseMove(line) {
-      var _this5 = this;
+      var _this6 = this;
 
       var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
@@ -343,7 +366,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
           return;
         }
 
-        var linePosition = _this5.getLinePosition(line); // If we're handling a touch event we need to pass through the page X & Y
+        var linePosition = _this6.getLinePosition(line); // If we're handling a touch event we need to pass through the page X & Y
 
 
         if (event.type === "touchmove") {
@@ -351,40 +374,40 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
           event.pageY = event.originalEvent.pageY;
         }
 
-        if (_this5.eventIntersectsLine(event, linePosition)) {
+        if (_this6.eventIntersectsLine(event, linePosition)) {
           intersects = true; // @todo re-instate onResizingMouseMove
 
-          _this5.onResizingMouseMove(event, line, linePosition);
+          _this6.onResizingMouseMove(event, line, linePosition);
 
-          _this5.onDraggingMouseMove(event, line, linePosition);
+          _this6.onDraggingMouseMove(event, line, linePosition);
 
-          _this5.onDroppingMouseMove(event, line, linePosition);
+          _this6.onDroppingMouseMove(event, line, linePosition);
         } else {
           intersects = false;
-          _this5.linePositionCache = null;
-          _this5.dropPosition = null;
+          _this6.linePositionCache = null;
+          _this6.dropPosition = null;
 
-          _this5.dropPlaceholder.removeClass("left right");
+          _this6.dropPlaceholder.removeClass("left right");
 
-          _this5.columnLineDropPlaceholder.removeClass("active");
+          _this6.columnLineDropPlaceholder.removeClass("active");
 
-          _this5.columnLineBottomDropPlaceholder.removeClass("active");
+          _this6.columnLineBottomDropPlaceholder.removeClass("active");
 
-          _this5.columnLineBottomDropPlaceholder.hide();
+          _this6.columnLineBottomDropPlaceholder.hide();
 
-          _this5.columnLineDropPlaceholder.hide(); // @todo combine active and show/hide functionality for columnLineDropPlaceholder
+          _this6.columnLineDropPlaceholder.hide(); // @todo combine active and show/hide functionality for columnLineDropPlaceholder
           //  this.movePlaceholder.css("left", "").removeClass("active");
 
         }
       }).on("mouseup touchend", function () {
         if (intersects) {
-          _this5.handleMouseUp();
+          _this6.handleMouseUp();
         }
 
         intersects = false;
-        _this5.dropPosition = null;
+        _this6.dropPosition = null;
 
-        _this5.endAllInteractions();
+        _this6.endAllInteractions();
 
         _underscore.defer(function () {
           // Re-enable any disabled sortable areas
@@ -437,23 +460,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     _proto.handleMouseUp = function handleMouseUp() {
       var index = -1;
       var self = this;
+      var dragColumn = (0, _registry.getDragColumn)();
 
-      if (this.columnLineDropPlaceholder.hasClass("active") || this.columnLineBottomDropPlaceholder.hasClass("active")) {
-        for (var _iterator = _createForOfIteratorHelperLoose(this.contentType.parentContentType.children()), _step; !(_step = _iterator()).done;) {
-          var child = _step.value;
-          index++;
-
-          if (child.id == self.contentType.id) {
-            break;
-          }
-        }
-
-        if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
-          // show the bottom drop placeholder
-          index++;
-        }
-
-        (0, _factory.createColumnLine)(this.contentType.parentContentType, this.resizeUtils.getSmallestColumnWidth(), index).then(function (columnLine) {
+      if ((this.columnLineDropPlaceholder.hasClass("active") || this.columnLineBottomDropPlaceholder.hasClass("active")) && !dragColumn) {
+        (0, _factory.createColumnLine)(this.contentType.parentContentType, this.resizeUtils.getSmallestColumnWidth(), this.getNewColumnLineIndex()).then(function (columnLine) {
           _events.trigger(columnLine.config.name + ":dropAfter", {
             id: columnLine.id,
             columnLine: columnLine
@@ -475,7 +485,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
 
       var column = (0, _registry.getDragColumn)();
 
-      if (this.movePosition && column && column.parentContentType !== this.contentType) {
+      if (this.isColumnBeingMovedToAnotherColumnLine()) {
         this.onExistingColumnDrop(this.movePosition);
       }
     }
@@ -524,7 +534,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
             this.movePosition = null;
           }
 
-          if (this.movePosition) {
+          if (this.movePosition && !this.isNewLinePlaceDropPlaceholderVisible(event, linePosition) && !this.isNewLineBottomPlaceDropPlaceholderVisible(event, linePosition)) {
             this.dropPlaceholder.removeClass("left right");
             this.movePlaceholder.css({
               left: this.movePosition.placement === "left" ? this.movePosition.left : "",
@@ -564,7 +574,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.onResizingMouseMove = function onResizingMouseMove(event, group, groupPosition) {
-      var _this6 = this;
+      var _this7 = this;
 
       var newColumnWidth;
 
@@ -624,8 +634,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
-                _this6.resizeColumnWidths = _this6.resizeUtils.determineColumnWidths(_this6.resizeColumnInstance, groupPosition);
-                _this6.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this6.resizeColumnWidths);
+                _this7.resizeColumnWidths = _this7.resizeUtils.determineColumnWidths(_this7.resizeColumnInstance, groupPosition);
+                _this7.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this7.resizeColumnWidths);
               });
             }
           }
@@ -659,16 +669,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     _proto.isNewLinePlaceDropPlaceholderVisible = function isNewLinePlaceDropPlaceholderVisible(event, linePosition) {
       var siblings = this.contentType.parentContentType.children();
       var id = this.contentType.id;
-      var index = 0;
-      siblings.forEach(function (columnLine) {
-        if (columnLine.id === id) {
-          return false;
-        }
+      var firstLine = siblings.shift(); // show column line drop placeholder only for top column line in a group
 
-        index++;
-      }); // show column line drop placeholder only for top column line in a group
-
-      return index === 0 && this.dropOverElement && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
+      var draggedColumn = (0, _registry.getDragColumn)();
+      return (this.dropOverElement || draggedColumn) && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
     }
     /**
      *
@@ -679,7 +683,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.isNewLineBottomPlaceDropPlaceholderVisible = function isNewLineBottomPlaceDropPlaceholderVisible(event, linePosition) {
-      return this.dropOverElement && event.pageY < linePosition.top + this.element.outerHeight() && event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight;
+      var draggedColumn = (0, _registry.getDragColumn)();
+      return (this.dropOverElement || draggedColumn) && event.pageY < linePosition.top + this.element.outerHeight() && event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight;
     }
     /**
      *
@@ -690,7 +695,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.isNewColumnDropPlaceholderVisible = function isNewColumnDropPlaceholderVisible(event, linePosition) {
-      return this.dropOverElement && event.pageY > linePosition.top + this.lineDropperHeight && event.pageY < linePosition.top + linePosition.outerHeight - this.lineDropperHeight;
+      var draggedColumn = (0, _registry.getDragColumn)();
+      return (this.dropOverElement || draggedColumn) && event.pageY > linePosition.top + this.lineDropperHeight && event.pageY < linePosition.top + linePosition.outerHeight - this.lineDropperHeight;
     }
     /**
      * Handle mouse move events on when dropping elements
@@ -864,7 +870,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
         },
         over: function over() {
           // Is the element currently being dragged a column group?
-          if ((0, _registry2.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column-group")) {
+          if ((0, _registry2.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column-group") || (0, _registry2.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
             // Always calculate drop positions when an element is dragged over
             var ownContentType = self.contentType;
             self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(ownContentType);
@@ -902,8 +908,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       for (var _i = totalChildColumns; _i > 0; _i--) {
         var potentialWidth = Math.floor(formattedAvailableWidth / _i);
 
-        for (var _iterator2 = _createForOfIteratorHelperLoose(allowedColumnWidths), _step2; !(_step2 = _iterator2()).done;) {
-          var width = _step2.value;
+        for (var _iterator = _createForOfIteratorHelperLoose(allowedColumnWidths), _step; !(_step = _iterator()).done;) {
+          var width = _step.value;
 
           if (potentialWidth === Math.floor(width)) {
             spreadAcross = _i;
@@ -943,33 +949,33 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.registerResizeHandle = function registerResizeHandle(column, handle) {
-      var _this7 = this;
+      var _this8 = this;
 
       handle.off("mousedown touchstart");
       handle.on("mousedown touchstart", function (event) {
         event.preventDefault();
 
-        var groupPosition = _this7.getLinePosition(_this7.element);
+        var groupPosition = _this8.getLinePosition(_this8.element);
 
-        _this7.resizing(true); // @ts-ignore
+        _this8.resizing(true); // @ts-ignore
 
 
-        _this7.resizeColumnInstance = column;
-        _this7.resizeColumnWidths = _this7.resizeUtils.determineColumnWidths(_this7.resizeColumnInstance, groupPosition);
-        _this7.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this7.resizeColumnWidths); // Force the cursor to resizing
+        _this8.resizeColumnInstance = column;
+        _this8.resizeColumnWidths = _this8.resizeUtils.determineColumnWidths(_this8.resizeColumnInstance, groupPosition);
+        _this8.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this8.resizeColumnWidths); // Force the cursor to resizing
 
         (0, _jquery)("body").css("cursor", "col-resize"); // Reset the resize history
 
-        _this7.resizeHistory = {
+        _this8.resizeHistory = {
           left: [],
           right: []
         };
-        _this7.resizeLastPosition = null;
-        _this7.resizeMouseDown = true;
-        ++_this7.interactionLevel;
+        _this8.resizeLastPosition = null;
+        _this8.resizeMouseDown = true;
+        ++_this8.interactionLevel;
 
         _events.trigger("stage:interactionStart", {
-          stageId: _this7.contentType.stageId
+          stageId: _this8.contentType.stageId
         });
       });
     }
@@ -981,7 +987,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.createColumns = function createColumns() {
-      var _this8 = this;
+      var _this9 = this;
 
       var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
       var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
@@ -990,11 +996,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       }), (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), this.contentType, this.contentType.stageId, {
         width: 100 - parseFloat(col1Width) + "%"
       })]).then(function (columns) {
-        _this8.contentType.addChild(columns[0], 0);
+        _this9.contentType.addChild(columns[0], 0);
 
-        _this8.contentType.addChild(columns[1], 1);
+        _this9.contentType.addChild(columns[1], 1);
 
-        _this8.fireMountEvent(_this8.contentType, columns[0], columns[1]);
+        _this9.fireMountEvent(_this9.contentType, columns[0], columns[1]);
       });
     }
     /**
@@ -1082,6 +1088,49 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
         this.contentType.parentContentType.removeChild(this.contentType);
         return;
       }
+    };
+
+    _proto.getNewColumnLineIndex = function getNewColumnLineIndex() {
+      var index = -1;
+      var self = this;
+      alert(this.contentType.parentContentType.getChildren()().length);
+
+      for (var _iterator2 = _createForOfIteratorHelperLoose(this.contentType.parentContentType.children()), _step2; !(_step2 = _iterator2()).done;) {
+        var child = _step2.value;
+        index++;
+
+        if (child.id == self.contentType.id) {
+          break;
+        }
+      }
+
+      if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
+        // show the bottom drop placeholder
+        index++;
+      }
+
+      return index;
+    };
+
+    _proto.isColumnBeingMovedToAnotherColumnLine = function isColumnBeingMovedToAnotherColumnLine() {
+      var column = (0, _registry.getDragColumn)();
+
+      if (!column) {
+        //if no move position, column is not being moved.
+        return false;
+      }
+
+      if (column.parentContentType !== this.contentType) {
+        //if the parent content type is not same as this column line, column is being moved to new column line
+        return true;
+      }
+
+      if (column.parentContentType === this.contentType && (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass('active'))) {
+        //since new column line drop placeholder is visible, column move will introduce a new column line
+        return true;
+      }
+
+      return false;
     };
 
     return Preview;
