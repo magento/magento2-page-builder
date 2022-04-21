@@ -669,10 +669,16 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     _proto.isNewLinePlaceDropPlaceholderVisible = function isNewLinePlaceDropPlaceholderVisible(event, linePosition) {
       var siblings = this.contentType.parentContentType.children();
       var id = this.contentType.id;
-      var firstLine = siblings.shift(); // show column line drop placeholder only for top column line in a group
+      var index = 0;
+      siblings.forEach(function (columnLine) {
+        if (columnLine.id === id) {
+          return false;
+        }
 
-      var draggedColumn = (0, _registry.getDragColumn)();
-      return (this.dropOverElement || draggedColumn) && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
+        index++;
+      }); // show column line drop placeholder only for top column line in a group
+
+      return this.dropOverElement && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
     }
     /**
      *
@@ -1093,7 +1099,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     _proto.getNewColumnLineIndex = function getNewColumnLineIndex() {
       var index = -1;
       var self = this;
-      alert(this.contentType.parentContentType.getChildren()().length);
 
       for (var _iterator2 = _createForOfIteratorHelperLoose(this.contentType.parentContentType.children()), _step2; !(_step2 = _iterator2()).done;) {
         var child = _step2.value;

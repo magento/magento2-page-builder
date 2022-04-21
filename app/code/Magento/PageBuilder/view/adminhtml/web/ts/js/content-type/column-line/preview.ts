@@ -744,11 +744,16 @@ export default class Preview extends PreviewCollection {
 
         const siblings = this.contentType.parentContentType.children();
         const id = this.contentType.id;
-        const firstLine = siblings.shift();
+        let index = 0;
+        siblings.forEach((columnLine) => {
+            if (columnLine.id === id){
+                return false;
+            }
+            index++;
+        });
         // show column line drop placeholder only for top column line in a group
-        const draggedColumn = getDragColumn();
 
-        return  (this.dropOverElement || draggedColumn) &&
+        return this.dropOverElement &&
             event.pageY > linePosition.top &&
             event.pageY < linePosition.top + this.lineDropperHeight;
     }
@@ -1186,7 +1191,6 @@ export default class Preview extends PreviewCollection {
     private getNewColumnLineIndex(): number {
         let index = -1;
         const self = this;
-        alert(this.contentType.parentContentType.getChildren()().length);
         for (const child of this.contentType.parentContentType.children()) {
             index++;
             if (child.id == self.contentType.id) {
