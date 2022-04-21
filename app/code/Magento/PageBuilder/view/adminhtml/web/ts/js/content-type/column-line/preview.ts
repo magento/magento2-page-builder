@@ -336,7 +336,8 @@ export default class Preview extends PreviewCollection {
     private onExistingColumnDrop(movePosition: DropPosition) {
         const column = getDragColumn();
         const sourceLinePreview = column.parentContentType.preview as ColumnLinePreview;
-        let modifyOldNeighbour;
+        let modifyOldNeighbour: ContentTypeCollectionInterface<ColumnPreview>;
+
 
         // Determine which old neighbour we should modify
         const oldWidth = sourceLinePreview.getResizeUtils().getColumnWidth(column);
