@@ -360,8 +360,8 @@ export default class Preview extends PreviewCollection {
         }
 
         // Move the content type
-        if (this.columnLineDropPlaceholder.hasClass('active')
-            || this.columnLineBottomDropPlaceholder.hasClass('active')) {
+        if (this.columnLineDropPlaceholder.hasClass("active")
+            || this.columnLineBottomDropPlaceholder.hasClass("active")) {
             // if new column line placeholders are visible, add new column line and move column there
             createColumnLine(
                 this.contentType.parentContentType,
@@ -378,7 +378,7 @@ export default class Preview extends PreviewCollection {
 
             });
         } else  {
-            //@todo evaluate if this else is needed
+            // @todo evaluate if this else is needed
             moveContentType(column, movePosition.insertIndex, this.contentType);
             if (modifyOldNeighbour) {
                 updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
@@ -491,13 +491,11 @@ export default class Preview extends PreviewCollection {
      */
     private handleMouseUp(): void {
 
-        let index = -1;
         const self = this;
         const dragColumn = getDragColumn();
         if ((this.columnLineDropPlaceholder.hasClass("active")
             || this.columnLineBottomDropPlaceholder.hasClass("active"))
         && !dragColumn) {
-
 
             createColumnLine(
                 this.contentType.parentContentType,
@@ -1193,7 +1191,7 @@ export default class Preview extends PreviewCollection {
         const self = this;
         for (const child of this.contentType.parentContentType.children()) {
             index++;
-            if (child.id == self.contentType.id) {
+            if (child.id === self.contentType.id) {
                 break;
             }
         }
@@ -1204,28 +1202,25 @@ export default class Preview extends PreviewCollection {
         return index;
     }
 
-
     private isColumnBeingMovedToAnotherColumnLine(): boolean {
-        let column = getDragColumn();
+        const column = getDragColumn();
         if (!column) {
-            //if no move position, column is not being moved.
+            // if no move position, column is not being moved.
             return false;
         }
 
         if (column.parentContentType !== this.contentType) {
-            //if the parent content type is not same as this column line, column is being moved to new column line
+            // if the parent content type is not same as this column line, column is being moved to new column line
             return true;
         }
 
         if (column.parentContentType === this.contentType
-            && (this.columnLineDropPlaceholder.hasClass('active')
-                 || this.columnLineBottomDropPlaceholder.hasClass('active'))) {
-            //since new column line drop placeholder is visible, column move will introduce a new column line
+            && (this.columnLineDropPlaceholder.hasClass("active")
+                 || this.columnLineBottomDropPlaceholder.hasClass("active"))) {
+            // since new column line drop placeholder is visible, column move should introduce a new column line
             return true;
         }
 
         return false;
     }
-
-
 }

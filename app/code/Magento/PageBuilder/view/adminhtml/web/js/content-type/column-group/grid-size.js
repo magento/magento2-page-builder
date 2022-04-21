@@ -166,7 +166,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     var columnGroupResizeUtil = columnGroup.preview.getResizeUtils();
     var existingGridSize = columnGroupResizeUtil.getInitialGridSize();
     var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
-    columnGroup.getChildren()().forEach(function (columnLine, index) {
+    columnGroup.getChildren()().forEach(function (columnLine, columnLineIndex) {
       var totalNewWidths = 0;
       var remainingWidth = 0;
       var numColumns = columnLine.getChildren()().length;
@@ -208,8 +208,8 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
           remainingWidth += existingWidth - parseFloat(newWidth);
           /**
-           * Determine if we have enough remaining width, and apply it to the current column, this results in a
-           * subsequent column always receiving any additional width from the previous column
+           * Determine if we have enough remaining width, and apply it to the current column, this results in
+           * a subsequent column always receiving any additional width from the previous column
            */
 
           if (resizeUtils.getSmallestColumnWidth(newGridSize) === resizeUtils.getAcceptedColumnWidth(remainingWidth.toString(), newGridSize)) {

@@ -160,7 +160,7 @@ function redistributeColumnWidths(
     );
 
     columnGroup.getChildren()().forEach(
-        (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+        (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, columnLineIndex: number) => {
             let totalNewWidths = 0;
             let remainingWidth: number = 0;
             const numColumns = columnLine.getChildren()().length;
@@ -209,8 +209,8 @@ function redistributeColumnWidths(
                     remainingWidth += (existingWidth - parseFloat(newWidth));
 
                     /**
-                     * Determine if we have enough remaining width, and apply it to the current column, this results in a
-                     * subsequent column always receiving any additional width from the previous column
+                     * Determine if we have enough remaining width, and apply it to the current column, this results in
+                     * a subsequent column always receiving any additional width from the previous column
                      */
                     if (resizeUtils.getSmallestColumnWidth(newGridSize)
                         === resizeUtils.getAcceptedColumnWidth(remainingWidth.toString(), newGridSize)

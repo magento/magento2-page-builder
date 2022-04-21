@@ -325,7 +325,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       } // Move the content type
 
 
-      if (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass('active')) {
+      if (this.columnLineDropPlaceholder.hasClass("active") || this.columnLineBottomDropPlaceholder.hasClass("active")) {
         // if new column line placeholders are visible, add new column line and move column there
         (0, _factory.createColumnLine)(this.contentType.parentContentType, this.resizeUtils.getSmallestColumnWidth(), this.getNewColumnLineIndex()).then(function (columnLine) {
           (0, _moveContentType.moveContentType)(column, 0, columnLine);
@@ -338,7 +338,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
           _this5.fireMountEvent(_this5.contentType, column);
         });
       } else {
-        //@todo evaluate if this else is needed
+        // @todo evaluate if this else is needed
         (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.contentType);
 
         if (modifyOldNeighbour) {
@@ -458,7 +458,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
     ;
 
     _proto.handleMouseUp = function handleMouseUp() {
-      var index = -1;
       var self = this;
       var dragColumn = (0, _registry.getDragColumn)();
 
@@ -1104,7 +1103,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
         var child = _step2.value;
         index++;
 
-        if (child.id == self.contentType.id) {
+        if (child.id === self.contentType.id) {
           break;
         }
       }
@@ -1121,17 +1120,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       var column = (0, _registry.getDragColumn)();
 
       if (!column) {
-        //if no move position, column is not being moved.
+        // if no move position, column is not being moved.
         return false;
       }
 
       if (column.parentContentType !== this.contentType) {
-        //if the parent content type is not same as this column line, column is being moved to new column line
+        // if the parent content type is not same as this column line, column is being moved to new column line
         return true;
       }
 
-      if (column.parentContentType === this.contentType && (this.columnLineDropPlaceholder.hasClass('active') || this.columnLineBottomDropPlaceholder.hasClass('active'))) {
-        //since new column line drop placeholder is visible, column move will introduce a new column line
+      if (column.parentContentType === this.contentType && (this.columnLineDropPlaceholder.hasClass("active") || this.columnLineBottomDropPlaceholder.hasClass("active"))) {
+        // since new column line drop placeholder is visible, column move should introduce a new column line
         return true;
       }
 
