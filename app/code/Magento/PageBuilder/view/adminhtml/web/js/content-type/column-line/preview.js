@@ -675,9 +675,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
         }
 
         index++;
-      }); // show column line drop placeholder only for top column line in a group
+      });
+      var draggedColumn = (0, _registry.getDragColumn)(); // show column line drop placeholder only for top column line in a group
 
-      return this.dropOverElement && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
+      return (this.dropOverElement || draggedColumn) && event.pageY > linePosition.top && event.pageY < linePosition.top + this.lineDropperHeight;
     }
     /**
      *

@@ -750,9 +750,10 @@ export default class Preview extends PreviewCollection {
             }
             index++;
         });
+        const draggedColumn = getDragColumn();
         // show column line drop placeholder only for top column line in a group
 
-        return this.dropOverElement &&
+        return (this.dropOverElement || draggedColumn) &&
             event.pageY > linePosition.top &&
             event.pageY < linePosition.top + this.lineDropperHeight;
     }
