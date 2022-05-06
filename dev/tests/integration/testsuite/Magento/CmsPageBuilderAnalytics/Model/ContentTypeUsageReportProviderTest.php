@@ -78,6 +78,7 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
                     ['type' => 'block', 'count' => 1],
                     ['type' => 'row', 'count' => 7],
                     ['type' => 'column-group', 'count' => 5],
+                    ['type' => 'column-line', 'count' => 5],
                     ['type' => 'column', 'count' => 12],
                     ['type' => 'video', 'count' => 2],
                     ['type' => 'heading', 'count' => 3],
