@@ -292,23 +292,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var siblings = parentContentType.children();
       var siblingColumnLines = parentContentType.parentContentType.children();
-
-      if (siblings.length < 1) {
-        return;
-      }
-
-      if (siblings.length === 1 && siblingColumnLines.length === 1) {
-        var lastColumn = siblings[0];
-        var options = lastColumn.preview.getOptions();
-        options.getOption("remove").isDisabled(true);
-        return;
-      }
-
+      var totalColumnCount = 0;
+      siblingColumnLines.forEach(function (columnLine) {
+        var columns = columnLine.children();
+        columns.forEach(function (column) {
+          totalColumnCount++;
+        });
+      });
+      var isRemoveDisabled = totalColumnCount <= 1;
       siblingColumnLines.forEach(function (columnLine) {
         var columns = columnLine.children();
         columns.forEach(function (column) {
           var removeOption = column.preview.getOptions().getOption("remove");
-          removeOption.isDisabled(false);
+          removeOption.isDisabled(isRemoveDisabled);
         });
       });
     }

@@ -311,20 +311,20 @@ export default class Preview extends PreviewCollection {
         }
         const siblings = parentContentType.children();
         const siblingColumnLines = parentContentType.parentContentType.children();
-        if (siblings.length < 1 ) {
-            return;
-        }
-        if (siblings.length === 1 && siblingColumnLines.length === 1) {
-            const lastColumn = siblings[0];
-            const options = lastColumn.preview.getOptions();
-            options.getOption("remove").isDisabled(true);
-            return;
-        }
+        let totalColumnCount = 0;
+        siblingColumnLines.forEach((columnLine) => {
+            const columns = columnLine.children();
+            columns.forEach((column: ContentTypeCollectionInterface) => {
+                totalColumnCount++;
+            });
+        });
+
+        const isRemoveDisabled = totalColumnCount <= 1;
         siblingColumnLines.forEach((columnLine) => {
             const columns = columnLine.children();
             columns.forEach((column: ContentTypeCollectionInterface) => {
                 const removeOption = column.preview.getOptions().getOption("remove");
-                removeOption.isDisabled(false);
+                removeOption.isDisabled(isRemoveDisabled);
             });
         });
 
