@@ -30,6 +30,7 @@ import Resize, {
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
 import {
+    ContentTypeAfterRenderEventParamsInterface,
     ContentTypeDroppedCreateEventParamsInterface,
     ContentTypeRemovedEventParamsInterface,
 } from "../content-type-events.types";
@@ -132,12 +133,85 @@ export default class Preview extends PreviewCollection {
             }
         });
 
+        events.on(
+            `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
+            this.moveContentsToNewColumnGroup.bind(this),
+        );
+
+        events.on("column-group:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            if (args.contentType.id === this.contentType.id) {
+                if (!this.hasColumnLine(args.contentType)) {
+                    args.element.addClassName('no-column-line');
+                } else  {
+                    args.element.removeClassName('no-column-line');
+                    args.element.addClassName('with-column-line');
+                }
+            }
+        });
+
         this.contentType.children.subscribe(
             _.debounce(
                 this.removeIfEmpty.bind(this),
                 50,
             ),
         );
+    }
+
+    /**
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
+     * @private
+     */
+    private hasColumnLine(contentType: ContentTypeInterface | ContentTypeCollectionInterface): boolean {
+        const children = this.contentType.getChildren()();
+        let hasColumnLine = false;
+        if (children.length === 0) {
+            //new column group, so it has a column line
+            hasColumnLine = true;
+        }
+        children.forEach((child) => {
+            if (child.config.name === "column-line") {
+                hasColumnLine = true;
+            }
+        });
+        return hasColumnLine;
+    }
+
+
+    /**
+     * If the column group does not have a column line, move contents to a new column group with a column line
+     */
+    private moveContentsToNewColumnGroup(): void {
+        if (this.hasColumnLine(this.contentType)) {
+            // This column-group already has a column line. Don't need to add one.
+            return;
+        }
+        const indexToInsertNewColumnGroupAt = this.getCurrentIndexInParent()
+        createContentType(
+            Config.getContentTypeConfig("column-group"),
+            this.contentType.parentContentType,
+            this.contentType.stageId,
+        ).then((columnGroup: ContentTypeCollectionInterface ) => {
+            this.contentType.parentContentType.addChild(columnGroup, indexToInsertNewColumnGroupAt);
+            events.trigger(columnGroup.config.name + ":dropAfter", {id: columnGroup.id, columnGroup,
+            columnGroupWithoutColumnLine: this.contentType});
+            this.fireMountEvent(this.contentType, columnGroup);
+        });
+    }
+
+    /**
+     * @private return index of current content type in parent
+     */
+    private getCurrentIndexInParent(): number {
+        let parentContentType = this.contentType.parentContentType;
+        let currentIndex = 0;
+        for (let sibling of this.contentType.parentContentType.getChildren()()) {
+            if (sibling.id != this.contentType.id) {
+                currentIndex++;
+                continue;
+            }
+            break;
+        }
+        return currentIndex;
     }
 
     /**
@@ -169,11 +243,10 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column")) {
-            events.on("column-group:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            events.on("column-group:dropAfter", (args: any) => {
                 if (args.id === this.contentType.id) {
                     this.setDefaultGridSizeOnColumnGroup();
-                    this.addDefaultColumnLine();
-                   // this.createColumns();
+                    this.addDefaultColumnLine(args);
                 }
             });
         }
@@ -225,14 +298,28 @@ export default class Preview extends PreviewCollection {
         );
     }
 
-    public addDefaultColumnLine(): void {
+    public addDefaultColumnLine(args: any): void {
         createContentType(
             Config.getContentTypeConfig("column-line"),
             this.contentType,
             this.contentType.stageId,
-        ).then((columnLine) => {
+        ).then((columnLine: ContentTypeCollectionInterface ) => {
             this.contentType.addChild(columnLine, 0);
-            events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine});
+            if (args.columnGroupWithoutColumnLine == undefined) {
+                events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine});
+            } else {
+                // Move children of this column group without column line as descendant of new
+                // column group that has a column line
+                const children = args.columnGroupWithoutColumnLine.getChildren()() as ContentTypeCollectionInterface[];
+                let index = 0;
+                children.forEach((child) => {
+                    setTimeout(() =>
+                        {
+                            moveContentType(child, index++, columnLine);
+                        },
+                        250);
+                });
+            }
             this.fireMountEvent(this.contentType, columnLine);
         });
     }
@@ -518,7 +605,6 @@ export default class Preview extends PreviewCollection {
                 setDragColumn((columnInstance.contentType as ContentTypeCollectionInterface<ColumnPreview>));
                 this.dropPositions = calculateDropPositions(this.contentType);
                 this.startDragEvent = event;
-
                 events.trigger("column:dragStart", {
                     column: columnInstance,
                     stageId: this.contentType.stageId,
