@@ -103,10 +103,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       _events.on("column-group:renderAfter", function (args) {
         if (args.contentType.id === _this.contentType.id) {
           if (!_this.hasColumnLine(args.contentType)) {
-            args.element.addClassName('no-column-line');
+            args.element.classList.add('no-column-line');
           } else {
-            args.element.removeClassName('no-column-line');
-            args.element.addClassName('with-column-line');
+            args.element.classList.remove('no-column-line');
+            args.element.classList.add('with-column-line');
           }
         }
       });
