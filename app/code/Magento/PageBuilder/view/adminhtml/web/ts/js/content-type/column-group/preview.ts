@@ -141,10 +141,10 @@ export default class Preview extends PreviewCollection {
         events.on("column-group:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
             if (args.contentType.id === this.contentType.id) {
                 if (!this.hasColumnLine(args.contentType)) {
-                    args.element.addClassName('no-column-line');
+                    args.element.classList.add('no-column-line');
                 } else  {
-                    args.element.removeClassName('no-column-line');
-                    args.element.addClassName('with-column-line');
+                    args.element.classList.remove('no-column-line');
+                    args.element.classList.add('with-column-line');
                 }
             }
         });
