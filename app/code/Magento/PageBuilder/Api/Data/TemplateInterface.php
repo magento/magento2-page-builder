@@ -10,6 +10,8 @@ use Magento\Framework\Api\ExtensibleDataInterface;
 
 /**
  * Template Manager template interface
+ *
+ * @api
  */
 interface TemplateInterface extends ExtensibleDataInterface
 {

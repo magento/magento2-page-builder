@@ -95,6 +95,9 @@
             <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="selectTextEditor"/>
             <actionGroup ref="ConfirmChangeInputTypeModalActionGroup" stepKey="confirmChangeInputTypeModal"/>
             <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveAttribute"/>
+            <actionGroup ref="CliIndexerReindexActionGroup" stepKey="reindex">
+                <argument name="indices" value=""/>
+            </actionGroup>
             <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
                 <argument name="tags" value="full_page"/>
             </actionGroup>
