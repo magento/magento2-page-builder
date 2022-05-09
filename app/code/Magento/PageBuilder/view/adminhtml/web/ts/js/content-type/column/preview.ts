@@ -312,7 +312,7 @@ export default class Preview extends PreviewCollection {
         const siblings = parentContentType.children();
         const siblingColumnLines = parentContentType.parentContentType.children();
         let totalColumnCount = 0;
-        siblingColumnLines.forEach((columnLine) => {
+        siblingColumnLines.forEach((columnLine: ContentTypeCollectionInterface) => {
             const columns = columnLine.children();
             columns.forEach((column: ContentTypeCollectionInterface) => {
                 totalColumnCount++;
@@ -320,7 +320,7 @@ export default class Preview extends PreviewCollection {
         });
 
         const isRemoveDisabled = totalColumnCount <= 1;
-        siblingColumnLines.forEach((columnLine) => {
+        siblingColumnLines.forEach((columnLine: ContentTypeCollectionInterface) => {
             const columns = columnLine.children();
             columns.forEach((column: ContentTypeCollectionInterface) => {
                 const removeOption = column.preview.getOptions().getOption("remove");
