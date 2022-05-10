@@ -70,7 +70,7 @@ export default class Preview extends PreviewCollection {
     private resizeUtils: Resize;
     private linePositionCache: LinePositionCache;
     private columnLineDropPlaceholder: JQuery;
-    private resizeColumnInstance: ContentTypeCollectionInterface<Preview>;
+    private resizeColumnInstance: ContentTypeCollectionInterface<ColumnPreview>;
     private resizeColumnWidths: ColumnWidth[];
     private resizeMaxGhostWidth: MaxGhostWidth;
     private resizeHistory: ResizeHistory = {
@@ -337,7 +337,6 @@ export default class Preview extends PreviewCollection {
         const column = getDragColumn();
         const sourceLinePreview = column.parentContentType.preview as ColumnLinePreview;
         let modifyOldNeighbour: ContentTypeCollectionInterface<ColumnPreview>;
-
 
         // Determine which old neighbour we should modify
         const oldWidth = sourceLinePreview.getResizeUtils().getColumnWidth(column);
