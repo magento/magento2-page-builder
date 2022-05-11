@@ -1,13 +1,13 @@
 /*eslint-disable */
 /* jscs:disable */
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
@@ -103,10 +103,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       _events.on("column-group:renderAfter", function (args) {
         if (args.contentType.id === _this.contentType.id) {
           if (!_this.hasColumnLine(args.contentType)) {
-            args.element.classList.add('no-column-line');
+            args.element.classList.add("no-column-line");
           } else {
-            args.element.classList.remove('no-column-line');
-            args.element.classList.add('with-column-line');
+            args.element.classList.remove("no-column-line");
+            args.element.classList.add("with-column-line");
           }
         }
       });
@@ -116,81 +116,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       return _this;
     }
     /**
-     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
-     * @private
+     * Handle user editing an instance
      */
 
 
     var _proto = Preview.prototype;
-
-    _proto.hasColumnLine = function hasColumnLine(contentType) {
-      var children = this.contentType.getChildren()();
-      var hasColumnLine = false;
-
-      if (children.length === 0) {
-        //new column group, so it has a column line
-        hasColumnLine = true;
-      }
-
-      children.forEach(function (child) {
-        if (child.config.name === "column-line") {
-          hasColumnLine = true;
-        }
-      });
-      return hasColumnLine;
-    }
-    /**
-     * If the column group does not have a column line, move contents to a new column group with a column line
-     */
-    ;
-
-    _proto.moveContentsToNewColumnGroup = function moveContentsToNewColumnGroup() {
-      var _this2 = this;
-
-      if (this.hasColumnLine(this.contentType)) {
-        // This column-group already has a column line. Don't need to add one.
-        return;
-      }
-
-      var indexToInsertNewColumnGroupAt = this.getCurrentIndexInParent();
-      (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.contentType.parentContentType, this.contentType.stageId).then(function (columnGroup) {
-        _this2.contentType.parentContentType.addChild(columnGroup, indexToInsertNewColumnGroupAt);
-
-        _events.trigger(columnGroup.config.name + ":dropAfter", {
-          id: columnGroup.id,
-          columnGroup: columnGroup,
-          columnGroupWithoutColumnLine: _this2.contentType
-        });
-
-        _this2.fireMountEvent(_this2.contentType, columnGroup);
-      });
-    }
-    /**
-     * @private return index of current content type in parent
-     */
-    ;
-
-    _proto.getCurrentIndexInParent = function getCurrentIndexInParent() {
-      var parentContentType = this.contentType.parentContentType;
-      var currentIndex = 0;
-
-      for (var _iterator = _createForOfIteratorHelperLoose(this.contentType.parentContentType.getChildren()()), _step; !(_step = _iterator()).done;) {
-        var sibling = _step.value;
-
-        if (sibling.id != this.contentType.id) {
-          currentIndex++;
-          continue;
-        }
-
-        break;
-      }
-
-      return currentIndex;
-    }
-    /**
-     * Handle user editing an instance
-     */
-    ;
 
     _proto.onOptionEdit = function onOptionEdit() {
       var numCols = this.contentType.getChildren()().length; // count the number of non empty columns
@@ -215,23 +145,23 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this3 = this;
+      var _this2 = this;
 
       _previewCollection2.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column")) {
         _events.on("column-group:dropAfter", function (args) {
-          if (args.id === _this3.contentType.id) {
-            _this3.setDefaultGridSizeOnColumnGroup();
+          if (args.id === _this2.contentType.id) {
+            _this2.setDefaultGridSizeOnColumnGroup();
 
-            _this3.addDefaultColumnLine(args);
+            _this2.addDefaultColumnLine(args);
           }
         });
       }
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        if (_this3.contentType.dataStore.get("grid_size") !== _this3.contentType.dataStore.get("initial_grid_size")) {
-          _this3.updateGridSize();
+        if (_this2.contentType.dataStore.get("grid_size") !== _this2.contentType.dataStore.get("initial_grid_size")) {
+          _this2.updateGridSize();
         }
       });
     }
@@ -251,7 +181,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.createColumns = function createColumns() {
-      var _this4 = this;
+      var _this3 = this;
 
       var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
       var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
@@ -260,21 +190,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       }), (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), this.contentType, this.contentType.stageId, {
         width: 100 - parseFloat(col1Width) + "%"
       })]).then(function (columns) {
-        _this4.contentType.addChild(columns[0], 0);
+        _this3.contentType.addChild(columns[0], 0);
 
-        _this4.contentType.addChild(columns[1], 1);
+        _this3.contentType.addChild(columns[1], 1);
 
-        _this4.fireMountEvent(_this4.contentType, columns[0], columns[1]);
+        _this3.fireMountEvent(_this3.contentType, columns[0], columns[1]);
       });
     };
 
     _proto.addDefaultColumnLine = function addDefaultColumnLine(args) {
-      var _this5 = this;
+      var _this4 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("column-line"), this.contentType, this.contentType.stageId).then(function (columnLine) {
-        _this5.contentType.addChild(columnLine, 0);
+        _this4.contentType.addChild(columnLine, 0);
 
-        if (args.columnGroupWithoutColumnLine == undefined) {
+        if (args.columnGroupWithoutColumnLine === undefined) {
           _events.trigger(columnLine.config.name + ":dropAfter", {
             id: columnLine.id,
             columnLine: columnLine
@@ -291,7 +221,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           });
         }
 
-        _this5.fireMountEvent(_this5.contentType, columnLine);
+        _this4.fireMountEvent(_this4.contentType, columnLine);
       });
     }
     /**
@@ -379,11 +309,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.onNewColumnDrop = function onNewColumnDrop(dropPosition) {
-      var _this6 = this;
+      var _this5 = this;
 
       // Create our new column
       (0, _factory.createColumn)(this.contentType, this.resizeUtils.getSmallestColumnWidth(), dropPosition.insertIndex).then(function () {
-        var newWidth = _this6.resizeUtils.getAcceptedColumnWidth((_this6.resizeUtils.getColumnWidth(dropPosition.affectedColumn) - _this6.resizeUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
+        var newWidth = _this5.resizeUtils.getAcceptedColumnWidth((_this5.resizeUtils.getColumnWidth(dropPosition.affectedColumn) - _this5.resizeUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
 
 
         (0, _resize.updateColumnWidth)(dropPosition.affectedColumn, newWidth);
@@ -511,32 +441,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.registerResizeHandle = function registerResizeHandle(column, handle) {
-      var _this7 = this;
+      var _this6 = this;
 
       handle.off("mousedown touchstart");
       handle.on("mousedown touchstart", function (event) {
         event.preventDefault();
 
-        var groupPosition = _this7.getGroupPosition(_this7.groupElement);
+        var groupPosition = _this6.getGroupPosition(_this6.groupElement);
 
-        _this7.resizing(true);
+        _this6.resizing(true);
 
-        _this7.resizeColumnInstance = column;
-        _this7.resizeColumnWidths = _this7.resizeUtils.determineColumnWidths(_this7.resizeColumnInstance, groupPosition);
-        _this7.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this7.resizeColumnWidths); // Force the cursor to resizing
+        _this6.resizeColumnInstance = column;
+        _this6.resizeColumnWidths = _this6.resizeUtils.determineColumnWidths(_this6.resizeColumnInstance, groupPosition);
+        _this6.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this6.resizeColumnWidths); // Force the cursor to resizing
 
         (0, _jquery)("body").css("cursor", "col-resize"); // Reset the resize history
 
-        _this7.resizeHistory = {
+        _this6.resizeHistory = {
           left: [],
           right: []
         };
-        _this7.resizeLastPosition = null;
-        _this7.resizeMouseDown = true;
-        ++_this7.interactionLevel;
+        _this6.resizeLastPosition = null;
+        _this6.resizeMouseDown = true;
+        ++_this6.interactionLevel;
 
         _events.trigger("stage:interactionStart", {
-          stageId: _this7.contentType.stageId
+          stageId: _this6.contentType.stageId
         });
       });
     }
@@ -548,7 +478,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.bindDraggable = function bindDraggable(column) {
-      var _this8 = this;
+      var _this7 = this;
 
       column.preview.element.draggable({
         appendTo: "body",
@@ -573,44 +503,44 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
 
 
           (0, _registry2.setDragColumn)(columnInstance.contentType);
-          _this8.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this8.contentType);
-          _this8.startDragEvent = event;
+          _this7.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this7.contentType);
+          _this7.startDragEvent = event;
 
           _events.trigger("column:dragStart", {
             column: columnInstance,
-            stageId: _this8.contentType.stageId
+            stageId: _this7.contentType.stageId
           });
 
           _events.trigger("stage:interactionStart", {
-            stageId: _this8.contentType.stageId
+            stageId: _this7.contentType.stageId
           });
         },
         stop: function stop() {
           var draggedColumn = (0, _registry2.getDragColumn)();
 
-          if (_this8.movePosition && draggedColumn) {
+          if (_this7.movePosition && draggedColumn) {
             // Check if we're moving within the same group, even though this function will
             // only ever run on the group that bound the draggable event
-            if (draggedColumn.parentContentType === _this8.contentType) {
-              _this8.onColumnSort(draggedColumn, _this8.movePosition.insertIndex);
+            if (draggedColumn.parentContentType === _this7.contentType) {
+              _this7.onColumnSort(draggedColumn, _this7.movePosition.insertIndex);
 
-              _this8.movePosition = null;
+              _this7.movePosition = null;
             }
           }
 
           (0, _registry2.removeDragColumn)();
 
-          _this8.movePlaceholder.removeClass("active");
+          _this7.movePlaceholder.removeClass("active");
 
-          _this8.startDragEvent = null;
+          _this7.startDragEvent = null;
 
           _events.trigger("column:dragStop", {
             column: draggedColumn,
-            stageId: _this8.contentType.stageId
+            stageId: _this7.contentType.stageId
           });
 
           _events.trigger("stage:interactionStop", {
-            stageId: _this8.contentType.stageId
+            stageId: _this7.contentType.stageId
           });
         }
       });
@@ -621,7 +551,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.updateGridSize = function updateGridSize() {
-      var _this9 = this;
+      var _this8 = this;
 
       if (!_jquery.isNumeric(this.gridSizeInput())) {
         this.gridSizeError((0, _translate)("Please enter a valid number."));
@@ -639,7 +569,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
             this.gridChange(true);
 
             _underscore.delay(function () {
-              _this9.gridChange(false);
+              _this8.gridChange(false);
             }, 1000);
           } catch (e) {
             if (e instanceof _gridSize.GridSizeError) {
@@ -652,6 +582,76 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           this.gridSizeError(null);
         }
       }
+    }
+    /**
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
+     * @private
+     */
+    ;
+
+    _proto.hasColumnLine = function hasColumnLine(contentType) {
+      var children = this.contentType.getChildren()();
+      var hasColumnLine = false;
+
+      if (children.length === 0) {
+        // new column group, so it has a column line
+        hasColumnLine = true;
+      }
+
+      children.forEach(function (child) {
+        if (child.config.name === "column-line") {
+          hasColumnLine = true;
+        }
+      });
+      return hasColumnLine;
+    }
+    /**
+     * If the column group does not have a column line, move contents to a new column group with a column line
+     */
+    ;
+
+    _proto.moveContentsToNewColumnGroup = function moveContentsToNewColumnGroup() {
+      var _this9 = this;
+
+      if (this.hasColumnLine(this.contentType)) {
+        // This column-group already has a column line. Don't need to add one.
+        return;
+      }
+
+      var indexToInsertNewColumnGroupAt = this.getCurrentIndexInParent();
+      (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.contentType.parentContentType, this.contentType.stageId).then(function (columnGroup) {
+        _this9.contentType.parentContentType.addChild(columnGroup, indexToInsertNewColumnGroupAt);
+
+        _events.trigger(columnGroup.config.name + ":dropAfter", {
+          id: columnGroup.id,
+          columnGroup: columnGroup,
+          columnGroupWithoutColumnLine: _this9.contentType
+        });
+
+        _this9.fireMountEvent(_this9.contentType, columnGroup);
+      });
+    }
+    /**
+     * @private return index of current content type in parent
+     */
+    ;
+
+    _proto.getCurrentIndexInParent = function getCurrentIndexInParent() {
+      var parentContentType = this.contentType.parentContentType;
+      var currentIndex = 0;
+
+      for (var _iterator = _createForOfIteratorHelperLoose(this.contentType.parentContentType.getChildren()()), _step; !(_step = _iterator()).done;) {
+        var sibling = _step.value;
+
+        if (sibling.id !== this.contentType.id) {
+          currentIndex++;
+          continue;
+        }
+
+        break;
+      }
+
+      return currentIndex;
     }
     /**
      * Fire the mount event for content types
