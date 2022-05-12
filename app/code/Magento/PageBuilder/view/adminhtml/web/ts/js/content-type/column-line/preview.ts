@@ -340,16 +340,16 @@ export default class Preview extends PreviewCollection {
 
         // Determine which old neighbour we should modify
         const oldWidth = sourceLinePreview.getResizeUtils().getColumnWidth(column);
+        let direction = "+1";
 
         // Retrieve the adjacent column either +1 or -1
         if (getAdjacentColumn(column, "+1")) {
             modifyOldNeighbour = getAdjacentColumn(column, "+1");
         } else if (getAdjacentColumn(column, "-1")) {
+            direction = "-1";
             modifyOldNeighbour = getAdjacentColumn(column, "-1");
         }
 
-        // Set the column to it's smallest column width
-        updateColumnWidth(column, this.resizeUtils.getSmallestColumnWidth());
         // Modify the old neighbour
         let oldNeighbourWidth = 100;
         if (modifyOldNeighbour) {
@@ -378,19 +378,50 @@ export default class Preview extends PreviewCollection {
 
             });
         } else  {
-            // @todo evaluate if this else is needed
             moveContentType(column, movePosition.insertIndex, this.contentType);
             if (modifyOldNeighbour) {
                 updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
             }
-            const newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
+            let newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
                 (this.resizeUtils.getColumnWidth(movePosition.affectedColumn) -
-                    this.resizeUtils.getSmallestColumnWidth()).toString(),
+                    oldWidth).toString(),
             );
+            let newNeighbour = movePosition.affectedColumn;
+            let totalWidthAdjusted = 0;
+            let newNeighbourIndex = getColumnIndexInLine(newNeighbour);
+            updateColumnWidth(column, oldWidth);
+            while (true) {
+                //take width from all neighbours in one direction till the entire width is obtained
+                if (newNeighbourWidth <= 0) {
+                    newNeighbourWidth   = this.resizeUtils.getSmallestColumnWidth();
+                    let originalWidthOfNeighbour =  this.resizeUtils.getColumnWidth(newNeighbour);
+                    updateColumnWidth(newNeighbour, newNeighbourWidth);
+                    totalWidthAdjusted += (originalWidthOfNeighbour - newNeighbourWidth);
+                } else {
+                    updateColumnWidth(newNeighbour, newNeighbourWidth);
+                    break;
+                }
 
-            // Reduce the affected columns width by the smallest column width
-            updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
+                newNeighbour = getAdjacentColumn(newNeighbour, direction);
+                if (!newNeighbour) {
+                    updateColumnWidth(column, oldWidth - totalWidthAdjusted);
+                    break;
+                }
+                let neighbourExistingWidth = this.resizeUtils.getColumnWidth(newNeighbour);
+                newNeighbourWidth = neighbourExistingWidth - (oldWidth - totalWidthAdjusted);
+                if (newNeighbourWidth < 0.001) {
+                    newNeighbourWidth = 0;
+                }
 
+            }
+            let totalWidth = 0;
+            this.contentType.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                totalWidth += this.resizeUtils.getColumnWidth(column);
+            });
+            if (totalWidth > 100) {
+                //take extra width from newly moved column
+                updateColumnWidth(column, this.resizeUtils.getColumnWidth(column) - (totalWidth - 100));
+            }
         }
 
     }

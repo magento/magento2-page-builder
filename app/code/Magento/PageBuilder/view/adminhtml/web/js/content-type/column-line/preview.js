@@ -307,16 +307,16 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
       var sourceLinePreview = column.parentContentType.preview;
       var modifyOldNeighbour; // Determine which old neighbour we should modify
 
-      var oldWidth = sourceLinePreview.getResizeUtils().getColumnWidth(column); // Retrieve the adjacent column either +1 or -1
+      var oldWidth = sourceLinePreview.getResizeUtils().getColumnWidth(column);
+      var direction = "+1"; // Retrieve the adjacent column either +1 or -1
 
       if ((0, _resize.getAdjacentColumn)(column, "+1")) {
         modifyOldNeighbour = (0, _resize.getAdjacentColumn)(column, "+1");
       } else if ((0, _resize.getAdjacentColumn)(column, "-1")) {
+        direction = "-1";
         modifyOldNeighbour = (0, _resize.getAdjacentColumn)(column, "-1");
-      } // Set the column to it's smallest column width
+      } // Modify the old neighbour
 
-
-      (0, _resize.updateColumnWidth)(column, this.resizeUtils.getSmallestColumnWidth()); // Modify the old neighbour
 
       var oldNeighbourWidth = 100;
 
@@ -338,16 +338,54 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
           _this5.fireMountEvent(_this5.contentType, column);
         });
       } else {
-        // @todo evaluate if this else is needed
         (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.contentType);
 
         if (modifyOldNeighbour) {
           (0, _resize.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
         }
 
-        var newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - this.resizeUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
+        var newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((this.resizeUtils.getColumnWidth(movePosition.affectedColumn) - oldWidth).toString());
+        var newNeighbour = movePosition.affectedColumn;
+        var totalWidthAdjusted = 0;
+        var newNeighbourIndex = (0, _resize.getColumnIndexInLine)(newNeighbour);
+        (0, _resize.updateColumnWidth)(column, oldWidth);
 
-        (0, _resize.updateColumnWidth)(movePosition.affectedColumn, newNeighbourWidth);
+        while (true) {
+          //take width from all neighbours in one direction till the entire width is obtained
+          if (newNeighbourWidth <= 0) {
+            newNeighbourWidth = this.resizeUtils.getSmallestColumnWidth();
+            var originalWidthOfNeighbour = this.resizeUtils.getColumnWidth(newNeighbour);
+            (0, _resize.updateColumnWidth)(newNeighbour, newNeighbourWidth);
+            totalWidthAdjusted += originalWidthOfNeighbour - newNeighbourWidth;
+          } else {
+            (0, _resize.updateColumnWidth)(newNeighbour, newNeighbourWidth);
+            break;
+          }
+
+          newNeighbour = (0, _resize.getAdjacentColumn)(newNeighbour, direction);
+
+          if (!newNeighbour) {
+            (0, _resize.updateColumnWidth)(column, oldWidth - totalWidthAdjusted);
+            break;
+          }
+
+          var neighbourExistingWidth = this.resizeUtils.getColumnWidth(newNeighbour);
+          newNeighbourWidth = neighbourExistingWidth - (oldWidth - totalWidthAdjusted);
+
+          if (newNeighbourWidth < 0.001) {
+            newNeighbourWidth = 0;
+          }
+        }
+
+        var totalWidth = 0;
+        this.contentType.children().forEach(function (column) {
+          totalWidth += _this5.resizeUtils.getColumnWidth(column);
+        });
+
+        if (totalWidth > 100) {
+          //take extra width from newly moved column
+          (0, _resize.updateColumnWidth)(column, this.resizeUtils.getColumnWidth(column) - (totalWidth - 100));
+        }
       }
     }
     /**
