@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Component\Form\Element;
 
+use Magento\Catalog\Setup\CategorySetup;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\View\Asset\Repository;
@@ -17,7 +18,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\PageBuilder\Model\Stage\Config as Config;
-use Magento\Framework\View\ConfigInterface as ViewConfigInterface;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -45,11 +45,10 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
-     * @param Repository $assetRepo
+     * @param Repository|null $assetRepo
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function __construct(
         ContextInterface $context,
@@ -66,14 +65,14 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         Repository $assetRepo = null
     ) {
         $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
-        $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
+        $wysiwygConfigData = $config['wysiwygConfigData'] ?? [];
 
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
                 $attribute = $attrRepository->get($data['name']);
 
-                if ($attribute) {
+                if ($attribute && $attribute->getEntityTypeId() === CategorySetup::CATEGORY_ENTITY_TYPE_ID) {
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {

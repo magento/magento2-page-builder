@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ColumnResize3to2to1Test">
         <annotations>
             <features value="PageBuilder"/>
@@ -36,7 +35,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <!-- Grab grid guide width at 5 -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
@@ -44,7 +43,7 @@
         <!-- Change Columns To 3:2:1 Ratio -->
         <comment userInput="Change Columns To 3:2:1 Ratio" stepKey="context1"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>

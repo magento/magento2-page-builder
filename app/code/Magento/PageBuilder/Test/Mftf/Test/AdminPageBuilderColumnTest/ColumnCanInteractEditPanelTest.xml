@@ -32,8 +32,9 @@
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="dragColumnIntoStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnGroupIntoStage">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">

@@ -14,8 +14,11 @@
             <argument name="contentTypeXCoordinate" defaultValue="null" type="string"/>
             <argument name="contentTypeYCoordinate" defaultValue="null" type="string"/>
         </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <executeJS function="return ['row', 'column', 'column-group'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.name}}'.toUpperCase()+'&quot;)]' : ['tabs'].include('{{contentType.role}}') ? '//ul[@data-element=&quot;navigation&quot;]' : '';" stepKey="contentTypeLabelSelector" />
+        <executeJS function="return ['row'].include('{{contentType.role}}') ? '(//div[contains(@class, &quot;pagebuilder-content-type-affordance&quot;) and contains(concat(&quot; &quot;, @class, &quot; &quot;), &quot; pagebuilder-affordance-{{contentType.role}} &quot;)])[{{contentTypeIndex}}]' : '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(concat(&quot; &quot;, @class, &quot; &quot;), &quot; pagebuilder-{{contentType.role}} &quot;)])[{{contentTypeIndex}}]';" stepKey="contentTypeByIndexSelector" />
+        <waitForElementVisible time="20" selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver stepKey="moveMouseOverSearch" selector="{{PageBuilderPanel.searchPanel}}" />
+        <moveMouseOver selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>

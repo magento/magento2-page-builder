@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ValidateResizeHistoryTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -33,7 +32,7 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12"/>
@@ -41,9 +40,11 @@
             <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
             <actualResult type="variable">columnTwoWidthGrid12</actualResult>
         </assertEquals>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo13">
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo13">
             <argument name="gridSize" value="13"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid13"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid13"/>
         <!-- Validate first column grew larger -->
@@ -52,24 +53,23 @@
             <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
             <actualResult type="variable">columnOneWidthGrid13</actualResult>
         </assertGreaterThan>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="12" stepKey="resetGridSizeTo12"/>
-        <pressKey selector="{{ColumnOnBackend.gridSizeInput('1')}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
-        <waitForPageLoad stepKey="waitForUpdate"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="resetGridSizeTo12"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="pressKeyEnter"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="waitForUpdate"/>
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo12">
+            <argument name="gridSize" value="12"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForGridSize12"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
-        <!-- Validate columns are equal again -->
-        <comment userInput="Validate columns are equal again" stepKey="commentValidateColumnsEqual"/>
-        <assertEquals stepKey="assertColumnsAreEqualAgain">
-            <expectedResult type="variable">columnOneWidthGrid12Restored</expectedResult>
-            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
-        </assertEquals>
-        <assertEquals stepKey="assertColumn1IsRestored">
-            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
-            <actualResult type="variable">columnOneWidthGrid12Restored</actualResult>
-        </assertEquals>
-        <assertEquals stepKey="assertColumn2IsRestored">
-            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
-            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
-        </assertEquals>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="commentValidateColumnsEqual"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="assertColumnsAreEqualAgain"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="assertColumn1IsRestored"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="assertColumn2IsRestored"/>
+        <!-- Validate columns are now 7/12 and 5/12 - see PB-1194 -->
+        <comment userInput="Validate columns are restored back" stepKey="commentValidateColumnsRestored"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','7/12')}}" stepKey="validateLeftColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/12')}}" stepKey="validateRightColumnWidth"/>
     </test>
 </tests>

@@ -7,7 +7,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/pagebuilder-header-height"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen, _pagebuilderHeaderHeight) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/pagebuilder-header-height"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen, _delayUntil, _pagebuilderHeaderHeight) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -134,41 +134,51 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
       this.getFixedToolbarContainer().addClass("pagebuilder-toolbar-active");
 
-      _events2.trigger("stage:interactionStart"); // Wait for everything else to finish
+      _events2.trigger("stage:interactionStart");
+
+      var element = document.querySelector("#" + this.elementId);
+
+      if (!element) {
+        return;
+      } // Wait for everything else to finish
 
 
       _underscore.defer(function () {
-        var $inlineToolbar = _this2.getFixedToolbarContainer().find(".tox-tinymce-inline");
+        return (0, _delayUntil)(function () {
+          var $inlineToolbar = _this2.getFixedToolbarContainer().find(".tox-tinymce-inline");
 
-        var self = _this2;
-        $inlineToolbar.css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
+          var self = _this2;
+          $inlineToolbar.css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
 
-        _this2.invertInlineEditorToAccommodateOffscreenToolbar(); // Update toolbar when the height changes
+          _this2.invertInlineEditorToAccommodateOffscreenToolbar(); // Update toolbar when the height changes
 
 
-        _this2.toolbarHeight = $inlineToolbar.height();
+          _this2.toolbarHeight = $inlineToolbar.height();
 
-        if ($inlineToolbar.length) {
-          _this2.resizeObserver = new ResizeObserver(function (entries) {
-            for (var _iterator = _createForOfIteratorHelperLoose(entries), _step; !(_step = _iterator()).done;) {
-              var entry = _step.value;
+          if ($inlineToolbar.length) {
+            _this2.resizeObserver = new ResizeObserver(function (entries) {
+              for (var _iterator = _createForOfIteratorHelperLoose(entries), _step; !(_step = _iterator()).done;) {
+                var entry = _step.value;
 
-              if (entry.target === $inlineToolbar.get(0) && entry.target.clientHeight !== self.toolbarHeight) {
-                self.invertInlineEditorToAccommodateOffscreenToolbar();
-                self.toolbarHeight = entry.target.clientHeight;
+                if (entry.target === $inlineToolbar.get(0) && entry.target.clientHeight !== self.toolbarHeight) {
+                  self.invertInlineEditorToAccommodateOffscreenToolbar();
+                  self.toolbarHeight = entry.target.clientHeight;
+                }
               }
-            }
-          });
+            });
 
-          _this2.resizeObserver.observe($inlineToolbar.get(0));
-        }
+            _this2.resizeObserver.observe($inlineToolbar.get(0));
+          }
 
-        var dialogContainer = document.querySelector("#" + _this2.elementId + " ~ .tox-tinymce-aux");
+          var dialogContainer = document.querySelector("#" + _this2.elementId + " ~ .tox-tinymce-aux");
 
-        if (!!dialogContainer) {
-          dialogContainer.setAttribute("data-editor-aux", _this2.elementId);
-          document.body.appendChild(dialogContainer);
-        }
+          if (!!dialogContainer) {
+            dialogContainer.setAttribute("data-editor-aux", _this2.elementId);
+            document.body.appendChild(dialogContainer);
+          }
+        }, function () {
+          return element.classList.contains("mce-edit-focus");
+        }, 10);
       });
     }
     /**

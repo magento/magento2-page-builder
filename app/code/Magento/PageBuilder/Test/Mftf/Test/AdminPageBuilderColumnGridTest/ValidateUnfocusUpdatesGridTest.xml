@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ValidateUnfocusUpdatesGridTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -34,11 +33,15 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="openGridSizeForm"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="enterGridSize"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="closeGridFormByClicking"/>
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo8">
+            <argument name="gridSize" value="8"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
     </test>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="updateGridSizeInvalidInForm">
+        <arguments>
+            <argument name="gridSize" defaultValue="12" type="string"/>
+            <argument name="errorMessage"/>
+        </arguments>
+        <see userInput="Grid Size" selector="{{EditPanelForm.panelFieldLabel('general', 'grid_size', 'general', 'grid_size')}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{EditPanelForm.panelFieldControl('general', 'grid_size')}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
+        <click selector="{{EditPanelForm.panelFieldLabel('general', 'grid_size', 'general', 'grid_size')}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeError(errorMessage)}}" stepKey="verifyError"/>
+    </actionGroup>
+</actionGroups>

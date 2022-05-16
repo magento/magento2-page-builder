@@ -12,6 +12,7 @@ import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
 import checkStageFullScreen from "../utils/check-stage-full-screen";
+import delayUntil from "../utils/delay-until";
 import pageBuilderHeaderHeight from "../utils/pagebuilder-header-height";
 import WysiwygInterface from "./wysiwyg-interface";
 
@@ -171,36 +172,45 @@ export default class Wysiwyg implements WysiwygInterface {
 
         events.trigger("stage:interactionStart");
 
+        const element = document.querySelector(`#${this.elementId}`);
+        if (!element) {
+            return;
+        }
+
         // Wait for everything else to finish
-        _.defer(() => {
-            const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
-            const self = this;
+        _.defer(() => delayUntil(
+            () => {
+                const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
+                const self = this;
 
-            $inlineToolbar.css("min-width", this.config.adapter_config.minToolbarWidth + "px");
+                $inlineToolbar.css("min-width", this.config.adapter_config.minToolbarWidth + "px");
 
-            this.invertInlineEditorToAccommodateOffscreenToolbar();
+                this.invertInlineEditorToAccommodateOffscreenToolbar();
 
-            // Update toolbar when the height changes
-            this.toolbarHeight = $inlineToolbar.height();
-            if ($inlineToolbar.length) {
-                this.resizeObserver = new ResizeObserver((entries) => {
-                    for (const entry of entries) {
-                        if (entry.target === $inlineToolbar.get(0)
-                            && entry.target.clientHeight !== self.toolbarHeight
-                        ) {
-                            self.invertInlineEditorToAccommodateOffscreenToolbar();
-                            self.toolbarHeight = entry.target.clientHeight;
+                // Update toolbar when the height changes
+                this.toolbarHeight = $inlineToolbar.height();
+                if ($inlineToolbar.length) {
+                    this.resizeObserver = new ResizeObserver((entries) => {
+                        for (const entry of entries) {
+                            if (entry.target === $inlineToolbar.get(0)
+                                && entry.target.clientHeight !== self.toolbarHeight
+                            ) {
+                                self.invertInlineEditorToAccommodateOffscreenToolbar();
+                                self.toolbarHeight = entry.target.clientHeight;
+                            }
                         }
-                    }
-                });
-                this.resizeObserver.observe($inlineToolbar.get(0));
-            }
-            const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-tinymce-aux`);
-            if (!!dialogContainer) {
-                dialogContainer.setAttribute("data-editor-aux", this.elementId);
-                document.body.appendChild(dialogContainer);
-            }
-        });
+                    });
+                    this.resizeObserver.observe($inlineToolbar.get(0));
+                }
+                const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-tinymce-aux`);
+                if (!!dialogContainer) {
+                    dialogContainer.setAttribute("data-editor-aux", this.elementId);
+                    document.body.appendChild(dialogContainer);
+                }
+            },
+            () => element.classList.contains("mce-edit-focus"),
+            10,
+        ));
     }
 
     /**
