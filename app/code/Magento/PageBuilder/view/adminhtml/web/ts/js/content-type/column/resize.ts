@@ -207,6 +207,24 @@ export default class Resize {
     }
 
     /**
+     * Find a shrinkable column of a greater size outwards from the current column
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+     */
+    public findBiggerShrinkableColumn(
+        column: ContentTypeCollectionInterface<ColumnPreview>,
+    ): ContentTypeCollectionInterface<ColumnPreview> {
+        return outwardSearch(
+            column.parentContentType.children(),
+            getColumnIndexInGroup(column),
+            (neighbourColumn) => {
+                return this.getColumnWidth(neighbourColumn) > this.getColumnWidth(column);
+            },
+        );
+    }
+
+    /**
      * Calculate the ghost size for the resizing action
      *
      * @param {GroupPositionCache} groupPosition

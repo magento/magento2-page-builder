@@ -404,7 +404,7 @@ export default class Preview extends PreviewCollection {
 
                 newNeighbour = getAdjacentColumn(newNeighbour, direction);
                 if (!newNeighbour) {
-                    updateColumnWidth(column, oldWidth - totalWidthAdjusted);
+                    updateColumnWidth(column, totalWidthAdjusted);
                     break;
                 }
                 let neighbourExistingWidth = this.resizeUtils.getColumnWidth(newNeighbour);

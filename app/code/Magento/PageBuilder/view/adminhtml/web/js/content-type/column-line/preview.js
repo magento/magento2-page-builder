@@ -365,7 +365,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
           newNeighbour = (0, _resize.getAdjacentColumn)(newNeighbour, direction);
 
           if (!newNeighbour) {
-            (0, _resize.updateColumnWidth)(column, oldWidth - totalWidthAdjusted);
+            (0, _resize.updateColumnWidth)(column, totalWidthAdjusted);
             break;
           }
 

@@ -200,6 +200,21 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       });
     }
     /**
+     * Find a shrinkable column of a greater size outwards from the current column
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+     */
+    ;
+
+    _proto.findBiggerShrinkableColumn = function findBiggerShrinkableColumn(column) {
+      var _this4 = this;
+
+      return (0, _array.outwardSearch)(column.parentContentType.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
+        return _this4.getColumnWidth(neighbourColumn) > _this4.getColumnWidth(column);
+      });
+    }
+    /**
      * Calculate the ghost size for the resizing action
      *
      * @param {GroupPositionCache} groupPosition
@@ -338,13 +353,13 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     ;
 
     _proto.gridSupportsResize = function gridSupportsResize(column, newWidth, shrinkableColumn, shrinkableColumnNewWidth) {
-      var _this4 = this;
+      var _this5 = this;
 
       // Determine the total width of all other columns in the grid, excluding the ones we plan to resize
       var otherColumnsWidth = column.parentContentType.getChildren()().filter(function (gridColumn) {
         return gridColumn !== column && shrinkableColumn && gridColumn !== shrinkableColumn;
       }).map(function (otherColumn) {
-        return _this4.getColumnWidth(otherColumn);
+        return _this5.getColumnWidth(otherColumn);
       }).reduce(function (a, b) {
         return a + b;
       }, 0); // Determine if the new total grid size will be 100%, with 1 for margin of error with rounding

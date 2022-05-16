@@ -19,8 +19,8 @@ import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import ColumnLinePreview from "../column-line/preview";
 import {
-    ContentTypeDroppedCreateEventParamsInterface, ContentTypeDuplicateEventParamsInterface,
-    ContentTypeMountEventParamsInterface,
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
     ContentTypeMoveEventParamsInterface,
     ContentTypeRemovedEventParamsInterface,
 } from "../content-type-events.types";
@@ -226,7 +226,32 @@ export default class Preview extends PreviewCollection {
             return super.clone(contentType, autoAppend);
         }
 
-        // Attempt to split the current column into parts
+        let shrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
+        if (shrinkableColumn) {
+            const shrinkableClone = super.clone(contentType, autoAppend);
+            if (shrinkableClone) {
+                let newShrinkableColumnWidth = resizeUtils.getColumnWidth(shrinkableColumn)
+                    - resizeUtils.getColumnWidth(contentType);
+                let duplicateColumnWidth = resizeUtils.getColumnWidth(contentType);
+                shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
+                    updateColumnWidth(
+                        shrinkableColumn,
+                        resizeUtils.getAcceptedColumnWidth(
+                            (newShrinkableColumnWidth).toString(),
+                        ),
+                    );
+                    updateColumnWidth(
+                        duplicateContentType,
+                        duplicateColumnWidth
+                    );
+
+                    return duplicateContentType;
+                });
+            }
+            return;
+        }
+
+            // Attempt to split the current column into parts
         const splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
         if (splitTimes > 1) {
             const splitClone = super.clone(contentType, autoAppend);
