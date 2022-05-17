@@ -334,6 +334,10 @@ export default class Preview extends PreviewCollection {
             // can happen if the column is moved within the same column group
             return;
         }
+        if (parentContentType.config.name != "column-line") {
+            //for legacy content in preview mode before stage is initialized, the parent may not be a column line
+            return;
+        }
         const siblings = parentContentType.children();
         const siblingColumnLines = parentContentType.parentContentType.children();
         let totalColumnCount = 0;
