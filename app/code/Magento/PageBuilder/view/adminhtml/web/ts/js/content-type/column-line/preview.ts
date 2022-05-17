@@ -360,8 +360,7 @@ export default class Preview extends PreviewCollection {
         }
 
         // Move the content type
-        if (this.columnLineDropPlaceholder.hasClass("active")
-            || this.columnLineBottomDropPlaceholder.hasClass("active")) {
+        if (this.columnLineDropPlaceholder.hasClass("active")) {
             // if new column line placeholders are visible, add new column line and move column there
             createColumnLine(
                 this.contentType.parentContentType,
@@ -377,7 +376,23 @@ export default class Preview extends PreviewCollection {
                 this.fireMountEvent(this.contentType, column);
 
             });
-        } else  {
+        } else if (this.columnLineBottomDropPlaceholder.hasClass("active")) {
+            // if new column line placeholders are visible, add new column line and move column there
+            createColumnLine(
+                this.contentType.parentContentType,
+                this.resizeUtils.getSmallestColumnWidth(),
+                this.getNewColumnLineIndex(),
+            ).then((columnLine) => {
+
+                moveContentType(column, 0, columnLine);
+                updateColumnWidth(column, 100);
+                if (modifyOldNeighbour) {
+                    updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
+                }
+                this.fireMountEvent(this.contentType, column);
+
+            });
+        } else {
             moveContentType(column, movePosition.insertIndex, this.contentType);
             if (modifyOldNeighbour) {
                 updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
@@ -388,13 +403,12 @@ export default class Preview extends PreviewCollection {
             );
             let newNeighbour = movePosition.affectedColumn;
             let totalWidthAdjusted = 0;
-            let newNeighbourIndex = getColumnIndexInLine(newNeighbour);
             updateColumnWidth(column, oldWidth);
             while (true) {
-                //take width from all neighbours in one direction till the entire width is obtained
+                // take width from all neighbours in one direction till the entire width is obtained
                 if (newNeighbourWidth <= 0) {
-                    newNeighbourWidth   = this.resizeUtils.getSmallestColumnWidth();
-                    let originalWidthOfNeighbour =  this.resizeUtils.getColumnWidth(newNeighbour);
+                    newNeighbourWidth = this.resizeUtils.getSmallestColumnWidth();
+                    const originalWidthOfNeighbour = this.resizeUtils.getColumnWidth(newNeighbour);
                     updateColumnWidth(newNeighbour, newNeighbourWidth);
                     totalWidthAdjusted += (originalWidthOfNeighbour - newNeighbourWidth);
                 } else {
@@ -402,12 +416,17 @@ export default class Preview extends PreviewCollection {
                     break;
                 }
 
-                newNeighbour = getAdjacentColumn(newNeighbour, direction);
+                if (direction === "+1") {
+                    newNeighbour = getAdjacentColumn(newNeighbour, "+1");
+                } else {
+                    newNeighbour = getAdjacentColumn(newNeighbour, "-1");
+                }
+
                 if (!newNeighbour) {
                     updateColumnWidth(column, totalWidthAdjusted);
                     break;
                 }
-                let neighbourExistingWidth = this.resizeUtils.getColumnWidth(newNeighbour);
+                const neighbourExistingWidth = this.resizeUtils.getColumnWidth(newNeighbour);
                 newNeighbourWidth = neighbourExistingWidth - (oldWidth - totalWidthAdjusted);
                 if (newNeighbourWidth < 0.001) {
                     newNeighbourWidth = 0;
@@ -415,11 +434,11 @@ export default class Preview extends PreviewCollection {
 
             }
             let totalWidth = 0;
-            this.contentType.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
-                totalWidth += this.resizeUtils.getColumnWidth(column);
+            this.contentType.children().forEach((columnChild: ContentTypeCollectionInterface<ColumnPreview>) => {
+                totalWidth += this.resizeUtils.getColumnWidth(columnChild);
             });
             if (totalWidth > 100) {
-                //take extra width from newly moved column
+                // take extra width from newly moved column
                 updateColumnWidth(column, this.resizeUtils.getColumnWidth(column) - (totalWidth - 100));
             }
         }
@@ -784,8 +803,8 @@ export default class Preview extends PreviewCollection {
         // show column line drop placeholder only for top column line in a group
 
         return (this.dropOverElement || draggedColumn) &&
-            event.pageY > linePosition.top &&
-            event.pageY < linePosition.top + this.lineDropperHeight;
+            event.pageY > linePosition.top + 15 &&
+            event.pageY < linePosition.top + 15 + this.lineDropperHeight;
     }
 
     /**
@@ -801,8 +820,8 @@ export default class Preview extends PreviewCollection {
 
         const draggedColumn = getDragColumn();
         return (this.dropOverElement || draggedColumn) &&
-            (event.pageY < linePosition.top + this.element.outerHeight() &&
-                event.pageY > linePosition.top + this.element.outerHeight() - this.lineDropperHeight);
+            (event.pageY < linePosition.top + 15 + this.element.outerHeight() &&
+                event.pageY > linePosition.top + 15 +this.element.outerHeight() - this.lineDropperHeight);
 
     }
 
@@ -816,8 +835,8 @@ export default class Preview extends PreviewCollection {
 
         const draggedColumn = getDragColumn();
         return (this.dropOverElement || draggedColumn) &&
-        event.pageY > linePosition.top + this.lineDropperHeight &&
-        event.pageY < linePosition.top + linePosition.outerHeight - this.lineDropperHeight;
+        event.pageY > linePosition.top + 15 + this.lineDropperHeight &&
+        event.pageY < linePosition.top + 15 + linePosition.outerHeight - this.lineDropperHeight;
     }
     /**
      * Handle mouse move events on when dropping elements

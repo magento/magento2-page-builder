@@ -219,16 +219,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
       }
 
-      var shrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
+      var biggestShrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
 
-      if (shrinkableColumn) {
+      if (biggestShrinkableColumn) {
         var shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
 
         if (shrinkableClone) {
-          var newShrinkableColumnWidth = resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getColumnWidth(contentType);
+          var newShrinkableColumnWidth = resizeUtils.getColumnWidth(biggestShrinkableColumn) - resizeUtils.getColumnWidth(contentType);
           var duplicateColumnWidth = resizeUtils.getColumnWidth(contentType);
           shrinkableClone.then(function (duplicateContentType) {
-            (0, _resize.updateColumnWidth)(shrinkableColumn, resizeUtils.getAcceptedColumnWidth(newShrinkableColumnWidth.toString()));
+            (0, _resize.updateColumnWidth)(biggestShrinkableColumn, resizeUtils.getAcceptedColumnWidth(newShrinkableColumnWidth.toString()));
             (0, _resize.updateColumnWidth)(duplicateContentType, duplicateColumnWidth);
             return duplicateContentType;
           });
@@ -258,14 +258,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
-        var _shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
+        var shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
 
-        if (_shrinkableColumn) {
+        if (shrinkableColumn) {
           var _shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
 
           if (_shrinkableClone) {
             _shrinkableClone.then(function (duplicateContentType) {
-              (0, _resize.updateColumnWidth)(_shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(_shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
+              (0, _resize.updateColumnWidth)(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
               (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getSmallestColumnWidth());
               return duplicateContentType;
             });

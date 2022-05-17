@@ -226,23 +226,23 @@ export default class Preview extends PreviewCollection {
             return super.clone(contentType, autoAppend);
         }
 
-        let shrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
-        if (shrinkableColumn) {
+        const biggestShrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
+        if (biggestShrinkableColumn) {
             const shrinkableClone = super.clone(contentType, autoAppend);
             if (shrinkableClone) {
-                let newShrinkableColumnWidth = resizeUtils.getColumnWidth(shrinkableColumn)
+                const newShrinkableColumnWidth = resizeUtils.getColumnWidth(biggestShrinkableColumn)
                     - resizeUtils.getColumnWidth(contentType);
-                let duplicateColumnWidth = resizeUtils.getColumnWidth(contentType);
+                const duplicateColumnWidth = resizeUtils.getColumnWidth(contentType);
                 shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
                     updateColumnWidth(
-                        shrinkableColumn,
+                        biggestShrinkableColumn,
                         resizeUtils.getAcceptedColumnWidth(
                             (newShrinkableColumnWidth).toString(),
                         ),
                     );
                     updateColumnWidth(
                         duplicateContentType,
-                        duplicateColumnWidth
+                        duplicateColumnWidth,
                     );
 
                     return duplicateContentType;
