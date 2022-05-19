@@ -821,7 +821,7 @@ export default class Preview extends PreviewCollection {
         const draggedColumn = getDragColumn();
         return (this.dropOverElement || draggedColumn) &&
             (event.pageY < linePosition.top + 15 + this.element.outerHeight() &&
-                event.pageY > linePosition.top + 15 +this.element.outerHeight() - this.lineDropperHeight);
+                event.pageY > linePosition.top + 15 + this.element.outerHeight() - this.lineDropperHeight);
 
     }
 
