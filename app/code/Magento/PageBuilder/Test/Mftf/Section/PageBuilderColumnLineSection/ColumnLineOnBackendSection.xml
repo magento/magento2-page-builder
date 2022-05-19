@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ColumnLineOnBackend">
+        <element name="base" type="button" selector="(//div[@data-content-type=&quot;column-line&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="bottomDropPlaceHolder" type="button" selector="(//div[@data-content-type=&quot;column-line&quot;])[{{arg1}}]/div[contains(@class,&quot;bottom-dropper&quot;)]" parameterized="true"/>
+        <element name="topDropPlaceHolder" type="button" selector="(//div[@data-content-type=&quot;column-line&quot;])[{{arg1}}]/div[contains(@class,&quot;top-dropper&quot;)]" parameterized="true"/>
+        <element name="childColumnDisplayLabel" type="button" selector="(//div[@data-content-type=&quot;column-line&quot;])[{{arg1}}]//div[contains(@class, &quot;pagebuilder-content-type&quot;) and  contains(concat(' ', @class, ' '), ' pagebuilder-column ')][{{arg2}}]/descendant::div[contains(@class, &quot;pagebuilder-display-label&quot;)][contains(text(), &quot;{{arg3}}&quot;)]" parameterized="true"/>
+    </section>
+</sections>
