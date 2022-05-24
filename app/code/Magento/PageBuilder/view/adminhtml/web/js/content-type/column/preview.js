@@ -308,8 +308,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return;
       }
 
-      if (parentContentType.config.name != "column-line") {
-        //for legacy content in preview mode before stage is initialized, the parent may not be a column line
+      if (parentContentType.config.name !== "column-line") {
+        // for legacy content in preview mode before stage is initialized, the parent may not be a column line
         return;
       }
 
