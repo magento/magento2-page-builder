@@ -10,7 +10,8 @@ var config = {
             'jarallax': 'Magento_PageBuilder/js/resource/jarallax/jarallax',
             'jarallaxVideo': 'Magento_PageBuilder/js/resource/jarallax/jarallax-video',
             'Magento_PageBuilder/js/resource/vimeo/player': 'vimeo/player',
-            'Magento_PageBuilder/js/resource/vimeo/vimeo-wrapper': 'vimeo/vimeo-wrapper'
+            'Magento_PageBuilder/js/resource/vimeo/vimeo-wrapper': 'vimeo/vimeo-wrapper',
+            'jarallax-wrapper': 'Magento_PageBuilder/js/resource/jarallax/jarallax-wrapper'
         }
     },
     shim: {
@@ -18,7 +19,7 @@ var config = {
             deps: ['jquery']
         },
         'Magento_PageBuilder/js/resource/jarallax/jarallax-video': {
-            deps: ['jarallax', 'vimeoWrapper']
+            deps: ['jarallax-wrapper', 'vimeoWrapper']
         }
     }
 };
