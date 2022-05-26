@@ -17,6 +17,7 @@ import {
     MaxGhostWidth,
     ResizeHistory,
 } from "Magento_PageBuilder/js/content-type/column-group/preview";
+import ColumnGroupPreview from "Magento_PageBuilder/js/content-type/column-group/preview";
 import {
     getDragColumn,
     removeDragColumn,
@@ -27,7 +28,6 @@ import {
     InitElementEventParamsInterface,
 } from "Magento_PageBuilder/js/content-type/column/column-events.types";
 import ColumnPreview from "Magento_PageBuilder/js/content-type/column/preview";
-import ColumnGroupPreview from "Magento_PageBuilder/js/content-type/column-group/preview";
 import {
     ContentTypeDroppedCreateEventParamsInterface,
     ContentTypeRemovedEventParamsInterface,
@@ -127,7 +127,7 @@ export default class Preview extends PreviewCollection {
 
         const parentPreview = this.contentType.parentContentType.preview as ColumnGroupPreview;
         this.gridSizeArray(parentPreview.gridSizeArray());
-        parentPreview.gridSizeArray.subscribe((gridSize : Array<any>) => {
+        parentPreview.gridSizeArray.subscribe((gridSize: any[]) => {
             this.gridSizeArray(gridSize);
         });
 
