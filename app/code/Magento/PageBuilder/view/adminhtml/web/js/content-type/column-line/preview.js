@@ -40,6 +40,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
 
       _this = _previewCollection2.call(this, contentType, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
+      _this.gridSizeArray = _knockout.observableArray([]);
       _this.dropPositions = [];
       _this.resizeHistory = {
         left: [],
@@ -70,6 +71,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Ma
         if (args.columnGroup.id === _this.contentType.id) {
           _this.bindDraggable(args.column);
         }
+      });
+
+      var parentPreview = _this.contentType.parentContentType.preview;
+
+      _this.gridSizeArray(parentPreview.gridSizeArray());
+
+      parentPreview.gridSizeArray.subscribe(function (gridSize) {
+        _this.gridSizeArray(gridSize);
       });
 
       _this.contentType.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_assertThisInitialized(_this)), 50));

@@ -19,6 +19,28 @@
         height: 30px;
         z-index: 26;
     }
+    
+    &.resizing {
+        .pagebuilder-grid-size-indicator {
+            z-index: 105;
+        }
+
+        .resize-grid {
+            opacity: 1;
+            transition: .5s opacity;
+            visibility: visible;
+        }
+
+        .pagebuilder-options {
+            display: none;
+        }
+
+        .pagebuilder-content-type {
+            .pagebuilder-empty {
+                opacity: 0;
+            }
+        }
+    }
 
     > .element-children {
         display: flex;

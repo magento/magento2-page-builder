@@ -27,6 +27,7 @@ import {
     InitElementEventParamsInterface,
 } from "Magento_PageBuilder/js/content-type/column/column-events.types";
 import ColumnPreview from "Magento_PageBuilder/js/content-type/column/preview";
+import ColumnGroupPreview from "Magento_PageBuilder/js/content-type/column-group/preview";
 import {
     ContentTypeDroppedCreateEventParamsInterface,
     ContentTypeRemovedEventParamsInterface,
@@ -59,6 +60,7 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 export default class Preview extends PreviewCollection {
     public contentType: ContentTypeCollectionInterface<ColumnLinePreview>;
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
+    public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     public element: JQuery;
     private dropPlaceholder: JQuery;
     private movePlaceholder: any;
@@ -123,6 +125,12 @@ export default class Preview extends PreviewCollection {
             }
         });
 
+        const parentPreview = this.contentType.parentContentType.preview as ColumnGroupPreview;
+        this.gridSizeArray(parentPreview.gridSizeArray());
+        parentPreview.gridSizeArray.subscribe((gridSize : Array<any>) => {
+            this.gridSizeArray(gridSize);
+        });
+
         this.contentType.children.subscribe(
             _.debounce(
                 this.removeIfEmpty.bind(this),
@@ -149,6 +157,7 @@ export default class Preview extends PreviewCollection {
             // Does the events parent match the previews column group?
             if (args.columnLine.id === this.contentType.id) {
                 this.bindDraggable(args.column);
+
             }
         });
     }
