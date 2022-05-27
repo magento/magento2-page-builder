@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="column-line"
+          label="Column Line"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/column-line/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          sortOrder="10"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="column-group" policy="allow"/>
+        </parents>
+        <children default_policy="deny">
+            <child name="column" policy="allow"/>
+        </children>
+        <is_system>false</is_system>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Magento_PageBuilder/content-type/column-line/default/preview"
+                        master_template="Magento_PageBuilder/content-type/column-line/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="name" source="data-content-type"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="grid_size" source="data-grid-size"/>
+                        <static_style source="display" value="flex"/>
+                        <static_style source="width" value="100%"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>

@@ -8,8 +8,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   var Resize = /*#__PURE__*/function () {
     "use strict";
 
-    function Resize(columnGroup) {
+    function Resize(columnGroup, columnLine) {
       this.columnGroup = columnGroup;
+      this.columnLine = columnLine;
     }
     /**
      * Get the grid size for this columnGroup
@@ -81,7 +82,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       return this.getAcceptedColumnWidth(column.dataStore.get("width").toString());
     }
     /**
-     * Get the total width of all columns in the group
+     * Get the total width of all columns in the column line
      *
      * @returns {number}
      */
@@ -90,7 +91,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.getColumnsWidth = function getColumnsWidth() {
       var _this = this;
 
-      return this.getAcceptedColumnWidth(this.columnGroup.children().map(function (column) {
+      return this.getAcceptedColumnWidth(this.columnLine.children().map(function (column) {
         return _this.getColumnWidth(column);
       }).reduce(function (widthA, widthB) {
         return widthA + (widthB ? widthB : 0);
@@ -196,6 +197,21 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
       return (0, _array.outwardSearch)(column.parentContentType.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
         return _this3.getColumnWidth(neighbourColumn) > _this3.getSmallestColumnWidth();
+      });
+    }
+    /**
+     * Find a shrinkable column of a greater size outwards from the current column
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+     */
+    ;
+
+    _proto.findBiggerShrinkableColumn = function findBiggerShrinkableColumn(column) {
+      var _this4 = this;
+
+      return (0, _array.outwardSearch)(column.parentContentType.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
+        return _this4.getColumnWidth(neighbourColumn) > _this4.getColumnWidth(column);
       });
     }
     /**
@@ -337,13 +353,13 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     ;
 
     _proto.gridSupportsResize = function gridSupportsResize(column, newWidth, shrinkableColumn, shrinkableColumnNewWidth) {
-      var _this4 = this;
+      var _this5 = this;
 
       // Determine the total width of all other columns in the grid, excluding the ones we plan to resize
       var otherColumnsWidth = column.parentContentType.getChildren()().filter(function (gridColumn) {
         return gridColumn !== column && shrinkableColumn && gridColumn !== shrinkableColumn;
       }).map(function (otherColumn) {
-        return _this4.getColumnWidth(otherColumn);
+        return _this5.getColumnWidth(otherColumn);
       }).reduce(function (a, b) {
         return a + b;
       }, 0); // Determine if the new total grid size will be 100%, with 1 for margin of error with rounding
@@ -355,13 +371,24 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   }();
   /**
    * Retrieve the index of the column within it's group
-   *
+   * @deprecated use getColumnIndexInLine
    * @param {ContentTypeCollectionInterface<ColumnPreview>} column
    * @returns {number}
    */
 
 
   function getColumnIndexInGroup(column) {
+    return column.parentContentType.children().indexOf(column);
+  }
+  /**
+   * Retrieve the index of the column within it's column line
+   *
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @returns {number}
+   */
+
+
+  function getColumnIndexInLine(column) {
     return column.parentContentType.children().indexOf(column);
   }
   /**
@@ -443,6 +470,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
   return Object.assign(Resize, {
     getColumnIndexInGroup: getColumnIndexInGroup,
+    getColumnIndexInLine: getColumnIndexInLine,
     getAdjacentColumn: getAdjacentColumn,
     determineMaxGhostWidth: determineMaxGhostWidth,
     getRoundedColumnWidth: getRoundedColumnWidth,
