@@ -8,6 +8,9 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Plugin;
 
 use Magento\Catalog\Model\Product;
+use Magento\Framework\App\AreaList;
+use Magento\Framework\App\State;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Message\MessageInterface;
 
 /**
@@ -21,14 +24,23 @@ class DesignLoader
     private $designLoader;
 
     /**
-     * @var \Magento\Framework\Message\ManagerInterface
+     * @var ManagerInterface
      */
-    private $messageManager;
+    private ManagerInterface $messageManager;
 
     /**
-     * @var \Magento\Framework\App\State
+     * Application
+     *
+     * @var AreaList
      */
-    private $appState;
+    private AreaList $areaList;
+
+    /**
+     * Layout
+     *
+     * @var State
+     */
+    private State $appState;
 
     /**
      * @var \Magento\PageBuilder\Model\Stage\Preview
@@ -40,17 +52,20 @@ class DesignLoader
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param \Magento\Framework\App\State $appState
      * @param \Magento\PageBuilder\Model\Stage\Preview $preview
+     * @param AreaList $areaList
      */
     public function __construct(
         \Magento\Framework\View\DesignLoader $designLoader,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Magento\Framework\App\State $appState,
-        \Magento\PageBuilder\Model\Stage\Preview $preview
+        \Magento\PageBuilder\Model\Stage\Preview $preview,
+        AreaList $areaList,
     ) {
         $this->designLoader = $designLoader;
         $this->messageManager = $messageManager;
         $this->appState = $appState;
         $this->preview = $preview;
+        $this->areaList = $areaList;
     }
 
     /**
@@ -84,7 +99,8 @@ class DesignLoader
     public function loadDesignConfig()
     {
         try {
-            $this->designLoader->load();
+            $area = $this->areaList->getArea($this->appState->getAreaCode());
+            $area->load(\Magento\Framework\App\Area::PART_DESIGN);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             if ($e->getPrevious() instanceof \Magento\Framework\Config\Dom\ValidationException) {
                 /** @var MessageInterface $message */

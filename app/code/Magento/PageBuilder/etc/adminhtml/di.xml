@@ -9,6 +9,9 @@
     <preference for="Magento\PageBuilder\Api\TemplateRepositoryInterface" type="Magento\PageBuilder\Model\TemplateRepository"/>
     <preference for="Magento\PageBuilder\Api\Data\TemplateInterface" type="Magento\PageBuilder\Model\Template"/>
     <preference for="Magento\PageBuilder\Api\Data\TemplateSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <type name="Magento\Catalog\Block\Product\ImageFactory">
+        <plugin name="designLoader" type="Magento\PageBuilder\Plugin\DesignLoader" />
+    </type>
     <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCloseButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton">
         <arguments>
             <argument name="targetName" xsi:type="string">ns = pagebuilder_modal_form, index = modal</argument>
