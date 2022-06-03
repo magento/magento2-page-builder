@@ -19,28 +19,23 @@ use Magento\Framework\Message\MessageInterface;
 class DesignLoader
 {
     /**
-     * @var \Magento\Framework\View\DesignLoader
-     */
-    private $designLoader;
-
-    /**
      * @var ManagerInterface
      */
-    private ManagerInterface $messageManager;
+    private $messageManager;
 
     /**
      * Application
      *
      * @var AreaList
      */
-    private AreaList $areaList;
+    private $areaList;
 
     /**
      * Layout
      *
      * @var State
      */
-    private State $appState;
+    private $appState;
 
     /**
      * @var \Magento\PageBuilder\Model\Stage\Preview
@@ -48,20 +43,17 @@ class DesignLoader
     private $preview;
 
     /**
-     * @param \Magento\Framework\View\DesignLoader $designLoader
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param \Magento\Framework\App\State $appState
      * @param \Magento\PageBuilder\Model\Stage\Preview $preview
      * @param AreaList $areaList
      */
     public function __construct(
-        \Magento\Framework\View\DesignLoader $designLoader,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Magento\Framework\App\State $appState,
         \Magento\PageBuilder\Model\Stage\Preview $preview,
-        AreaList $areaList,
+        AreaList $areaList
     ) {
-        $this->designLoader = $designLoader;
         $this->messageManager = $messageManager;
         $this->appState = $appState;
         $this->preview = $preview;
