@@ -9,7 +9,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-line/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       _events.on("column:initializeAfter", function (args) {
-        _this2.resetRemoveOnLastColumn(args.columnGroup);
+        _this2.resetRemoveOnLastColumn(args.columnLine);
       });
 
       _events.on("column:dropAfter", function (args) {
@@ -123,7 +123,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("column:initializeAfter", {
         column: this.contentType,
         element: (0, _jquery)(element),
-        columnGroup: this.contentType.parentContentType
+        columnLine: this.contentType.parentContentType,
+        columnGroup: this.contentType.parentContentType.parentContentType
       });
 
       this.updateDisplayLabel();
@@ -158,7 +159,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("column:resizeHandleBindAfter", {
         column: this.contentType,
         handle: (0, _jquery)(handle),
-        columnGroup: this.contentType.parentContentType
+        columnLine: this.contentType.parentContentType
       });
     }
     /**
@@ -216,6 +217,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (contentType.config.name !== "column" || this.contentType.parentContentType.children().length === 0 || this.contentType.parentContentType.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
         return _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
+      }
+
+      var biggestShrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
+
+      if (biggestShrinkableColumn) {
+        var shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
+
+        if (shrinkableClone) {
+          var newShrinkableColumnWidth = resizeUtils.getColumnWidth(biggestShrinkableColumn) - resizeUtils.getColumnWidth(contentType);
+          var duplicateColumnWidth = resizeUtils.getColumnWidth(contentType);
+          shrinkableClone.then(function (duplicateContentType) {
+            (0, _resize.updateColumnWidth)(biggestShrinkableColumn, resizeUtils.getAcceptedColumnWidth(newShrinkableColumnWidth.toString()));
+            (0, _resize.updateColumnWidth)(duplicateContentType, duplicateColumnWidth);
+            return duplicateContentType;
+          });
+        }
+
+        return;
       } // Attempt to split the current column into parts
 
 
@@ -242,10 +261,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
 
         if (shrinkableColumn) {
-          var shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
+          var _shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
 
-          if (shrinkableClone) {
-            shrinkableClone.then(function (duplicateContentType) {
+          if (_shrinkableClone) {
+            _shrinkableClone.then(function (duplicateContentType) {
               (0, _resize.updateColumnWidth)(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
               (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getSmallestColumnWidth());
               return duplicateContentType;
@@ -268,7 +287,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.updateDisplayLabel = function updateDisplayLabel() {
       if (this.contentType.parentContentType.preview instanceof _preview) {
         var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-        var gridSize = this.contentType.parentContentType.preview.gridSize();
+        var grandParent = this.contentType.parentContentType.parentContentType;
+        var columnGroupPreview = grandParent.preview;
+        var gridSize = columnGroupPreview.gridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         var columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
         var columnNumber = columnIndex !== -1 ? columnIndex + 1 + " " : "";
@@ -287,22 +308,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return;
       }
 
+      if (parentContentType.config.name !== "column-line") {
+        // for legacy content in preview mode before stage is initialized, the parent may not be a column line
+        return;
+      }
+
       var siblings = parentContentType.children();
-
-      if (siblings.length < 1) {
-        return;
-      }
-
-      if (siblings.length === 1) {
-        var lastColumn = siblings[0];
-        var options = lastColumn.preview.getOptions();
-        options.getOption("remove").isDisabled(true);
-        return;
-      }
-
-      siblings.forEach(function (column) {
-        var removeOption = column.preview.getOptions().getOption("remove");
-        removeOption.isDisabled(false);
+      var siblingColumnLines = parentContentType.parentContentType.children();
+      var totalColumnCount = 0;
+      siblingColumnLines.forEach(function (columnLine) {
+        var columns = columnLine.children();
+        columns.forEach(function (column) {
+          totalColumnCount++;
+        });
+      });
+      var isRemoveDisabled = totalColumnCount <= 1;
+      siblingColumnLines.forEach(function (columnLine) {
+        var columns = columnLine.children();
+        columns.forEach(function (column) {
+          var removeOption = column.preview.getOptions().getOption("remove");
+          removeOption.isDisabled(isRemoveDisabled);
+        });
       });
     }
     /**

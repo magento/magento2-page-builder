@@ -22,11 +22,16 @@
 .pagebuilder-content-type {
     .pagebuilder-column-group {
         box-sizing: border-box;
-        position: relative;
         width: 100%;
 
+        &.no-column-line {
+            .element-children {
+                display: flex;
+            }
+        }
+
         .drop-placeholder {
-            background: rgba(142, 0, 6, .3);
+            background: @color-red-berry;
             bottom: 0;
             opacity: 0;
             position: absolute;
@@ -51,7 +56,7 @@
 
         .move-placeholder {
             animation: inner-pulsate 1s infinite ease-in-out;
-            background: rgba(142, 0, 6, .3);
+            background: @color-red-berry;
             bottom: 0;
             opacity: 0;
             position: absolute;
@@ -149,7 +154,6 @@
         }
 
         > .element-children {
-            display: flex;
             padding: 0;
             position: relative;
             width: 100%;
