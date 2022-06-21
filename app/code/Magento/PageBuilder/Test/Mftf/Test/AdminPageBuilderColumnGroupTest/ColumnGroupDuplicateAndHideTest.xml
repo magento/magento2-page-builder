@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnGroupDuplicateAndHideTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Columns"/>
+            <title value="[Columns] Verify that user can hide and duplicate Column Group"/>
+            <description value="A user should be able to duplicate and hide column groups"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="PB-1202"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-column-group"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderColumnGroupDesktopImage_PNG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteDesktopImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnGroupMobileImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnGroupMobileImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnOneDesktopImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnOneDesktopImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnsToRootContainer">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnGroup">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnGroupContentType.role,'1')}}" stepKey="waitForColumnGroupHideButton"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnGroupContentType.role,'1')}}" stepKey="waitForColumnGroupDuplicateButton"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(PageBuilderColumnGroupContentType.role)}}" stepKey="waitForColumnGroupRemoveButton"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnOne">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Check Column One and Column Two Options -->
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumnOneEditButton"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumnOneDuplicateButton"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(PageBuilderColumnContentType.role)}}" stepKey="waitForColumnOneRemoveButton"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="doNotSeeColumnOneHideButton"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnTwo">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnTwoEditButton"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnTwoDuplicateButton"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnTwoRemoveButton"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '2')}}" stepKey="doNotSeeColumnTwoHideButton"/>
+        <!-- Open Column Group Edit Panel -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForColumnGroup">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_345"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FC0009"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty2">
+            <argument name="property" value="PageBuilderColumnGroupMobileImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundSizePropertyContain">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBackgroundRepeatYes">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor3">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty50"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Open Column One Edit Panel -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterColumnAppearancePropertyColumn1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightPropertyColumn1">
+            <argument name="property" value="PageBuilderMinHeightProperty_100"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopPropertyColumn1">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1Column1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFileColumn1">
+            <argument name="property" value="PageBuilderColumnOneDesktopImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSizeColumn1">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPositionColumn1">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopRight"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachmentColumn1">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenterColumn1">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectColumn1Border7">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColorColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidthColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadiusColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClassesColumn1">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnOneClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMarginsColumn1">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique2345"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingColumn1">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique6789"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn1"/>
+        <!-- Duplicate Column Group -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        </actionGroup>
+        <!-- Remove Column Group One's Second Column -->
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <!-- Save CMS Page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Visit the storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Conduct Storefront validation-->
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumnGroups}}" userInput="2" stepKey="seeNumberOfColumnGroups2"/>
+        <seeNumberOfElements selector="{{ColumnGroupOnFrontend.columnsInGroup('1')}}" userInput="1" stepKey="seeNumberOfColumnsInGroupOne"/>
+        <seeNumberOfElements selector="{{ColumnGroupOnFrontend.columnsInGroup('2')}}" userInput="2" stepKey="seeNumberOfColumnsInGroupTwo"/>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefrontColumnGroupOne">
+            <argument name="page" value="ColumnGroupOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty50"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefrontColumnGroup2">
+            <argument name="page" value="ColumnGroupOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty50"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique5678"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Open CMS page in Admin -->
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPageAgain">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnOneAgain">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitSecondTimeColumnOneEditButton"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '1')}}" stepKey="waitSecondTimeForColumnOneDuplicateButton"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveDisabled(PageBuilderColumnContentType.role,'1')}}" stepKey="waitSecondForColumnOneRemoveButton"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="doNotSeeSecondTimeColumnOneHideButton"/>
+       <!-- Hide Column Group One -->
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnGroupSecondTime">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnGroupContentType.role, '1')}}"   stepKey="hideColumnGroupOne"/>
+        <!-- Save CMS Page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitSecondTimePageBuilderFullScreen"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageSecondTime"/>
+        <!-- Visit the storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateSecondTimeToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeSecondTimeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumnGroups}}" userInput="1" stepKey="seeSecondTimeNumberOfColumnGroups2"/>
+        <dontSeeElement selector="{{ColumnOnFrontend.columnGroup('1')}}" stepKey="dontSeeColumnGroupOne"/>
+        <seeNumberOfElements selector="{{ColumnGroupOnFrontend.columnsInGroup('2')}}" userInput="2" stepKey="seeSecondTimeNumberOfColumnsInGroupOne"/>
+        <!-- Open CMS page in Admin -->
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPageThirdTime">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageThirdTime"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondColumnGroup">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal"/>
+
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuForColumnGroupThirdTime">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(PageBuilderColumnGroupContentType.role, '1')}}"   stepKey="unHideColumnGroupOne"/>
+        <!-- Save CMS Page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitThirdTimePageBuilderFullScreen"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageThirdTime"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateThirdTimeToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="1" stepKey="seeThirdTimeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumnGroups}}" userInput="1" stepKey="seeThirdTimeNumberOfColumnGroups"/>
+        <seeNumberOfElements selector="{{ColumnGroupOnFrontend.columnsInGroup('1')}}" userInput="1" stepKey="seeThirdTimeNumberOfColumnsInGroupOne"/>
+    </test>
+</tests>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnGroupSettingsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Columns"/>
+            <title value="[Columns] Create Column Group with two columns and check in Admin Panel"/>
+            <description value="A user should be able to change settings for a column group and its columns"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="PB-1196"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-column-group"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderColumnGroupDesktopImage_PNG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteDesktopImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnGroupMobileImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnGroupMobileImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnOneDesktopImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnOneDesktopImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteColumnTwoMobileImageFromStorage">
+                <argument name="Image" value="PageBuilderColumnTwoMobileImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnsToRootContainer">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
+        <!-- Add Column Group values -->
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo6">
+            <argument name="gridSize" value="6"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_345"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FC0009"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty2">
+            <argument name="property" value="PageBuilderColumnGroupMobileImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundSizePropertyContain">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBackgroundRepeatYes">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor3">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty50"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1GridSize6"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2GridSize6"/>
+        <!-- Add Column 1 values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterColumnAppearancePropertyColumn1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightPropertyColumn1">
+            <argument name="property" value="PageBuilderMinHeightProperty_150"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopPropertyColumn1">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1Column1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFileColumn1">
+            <argument name="property" value="PageBuilderColumnOneDesktopImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSizeColumn1">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPositionColumn1">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopRight"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachmentColumn1">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenterColumn1">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectColumn1Border7">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColorColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidthColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadiusColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClassesColumn1">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnOneClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMarginsColumn1">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique2345"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingColumn1">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique6789"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn1"/>
+        <!-- Add Column 2 values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="addColumnAppearancePropertyColumn2">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightPropertyColumn2">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopPropertyColumn2">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1Column2">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty2Column2">
+            <argument name="property" value="PageBuilderColumnTwoMobileImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSizeColumn2">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPositionColumn2">
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachmentColumn2">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeatColumn2">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentRightColumn2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectColumn2Border9">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyRidge"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColorColumn2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidthColumn2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadiusColumn2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClassesColumn2">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnTwoClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMarginsColumn2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique3456"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingColumn2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique78910"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn2"/>
+        <!-- Save Page and Verify Expected Content Types on Stage -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Column Group Values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForColumnGroupToVerify">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupMinHeightProperty">
+            <argument name="property" value="PageBuilderColumnGroupMinHeightProperty_345"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FC0009"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeColumnGroupBackgroundImagePreview">
+            <argument name="property" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeColumnGroupBackgroundMobileImagePreview">
+            <argument name="property" value="PageBuilderColumnGroupMobileImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnGroupBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnGroupBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnGroupBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeColumnGroupBackgroundRepeatYes">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnGroupAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty50"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnGroupCssClass">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeColumnGroupMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeColumnGroupPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="afterSeeCloseColumnGroupSettings"/>
+        <!-- Verify Column 1 values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForColumnOneToVerify">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneColumnAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneMinHeightProperty_100">
+            <argument name="property" value="PageBuilderMinHeightProperty_150"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneVerticalAlignmentProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeColumnOneBackgroundImagePreview">
+            <argument name="property" value="PageBuilderColumnOneDesktopImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopRight"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeColumnOneBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnOneAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnOneCssClass">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnOneClass"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeColumnOneMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique2345"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel"  stepKey="seeColumnOnePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique6789"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="afterSeeCloseColumnOneSettings"/>
+        <!-- Verify Column 2 values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForColumnTwoToVerify">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoColumnAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoVerticalAlignmentProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeColumnTwoMobileBackgroundImagePreview">
+            <argument name="property" value="PageBuilderColumnTwoMobileImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeColumnTwoBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeColumnTwoAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyRidge"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeColumnTwoCssClass">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnTwoClass"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeColumnTwoMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique3456"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel"  stepKey="seeColumnTwoPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique78910"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="afterSeeCloseColumnTwoSettings"/>
+    </test>
+</tests>

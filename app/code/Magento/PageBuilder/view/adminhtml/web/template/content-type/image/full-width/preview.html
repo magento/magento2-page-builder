@@ -6,21 +6,26 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-image type-nested" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <render args="getOptions().template" />
+    <render args="getOptions().template" ></render>
     <figure attr="data.main.attributes" ko-style="Object.assign({}, data.main.style(), !data.desktop_image.attributes().src ? {} : {borderStyle: 'none'})" css="data.main.css">
         <scope args="getUploader().getUiComponent()">
-            <render />
+            <render ></render>
         </scope>
         <img if="getViewportImageData().attributes().src"
              attr="getViewportImageData().attributes"
              class="preview-image"
              css="getViewportImageData().css"
              ko-style="getViewportImageData().style" />
-        <figcaption if="data.caption.html()"
-                    attr="data.caption.attributes"
-                    css="data.caption.css"
-                    html="data.caption.html"
-                    ko-style="data.caption.style">
+        <!-- ko if: data.caption.html() -->
+        <!-- ko with: data.caption -->
+        <!-- ko with: {attributes: attributes, css: css, dataCaptionUnsanitizedHtml: html, style: style} -->
+        <figcaption attr="attributes"
+                    css="css"
+                    html="dataCaptionUnsanitizedHtml"
+                    ko-style="style">
         </figcaption>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- /ko -->
     </figure>
 </div>

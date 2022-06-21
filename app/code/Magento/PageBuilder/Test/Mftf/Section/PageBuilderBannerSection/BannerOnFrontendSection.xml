@@ -20,6 +20,8 @@
         <element name="overlay" type="button" selector="(//div[@data-content-type=&quot;banner&quot;])[{{bannerIndex}}]//div[@data-element=&quot;overlay&quot;]" parameterized="true"/>
         <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=banner] div.pagebuilder-overlay')[{{overlayIndex}} - 1]" parameterized="true"/>
         <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//a[@href='{{link}}']" parameterized="true"/>
+        <element name="bannerAltText" type="button" selector="(//div[@data-content-type='banner'])[{{arg1}}]//div[@aria-label='{{arg2}}']" parameterized="true"/>
+        <element name="bannerTitleAttribute" type="button" selector="(//div[@data-content-type='banner'])[{{arg1}}]//div[@title='{{arg2}}']" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
         <element name="appearancePosterCSS" type="button" selector="[data-content-type=banner][data-appearance=poster]"/>
@@ -58,7 +60,7 @@
         <element name="transparentOverlay" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true" deprecated="Styles are not inline"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]" parameterized="true"/>
-        <element name="videoBackgroundVideoElement" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//video" parameterized="true"/>
+        <element name="videoBackgroundVideoElement" type="text" selector="((//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//iframe)[last()]|((//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//video)[last()]" parameterized="true"/>
         <element name="videoBackgroundVideoUrl" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]" parameterized="true"/>
         <element name="videoBackgroundOverlayElement" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='video_overlay']" parameterized="true"/>
         <element name="videoBackgroundInfiniteLoop" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper' and @data-video-loop='{{infiniteLoopValue}}']" parameterized="true"/>

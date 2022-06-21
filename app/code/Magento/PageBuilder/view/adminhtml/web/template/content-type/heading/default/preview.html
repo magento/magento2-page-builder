@@ -6,10 +6,10 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-heading" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <render args="getOptions().template" />
+    <render args="getOptions().template" ></render>
     <div class="pagebuilder-toolbar-container" tabindex="0" event="{ focusin: toolbar.onFocusIn, focusout: toolbar.onFocusOut }">
         <with args="toolbar">
-            <render args="template" />
+            <render args="template" ></render>
         </with>
         <if args="data.main.heading_type() === 'h1'">
             <h1 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h1>

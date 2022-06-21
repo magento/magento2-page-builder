@@ -17,6 +17,7 @@
             <testCaseId value="MC-2857"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -53,7 +54,7 @@
         <!-- User sees the first tab to be active and focused. -->
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
         <assertElementContainsAttribute stepKey="assertTab1ContentFocused">
-			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" type="string">true</expectedResult>
+			<expectedResult selector="{{TabOnStage.tab('1')}}" attribute="aria-expanded" type="string">true</expectedResult>
         </assertElementContainsAttribute>
         <assertElementContainsAttribute stepKey="assertTab1ContentVisible">
 			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" type="string">false</expectedResult>

@@ -34,7 +34,8 @@
         <!-- Validate Layout menu section -->
         <comment userInput="Validate layout menu section" stepKey="commentValidatePanel1"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '1', 'Row')}}" stepKey="validateContentTypeRow"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '2', 'Column')}}" stepKey="validateContentTypeColumn"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="validateContentTypeColumn"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '2', 'Columns')}}" stepKey="validateContentTypeColumnGroup"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentTypeTabs"/>
         <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
         <!-- Validate Elements menu section -->

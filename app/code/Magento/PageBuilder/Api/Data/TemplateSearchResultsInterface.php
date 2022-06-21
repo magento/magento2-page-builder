@@ -8,6 +8,9 @@ namespace Magento\PageBuilder\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
+/**
+ * @api
+ */
 interface TemplateSearchResultsInterface extends SearchResultsInterface
 {
     /**

@@ -170,9 +170,9 @@ export default class Preview extends BasePreview {
                 this.displayLabel(response.data[labelKey] ? response.data[labelKey] : this.config.label);
                 let content: string = "";
                 if (response.data.content) {
-                    this.showBlockPreview(true);
                     content = this.processContent(response.data.content);
                     this.data.main.html(content);
+                    this.showBlockPreview(true);
                     this.initializeWidgets(this.element);
                 } else if (response.data.error) {
                     this.showBlockPreview(false);

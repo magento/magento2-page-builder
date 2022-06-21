@@ -203,7 +203,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
 
 
             (0, _jquery)(".content-type-container.ui-sortable").each(function () {
-              if ((0, _jquery)(this).data("sortable")) {
+              if ((0, _jquery)(this).data("ui-sortable")) {
                 (0, _jquery)(this).sortable("option", "tolerance", "intersect");
               }
             });
@@ -217,7 +217,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
         },
         stop: function stop() {
           (0, _jquery)(".content-type-container.ui-sortable").each(function () {
-            if ((0, _jquery)(this).data("sortable")) {
+            if ((0, _jquery)(this).data("ui-sortable")) {
               (0, _jquery)(this).sortable("option", "tolerance", "pointer");
             }
           });

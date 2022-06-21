@@ -12,9 +12,9 @@
         <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=tab-item]')[{{arg1}} - 1]" parameterized="true"/>
         <element name="elementChildren" type="text" selector="(//*[@role=&quot;tabpanel&quot;])[{{arg1}}]//div[contains(@class, &quot;pagebuilder-tab-item&quot;)]//div[contains(@class, &quot;tab-item-container&quot;)]" parameterized="true"/>
         <element name="all" type="button" selector=".pagebuilder-tab-item"/>
-        <element name="moveHandle" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]//li[@role='tab'][{{arg2}}]//span[@class='tab-drag-handle']" parameterized="true"/>
+        <element name="moveHandle" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]//li[@role='tab'][{{arg2}}]//span[contains(@class, 'tab-drag-handle')]" parameterized="true"/>
         <element name="tabHeader" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]" parameterized="true"/>
-        <element name="tabHeaderCSS" type="button" selector="[data-content-type=tabs] [role=presentation]"/>
+        <element name="tabHeaderCSS" type="button" selector="[data-content-type=tabs] .tab-header"/>
         <element name="tabHeaderEditableTitle" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]//span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="tabHeaderItem" type="button" selector="//ul[contains(@class, &quot;tabs-navigation&quot;)]/li[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderItemDefault" type="button" selector="//ul[contains(@class, 'tabs-navigation')]/li[contains(@style, 'border-radius: {{arg1}}px;') and contains(@style, 'border-width: 1px;')]" parameterized="true"/>
@@ -30,6 +30,7 @@
         <element name="optionsMenuButtonDisabled" type="button" selector="(//ul[contains(@class,'tabs-navigation')]//div[contains(@class,'pagebuilder-options-wrapper')])[{{arg1}}]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')]//div[@role='tabpanel'])[{{arg1}}][not(contains(@style,'border:'))]" parameterized="true"/>
         <element name="tabTitle" type="button" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
+        <element name="tab" type="button" selector="//*[@role='tab'][{{arg1}}]" parameterized="true"/>
         <element name="tabPanel" type="button" selector="//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
         <element name="tabContent" type="button" selector="//*[@role=&quot;tabpanel&quot;][{{arg1}}]//div[contains(@class, &quot;pagebuilder-tab-item&quot;)]" parameterized="true"/>
         <element name="cssClasses" type="button" selector="//*[@role=&quot;tabpanel&quot;][{{arg1}}]//div[contains(@class, &quot;pagebuilder-tab-item&quot;)][contains(@class,'{{arg2}}')]" parameterized="true"/>
