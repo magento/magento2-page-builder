@@ -17,6 +17,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <wait time="5" stepKey="waitToPreventVideoFlakiness"/>
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>

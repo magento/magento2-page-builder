@@ -18,8 +18,8 @@
         <!-- Hiding content type -->
         <comment userInput="Hiding content type" stepKey="commentHideContentType"/>
         <waitForElementVisible selector="{{section.base(targetIndex)}}" stepKey="waitForContentType"/>
-        <executeJS function="return ['row', 'column'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.role}}'.toUpperCase()+'&quot;)]' : '';" stepKey="contentTypeLabelSelector" />
-        <executeJS function="return ['row'].include('{{contentType.role}}') ? '(//div[contains(@class, &quot;pagebuilder-content-type-affordance&quot;) and contains(@class, &quot;pagebuilder-affordance-{{contentType.role}}&quot;)])[{{targetIndex}}]' : '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{contentType.role}}&quot;)])[{{targetIndex}}]';" stepKey="contentTypeByIndexSelector" />
+        <executeJS function="return ['row', 'column', 'column-group'].include('{{contentType.role}}') ? '//div[contains(@class, &quot;pagebuilder-display-label&quot;) and contains(.,&quot;'+'{{contentType.name}}'.toUpperCase()+'&quot;)]' : '';" stepKey="contentTypeLabelSelector" />
+        <executeJS function="return ['row'].include('{{contentType.role}}') ? '(//div[contains(@class, &quot;pagebuilder-content-type-affordance&quot;) and contains(concat(&quot; &quot;, @class, &quot; &quot;), &quot; pagebuilder-affordance-{{contentType.role}} &quot;)])[{{targetIndex}}]' : '(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(concat(&quot; &quot;, @class, &quot; &quot;), &quot; pagebuilder-{{contentType.role}} &quot;)])[{{targetIndex}}]';" stepKey="contentTypeByIndexSelector" />
         <moveMouseOver selector="{$contentTypeByIndexSelector}{$contentTypeLabelSelector}" x="{{x}}" y="{{y}}" stepKey="moveMouseOverContentType"/>
         <waitForPageLoad stepKey="waitForMouseOver"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible"/>

@@ -114,6 +114,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltText">
+            <argument name="property" value="PageBuilderBannerAltTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleAttribute">
+            <argument name="property" value="PageBuilderBannerTitleAttributeProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
@@ -121,6 +127,8 @@
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.bannerAltText('1', PageBuilderBannerAltTextProperty.value)}}" stepKey="seeBannerAltTextCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.bannerTitleAttribute('1', PageBuilderBannerTitleAttributeProperty.value)}}" stepKey="seeBannerTitleAttributeCMSBlockStage"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="BannerOnBackend"/>
             <argument name="padding" value="PageBuilderPaddingProperty0"/>
@@ -202,6 +210,8 @@
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.bannerAltText('1', PageBuilderBannerAltTextProperty.value)}}" stepKey="seeBannerAltTextCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.bannerTitleAttribute('1', PageBuilderBannerTitleAttributeProperty.value)}}" stepKey="seeBannerTitleAttributeCMSPageStage"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
             <argument name="page" value="BannerOnFrontend"/>
             <argument name="padding" value="PageBuilderPaddingProperty0"/>
@@ -255,6 +265,8 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.bannerAltText('1', PageBuilderBannerAltTextProperty.value)}}" stepKey="seeBannerAltTextCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.bannerTitleAttribute('1', PageBuilderBannerTitleAttributeProperty.value)}}" stepKey="seeBannerTitleAttributeCMSPageStorefront"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefront">
             <argument name="page" value="BannerOnFrontend"/>
             <argument name="padding" value="PageBuilderPaddingProperty0"/>
@@ -321,6 +333,8 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStoreFrontMobile">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.bannerAltText('1', PageBuilderBannerAltTextProperty.value)}}" stepKey="seeBannerAltTextCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.bannerTitleAttribute('1', PageBuilderBannerTitleAttributeProperty.value)}}" stepKey="seeBannerTitleAttributeCMSPageStorefrontMobile"/>
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
             <argument name="page" value="BannerOnFrontend"/>
             <argument name="padding" value="PageBuilderPaddingProperty0"/>

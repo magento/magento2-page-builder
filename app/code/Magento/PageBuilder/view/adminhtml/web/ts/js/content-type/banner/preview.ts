@@ -6,6 +6,7 @@
 import "jarallax";
 import "jarallaxVideo";
 import $ from "jquery";
+import "jquery/z-index";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";

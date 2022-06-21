@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragNewColumnToNewColumnLine">
+        <arguments>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="targetColumnLineSelector" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="lostFocus"/>
+        <waitForElementVisible time="30" selector="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderColumnGroupContentType.name)}}" stepKey="waitForPageBuilderColumnGroupContentTypeInPanel"/>
+        <dragAndDrop selector1="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderColumnGroupContentType.name)}}" selector2="{{targetColumnLineSelector}}"  x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropagainPageBuilderColumnGroupContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimationasdads" time="30"/>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex('column-line', contentTypeIndex)}}" stepKey="waitForPageBuilderColumnLineContentTypeInStage"/>
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+    </actionGroup>
+</actionGroups>
+

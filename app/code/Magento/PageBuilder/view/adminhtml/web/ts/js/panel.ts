@@ -206,7 +206,7 @@ export default class Panel {
                      * size this yields better results when dragging
                      */
                     $(".content-type-container.ui-sortable").each(function() {
-                        if ($(this).data("sortable")) {
+                        if ($(this).data("ui-sortable")) {
                             $(this).sortable("option", "tolerance", "intersect");
                         }
                     });
@@ -217,7 +217,7 @@ export default class Panel {
             },
             stop() {
                 $(".content-type-container.ui-sortable").each(function() {
-                    if ($(this).data("sortable")) {
+                    if ($(this).data("ui-sortable")) {
                         $(this).sortable("option", "tolerance", "pointer");
                     }
                 });
