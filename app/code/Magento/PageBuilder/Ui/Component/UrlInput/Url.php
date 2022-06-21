@@ -12,7 +12,7 @@ namespace Magento\PageBuilder\Ui\Component\UrlInput;
 class Url implements \Magento\Ui\Model\UrlInput\ConfigInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getConfig(): array
     {
