@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="BlockRenderColumnFullHeightAppearanceThroughBlockContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -56,7 +55,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <!-- Edit Column 1 -->
         <comment userInput="Edit Column 1" stepKey="commentEditColumn1"/>
@@ -124,6 +123,7 @@
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSBlockStage">
             <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
+            <argument name="acceptableOffset" value="3"/>
         </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="ColumnOnBackend"/>

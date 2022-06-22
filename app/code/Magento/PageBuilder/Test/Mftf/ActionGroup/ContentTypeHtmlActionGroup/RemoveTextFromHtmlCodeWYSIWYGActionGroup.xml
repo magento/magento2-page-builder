@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="removeTextFromHtmlCodeWYSIWYGActionGroup">
+        <arguments>
+            <argument name="selector" type="string"/>
+            <argument name="text" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElement time="2" selector="{{selector}}" stepKey="waitForElementVisible"/>
+        <!-- Workaround to remove UTF8 MB4 characters -->
+        <executeJS function="node=document.evaluate('{{selector}}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;node.value = node.value.replace(new RegExp('{{text}}'), ''); node.dispatchEvent(new Event('change')); return 1;" stepKey="testVariable"/>
+    </actionGroup>
+</actionGroups>

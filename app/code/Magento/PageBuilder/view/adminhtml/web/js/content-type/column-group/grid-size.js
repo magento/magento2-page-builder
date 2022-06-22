@@ -63,17 +63,19 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
 
   function resizeGrid(columnGroup, newGridSize, gridSizeHistory) {
-    if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
+    if (newGridSize === columnGroup.preview.getResizeUtils().getInitialGridSize()) {
       return;
     }
 
-    validateNewGridSize(columnGroup, newGridSize); // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+    validateNewGridSize(columnGroup, newGridSize);
+    columnGroup.getChildren()().forEach(function (columnLine, index) {
+      // if we have more columns than the new grid size allows, remove empty columns till the correct size
+      console.log(columnLine.getChildren()().length);
 
-    if (newGridSize < columnGroup.getChildren()().length) {
-      removeEmptyColumnsToFit(columnGroup, newGridSize);
-    }
-
-    columnGroup.preview.gridSize(newGridSize); // update column widths
+      if (newGridSize < columnLine.getChildren()().length) {
+        removeEmptyColumnsToFit(columnLine, newGridSize);
+      }
+    }); // update column widths
 
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
   }
@@ -94,20 +96,27 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     } // Validate that the operation will be successful
 
 
-    var numCols = columnGroup.getChildren()().length;
-    var currentGridSize = columnGroup.preview.getResizeUtils().getGridSize();
-
-    if (newGridSize < currentGridSize && numCols > newGridSize) {
+    var doThrowException = false;
+    columnGroup.getChildren()().forEach(function (columnLine, index) {
       var numEmptyColumns = 0;
-      columnGroup.getChildren()().forEach(function (column) {
-        if (column.getChildren()().length === 0) {
-          numEmptyColumns++;
-        }
-      });
+      var numCols = columnLine.getChildren()().length;
+      var currentGridSize = columnLine.preview.getResizeUtils().getInitialGridSize();
 
-      if (newGridSize < numCols - numEmptyColumns) {
-        throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
+      if (newGridSize < currentGridSize && numCols > newGridSize) {
+        columnLine.getChildren()().forEach(function (column) {
+          if (column.getChildren()().length === 0) {
+            numEmptyColumns++;
+          }
+        });
+
+        if (newGridSize < numCols - numEmptyColumns) {
+          doThrowException = true;
+        }
       }
+    });
+
+    if (doThrowException) {
+      throw new Error((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
     }
   }
   /**
@@ -118,8 +127,8 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
    */
 
 
-  function removeEmptyColumnsToFit(columnGroup, newGridSize) {
-    var columns = columnGroup.getChildren()();
+  function removeEmptyColumnsToFit(columnLine, newGridSize) {
+    var columns = columnLine.getChildren()();
     var numColumns = columns.length;
     var i;
 
@@ -127,7 +136,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
       var column = columns[i];
 
       if (newGridSize < numColumns && column.getChildren()().length === 0) {
-        columnGroup.removeChild(column);
+        columnLine.removeChild(column);
         numColumns--;
       }
     }
@@ -150,75 +159,84 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         (0, _resize.updateColumnWidth)(column, columnWidths[index]);
       });
       columnGroup.dataStore.set("grid_size", newGridSize);
+      columnGroup.dataStore.unset("initial_grid_size");
       return;
     }
 
-    var resizeUtils = columnGroup.preview.getResizeUtils();
-    var existingGridSize = resizeUtils.getGridSize();
+    var columnGroupResizeUtil = columnGroup.preview.getResizeUtils();
+    var existingGridSize = columnGroupResizeUtil.getInitialGridSize();
     var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
-    var totalNewWidths = 0;
-    var numColumns = columnGroup.getChildren()().length;
-    var remainingWidth = 0;
-    columnGroup.getChildren()().forEach(function (column, index) {
-      var existingWidth = resizeUtils.getColumnWidth(column);
-      var fractionColumnWidth = Math.round(existingWidth / (100 / existingGridSize));
-      /**
-       * Determine if the grid & column are directly compatible with the new defined grid size, this will directly
-       * convert fractions to their equivalent of the new grid size.
-       *
-       * For instance changing a 12 column grid with 2 x 6 / 12 columns to a 6 grid is fully compatible.
-       *
-       * Check the existing grid size and new grid size are divisible, verify the amount of columns will fit
-       * in the new grid size and finally check the calculation to convert the existing column width results in a
-       * positive integer.
-       */
-
-      if ((existingGridSize > newGridSize && existingGridSize % newGridSize === 0 || existingGridSize < newGridSize && newGridSize % existingGridSize === 0) && newGridSize % numColumns === 0 && newGridSize / existingGridSize * fractionColumnWidth % 1 === 0) {
-        // We don't need to modify the columns width as it's directly compatible, we will however increment the
-        // width counter as some other columns may not be compatible.
-        totalNewWidths += existingWidth;
-      } else {
-        var newWidth = (100 * Math.floor(existingWidth / 100 * newGridSize) / newGridSize).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0); // make sure the column is at least one grid size wide
-
-        if (parseFloat(newWidth) < parseFloat(minColWidth)) {
-          newWidth = minColWidth;
-        } // make sure we leave enough space for other columns
-
-
-        var maxAvailableWidth = 100 - totalNewWidths - (numColumns - index - 1) * parseFloat(minColWidth);
-
-        if (parseFloat(newWidth) > maxAvailableWidth) {
-          newWidth = maxAvailableWidth.toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
-        } // Calculate any width lost from the column, if a 5 / 12 is becoming a 2 / 6 then it's lost 1 / 12
-
-
-        remainingWidth += existingWidth - parseFloat(newWidth);
+    columnGroup.getChildren()().forEach(function (columnLine, columnLineIndex) {
+      var totalNewWidths = 0;
+      var remainingWidth = 0;
+      var numColumns = columnLine.getChildren()().length;
+      var resizeUtils = columnLine.preview.getResizeUtils();
+      columnLine.getChildren()().forEach(function (column, index) {
+        var existingWidth = resizeUtils.getColumnWidth(column);
+        var fractionColumnWidth = Math.round(existingWidth / (100 / existingGridSize));
         /**
-         * Determine if we have enough remaining width, and apply it to the current column, this results in a
-         * subsequent column always receiving any additional width from the previous column
+         * Determine if the grid & column are directly compatible with the new defined grid size, this will
+         * directly convert fractions to their equivalent of the new grid size.
+         *
+         * For instance changing a 12 column grid with 2 x 6 / 12 columns to a 6 grid is fully compatible.
+         *
+         * Check the existing grid size and new grid size are divisible, verify the amount of columns will fit
+         * in the new grid size and finally check the calculation to convert the existing column width results
+         * in a positive integer.
          */
 
-        if (resizeUtils.getSmallestColumnWidth(newGridSize) === resizeUtils.getAcceptedColumnWidth(remainingWidth.toString(), newGridSize)) {
-          var widthWithRemaining = resizeUtils.getAcceptedColumnWidth((parseFloat(newWidth) + remainingWidth).toString(), newGridSize);
+        if ((existingGridSize > newGridSize && existingGridSize % newGridSize === 0 || existingGridSize < newGridSize && newGridSize % existingGridSize === 0) && newGridSize % numColumns === 0 && newGridSize / existingGridSize * fractionColumnWidth % 1 === 0) {
+          // We don't need to modify the columns width as it's compatible, we will however increment the
+          // width counter as some other columns may not be compatible.
+          totalNewWidths += existingWidth;
+        } else {
+          var newWidth = (100 * Math.floor(existingWidth / 100 * newGridSize) / newGridSize).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0); // make sure the column is at least one grid size wide
 
-          if (widthWithRemaining > 0) {
-            newWidth = widthWithRemaining.toFixed(Math.round(100 / widthWithRemaining) !== 100 / widthWithRemaining ? 8 : 0);
-            remainingWidth = 0;
+          if (parseFloat(newWidth) < parseFloat(minColWidth)) {
+            newWidth = minColWidth;
+          } // make sure we leave enough space for other columns
+
+
+          var widthTaken = totalNewWidths + (numColumns - index - 1) * parseFloat(minColWidth);
+          var maxAvailableWidth = 100 - totalNewWidths;
+
+          if (parseFloat(newWidth) > maxAvailableWidth) {
+            var gridWidth = Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0;
+            newWidth = maxAvailableWidth.toFixed(gridWidth);
+          } // Calculate any width lost from the column, if a 5 / 12 is becoming a 2 / 6 then it's lost 1 / 12
+
+
+          remainingWidth += existingWidth - parseFloat(newWidth);
+          /**
+           * Determine if we have enough remaining width, and apply it to the current column, this results in
+           * a subsequent column always receiving any additional width from the previous column
+           */
+
+          if (resizeUtils.getSmallestColumnWidth(newGridSize) === resizeUtils.getAcceptedColumnWidth(remainingWidth.toString(), newGridSize)) {
+            var widthWithRemaining = resizeUtils.getAcceptedColumnWidth((parseFloat(newWidth) + remainingWidth).toString(), newGridSize);
+
+            if (widthWithRemaining > 0) {
+              newWidth = widthWithRemaining.toFixed(Math.round(100 / widthWithRemaining) !== 100 / widthWithRemaining ? 8 : 0);
+              remainingWidth = 0;
+            }
           }
+
+          totalNewWidths += parseFloat(newWidth);
+          (0, _resize.updateColumnWidth)(column, parseFloat(newWidth));
         }
 
-        totalNewWidths += parseFloat(newWidth);
-        (0, _resize.updateColumnWidth)(column, parseFloat(newWidth));
+        column.preview.updateDisplayLabel();
+      });
+    });
+    columnGroup.dataStore.set("grid_size", newGridSize);
+    columnGroup.dataStore.unset("initial_grid_size");
+    columnGroup.getChildren()().forEach(function (columnLine, index) {
+      var resizeUtils = columnLine.preview.getResizeUtils();
+
+      if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+        applyLeftoverColumnsInColumnLine(columnLine, newGridSize);
       }
-
-      column.preview.updateDisplayLabel();
-    }); // persist new grid size so upcoming calls to get column widths are calculated correctly
-
-    columnGroup.dataStore.set("grid_size", newGridSize); // apply leftover columns if the new grid size did not distribute evenly into existing columns
-
-    if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-      applyLeftoverColumns(columnGroup, newGridSize);
-    }
+    });
   }
   /**
    * Make sure the full grid size is distributed across the columns
@@ -235,6 +253,29 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
     for (var _iterator = _createForOfIteratorHelperLoose(columnGroup.getChildren()()), _step; !(_step = _iterator()).done;) {
       column = _step.value;
+
+      if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+        (0, _resize.updateColumnWidth)(column, parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth));
+      } else {
+        break;
+      }
+    }
+  }
+  /**
+   * Make sure the full grid size is distributed across the columns
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+   * @param {number} newGridSize
+   */
+
+
+  function applyLeftoverColumnsInColumnLine(columnLine, newGridSize) {
+    var resizeUtils = columnLine.preview.getResizeUtils();
+    var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
+    var column;
+
+    for (var _iterator2 = _createForOfIteratorHelperLoose(columnLine.getChildren()()), _step2; !(_step2 = _iterator2()).done;) {
+      column = _step2.value;
 
       if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
         (0, _resize.updateColumnWidth)(column, parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth));

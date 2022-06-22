@@ -92,7 +92,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
             ->load();
 
         if ($blocks->count() === 0) {
-            $result['error'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
+            $result['error'] = sprintf(__('Block with ID: %s doesn\'t exist')->render(), $params['block_id']);
 
             return $result;
         }

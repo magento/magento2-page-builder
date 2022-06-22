@@ -9,6 +9,8 @@ namespace Magento\PageBuilder\Model\Dom\Adapter;
 
 /**
  * Interface for StringMap wrappers
+ *
+ * @api
  */
 interface StringMapInterface
 {

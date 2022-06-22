@@ -6,7 +6,8 @@
 define([
     'jquery',
     'jquery-ui-modules/widget',
-    'Magento_Ui/js/modal/alert'
+    'Magento_Ui/js/modal/alert',
+    'jquery/z-index'
 ], function ($) {
     'use strict';
 

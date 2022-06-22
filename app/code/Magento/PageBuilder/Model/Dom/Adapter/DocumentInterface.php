@@ -12,6 +12,8 @@ use RuntimeException;
 
 /**
  * Interface for Document wrappers
+ *
+ * @api
  */
 interface DocumentInterface
 {

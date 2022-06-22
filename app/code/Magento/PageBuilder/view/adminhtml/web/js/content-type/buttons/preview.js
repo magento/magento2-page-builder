@@ -37,7 +37,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.contentType.children.subscribe(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
-        if (!sortableElement.data("sortable")) {
+        if (!sortableElement.data("ui-sortable")) {
           return;
         }
 

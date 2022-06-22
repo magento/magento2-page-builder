@@ -107,7 +107,7 @@ function convertVariablesToHtmlPreview(content: string) {
 function convertWidgetsToHtmlPreview(content: string) {
     const config = Config.getConfig("tinymce").widgets;
 
-    return content.replace(/\{\{widget(.*?)\}\}/ig, (match, widgetBody) => {
+    return content.replace(/\{\{widget([\S\s]*?)\}\}/ig, (match, widgetBody) => {
         const attributes = parseAttributesString(widgetBody);
         let imageSrc;
 
@@ -431,7 +431,7 @@ function normalizeTableCellSelection(range: Range): Range {
  * @returns {string}
  */
 export function escapeDoubleQuoteWithinWidgetDirective(content: string): string {
-    return content.replace(/\{\{widget.*?\}\}/ig,  (match: string) => {
+    return content.replace(/\{\{widget[\S\s]*?\}\}/ig,  (match: string) => {
         return match.replace(/&quot;/g, "\\\"");
     });
 }
@@ -443,7 +443,7 @@ export function escapeDoubleQuoteWithinWidgetDirective(content: string): string 
  * @returns {string}
  */
 export function unescapeDoubleQuoteWithinWidgetDirective(content: string): string {
-    return content.replace(/\{\{widget.*?\}\}/ig,  (match: string) => {
+    return content.replace(/\{\{widget[\S\s]*?\}\}/ig,  (match: string) => {
         return match.replace(/\\+"/g, "&quot;");
     });
 }
