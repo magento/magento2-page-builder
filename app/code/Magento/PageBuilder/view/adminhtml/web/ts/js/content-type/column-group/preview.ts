@@ -6,19 +6,22 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import HideShowOption from "Magento_PageBuilder/js/content-type-menu/hide-show-option";
+import {OptionsInterface} from "Magento_PageBuilder/js/content-type-menu/option.types";
+import ContentTypeInterface from "Magento_PageBuilder/js/content-type.types";
+import ColumnLinePreview from "Magento_PageBuilder/js/content-type/column-line/preview";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";
+import createContentType from "../../content-type-factory";
 import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
-import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
-import pageBuilderHeaderHeight from "../../utils/pagebuilder-header-height";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
@@ -26,12 +29,19 @@ import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
-import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
+import {
+    ContentTypeAfterRenderEventParamsInterface,
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import {calculateDropPositions, DropPosition} from "./drag-and-drop";
-import {createColumn} from "./factory";
-import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
+import {
+    calculateDropPositions,
+    DropPosition,
+} from "./drag-and-drop";
+import {createColumn, createColumnLine} from "./factory";
+import {getDefaultGridSize, getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 
 /**
@@ -116,17 +126,26 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        // Listen for resizing events from child columns
-        events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
-            // Does the events content type match the previews column group?
-            if (args.columnGroup.id === this.contentType.id) {
-                this.registerResizeHandle(args.column, args.handle);
-            }
-        });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
             // Does the events parent match the previews column group?
             if (args.columnGroup.id === this.contentType.id) {
                 this.bindDraggable(args.column);
+            }
+        });
+
+        events.on(
+            `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
+            this.moveContentsToNewColumnGroup.bind(this),
+        );
+
+        events.on("column-group:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            if (args.contentType.id === this.contentType.id) {
+                if (!this.hasColumnLine(args.contentType)) {
+                    args.element.classList.add("no-column-line");
+                } else  {
+                    args.element.classList.remove("no-column-line");
+                    args.element.classList.add("with-column-line");
+                }
             }
         });
 
@@ -136,6 +155,182 @@ export default class Preview extends PreviewCollection {
                 50,
             ),
         );
+    }
+
+    /**
+     * Handle user editing an instance
+     */
+    public onOptionEdit(): void {
+        const numCols = this.contentType.getChildren()().length;
+        // count the number of non empty columns
+        let numEmptyColumns = 0;
+        this.contentType.getChildren()().forEach(
+            (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                if (column.getChildren()().length === 0) {
+                    numEmptyColumns++;
+                }
+            });
+
+        const appearance = this.contentType.dataStore.get("appearance") ? this.contentType.dataStore.get("appearance") : "default";
+        this.contentType.dataStore.set("appearance", appearance);
+        this.contentType.dataStore.set("non_empty_column_count", this.getNonEmptyColumnCount());
+        this.contentType.dataStore.set("max_grid_size", getMaxGridSize());
+        this.contentType.dataStore.set("initial_grid_size", this.contentType.dataStore.get("grid_size"));
+        super.openEdit();
+    }
+
+    /**
+     * Bind events
+     */
+    public bindEvents() {
+        super.bindEvents();
+
+        if (Config.getContentTypeConfig("column")) {
+            events.on("column-group:dropAfter", (args: any) => {
+                if (args.id === this.contentType.id) {
+                    this.setDefaultGridSizeOnColumnGroup();
+                    this.addDefaultColumnLine(args);
+                }
+            });
+        }
+
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            if (this.contentType.dataStore.get("grid_size") !== this.contentType.dataStore.get("initial_grid_size")) {
+                this.updateGridSize();
+            }
+        });
+    }
+
+    /**
+     * Set default grid size on current column group
+     */
+    public setDefaultGridSizeOnColumnGroup(): void {
+        this.contentType.dataStore.set("grid_size", getDefaultGridSize());
+    }
+
+    /**
+     * Add Columns to the current Column Group
+     *
+     * @returns {Promise<ContentTypeCollectionInterface>}
+     */
+    public createColumns(): void {
+        const defaultGridSize = getDefaultGridSize();
+        const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
+            Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,
+        );
+
+        Promise.all([
+            createContentType(
+                Config.getContentTypeConfig("column"),
+                this.contentType,
+                this.contentType.stageId,
+                {width: col1Width + "%"},
+            ),
+            createContentType(
+                Config.getContentTypeConfig("column"),
+                this.contentType,
+                this.contentType.stageId,
+                {width: (100 - parseFloat(col1Width)) + "%"},
+            ),
+        ]).then(
+            (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
+                this.contentType.addChild(columns[0], 0);
+                this.contentType.addChild(columns[1], 1);
+                this.fireMountEvent(this.contentType, columns[0], columns[1]);
+            },
+        );
+    }
+
+    public addDefaultColumnLine(args: any): void {
+        createContentType(
+            Config.getContentTypeConfig("column-line"),
+            this.contentType,
+            this.contentType.stageId,
+        ).then((columnLine: ContentTypeCollectionInterface ) => {
+            this.contentType.addChild(columnLine, 0);
+            if (args.columnGroupWithoutColumnLine === undefined) {
+                events.trigger(columnLine.config.name + ":dropAfter", {id: columnLine.id, columnLine});
+            } else {
+                // Move children of this column group without column line as descendant of new
+                // column group that has a column line
+                const children = args.columnGroupWithoutColumnLine.getChildren()() as ContentTypeCollectionInterface[];
+                let index = 0;
+                children.forEach((child) => {
+                    setTimeout(() =>
+                        {
+                            moveContentType(child, index++, columnLine);
+                        },
+                        250);
+                });
+            }
+            this.fireMountEvent(this.contentType, columnLine);
+        });
+    }
+
+    /**
+     * Use the conditional remove to disable the option when the content type has a single child
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
+    }
+
+    /**
+     * Return selected element styles
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyle(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return styleProperties.reduce((obj, key) => ({ ...obj, [key]: stylesObject[key] }), {});
+    }
+
+    /**
+     * Return element styles without selected
+     *
+     * @param element
+     * @param styleProperties
+     */
+    public getStyleWithout(element: {[key: string]: any}, styleProperties: string[]) {
+        const stylesObject = element.style();
+
+        return Object.keys(stylesObject)
+            .filter((key) => !styleProperties.includes(key))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: stylesObject[key],
+                };
+            }, {});
+    }
+
+    /**
+     * Get background image url base on the viewport.
+     *
+     * @returns {string}
+     */
+    public getBackgroundImage(): string {
+        const mobileImage = (this.contentType.dataStore.get("mobile_image") as any[]);
+        const desktopImage = (this.contentType.dataStore.get("background_image") as any[]);
+        const backgroundImage = this.viewport() === "mobile" && mobileImage.length ?
+            mobileImage :
+            desktopImage;
+
+        return backgroundImage.length ? `url("${backgroundImage[0].url}")` : "none";
     }
 
     /**
@@ -263,6 +458,7 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Init the drop placeholder
+     * @deprecated - dropPlaceholder functionality moved to column-line
      *
      * @param {Element} element
      */
@@ -290,7 +486,7 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Register a resize handle within a child column
-     *
+     * @deprecated
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {JQuery} handle
      */
@@ -302,10 +498,7 @@ export default class Preview extends PreviewCollection {
             this.resizing(true);
 
             this.resizeColumnInstance = column;
-            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(
-                this.resizeColumnInstance,
-                groupPosition,
-            );
+            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(this.resizeColumnInstance, groupPosition);
             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
 
             // Force the cursor to resizing
@@ -355,7 +548,6 @@ export default class Preview extends PreviewCollection {
                 setDragColumn((columnInstance.contentType as ContentTypeCollectionInterface<ColumnPreview>));
                 this.dropPositions = calculateDropPositions(this.contentType);
                 this.startDragEvent = event;
-
                 events.trigger("column:dragStart", {
                     column: columnInstance,
                     stageId: this.contentType.stageId,
@@ -375,7 +567,6 @@ export default class Preview extends PreviewCollection {
 
                 removeDragColumn();
 
-                this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
                 this.startDragEvent = null;
 
@@ -398,7 +589,7 @@ export default class Preview extends PreviewCollection {
 
         const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
         if (newGridSize || newGridSize === 0) {
-            if (newGridSize !== this.resizeUtils.getGridSize()) {
+            if (newGridSize !== this.resizeUtils.getGridSize() || true) {
                 try {
                     resizeGrid(
                         this.contentType,
@@ -427,76 +618,71 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * On grid input key up, check if the enter key was used and submit
-     *
-     * @param {Preview} context
-     * @param {KeyboardEvent} event
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
+     * @private
      */
-    public onGridInputKeyUp(context: Preview, event: KeyboardEvent) {
-        if (event.which === 13 || event.keyCode === 13) {
-            this.updateGridSize();
+    private hasColumnLine(contentType: ContentTypeInterface | ContentTypeCollectionInterface): boolean {
+        const children = this.contentType.getChildren()();
+        let hasColumnLine = false;
+        if (children.length === 0) {
+            // new column group, so it has a column line
+            hasColumnLine = true;
         }
-    }
-
-    /**
-     * On grid input blur, update the grid size
-     */
-    public onGridInputBlur() {
-        this.updateGridSize();
-    }
-
-    /**
-     * Hide grid size panel on focus out
-     */
-    public closeGridForm(): void {
-        this.updateGridSize();
-        if (!this.gridSizeError()) {
-            this.gridFormOpen(false);
-            this.gridToolTipOverFlow(false);
-            events.trigger("stage:interactionStop");
-            events.trigger("stage:childFocusStop");
-            $(document).off("click focusin", this.onDocumentClick);
-        }
-    }
-
-    /**
-     * Show grid size panel on click and start interaction
-     */
-    public openGridForm(): void {
-        const tooltip = $(this.wrapperElement).find("[role='tooltip']");
-        if (!this.gridFormOpen()) {
-            this.gridSizeHistory = new Map();
-            this.recordGridResize(this.gridSize());
-            // inline tooltip out of bounds
-            const tooltipClientRectTop = tooltip[0].getBoundingClientRect().top
-                                     - pageBuilderHeaderHeight(this.contentType.stageId);
-
-            if (checkStageFullScreen(this.contentType.stageId)
-                && tooltip[0].getBoundingClientRect().height > tooltipClientRectTop
-            ) {
-                this.gridToolTipOverFlow(true);
+        children.forEach((child) => {
+            if (child.config.name === "column-line") {
+                hasColumnLine = true;
             }
-            this.gridFormOpen(true);
-            // Wait for animation to complete
-            _.delay(() => {
-                $(this.wrapperElement).find(".grid-panel-item-wrapper input").focus().select();
-            }, 200);
-            $(document).on("click focusin", this.onDocumentClick);
-            events.trigger("stage:interactionStart");
-            events.trigger("stage:childFocusStart");
-        }
+        });
+        return hasColumnLine;
     }
 
     /**
-     * Handle a click on the document closing the grid form
-     *
-     * @param {Event} event
+     * If the column group does not have a column line, move contents to a new column group with a column line
      */
-    private onDocumentClick = (event: JQueryEventObject) => {
-        // Verify the click event wasn't within our form
-        if (!$.contains($(this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], $(event.target)[0])) {
-            this.closeGridForm();
+    private moveContentsToNewColumnGroup(): void {
+        if (this.hasColumnLine(this.contentType)) {
+            // This column-group already has a column line. Don't need to add one.
+            return;
         }
+        const indexToInsertNewColumnGroupAt = this.getCurrentIndexInParent();
+        createContentType(
+            Config.getContentTypeConfig("column-group"),
+            this.contentType.parentContentType,
+            this.contentType.stageId,
+        ).then((columnGroup: ContentTypeCollectionInterface ) => {
+            this.contentType.parentContentType.addChild(columnGroup, indexToInsertNewColumnGroupAt);
+            events.trigger(columnGroup.config.name + ":dropAfter", {id: columnGroup.id, columnGroup,
+            columnGroupWithoutColumnLine: this.contentType});
+            this.fireMountEvent(this.contentType, columnGroup);
+        });
+    }
+
+    /**
+     * @private return index of current content type in parent
+     */
+    private getCurrentIndexInParent(): number {
+        const parentContentType = this.contentType.parentContentType;
+        let currentIndex = 0;
+        for (const sibling of this.contentType.parentContentType.getChildren()()) {
+            if (sibling.id !== this.contentType.id) {
+                currentIndex++;
+                continue;
+            }
+            break;
+        }
+        return currentIndex;
+    }
+
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
+        contentTypes.forEach((contentType) => {
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
+        });
     }
 
     /**
@@ -538,12 +724,11 @@ export default class Preview extends PreviewCollection {
         this.resizeLeftLastColumnShrunk = this.resizeRightLastColumnShrunk = null;
         this.dropPositions = [];
 
-        this.unsetResizingColumns();
+        // this.unsetResizingColumns();
 
         // Change the cursor back
         $("body").css("cursor", "");
 
-        this.dropPlaceholder.removeClass("left right");
         this.movePlaceholder.css("left", "").removeClass("active");
         this.resizeGhost.removeClass("active");
 
@@ -573,22 +758,17 @@ export default class Preview extends PreviewCollection {
 
             if (this.eventIntersectsGroup(event, groupPosition)) {
                 intersects = true;
+                // @todo make column re-sizing work
                 this.onResizingMouseMove(event, group, groupPosition);
-                this.onDraggingMouseMove(event, group, groupPosition);
-                this.onDroppingMouseMove(event, group, groupPosition);
             } else {
                 intersects = false;
                 this.groupPositionCache = null;
                 this.dropPosition = null;
-                this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.css("left", "").removeClass("active");
             }
         }).on("mouseup touchend", () => {
-            if (intersects) {
-                this.handleMouseUp();
-            }
-            intersects = false;
 
+            intersects = false;
             this.dropPosition = null;
             this.endAllInteractions();
 
@@ -605,6 +785,7 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Handle the mouse up action, either adding a new column or moving an existing
+     * @deprecated
      */
     private handleMouseUp(): void {
         if (this.dropOverElement && this.dropPosition) {
@@ -790,7 +971,7 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Handle a column being dragged around the group
-     *
+     * @deprecated - this is now handled in column-line/preview onDraggingMouseMove
      * @param {JQueryEventObject} event
      * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
@@ -824,7 +1005,6 @@ export default class Preview extends PreviewCollection {
                 }
 
                 if (this.movePosition) {
-                    this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right"
@@ -843,15 +1023,6 @@ export default class Preview extends PreviewCollection {
                 if (this.movePosition) {
                     const classToRemove = (this.movePosition.placement === "left" ? "right" : "left");
                     this.movePlaceholder.removeClass("active");
-                    this.dropPlaceholder.removeClass(classToRemove).css({
-                        left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
-                        right: (this.movePosition.placement === "right" ?
-                                groupPosition.width - this.movePosition.right : ""
-                        ),
-                        width: groupPosition.width / this.resizeUtils.getGridSize() + "px",
-                    }).addClass(this.movePosition.placement);
-                } else {
-                    this.dropPlaceholder.removeClass("left right");
                 }
             }
         }
@@ -863,6 +1034,7 @@ export default class Preview extends PreviewCollection {
      * @param {JQueryEventObject} event
      * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
+     * @deprecated now handled in column-line/preview
      */
     private onDroppingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache): void {
         const elementChildrenParent = group.parents(".element-children");
@@ -882,21 +1054,12 @@ export default class Preview extends PreviewCollection {
                 return currentX > position.left && currentX <= position.right && position.canShrink;
             });
 
-            if (this.dropPosition) {
-                this.dropPlaceholder.removeClass("left right").css({
-                    left: (this.dropPosition.placement === "left" ? this.dropPosition.left : ""),
-                    right:
-                        (this.dropPosition.placement === "right" ? groupPosition.width - this.dropPosition.right : ""),
-                    width: groupPosition.width / this.resizeUtils.getGridSize() + "px",
-                }).addClass(this.dropPosition.placement);
-            }
         } else if (this.dropOverElement) {
             // Re-enable the column group sortable instance
             if (elementChildrenParent.data("ui-sortable")) {
                 elementChildrenParent.sortable("option", "disabled", false);
             }
             this.dropPosition = null;
-            this.dropPlaceholder.removeClass("left right");
         }
     }
 
@@ -912,7 +1075,6 @@ export default class Preview extends PreviewCollection {
         group.droppable({
             deactivate() {
                 self.dropOverElement = null;
-                self.dropPlaceholder.removeClass("left right");
 
                 _.defer(() => {
                     // Re-enable the column group sortable instance & all children sortable instances
@@ -924,7 +1086,7 @@ export default class Preview extends PreviewCollection {
                 });
             },
             activate() {
-                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
                     group.find(".ui-sortable").each(function() {
                         if ($(this).data("ui-sortable")) {
                             $(this).sortable("option", "disabled", true);
@@ -950,20 +1112,14 @@ export default class Preview extends PreviewCollection {
             },
             drop() {
                 self.dropPositions = [];
-                self.dropPlaceholder.removeClass("left right");
             },
             out() {
                 self.dropOverElement = null;
-                self.dropPlaceholder.removeClass("left right");
             },
             over() {
-                // Is the element currently being dragged a column?
-                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                // Is the element currently being dragged a column group?
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column-group")) {
                     // Always calculate drop positions when an element is dragged over
-                    self.dropPositions = calculateDropPositions(
-                        self.contentType as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                    );
-
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;
@@ -1052,6 +1208,8 @@ export default class Preview extends PreviewCollection {
      * @param {number} newGridSize
      */
     private recordGridResize(newGridSize: number): void {
+        // @todo evaluate utility of having a grid size history
+        return;
         if (!this.gridSizeHistory.has(newGridSize)) {
             const columnWidths: number[] = [];
             this.contentType.getChildren()().forEach(
@@ -1061,9 +1219,45 @@ export default class Preview extends PreviewCollection {
             this.gridSizeHistory.set(newGridSize, columnWidths);
         }
     }
+
+    /**
+     * Figure out the maximum number of non-empty columns in various column lines
+     * @private
+     */
+    private getNonEmptyColumnCount(): number {
+
+        let nonEmptyColumnCount = 0;
+        this.contentType.getChildren()().forEach(
+            (columnLine: ContentTypeCollectionInterface<ColumnLinePreview>, index: number) => {
+                let numEmptyColumns = 0;
+                const numCols = columnLine.getChildren()().length;
+                columnLine.getChildren()().forEach(
+                        (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                            if (column.getChildren()().length === 0) {
+                                numEmptyColumns++;
+                            }
+                        });
+
+                if (numCols - numEmptyColumns > nonEmptyColumnCount) {
+                    nonEmptyColumnCount = numCols - numEmptyColumns;
+                }
+
+            });
+
+        return nonEmptyColumnCount;
+    }
 }
 
 export interface GroupPositionCache {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    outerWidth: number;
+    outerHeight: number;
+}
+
+export interface LinePositionCache {
     left: number;
     top: number;
     width: number;

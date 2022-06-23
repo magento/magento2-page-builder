@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnGroupEditSettingsAndVerifyTest" extends="ColumnGroupSettingsTest" >
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Columns"/>
+            <title value="[Columns] Edit/Update Column Group with two columns and verify on Storefront"/>
+            <description value="A user should be able edit Column and Column Group content type settings and see the changes on Storefront"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="PB-1198"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-column-group"/>
+        </annotations>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.base('1')}}" userInput="1" stepKey="seeOneColumnOnStage"/>
+        <!-- Duplicate Column One-->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="editTestBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="editTestBeforeLabelColumn2"/>
+        <!-- Drag Third Column to Column Group-->
+        <actionGroup ref="dragColumnToColumnGroup" stepKey="dragColumnToColumnGroup">
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <!-- Verify Three Columns -->
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/6')}}" stepKey="editTestFindLabelColumnOne"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/6')}}" stepKey="editTestFindLabelColumnTwo"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','3/6')}}" stepKey="editTestFindLabelColumnThree"/>
+        <!-- Edit Column One-->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSecondTimeEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="editColumnAppearancePropertyColumn1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="editMinHeightPropertyColumn1">
+            <argument name="property" value="PageBuilderMinHeightProperty_150"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="editVerticalAlignmentPropertyColumn1">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="editBackgroundColorProperty1Column1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_BE0005"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="editBackgroundSizeColumn1">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="editBackgroundPositionColumn1">
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="editBackgroundAttachmentColumn1">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="editBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="editAlignmentColumn1">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="editColumn1Border7">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="editBorderColorColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FB00FF"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="editBorderWidthColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty13"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="editBorderRadiusColumn1">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty27"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="editCssClassesColumn1">
+            <argument name="property" value="PageBuilderAdvancedPropertyColumnOneEditClass"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="editMarginsColumn1">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique12131415"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="editPaddingColumn1">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique16171819"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSecondTimeEditPanelSettingsColumn1"/>
+        <!-- Save Page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitSecondTimePageBuilderFullScreen"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveSecondTimeAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchSecondTimeToPageBuilderStage"/>
+        <!-- Verify Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Verify Column One -->
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnOneBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_BE0005"/>
+            <argument name="backgroundImage" value="PageBuilderColumnOneDesktopImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomCenter"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateColumnOneAllAdvancedStorefront">
+            <argument name="page" value="ColumnOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FB00FF"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty13"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty27"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnOneEditClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique12131415"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique16171819"/>
+        </actionGroup>
+        <!-- Verify Column Two -->
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnTwoBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Default"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Default"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Disabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <!-- Verify Column Three -->
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnThreeBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="index" value="3"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+            <argument name="backgroundImage" value="PageBuilderColumnOneDesktopImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopRight"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Disabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateColumnThreeAllAdvancedStorefront">
+            <argument name="page" value="ColumnOnFrontend"/>
+            <argument name="index" value="3"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnOneClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique2345"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique6789"/>
+        </actionGroup>
+    </test>
+</tests>

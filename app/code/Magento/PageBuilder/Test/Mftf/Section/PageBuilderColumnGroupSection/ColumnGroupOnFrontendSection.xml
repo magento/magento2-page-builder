@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ColumnGroupOnFrontend">
+        <element name="base" type="block" selector="(//div[@data-content-type=&quot;column-group&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=column-group]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="baseCSS" type="text" selector="[data-content-type=column-group]"/>
+        <element name="columnsInGroup" type="block" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]//div[@data-content-type='column']" parameterized="true"/>
+        <!-- Background Configuration -->
+        <element name="backgroundPath" type="button" selector="(//div[@data-content-type=&quot;column-group&quot;])[{{arg1}}]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;column-group&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='column-group'])[{{arg1}}][contains(@class, '{{arg2}}')]" parameterized="true"/>
+    </section>
+</sections>

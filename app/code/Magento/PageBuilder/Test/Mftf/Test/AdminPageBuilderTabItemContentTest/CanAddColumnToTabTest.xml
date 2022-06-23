@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="CanAddColumnToTabTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -49,7 +48,7 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Column to Tab -->
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnOntoTab">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
@@ -87,9 +86,8 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Hex_Grey.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <actionGroup ref="ValidateColumnWidthActionGroup" stepKey="seeFirstColumnWidthDistributed">
+        <actionGroup ref="ValidateColumnWidthOnFrontendActionGroup" stepKey="seeFirstColumnWidthDistributed">
             <argument name="index" value="2"/>
-            <argument name="section" value="ColumnOnFrontend"/>
         </actionGroup>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumn2HeightApplied">
             <argument name="selector" value="{{ColumnOnFrontend.base('2')}}"/>

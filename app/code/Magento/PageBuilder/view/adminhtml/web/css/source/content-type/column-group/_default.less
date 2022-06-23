@@ -21,13 +21,17 @@
 
 .pagebuilder-content-type {
     .pagebuilder-column-group {
-        border: none;
         box-sizing: border-box;
-        position: relative;
         width: 100%;
 
+        &.no-column-line {
+            .element-children {
+                display: flex;
+            }
+        }
+
         .drop-placeholder {
-            background: rgba(142, 0, 6, .3);
+            background: @color-red-berry;
             bottom: 0;
             opacity: 0;
             position: absolute;
@@ -52,7 +56,7 @@
 
         .move-placeholder {
             animation: inner-pulsate 1s infinite ease-in-out;
-            background: rgba(142, 0, 6, .3);
+            background: @color-red-berry;
             bottom: 0;
             opacity: 0;
             position: absolute;
@@ -150,7 +154,6 @@
         }
 
         > .element-children {
-            display: flex;
             padding: 0;
             position: relative;
             width: 100%;
@@ -253,6 +256,9 @@
     width: 18px;
     z-index: 11;
 
+    /**
+     * @codingStandardsIgnoreStart
+     */
     .admin__control-text {
         height: 89%;
         margin: 0;
@@ -265,6 +271,7 @@
         text-align: left;
         width: 135px;
     }
+    //@codingStandardsIgnoreEnd
 
     .grid-panel-field-error {
         border: 1px solid @error_color;
@@ -395,4 +402,9 @@
     100% {
         box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
     }
+}
+
+.pagebuilder-content-type-hidden .pagebuilder-content-type.pagebuilder-column-group:before {
+    opacity: 1;
+    visibility: visible;
 }

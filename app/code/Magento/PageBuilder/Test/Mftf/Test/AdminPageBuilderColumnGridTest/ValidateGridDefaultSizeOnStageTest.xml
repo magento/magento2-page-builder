@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ValidateGridDefaultSizeOnStageTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -37,16 +36,20 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <comment userInput="Validate default grid size on initial drop" stepKey="commentValidateInitial"/>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
-        <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSize"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="openGridSizeForm"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="seeDefaultGridSize"/>
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo8">
+            <argument name="gridSize" value="{{PageBuilderGridSize.defaultGridSize}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <comment userInput="Validate default grid size after save" stepKey="commentValidateAfterSave"/>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeFormAfterSave"/>
-        <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
+        <actionGroup ref="openGridSizeFormInColumnGroup" stepKey="openGridSizeFormAfterSave"/>
+        <seeInField selector="{{ColumnOnBackend.gridSizeInputInForm}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
     </test>
 </tests>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragExistingColumnToNewColumnLine">
+        <arguments>
+            <argument name="newColumnLineIndexExpected" defaultValue="1" type="string"/>
+            <argument name="targetColumnLineSelector" type="string"/>
+            <argument name="columnIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+            <!-- When adding column line to the top, advised to use y offset of 10 -->
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex('column', columnIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex('column', columnIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad time="30" stepKey="waitForMouseOverAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex('column', columnIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnMoveByIndex(columnIndex)}}" stepKey="waitForMoveHandle"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnMoveByIndex(columnIndex)}}" selector2="{{targetColumnLineSelector}}"  x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropPageBuilderColumnGroupContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimationasdads" time="30"/>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex('column-line', newColumnLineIndexExpected)}}" stepKey="waitForPageBuilderColumnLineContentTypeInStage"/>
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+    </actionGroup>
+</actionGroups>
+

@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TextVerifyTinyMCETableToolbarOnPageBuilderStageTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -42,7 +41,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToRootContainer">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
@@ -110,14 +109,18 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="offsetYCoordinate" value="10"/>
         </actionGroup>
 
         <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible -->
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType"/>
-        <waitForPageLoad stepKey="waitForTinyMCEToolbar"/>
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickAgainToOpenTableToolbar"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="clickOnTextContentType">
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinyMCEToolbar"/>
+        <conditionalClick selector="{{TextOnStage.tinymce('1')}}" dependentSelector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" visible="false" stepKey="clickAgainToOpenTableToolbar"/>
         <waitForPageLoad stepKey="waitForTinyMCETableToolbar"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar2"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable2"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore2"/>
@@ -169,14 +172,18 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="offsetYCoordinate" value="10"/>
         </actionGroup>
 
         <!-- Initialize TinyMCE Table Toolbar & Verify All Table Toolbar Menu Items are Visible Again -->
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickOnTextContentType2"/>
-        <waitForPageLoad stepKey="waitForTinymceToolbar2"/>
-        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="clickAgainToOpenTableToolbar2"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="clickOnTextContentType2">
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <comment userInput="Step key preserved for backwards compatibility" stepKey="waitForTinymceToolbar2"/>
+        <conditionalClick selector="{{TextOnStage.tinymce('1')}}" dependentSelector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" visible="false" stepKey="clickAgainToOpenTableToolbar2"/>
         <waitForPageLoad stepKey="waitForTinymceTableToolbar2"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar3"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.tableToolbar}}" stepKey="seeTableToolbar3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.tableProperties}}" stepKey="seeTableProperties3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.deleteTable}}" stepKey="seeDeleteTable3"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.insertRowBefore}}" stepKey="seeInsertRowBefore3"/>

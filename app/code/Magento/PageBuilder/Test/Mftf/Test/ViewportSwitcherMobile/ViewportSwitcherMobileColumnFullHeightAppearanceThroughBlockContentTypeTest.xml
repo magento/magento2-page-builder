@@ -57,7 +57,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
 
         <!-- Edit Column 1 -->
@@ -154,6 +154,7 @@
         </actionGroup>
         <actionGroup ref="validateColumnAppearanceFullHeight" stepKey="validateColumn1AppearanceCMSBlockStage">
             <argument name="affordanceValue" value="{{PageBuilderColumnAffordanceHeight.value}}"/>
+            <argument name="acceptableOffset" value="3"/>
         </actionGroup>
         <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="ColumnOnBackend"/>
@@ -173,7 +174,7 @@
         <actionGroup ref="ValidateLayoutConfigurationWithAllUpdatedActionGroup" stepKey="validateLayoutCMSBlockStage">
             <argument name="page" value="ColumnOnBackend"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_Auto"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_150"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateColumn1HeightCMSBlockStage">

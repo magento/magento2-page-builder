@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="CannotAddColumnToFullSmallGridSizeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -34,11 +33,12 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo2">
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo2">
             <argument name="gridSize" value="2"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumn1Visible"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="mouseOverColumn1"/>

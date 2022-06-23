@@ -34,8 +34,9 @@
         </after>
         <!-- Add column to stage and open configuration form -->
         <comment userInput="Add column to stage" stepKey="commentAddColumnToStage"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        <comment userInput="Comment is added to preserve the step key for backward compatibility" stepKey="dragColumnIntoStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnGroupIntoStage">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>

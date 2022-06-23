@@ -7,12 +7,14 @@ import ContentTypeCollectionInterface from "../../content-type-collection.types"
 import {outwardSearch} from "../../utils/array";
 import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "../column-group/preview";
 import ColumnPreview from "./preview";
-
 export default class Resize {
     private columnGroup: ContentTypeCollectionInterface;
+    private columnLine: ContentTypeCollectionInterface;
 
-    constructor(columnGroup: ContentTypeCollectionInterface) {
+    constructor(columnGroup: ContentTypeCollectionInterface,
+                columnLine?: ContentTypeCollectionInterface) {
         this.columnGroup = columnGroup;
+        this.columnLine = columnLine;
     }
 
     /**
@@ -25,13 +27,22 @@ export default class Resize {
     }
 
     /**
+     * Get the initial grid size for this columnGroup before it was updated
+     *
+     * @returns {number}
+     */
+    public getInitialGridSize(): number {
+        return parseInt(this.columnGroup.dataStore.get("initial_grid_size", 0).toString(), 10);
+    }
+
+    /**
      * Get the smallest column width possible
      *
      * @param {number} gridSize
      * @returns {number}
      */
     public getSmallestColumnWidth(gridSize?: number): number {
-        gridSize = gridSize || this.getGridSize();
+        gridSize = gridSize || this.getInitialGridSize() || this.getGridSize();
         return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(
             Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0,
         ));
@@ -45,7 +56,7 @@ export default class Resize {
      * @returns {number}
      */
     public getAcceptedColumnWidth(width: string, gridSize?: number): number {
-        gridSize = gridSize || this.getGridSize();
+        gridSize = gridSize || this.getInitialGridSize() || this.getGridSize();
         let newWidth = 0;
         for (let i = gridSize; i > 0; i--) {
             const percentage = parseFloat((100 / gridSize * i).toFixed(
@@ -71,13 +82,13 @@ export default class Resize {
     }
 
     /**
-     * Get the total width of all columns in the group
+     * Get the total width of all columns in the column line
      *
      * @returns {number}
      */
     public getColumnsWidth(): number {
         return this.getAcceptedColumnWidth(
-            this.columnGroup.children().map((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+            this.columnLine.children().map((column: ContentTypeCollectionInterface<ColumnPreview>) => {
                 return this.getColumnWidth(column);
             }).reduce((widthA: number, widthB: number) => {
                 return widthA + (widthB ? widthB : 0);
@@ -191,6 +202,24 @@ export default class Resize {
             getColumnIndexInGroup(column),
             (neighbourColumn) => {
                 return this.getColumnWidth(neighbourColumn) > this.getSmallestColumnWidth();
+            },
+        );
+    }
+
+    /**
+     * Find a shrinkable column of a greater size outwards from the current column
+     *
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+     */
+    public findBiggerShrinkableColumn(
+        column: ContentTypeCollectionInterface<ColumnPreview>,
+    ): ContentTypeCollectionInterface<ColumnPreview> {
+        return outwardSearch(
+            column.parentContentType.children(),
+            getColumnIndexInGroup(column),
+            (neighbourColumn) => {
+                return this.getColumnWidth(neighbourColumn) > this.getColumnWidth(column);
             },
         );
     }
@@ -369,11 +398,21 @@ export default class Resize {
 
 /**
  * Retrieve the index of the column within it's group
- *
+ * @deprecated use getColumnIndexInLine
  * @param {ContentTypeCollectionInterface<ColumnPreview>} column
  * @returns {number}
  */
 export function getColumnIndexInGroup(column: ContentTypeCollectionInterface<ColumnPreview>): number {
+    return column.parentContentType.children().indexOf(column);
+}
+
+/**
+ * Retrieve the index of the column within it's column line
+ *
+ * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @returns {number}
+ */
+export function getColumnIndexInLine(column: ContentTypeCollectionInterface<ColumnPreview>): number {
     return column.parentContentType.children().indexOf(column);
 }
 
