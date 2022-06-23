@@ -5,65 +5,29 @@
  */
 -->
 
-<div class="pagebuilder-column-group"
-     css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}">
-    <div class="pagebuilder-grid-size-indicator">
-        <div class="indicator-wrapper" event="{ click: openGridForm }">
-            <i class="icon-pagebuilder-grid-options"></i>
-            <div class="pagebuilder-grid-panel"
-                 css="{ 'grid-panel-visible': gridFormOpen, 'grid-panel-error': gridSizeError }">
-                <div class="grid-panel-wrapper">
-                    <ul class="grid-panel-items">
-                        <li class="grid-panel-item">
-                            <!-- ko if: gridSizeError -->
-                                <!-- ko with: {gridSizeErrorUnsanitizedHtml: gridSizeError} -->
-                                    <div html="gridSizeErrorUnsanitizedHtml" class="admin__field-error"></div>
-                                <!-- /ko -->
-                            <!-- /ko -->
-                        </li>
-                    </ul>
-                    <ul class="grid-panel-items">
-                        <li class="grid-panel-item">
-                            <div class="grid-panel-title" translate="'Grid Size'"></div>
-                        </li>
-                        <li class="grid-panel-item">
-                            <div class="grid-panel-item-wrapper">
-                                <input type="number"
-                                       css="{'grid-panel-field-error': gridSizeError}"
-                                       event="{keyup: onGridInputKeyUp, blur: onGridInputBlur}"
-                                       min="2"
-                                       class="admin__control-text"
-                                       data-bind="textInput: gridSizeInput, attr: {max: gridSizeMax}"/>
-                            </div>
-                        </li>
-                        <li class="grid-panel-item">
-                            <div class="grid-panel-item-wrapper">
-                                <div class="grid-panel-tooltip">
-                                    <span class="tooltip-content"
-                                          role="tooltip"
-                                          css="{'tooltip-down': gridToolTipOverFlow}">
-                                        <p translate="'Grid size determines the maximum number of columns available.'"></p>
-                                        <!-- ko with: {getGridSizeMaxUnsanitizedHtml: gridSizeMax} -->
-                                        <p><span translate="'Select a value between 2 and'"></span> <span html="getGridSizeMaxUnsanitizedHtml"></span>.</p>
-                                        <!-- /ko -->
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="pagebuilder-column-group pagebuilder-content-type-affordance pagebuilder-content-type pagebuilder-affordance-column-group"
+     ko-style="Object.assign(data.container.style, getStyle(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight']))"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
+     css="Object.assign(data.main.css(), {'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'empty-container': $parent.children().length == 0})"
+     attr="data.main.attributes">
+
+    <render args="getOptions().template"></render>
     <div class="resize-grid" each="gridSizeArray">
         <div class="grid-line"></div>
     </div>
     <div class="resize-ghost" afterRender="function (element) { bindGhost.call($data, element); }"></div>
-    <div class="drop-placeholder" afterRender="function (element) { bindDropPlaceholder.call($data, element); }"></div>
     <div class="move-placeholder" afterRender="function (element) { bindMovePlaceholder.call($data, element); }"></div>
-    <div class="element-children"
-         each="$parent.getChildren()"
-         afterRender="function (element) { bindInteractions.call($data, element); }">
-        <render args="{name: preview.template, data: preview}"></render>
+    <div class="pagebuilder-display-label label-column-group"
+         text="displayLabel().toUpperCase()">
     </div>
+
+
+        <div class="element-children content-type-container"
+             ko-style="Object.assign({}, getStyleWithout(data.main, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'width', 'alignSelf', 'minHeight']), {backgroundImage: getBackgroundImage()})"
+             each="$parent.getChildren()"
+             data-bind="sortable: getSortableOptions()"
+             afterRender="function (element) { bindInteractions.call($data, element); }">
+            <render args="{name: preview.template, data: preview}"></render>
+
+        </div>
 </div>

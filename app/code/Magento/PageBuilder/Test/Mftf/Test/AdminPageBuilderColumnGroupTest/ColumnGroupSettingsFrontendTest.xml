@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnGroupSettingsFrontendTest" extends="ColumnGroupSettingsTest" >
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Columns"/>
+            <title value="[Columns] Verify Column Group with two columns on Storefront"/>
+            <description value="A user should be able to see effects of column and column group settings changes on the front-end"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="PB-1197"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-column-group"/>
+        </annotations>
+        <!-- Verify Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Verify Column Group -->
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.columnGroupWithGridSize('6','1')}}" userInput="1" stepKey="seeColumnGroupWithGridSize6"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnGroupMinHeightApplied">
+            <argument name="selector" value="{{ColumnGroupOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnGroupMinHeightProperty_345.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateBackgroundOnStorefront">
+            <argument name="section" value="ColumnGroupOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_FC0009"/>
+            <argument name="backgroundImage" value="PageBuilderColumnGroupDesktopImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopCenter"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="ColumnGroupOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty50"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty60"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnGroupClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique5678"/>
+        </actionGroup>
+        <!-- Verify Column One -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnOneMinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_150.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnOneColumnAppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentCenter}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnOneBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+            <argument name="backgroundImage" value="PageBuilderColumnOneDesktopImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopRight"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Disabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateColumnOneAllAdvancedStorefront">
+            <argument name="page" value="ColumnOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnOneClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique2345"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique6789"/>
+        </actionGroup>
+        <!-- Verify Column Two -->
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnTwoMinHeightApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderMinHeightProperty_200.value}}"/>
+            <argument name="cssProperty" value="minHeight"/>
+        </actionGroup>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeColumnTwoColumnAppearanceApplied">
+            <argument name="selector" value="{{ColumnOnFrontend.advancedConfigurationPath('2')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderColumnStyles.alignmentBottom}}"/>
+            <argument name="cssProperty" value="alignSelf"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnTwoBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAdvancedConfigurationAllOptionsActionGroup" stepKey="validateColumnTwoAllAdvancedStorefront">
+            <argument name="page" value="ColumnOnFrontend"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_82BB6A"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty1"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedPropertyColumnTwoClass"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique3456"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique78910"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Mobile Background Images -->
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateMobileViewBackgroundOnStorefront">
+            <argument name="section" value="ColumnGroupOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_FC0009"/>
+            <argument name="backgroundImage" value="PageBuilderColumnGroupMobileImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopCenter"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="ValidateAllBackgroundAttributesActionGroup" stepKey="validateColumnTwoMobileViewBackgroundOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColorProperty_21FFFF"/>
+            <argument name="backgroundImage" value="PageBuilderColumnTwoMobileImage_PNG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+    </test>
+</tests>

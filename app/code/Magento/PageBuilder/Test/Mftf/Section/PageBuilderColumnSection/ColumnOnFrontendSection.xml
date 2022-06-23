@@ -13,6 +13,7 @@
         <element name="baseCSS" type="text" selector="[data-content-type=column]"/>
         <element name="elementChildren" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
         <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]" parameterized="true"/>
+        <element name="columnGroupWithGridSize" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group') and @data-grid-size='{{arg1}}'])[{{arg2}}]" parameterized="true"/>
         <element name="allColumnGroups" type="block" selector=".pagebuilder-column-group"/>
         <element name="allColumns" type="block" selector="(//div[@data-content-type='column'])"/>
         <element name="columnX" type="block" selector="[data-content-type=column]:nth-child({{arg1}})" parameterized="true"/>
@@ -67,5 +68,8 @@
         <element name="backgroundImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true" deprecated="Styles are not inline"/>
         <element name="backgroundMobileImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true" deprecated="Styles are not inline"/>
+        <!-- Advanced Configuration -->
+        <element name="advancedConfigurationPath" type="text" selector="(//div[@data-content-type=&quot;column&quot;])[{{arg1}}]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@class, '{{arg2}}')]" parameterized="true"/>
     </section>
 </sections>

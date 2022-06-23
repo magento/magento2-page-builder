@@ -10,16 +10,67 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
 
     function VideoSrc() {}
 
-    var _proto = VideoSrc.prototype;
+    /**
+     * Parse YouTube parameters from given URL and Autoplay setting from UI
+     *
+     * @param url string
+     * @param data DataObject
+     * @returns string
+     * @private
+     */
+    VideoSrc.parseYoutubeGetParams = function parseYoutubeGetParams(url, data) {
+      var acceptableYouTubeParams = ["rel", "controls", "autoplay", "mute", "loop", "playlist", "cc_lang_pref", "cc_load_policy", "color", "disablekb", "end", "fs", "hl", "iv_load_policy", "modestbranding", "start"];
+      var a = document.createElement("a");
+      a.href = url;
+      var urlGetParams = {};
+      a.search.slice(a.search.indexOf("?") + 1).split("&").map(function (hash) {
+        var _hash$split = hash.split("="),
+            key = _hash$split[0],
+            val = _hash$split[1];
 
+        urlGetParams[key] = decodeURIComponent(val);
+      });
+      var filteredGetParams = {};
+
+      for (var _i = 0, _acceptableYouTubePar = acceptableYouTubeParams; _i < _acceptableYouTubePar.length; _i++) {
+        var param = _acceptableYouTubePar[_i];
+
+        if (urlGetParams.hasOwnProperty(param)) {
+          filteredGetParams[param] = urlGetParams[param];
+        }
+      }
+
+      if (data.autoplay === "true") {
+        filteredGetParams.autoplay = "1";
+        filteredGetParams.mute = "1";
+      } else {
+        delete filteredGetParams.autoplay;
+        delete filteredGetParams.mute;
+      }
+
+      var processedGetParams = [];
+
+      for (var _param in filteredGetParams) {
+        if (filteredGetParams.hasOwnProperty(_param)) {
+          processedGetParams.push(encodeURI(_param + "=" + filteredGetParams[_param]));
+        }
+      }
+
+      return processedGetParams.length > 0 ? "?" + processedGetParams.join("&") : "";
+    }
     /**
      * Convert value to internal format
      *
      * @param value string
      * @returns {string | object}
      */
+    ;
+
+    var _proto = VideoSrc.prototype;
+
     _proto.fromDom = function fromDom(value) {
       value = value.replace(/\?autoplay=1&mute=1/g, "");
+      value = value.replace(/&autoplay=1&mute=1/g, "");
       value = value.replace(/\?title=0&byline=0&portrait=0/g, "");
       value = value.replace(/&autoplay=1&autopause=0&muted=1/g, "");
       return value;
@@ -44,7 +95,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       var vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" + "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
 
       if (youtubeRegExp.test(value)) {
-        return "https://www.youtube.com/embed/" + youtubeRegExp.exec(value)[1] + (data.autoplay === "true" ? "?autoplay=1&mute=1" : "");
+        return "https://www.youtube.com/embed/" + youtubeRegExp.exec(value)[1] + VideoSrc.parseYoutubeGetParams(value, data);
       } else if (vimeoRegExp.test(value)) {
         return "https://player.vimeo.com/video/" + vimeoRegExp.exec(value)[3] + "?title=0&byline=0&portrait=0" + (data.autoplay === "true" ? "&autoplay=1&autopause=0&muted=1" : "");
       }

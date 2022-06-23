@@ -293,6 +293,30 @@ define([
             $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
         );
 
+        validator.addRule(
+            'validate-grid-size',
+            function (value, params, additionalParams) {
+                if (value < additionalParams.non_empty_column_count) {
+                    return false;
+                }
+
+                return true;
+            },
+            $.mage.__('Grid size cannot be smaller than the current total amount of columns, minus any empty columns.')
+        );
+
+        validator.addRule(
+            'validate-max-grid-size',
+            function (value, params, additionalParams) {
+                if (value > additionalParams.max_grid_size) {
+                    return false;
+                }
+
+                return true;
+            },
+            $.mage.__('Please enter a value less than or equal to the Maximum Column Grid Size configuration.')
+        );
+
         validateObjectField(validator, 'validate-number');
         validateObjectField(validator, 'less-than-equals-to');
         validateObjectField(validator, 'greater-than-equals-to');
