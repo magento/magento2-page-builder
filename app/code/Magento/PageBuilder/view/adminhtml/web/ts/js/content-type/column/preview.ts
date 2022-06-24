@@ -17,9 +17,10 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
+import ColumnLinePreview from "../column-line/preview";
 import {
-    ContentTypeDroppedCreateEventParamsInterface, ContentTypeDuplicateEventParamsInterface,
-    ContentTypeMountEventParamsInterface,
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
     ContentTypeMoveEventParamsInterface,
     ContentTypeRemovedEventParamsInterface,
 } from "../content-type-events.types";
@@ -94,7 +95,7 @@ export default class Preview extends PreviewCollection {
             this.resetRemoveOnLastColumn(args.sourceParent);
         });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
-            this.resetRemoveOnLastColumn(args.columnGroup);
+            this.resetRemoveOnLastColumn(args.columnLine);
         });
         events.on("column:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             this.resetRemoveOnLastColumn(this.contentType.parentContentType);
@@ -121,7 +122,8 @@ export default class Preview extends PreviewCollection {
         events.trigger("column:initializeAfter", {
             column: this.contentType,
             element: $(element),
-            columnGroup: this.contentType.parentContentType,
+            columnLine: this.contentType.parentContentType,
+            columnGroup: this.contentType.parentContentType.parentContentType,
         });
         this.updateDisplayLabel();
     }
@@ -152,7 +154,7 @@ export default class Preview extends PreviewCollection {
         events.trigger("column:resizeHandleBindAfter", {
             column: this.contentType,
             handle: $(handle),
-            columnGroup: this.contentType.parentContentType,
+            columnLine: this.contentType.parentContentType,
         });
     }
 
@@ -224,7 +226,32 @@ export default class Preview extends PreviewCollection {
             return super.clone(contentType, autoAppend);
         }
 
-        // Attempt to split the current column into parts
+        const biggestShrinkableColumn = resizeUtils.findBiggerShrinkableColumn(contentType);
+        if (biggestShrinkableColumn) {
+            const shrinkableClone = super.clone(contentType, autoAppend);
+            if (shrinkableClone) {
+                const newShrinkableColumnWidth = resizeUtils.getColumnWidth(biggestShrinkableColumn)
+                    - resizeUtils.getColumnWidth(contentType);
+                const duplicateColumnWidth = resizeUtils.getColumnWidth(contentType);
+                shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
+                    updateColumnWidth(
+                        biggestShrinkableColumn,
+                        resizeUtils.getAcceptedColumnWidth(
+                            (newShrinkableColumnWidth).toString(),
+                        ),
+                    );
+                    updateColumnWidth(
+                        duplicateContentType,
+                        duplicateColumnWidth,
+                    );
+
+                    return duplicateContentType;
+                });
+            }
+            return;
+        }
+
+            // Attempt to split the current column into parts
         const splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
         if (splitTimes > 1) {
             const splitClone = super.clone(contentType, autoAppend);
@@ -286,9 +313,11 @@ export default class Preview extends PreviewCollection {
      * Update the display label for the column
      */
     public updateDisplayLabel() {
-        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+        if (this.contentType.parentContentType.preview instanceof ColumnLinePreview) {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
-            const gridSize = (this.contentType.parentContentType.preview as ColumnGroupPreview).gridSize();
+            const grandParent = this.contentType.parentContentType.parentContentType;
+            const columnGroupPreview = (grandParent.preview as ColumnGroupPreview);
+            const gridSize = columnGroupPreview.gridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
             const columnIndex = this.contentType.parentContentType.children().indexOf(this.contentType);
             const columnNumber = (columnIndex !== -1) ? `${columnIndex + 1} ` : "";
@@ -305,20 +334,29 @@ export default class Preview extends PreviewCollection {
             // can happen if the column is moved within the same column group
             return;
         }
+        if (parentContentType.config.name !== "column-line") {
+            // for legacy content in preview mode before stage is initialized, the parent may not be a column line
+            return;
+        }
         const siblings = parentContentType.children();
-        if (siblings.length < 1) {
-            return;
-        }
-        if (siblings.length === 1) {
-            const lastColumn = siblings[0];
-            const options = lastColumn.preview.getOptions();
-            options.getOption("remove").isDisabled(true);
-            return;
-        }
-        siblings.forEach((column) => {
-            const removeOption = column.preview.getOptions().getOption("remove");
-            removeOption.isDisabled(false);
+        const siblingColumnLines = parentContentType.parentContentType.children();
+        let totalColumnCount = 0;
+        siblingColumnLines.forEach((columnLine: ContentTypeCollectionInterface) => {
+            const columns = columnLine.children();
+            columns.forEach((column: ContentTypeCollectionInterface) => {
+                totalColumnCount++;
+            });
         });
+
+        const isRemoveDisabled = totalColumnCount <= 1;
+        siblingColumnLines.forEach((columnLine: ContentTypeCollectionInterface) => {
+            const columns = columnLine.children();
+            columns.forEach((column: ContentTypeCollectionInterface) => {
+                const removeOption = column.preview.getOptions().getOption("remove");
+                removeOption.isDisabled(isRemoveDisabled);
+            });
+        });
+
     }
 
     /**
@@ -388,7 +426,7 @@ export default class Preview extends PreviewCollection {
      * Delegate trigger call on children elements.
      */
     private triggerChildren() {
-        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+        if (this.contentType.parentContentType.preview instanceof ColumnLinePreview) {
             const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
 
             this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });

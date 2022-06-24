@@ -31,6 +31,9 @@
         </before>
         <after>
             <deleteData createDataKey="createWysiwygAttribute" stepKey="deletePreReqProductAttribute"/>
+            <actionGroup ref="CliIndexerReindexActionGroup" stepKey="reindex">
+                <argument name="indices" value=""/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Update created attribute to enable Page Builder -->

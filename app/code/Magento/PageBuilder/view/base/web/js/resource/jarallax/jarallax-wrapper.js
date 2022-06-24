@@ -4,11 +4,9 @@
  */
 
 define([
-    'vimeo'
-], function (Player) {
+    'Magento_PageBuilder/js/resource/jarallax/jarallax'
+], function(jarallax){
     'use strict';
 
-    window.Vimeo = window.Vimeo || {
-        'Player': Player
-    };
+    window.jarallax = window.jarallax || jarallax;
 });
