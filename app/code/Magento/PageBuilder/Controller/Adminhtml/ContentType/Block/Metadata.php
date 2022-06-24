@@ -42,9 +42,14 @@ class Metadata extends \Magento\Backend\App\AbstractAction
         try {
             $collection = $this->blockCollectionFactory->create();
             $blocks = $collection
-                ->addFieldToSelect(['title','is_active'])
-                ->addFieldToFilter('block_id', ['eq' => $params['block_id']])
-                ->load();
+                ->addFieldToSelect(['title', 'is_active'])
+                ->addFieldToFilter(
+                    ['block_id', 'identifier'],
+                    [
+                        ['eq' => $params['block_id']],
+                        ['eq' => $params['block_id']]
+                    ]
+                )->load();
             $result = $blocks->getFirstItem()->toArray();
         } catch (\Exception $e) {
             $result = [
