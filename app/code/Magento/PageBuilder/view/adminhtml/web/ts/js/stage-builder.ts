@@ -60,7 +60,9 @@ function convertToInlineStyles(document: Document): void {
         _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
             const element: HTMLElement = document.querySelector(selector);
 
-            if (!element) return;
+            if (!element) {
+                return;
+            }
 
             _.each(stylesArray, (style: CSSStyleDeclaration) => {
                 element.setAttribute(

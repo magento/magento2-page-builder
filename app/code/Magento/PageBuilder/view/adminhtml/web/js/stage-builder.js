@@ -49,7 +49,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       _.each(styles, function (stylesArray, selector) {
         var element = document.querySelector(selector);
 
-        if (!element) return;
+        if (!element) {
+          return;
+        }
 
         _.each(stylesArray, function (style) {
           element.setAttribute("data-" + name + "-style", element.getAttribute("data-" + name + "-style") ? element.getAttribute("data-" + name + "-style") + style.cssText : style.cssText);
