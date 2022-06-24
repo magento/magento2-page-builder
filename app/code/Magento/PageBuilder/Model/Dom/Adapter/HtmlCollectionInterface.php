@@ -9,6 +9,8 @@ namespace Magento\PageBuilder\Model\Dom\Adapter;
 
 /**
  * Interface for HtmlCollection wrappers
+ *
+ * @api
  */
 interface HtmlCollectionInterface
 {

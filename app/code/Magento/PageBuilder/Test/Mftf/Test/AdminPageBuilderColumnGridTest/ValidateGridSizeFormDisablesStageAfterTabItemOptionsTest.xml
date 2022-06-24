@@ -21,6 +21,9 @@
             <group value="pagebuilder-columnGridSize"/>
             <group value="pagebuilder-tabs"/>
             <group value="pr_exclude"/>
+            <skip>
+                <issueId value="DEPRECATED">Not applicable anymore after moving the grid size field to the settings form - PB-500</issueId>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -41,7 +44,7 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
@@ -53,7 +56,7 @@
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm"/>
+        <actionGroup ref="openGridSizeFormInColumnGroup" stepKey="openGridSizeForm"/>
         <!-- Validate column options don't display -->
         <comment userInput="Validate column options don't display" stepKey="commentColumnOptionsHidden"/>
         <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn"/>

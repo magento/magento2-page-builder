@@ -10,6 +10,8 @@ namespace Magento\PageBuilder\Model\Stage;
 
 /**
  * Provides an interface for individual content type renderers for the stage
+ *
+ * @api
  */
 interface RendererInterface
 {

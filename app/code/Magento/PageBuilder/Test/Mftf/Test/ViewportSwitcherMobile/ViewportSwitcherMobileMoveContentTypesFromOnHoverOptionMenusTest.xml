@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ViewportSwitcherMobileMoveContentTypesFromOnHoverOptionMenusTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -50,7 +49,7 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnToRow">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Heading to Column 2 -->
@@ -77,14 +76,14 @@
         </actionGroup>
         <!-- Validate Stage -->
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingPosition">
-            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="positionInContainer" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateDividerPosition">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="positionInContainer" value="2"/>
             <argument name="contentTypeIndex" value="1"/>

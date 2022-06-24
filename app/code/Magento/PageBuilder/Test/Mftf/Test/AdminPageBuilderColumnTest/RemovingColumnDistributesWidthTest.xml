@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="RemovingColumnDistributesWidthTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -33,14 +32,12 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        <actionGroup ref="dragColumnToColumnGroup" stepKey="dragThirdColumn">
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>

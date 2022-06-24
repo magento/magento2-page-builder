@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="CanAddColumnToSmallGridSizeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -34,11 +33,12 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo3">
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo3">
             <argument name="gridSize" value="3"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>

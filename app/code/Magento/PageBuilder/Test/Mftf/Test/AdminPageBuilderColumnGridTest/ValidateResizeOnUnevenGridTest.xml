@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ValidateResizeOnUnevenGridTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -33,16 +32,17 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logOut"/>
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo7">
+        <actionGroup ref="updateGridSizeInForm" stepKey="updateGridSizeTo7">
             <argument name="gridSize" value="7"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill3"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
         <!-- Verify Initial Column Sizes -->
