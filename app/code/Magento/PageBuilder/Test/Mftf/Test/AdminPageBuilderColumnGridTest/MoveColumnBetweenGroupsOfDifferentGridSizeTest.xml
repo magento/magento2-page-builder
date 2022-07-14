@@ -55,7 +55,9 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
+        <moveMouseOver selector="{{ColumnOnBackend.displayLabel('1', '8/8')}}" stepKey="mouseHoverOnOriginalColumnGroup"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumnGroup"/>
+        <moveMouseOver selector="{{ColumnOnBackend.displayLabel('2', '1/12')}}" stepKey="mouseHoverOnVerifyMovedColumn"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '1/12')}}" stepKey="verifyMovedColumn"/>
     </test>
 </tests>
