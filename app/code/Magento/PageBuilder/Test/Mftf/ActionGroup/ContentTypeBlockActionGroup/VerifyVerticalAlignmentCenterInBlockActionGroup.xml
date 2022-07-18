@@ -17,9 +17,9 @@
         </arguments>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].getBoundingClientRect().top" stepKey="containerCenter"/>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].getBoundingClientRect().top" stepKey="contentCenter"/>
-        <assertEquals stepKey="assertBottomPosition">
+        <assertGreaterThanOrEqual stepKey="assertBottomPosition">
             <expectedResult type="variable">containerCenter</expectedResult>
             <actualResult type="variable">contentCenter</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
     </actionGroup>
 </actionGroups>
