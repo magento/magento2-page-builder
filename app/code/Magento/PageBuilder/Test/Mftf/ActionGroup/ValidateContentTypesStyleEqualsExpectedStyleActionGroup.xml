@@ -13,8 +13,9 @@
     <arguments>
       <argument name="selector" type="string"/>
       <argument name="expectedProperty" type="string"/>
+      <argument name="cssProperty" defaultValue="backgroundColor" type="string"/>
     </arguments>
-    <grabAttributeFrom userInput="data-overlay-color" selector="{{selector}}" stepKey="fetchedProperty"/>
+    <executeJS function="return window.getComputedStyle(document.evaluate('{{selector}}', document.body).iterateNext()).{{cssProperty}}.replace(/px/g, &quot;&quot;)" stepKey="fetchedProperty"/>
     <assertEquals stepKey="propertyIsEqualsAsExpected">
       <expectedResult type="string">{{expectedProperty}}</expectedResult>
       <actualResult type="variable">fetchedProperty</actualResult>
