@@ -6,161 +6,160 @@
   */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-  <test name="BannerPosterOverlayAndButtonOnHoverTest">
-    <annotations>
-      <features value="PageBuilder"/>
-      <stories value="Banner"/>
-      <title value="Poster - Check poster button and overlay on hover state works"/>
-      <description value="Check poster button and overlay on hover state works"/>
-      <severity value="BLOCKER"/>
-      <useCaseId value="MAGETWO-83553"/>
-      <testCaseId value="MC-2665"/>
-      <group value="pagebuilder"/>
-      <group value="pagebuilder-banner"/>
-      <group value="pagebuilder-bannerPoster"/>
-    </annotations>
-    <before>
-      <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-      <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-      <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-      <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
-        <argument name="contentType" value="PageBuilderRowContentType"/>
-        <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-      </actionGroup>
-    </before>
-    <after>
-      <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-      <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
-    </after>
-    <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-      <argument name="contentType" value="PageBuilderBannerContentType"/>
-    </actionGroup>
-    <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-      <argument name="contentType" value="PageBuilderBannerContentType"/>
-    </actionGroup>
-    <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-      <argument name="contentType" value="PageBuilderBannerContentType"/>
-    </actionGroup>
-    <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-      <argument name="contentType" value="PageBuilderBannerContentType"/>
-    </actionGroup>
-    <!-- Fill Out Edit Panel -->
-    <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-    <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-      <argument name="property" value="PageBuilderAppearance_Poster"/>
-    </actionGroup>
-    <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
-      <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
-    </actionGroup>
-    <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
-      <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
-    </actionGroup>
-    <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
-      <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
-    </actionGroup>
-    <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayColor">
-      <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
-    </actionGroup>
-    <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
-      <argument name="property" value="PageBuilderBannerLinkUrlPropertyValidate"/>
-      <argument name="selection" value="{{ExternalLink.url}}"/>
-      <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
-    </actionGroup>
-    <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-    <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
-    <!-- Validate Stage -->
-    <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-    <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorStage">
-      <argument name="selector" value="{{BannerOnBackend.backgroundPath('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMStage"/>
-    <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStage"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayStage">
-      <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerStage"/>
-    <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
-    <waitForPageLoad time="30" stepKey="waitForTransitionStage"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStage">
-      <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-    <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-    <!-- Validate Storefront -->
-    <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-    <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-      <argument name="contentType" value="PageBuilderBannerContentType"/>
-    </actionGroup>
-    <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorStorefront">
-      <argument name="selector" value="{{BannerOnFrontend.backgroundPath('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
-    <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayStorefront">
-      <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
-    <wait time="5" stepKey="pauseAfterIconHover"/>
-    <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
-    <wait time="10" stepKey="pause1"/>
-    <moveMouseOver selector="{{BannerOnFrontend.button('1')}}" stepKey="moveMouseOverBannerButtonStorefront1"/>
-    <wait time="5" stepKey="pause2"/>
-    <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefront">
-      <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
-    <!-- Click banner anchor -->
-    <comment userInput="Click banner anchor" stepKey="clickBannerAnchorStorefront"/>
-    <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlStorefront"/>
-    <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
-    <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront"/>
-    <!-- Validate Storefront Mobile -->
-    <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-      <argument name="contentType" value="PageBuilderBannerContentType"/>
-    </actionGroup>
-    <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
-    <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-    <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorStorefrontMobile">
-      <argument name="selector" value="{{BannerOnFrontend.backgroundPath('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
-    <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayStorefrontMobile">
-      <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-    <waitForPageLoad time="30" stepKey="waitForTransitionStorefrontMobile"/>
-    <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
-    <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefrontMobile">
-      <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
-      <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
-      <argument name="cssProperty" value="backgroundColor"/>
-    </actionGroup>
-    <!-- Click mobile banner anchor -->
-    <comment userInput="Click mobile banner anchor" stepKey="clickMobileBannerAnchorStorefront"/>
-    <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
-    <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile"/>
-    <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefrontMobile"/>
-  </test>
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerPosterOverlayAndButtonOnHoverTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Poster - Check poster button and overlay on hover state works"/>
+            <description value="Check poster button and overlay on hover state works"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MC-2665"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
+            <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayColor">
+            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlPropertyValidate"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorStage">
+            <argument name="selector" value="{{BannerOnBackend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMStage"/>
+        <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayStage">
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerStage"/>
+        <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
+        <waitForPageLoad time="30" stepKey="waitForTransitionStage"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStage">
+            <argument name="selector" value="{{BannerOnBackend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
+        <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefront">
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
+        <!-- Click banner anchor -->
+        <comment userInput="Click banner anchor" stepKey="clickBannerAnchorStorefront"/>
+        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront"/>
+        <!-- Validate Storefront Mobile -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeBackgroundColorStorefrontMobile">
+            <argument name="selector" value="{{BannerOnFrontend.backgroundPath('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Plaintext_Green.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeTransparentOverlayStorefrontMobile">
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutsideMobileStorefront"/>
+        <wait time="5" stepKey="pauseAfterIconHoverMobileStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerMobileStorefront"/>
+        <wait time="10" stepKey="pause3"/>
+        <moveMouseOver selector="{{BannerOnFrontend.button('1')}}" stepKey="moveMouseOverBannerButtonMobileStorefront"/>
+        <wait time="5" stepKey="pause4"/>
+        <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefrontMobile">
+            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
+            <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
+            <argument name="cssProperty" value="backgroundColor"/>
+        </actionGroup>
+        <!-- Click mobile banner anchor -->
+        <comment userInput="Click mobile banner anchor" stepKey="clickMobileBannerAnchorStorefront"/>
+        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile"/>
+        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefrontMobile"/>
+    </test>
 </tests>
