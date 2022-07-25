@@ -114,6 +114,9 @@
         </actionGroup>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
+        <wait time="10" stepKey="pause1"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="50" y="50" stepKey="moveMouseOverBannerStorefront1"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefront">
             <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
