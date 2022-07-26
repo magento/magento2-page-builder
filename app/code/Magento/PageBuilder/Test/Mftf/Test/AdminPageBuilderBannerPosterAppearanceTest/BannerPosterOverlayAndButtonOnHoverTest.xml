@@ -112,7 +112,7 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}"  x="50" y="50"  stepKey="moveMouseOverBannerStorefront"/>
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefront">
