@@ -5,8 +5,7 @@
   * See COPYING.txt for license details.
   */
 -->
-<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="HeadingLiveEditToolbarNotCutOffInFullScreenModeTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -38,7 +37,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
         </actionGroup>
         <!-- Duplicate left column 3 times to create 1/12 column on the left configuration -->
         <comment userInput="Duplicate left column 3 times to create 1/12 column on the left configuration" stepKey="commentInitialResize"/>
@@ -54,7 +53,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <seeElement selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateFirstColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth"/>
         <!-- Add Heading Content Type -->
         <comment userInput="Add Heading Content Type" stepKey="commentAddInnerContentType"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderInnerContentTypePanelMenuSection">
@@ -133,7 +132,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
-        <seeElement selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="validateColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateColumnWidth"/>
         <!-- Add Another Heading Content Type -->
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingContentTypeIntoColumn2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -142,7 +141,6 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionInMediumColumn"/>
-        <executeJS function="return {$toolbarTopPositionInMediumColumn} * 2.24" stepKey="toolbarTopPositionInMediumColumnCalc"/>
         <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionBottom('0')}}" stepKey="inputBoxBottomPositionInMediumColumn"/>
         <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionInMediumColumn"/>
         <!-- Assert toolbar did not overflow in 3/12 column -->
@@ -153,7 +151,7 @@
         <!-- Check top of toolbar is below bottom of input box in 3/12 column -->
         <assertGreaterThanOrEqual stepKey="assertToolbarAboveInputBoxInMediumColumn">
             <expectedResult type="variable">$inputBoxBottomPositionInMediumColumn</expectedResult>
-            <actualResult type="variable">$toolbarTopPositionInMediumColumnCalc</actualResult>
+            <actualResult type="variable">$toolbarTopPositionInMediumColumn</actualResult>
         </assertGreaterThanOrEqual>
     </test>
 </tests>
