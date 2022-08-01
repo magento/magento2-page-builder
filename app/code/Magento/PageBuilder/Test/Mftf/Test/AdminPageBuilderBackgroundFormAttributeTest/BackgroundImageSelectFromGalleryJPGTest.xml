@@ -31,11 +31,16 @@
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
                 <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="PageBuilderBackgroundImageRoot_JPG"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage"/>
+            <actionGroup ref="DeleteFolderActionGroup" stepKey="DeleteFolderFromMediaGallery">
+                <argument name="ImageFolder" value="ImageFolder"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -56,8 +61,15 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
             <argument name="property" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
-        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+        <comment userInput="BIC workaround" stepKey="NavigateToFolder"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
             <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
+        <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="PageBuilderBackgroundImageRoot_JPG"/>

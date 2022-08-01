@@ -33,9 +33,13 @@
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToMediaGalleryNavigateToFolder">
-                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+                <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="navigateToMediaGalleryNavigateToFolder"/>
             <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
                 <argument name="ImageFolder" value="ImageFolder"/>
             </actionGroup>
@@ -94,14 +98,20 @@
         <!-- Add Image Link to TinyMCE -->
         <actionGroup ref="ClickTinyMCEInsertImageButtonActionGroup" stepKey="clickTinyMCEInsertImageButton"/>
         <actionGroup ref="GoToMediaGalleryFromTinyMCEImageModalActionGroup" stepKey="goToMediaGalleryFromTinyMCEImageModal"/>
-        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickTinyMCESelectorBrowseModalMediaGalleryStorageRootArrow"/>
+        <comment userInput="BIC workaround" stepKey="clickTinyMCESelectorBrowseModalMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="createTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="SaveImageActionGroup" stepKey="saveTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>    
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>
         <actionGroup ref="FillTinyMCEInsertImageModalAndSaveActionGroup" stepKey="fillTinyMCEInsertImageModalAndSave">
             <argument name="textToDisplay" value="{{PageBuilderBannerLinkUrlProperty.value}}"/>
         </actionGroup>
@@ -189,11 +199,20 @@
             <argument name="wysiwygArea" value="{{WYSIWYGOnPageBuilderInline.inlineCss}}"/>
         </actionGroup>
         <actionGroup ref="GoToMediaGalleryFromTinyMCEImageModalActionGroup" stepKey="goToMediaGalleryFromInlineWYSIWYGTinyMCEImageModal"/>
-        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickInlineWYSIWYGTinyMCESelectorBrowseModalMediaGalleryStorageRootArrow"/>
+        <comment userInput="BIC workaround" stepKey="clickInlineWYSIWYGTinyMCESelectorBrowseModalMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder2">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder2">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToImageFolderFolder">
+            <argument name="FolderName" value="{{ImageFolder.name}}"/>
+        </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromInlineWYSIWYGTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="SaveImageActionGroup" stepKey="saveInlineWYSIWYGTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>    
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveInlineWYSIWYGTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>
         <actionGroup ref="FillTinyMCEInsertImageModalAndSaveActionGroup" stepKey="fillInlineWYSIWYGTinyMCEInsertImageModalAndSave">
             <argument name="textToDisplay" value="{{PageBuilderBannerLinkUrlProperty.value}}"/>
         </actionGroup>

@@ -43,11 +43,16 @@
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+                <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="ImageUpload3"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder"/>
+            <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage"/>
+            <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
+                <argument name="ImageFolder" value="ImageFolder"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -105,7 +110,13 @@
         <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
         <actionGroup ref="ClickBrowseBtnOnUploadPopupActionGroup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActionsActionGroup" stepKey="VerifyMediaGalleryStorageBtn"/>
-        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <comment userInput="BIC workaround" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>

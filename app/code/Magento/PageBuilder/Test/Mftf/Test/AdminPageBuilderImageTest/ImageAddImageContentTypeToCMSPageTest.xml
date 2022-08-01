@@ -30,27 +30,29 @@
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
-                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG.path}}"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+                <argument name="FolderName" value="Storage Root"/>
+            </actionGroup>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
+                <argument name="ImageFolder" value="ImageFolder"/>
+            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder1"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
                 <argument name="Image" value="PageBuilderImageProperty_JPG"/>
             </actionGroup>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
-                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
-            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder2"/>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
                 <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
             </actionGroup>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder3">
-                <argument name="FolderName" value="{{ImageFolder.name}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
-                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
-            </actionGroup>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder4">
-                <argument name="FolderName" value="{{PageBuilderMobileImagePropertyGif.path}}"/>
-            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder3"/>
+            <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage3"/>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder4"/>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
                 <argument name="Image" value="PageBuilderMobileImagePropertyGif"/>
             </actionGroup>
@@ -102,8 +104,14 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
             <argument name="property" value="PageBuilderImageProperty_JPG2"/>
         </actionGroup>
-        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <comment userInput="BIC workaround" stepKey="clickStorageRoot"/>
+        <comment userInput="BIC workaround" stepKey="waitForPageLoad"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>

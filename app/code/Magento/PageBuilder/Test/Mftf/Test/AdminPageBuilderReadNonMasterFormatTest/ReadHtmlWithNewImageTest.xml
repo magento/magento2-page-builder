@@ -31,11 +31,16 @@
             <magentoCLI command="cache:clean config" stepKey="flushCache"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
+                <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="ImageUpload"/>
+            <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandWysiwygFolder">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <comment userInput="BIC workaround" stepKey="NavigateToFolder"/>
+            <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage"/>
+            <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
+                <argument name="ImageFolder" value="ImageFolder"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -51,33 +56,44 @@
         <click selector="{{MediaGallerySection.Browse}}" stepKey="clickBrowse"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear1"/>
-        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToStorageRootFolder">
+        <comment userInput="BIC workaround" stepKey="navigateToStorageRootFolder"/>
+        <actionGroup ref="AdminExpandMediaGalleryFolderActionGroup" stepKey="expandStorageRootFolder">
             <argument name="FolderName" value="Storage Root"/>
         </actionGroup>
-        <click selector="{{MediaGallerySection.CreateFolder}}" stepKey="createFolder"/>
-        <waitForElementVisible selector="{{MediaGallerySection.FolderName}}" stepKey="waitForPopup"/>
-        <fillField selector="{{MediaGallerySection.FolderName}}" userInput="{{ImageFolder.name}}" stepKey="fillFolderName"/>
-        <click selector="{{MediaGallerySection.AcceptFolderName}}" stepKey="acceptFolderName"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
-        <conditionalClick selector="{{MediaGallerySection.StorageRootArrow}}" dependentSelector="{{MediaGallerySection.checkIfArrowExpand}}" stepKey="clickStorageRootArrowIfClosed" visible="true"/>
-        <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
-        <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <waitForText userInput="{{ImageFolder.name}}" stepKey="waitForNewFolder"/>
-        <click userInput="{{ImageFolder.name}}" stepKey="clickOnCreatedFolder"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
-        <attachFile selector="{{MediaGallerySection.BrowseUploadImage}}" userInput="{{ImageUpload.file}}" stepKey="uploadImage1"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear4"/>
-        <waitForElementVisible selector="{{MediaGallerySection.image(ImageUpload.file)}}" stepKey="waitForUploadImage1"/>
-        <seeElement selector="{{MediaGallerySection.imageSelected(ImageUpload.file)}}" stepKey="seeImageSelected"/>
-        <waitForElementVisible selector="{{MediaGallerySection.image(ImageUpload.file)}}" stepKey="waitForUploadImage2"/>
-        <click selector="{{MediaGallerySection.InsertFile}}" stepKey="clickInsertBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
-        <waitForElementVisible selector="{{MediaGallerySection.OkBtn}}" stepKey="waitForOkBtn"/>
-        <fillField selector="{{MediaGallerySection.ImageDescription}}" userInput="{{ImageUpload.content}}" stepKey="fillImageDescription"/>
-        <fillField selector="{{MediaGallerySection.Height}}" userInput="{{ImageUpload.height}}" stepKey="fillImageHeight"/>
-        <click selector="{{MediaGallerySection.OkBtn}}" stepKey="clickOkBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToWysiwygFolder">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
+        <actionGroup ref="CreateImageFolderActionGroup" stepKey="createFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="waitForPopup"/>
+        <comment userInput="BIC workaround" stepKey="fillFolderName"/>
+        <comment userInput="BIC workaround" stepKey="acceptFolderName"/>
+        <comment userInput="BIC workaround" stepKey="waitForLoadingMaskToDisappear2"/>
+        <actionGroup ref="AttachImageActionGroup" stepKey="attachImage1">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <comment userInput="BIC workaround" stepKey="clickStorageRootArrowIfClosed"/>
+        <comment userInput="BIC workaround" stepKey="waitForPageLoad3"/>
+        <comment userInput="BIC workaround" stepKey="clickWysiwygArrowIfClosed"/>
+        <comment userInput="BIC workaround" stepKey="waitForPageLoad4"/>
+        <comment userInput="BIC workaround" stepKey="waitForNewFolder"/>
+        <comment userInput="BIC workaround" stepKey="clickOnCreatedFolder"/>
+        <comment userInput="BIC workaround" stepKey="waitForLoadingMaskToDisappear3"/>
+        <comment userInput="BIC workaround" stepKey="uploadImage1"/>
+        <comment userInput="BIC workaround" stepKey="waitForLoadingMaskToDisappear4"/>
+        <comment userInput="BIC workaround" stepKey="waitForUploadImage1"/>
+        <comment userInput="BIC workaround" stepKey="seeImageSelected"/>
+        <comment userInput="BIC workaround" stepKey="waitForUploadImage2"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
+        <comment userInput="BIC workaround" stepKey="clickInsertBtn"/>
+        <comment userInput="BIC workaround" stepKey="waitForLoadingMaskToDisappear5"/>
+        <actionGroup ref="FillOutUploadImagePopupActionGroup" stepKey="fillOutUploadImagePopup"/>
+        <comment userInput="BIC workaround" stepKey="waitForOkBtn"/>
+        <comment userInput="BIC workaround" stepKey="fillImageDescription"/>
+        <comment userInput="BIC workaround" stepKey="fillImageHeight"/>
+        <comment userInput="BIC workaround" stepKey="clickOkBtn"/>
+        <comment userInput="BIC workaround" stepKey="waitForPageLoad5"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
