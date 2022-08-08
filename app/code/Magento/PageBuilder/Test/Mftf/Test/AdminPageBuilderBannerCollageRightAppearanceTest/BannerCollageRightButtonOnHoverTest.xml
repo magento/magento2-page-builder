@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCollageRight"/>
+            <skip>
+              <issueId value="ACQE-3837">Skipped</issueId>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -85,7 +88,11 @@
         </actionGroup>
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
+        <!--    -->
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
+        <wait time="10" stepKey="pause1"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
@@ -100,7 +107,10 @@
         </actionGroup>
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutsideStorefrontMobile"/>
+        <wait time="5" stepKey="pauseAfterIconHoverStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
+        <wait time="10" stepKey="pause3"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
     </test>
 </tests>
