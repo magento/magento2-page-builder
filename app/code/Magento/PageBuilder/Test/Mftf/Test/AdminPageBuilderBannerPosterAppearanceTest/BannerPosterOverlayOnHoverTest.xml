@@ -79,8 +79,11 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
-        <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
+        <wait time="5" stepKey="pause1"/>
+      <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayBackgroundColorStorefront">
             <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
@@ -92,11 +95,14 @@
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
         <waitForPageLoad time="30" stepKey="waitForTransitionStorefrontMobile"/>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStorefrontMobile"/>
+        <wait time="5" stepKey="pauseAfterIconHoverMobileStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerMobileStorefront"/>
+        <wait time="5" stepKey="pause3"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayBackgroundColorStorefrontMobile">
-            <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
-            <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
-            <argument name="cssProperty" value="backgroundColor"/>
-        </actionGroup>
+              <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
+              <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
+              <argument name="cssProperty" value="backgroundColor"/>
+          </actionGroup>
     </test>
 </tests>

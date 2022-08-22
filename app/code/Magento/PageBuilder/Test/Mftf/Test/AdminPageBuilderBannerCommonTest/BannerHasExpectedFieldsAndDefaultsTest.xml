@@ -111,7 +111,8 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <scrollTo selector="//div[@data-index='background']/descendant::*[@name='background_position']/option" stepKey="options"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
             <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
             <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
