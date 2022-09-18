@@ -78,7 +78,7 @@
         </helper>
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus"/>
         <executeJS function="return jQuery('.inline-wysiwyg h2').text().substring(1, 11);" stepKey="selectionString"/>
-        <assertEquals stepKey="assertSelectionText">
+        <assertEquals stepKey="assertSelection">
             <expectedResult type="string">{{TinyMCEPartialHeadingSelection.selection}}</expectedResult>
             <actualResult type="variable">selectionString</actualResult>
         </assertEquals>
@@ -96,7 +96,7 @@
         </helper>
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus2"/>
         <executeJS function="return jQuery('.inline-wysiwyg p:last-child').text().substring(3, 10);" stepKey="selectionString2"/>
-        <assertEquals stepKey="assertSelectionText2">
+        <assertEquals stepKey="assertSelection2">
             <expectedResult type="string">{{TinyMCEPartialTextSelection.selection}}</expectedResult>
             <actualResult type="variable">selectionString2</actualResult>
         </assertEquals>
@@ -116,7 +116,7 @@
 
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus3"/>
         <executeJS function="return jQuery('.inline-wysiwyg').text().substring(1, 35);" stepKey="selectionString3"/>
-        <assertEquals stepKey="assertSelectionText3">
+        <assertEquals stepKey="assertSelection3">
             <expectedResult type="string">{{TinyMCEHeadingVariableTextSelection.selection}}</expectedResult>
             <actualResult type="variable">selectionString3</actualResult>
         </assertEquals>
