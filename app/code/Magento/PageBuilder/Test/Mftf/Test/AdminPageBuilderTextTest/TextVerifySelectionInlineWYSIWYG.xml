@@ -18,14 +18,10 @@
             <testCaseId value="MC-29450"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MQE-2288" />
-                <issueId value="MQE-3208" />
-            </skip>
             <group value="pr_exclude"/>
         </annotations>
         <before>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
@@ -40,10 +36,12 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="focusTinyMCE" stepKey="focusTinyMCE"/>
         <!-- Create new Heading 2 -->
@@ -79,14 +77,16 @@
             <argument name="endY">{{TinyMCEPartialHeadingSelection.endY}}</argument>
         </helper>
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus"/>
-        <actionGroup ref="assertSelectedText" stepKey="assertSelection">
-            <argument name="expectedSelectedText" value="TinyMCEPartialHeadingSelection"/>
-        </actionGroup>
+        <executeJS function="return jQuery('.inline-wysiwyg h2').text().substring(1, 11);" stepKey="selectionString"/>
+        <assertEquals stepKey="assertSelection">
+            <expectedResult type="string">{{TinyMCEPartialHeadingSelection.selection}}</expectedResult>
+            <actualResult type="variable">selectionString</actualResult>
+        </assertEquals>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForReload"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE2"/>
-        <!-- Select portion of paragraph text "es stri" -->
+        <!-- Select portion of paragraph text "t strin" -->
         <helper class="Magento\PageBuilder\Test\Mftf\Helper\SelectText" method="selectText" stepKey="selectTextInTinyMCE">
             <argument name="context">//div[contains(@class, 'inline-wysiwyg')]//p[2]</argument>
             <argument name="startX">{{TinyMCEPartialTextSelection.startX}}</argument>
@@ -95,9 +95,11 @@
             <argument name="endY">{{TinyMCEPartialTextSelection.endY}}</argument>
         </helper>
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus2"/>
-        <actionGroup ref="assertSelectedText" stepKey="assertSelection2">
-            <argument name="expectedSelectedText" value="TinyMCEPartialTextSelection"/>
-        </actionGroup>
+        <executeJS function="return jQuery('.inline-wysiwyg p:last-child').text().substring(3, 10);" stepKey="selectionString2"/>
+        <assertEquals stepKey="assertSelection2">
+            <expectedResult type="string">{{TinyMCEPartialTextSelection.selection}}</expectedResult>
+            <actualResult type="variable">selectionString2</actualResult>
+        </assertEquals>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForReload2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
@@ -113,8 +115,10 @@
         </helper>
 
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus3"/>
-        <actionGroup ref="assertSelectedText" stepKey="assertSelection3">
-            <argument name="expectedSelectedText" value="TinyMCEHeadingVariableTextSelection"/>
-        </actionGroup>
+        <executeJS function="return jQuery('.inline-wysiwyg').text().substring(1, 35);" stepKey="selectionString3"/>
+        <assertEquals stepKey="assertSelection3">
+            <expectedResult type="string">{{TinyMCEHeadingVariableTextSelection.selection}}</expectedResult>
+            <actualResult type="variable">selectionString3</actualResult>
+        </assertEquals>
     </test>
 </tests>
