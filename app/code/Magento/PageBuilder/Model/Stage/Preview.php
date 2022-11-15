@@ -14,7 +14,7 @@ use Magento\Framework\View\Design\Theme\ThemeProviderInterface;
 use Magento\Framework\View\DesignInterface;
 use Magento\Store\Model\App\Emulation;
 use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Model\Store;
 
 /**
  * Handle placing Magento into Page Builder Preview mode and emulating the store front
@@ -42,11 +42,6 @@ class Preview
     private $themeProvider;
 
     /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
@@ -62,7 +57,6 @@ class Preview
      * @param State $appState
      * @param DesignInterface $design
      * @param ThemeProviderInterface $themeProvider
-     * @param StoreManagerInterface $storeManager
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
@@ -70,14 +64,12 @@ class Preview
         State $appState,
         DesignInterface $design,
         ThemeProviderInterface $themeProvider,
-        StoreManagerInterface $storeManager,
         ScopeConfigInterface $scopeConfig
     ) {
         $this->emulation = $emulation;
         $this->appState = $appState;
         $this->design = $design;
         $this->themeProvider = $themeProvider;
-        $this->storeManager = $storeManager;
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -104,7 +96,7 @@ class Preview
         $this->isPreview = true;
 
         if (!$storeId) {
-            $storeId = $this->getStoreId();
+            $storeId = Store::DEFAULT_STORE_ID;
         }
         $this->emulation->startEnvironmentEmulation($storeId);
 
@@ -139,27 +131,5 @@ class Preview
     public function isPreviewMode() : bool
     {
         return $this->isPreview;
-    }
-
-    /**
-     * Returns store id by default store view or store id from the available store if default store view is null
-     *
-     * @return int|null
-     */
-    private function getStoreId(): ?int
-    {
-        $storeId = null;
-        $store = $this->storeManager->getDefaultStoreView();
-        if ($store) {
-            $storeId = (int) $store->getId();
-        } else {
-            $stores = $this->storeManager->getStores();
-            if (count($stores)) {
-                $store = array_shift($stores);
-                $storeId = (int) $store->getId();
-            }
-        }
-
-        return $storeId;
     }
 }
