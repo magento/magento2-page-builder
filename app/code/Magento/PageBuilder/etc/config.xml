@@ -5,7 +5,8 @@
  * See COPYING.txt for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <general>
             <validator_data>
@@ -38,5 +39,10 @@
                 </allowed_resources>
             </media_storage_configuration>
         </system>
+        <catalog>
+            <fields_masks>
+                <meta_description>{{name}}</meta_description>
+            </fields_masks>
+        </catalog>
     </default>
 </config>
