@@ -252,7 +252,7 @@ export default class Preview extends BasePreview {
                 && !this.wysiwyg
                 && document.activeElement === this.element
                 // Check that mouseup occurred outside the element, otherwise "click" event will be triggerred in which
-                // case we don't need to do anything as the "click" event handled in "activateEditor"
+                // case we don't need to do anything as the "click" event is handled in "activateEditor"
                 // Note: click is fired after a full click action occurs; that is, the mouse button is pressed
                 // and released while the pointer remains inside the same element.
                 && this.element !== mouseUpEvent.target
@@ -265,7 +265,10 @@ export default class Preview extends BasePreview {
         };
 
         event.stopPropagation();
-        $(document).on("mouseup",  handleMouseUp);
+
+        if (this.element && !this.wysiwyg) {
+            $(document).on("mouseup",  handleMouseUp);
+        }
 
         return true;
     }

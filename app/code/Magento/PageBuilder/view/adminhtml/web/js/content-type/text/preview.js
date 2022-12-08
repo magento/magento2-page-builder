@@ -235,7 +235,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
       var handleMouseUp = function handleMouseUp(mouseUpEvent) {
         if (_this6.element && !_this6.wysiwyg && document.activeElement === _this6.element // Check that mouseup occurred outside the element, otherwise "click" event will be triggerred in which
-        // case we don't need to do anything as the "click" event handled in "activateEditor"
+        // case we don't need to do anything as the "click" event is handled in "activateEditor"
         // Note: click is fired after a full click action occurs; that is, the mouse button is pressed
         // and released while the pointer remains inside the same element.
         && _this6.element !== mouseUpEvent.target && !_jquery.contains(_this6.element, mouseUpEvent.target)) {
@@ -247,7 +247,11 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       };
 
       event.stopPropagation();
-      (0, _jquery)(document).on("mouseup", handleMouseUp);
+
+      if (this.element && !this.wysiwyg) {
+        (0, _jquery)(document).on("mouseup", handleMouseUp);
+      }
+
       return true;
     }
     /**
