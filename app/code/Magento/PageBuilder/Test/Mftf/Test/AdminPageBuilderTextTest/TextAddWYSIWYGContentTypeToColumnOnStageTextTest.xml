@@ -23,6 +23,9 @@
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE"/>
         </before>
         <after>
@@ -40,6 +43,9 @@
             </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
+            <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
