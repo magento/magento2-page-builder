@@ -2,7 +2,7 @@
 
 Contributions to the Magento 2 Page Builder codebase are done using the fork & pull model.
 This contribution model has contributors maintaining their own fork of the Magento 2 Page Builder repository.
-The forked repository is then used to submit a request to the base repository to “pull” a set of changes.
+The forked repository is then used to submit a request to the base repository to "pull" a set of changes.
 For more information on pull requests please refer to [GitHub Help](https://help.github.com/articles/about-pull-requests/).
 
 Contributions can take the form of new components or features, changes to existing features, tests, documentation (such as developer guides, user guides, examples, or specifications), bug fixes or optimizations.
@@ -33,7 +33,7 @@ This will allow you to collaborate with the Magento 2 Page Builder development t
 1. Search current [listed issues](https://github.com/magento/magento2-page-builder/issues) (open or closed) for similar proposals of intended contribution before starting work on a new contribution.
 2. Review the [Contributor License Agreement](https://opensource.adobe.com/cla.html) if this is your first time contributing.
 3. Create and test your work.
-4. Fork the Magento 2 Page Builder repository according to the [Fork A Repository instructions](https://devdocs.magento.com/guides/v2.4/contributor-guide/contributing.html#fork) and when you are ready to send us a pull request – follow the [Create A Pull Request instructions](https://devdocs.magento.com/guides/v2.4/contributor-guide/contributing.html#pull_request).
+4. Fork the Magento 2 Page Builder repository according to the [Fork A Repository instructions](https://developer.adobe.com/commerce/contributor/guides/code-contributions/) and when you are ready to send us a pull request – follow the [Create A Pull Request instructions](https://developer.adobe.com/commerce/contributor/guides/code-contributions/).
 5. Once your contribution is received the Magento 2 Page Builder development team will review the contribution and collaborate with you as needed.
 
 ## Code of Conduct
