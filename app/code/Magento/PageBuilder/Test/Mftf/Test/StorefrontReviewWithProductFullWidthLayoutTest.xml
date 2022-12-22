@@ -72,6 +72,11 @@
             <argument name="productUrl" value="$$createProduct.custom_attributes[url_key]$$"/>
         </actionGroup>
         <!-- Click on reviews and add review with current user -->
+        <scrollTo selector="{{StorefrontProductReviewsSection.startRating('1','5')}}" x="-200" y="-200" stepKey="scrollToQuality"/>
+        <clickWithLeftButton selector="{{StorefrontProductReviewsSection.startRating('1','5')}}" x="75" y="0" stepKey="clickButton1"/>
+        <clickWithLeftButton selector="{{StorefrontProductReviewsSection.startRating('2','5')}}" x="75" y="0" stepKey="clickButton2"/>
+        <clickWithLeftButton selector="{{StorefrontProductReviewsSection.startRating('3','5')}}" x="75" y="0" stepKey="clickButton3"/>
+
         <actionGroup ref="StorefrontAddProductReviewProductFullWidthLayoutActionGroup" stepKey="addReview"/>
         <!-- Go to "Pending reviews" page and clear filters -->
         <actionGroup ref="AdminOpenPendingReviewsPageActionGroup" stepKey="openReviewsPage"/>
