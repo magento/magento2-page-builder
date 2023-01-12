@@ -170,7 +170,11 @@ class Template
                 throw new DOMException($errorString, $errorNumber);
             }
         );
-        $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+        $string = mb_encode_numericentity(
+            $html,
+            ['HTML-ENTITIES','','',''],
+            'UTF-8'
+        );
         try {
             libxml_use_internal_errors(true);
             // LIBXML_SCHEMA_CREATE option added according to this message
