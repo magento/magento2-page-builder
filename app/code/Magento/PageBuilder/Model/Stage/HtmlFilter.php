@@ -45,7 +45,11 @@ class HtmlFilter
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
             $content = '<div>' . $content . '</div>';
-            $string = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+            $string = mb_encode_numericentity(
+                $content,
+                ['HTML-ENTITIES','','',''],
+                'UTF-8'
+            );
             $dom->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } catch (\Exception $e) {
             $this->loggerInterface->critical($e->getMessage());
