@@ -41,6 +41,7 @@ class HtmlFilter
     public function filterHtml(string $content): string
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
+        $previous = '';
         try {
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
