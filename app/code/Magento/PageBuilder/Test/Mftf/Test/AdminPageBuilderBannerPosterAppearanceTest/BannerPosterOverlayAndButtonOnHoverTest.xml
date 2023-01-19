@@ -112,8 +112,10 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
-        <waitForPageLoad time="30" stepKey="waitForTransitionStorefront"/>
+        <wait time="10" stepKey="waitForTransitionStorefront"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefront">
             <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
@@ -145,9 +147,12 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <waitForPageLoad time="30" stepKey="waitForTransitionStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStorefrontMobile"/>
+        <wait time="5" stepKey="waitForTransitionStorefrontMobile"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
+        <wait time="5" stepKey="pause3"/>
+        <moveMouseOver selector="{{BannerOnFrontend.button('1')}}" stepKey="moveMouseOverBannerButtonMobileStorefront"/>
+        <wait time="5" stepKey="pause4"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefrontMobile">
             <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.value}}"/>
