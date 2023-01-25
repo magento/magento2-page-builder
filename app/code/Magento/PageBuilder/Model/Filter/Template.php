@@ -170,9 +170,10 @@ class Template
                 throw new DOMException($errorString, $errorNumber);
             }
         );
+        $convmap = [0x80, 0x10FFFF, 0, 0x1FFFFF];
         $string = mb_encode_numericentity(
             $html,
-            ['HTML-ENTITIES','','',''],
+            $convmap,
             'UTF-8'
         );
         try {
