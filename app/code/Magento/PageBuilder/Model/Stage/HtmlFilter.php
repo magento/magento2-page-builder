@@ -46,9 +46,10 @@ class HtmlFilter
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
             $content = '<div>' . $content . '</div>';
+            $convmap = [0x80, 0x10FFFF, 0, 0x1FFFFF];
             $string = mb_encode_numericentity(
                 $content,
-                ['HTML-ENTITIES','','',''],
+                $convmap,
                 'UTF-8'
             );
             $dom->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
