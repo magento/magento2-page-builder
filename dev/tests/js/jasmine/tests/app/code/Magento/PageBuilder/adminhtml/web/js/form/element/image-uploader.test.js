@@ -6,9 +6,8 @@
 
 /* eslint-disable max-nested-callbacks */
 define([
-    'jquery',
     'squire'
-], function ($, Squire) {
+], function (Squire) {
     'use strict';
 
     var uploader,
@@ -73,7 +72,7 @@ define([
 
     beforeEach(function (done) {
         injector.mock(mocks);
-        injector.require(['Magento_PageBuilder/js/form/element/image-uploader'], function (ImageUploader) {
+        injector.require(['Magento_PageBuilder/js/form/element/image-uploader', 'jquery'], function (ImageUploader, $) {
             /**
              * A stub constructor to bypass the original
              * @constructor
@@ -114,7 +113,7 @@ define([
                 expect(uploader.$uploadArea.removeClass).toHaveBeenCalledWith('foo bar');
             });
 
-            $.each(scenarios, function (i, scenario) {
+            scenarios.forEach(function (scenario, i) {
                 it('Should add modifier classes if configuration is met in scenario ' + i, function () {
                     uploader.elementWidthModifierClasses = scenario.config;
                     spyOn(uploader.$uploadArea, 'is').and.returnValue(true);

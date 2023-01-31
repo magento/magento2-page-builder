@@ -131,7 +131,26 @@ define([
                 editableValue = this.pageBuilder.isFullScreen();
 
             editable.attr('contenteditable', editableValue);
-            $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue);
+            if (this.pageBuilder.isFullScreen()) {
+                $(pageBuilderSelector + focusableSelector)
+                    .each(function () {
+                        if ($(this).data('original-tabindex')) {
+                            $(this).attr('tabindex', $(this).data('original-tabindex'));
+                        } else if ($(this).data('original-tabindex') === '') {
+                            $(this).removeAttr('tabindex');
+                        }
+                        $(this).removeData('original-tabindex');
+                    });
+            } else {
+                $(pageBuilderSelector + focusableSelector).each(function () {
+                    if ($(this).attr('tabindex')) {
+                        $(this).data('original-tabindex', $(this).attr('tabindex'));
+                    } else {
+                        $(this).data('original-tabindex', '');
+                    }
+                    $(this).attr('tabindex', '-1');
+                });
+            }
             $(mediaSelector).attr('tabindex', tabIndexValue);
         },
 
