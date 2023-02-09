@@ -487,8 +487,9 @@ export function removeReservedHtmlAttributes(content: string): string
 /**
  * Remove attribute from html tags
  *
- * @param content
- * @param name
+ * @param {string} content
+ * @param {string} name
+ * @returns {string}
  */
 function removeHtmlTagAttribute(content: string, name: string): string
 {

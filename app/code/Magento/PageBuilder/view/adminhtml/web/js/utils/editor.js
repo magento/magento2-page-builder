@@ -453,8 +453,9 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
   /**
    * Remove attribute from html tags
    *
-   * @param content
-   * @param name
+   * @param {string} content
+   * @param {string} name
+   * @returns {string}
    */
 
 
