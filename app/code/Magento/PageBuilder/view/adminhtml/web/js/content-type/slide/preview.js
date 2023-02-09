@@ -361,7 +361,6 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       }
 
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      wysiwygConfig.adapter.settings.paste_as_text = true;
 
       if (focus) {
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
