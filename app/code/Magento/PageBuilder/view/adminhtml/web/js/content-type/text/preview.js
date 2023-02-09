@@ -323,15 +323,16 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _proto.bindEvents = function bindEvents() {
       var _this8 = this;
 
-      _preview2.prototype.bindEvents.call(this);
-
       this.contentType.dataStore.subscribe(function (state) {
-        var sanitizedContent = (0, _editor.replaceDoubleQuoteWithSingleQuoteWithinVariableDirective)((0, _editor.escapeDoubleQuoteWithinWidgetDirective)(state.content));
+        var sanitizedContent = (0, _editor.removeReservedHtmlAttributes)((0, _editor.replaceDoubleQuoteWithSingleQuoteWithinVariableDirective)((0, _editor.escapeDoubleQuoteWithinWidgetDirective)(state.content)));
 
         if (sanitizedContent !== state.content) {
           state.content = sanitizedContent;
         }
-      }); // After drop of new content type open TinyMCE and focus
+      }, "content");
+
+      _preview2.prototype.bindEvents.call(this); // After drop of new content type open TinyMCE and focus
+
 
       _events.on("text:dropAfter", function (args) {
         if (args.id === _this8.contentType.id) {
