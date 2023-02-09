@@ -494,8 +494,7 @@ function removeHtmlTagAttribute(content: string, name: string): string
 {
     if (typeof content === "string" && content.indexOf(`${name}=`) !== -1) {
         const html = new DOMParser().parseFromString(content, "text/html");
-        const children = html.querySelectorAll("[" + name + "]");
-        children.forEach((child: Element) => {
+        html.querySelectorAll(`[${name}]`).forEach((child: Element) => {
             child.removeAttribute(name);
         });
         content = html.body.innerHTML;

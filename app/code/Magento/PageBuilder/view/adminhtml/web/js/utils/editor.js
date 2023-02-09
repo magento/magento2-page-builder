@@ -461,8 +461,7 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
   function removeHtmlTagAttribute(content, name) {
     if (typeof content === "string" && content.indexOf(name + "=") !== -1) {
       var html = new DOMParser().parseFromString(content, "text/html");
-      var children = html.querySelectorAll("[" + name + "]");
-      children.forEach(function (child) {
+      html.querySelectorAll("[" + name + "]").forEach(function (child) {
         child.removeAttribute(name);
       });
       content = html.body.innerHTML;
