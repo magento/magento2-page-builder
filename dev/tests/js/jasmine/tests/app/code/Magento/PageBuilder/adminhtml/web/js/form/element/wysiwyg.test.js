@@ -6,41 +6,34 @@
 
 /* eslint-disable max-nested-callbacks */
 define([
-    'squire'
-], function (Squire) {
+    'jquery',
+    'Magento_PageBuilder/js/form/element/wysiwyg'
+], function ($, UiWysiwyg) {
     'use strict';
 
-    var injector = new Squire(),
-        mocks = {
-            'Magento_PageBuilder/js/events': jasmine.createSpyObj('events',['on', 'trigger']),
-            'Magento_PageBuilder/js/page-builder': function () {}
-        },
-        wysiwyg,
-        $;
+    var wysiwyg;
 
-    beforeEach(function (done) {
-        injector.mock(mocks);
-        injector.require(['Magento_PageBuilder/js/form/element/wysiwyg', 'jquery'], function (UiWysiwyg, jq) {
-            var MockWysiwyg = function () {};
+    function createWysiwygMock() {
+        var mock,
+            MockWysiwyg = function () {};
 
-            MockWysiwyg.prototype = Object.create(UiWysiwyg.prototype);
-            MockWysiwyg.prototype.constructor = MockWysiwyg;
-            wysiwyg = new MockWysiwyg();
-            $ = jq;
-            $.extend(wysiwyg, UiWysiwyg.defaults, {pageBuilder: {id: 'pb-wysiwyg-test'}});
-            $(document.body).append(
-                $('<div><div contenteditable="true"><a href="/login"></a><span tabindex="0"></span></div></div>')
-                    .attr('id', wysiwyg.pageBuilder.id)
-            );
-            done();
-        });
+        MockWysiwyg.prototype = Object.create(UiWysiwyg.prototype);
+        MockWysiwyg.prototype.constructor = MockWysiwyg;
+        mock = new MockWysiwyg();
+        $.extend(mock, UiWysiwyg.defaults);
+        return mock;
+    }
+
+    beforeEach(function () {
+        wysiwyg = createWysiwygMock();
+        wysiwyg.pageBuilder = {id: 'pb-wysiwyg-test'};
+        $(document.body).append(
+            $('<div><div contenteditable="true"><a href="/login"></a><span tabindex="0"></span></div></div>')
+                .attr('id', wysiwyg.pageBuilder.id)
+        );
     });
 
     afterEach(function () {
-        try {
-            injector.clean();
-            injector.remove();
-        } catch (e) {}
         $('#' + wysiwyg.pageBuilder.id).remove();
     });
 
