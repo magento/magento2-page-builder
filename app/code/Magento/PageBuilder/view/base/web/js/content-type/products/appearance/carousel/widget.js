@@ -27,7 +27,7 @@ define([
             $carouselElement.slick('unslick');
         }
 
-        config.slidesToScroll = config.slidesToShow;
+        config.slidesToScroll = Math.round(config.slidesToShow);
         $carouselElement.slick(config);
     }
 
