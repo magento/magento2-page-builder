@@ -423,6 +423,14 @@ define(["jarallax", "jarallaxVideo", "jquery", "jquery/z-index", "mage/translate
     _proto.bindEvents = function bindEvents() {
       var _this8 = this;
 
+      this.contentType.dataStore.subscribe(function (state) {
+        var sanitizedContent = (0, _editor.removeReservedHtmlAttributes)(state.message);
+
+        if (sanitizedContent !== state.message) {
+          state.message = sanitizedContent;
+        }
+      }, "message");
+
       _preview2.prototype.bindEvents.call(this);
 
       _events.on("banner:mountAfter", function (args) {

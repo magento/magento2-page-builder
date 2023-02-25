@@ -6,8 +6,9 @@
 /* eslint-disable max-nested-callbacks */
 define([
     'Magento_PageBuilder/js/utils/editor',
-    'jquery'
-], function (utils, $) {
+    'jquery',
+    'Magento_PageBuilder/js/config'
+], function (utils, $, Config) {
     'use strict';
 
     describe('Magento_PageBuilder/js/utils/editor.js', function () {
@@ -39,6 +40,23 @@ define([
                 utils.unlockImageSize(element);
                 expect(image.style.width).toEqual('100%');
                 expect(image.style.height).toEqual('');
+            });
+        });
+
+        describe('removeReservedHtmlAttributes', function () {
+            it('Should remove reserve html attributes from a content', function () {
+                var content = '<div id="x" data-t1="1" data-t2="2"><span id="y" data-t2="2" data-t3="3"></span></div>';
+
+                Config.setConfig({
+                    stage_config: {
+                        reserved_html_attributes: {
+                            'data-t2': 'data-t2',
+                            'data-t3': 'data-t3'
+                        }
+                    }
+                });
+                content = utils.removeReservedHtmlAttributes(content);
+                expect(content).toEqual('<div id="x" data-t1="1"><span id="y"></span></div>');
             });
         });
     });
