@@ -419,6 +419,8 @@
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseSlideStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefront"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
@@ -472,7 +474,12 @@
         </actionGroup>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobile"/>
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefrontMobile"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseSlideStageOutsideStorefrontMobile"/>
+        <wait time="5" stepKey="pauseAfterIconHoverStorefrontMobile"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobileAgain"/>
+        <wait time="2" stepKey="pause3"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
+        <wait time="5" stepKey="pause4"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile">
             <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>
