@@ -28,7 +28,7 @@ use Magento\Framework\AuthorizationInterface;
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
 
-    public const ADMIN_RESOURCE = 'Magento_Backend::content';
+    private const ADMIN_RESOURCE = 'Magento_Backend::content';
 
     /**
      * @var Repository
@@ -55,6 +55,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
      * @param Repository|null $assetRepo
+     * @param AuthorizationInterface|null $authorization
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.NPathComplexity)
