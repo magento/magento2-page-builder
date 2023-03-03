@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SpecificACLAdminUserCheckProductContentEditWithPageBuilderTest">
+        <annotations>
+            <features value="Catalog"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createSimpleProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsLimitedAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin1"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createSimpleProduct" stepKey="deleteProduct"/>
+            <actionGroup ref="AdminDeleteCreatedUserActionGroup" stepKey="deleteAdminUser">
+                <argument name="user" value="Admin3"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteUserRoleWithSpecifiedPermissionActionGroup" stepKey="deleteRole">
+                <argument name="role" value="roleSales"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsAdmin1"/>
+        </after>
+        <actionGroup ref="AdminOpenCreateRolePageActionGroup" stepKey="goToNewRolePage"/>
+        <actionGroup ref="AdminFillUserRoleFormActionGroup" stepKey="startCreateUserRole" >
+            <argument name="role" value="roleSales"/>
+        </actionGroup>
+        <actionGroup ref="AdminChooseUserRoleResourceActionGroup" stepKey="setResourceAccess">
+            <argument name="resourceId" value="Magento_Catalog::catalog"/>
+            <argument name="resourceName" value="Catalog"/>
+        </actionGroup>
+        <actionGroup ref="AdminSaveUserRoleActionGroup" stepKey="saveUserRole" />
+        <actionGroup ref="AdminCreateUserWithRoleActionGroup" stepKey="createRestrictedAdmin">
+            <argument name="role" value="roleSales"/>
+            <argument name="user" value="Admin3"/>
+        </actionGroup>
+        <!-- Logout and login with newly created restricted user -->
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsAdmin"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsLimitedAdmin">
+            <argument name="username" value="{{Admin3.username}}"/>
+            <argument name="password" value="{{Admin3.password}}"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToProductPage" >
+            <argument name="product" value="$$createSimpleProduct$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminOpenContentSectionOnProductPageActionGroup" stepKey="openContentSection"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <seeElement selector="{{AdminProductMessagesSection.successMessage}}" stepKey="checkProductSavedMessage"/>
+    </test>
+</tests>
