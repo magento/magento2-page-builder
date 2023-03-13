@@ -33,21 +33,17 @@
                 <argument name="user" value="Admin3"/>
             </actionGroup>
             <actionGroup ref="AdminDeleteUserRoleWithSpecifiedPermissionActionGroup" stepKey="deleteRole">
-                <argument name="role" value="roleSales"/>
+                <argument name="role" value="limitedAccessRole"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsAdmin1"/>
         </after>
-        <actionGroup ref="AdminOpenCreateRolePageActionGroup" stepKey="goToNewRolePage"/>
-        <actionGroup ref="AdminFillUserRoleFormActionGroup" stepKey="startCreateUserRole" >
-            <argument name="role" value="roleSales"/>
+        <!-- Create a restricted role with access only to Catalog -->
+        <actionGroup ref="AdminCreateRoleActionGroup" stepKey="createRestrictedRole">
+            <argument name="restrictedRole" value="Catalog"/>
+            <argument name="User" value="limitedAccessRole"/>
         </actionGroup>
-        <actionGroup ref="AdminChooseUserRoleResourceActionGroup" stepKey="setResourceAccess">
-            <argument name="resourceId" value="Magento_Catalog::catalog"/>
-            <argument name="resourceName" value="Catalog"/>
-        </actionGroup>
-        <actionGroup ref="AdminSaveUserRoleActionGroup" stepKey="saveUserRole" />
         <actionGroup ref="AdminCreateUserWithRoleActionGroup" stepKey="createRestrictedAdmin">
-            <argument name="role" value="roleSales"/>
+            <argument name="role" value="limitedAccessRole"/>
             <argument name="user" value="Admin3"/>
         </actionGroup>
         <!-- Logout and login with newly created restricted user -->
