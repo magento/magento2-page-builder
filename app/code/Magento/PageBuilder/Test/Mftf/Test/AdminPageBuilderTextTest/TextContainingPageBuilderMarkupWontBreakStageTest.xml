@@ -40,5 +40,16 @@
         <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextVisible"/>
         <seeElement selector="{{TextOnStage.base('1')}}" stepKey="seeText"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTestStringInText"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDesktop"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageDesktop"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCodeAfterSave"/>
+        <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextVisibleAfterSave"/>
+        <seeElement selector="{{TextOnStage.base('1')}}" stepKey="seeTextAfterSave"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTestStringInTextAfterSave"/>
     </test>
 </tests>
