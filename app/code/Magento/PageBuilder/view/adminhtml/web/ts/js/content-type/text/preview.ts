@@ -20,6 +20,7 @@ import {
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
+    removeReservedHtmlAttributes,
     replaceDoubleQuoteWithSingleQuoteWithinVariableDirective,
     unlockImageSize,
 } from "../../utils/editor";
@@ -340,17 +341,19 @@ export default class Preview extends BasePreview {
      * Bind events
      */
     protected bindEvents() {
-        super.bindEvents();
-
         this.contentType.dataStore.subscribe((state: DataObject) => {
-            const sanitizedContent = replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(
-                escapeDoubleQuoteWithinWidgetDirective(state.content),
-            );
+            const sanitizedContent = removeReservedHtmlAttributes(
+                    replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(
+                        escapeDoubleQuoteWithinWidgetDirective(state.content),
+                    ),
+                );
 
             if (sanitizedContent !== state.content) {
                 state.content = sanitizedContent;
             }
-        });
+        }, "content");
+
+        super.bindEvents();
 
         // After drop of new content type open TinyMCE and focus
         events.on("text:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
