@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SpecificACLAdminUserCheckProductContentEditWithPageBuilderTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Specific ACL Admin user verify product content modify with Page Builder"/>
+            <description value="This test is designed to make sure that a limited admin user can effectively save the basic product content using PageBuilder.."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="ACP2E-1646"/>
+            <testCaseId value="AC-8107"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createSimpleProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsLimitedAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin1"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createSimpleProduct" stepKey="deleteProduct"/>
+            <actionGroup ref="AdminDeleteCreatedUserActionGroup" stepKey="deleteAdminUser">
+                <argument name="user" value="Admin3"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteUserRoleActionGroup" stepKey="deleteRole">
+                <argument name="roleName" value="{{limitedAccessRole.name}}"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsAdmin1"/>
+        </after>
+        <!-- Create a restricted role with access only to Catalog -->
+        <actionGroup ref="AdminCreateRoleWithoutScopeSelectionActionGroup" stepKey="createRestrictedRole">
+            <argument name="restrictedRole" value="Catalog"/>
+            <argument name="User" value="limitedAccessRole"/>
+        </actionGroup>
+        <actionGroup ref="AdminCreateUserWithRoleActionGroup" stepKey="createRestrictedAdmin">
+            <argument name="role" value="limitedAccessRole"/>
+            <argument name="user" value="Admin3"/>
+        </actionGroup>
+        <!-- Logout and login with newly created restricted user -->
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutAsAdmin"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsLimitedAdmin">
+            <argument name="username" value="{{Admin3.username}}"/>
+            <argument name="password" value="{{Admin3.password}}"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToProductPage" >
+            <argument name="product" value="$$createSimpleProduct$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminOpenContentSectionOnProductPageActionGroup" stepKey="openContentSection"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <seeElement selector="{{AdminProductMessagesSection.successMessage}}" stepKey="checkProductSavedMessage"/>
+    </test>
+</tests>
