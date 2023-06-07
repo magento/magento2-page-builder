@@ -72,5 +72,16 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForHeadingVisible"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}" stepKey="waitForTextVisible"/>
+        <!-- Verify page builder text element's content (pasted from the heading element) styling is not removed -->
+        <executeJS function="return !!document.querySelector('{{TextOnStage.textWrapper}}').getElementsByTagName('h2').length;" stepKey="isTextContainsH2Tag"/>
+        <assertTrue stepKey="assertTextContainsH2Tag">
+            <actualResult type="variable">isTextContainsH2Tag</actualResult>
+        </assertTrue>
+        <executeJS function="return document.querySelector('{{TextOnStage.textWrapper}}').querySelector('h2').innerHTML;" stepKey="textOnStage"/>
+        <executeJS function="return document.querySelector('{{TextOnStage.headingWrapper}}').querySelector('h2').innerHTML;" stepKey="headingOnStage"/>
+        <assertEquals stepKey="assertBothTextAndHeadingContainsSameValue">
+            <expectedResult type="variable">headingOnStage</expectedResult>
+            <actualResult type="variable">textOnStage</actualResult>
+        </assertEquals>
     </test>
 </tests>
