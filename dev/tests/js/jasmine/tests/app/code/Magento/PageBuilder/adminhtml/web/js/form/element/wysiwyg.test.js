@@ -6,35 +6,77 @@
 
 /* eslint-disable max-nested-callbacks */
 define([
-    'jquery',
-    'Magento_PageBuilder/js/form/element/wysiwyg'
-], function ($, UiWysiwyg) {
+    'squire'
+], function (Squire) {
     'use strict';
 
-    var wysiwyg;
+    var $,
+        wysiwyg,
+        events = {
+            trigger: jasmine.createSpy(),
+            on: jasmine.createSpy()
+        },
+        injector = new Squire();
 
-    function createWysiwygMock() {
-        var mock,
-            MockWysiwyg = function () {};
-
-        MockWysiwyg.prototype = Object.create(UiWysiwyg.prototype);
-        MockWysiwyg.prototype.constructor = MockWysiwyg;
-        mock = new MockWysiwyg();
-        $.extend(mock, UiWysiwyg.defaults);
-        return mock;
+    function PageBuilderFactoryMock() {
+        this.id = 'pagebuilder_instance_id';
     }
 
-    beforeEach(function () {
-        wysiwyg = createWysiwygMock();
-        wysiwyg.pageBuilder = {id: 'pb-wysiwyg-test'};
-        $(document.body).append(
-            $('<div><div contenteditable="true"><a href="/login"></a><span tabindex="0"></span></div></div>')
-                .attr('id', wysiwyg.pageBuilder.id)
-        );
+    PageBuilderFactoryMock.prototype.isFullScreen = jasmine.createSpy().and.returnValue(false);
+
+    function getWysiwygFactoryMock(Wysiwyg) {
+        var _proto,
+            WysiwygMock = function () {};
+
+        _proto = Object.create(Wysiwyg.prototype);
+        _proto.constructor = WysiwygMock;
+        WysiwygMock.prototype = _proto;
+
+        return WysiwygMock;
+    }
+
+    beforeEach(function (done) {
+        injector.mock({
+            'Magento_PageBuilder/js/page-builder': PageBuilderFactoryMock,
+            'Magento_PageBuilder/js/events': events
+        });
+        injector.require(['jquery', 'Magento_PageBuilder/js/form/element/wysiwyg'], function (jq, PageBuilderWysiwyg) {
+            var WysiwygFactoryMock = getWysiwygFactoryMock(PageBuilderWysiwyg);
+
+            $ = jq;
+            $.async = jasmine.createSpy();
+            wysiwyg = new WysiwygFactoryMock();
+            $.extend(wysiwyg, PageBuilderWysiwyg.defaults);
+            $.extend(wysiwyg, {
+                source: {
+                    set: function (name, value) {
+                        this[name] = value;
+                    },
+                    get: function (name) {
+                        return this[name];
+                    }
+                },
+                pageBuilder: new PageBuilderFactoryMock(),
+                isComponentInitialized: jasmine.createSpy().and.returnValue(false),
+                loading: jasmine.createSpy().and.returnValue(false),
+                visiblePageBuilder: jasmine.createSpy().and.returnValue(false),
+                wysiwygConfigData: jasmine.createSpy().and.returnValue({isFullScreen: false}),
+                ns: 'testnamespace'
+            });
+            $(document.body).append(
+                $('<div><div contenteditable="true"><a href="/login"></a><span tabindex="0"></span></div></div>')
+                    .attr('id', wysiwyg.pageBuilder.id)
+            );
+            done();
+        });
     });
 
     afterEach(function () {
         $('#' + wysiwyg.pageBuilder.id).remove();
+        try {
+            injector.clean();
+            injector.remove();
+        } catch (e) {}
     });
 
     describe('Magento_PageBuilder/js/form/element/wysiwyg', function () {
@@ -60,6 +102,17 @@ define([
                 expect($div.find('span').attr('tabindex')).toBe('0');
                 expect($div.find('span').data('original-tabindex')).toBe(undefined);
                 expect($div.find('[contenteditable]').attr('contenteditable')).toBe('true');
+            });
+        });
+        describe('initPageBuilder', function () {
+            it('Should register PageBuilder instance', function () {
+                wysiwyg.initPageBuilder();
+                expect(wysiwyg.source.get('pageBuilderInstances')).toContain(wysiwyg.pageBuilder);
+                expect(events.trigger)
+                    .toHaveBeenCalledWith(
+                        'pagebuilder:register',
+                        {ns: wysiwyg.ns, instance: wysiwyg.pageBuilder}
+                    );
             });
         });
     });
