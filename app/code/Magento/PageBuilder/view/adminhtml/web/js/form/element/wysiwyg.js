@@ -88,6 +88,12 @@ define([
                   this.wysiwygConfigData(),
                   this.initialValue
                 );
+                if (!this.source.get('pageBuilderInstances')) {
+                    this.source.set('pageBuilderInstances', []);
+                }
+                // Register PageBuilder instance in the data provider in case the event "pagebuilder:register"
+                // is triggered before the subscribers are registered
+                this.source.get('pageBuilderInstances').push(this.pageBuilder);
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,
                     instance: this.pageBuilder
