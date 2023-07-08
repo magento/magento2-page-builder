@@ -156,8 +156,6 @@ export default class Preview extends BasePreview {
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
 
-        wysiwygConfig.adapter.settings.paste_as_text = true;
-
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
             wysiwygConfig.adapter.settings.init_instance_callback = () => {
