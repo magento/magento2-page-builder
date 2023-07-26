@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom;
 
-use Gt\Dom\DOMStringMap as GtDomStringMap;
+use Gt\Dom\DOMStringMapFactory as GtDomStringMapFactory;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\StringMapInterface;
 
@@ -22,7 +22,7 @@ class StringMap implements StringMapInterface
     private $objectManager;
 
     /**
-     * @var GtDomStringMap
+     * @var GtDomStringMapFactory
      */
     private $stringMap;
 
@@ -30,11 +30,11 @@ class StringMap implements StringMapInterface
      * HtmlDocument constructor.
      *
      * @param ObjectManagerInterface $objectManager
-     * @param GtDomStringMap $stringMap
+     * @param GtDomStringMapFactory $stringMap
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        GtDomStringMap $stringMap
+        GtDomStringMapFactory $stringMap
     ) {
         $this->objectManager = $objectManager;
         $this->stringMap = $stringMap;

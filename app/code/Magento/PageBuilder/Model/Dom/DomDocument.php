@@ -14,8 +14,4 @@ use Gt\Dom\Document as GtDomDocument;
  */
 class DomDocument extends GtDomDocument
 {
-    public function __construct(string $characterSet, string $contentType)
-    {
-        parent::__construct($characterSet, $contentType);
-    }
 }
