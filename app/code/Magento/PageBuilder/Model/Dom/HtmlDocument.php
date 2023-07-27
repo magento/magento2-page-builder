@@ -34,7 +34,7 @@ class HtmlDocument extends Document implements HtmlDocumentInterface
         $this->document = $this->objectManager->create(
             GtDomHTMLDocument::class,
             [
-                "document" => $document,
+                "html" => $document,
                 "characterSet" => $characterSet
             ]
         );

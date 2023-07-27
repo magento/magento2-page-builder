@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom;
 
-use Gt\Dom\DOMTokenListFactory as GtDomTokenListFactory;
+use Gt\Dom\DOMTokenList as GtDomTokenList;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\TokenListInterface;
 
@@ -22,7 +22,7 @@ class TokenList implements TokenListInterface
     private $objectManager;
 
     /**
-     * @var GtDomTokenListFactory
+     * @var GtDomTokenList
      */
     private $tokenList;
 
@@ -30,11 +30,11 @@ class TokenList implements TokenListInterface
      * TokenList constructor.
      *
      * @param ObjectManagerInterface $objectManager
-     * @param GtDomTokenListFactory $tokenList
+     * @param GtDomTokenList $tokenList
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        GtDomTokenListFactory $tokenList
+        GtDomTokenList $tokenList
     ) {
         $this->objectManager = $objectManager;
         $this->tokenList = $tokenList;
