@@ -115,7 +115,9 @@
         </assertEquals>
         <!-- Clean Cache -->
         <comment userInput="Clean Cache" stepKey="commentCleanCache"/>
-        <magentoCLI command="cache:clean" stepKey="cleanCache"/>
+        <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
+            <argument name="tags" value=""/>
+        </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront5">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
