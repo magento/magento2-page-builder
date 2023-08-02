@@ -39,6 +39,9 @@
                 <argument name="contentType" value="PageBuilderRowContentType"/>
                 <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             </actionGroup>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCaches">
+                <argument name="tags" value="config" />
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
@@ -58,6 +61,9 @@
             </actionGroup>
             <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
                 <argument name="enabled" value="1"/>
+            </actionGroup>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCaches">
+                <argument name="tags" value="config" />
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
