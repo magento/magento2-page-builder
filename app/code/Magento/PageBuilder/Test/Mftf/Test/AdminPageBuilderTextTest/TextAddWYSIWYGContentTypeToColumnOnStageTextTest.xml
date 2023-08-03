@@ -27,6 +27,9 @@
                 <argument name="enabled" value="0"/>
             </actionGroup>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCaches">
+                <argument name="tags" value="config" />
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -45,6 +48,9 @@
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
             <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
                 <argument name="enabled" value="1"/>
+            </actionGroup>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCaches">
+                <argument name="tags" value="config" />
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
