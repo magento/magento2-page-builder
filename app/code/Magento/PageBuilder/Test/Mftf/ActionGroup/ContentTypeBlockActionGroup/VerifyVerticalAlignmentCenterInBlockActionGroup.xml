@@ -6,7 +6,7 @@
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="verifyVerticalAlignmentCenterInBlock">
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
@@ -15,8 +15,8 @@
             <argument name="content"/>
             <argument name="contentIndex" defaultValue="1" type="string"/>
         </arguments>
-        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].getBoundingClientRect().top" stepKey="containerCenter"/>
-        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].getBoundingClientRect().top" stepKey="contentCenter"/>
+        <executeJS function="return Math.round(document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].getBoundingClientRect().top)" stepKey="containerCenter"/>
+        <executeJS function="return Math.round(document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].getBoundingClientRect().top)" stepKey="contentCenter"/>
         <assertEquals stepKey="assertBottomPosition">
             <expectedResult type="variable">containerCenter</expectedResult>
             <actualResult type="variable">contentCenter</actualResult>
