@@ -22,12 +22,16 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
