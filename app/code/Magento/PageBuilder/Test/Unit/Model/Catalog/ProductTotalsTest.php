@@ -101,18 +101,19 @@ class ProductTotalsTest extends TestCase
         $collection = $this->createMock(Collection::class);
         $collection->expects($this->exactly(3))->method('distinct');
         $collection->expects($this->any())->method('addAttributeToFilter');
-        $collection->expects($this->once())->method('getAllIds');
+        $collection->expects($this->exactly(3))->method('getAllIds');
+        $collection->expects($this->any())->method('getSize')->willReturn(1);
         $select = $this->createMock(Select::class);
         $select->expects($this->any())->method('joinLeft')->willReturn($select);
 
         $collection->expects($this->exactly(3))->method('getSelect')->willReturn($select);
-        $this->productCollectionFactory->expects($this->exactly(4))
+        $this->productCollectionFactory->expects($this->any())
             ->method('create')
             ->willReturn($collection);
 
         $entityMeta = $this->createMock(EntityMetadataInterface::class);
-        $entityMeta->expects($this->once())->method('getLinkField')->willReturn('row_id');
-        $this->metadataPool->expects($this->exactly(1))
+        $entityMeta->expects($this->exactly(3))->method('getLinkField')->willReturn('row_id');
+        $this->metadataPool->expects($this->exactly(3))
             ->method('getMetadata')
             ->with(\Magento\Catalog\Api\Data\ProductInterface::class)
             ->willReturn($entityMeta);
@@ -121,9 +122,9 @@ class ProductTotalsTest extends TestCase
         $parentSelect->expects($this->any())->method('from')->willReturn($parentSelect);
         $parentSelect->expects($this->any())->method('joinInner')->willReturn($parentSelect);
         $db = $this->createMock(AdapterInterface::class);
-        $db->expects($this->once())->method('select')->willReturn($parentSelect);
-        $db->expects($this->once())->method('fetchCol')->willReturn([1]);
-        $this->resource->expects($this->once())->method('getConnection')->willReturn($db);
+        $db->expects($this->exactly(3))->method('select')->willReturn($parentSelect);
+        $db->expects($this->exactly(3))->method('fetchCol')->willReturn([1]);
+        $this->resource->expects($this->exactly(3))->method('getConnection')->willReturn($db);
 
         $this->conditionsHelper->expects($this->exactly(3))->method('decode')->willReturn([]);
         $this->rule->expects($this->exactly(3))->method('loadPost');

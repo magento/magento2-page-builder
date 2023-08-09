@@ -66,8 +66,6 @@ class ProductTotals
      */
     private ResourceConnection $resource;
 
-    private ?Collection $parentsCollection = null;
-
     /**
      * @param CollectionFactory $productCollectionFactory
      * @param Builder $sqlBuilder
@@ -184,34 +182,32 @@ class ProductTotals
      * Get parent products that don't have stand-alone properties (e.g. price or special price)
      *
      * @param Collection $collection
-     * @return Collection
+     * @return Collection|null
      * @throws \Exception
      */
-    private function getParentProductsCollection(Collection $collection): Collection
+    private function getParentProductsCollection(Collection $collection): ?Collection
     {
-        if (!$this->parentsCollection) {
-            $ids = $collection->getAllIds();
-            $linkField = $this->metadataPool->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class)
-                ->getLinkField();
-            $connection = $this->resource->getConnection();
-            $productIds = $connection->fetchCol(
-                $connection
-                    ->select()
-                    ->from(['e' => $collection->getTable('catalog_product_entity')], ['link_table.parent_id'])
-                    ->joinInner(
-                        ['link_table' => $collection->getTable('catalog_product_super_link')],
-                        'link_table.product_id = e.' . $linkField,
-                        []
-                    )
-                    ->where('link_table.product_id IN (?)', $ids)
-            );
-
-            $parentProducts = $this->productCollectionFactory->create();
+        $parentProducts = $this->productCollectionFactory->create();
+        $linkField = $this->metadataPool->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class)
+            ->getLinkField();
+        $connection = $this->resource->getConnection();
+        $productIds = $connection->fetchCol(
+            $connection
+                ->select()
+                ->from(['e' => $collection->getTable('catalog_product_entity')], ['link_table.parent_id'])
+                ->joinInner(
+                    ['link_table' => $collection->getTable('catalog_product_super_link')],
+                    'link_table.product_id = e.' . $linkField,
+                    []
+                )
+                ->where('link_table.product_id IN (?)', $collection->getAllIds())
+        );
+        if ($productIds) {
             $parentProducts->addIdFilter($productIds);
-            $this->parentsCollection = $parentProducts;
+            return $parentProducts;
         }
 
-        return $this->parentsCollection;
+        return null;
     }
 
     /**
@@ -226,11 +222,13 @@ class ProductTotals
     {
         $collection = $this->getProductCollection($conditions, true);
         $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+        $count = $collection->getSize();
+        if ($collection->getSize() && $parentProducts = $this->getParentProductsCollection($collection)) {
+            $parentProducts->addAttributeToFilter('status', Status::STATUS_ENABLED);
+            $count += $parentProducts->getSize();
+        }
 
-        $parentProducts = $this->getParentProductsCollection($collection);
-        $parentProducts->addAttributeToFilter('status', Status::STATUS_ENABLED);
-
-        return $collection->getSize() + $parentProducts->getSize();
+        return $count;
     }
 
     /**
@@ -244,11 +242,13 @@ class ProductTotals
     {
         $collection = $this->getProductCollection($conditions, false);
         $collection->addAttributeToFilter('status', Status::STATUS_DISABLED);
+        $count = $collection->getSize();
+        if ($count && $parentProducts = $this->getParentProductsCollection($collection)) {
+            $parentProducts->addAttributeToFilter('status', Status::STATUS_DISABLED);
+            $count += $parentProducts->getSize();
+        }
 
-        $parentProducts = $this->getParentProductsCollection($collection);
-        $parentProducts->addAttributeToFilter('status', Status::STATUS_DISABLED);
-
-        return $collection->getSize() + $parentProducts->getSize();
+        return $count;
     }
 
     /**
@@ -269,18 +269,20 @@ class ProductTotals
                 Visibility::VISIBILITY_IN_SEARCH
             ]
         );
+        $count = $collection->getSize();
+        if ($count && $parentProducts = $this->getParentProductsCollection($collection)) {
+            $parentProducts->addAttributeToFilter('status', Status::STATUS_ENABLED);
+            $parentProducts->addAttributeToFilter(
+                'visibility',
+                [
+                    Visibility::VISIBILITY_NOT_VISIBLE,
+                    Visibility::VISIBILITY_IN_SEARCH
+                ]
+            );
+            $count += $parentProducts->getSize();
+        }
 
-        $parentProducts = $this->getParentProductsCollection($collection);
-        $parentProducts->addAttributeToFilter('status', Status::STATUS_ENABLED);
-        $parentProducts->addAttributeToFilter(
-            'visibility',
-            [
-                Visibility::VISIBILITY_NOT_VISIBLE,
-                Visibility::VISIBILITY_IN_SEARCH
-            ]
-        );
-
-        return $collection->getSize() + $parentProducts->getSize();
+        return $count;
     }
 
     /**
