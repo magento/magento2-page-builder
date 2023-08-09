@@ -34,11 +34,17 @@
                 <argument name="contentType" value="PageBuilderRowContentType"/>
                 <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             </actionGroup>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanConfigCache">
+                <argument name="tags" value="config" />
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
             <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
                 <argument name="enabled" value="1"/>
+            </actionGroup>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanConfigCache">
+                <argument name="tags" value="config" />
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
