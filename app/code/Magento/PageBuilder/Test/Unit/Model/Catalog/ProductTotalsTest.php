@@ -23,6 +23,9 @@ use Magento\Widget\Helper\Conditions;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class ProductTotalsTest extends TestCase
 {
     /**
