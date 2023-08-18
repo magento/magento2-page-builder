@@ -22,11 +22,15 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="disableByDefaultWYSIWYG" before="loginAsAdmin"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="disableByDefaultWYSIWYG"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache" after="disableByDefaultWYSIWYG">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enableWYSIWYG"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache" after="enableWYSIWYG">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </after>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel" before="enterText"/>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="enterText"/>
