@@ -79,6 +79,17 @@
             <argument name="text" value="\u{1F600}"/>
         </actionGroup>
 
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="savePageBuilderTextContentType"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textAreaError}}" stepKey="waitForPageBuilderTextContentTypeError"/>
+        <grabTextFrom selector="{{TextOnConfiguration.textAreaError}}" stepKey="grabTextFromPageBuilderTextContentTypeError"/>
+        <assertStringContainsString stepKey="assertErrorMessageForPageBuilderTextContentType">
+            <expectedResult type="string">Please remove invalid characters</expectedResult>
+            <actualResult type="variable">grabTextFromPageBuilderTextContentTypeError</actualResult>
+        </assertStringContainsString>
+        <actionGroup ref="removeTextFromHtmlCodeWYSIWYGActionGroup" stepKey="removeTheInvalidCharacterFromPageBuilderTextContentType">
+            <argument name="selector" value="//textarea[@id=&quot;{{TextOnConfiguration.textAreaId}}&quot;][1]"/>
+            <argument name="text" value="\u{1F600}"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveTextEditPanelSettings"/>
 
         <!-- Validate Stage -->
@@ -90,6 +101,16 @@
             <expectedResult type="string">{{PageBuilderHtmlPropertyButton.value}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCode</actualResult>
         </assertStringContainsString>
+
+        <!-- Add the invalid character in the text element on stage -->
+        <click selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="focusOnEditorArea"/>
+        <actionGroup ref="addTextToHtmlCodeWYSIWYGActionGroup" stepKey="enterWrongTextContentOnStage">
+            <argument name="selector" value="{{TextOnStage.textAreaForExecuteJS('1')}}"/>
+            <argument name="text" value="\u{1F600}"/>
+        </actionGroup>
+        <!-- Trigger keyup to dispatch changes -->
+        <pressKey selector="{{TextOnStage.textareaPlaceholder('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
 
         <!-- Cannot save invalid text-->
