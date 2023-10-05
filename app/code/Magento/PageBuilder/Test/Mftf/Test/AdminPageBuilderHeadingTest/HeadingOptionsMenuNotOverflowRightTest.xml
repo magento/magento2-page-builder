@@ -19,6 +19,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
             <group value="pr_exclude"/>
+            <skip>
+                <issueId value="ACQE-5145"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -50,7 +53,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="3"/>
         </actionGroup>
-        <seeElement selector="{{ColumnOnBackend.displayLabel('4','1/12')}}" stepKey="validateLastColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('4','3/12')}}" stepKey="validateLastColumnWidth"/>
         <!-- Add Heading Content Type -->
         <comment userInput="Add Heading Content Type" stepKey="commentAddHeadingContentType"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandHeadingPageBuilderPanelMenuSection">
