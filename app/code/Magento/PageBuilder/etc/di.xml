@@ -184,7 +184,7 @@
         <arguments>
             <argument name="productCollectionFactory" xsi:type="object">pageBuilderProductCollectionFactory</argument>
         </arguments>
-        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" />
+        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" sortOrder="1"/>
     </type>
     <type name="Magento\Catalog\Helper\Output">
         <arguments>
@@ -315,6 +315,9 @@
                 <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending</item>
             </argument>
         </arguments>
+    </type>
+    <type name="Magento\Framework\Filter\Template">
+        <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
     </type>
     <type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
         <arguments>
