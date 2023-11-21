@@ -234,7 +234,7 @@ define([
                 var allFilled;
 
                 // Validation only for margins and paddings
-                if (typeof value === 'object' && !!(value.padding || value.margin)) {
+                if (value !== null && typeof value === 'object' && !!(value.padding || value.margin)) {
                     allFilled = true;
 
                     _.flatten(_.map(value, _.values)).forEach(function (val) {

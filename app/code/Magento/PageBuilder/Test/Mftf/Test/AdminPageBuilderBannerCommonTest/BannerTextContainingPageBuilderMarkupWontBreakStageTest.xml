@@ -38,5 +38,15 @@
         <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCode"/>
         <waitForElementVisible selector="{{BannerOnBackend.base('1')}}" stepKey="waitForBannerVisible"/>
         <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTestStringInBanner"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDesktop"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageDesktop"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCodeAfterSave"/>
+        <waitForElementVisible selector="{{BannerOnBackend.base('1')}}" stepKey="waitForBannerVisibleAfterSave"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTestStringInBannerAfterSave"/>
     </test>
 </tests>

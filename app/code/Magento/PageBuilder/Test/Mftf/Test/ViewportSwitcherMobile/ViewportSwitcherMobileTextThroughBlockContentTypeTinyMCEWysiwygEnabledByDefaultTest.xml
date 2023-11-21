@@ -27,6 +27,9 @@
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -41,7 +44,7 @@
             </actionGroup>
         </before>
         <after>
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCMSPageB"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
@@ -56,6 +59,9 @@
             <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage"/>
             <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
                 <argument name="ImageFolder" value="ImageFolder"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>

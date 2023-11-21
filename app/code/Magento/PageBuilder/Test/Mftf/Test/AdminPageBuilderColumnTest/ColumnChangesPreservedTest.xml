@@ -21,6 +21,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
@@ -40,6 +43,9 @@
             <waitForPageLoad stepKey="waitForPageLoad"/>
             <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
             <waitForPageLoad stepKey="waitForGridReload"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">

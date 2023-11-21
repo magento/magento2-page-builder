@@ -22,6 +22,9 @@
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
@@ -44,6 +47,9 @@
             <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage2"/>
             <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
                 <argument name="ImageFolder" value="ImageFolder"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>

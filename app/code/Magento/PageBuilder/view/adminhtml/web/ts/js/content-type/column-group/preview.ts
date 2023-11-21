@@ -21,6 +21,7 @@ import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
+import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
@@ -134,7 +135,7 @@ export default class Preview extends PreviewCollection {
         });
 
         events.on(
-            `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`,
+            `stage:${this.contentType.stageId}:readyAfter`,
             this.moveContentsToNewColumnGroup.bind(this),
         );
 
@@ -624,7 +625,7 @@ export default class Preview extends PreviewCollection {
     private hasColumnLine(contentType: ContentTypeInterface | ContentTypeCollectionInterface): boolean {
         const children = this.contentType.getChildren()();
         let hasColumnLine = false;
-        if (children.length === 0) {
+        if (children.length === 0 && checkStageFullScreen(contentType.stageId)) {
             // new column group, so it has a column line
             hasColumnLine = true;
         }

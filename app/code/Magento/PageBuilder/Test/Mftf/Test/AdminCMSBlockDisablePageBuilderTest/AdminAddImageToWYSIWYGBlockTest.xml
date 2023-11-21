@@ -10,11 +10,15 @@
     <test name="AdminAddImageToWYSIWYGBlockTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="enableTinyMCE"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="disablePageBuilder"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache" after="disablePageBuilder">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enablePageBuilder"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache" after="enablePageBuilder">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </after>
     </test>
 </tests>

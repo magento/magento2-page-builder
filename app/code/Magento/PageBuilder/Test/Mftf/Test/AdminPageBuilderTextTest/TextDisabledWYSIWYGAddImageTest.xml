@@ -21,6 +21,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG1"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -46,6 +49,9 @@
             <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage2"/>
             <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
                 <argument name="ImageFolder" value="ImageFolder"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
