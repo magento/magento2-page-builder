@@ -193,7 +193,8 @@ define([
 
                 href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
 
-                return validateIsUrl(href) && (href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/));
+                return validateIsUrl(href)
+                    && (href.match(/youtube\.com|youtu\.be|youtube-nocookie\.com/) || href.match(/vimeo\.com/));
             },
             $.mage.__('Please enter a valid video URL.')
         );
@@ -208,7 +209,7 @@ define([
                 href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
 
                 return validateIsUrl(href) && (
-                    href.match(/youtube\.com|youtu\.be/) ||
+                    href.match(/youtube\.com|youtu\.be|youtube-nocookie\.com/) ||
                     href.match(/vimeo\.com/) ||
                     href.match(/\.(mp4|ogv|webm)(?!\w)/)
                 );

@@ -92,10 +92,13 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       }
 
       var youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
+      var youtubeNoCookieRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtube-nocookie\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
       var vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" + "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
 
       if (youtubeRegExp.test(value)) {
         return "https://www.youtube.com/embed/" + youtubeRegExp.exec(value)[1] + VideoSrc.parseYoutubeGetParams(value, data);
+      } else if (youtubeNoCookieRegExp.test(value)) {
+        return "https://www.youtube-nocookie.com/embed/" + youtubeNoCookieRegExp.exec(value)[1] + VideoSrc.parseYoutubeGetParams(value, data);
       } else if (vimeoRegExp.test(value)) {
         return "https://player.vimeo.com/video/" + vimeoRegExp.exec(value)[3] + "?title=0&byline=0&portrait=0" + (data.autoplay === "true" ? "&autoplay=1&autopause=0&muted=1" : "");
       }
