@@ -18,7 +18,9 @@
             <magentoCLI command="config:set web/default_layouts/default_cms_layout cms-full-width" stepKey="setPageBuilderDefaultCmsLayout"/>
             <magentoCLI command="config:set web/default_layouts/default_category_layout category-full-width" stepKey="setPageBuilderDefaultCategoryLayout"/>
             <magentoCLI command="config:set web/default_layouts/default_product_layout product-full-width" stepKey="setPageBuilderDefaultProductLayout"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </before>
         <after>
             <magentoCLI command="setup:config:set {{RemoteStorageAwsS3ConfigData.disable_options}}" stepKey="disableRemoteStorage"/>
@@ -28,7 +30,9 @@
             </actionGroup>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </after>
         <include>
             <group name="remote_storage_aws_s3_pagebuilder"/>

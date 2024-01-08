@@ -19,6 +19,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
             <group value="pagebuilder-text"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCmsPage"/>
@@ -71,5 +72,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForHeadingVisible"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}" stepKey="waitForTextVisible"/>
+        <!-- Verify page builder text element's content (pasted from the heading element) styling is not removed -->
+        <seeElement selector="{{TextOnStage.elementInText('1', PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="seeTextElementContainsH2Tag"/>
+        <seeElement selector="{{TextOnStage.textWithTag('1', PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value)}}" stepKey="seeCopiedTextInTextElement"/>
     </test>
 </tests>

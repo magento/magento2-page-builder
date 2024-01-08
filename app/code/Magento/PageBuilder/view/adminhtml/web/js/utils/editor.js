@@ -432,6 +432,44 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
       return "<" + tag + sanitizedAttributes + ">";
     });
   }
+  /**
+   * Remove Page Builder reserved html tag attributes from the content
+   *
+   * @param {string} content
+   * @returns {string}
+   */
+
+
+  function removeReservedHtmlAttributes(content) {
+    var attributes = _config.getConfig("stage_config").reserved_html_attributes || {};
+
+    for (var _i = 0, _Object$keys = Object.keys(attributes); _i < _Object$keys.length; _i++) {
+      var attribute = _Object$keys[_i];
+      content = removeHtmlTagAttribute(content, attribute);
+    }
+
+    return content;
+  }
+  /**
+   * Remove attribute from html tags
+   *
+   * @param {string} content
+   * @param {string} name
+   * @returns {string}
+   */
+
+
+  function removeHtmlTagAttribute(content, name) {
+    if (typeof content === "string" && content.indexOf(name + "=") !== -1) {
+      var html = new DOMParser().parseFromString(content, "text/html");
+      html.querySelectorAll("[" + name + "]").forEach(function (child) {
+        child.removeAttribute(name);
+      });
+      content = html.body.innerHTML;
+    }
+
+    return content;
+  }
 
   return {
     isWysiwygSupported: isWysiwygSupported,
@@ -448,7 +486,8 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
     processInlineStyles: processInlineStyles,
     escapeDoubleQuoteWithinWidgetDirective: escapeDoubleQuoteWithinWidgetDirective,
     unescapeDoubleQuoteWithinWidgetDirective: unescapeDoubleQuoteWithinWidgetDirective,
-    replaceDoubleQuoteWithSingleQuoteWithinVariableDirective: replaceDoubleQuoteWithSingleQuoteWithinVariableDirective
+    replaceDoubleQuoteWithSingleQuoteWithinVariableDirective: replaceDoubleQuoteWithSingleQuoteWithinVariableDirective,
+    removeReservedHtmlAttributes: removeReservedHtmlAttributes
   };
 });
 //# sourceMappingURL=editor.js.map
