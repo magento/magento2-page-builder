@@ -18,9 +18,13 @@
             <testCaseId value="MC-4043"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
@@ -41,6 +45,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
                 <argument name="Image" value="PageBuilderBackgroundImage3"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>

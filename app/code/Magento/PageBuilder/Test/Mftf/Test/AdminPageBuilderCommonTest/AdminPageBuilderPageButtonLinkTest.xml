@@ -19,6 +19,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
             <group value="pagebuilder-link"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
@@ -76,16 +77,17 @@
         <!--Expand dropdown again to verify highlighted not cleared yet-->
         <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2"/>
         <seeInField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
-        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted"/>
 
         <!--Select another page from dropdown-->
+        <waitForElementClickable selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createCMSPageA.title$)}}" stepKey="waitForCMSPageBClickable"/>
         <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
         <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
             <expectedResult type="string">$createCMSPageB.title$</expectedResult>
             <actualResult type="variable">textFromDropDown2</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
@@ -93,8 +95,8 @@
         <!--Go to storefront to verify CMS Page Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront"/>
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createCMSPageB.title$" stepKey="seePageName"/>

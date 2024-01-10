@@ -21,6 +21,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
@@ -55,6 +58,9 @@
             <comment userInput="BIC workaround" stepKey="NavigateToFolder4"/>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
                 <argument name="Image" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -175,6 +181,6 @@
             <argument name="cssProperty" value="maxWidth"/>
         </actionGroup>
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
-        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+        <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
     </test>
 </tests>

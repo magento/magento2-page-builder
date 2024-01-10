@@ -22,6 +22,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
@@ -38,7 +41,7 @@
             </actionGroup>
         </before>
         <after>
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -53,6 +56,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
                 <argument name="Image" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
