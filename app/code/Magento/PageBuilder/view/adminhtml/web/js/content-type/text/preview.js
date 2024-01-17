@@ -135,7 +135,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       }
 
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      wysiwygConfig.adapter.settings.paste_as_text = true;
 
       if (focus) {
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
@@ -222,12 +221,45 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       });
     }
     /**
+     * Handle "mousedown" event
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    ;
+
+    _proto.handleMouseDown = function handleMouseDown(preview, event) {
+      var _this6 = this;
+
+      var handleMouseUp = function handleMouseUp(mouseUpEvent) {
+        if (_this6.element && !_this6.wysiwyg && document.activeElement === _this6.element // Check that mouseup occurred outside the element, otherwise "click" event will be triggerred in which
+        // case we don't need to do anything as the "click" event is handled in "activateEditor"
+        // Note: click is fired after a full click action occurs; that is, the mouse button is pressed
+        // and released while the pointer remains inside the same element.
+        && _this6.element !== mouseUpEvent.target && !_jquery.contains(_this6.element, mouseUpEvent.target)) {
+          _this6.activateEditor(_this6, mouseUpEvent);
+        }
+
+        (0, _jquery)(document).off("mouseup", handleMouseUp);
+        return true;
+      };
+
+      event.stopPropagation();
+
+      if (this.element && !this.wysiwyg) {
+        (0, _jquery)(document).on("mouseup", handleMouseUp);
+      }
+
+      return true;
+    }
+    /**
      * @param {HTMLTextAreaElement} element
      */
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -235,9 +267,9 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this6.textarea.value = _this6.contentType.dataStore.get("content");
+        _this7.textarea.value = _this7.contentType.dataStore.get("content");
 
-        _this6.adjustTextareaHeightBasedOnScrollHeight();
+        _this7.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
@@ -288,23 +320,24 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this7 = this;
-
-      _preview2.prototype.bindEvents.call(this);
+      var _this8 = this;
 
       this.contentType.dataStore.subscribe(function (state) {
-        var sanitizedContent = (0, _editor.replaceDoubleQuoteWithSingleQuoteWithinVariableDirective)((0, _editor.escapeDoubleQuoteWithinWidgetDirective)(state.content));
+        var sanitizedContent = (0, _editor.removeReservedHtmlAttributes)((0, _editor.replaceDoubleQuoteWithSingleQuoteWithinVariableDirective)((0, _editor.escapeDoubleQuoteWithinWidgetDirective)(state.content)));
 
         if (sanitizedContent !== state.content) {
           state.content = sanitizedContent;
         }
-      }); // After drop of new content type open TinyMCE and focus
+      }, "content");
+
+      _preview2.prototype.bindEvents.call(this); // After drop of new content type open TinyMCE and focus
+
 
       _events.on("text:dropAfter", function (args) {
-        if (args.id === _this7.contentType.id) {
-          _this7.afterRenderDeferred.then(function () {
-            if (_this7.isWysiwygSupported()) {
-              _this7.initWysiwygFromClick(true);
+        if (args.id === _this8.contentType.id) {
+          _this8.afterRenderDeferred.then(function () {
+            if (_this8.isWysiwygSupported()) {
+              _this8.initWysiwygFromClick(true);
             }
           });
         }

@@ -18,6 +18,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pr_exclude"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -73,7 +74,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <comment userInput="Border: available values None, Default, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset" stepKey="AC2"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="data-title" stepKey="grabBorderOptions"/>
         <assertEquals message="Verify Border dropdown options" stepKey="assertBorderOptions2">
             <actualResult type="variable">grabBorderOptions</actualResult>
             <expectedResult type="array">{{PageBuilderAdvancedBorderDefaultSlideProperty.optionsList}}</expectedResult>
