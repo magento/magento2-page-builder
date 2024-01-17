@@ -24,11 +24,15 @@
             <remove keyForRemoval="enableWYSIWYG"/>
             <remove keyForRemoval="enableTinyMCE"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG" before="loginAsAdmin"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="disableWYSIWYG"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache" after="disableWYSIWYG">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enableWYSIWYG"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache" after="enableWYSIWYG">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </after>
         <!-- Change Appearance -->
         <comment userInput="Change Appearance" after="dragContentTypeIntoContainer" stepKey="commentChangeAppearanceExtended"/>

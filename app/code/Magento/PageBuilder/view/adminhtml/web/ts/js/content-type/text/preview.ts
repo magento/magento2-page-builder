@@ -20,6 +20,7 @@ import {
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
+    removeReservedHtmlAttributes,
     replaceDoubleQuoteWithSingleQuoteWithinVariableDirective,
     unlockImageSize,
 } from "../../utils/editor";
@@ -155,8 +156,6 @@ export default class Preview extends BasePreview {
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
 
-        wysiwygConfig.adapter.settings.paste_as_text = true;
-
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
             wysiwygConfig.adapter.settings.init_instance_callback = () => {
@@ -240,6 +239,40 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Handle "mousedown" event
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public handleMouseDown(preview: Preview, event: JQueryEventObject) {
+        const handleMouseUp = (mouseUpEvent: JQueryEventObject) => {
+            if (this.element
+                && !this.wysiwyg
+                && document.activeElement === this.element
+                // Check that mouseup occurred outside the element, otherwise "click" event will be triggerred in which
+                // case we don't need to do anything as the "click" event is handled in "activateEditor"
+                // Note: click is fired after a full click action occurs; that is, the mouse button is pressed
+                // and released while the pointer remains inside the same element.
+                && this.element !== mouseUpEvent.target
+                && !$.contains(this.element, mouseUpEvent.target)
+            ) {
+                this.activateEditor(this, mouseUpEvent);
+            }
+            $(document).off("mouseup", handleMouseUp);
+            return true;
+        };
+
+        event.stopPropagation();
+
+        if (this.element && !this.wysiwyg) {
+            $(document).on("mouseup",  handleMouseUp);
+        }
+
+        return true;
+    }
+
+    /**
      * @param {HTMLTextAreaElement} element
      */
     public initTextarea(element: HTMLTextAreaElement) {
@@ -306,17 +339,19 @@ export default class Preview extends BasePreview {
      * Bind events
      */
     protected bindEvents() {
-        super.bindEvents();
-
         this.contentType.dataStore.subscribe((state: DataObject) => {
-            const sanitizedContent = replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(
-                escapeDoubleQuoteWithinWidgetDirective(state.content),
-            );
+            const sanitizedContent = removeReservedHtmlAttributes(
+                    replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(
+                        escapeDoubleQuoteWithinWidgetDirective(state.content),
+                    ),
+                );
 
             if (sanitizedContent !== state.content) {
                 state.content = sanitizedContent;
             }
-        });
+        }, "content");
+
+        super.bindEvents();
 
         // After drop of new content type open TinyMCE and focus
         events.on("text:dropAfter", (args: ContentTypeMountEventParamsInterface) => {

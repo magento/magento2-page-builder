@@ -107,6 +107,7 @@
         <arguments>
             <argument name="linksConfiguration" xsi:type="array">
                 <item name="page" xsi:type="string">Magento\PageBuilder\Ui\Component\UrlInput\Page</item>
+                <item name="default" xsi:type="string">Magento\PageBuilder\Ui\Component\UrlInput\Url</item>
             </argument>
         </arguments>
     </type>
@@ -555,6 +556,10 @@
                     <item name="category" xsi:type="string">Category</item>
                     <item name="block" xsi:type="string">Block</item>
                 </item>
+                <item name="reserved_html_attributes" xsi:type="array">
+                    <item name="data-content-type" xsi:type="string">data-content-type</item>
+                    <item name="contenteditable" xsi:type="string">contenteditable</item>
+                </item>
             </argument>
             <argument name="rootContainerConfig" xsi:type="array">
                 <item name="label" xsi:type="string">Root Container</item>
@@ -635,9 +640,6 @@
                 <item name="fulltext" xsi:type="object">Magento\PageBuilder\Ui\Component\Template\FulltextFilter</item>
             </argument>
         </arguments>
-    </type>
-    <type name="Magento\Framework\Filter\Template">
-        <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
     </type>
     <type name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav">
         <plugin name="pagebuilder_product_form_eav" type="Magento\PageBuilder\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifier\EavPlugin" sortOrder="20"/>

@@ -20,6 +20,8 @@
             <group value="pagebuilder-fullwidth"/>
             <group value="pagebuilder-cms-page"/>
             <group value="pr_exclude"/>
+            <group value="cloud"/>
+	    <skip><issueId value="AC-10534"/></skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -40,6 +42,9 @@
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>

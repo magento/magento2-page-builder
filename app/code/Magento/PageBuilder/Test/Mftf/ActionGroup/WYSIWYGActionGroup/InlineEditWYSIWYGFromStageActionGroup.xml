@@ -18,7 +18,7 @@
         </arguments>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanel"/>
-        <pressKey selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
+        <fillField selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForText userInput="{{content}}" stepKey="waitForContent"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
