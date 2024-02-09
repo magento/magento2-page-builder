@@ -122,13 +122,13 @@ define([
 
             if (isInsideDropzone) {
                 $dropzone
-                  .removeClass(this.classes.draggingOutside)
-                  .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
+                    .removeClass(this.classes.draggingOutside)
+                    .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
             }
 
             $otherDropzones
-              .removeClass(this.classes.draggingInside)
-              .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
+                .removeClass(this.classes.draggingInside)
+                .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
         },
 
         /**
