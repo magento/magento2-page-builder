@@ -14,10 +14,10 @@
         <waitForElementVisible selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="waitForProductImage"/>
         <moveMouseOver selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="moveMouseOverProduct"/>
         <click selector="{{ProductsOnStorefront.productAddToCartByProductName(product)}}" stepKey="clickProductAddToCart"/>
-        <seeElement selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAdding}}" stepKey="seeAddingButtonLabel"/>
+        <seeElement selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAddingOrAdded}}" stepKey="seeAddingButtonLabel"/>
         <waitForElementVisible selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAdded}}" stepKey="waitForAddedButtonLabel"/>
         <seeElement selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAdded}}" stepKey="seeAddedButtonLabel"/>
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
-        <see userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
+        <waitForText userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
     </actionGroup>
 </actionGroups>

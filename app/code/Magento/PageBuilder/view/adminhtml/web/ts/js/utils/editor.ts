@@ -469,6 +469,40 @@ export function replaceDoubleQuoteWithSingleQuoteWithinVariableDirective(content
     );
 }
 
+/**
+ * Remove Page Builder reserved html tag attributes from the content
+ *
+ * @param {string} content
+ * @returns {string}
+ */
+export function removeReservedHtmlAttributes(content: string): string
+{
+    const attributes: {[key: string]: string} = Config.getConfig("stage_config").reserved_html_attributes || {};
+    for (const attribute of Object.keys(attributes)) {
+        content = removeHtmlTagAttribute(content, attribute);
+    }
+    return content;
+}
+
+/**
+ * Remove attribute from html tags
+ *
+ * @param {string} content
+ * @param {string} name
+ * @returns {string}
+ */
+function removeHtmlTagAttribute(content: string, name: string): string
+{
+    if (typeof content === "string" && content.indexOf(`${name}=`) !== -1) {
+        const html = new DOMParser().parseFromString(content, "text/html");
+        html.querySelectorAll(`[${name}]`).forEach((child: Element) => {
+            child.removeAttribute(name);
+        });
+        content = html.body.innerHTML;
+    }
+    return content;
+}
+
 interface IdBookmark {
     id: string;
     keep?: boolean;
