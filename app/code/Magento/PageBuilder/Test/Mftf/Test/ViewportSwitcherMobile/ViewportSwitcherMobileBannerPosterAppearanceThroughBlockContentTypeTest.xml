@@ -25,6 +25,9 @@
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -39,7 +42,7 @@
             </actionGroup>
         </before>
         <after>
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -51,6 +54,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
                 <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -419,6 +425,8 @@
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseSlideStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefront"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
@@ -472,7 +480,12 @@
         </actionGroup>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobile"/>
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefrontMobile"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseSlideStageOutsideStorefrontMobile"/>
+        <wait time="5" stepKey="pauseAfterIconHoverStorefrontMobile"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobileAgain"/>
+        <wait time="2" stepKey="pause3"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
+        <wait time="5" stepKey="pause4"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile">
             <argument name="selector" value="{{BannerOnFrontend.overlay('1')}}"/>
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColor_Blue_Opaque.rgb}}"/>

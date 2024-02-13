@@ -26,6 +26,9 @@
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -36,7 +39,7 @@
             </actionGroup>
         </before>
         <after>
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -48,6 +51,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
                 <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -300,7 +306,9 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
-        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseSlideStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
+        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}"   x="50" y="50"  stepKey="moveMouseOverSlideCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
@@ -353,6 +361,8 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseSlideStageOutsideStoreFrontMobile"/>
+        <wait time="5" stepKey="pauseAfterIconHoverStoreFrontMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideCMSPageStorefrontMobile"/>
         <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>

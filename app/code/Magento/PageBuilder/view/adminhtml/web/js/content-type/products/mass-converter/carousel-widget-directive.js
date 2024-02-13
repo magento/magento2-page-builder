@@ -38,7 +38,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
       data.carousel_products_count = attributes.products_count;
       data.sort_order = attributes.sort_order;
       data.condition_option = attributes.condition_option || "condition";
-      data[data.condition_option] = this.decodeWysiwygCharacters(attributes.condition_option_value || "");
+      data[data.condition_option] = this.decodeWysiwygCharacters(this.decodeHtmlCharacters(attributes.condition_option_value || ""));
       data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
       data[data.condition_option + "_source"] = data.conditions_encoded;
       return data;
@@ -98,6 +98,22 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
 
     _proto.decodeWysiwygCharacters = function decodeWysiwygCharacters(content) {
       return content.replace(/\^\[/g, "{").replace(/\^\]/g, "}").replace(/`/g, "\"").replace(/\|/g, "\\").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    }
+    /**
+     * Decode html special characters
+     *
+     * @param {string} content
+     * @returns {string}
+     */
+    ;
+
+    _proto.decodeHtmlCharacters = function decodeHtmlCharacters(content) {
+      if (content) {
+        var htmlDocument = new DOMParser().parseFromString(content, "text/html");
+        return htmlDocument.body ? htmlDocument.body.textContent : content;
+      }
+
+      return content;
     };
 
     return WidgetDirective;
