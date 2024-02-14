@@ -80,8 +80,10 @@ define([
          */
         initUploader: function (fileInput) {
             this._super(fileInput);
-            this.$uploadArea = $(this.$fileInput).closest('.pagebuilder-image-empty-preview');
-            new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea.get(0));
+            this.$uploadArea = $('#' + $(fileInput).attr('id')).closest('.pagebuilder-image-empty-preview');
+            if (this.$uploadArea.get(0) !== undefined) {
+                new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea.get(0));
+            }
         },
 
         /**
@@ -120,13 +122,13 @@ define([
 
             if (isInsideDropzone) {
                 $dropzone
-                  .removeClass(this.classes.draggingOutside)
-                  .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
+                    .removeClass(this.classes.draggingOutside)
+                    .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
             }
 
             $otherDropzones
-              .removeClass(this.classes.draggingInside)
-              .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
+                .removeClass(this.classes.draggingInside)
+                .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
         },
 
         /**
