@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Dom;
 
 use DOMNode;
-use Gt\Dom\Document as GtDomDocument;
+use Magento\PageBuilder\Model\Dom\DomDocument;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\DocumentFragmentInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\DocumentInterface;
@@ -26,21 +26,29 @@ class Document implements DocumentInterface
     protected $objectManager;
 
     /**
-     * @var GtDomDocument
+     * @var DOMDocument
      */
     protected $document;
 
     /**
      * Document constructor.
      * @param ObjectManagerInterface $objectManager
-     * @param string $document
+     * @param string $characterSet
+     * @param string $contentType
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        string $document = ""
+        string $characterSet,
+        string $contentType
     ) {
         $this->objectManager = $objectManager;
-        $this->document = $this->objectManager->create(GtDomDocument::class, [ 'document' => $document ]);
+        $this->document = $this->objectManager->create(
+            DomDocument::class,
+            [
+                'characterSet' => $characterSet,
+                'contentType' => $contentType
+            ]
+        );
     }
 
     /**

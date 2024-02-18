@@ -16,7 +16,7 @@
             <argument name="section"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <attachFile userInput="{{backgroundImage.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachBackgroundImageFromLocalToStage"/>
+        <attachFile userInput="{{backgroundImage.value}}" selector="{{section.uploadImageInputWithUploaderId(index)}}" stepKey="attachBackgroundImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <executeJS function="return window.getComputedStyle(document.evaluate('{{section.backgroundPath(index)}}', document.body).iterateNext()).backgroundImage" stepKey="backgroundImageRawValue"/>
         <!-- Return the string value of background-image -->

@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom;
 
-use Gt\Dom\TokenList as GtDomTokenList;
+use Gt\Dom\DOMTokenList as GtDomTokenList;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\TokenListInterface;
 
