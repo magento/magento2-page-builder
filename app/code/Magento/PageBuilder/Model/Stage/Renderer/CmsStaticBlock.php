@@ -88,8 +88,13 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
         $collection = $this->blockCollectionFactory->create();
         $blocks = $collection
             ->addFieldToSelect(['title', 'is_active'])
-            ->addFieldToFilter('block_id', ['eq' => $params['block_id']])
-            ->load();
+            ->addFieldToFilter(
+                ['block_id', 'identifier'],
+                [
+                    ['eq' => $params['block_id']],
+                    ['eq' => $params['block_id']]
+                ]
+            )->load();
 
         if ($blocks->count() === 0) {
             $result['error'] = sprintf(__('Block with ID: %s doesn\'t exist')->render(), $params['block_id']);
