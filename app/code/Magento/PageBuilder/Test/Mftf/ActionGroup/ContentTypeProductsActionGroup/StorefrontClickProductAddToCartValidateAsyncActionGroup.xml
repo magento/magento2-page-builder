@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="StorefrontClickProductAddToCartValidateAsyncActionGroup">
+        <arguments>
+            <argument name="product" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="waitForProductImage"/>
+        <moveMouseOver selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="moveMouseOverProduct"/>
+        <click selector="{{ProductsOnStorefront.productAddToCartByProductName(product)}}" stepKey="clickProductAddToCart"/>
+        <seeElement selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAddingOrAdded}}" stepKey="seeAddingButtonLabel"/>
+        <waitForElementVisible selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAdded}}" stepKey="waitForAddedButtonLabel"/>
+        <seeElement selector="{{StorefrontProductActionSection.addToCartButtonTitleIsAdded}}" stepKey="seeAddedButtonLabel"/>
+        <waitForPageLoad stepKey="waitForProductPageToLoad"/>
+        <waitForText userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnLineMoveColumnTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column Lines"/>
+            <title value="[Columns] A user should be able to move a column into another line of the column group"/>
+            <description value="A user should be able to move a column another line of the column group"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="PB-1211"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-column-group"/>
+            <group value="pagebuilder-column-line"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnsToRootContainer">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
+        <!-- Duplicate Column 1-->
+        <comment userInput="Duplicate Column 1" stepKey="duplicateColumn1Comment"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="findAfterDuplicateLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/12')}}" stepKey="findAfterDuplicateLabelColumn2"/>
+        <!-- Drop new Column Group -->
+        <actionGroup ref="dragContentTypeNextToExistingContentType" stepKey="dragColumnGroup2ToRootContainer">
+            <argument name="contentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="existingContentType" value="PageBuilderColumnGroupContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+       <!-- <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2' ,'1','6/12')}}" stepKey="findSecondColumnLineColumn1"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2','2','6/12')}}" stepKey="findSecondColumnLineColumn2"/> -->
+        <!-- Drag column from CG2 to CG1 -->
+        <actionGroup ref="dragExistingColumnToExistingColumnLine" stepKey="moveColumnToCG1ColumnLine1">
+            <argument name="containerColumnGroupIndex" value="1"/>
+            <argument name="containerColumnLineIndex" value="1"/>
+            <argument name="columnIndexInNewLine" value="1" />
+            <argument name="columnIndex" value="3" />
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('1' ,'1','3/12')}}" stepKey="findFirstColumnLineColumn1AftermoveColumn"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('1','2','3/12')}}" stepKey="findFirstColumnLineColumn2AftermoveColumn"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('1','3','6/12')}}" stepKey="findFirstColumnLineColumn3AftermoveColumn"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2','1','6/12')}}" stepKey="findSecondColumnLineColumn1AftermoveColumn"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2','2','6/12')}}" stepKey="findSecondColumnLineColumn2AftermoveColumn"/>
+        <!-- Drag column from CG1 to CG2 -->
+        <actionGroup ref="dragExistingColumnToExistingColumnLine" stepKey="moveColumnToCG2ColumnLine1">
+            <argument name="containerColumnGroupIndex" value="2"/>
+            <argument name="containerColumnLineIndex" value="1"/>
+            <argument name="columnIndexInNewLine" value="1" />
+            <argument name="columnIndex" value="1" />
+        </actionGroup>
+
+
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumnTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+
+        <!-- save page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitSecondTimePageBuilderFullScreen"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveSecondTimeAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchSecondTimeToPageBuilderStage"/>
+        <!-- Verify Column Widths in stage after save-->
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('1','1','4/12')}}" stepKey="verifyFirstColumnLineColumn1AftermoveColumnToCG2ColumnLine1"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('1','2','8/12')}}" stepKey="verifyFirstColumnLineColumn2AftermoveColumnToCG2ColumnLine1"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2','1','3/12')}}" stepKey="verifySecondColumnLineColumn1AftermoveColumnToCG2ColumnLine1"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2' ,'2','3/12')}}" stepKey="verifySecondColumnLineColumn2AftermoveColumnToCG2ColumnLine1"/>
+        <waitForElementVisible selector="{{ColumnLineOnBackend.childColumnDisplayLabel('2','3','6/12')}}" stepKey="verifySecondColumnLineColumn3AftermoveColumnToCG2ColumnLine1"/>
+    </test>
+</tests>
+

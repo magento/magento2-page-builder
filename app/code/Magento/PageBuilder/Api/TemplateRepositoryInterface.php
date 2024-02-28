@@ -12,6 +12,9 @@ use Magento\PageBuilder\Api\Data\TemplateSearchResultsInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
+/**
+ * @api
+ */
 interface TemplateRepositoryInterface
 {
     /**

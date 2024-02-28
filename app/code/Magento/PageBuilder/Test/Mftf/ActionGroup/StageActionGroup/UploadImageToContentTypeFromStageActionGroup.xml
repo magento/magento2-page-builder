@@ -13,7 +13,7 @@
             <argument name="section" defaultValue="PageBuilderStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInputWithUploaderId(index)}}" stepKey="attachImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>

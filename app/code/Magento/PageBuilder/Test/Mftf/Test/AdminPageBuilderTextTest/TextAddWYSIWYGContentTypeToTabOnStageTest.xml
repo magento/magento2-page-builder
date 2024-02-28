@@ -22,6 +22,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
@@ -41,6 +44,9 @@
             </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">

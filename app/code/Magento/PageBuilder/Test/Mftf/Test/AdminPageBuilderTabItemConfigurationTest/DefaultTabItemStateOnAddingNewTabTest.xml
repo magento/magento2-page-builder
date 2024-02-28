@@ -18,6 +18,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pr_exclude"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -146,7 +147,7 @@
         </actionGroup>
         <!-- Background Position has expected dropdown values -->
         <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="data-title" stepKey="grabBackgroundPositionOptions"/>
         <assertEquals message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions">
             <actualResult type="variable">grabBackgroundPositionOptions</actualResult>
             <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
@@ -166,7 +167,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
             <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundAttachment_Default.section, PageBuilderBackgroundAttachment_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundAttachment_Default.section, PageBuilderBackgroundAttachment_Default.fieldName)}}" userInput="data-title" stepKey="grabBackgroundAttachmentOptions"/>
         <assertEquals message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions">
             <actualResult type="variable">grabBackgroundAttachmentOptions</actualResult>
             <expectedResult type="array">{{PageBuilderBackgroundAttachment_Default.optionsList}}</expectedResult>

@@ -21,7 +21,8 @@ The wiki provides more information on the Page Builder project, such as:
 - [MFTF best practices](https://github.com/magento/magento2-page-builder-docs/wiki/%5BRough-Draft%5D-MFTF-Best-Practices)
 
 ## Documentation
-Complete documentation located on the [Magento DevDocs](https://devdocs.magento.com/page-builder/docs/), including what you need to know to start local development as described in the [installation guide](https://github.com/magento/magento2-page-builder-docs/wiki/Installation-Guide).
+
+Complete documentation located on the [Magento DevDocs](https://developer.adobe.com/commerce/frontend-core/page-builder/), including what you need to know to start local development as described in the [installation guide](https://github.com/magento/magento2-page-builder-docs/wiki/Installation-Guide).
 
 ## Community Engineering Slack
 

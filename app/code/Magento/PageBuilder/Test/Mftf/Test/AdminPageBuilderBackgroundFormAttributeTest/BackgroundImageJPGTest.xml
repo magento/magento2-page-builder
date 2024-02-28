@@ -19,8 +19,15 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-backgroundForm"/>
+            <group value="cloud"/>
         </annotations>
         <before>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="cleanCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -36,6 +43,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StorefrontProductMultipleWidgetsAddToCartSameProductOnce">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Add to cart from product widget"/>
+            <title value="Adding to cart from product widget when two widgets on the same page, should add to cart once"/>
+            <description value="The product should be added to the cart only once from the product widget when the CMS page contains two rows, the first row contains the regular product widget, and the second row contains the product carousel widget and both of them are displaying the same product"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="ACP2E-1564"/>
+            <testCaseId value="AC-7939"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-cms-page"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCreatedCategory"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Open the newly created CMS Page for editing and expand the Page Builder editor -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="openPageBuilderFullScreen"/>
+
+        <!-- Add the product widget with Page Builder, set it to carousel mode and assign the product category -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Add the regular product widget with Page Builder and assign the product category -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSecondRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContentForSecondRow">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStageForSecondRow">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropForSecondRow">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsByForSecondRow">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategoryForSecondRow">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+
+        <!-- Save the Page Builder stage -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForSecondRow"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
+
+        <!-- Save the CMS Page -->
+        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCMSPage"/>
+
+        <!-- Validate Add to Cart on the storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontClickProductAddToCartValidateAsyncActionGroup" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct.name$$"/>
+        </actionGroup>
+
+        <!-- Validate the product was added to the cart just once -->
+        <see selector="{{StorefrontMinicartSection.quantity}}" userInput="1" stepKey="seeCartQuantityToBeJustOne"/>
+        <actionGroup ref="StorefrontAssertProductQtyInMinicartActionGroup" stepKey="assertProductQtyInMinicartToBeJustOne">
+            <argument name="product" value="$$createProduct$$"/>
+            <argument name="qty" value="1"/>
+        </actionGroup>
+    </test>
+</tests>

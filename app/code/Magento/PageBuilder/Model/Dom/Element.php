@@ -145,7 +145,7 @@ class Element implements ElementInterface
     public function removeStyle(string $styleProperty): string
     {
         $style = $this->getAttribute('style');
-        $this->setAttribute('style', preg_replace("/${styleProperty}:(.*?);/", '', $style ?? ''));
+        $this->setAttribute('style', preg_replace("/{$styleProperty}:(.*?);/", '', $style ?? ''));
         return $this->getAttribute('style') ?? '';
     }
 
@@ -155,7 +155,7 @@ class Element implements ElementInterface
     public function addStyle(string $styleProperty, string $value): string
     {
         $this->removeStyle($styleProperty);
-        $this->setAttribute('style', "${styleProperty}: $value; " . $this->getAttribute('style') ?? '');
+        $this->setAttribute('style', "{$styleProperty}: $value; " . $this->getAttribute('style') ?? '');
         return $this->getAttribute('style') ?? '';
     }
 }

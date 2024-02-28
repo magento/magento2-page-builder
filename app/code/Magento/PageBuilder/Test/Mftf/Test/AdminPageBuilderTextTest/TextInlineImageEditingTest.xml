@@ -22,6 +22,9 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <magentoCLI command="config:set cms/wysiwyg/use_static_urls_in_catalog 1" stepKey="useStaticURLForMediaContentInWYSIWYG"/>
         </before>
@@ -39,6 +42,9 @@
                 <argument name="ImageFolder" value="ImageFolder"/>
             </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">

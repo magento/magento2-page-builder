@@ -36,8 +36,9 @@ class RepositoryPlugin
         \Magento\Catalog\Model\Product\Attribute\Repository $subject,
         \Magento\Catalog\Api\Data\ProductAttributeInterface $attribute
     ) {
-        $isPageBuilderEnabled = $attribute->getData('extension_attributes')
-            ? $attribute->getData('extension_attributes')->getIsPagebuilderEnabled()
+        $extensionAttributes = $attribute->getData('extension_attributes');
+        $isPageBuilderEnabled = ($extensionAttributes && method_exists($extensionAttributes, 'getIsPagebuilderEnabled'))
+            ? $extensionAttributes->getIsPagebuilderEnabled()
             : 0;
         $attribute->setData('is_pagebuilder_enabled', $isPageBuilderEnabled);
     }
@@ -58,7 +59,11 @@ class RepositoryPlugin
         $extensionAttribute = $result->getExtensionAttributes()
             ? $result->getExtensionAttributes()
             : $this->extensionAttributesFactory->create();
-        $extensionAttribute->setIsPagebuilderEnabled($isPageBuilderEnabled);
+
+        if (method_exists($extensionAttribute, 'setIsPagebuilderEnabled')) {
+            $extensionAttribute->setIsPagebuilderEnabled($isPageBuilderEnabled);
+        }
+
         $result->setExtensionAttributes($extensionAttribute);
         return $result;
     }

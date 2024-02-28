@@ -24,6 +24,9 @@
             <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -42,6 +45,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_PNG"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>

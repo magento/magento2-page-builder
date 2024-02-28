@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Component\Form\Element;
 
+use Magento\Catalog\Setup\CategorySetup;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\View\Asset\Repository;
@@ -17,7 +18,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\PageBuilder\Model\Stage\Config as Config;
-use Magento\Framework\View\ConfigInterface as ViewConfigInterface;
+use Magento\Framework\AuthorizationInterface;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
@@ -26,10 +27,18 @@ use Magento\Framework\View\ConfigInterface as ViewConfigInterface;
  */
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
+
+    private const ADMIN_RESOURCE = 'Magento_Backend::content';
+
     /**
      * @var Repository
      */
     private $assetRepo;
+
+    /**
+     * @var AuthorizationInterface
+     */
+    private $authorization;
 
     /**
      * WYSIWYG Constructor
@@ -45,11 +54,11 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param array $config
      * @param PageBuilderConfig|null $pageBuilderConfig
      * @param bool $overrideSnapshot
-     * @param Repository $assetRepo
+     * @param Repository|null $assetRepo
+     * @param AuthorizationInterface|null $authorization
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.NPathComplexity)
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function __construct(
         ContextInterface $context,
@@ -63,28 +72,30 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         array $config = [],
         PageBuilderConfig $pageBuilderConfig = null,
         bool $overrideSnapshot = false,
-        Repository $assetRepo = null
+        Repository $assetRepo = null,
+        AuthorizationInterface $authorization = null
     ) {
         $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
-        $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
+        $this->authorization = $authorization ?: ObjectManager::getInstance()->get(AuthorizationInterface::class);
+        $wysiwygConfigData = $config['wysiwygConfigData'] ?? [];
 
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
                 $attribute = $attrRepository->get($data['name']);
 
-                if ($attribute) {
+                if ($attribute && $attribute->getEntityTypeId() === CategorySetup::CATEGORY_ENTITY_TYPE_ID) {
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {
                 $config['wysiwyg'] = true;
             }
         }
-
+        $isAllowed = $this->authorization->isAllowed(self::ADMIN_RESOURCE);
         $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
             && !$wysiwygConfigData['is_pagebuilder_enabled']
             || false;
-        if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder)) {
+        if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder) && $isAllowed) {
             // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
             $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 

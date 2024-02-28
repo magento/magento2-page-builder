@@ -22,7 +22,7 @@
         <moveMouseOver selector="{{section.base('1')}}" stepKey="hoverSectionArea"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{PageBuilderStage.onHoverUploadImageButton(contentType.role, '1')}}" stepKey="waitForUploadImageButton"/>
-        <attachFile userInput="{{file.value}}" selector="{{section.uploadImageInput('1')}}" stepKey="attachFile"/>
+        <attachFile userInput="{{file.value}}" selector="{{section.uploadImageInputWithUploaderId('1')}}" stepKey="attachFile"/>
         <waitForPageLoad stepKey="waitForFileLoad"/>
         <waitForElementVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
         <waitForElementVisible selector="{{PageBuilderStage.errorModalMessage(file.errorMessage)}}" stepKey="waitForModalMessage"/>

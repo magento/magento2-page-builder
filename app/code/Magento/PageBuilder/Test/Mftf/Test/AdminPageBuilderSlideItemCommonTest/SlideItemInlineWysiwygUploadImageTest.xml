@@ -22,6 +22,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
@@ -46,6 +49,9 @@
             <comment userInput="BIC workaround" stepKey="DeleteImageFromStorage"/>
             <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
                 <argument name="ImageFolder" value="ImageFolder"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>

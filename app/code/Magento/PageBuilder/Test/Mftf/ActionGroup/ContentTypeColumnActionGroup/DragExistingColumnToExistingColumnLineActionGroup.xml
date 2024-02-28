@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragExistingColumnToExistingColumnLine">
+        <arguments>
+            <argument name="containerColumnGroupIndex" defaultValue="1" type="string"/>
+            <argument name="containerColumnLineIndex" defaultValue="1" type="string"/>
+            <argument name="columnIndexInNewLine" defaultValue="1" type="string"/>
+            <argument name="columnIndex" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex('column', columnIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex('column', columnIndex)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad time="30" stepKey="waitForMouseOverAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex('column', columnIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnMoveByIndex(columnIndex)}}" stepKey="waitForMoveHandle"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnMoveByIndex(columnIndex)}}" selector2="{{PageBuilderStage.contentTypeInStageByIndex('column-group', containerColumnGroupIndex)}}{{PageBuilderStage.childContentTypeInStageByIndex('column-line', containerColumnLineIndex)}}{{PageBuilderStage.childContentTypeInStageByIndex('column', columnIndexInNewLine)}}" stepKey="moveContentTypeIntoContainer"/>
+        <waitForPageLoad stepKey="waitForDragOperation"/>
+    </actionGroup>
+</actionGroups>
