@@ -11,8 +11,8 @@
     <arguments>
       <argument name="property"/>
     </arguments>
-    <waitForElement time="2" selector="{{EditPanelForm.panelFieldControlWithUploaderId(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
-    <dontSeeElement selector="{{EditPanelForm.panelFieldRequired(property.section, property.fieldName)}}" stepKey="seePropertyIsNotRequired"/>
+    <waitForElementVisible time="2" selector="{{EditPanelForm.panelFieldControlWithUploaderId(property.section, property.fieldName)}}" stepKey="waitForPropertyElement"/>
+    <dontSeeElement selector="{{EditPanelForm.panelFieldRequired(property.section, property.fieldName)}}" stepKey="seePropertyIsNotARequiredField"/>
   </actionGroup>
 </actionGroups>
 
