@@ -83,7 +83,7 @@ class ConfigTest extends TestCase
     /**
      * @return array
      */
-    public function storeDataProvider(): array
+    public static function storeDataProvider(): array
     {
         return [
             [
