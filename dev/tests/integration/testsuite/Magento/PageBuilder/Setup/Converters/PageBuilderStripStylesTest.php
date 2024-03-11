@@ -176,7 +176,7 @@ class PageBuilderStripStylesTest extends TestCase
     /**
      * @return array
      */
-    public function conversionDataRaw(): array
+    public static function conversionDataRaw(): array
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [

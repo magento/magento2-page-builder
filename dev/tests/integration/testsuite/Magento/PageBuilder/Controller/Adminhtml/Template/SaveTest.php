@@ -100,7 +100,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ->getMock();
 
         $this->imageAdapterFactory = $this->getMockBuilder(AdapterFactory::class)
-            ->setMethods(['create'])
+            ->onlyMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 
