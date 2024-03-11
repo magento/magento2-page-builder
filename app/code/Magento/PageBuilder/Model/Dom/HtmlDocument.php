@@ -21,13 +21,23 @@ class HtmlDocument extends Document implements HtmlDocumentInterface
      * HtmlDocument constructor.
      * @param ObjectManagerInterface $objectManager
      * @param string $document
+     * @param string $characterSet
+     * @param string $contentType
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        string $document = ""
+        string $document,
+        string $characterSet = "UTF-8",
+        string $contentType = "text/html"
     ) {
-        parent::__construct($objectManager, $document);
-        $this->document = $this->objectManager->create(GtDomHTMLDocument::class, [ 'document' => $document ]);
+        parent::__construct($objectManager, $characterSet, $contentType);
+        $this->document = $this->objectManager->create(
+            GtDomHTMLDocument::class,
+            [
+                "html" => $document,
+                "characterSet" => $characterSet
+            ]
+        );
     }
 
     /**

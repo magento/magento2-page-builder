@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateSlideOutPanelFieldTooltipWithUploaderId">
+        <annotations>
+            <description>Validates the tooltip for a field on the edit panel form.</description>
+        </annotations>
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldTooltipWithUploaderId(property.section, property.fieldName)}}" stepKey="waitForTooltip"/>
+        <moveMouseOver selector="{{EditPanelForm.panelFieldTooltipWithUploaderId(property.section, property.fieldName)}}" stepKey="mouseOverTooltip"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldTooltipContentWithUploaderId(property.section, property.fieldName)}}" stepKey="waitForTooltipContentVisible"/>
+        <see userInput="{{property.tooltipText}}" selector="{{EditPanelForm.panelFieldTooltipContentWithUploaderId(property.section, property.fieldName)}}" stepKey="seeTooltipContent"/>
+    </actionGroup>
+</actionGroups>
