@@ -15,6 +15,9 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @magentoDbIsolation enabled
+ */
 class PageBuilderStripStylesTest extends TestCase
 {
     private const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
