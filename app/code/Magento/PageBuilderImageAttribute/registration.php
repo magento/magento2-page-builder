@@ -1,5 +1,6 @@
 <?php
 /**
+ * Copyright © Magento, Inc. All rights reserved.
  * Changes by: Ajay Prajapati
  */
 
