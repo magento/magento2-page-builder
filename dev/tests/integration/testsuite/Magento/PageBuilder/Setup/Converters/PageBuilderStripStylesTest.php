@@ -66,7 +66,9 @@ class PageBuilderStripStylesTest extends TestCase
             $styleAttr = $node->getAttribute('style');
 
             if ($styleAttr) {
-                $getInternalStyles = $xpathAfter->query('//body/style[last()]')->item(0)->textContent;
+                if($xpathAfter->query('//body/style[last()]')->item(0)){
+                    $getInternalStyles = $xpathAfter->query('//body/style[last()]')->item(0)->textContent;
+                }
                 $styleRules[] = $styleAttr;
             }
         }
