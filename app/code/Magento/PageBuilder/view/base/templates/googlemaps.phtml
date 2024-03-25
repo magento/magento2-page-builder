@@ -32,6 +32,7 @@ $script = <<<SCRIPT
         }
     });
 SCRIPT;
+//phpcs:ignore
 echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
 ?>
 
@@ -48,6 +49,7 @@ if ($block->shouldIncludeGoogleMapsLibrary()) {
         }
     });
 SCRIPT;
+    //phpcs:ignore
     echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
 }
 ?>
