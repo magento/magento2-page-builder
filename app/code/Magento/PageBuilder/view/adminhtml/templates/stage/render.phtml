@@ -4,8 +4,9 @@
  * See COPYING.txt for license details.
  */
 
-/** @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block
- *  @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+/**
+ * @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 ?>
 
@@ -47,7 +48,7 @@ $script .= <<<SCRIPT
     });
 
     require(['Magento_PageBuilder/js/master-format/render/frame'], function (listen) {
-        listen(${$pageBuilderConfig});
+        listen({$pageBuilderConfig});
     });
 ?>
 SCRIPT;

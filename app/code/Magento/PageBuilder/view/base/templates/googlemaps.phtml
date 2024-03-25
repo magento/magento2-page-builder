@@ -4,9 +4,10 @@
  * See COPYING.txt for license details.
  */
 
-/** @var Magento\PageBuilder\Block\GoogleMapsApi $block
- *  @var Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
- *  @var Magento\Framework\Escaper $escaper
+/**
+ * @var Magento\PageBuilder\Block\GoogleMapsApi $block
+ * @var Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var Magento\Framework\Escaper $escaper
  */
 ?>
 
@@ -31,7 +32,7 @@ $script = <<<SCRIPT
         }
     });
 SCRIPT;
-/** @noEscape */ echo $secureRenderer->renderTag('script', [], $script, false);
+echo $secureRenderer->renderTag('script', [], $script, false);
 ?>
 
 <?php
@@ -47,6 +48,6 @@ if ($block->shouldIncludeGoogleMapsLibrary()) {
         }
     });
 SCRIPT;
-    /** @noEscape */ echo $secureRenderer->renderTag('script', [], $script, false);
+echo $secureRenderer->renderTag('script', [], $script, false);
 }
 ?>
