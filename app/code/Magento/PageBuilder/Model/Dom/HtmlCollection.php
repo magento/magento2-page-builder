@@ -9,7 +9,7 @@ namespace Magento\PageBuilder\Model\Dom;
 
 use ArrayAccess;
 use Countable;
-use Gt\Dom\HTMLCollection as GtDomHTMLCollection;
+use Gt\Dom\NodeList as GtDomNodeList;
 use Iterator;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
@@ -26,7 +26,7 @@ class HtmlCollection implements Iterator, ArrayAccess, Countable, HtmlCollection
     private $objectManager;
 
     /**
-     * @var GtDomHTMLCollection
+     * @var GtDomNodeList
      */
     private $collection;
 
@@ -34,11 +34,11 @@ class HtmlCollection implements Iterator, ArrayAccess, Countable, HtmlCollection
      * HtmlCollection constructor.
      *
      * @param ObjectManagerInterface $objectManager
-     * @param GtDomHTMLCollection $collection
+     * @param GtDomNodeList $collection
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        GtDomHTMLCollection $collection
+        GtDomNodeList $collection
     ) {
         $this->objectManager = $objectManager;
         $this->collection = $collection;
