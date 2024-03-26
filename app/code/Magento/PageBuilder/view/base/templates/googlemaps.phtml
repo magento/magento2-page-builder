@@ -35,7 +35,7 @@ $script = <<<SCRIPT
         }
     });
 SCRIPT;
-
+// phpcs:ignore
 echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
 
 /** Include the googleMaps dependency only if we have an API key set, this removes unnecessary calls to Google */
@@ -51,5 +51,6 @@ if ($block->shouldIncludeGoogleMapsLibrary()) {
     });
 SCRIPT;
 
+    // phpcs:ignore
     echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
 }
