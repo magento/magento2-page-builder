@@ -6,12 +6,10 @@
 
 /**
  * @var Magento\PageBuilder\Block\GoogleMapsApi $block
- * @var Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
- * @var Magento\Framework\Escaper $escaper
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var \Magento\Framework\Escaper $escaper
  */
-?>
 
-<?php
 $script = <<<SCRIPT
     require.config({
         paths: {
@@ -32,10 +30,9 @@ $script = <<<SCRIPT
         }
     });
 SCRIPT;
-?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false) ?>
 
-<?php
+echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
+
 /** Include the googleMaps dependency only if we have an API key set, this removes unnecessary calls to Google */
 if ($block->shouldIncludeGoogleMapsLibrary()) {
     $script = <<<SCRIPT
@@ -48,7 +45,6 @@ if ($block->shouldIncludeGoogleMapsLibrary()) {
         }
     });
 SCRIPT;
-    //phpcs:ignore
+
     echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
 }
-?>
