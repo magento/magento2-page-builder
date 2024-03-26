@@ -10,22 +10,27 @@
  * @var \Magento\Framework\Escaper $escaper
  */
 
+$libraryUrl = $escaper->escapeJs($block->getLibraryUrl());
+$style = $escaper->escapeJs($block->getStyle());
+$apiKey = $escaper->escapeJs($block->getApiKey());
+$invalidApiKeyMessage = $escaper->escapeJs($block->getInvalidApiKeyMessage());
+
 $script = <<<SCRIPT
     require.config({
         paths: {
-            googleMaps: '" . $escaper->escapeJs($block->getLibraryUrl()); . "'
+            googleMaps: '{$libraryUrl}'
         },
         config: {
             'Magento_PageBuilder/js/utils/map': {
-                style: '" . $escaper->escapeJs($block->getStyle()); . "'
+                style: '{$style}',
             },
             'Magento_PageBuilder/js/content-type/map/preview': {
-                apiKey: '" . $escaper->escapeJs($block->getApiKey()); . "',
-                apiKeyErrorMessage: '" . $escaper->escapeJs($block->getInvalidApiKeyMessage()); . "'
+                apiKey: '{$apiKey}',
+                apiKeyErrorMessage: '{$invalidApiKeyMessage}'
             },
             'Magento_PageBuilder/js/form/element/map': {
-                apiKey: '" . $escaper->escapeJs($block->getApiKey()); . "',
-                apiKeyErrorMessage: '" . $escaper->escapeJs($block->getInvalidApiKeyMessage()); . "'
+                apiKey: '{$apiKey}',
+                apiKeyErrorMessage: '{$invalidApiKeyMessage}'
             },
         }
     });
