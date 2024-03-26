@@ -50,10 +50,7 @@ $script .= <<<SCRIPT
     require(['Magento_PageBuilder/js/master-format/render/frame'], function (listen) {
         listen({$pageBuilderConfig});
     });
-?>
 SCRIPT;
-
-/* @noEscape */ echo $secureRenderer->renderTag('script', [], $script, false);
 ?>
-
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false) ?>
 <div>Page Builder Render Frame</div>
