@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/************************************************************************
+ *
+ * Copyright 2024 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ * ************************************************************************
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ImageAddSameNameImageIntoPageBuilderStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Add Image with same name in PageBuilder for new CMS page and view on Storefront"/>
+            <description value="Upload and select an image to/from Magento Media Gallery from the Image content type in the Page Builder Stage and then delete it and re-upload a different image with same name."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="ACP2E-2957"/>
+            <testCaseId value="AC-11732"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="cloud"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+            <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage2">
+                <argument name="contentType" value="PageBuilderImageContentType"/>
+                <argument name="x" value="0"/>
+                <argument name="y" value="0"/>
+            </actionGroup>
+            <comment stepKey="deleteImageB" userInput="Delete image B"/>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="PageBuilderImagePropertyJpgCopyOtherFolder"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage" />
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Go to CMS Page in Admin -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <!-- Switch to PageBuilder stage -->
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Add a row to PageBuilder stage with image -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+
+        <!-- Attach image A to PageBuilder stage -->
+        <comment userInput="Attach image A to PageBuilder stage" stepKey="commentAttachImage"/>
+        <comment userInput="Upload image from stage" stepKey="uploadImageFromStage"/>
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+
+        <!-- Go to Media Storage from stage -->
+        <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage1"/>
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="x" value="0"/>
+            <argument name="y" value="0"/>
+        </actionGroup>
+
+        <!-- Delete image A -->
+        <comment stepKey="deleteImageA" userInput="Delete image A"/>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+
+        <!-- Select image B from Media Gallery -->
+        <comment userInput="Attach image B from Media Gallery" stepKey="attachImageToSlideOut"/>
+        <actionGroup ref="InsertImageFromMediaGalleryFromCmsActionGroup" stepKey="insertImageFromMediaGallery">
+            <argument name="imageFileName" value="{{PageBuilderImagePropertyJpgCopyOtherFolder.fileName}}"/>
+            <argument name="imageFilePath" value="{{PageBuilderImagePropertyJpgCopyOtherFolder.file}}"/>
+        </actionGroup>
+
+        <!-- Save Cms Page -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- Go to Storefront -->
+        <actionGroup ref="StorefrontGoToCMSPageActionGroup" stepKey="goToCMSPageOnStorefrontAsGuest">
+            <argument name="identifier" value="$createCMSPage.identifier$"/>
+        </actionGroup>
+
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImagePropertyJpgCopyOtherFolder.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+    </test>
+</tests>
