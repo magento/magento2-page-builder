@@ -91,6 +91,18 @@
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube_Insecure"/>
         </actionGroup>
+        <!-- Update to YouTube Nocookie -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeNocookie">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeNocookie">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube_Nocookie"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsNocookie"/>
+        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeNocookieStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube_Nocookie"/>
+        </actionGroup>
         <!-- Update to Vimeo Embedded-->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoEmbedded">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
