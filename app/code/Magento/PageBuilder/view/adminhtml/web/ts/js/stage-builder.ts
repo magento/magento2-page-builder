@@ -252,7 +252,7 @@ function getElementChildren(element: HTMLElement): HTMLElement[] {
                 if (child.hasAttribute(Config.getConfig("dataContentTypeAttributeName"))) {
                     children.push(child);
                 } else {
-                    children = getElementChildren(child);
+                    children.push(...getElementChildren(child));
                 }
             }
         });
