@@ -31,6 +31,12 @@ class Collection extends TemplateCollection implements SearchResultInterface
      */
     private $aggregations;
 
+    /** @var string */
+    private $model;
+
+    /** @var string */
+    private $resourceModel;
+
     /**
      * @param EntityFactoryInterface $entityFactory
      * @param LoggerInterface $logger
@@ -58,6 +64,8 @@ class Collection extends TemplateCollection implements SearchResultInterface
         $connection = null,
         AbstractDb $resource = null
     ) {
+        $this->resourceModel = $resourceModel;
+        $this->model = $model;
         parent::__construct(
             $entityFactory,
             $logger,
@@ -68,8 +76,17 @@ class Collection extends TemplateCollection implements SearchResultInterface
         );
         $this->_eventPrefix = $eventPrefix;
         $this->_eventObject = $eventObject;
-        $this->_init($model, $resourceModel);
+        $this->_init($this->model, $this->resourceModel);
         $this->setMainTable($mainTable);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function _resetState(): void
+    {
+        parent::_resetState();
+        $this->_init($this->model, $this->resourceModel);
     }
 
     /**

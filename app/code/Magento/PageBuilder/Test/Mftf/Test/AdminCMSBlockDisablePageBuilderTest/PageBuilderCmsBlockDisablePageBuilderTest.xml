@@ -29,14 +29,18 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <seeElement selector="{{PageBuilderStage.stageWrapper}}" stepKey="seeElementPageBuilderStage"/>
         <dontSeeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="dontSeeContentAreaInDOM"/>
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
-        <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+        <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+            <argument name="tags" value="config"/>
+        </actionGroup>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>

@@ -19,6 +19,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
             <group value="pagebuilder-productsCarousel"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
@@ -251,6 +252,8 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
+        <!-- Moving mouse over logo to make sure we aren't hovering over some product that should be 50% transparent  -->
+        <moveMouseOver selector="{{StorefrontHeaderSection.logoLink}}" stepKey="moveMouseOverLogo" />
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="carouselMode" value="PageBuilderProductsCarouselSettingsCarouselMode_Continuous"/>

@@ -420,6 +420,14 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
     _proto.bindEvents = function bindEvents() {
       var _this8 = this;
 
+      this.contentType.dataStore.subscribe(function (state) {
+        var sanitizedContent = (0, _editor.removeReservedHtmlAttributes)(state.content);
+
+        if (sanitizedContent !== state.content) {
+          state.content = sanitizedContent;
+        }
+      }, "content");
+
       _preview2.prototype.bindEvents.call(this);
 
       _events.on("slide:mountAfter", function (args) {

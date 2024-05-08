@@ -24,11 +24,15 @@
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG1"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <actionGroup ref="CliCacheCleanActionGroup" stepKey="flushCache">
+                <argument name="tags" value="config"/>
+            </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>

@@ -45,7 +45,7 @@ define(["Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_Pa
     };
 
     _proto.isHosted = function isHosted(src) {
-      var youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
+      var youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtu\\.be\/|(?:youtube\\.com\/|youtube-nocookie\\.com\/)(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))" + "([\\w-]{11})(?![\\w-])");
       var vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" + "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
       return vimeoRegExp.test(src) || youtubeRegExp.test(src);
     }

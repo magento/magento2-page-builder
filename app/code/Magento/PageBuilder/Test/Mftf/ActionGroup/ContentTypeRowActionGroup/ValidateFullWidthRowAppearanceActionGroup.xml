@@ -20,7 +20,7 @@
             <argument name="affordanceValue" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
-        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <resizeWindow width="2560" height="1440" stepKey="resizeWindow"/>
         <executeJS function="return {{pageOrStageWidthJS}} - {{affordanceValue}}" stepKey="pageOrStageWidth"/>
         <executeJS function="return {{section.rowWidthJS(rowIndex)}}" stepKey="rowWidth"/>
         <executeJS function="return parseInt({{section.rowChildContentWidthJS(rowIndex, childContentType.role, childContentTypeIndex)}} + {{padding.paddingLeft}} + {{padding.paddingRight}} + ({{childContentTypeBorder.value}}*2))" stepKey="rowChildElementWidth"/>
@@ -41,6 +41,6 @@
             <expectedResult type="int">1300</expectedResult>
             <actualResult type="variable">rowChildElementWidth</actualResult>
         </assertLessThanOrEqual>
-        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+        <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
 </actionGroups>

@@ -11,7 +11,7 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeElementInDOM selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
