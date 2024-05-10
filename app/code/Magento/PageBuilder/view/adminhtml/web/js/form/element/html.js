@@ -59,24 +59,28 @@ define([
                 name;
 
             this.elements.forEach(function (item) {
+                if (!$.contains(document.documentElement, item)) {
+                    // item was removed
+                    return;
+                }
                 switch (item.type) {
-                    case 'checkbox':
-                        result[item.name] = +!!item.checked;
-                        break;
+                case 'checkbox':
+                    result[item.name] = +!!item.checked;
+                    break;
 
-                    case 'radio':
-                        if (item.checked) {
-                            result[item.name] = item.value;
-                        }
-                        break;
-
-                    case 'select-multiple':
-                        name = item.name.substring(0, item.name.length - 2); //remove [] from the name ending
-                        result[name] = _.pluck(item.selectedOptions, 'value');
-                        break;
-
-                    default:
+                case 'radio':
+                    if (item.checked) {
                         result[item.name] = item.value;
+                    }
+                    break;
+
+                case 'select-multiple':
+                    name = item.name.substring(0, item.name.length - 2); //remove [] from the name ending
+                    result[name] = _.pluck(item.selectedOptions, 'value');
+                    break;
+
+                default:
+                    result[item.name] = item.value;
                 }
             });
 
