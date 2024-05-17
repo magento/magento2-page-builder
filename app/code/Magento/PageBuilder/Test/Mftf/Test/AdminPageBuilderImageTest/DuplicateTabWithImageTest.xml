@@ -18,9 +18,16 @@
             <testCaseId value="MC-5022"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
+            <group value="cloud"/>
+
+            <!--  TODO: pr_exclude group must be removed when AC-9371 is resolved  -->
+            <group value="pr_exclude" />
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
@@ -35,6 +42,9 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -67,8 +77,8 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusTabOptions"/>
         <!-- Validate Tab Item is duplicated -->
         <comment userInput="Validate Tab Item is duplicated" stepKey="commentValidateTabItemDuplicateOnStage"/>
-        <seeElement selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2"/>
-        <seeElement selector="{{TabOnStage.base('2')}}" stepKey="seeTab2"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2"/>
+        <waitForElementVisible selector="{{TabOnStage.base('2')}}" stepKey="seeTab2"/>
         <!-- Duplicate Tab Group -->
         <comment userInput="Duplicate Tab Group" stepKey="commentDuplicateTabGroup"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateTabGroup">
@@ -76,56 +86,56 @@
         </actionGroup>
         <!-- Validate Tab Group is duplicated -->
         <comment userInput="Validate Tab Group is duplicated" stepKey="commentValidateTabGroupDuplicateOnStage"/>
-        <seeElement selector="{{TabsOnStage.base('2')}}" stepKey="seeTabGroup1"/>
-        <seeElement selector="{{TabOnStage.base('3')}}" stepKey="seeTab3"/>
-        <seeElement selector="{{ImageOnStage.base('3')}}" stepKey="seeImage3"/>
+        <waitForElementVisible selector="{{TabsOnStage.base('2')}}" stepKey="seeTabGroup1"/>
+        <waitForElementVisible selector="{{TabOnStage.base('3')}}" stepKey="seeTab3"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('3')}}" stepKey="seeImage3"/>
         <click selector="{{TabOnStage.tabHeader('4')}}" stepKey="switchToTab4Stage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeElement selector="{{TabOnStage.base('4')}}" stepKey="seeTab4"/>
-        <seeElement selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4"/>
+        <waitForElementVisible selector="{{TabOnStage.base('4')}}" stepKey="seeTab4"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4"/>
         <!-- Stage: Validate After Save -->
         <comment userInput="Stage: Validate After Save" stepKey="CommentValidateOnStageAfterSave"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{TabsOnStage.base('1')}}" stepKey="seeTabGroup1AfterSave"/>
-        <seeElement selector="{{TabOnStage.base('1')}}" stepKey="seeTab1AfterSave"/>
-        <seeElement selector="{{ImageOnStage.base('1')}}" stepKey="seeImage1AfterSave"/>
+        <waitForElementVisible selector="{{TabsOnStage.base('1')}}" stepKey="seeTabGroup1AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.base('1')}}" stepKey="seeTab1AfterSave"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('1')}}" stepKey="seeImage1AfterSave"/>
         <actionGroup ref="switchTabs" stepKey="switchToTab2StageAfterSave">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <seeElement selector="{{TabOnStage.base('2')}}" stepKey="seeTab2AfterSave"/>
-        <seeElement selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2AfterSave"/>
-        <seeElement selector="{{TabsOnStage.base('2')}}" stepKey="seeTabGroup2AfterSave"/>
-        <seeElement selector="{{TabOnStage.base('3')}}" stepKey="seeTab3AfterSave"/>
-        <seeElement selector="{{ImageOnStage.base('3')}}" stepKey="seeImage3AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.base('2')}}" stepKey="seeTab2AfterSave"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2AfterSave"/>
+        <waitForElementVisible selector="{{TabsOnStage.base('2')}}" stepKey="seeTabGroup2AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.base('3')}}" stepKey="seeTab3AfterSave"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('3')}}" stepKey="seeImage3AfterSave"/>
         <click selector="{{TabOnStage.tabHeader('4')}}" stepKey="switchToTab4StageAfterSave"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElement selector="{{TabOnStage.base('4')}}" stepKey="seeTab4AfterSave"/>
-        <seeElement selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.base('4')}}" stepKey="seeTab4AfterSave"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4AfterSave"/>
         <!-- Validate content type is duplicated in Storefront -->
         <comment userInput="Validate content type is duplicated in Storefront" stepKey="commentValidateDuplicatedStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <seeElement selector="{{TabsOnFrontend.base('1')}}" stepKey="seeTabGroup1Storefront"/>
-        <seeElement selector="{{TabOnStorefront.base('1')}}" stepKey="seeTab1Storefront"/>
-        <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="seeImage1Storefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.base('1')}}" stepKey="seeTabGroup1Storefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.base('1')}}" stepKey="seeTab1Storefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="seeImage1Storefront"/>
         <actionGroup ref="switchTabs" stepKey="switchToTab2Storefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <seeElement selector="{{TabOnStorefront.base('2')}}" stepKey="seeTab2Storefront"/>
-        <seeElement selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
-        <seeElement selector="{{TabsOnFrontend.base('2')}}" stepKey="seeTabGroup2Storefront"/>
-        <seeElement selector="{{TabOnStorefront.base('3')}}" stepKey="seeTab3Storefront"/>
-        <seeElement selector="{{ImageOnStorefront.base('3')}}" stepKey="seeImage3Storefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.base('2')}}" stepKey="seeTab2Storefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.base('2')}}" stepKey="seeTabGroup2Storefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.base('3')}}" stepKey="seeTab3Storefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('3')}}" stepKey="seeImage3Storefront"/>
         <click selector="{{TabOnStorefront.tabHeader('4')}}" stepKey="switchToTab4Storefront"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <seeElement selector="{{TabOnStorefront.base('4')}}" stepKey="seeTab4Storefront"/>
-        <seeElement selector="{{ImageOnStorefront.base('4')}}" stepKey="seeImage4Storefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.base('4')}}" stepKey="seeTab4Storefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('4')}}" stepKey="seeImage4Storefront"/>
     </test>
 </tests>

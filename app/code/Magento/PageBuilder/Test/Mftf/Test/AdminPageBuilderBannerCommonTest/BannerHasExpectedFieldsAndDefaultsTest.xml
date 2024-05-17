@@ -19,6 +19,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -61,10 +62,10 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
+        <actionGroup ref="validateSlideOutPanelFieldWithUploaderId" stepKey="seeBackgroundImageProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeMobileImageProperty">
+        <actionGroup ref="validateSlideOutPanelFieldWithUploaderId" stepKey="seeMobileImageProperty">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
@@ -111,7 +112,8 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <scrollTo selector="//div[@data-index='background']/descendant::*[@name='background_position']/option" stepKey="options"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
             <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
             <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>

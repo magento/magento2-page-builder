@@ -22,6 +22,9 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
                 <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -41,6 +44,9 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Slider -->
@@ -57,7 +63,7 @@
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <attachFile selector="{{PageBuilderStage.uploadImageInput('1')}}" userInput="{{PageBuilderImageProperty_JPG.value}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile selector="{{PageBuilderStage.uploadImageInputWithUploaderId('1')}}" userInput="{{PageBuilderImageProperty_JPG.value}}" stepKey="attachImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="ValidateBackgroundImageConfigurationActionGroup" stepKey="validateBackgroundImageStage">
             <argument name="section" value="SlideOnBackend"/>

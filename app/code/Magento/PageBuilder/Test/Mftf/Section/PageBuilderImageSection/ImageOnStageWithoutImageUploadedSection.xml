@@ -12,6 +12,7 @@
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="attachImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']"/>
+        <element name="attachImageBtnWithUploaderId" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//div[@upload-area-id='image']//div[contains(@class,'uppy-Root')]//input[contains(@class,'uppy-Dashboard-input')]"/>
         <element name="imageSourceByIndex" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-image')])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="imageEmptyPreview" type="text" selector="//div[contains(concat(' ', normalize-space(@class), ' '), ' pagebuilder-image-empty-preview ')]"/>
         <element name="imagePreview" type="text" selector="//img[contains(concat(' ', normalize-space(@class), ' '), ' preview-image ')]"/>
@@ -21,6 +22,7 @@
         <element name="onHoverUploadImageButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//label[text()='Upload New Image']" parameterized="true"/>
         <element name="uploadImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//label[text()='Upload Image']"/>
         <element name="uploadImageInput" type="button" selector="(//div[contains(@class,'pagebuilder-image-uploader-container')])[{{arg1}}]//input[@name='image']" parameterized="true"/>
+        <element name="uploadImageInputWithUploaderId" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//div[@upload-area-id='image']//div[contains(@class,'uppy-Root')]//input[contains(@class,'uppy-Dashboard-input')]"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figure[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figure[not(contains(@style,'text-align:'))]" parameterized="true"/>
