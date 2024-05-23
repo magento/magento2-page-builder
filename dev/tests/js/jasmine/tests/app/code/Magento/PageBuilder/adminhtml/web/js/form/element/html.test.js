@@ -39,6 +39,11 @@ define([
             return inputElement;
         }
 
+        function removeElement(element) {
+            element.remove();
+            model.elements = model.elements.filter(el => el !== element);
+        }
+
         beforeEach(function () {
             model = new HtmlUiElement({inputSelector: '[data-form-part=' + formId + ']'});
             htmlContainer = document.createElement('ul');
@@ -66,7 +71,7 @@ define([
                 param2.value = 'value22';
                 model.updateValue();
                 expect(model.value()).toEqual({param1: 'value1', param2: 'value22'});
-                param1.remove();
+                removeElement(param1);
                 model.updateValue();
                 expect(model.value()).toEqual({param2: 'value22'});
             });
