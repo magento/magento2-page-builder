@@ -16,7 +16,7 @@
 
 /* eslint-disable max-nested-callbacks */
 define([
-    'Magento_PageBuilder/js/form/element/html',
+    'Magento_PageBuilder/js/form/element/html'
 ], function (HtmlUiElement) {
     'use strict';
 
