@@ -300,6 +300,8 @@
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefront"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
@@ -354,6 +356,8 @@
             <argument name="expectedProperty" value="{{PageBuilderBannerOverlayColorDefaultProperty.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutsideStorefrontMobile"/>
+        <wait time="5" stepKey="pauseAfterIconHoverStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobile"/>
         <wait time="3" stepKey="waitAfterMouseOverBannerCMSPageStorefrontMobile"/>
         <waitForElementVisible selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
