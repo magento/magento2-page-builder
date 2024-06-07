@@ -85,22 +85,22 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ->disableOriginalConstructor()
             ->getMock();
         $this->filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['getDirectoryWrite'])
+            ->onlyMethods(['getDirectoryWrite'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->mediaStorage = $this->getMockBuilder(Database::class)
-            ->setMethods(['checkDbUsage', 'saveFile'])
+            ->onlyMethods(['checkDbUsage', 'saveFile'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->imageAdapter = $this->getMockBuilder(Gd2::class)
-            ->setMethods(['open', 'resize', 'save'])
+            ->onlyMethods(['open', 'resize', 'save'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->imageAdapterFactory = $this->getMockBuilder(AdapterFactory::class)
-            ->setMethods(['create'])
+            ->onlyMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 

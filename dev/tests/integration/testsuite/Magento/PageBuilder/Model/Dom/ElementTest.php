@@ -47,7 +47,7 @@ class ElementTest extends TestCase
         $this->assertEquals($expectedResult, $element->removeStyle($styleProperty));
     }
 
-    public function removeStylesDataProvider()
+    public static function removeStylesDataProvider()
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
@@ -90,7 +90,7 @@ class ElementTest extends TestCase
         $this->assertEquals($expectedResult, $element->addStyle($styleProperty, $styleValue));
     }
 
-    public function addStyleDataProvider()
+    public static function addStyleDataProvider()
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
