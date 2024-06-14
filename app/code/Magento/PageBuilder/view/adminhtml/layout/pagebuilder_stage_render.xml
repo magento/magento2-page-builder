@@ -14,6 +14,13 @@
         <remove src="css/styles.css"/>
     </head>
     <body>
+        <referenceBlock name="require.js">
+            <arguments>
+                <argument name="config_modifier" xsi:type="object">
+                    Magento\PageBuilder\ViewModel\StageRenderFrameRequireJsConfigModifier
+                </argument>
+            </arguments>
+        </referenceBlock>
         <referenceContainer name="backend.page" remove="true"/>
         <referenceContainer name="menu.wrapper" remove="true"/>
         <referenceContainer name="root">
