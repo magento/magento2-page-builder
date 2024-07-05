@@ -80,6 +80,7 @@ class ContentTypeUsageReportProvider
     {
         $query = $this->queryFactory->create($name);
 
+        $reportData = [];
         // Prepare our type count data
         $typeCounts = [];
         $contentTypes = $this->config->getContentTypes();
