@@ -102,7 +102,7 @@ class ContentTypeUsageReportProvider
                     foreach ($contentTypes as $type) {
                         // Count the amount of content types within the content
                         $rowContent = $row['content'] ?? '';
-                        if (strlen($rowContent) > 0) {
+                        if ($rowContent !== null && strlen($rowContent) > 0) {
                             $typeCounts[$type['name']] += substr_count(
                                 $rowContent,
                                 'data-content-type="' . $type['name'] . '"'
