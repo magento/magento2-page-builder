@@ -27,6 +27,7 @@
             <expectedResult type="string">{{defaultBackgroundColor.rgb}}</expectedResult>
             <actualResult type="variable">grabBackgroundColorValue</actualResult>
         </assertEquals>
+	<scrollToTopOfPage stepKey="scrollToTopToAvoidFlakiness" />
         <wait time="5" stepKey="waitToPreventVideoFlakiness"/>
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
