@@ -253,7 +253,8 @@ define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magent
 
 
   function moveToBookmark(bookmark) {
-    window.tinymce.activeEditor.selection.moveToBookmark(bookmark);
+    getActiveEditor().selection.moveToBookmark(bookmark);
+    getActiveEditor().nodeChanged();
   }
   /**
    * Retrieve active editor from TinyMCE
