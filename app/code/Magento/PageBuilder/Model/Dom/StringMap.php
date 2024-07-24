@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom;
 
-use Gt\Dom\StringMap as GtDomStringMap;
+use Gt\Dom\DOMStringMap as GtDomStringMap;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\StringMapInterface;
 

@@ -37,7 +37,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function getFilterForDataProvider() : array
+    public static function getFilterForDataProvider() : array
     {
         $template = <<<TEMPLATE
 <div data-content-type="row" data-appearance="contained" data-element="main">

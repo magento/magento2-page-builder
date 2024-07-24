@@ -4,13 +4,13 @@
  * See COPYING.txt for license details.
  */
 
-$this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
+$objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
 /** @var \Magento\Variable\Model\ResourceModel\Variable $variableResource */
-$variableResource = $this->objectManager->get(\Magento\Variable\Model\ResourceModel\Variable::class);
+$variableResource = $objectManager->get(\Magento\Variable\Model\ResourceModel\Variable::class);
 
 /** @var \Magento\Variable\Model\Variable $variable */
-$variable = $this->objectManager->get(\Magento\Variable\Model\Variable::class);
+$variable = $objectManager->get(\Magento\Variable\Model\Variable::class);
 
 $variable->setData([
     'code' => 'xssVariable',

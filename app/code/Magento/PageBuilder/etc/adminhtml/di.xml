@@ -634,6 +634,7 @@
             <argument name="overrideSnapshot" xsi:type="boolean">true</argument>
         </arguments>
     </virtualType>
+    <preference for="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\CategoryWysiwyg" />
     <type name="Magento\PageBuilder\Ui\Component\Template\DataProvider">
         <arguments>
             <argument name="additionalFilterPool" xsi:type="array">
@@ -647,5 +648,8 @@
     <type name="Magento\Backend\Model\Auth">
         <plugin name="pagebuilder_clear_editor_config_cache"
                 type="Magento\PageBuilder\Plugin\ClearEditorConfigCache" sortOrder="10"/>
+    </type>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" sortOrder="1"/>
     </type>
 </config>

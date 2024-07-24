@@ -11,7 +11,7 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <attachFile userInput="{{property.value}}" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="attachBackgroundImageFile"/>
+        <attachFile userInput="{{property.value}}" selector="{{EditPanelForm.panelFieldControlWithUploaderId(property.section, property.fieldName)}}" stepKey="attachBackgroundImageFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
         <waitForElementVisible selector="{{EditPanelForm.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>

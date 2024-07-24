@@ -21,12 +21,22 @@ class XmlDocument extends Document implements XmlDocumentInterface
      *
      * @param ObjectManagerInterface $objectManager
      * @param string $document
+     * @param string $characterSet
+     * @param string $contentType
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        string $document = ""
+        string $document = "",
+        string $characterSet = "UTF-8",
+        string $contentType = "text/html"
     ) {
-        parent::__construct($objectManager, $document);
-        $this->document = $this->objectManager->create(GtDomXmlDocument::class, [ 'document' => $document ]);
+        parent::__construct($objectManager, $characterSet, $contentType);
+        $this->document = $this->objectManager->create(
+            GtDomXmlDocument::class,
+            [
+                "document" => $document,
+                "characterSet" => $characterSet
+            ]
+        );
     }
 }
