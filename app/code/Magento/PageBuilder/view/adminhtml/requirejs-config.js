@@ -41,6 +41,9 @@ var config = {
             },
             'Magento_PageBuilder/js/content-type/row/appearance/default/widget': {
                 'Magento_PageBuilder/js/content-type/row/appearance/default/widget-mixin': true
+            },
+            'Magento_Ui/js/form/element/file-uploader': {
+                'Magento_PageBuilder/js/form/element/file-uploader': true
             }
         }
     }

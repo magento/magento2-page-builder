@@ -7,14 +7,15 @@
 <div class="pagebuilder-image-uploader-container" data-role="drop-zone" css="_loading: isLoading, 'has-data': hasData()">
     <div class="pagebuilder-options" data-bind="visible: hasData() || isShowImageUploadOptions" if="visibleControls">
         <div class="pagebuilder-options-wrapper">
-            <div class="file-uploader image-uploader">
-                <div class="file-uploader-area" if="visibleControls">
-                    <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled"/>
-                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadNewImage"></label>
-                    <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"></render>
-                </div>
-            </div>
             <ul class="pagebuilder-options-links">
+                <li class="pagebuilder-options-link">
+                    <label
+                        data-bind="event: {mousedown: stopEvent}"
+                        class="file-uploader-button action-default action-upload-image"
+                        attr="for: uid"
+                        disable="disabled"
+                        translate="translations.uploadNewImage"></label>
+                </li>
                 <li class="pagebuilder-options-link">
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog, mousedown: stopEvent}"
@@ -32,13 +33,19 @@
     <div class="pagebuilder-image-uploader-container-dropzone-overlay" if="visibleControls">
         <span class="dropzone-placeholder-text" translate="translations.dropHere"></span>
     </div>
+    <div class="file-uploader-area" if="visibleControls">
+        <input
+            type="file"
+            afterRender="onElementRender"
+            attr="id: uid, name: inputName, multiple: isMultipleFiles"
+            disable="disabled"></input>
+    </div>
     <div class="pagebuilder-image-empty-preview" data-bind="visible: !hasData() && isShowImageUploadInstructions">
         <div class="admin__field-control">
             <div class="file-uploader image-uploader">
-                <div class="file-uploader-area" if="visibleControls">
+                <div class="image-uploader-area" if="visibleControls">
                     <p class="image-upload-instructions" translate="translations.dragImageHere"></p>
-                    <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled"/>
-                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadImage"></label>
+                    <label class="file-uploader-button action-default action-upload-image" attr="for: uid" disable="disabled" translate="translations.uploadImage"></label>
                     <span translate="translations.or"></span>
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
