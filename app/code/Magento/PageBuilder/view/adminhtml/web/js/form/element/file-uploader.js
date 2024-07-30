@@ -19,13 +19,16 @@ define([
                     spanElement =  '<span id=\'' + fileId + fileClass + '\' ></span>';
 
                 $('#' + fileId).closest('.file-uploader-area').attr('upload-area-id', fileName);
+                $('#' + fileId + fileClass).closest('.file-uploader-area').attr('upload-area-id', fileName);
+
                 $(fileInput).replaceWith(spanElement);
 
                 $('#' + fileId).closest('.file-uploader-area').find('.file-uploader-button:first').on('click', function () {
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
 
-                $('#' + fileId + fileClass).closest('.file-uploader-area').find('.action-upload-image').on('click', function () {
+                $('#' + fileId + fileClass).closest('.file-uploader-area').find('.action-upload-image').on('click', function (e) {
+                    e.preventDefault();
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
             },
