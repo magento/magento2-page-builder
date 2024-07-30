@@ -9,12 +9,20 @@
         <div class="pagebuilder-options-wrapper">
             <ul class="pagebuilder-options-links">
                 <li class="pagebuilder-options-link">
-                    <label
-                        data-bind="event: {mousedown: stopEvent}"
-                        class="file-uploader-button action-default action-upload-image"
-                        attr="for: uid"
-                        disable="disabled"
-                        translate="translations.uploadNewImage"></label>
+                    <span class="file-uploader-area" if="visibleControls">
+                        <input
+                            type="file"
+                            afterRender="onElementRender"
+                            attr="id: uid, name: inputName, multiple: isMultipleFiles"
+                            class="file-upload-options-link"
+                            disable="disabled"></input>
+                        <label
+                            data-bind="event: {mousedown: stopEvent}"
+                            class="file-uploader-button action-default action-upload-image"
+                            attr="for: uid"
+                            disable="disabled"
+                            translate="translations.uploadNewImage"></label>
+                    </span>
                 </li>
                 <li class="pagebuilder-options-link">
                     <label
@@ -33,18 +41,12 @@
     <div class="pagebuilder-image-uploader-container-dropzone-overlay" if="visibleControls">
         <span class="dropzone-placeholder-text" translate="translations.dropHere"></span>
     </div>
-    <div class="file-uploader-area" if="visibleControls">
-        <input
-            type="file"
-            afterRender="onElementRender"
-            attr="id: uid, name: inputName, multiple: isMultipleFiles"
-            disable="disabled"></input>
-    </div>
     <div class="pagebuilder-image-empty-preview" data-bind="visible: !hasData() && isShowImageUploadInstructions">
         <div class="admin__field-control">
             <div class="file-uploader image-uploader">
-                <div class="image-uploader-area" if="visibleControls">
+                <div class="file-uploader-area" if="visibleControls">
                     <p class="image-upload-instructions" translate="translations.dragImageHere"></p>
+                    <input type="file" class="file-upload-empty-preview" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled"/>
                     <label class="file-uploader-button action-default action-upload-image" attr="for: uid" disable="disabled" translate="translations.uploadImage"></label>
                     <span translate="translations.or"></span>
                     <label
