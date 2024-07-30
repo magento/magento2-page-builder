@@ -28,7 +28,6 @@ define([
                 });
 
                 $('#' + fileId + fileClass).closest('.file-uploader-area').find('.action-upload-image').on('click', function (e) {
-                    e.preventDefault();
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
             },
