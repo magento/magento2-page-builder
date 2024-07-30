@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2024 Adobe
+ * All Rights Reserved.
  */
 
 define([
@@ -20,9 +20,11 @@ define([
 
                 $('#' + fileId).closest('.file-uploader-area').attr('upload-area-id', fileName);
                 $(fileInput).replaceWith(spanElement);
+
                 $('#' + fileId).closest('.file-uploader-area').find('.file-uploader-button:first').on('click', function () {
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
+
                 $('#' + fileId + fileClass).closest('.file-uploader-area').find('.action-upload-image').on('click', function () {
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
