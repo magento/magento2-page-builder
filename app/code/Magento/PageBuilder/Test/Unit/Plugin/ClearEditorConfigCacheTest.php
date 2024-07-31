@@ -73,7 +73,7 @@ class ClearEditorConfigCacheTest extends TestCase
     /**
      * @return array
      */
-    public function afterLoginDataProvider(): array
+    public static function afterLoginDataProvider(): array
     {
         return [
             [false],
