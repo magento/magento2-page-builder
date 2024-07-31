@@ -27,7 +27,7 @@ define([
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
 
-                $('#' + fileId + fileClass).closest('.file-uploader-area').find('.action-upload-image').on('click', function (e) {
+                $('#' + fileId + fileClass).closest('.file-uploader-area').find('.action-upload-image').on('click', function () {
                     $(this).closest('.file-uploader-area').find('.uppy-Dashboard-browse').trigger('click');
                 });
             },
