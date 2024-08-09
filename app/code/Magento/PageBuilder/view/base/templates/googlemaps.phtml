@@ -4,33 +4,44 @@
  * See COPYING.txt for license details.
  */
 
-/** @var Magento\PageBuilder\Block\GoogleMapsApi $block */
-?>
-<script>
+/**
+ * @var Magento\PageBuilder\Block\GoogleMapsApi $block
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+$libraryUrl = $escaper->escapeJs($block->getLibraryUrl());
+$style = $escaper->escapeJs($block->getStyle());
+$apiKey = $escaper->escapeJs($block->getApiKey());
+$invalidApiKeyMessage = $escaper->escapeJs($block->getInvalidApiKeyMessage());
+
+$script = <<<SCRIPT
     require.config({
         paths: {
-            googleMaps: '<?= $block->escapeJs($block->getLibraryUrl()); ?>'
+            googleMaps: '{$libraryUrl}'
         },
         config: {
             'Magento_PageBuilder/js/utils/map': {
-                style: '<?= $block->escapeJs($block->getStyle()); ?>'
+                style: '{$style}',
             },
             'Magento_PageBuilder/js/content-type/map/preview': {
-                apiKey: '<?= $block->escapeJs($block->getApiKey()); ?>',
-                apiKeyErrorMessage: '<?= $block->escapeJs($block->getInvalidApiKeyMessage()); ?>'
+                apiKey: '{$apiKey}',
+                apiKeyErrorMessage: '{$invalidApiKeyMessage}'
             },
             'Magento_PageBuilder/js/form/element/map': {
-                apiKey: '<?= $block->escapeJs($block->getApiKey()); ?>',
-                apiKeyErrorMessage: '<?= $block->escapeJs($block->getInvalidApiKeyMessage()); ?>'
+                apiKey: '{$apiKey}',
+                apiKeyErrorMessage: '{$invalidApiKeyMessage}'
             },
         }
     });
-</script>
+SCRIPT;
+// phpcs:ignore
+echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
 
-<?php
-// Include the googleMaps dependency only if we have an API key set, this removes unnecessary calls to Google
-if ($block->shouldIncludeGoogleMapsLibrary()) : ?>
-<script>
+/** Include the googleMaps dependency only if we have an API key set, this removes unnecessary calls to Google */
+if ($block->shouldIncludeGoogleMapsLibrary()) {
+    $script = <<<SCRIPT
+
     require.config({
         shim: {
             'Magento_PageBuilder/js/utils/map': {
@@ -38,5 +49,8 @@ if ($block->shouldIncludeGoogleMapsLibrary()) : ?>
             }
         }
     });
-</script>
-<?php endif; ?>
+SCRIPT;
+
+    // phpcs:ignore
+    echo /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false);
+}
