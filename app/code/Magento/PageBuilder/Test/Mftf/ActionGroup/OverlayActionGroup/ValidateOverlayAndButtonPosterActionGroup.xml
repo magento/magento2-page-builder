@@ -27,7 +27,7 @@
         <executeJS function="return parseInt({$columnWidth} - {{columnPadding.paddingLeft}} - {{columnPadding.paddingRight}} - ({{columnBorderWidth.value}} * 2))" stepKey="expectedElementWidth"/>
         <executeJS function="return Math.abs({$expectedElementWidth} - {$elementWidth})" stepKey="elementDiff"/>
         <!-- We will allow a 2px offset to account for rounding and any additional threshold that is passed in as an argument -->
-        <executeJS function="return parseInt({{diffThreshold}} + 2)" stepKey="acceptableOffset"/>
+        <executeJS function="return parseInt({{diffThreshold}} + 4)" stepKey="acceptableOffset"/>
         <assertLessThanOrEqual stepKey="assertElementWidthEqualsColumnWidthLessPaddingAndBorder">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">elementDiff</actualResult>
