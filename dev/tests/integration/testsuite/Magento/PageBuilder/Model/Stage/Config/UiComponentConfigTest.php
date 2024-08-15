@@ -32,7 +32,7 @@ class UiComponentConfigTest extends \PHPUnit\Framework\TestCase
         $this->objectManager = Bootstrap::getObjectManager();
 
         $this->dataInterfaceFactoryMock = $this->getMockBuilder(\Magento\Framework\Config\DataInterfaceFactory::class)
-            ->setMethods(['create'])
+            ->onlyMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -70,7 +70,7 @@ class UiComponentConfigTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function uiConfigDataProvider() : array
+    public static function uiConfigDataProvider() : array
     {
         return [
             [

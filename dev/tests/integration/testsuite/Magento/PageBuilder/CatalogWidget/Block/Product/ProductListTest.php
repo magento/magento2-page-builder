@@ -113,6 +113,7 @@ class ProductListTest extends TestCase
     /**
      * Test that filtering by category works correctly together with sorting
      *
+     * @magentoDbIsolation disabled
      * @magentoDataFixture Magento/Catalog/_files/multiple_products.php
      * @magentoDataFixture Magento/Catalog/_files/products_list.php
      * @magentoDataFixture Magento/Catalog/_files/categories_no_products.php

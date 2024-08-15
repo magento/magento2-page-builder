@@ -59,5 +59,30 @@ define([
                 expect(content).toEqual('<div id="x" data-t1="1"><span id="y"></span></div>');
             });
         });
+
+        describe('moveToBookmark', function () {
+            var originalTinymce = window.tinymce;
+
+            beforeEach(function () {
+                window.tinymce = {
+                    activeEditor: {
+                        selection: {
+                            moveToBookmark: jasmine.createSpy('moveToBookmark')
+                        },
+                        nodeChanged: jasmine.createSpy('nodeChanged')
+                    }
+                };
+            });
+            afterEach(function () {
+                originalTinymce && (window.tinymce = originalTinymce);
+            });
+            it('Should call activeEditor.selection.moveToBookmark and activeEditor.nodeChanged', function () {
+                var bookmark = {id: 'test'};
+
+                utils.moveToBookmark(bookmark);
+                expect(utils.getActiveEditor().selection.moveToBookmark).toHaveBeenCalledWith(bookmark);
+                expect(utils.getActiveEditor().nodeChanged).toHaveBeenCalled();
+            });
+        });
     });
 });

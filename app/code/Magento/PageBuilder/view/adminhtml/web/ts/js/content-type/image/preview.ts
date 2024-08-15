@@ -59,8 +59,12 @@ export default class Preview extends BasePreview {
     public getViewportImageData() {
         const desktopImageData = this.data.desktop_image;
         const mobileImageData = this.data.mobile_image;
-        return this.viewport() === "mobile" && typeof mobileImageData !== "undefined"
+        const result = this.viewport() === "mobile" && typeof mobileImageData !== "undefined"
             ? mobileImageData : desktopImageData;
+        if (result && result.attributes() && result.attributes().src.length > 0 && result.attributes().src.indexOf("?rand") === -1) {
+            result.attributes().src += "?rand=" + Date.now();
+        }
+        return result;
     }
 
     /**
