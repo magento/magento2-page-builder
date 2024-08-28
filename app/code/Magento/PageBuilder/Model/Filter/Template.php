@@ -221,7 +221,7 @@ class Template
             $htmlContentTypeNode->setAttribute('data-decoded', 'true');
 
             // if nothing exists inside the node, continue
-            if (!strlen(trim($htmlContentTypeNode->nodeValue))) {
+            if (!strlen(trim($htmlContentTypeNode->nodeValue ?? ''))) {
                 continue;
             }
 
