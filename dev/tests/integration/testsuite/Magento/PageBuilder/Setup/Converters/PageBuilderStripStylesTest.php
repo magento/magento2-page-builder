@@ -15,6 +15,9 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @magentoDbIsolation enabled
+ */
 class PageBuilderStripStylesTest extends TestCase
 {
     private const XPATH_SELECTOR = '//*[@data-content-type][@style]|//*[@data-content-type]/*[@style]';
@@ -63,7 +66,9 @@ class PageBuilderStripStylesTest extends TestCase
             $styleAttr = $node->getAttribute('style');
 
             if ($styleAttr) {
-                $getInternalStyles = $xpathAfter->query('//body/style[last()]')->item(0)->textContent;
+                if ($xpathAfter->query('//body/style[last()]')->item(0)) {
+                    $getInternalStyles = $xpathAfter->query('//body/style[last()]')->item(0)->textContent;
+                }
                 $styleRules[] = $styleAttr;
             }
         }
@@ -85,7 +90,7 @@ class PageBuilderStripStylesTest extends TestCase
     /**
      * @return array
      */
-    public function conversionData(): array
+    public static function conversionData(): array
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
@@ -176,7 +181,7 @@ class PageBuilderStripStylesTest extends TestCase
     /**
      * @return array
      */
-    public function conversionDataRaw(): array
+    public static function conversionDataRaw(): array
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [

@@ -139,7 +139,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       if (focus) {
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
 
-        wysiwygConfig.adapter.settings.init_instance_callback = function () {
+        wysiwygConfig.adapter.settings.init_instance_callback = function (editor) {
+          editor.on("mousedown", function (event) {
+            if (event.target.nodeName === "IMG" && event.button !== 2 && editor.dom.getRoot() !== document.activeElement) {
+              editor.selection.select(event.target);
+              editor.nodeChanged();
+            }
+          });
+
           _underscore.defer(function () {
             _this3.element.blur();
 
