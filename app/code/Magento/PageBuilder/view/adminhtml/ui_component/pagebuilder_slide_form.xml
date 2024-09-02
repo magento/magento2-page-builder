@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/slider-dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">poster</item>
@@ -57,6 +57,77 @@
                 </additionalClasses>
                 <dataType>text</dataType>
                 <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+                <switcherConfig>
+                    <name>pagebuilder_slide_form_pagebuiler_content</name>
+                    <rules>
+                        <rule name="0">
+                            <value>poster</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.general</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.background</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>collage-left</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.general</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.background</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="2">
+                            <value>collage-centered</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.general</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.background</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="3">
+                            <value>collage-right</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.general</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.background</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="4">
+                            <value>container</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.general</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pagebuilder_slide_form.pagebuilder_slide_form.background</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                    </rules>
+                    <enabled>true</enabled>
+                </switcherConfig>
             </settings>
             <formElements>
                 <select>
