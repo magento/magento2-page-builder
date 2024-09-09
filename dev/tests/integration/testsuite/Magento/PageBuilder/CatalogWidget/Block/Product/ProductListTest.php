@@ -153,7 +153,7 @@ class ProductListTest extends TestCase
     /**
      * @return array
      */
-    public function priceFilterDataProvider(): array
+    public static function priceFilterDataProvider(): array
     {
         return [
             [
@@ -189,7 +189,7 @@ class ProductListTest extends TestCase
     /**
      * @return array
      */
-    public function priceSortDataProvider(): array
+    public static function priceSortDataProvider(): array
     {
         return [
             [
@@ -212,7 +212,7 @@ class ProductListTest extends TestCase
     /**
      * @return array
      */
-    public function categoryFilterAndSortDataProvider(): array
+    public static function categoryFilterAndSortDataProvider(): array
     {
         $categories = [
             //Category 1
