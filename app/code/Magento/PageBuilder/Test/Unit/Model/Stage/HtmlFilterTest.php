@@ -33,7 +33,7 @@ class HtmlFilterTest extends TestCase
     public function testFilterHtml()
     {
         //test for script tag
-        $inputHtml = '<div><script>alert("test")</script><p>Content</p></div>';
+        $inputHtml = '<div><script type="text/x-magento-init">alert("test")</script><p>Content</p></div>';
         $expectedOutput = '<div><p>Content</p></div>';
 
         $result = $this->htmlFilter->filterHtml($inputHtml);
