@@ -15,7 +15,7 @@
             <argument name="editButtonSelector" defaultValue="{{PageBuilderStage.editButtonSelector}}" type="string"/>
             <argument name="rowIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="30" selector="{{sectionSelector}}" stepKey="waitForSection"/>
+        <waitForElementClickable selector="{{sectionSelector}}" stepKey="waitForSection"/>
         <conditionalClick selector="{{sectionSelector}}" dependentSelector="{{sectionDependentSelector}}" visible="false" stepKey="expandSection"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <waitForElementVisible time="30" selector="{{snapshotSelector}}" stepKey="waitForSnapshot"/>

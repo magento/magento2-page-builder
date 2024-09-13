@@ -12,10 +12,6 @@ define([
     'use strict';
 
     var mixin = {
-        defaults: {
-            pageBuilderInstances: []
-        },
-
         /**
          * Record instances of Page Builder initialized in the forms namespace
          */
@@ -24,9 +20,18 @@ define([
 
             this._super();
 
+            if (!this.source.get('pageBuilderInstances')) {
+                this.source.set('pageBuilderInstances', []);
+            }
+
             events.on('pagebuilder:register', function (data) {
+                var instance;
+
                 if (data.ns === self.ns) {
-                    self.pageBuilderInstances.push(data.instance);
+                    instance = _.findWhere(self.source.get('pageBuilderInstances'), {id: data.instance.id});
+                    if (!instance) {
+                        self.source.get('pageBuilderInstances').push(data.instance);
+                    }
                 }
             });
 
@@ -44,7 +49,7 @@ define([
                 timeout,
                 locks;
 
-            if (_.isEmpty(this.pageBuilderInstances)) {
+            if (_.isEmpty(this.source.get('pageBuilderInstances'))) {
                 submit();
             } else {
                 timeout = setTimeout(function () {
@@ -56,7 +61,7 @@ define([
                 // Wait for all rendering locks within Page Builder stages to resolve
                 $.when.apply(
                     null,
-                    this.pageBuilderInstances.map(function (instance) {
+                    this.source.get('pageBuilderInstances').map(function (instance) {
                         locks = instance.stage.renderingLocks;
 
                         return locks[locks.length - 1];

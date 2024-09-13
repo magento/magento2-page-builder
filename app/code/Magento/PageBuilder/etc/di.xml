@@ -7,7 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\Ui\Component\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
-    <preference for="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\CategoryWysiwyg" />
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Magento\PageBuilder\Block\Element\Editor" />
     <preference for="Magento\PageBuilder\Model\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\AttrInterface" type="Magento\PageBuilder\Model\Dom\Attr" />
@@ -184,7 +183,6 @@
         <arguments>
             <argument name="productCollectionFactory" xsi:type="object">pageBuilderProductCollectionFactory</argument>
         </arguments>
-        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" />
     </type>
     <type name="Magento\Catalog\Helper\Output">
         <arguments>
@@ -316,6 +314,9 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\Filter\Template">
+        <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
+    </type>
     <type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
         <arguments>
             <argument name="entities" xsi:type="array">
@@ -361,6 +362,7 @@
         <arguments>
             <argument name="allowedHosts" xsi:type="array">
                 <item name="youtube" xsi:type="string">youtube.com</item>
+                <item name="youtube-nocookie" xsi:type="string">youtube-nocookie.com</item>
                 <item name="vimeo" xsi:type="string">vimeo.com</item>
             </argument>
         </arguments>
@@ -414,6 +416,7 @@
                 <item name="data-video-overlay-color" xsi:type="string">data-video-overlay-color</item>
                 <item name="data-video-play-only-visible" xsi:type="string">data-video-play-only-visible</item>
                 <item name="data-video-src" xsi:type="string">data-video-src</item>
+                <item name="data-placeholder" xsi:type="string">data-placeholder</item>
                 <item name="href" xsi:type="string">href</item>
                 <item name="id" xsi:type="string">id</item>
                 <item name="role" xsi:type="string">role</item>

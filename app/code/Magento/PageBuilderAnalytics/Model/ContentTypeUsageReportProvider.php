@@ -80,6 +80,7 @@ class ContentTypeUsageReportProvider
     {
         $query = $this->queryFactory->create($name);
 
+        $reportData = [];
         // Prepare our type count data
         $typeCounts = [];
         $contentTypes = $this->config->getContentTypes();
@@ -102,7 +103,7 @@ class ContentTypeUsageReportProvider
                     foreach ($contentTypes as $type) {
                         // Count the amount of content types within the content
                         $rowContent = $row['content'] ?? '';
-                        if (strlen($rowContent) > 0) {
+                        if ($rowContent !== null && strlen($rowContent) > 0) {
                             $typeCounts[$type['name']] += substr_count(
                                 $rowContent,
                                 'data-content-type="' . $type['name'] . '"'
