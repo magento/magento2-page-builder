@@ -56,7 +56,7 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function filterDataProvider(): array
+    public static function filterDataProvider(): array
     {
         $preFilteredFiles = glob(__DIR__ . '/../../_files/template_plugin/*pre_filter*');
 

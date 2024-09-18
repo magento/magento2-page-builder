@@ -17,7 +17,7 @@ import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "./url";
 export function decodeUrl(value: string): string | [object] {
     let result: any = "";
     value = decodeURIComponent((value).replace(window.location.href, ""));
-    const regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/;
+    const regexp = /{{.*\s*url="?(.*\.([a-z|A-Z|0-9?=]*))\"?\s*}}/;
     if (regexp.test(value)) {
         const [, url, type] = regexp.exec(value);
         const image = {

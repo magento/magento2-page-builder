@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
+import {Editor} from "tinymce";
 import _ from "underscore";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
@@ -158,7 +159,16 @@ export default class Preview extends BasePreview {
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
-            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+            wysiwygConfig.adapter.settings.init_instance_callback = (editor: Editor) => {
+                editor.on("mousedown", (event) => {
+                    if (event.target.nodeName === "IMG"
+                        && event.button !== 2
+                        && editor.dom.getRoot() !== document.activeElement
+                    ) {
+                        editor.selection.select(event.target);
+                        editor.nodeChanged();
+                    }
+                });
                 _.defer(() => {
                     this.element.blur();
                     this.element.focus();
