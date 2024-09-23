@@ -61,7 +61,7 @@ class TemplateTest extends TestCase
     /**
      * @return array
      */
-    public function filterProvider(): array
+    public static function filterProvider(): array
     {
         return [
             [
