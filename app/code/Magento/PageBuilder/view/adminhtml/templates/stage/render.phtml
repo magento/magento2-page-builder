@@ -11,24 +11,7 @@
 ?>
 
 <?php
-/**
- * Override the text! plugin within the iframe to ensure we can pipe any XHR requests through to the parent window
- * as the same origin policy will not allow us to load the templates within this iframe.
- */
-?>
-<?php
 $pageBuilderConfig = $block->getPageBuilderConfig();
-
-$script = <<<SCRIPT
-   require.config({
-       'map': {
-           '*': {
-               'text': 'Magento_PageBuilder/js/master-format/render/requirejs/text',
-               'Magento_PageBuilder/js/events': 'Magento_PageBuilder/js/master-format/render/events'
-           }
-       }
-   });
-SCRIPT;
 
 /**
  * To be able to override the text plugin we need the Magento template engine to be used, as the template engine
@@ -36,7 +19,7 @@ SCRIPT;
  * dependency blocks us. If we try to just override using the RequireJS config above our !text plugin will never
  * get overridden as our template engine cannot load.
  */
-$script .= <<<SCRIPT
+$script = <<<SCRIPT
     require([
         'ko',
         'Magento_Ui/js/lib/knockout/template/engine'

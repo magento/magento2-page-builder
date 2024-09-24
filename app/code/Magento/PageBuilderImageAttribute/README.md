@@ -1,0 +1,2 @@
+# Magento_PageBuilderImageAttribute module
+

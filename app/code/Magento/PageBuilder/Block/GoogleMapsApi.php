@@ -17,7 +17,7 @@ use Magento\Framework\View\Element\Template;
 class GoogleMapsApi extends \Magento\Framework\View\Element\Template
 {
     public const GOOGLE_MAPS_API_KEY_PATH = 'cms/pagebuilder/google_maps_api_key';
-    public const GOOGLE_MAPS_LIBRARY_URL = 'https://maps.googleapis.com/maps/api/js?v=3.53&key=%s';
+    public const GOOGLE_MAPS_LIBRARY_URL = 'https://maps.googleapis.com/maps/api/js?v=3.56&key=%s';
     public const GOOGLE_MAPS_STYLE_PATH = 'cms/pagebuilder/google_maps_style';
 
     /**

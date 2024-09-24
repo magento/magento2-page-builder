@@ -68,9 +68,9 @@ class Block implements \Magento\PageBuilder\Model\Stage\RendererInterface
         ];
 
         $contentTypes = $this->config->getContentTypes();
-        $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
+        $backendBlockClassName = isset($params['role']) && isset($contentTypes[$params['role']]['backend_block'])
             ? $contentTypes[$params['role']]['backend_block'] : false;
-        $backendBlockTemplate = isset($contentTypes[$params['role']]['backend_template'])
+        $backendBlockTemplate = isset($params['role']) && isset($contentTypes[$params['role']]['backend_template'])
             ? $contentTypes[$params['role']]['backend_template'] : false;
 
         if ($backendBlockTemplate) {

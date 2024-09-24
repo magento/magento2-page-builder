@@ -279,7 +279,8 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
  * @param bookmark
  */
 export function moveToBookmark(bookmark: Bookmark) {
-    ((window as any).tinymce.activeEditor as Editor).selection.moveToBookmark(bookmark);
+    getActiveEditor().selection.moveToBookmark(bookmark);
+    getActiveEditor().nodeChanged();
 }
 
 /**
