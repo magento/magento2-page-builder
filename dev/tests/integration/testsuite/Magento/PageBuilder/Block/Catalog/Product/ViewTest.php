@@ -72,7 +72,7 @@ class ViewTest extends TestCase
      *
      * @return array
      */
-    public function sectionWrapperDataProvider(): array
+    public static function sectionWrapperDataProvider(): array
     {
         return [
             ['description'],
