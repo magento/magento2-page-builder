@@ -78,17 +78,43 @@ class HtmlFilter
         );
         foreach ($htmlContentTypes as $htmlContentType) {
             /* @var \DOMElement $htmlContentType */
-            $innerHTML = '';
-            $children = $htmlContentType->childNodes;
-            foreach ($children as $child) {
-                $innerHTML .= $child->ownerDocument->saveXML($child);
-            }
             $htmlContentType->setAttribute(
                 "class",
                 $htmlContentType->getAttribute("class") . " placeholder-html-code"
             );
+
+            $innerHTML = $this->getChildrenInnerHtml($htmlContentType);
+
             $htmlContentType->nodeValue = htmlentities($innerHTML);
         }
         return substr(trim($dom->saveHTML()), 5, -6);
+    }
+
+    /**
+     * Get inner HTML of element's children
+     *
+     * @param \DOMElement $element
+     * @return string
+     */
+    private function getChildrenInnerHtml(\DOMElement $element): string
+    {
+        $innerHTML = '';
+        $childrenIterator = $element->childNodes->getIterator();
+        while ($childrenIterator->valid()) {
+            $child = $childrenIterator->current();
+            try {
+                $ownerDocument = $child->ownerDocument;
+            } catch (\Error $error) {
+                $ownerDocument = null;
+                $this->loggerInterface->critical($error->getMessage());
+            }
+            if ($ownerDocument === null) {
+                $childrenIterator->next();
+                continue;
+            }
+            $innerHTML .= $ownerDocument->saveXML($child);
+            $childrenIterator->next();
+        }
+        return $innerHTML;
     }
 }
