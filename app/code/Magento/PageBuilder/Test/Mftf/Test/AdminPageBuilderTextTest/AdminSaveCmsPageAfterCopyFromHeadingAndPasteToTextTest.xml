@@ -63,6 +63,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <waitForPageLoad stepKey="waitForTextEditorArea"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
         <!-- Save page and verify copy, paste -->
