@@ -245,14 +245,14 @@ function createInitialElementData(fields: ConfigFieldInterface): FieldDefaultsIn
  */
 function getElementChildren(element: HTMLElement): HTMLElement[] {
     if (element.hasChildNodes()) {
-        let children: any[] = [];
+        const children: any[] = [];
         // Find direct children of the element
         _.forEach(element.childNodes, (child: HTMLElement) => {
             if (child.nodeType === Node.ELEMENT_NODE) {
                 if (child.hasAttribute(Config.getConfig("dataContentTypeAttributeName"))) {
                     children.push(child);
                 } else {
-                    children = getElementChildren(child);
+                    children.push(...getElementChildren(child));
                 }
             }
         });

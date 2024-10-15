@@ -236,7 +236,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
           if (child.hasAttribute(_config.getConfig("dataContentTypeAttributeName"))) {
             children.push(child);
           } else {
-            children = getElementChildren(child);
+            children.push(...getElementChildren(child));
           }
         }
       });
