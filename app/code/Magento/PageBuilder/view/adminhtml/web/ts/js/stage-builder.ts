@@ -58,7 +58,12 @@ function convertToInlineStyles(document: Document): void {
 
     _.each(viewportStyles, (styles, name: string) => {
         _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
-            const element: HTMLElement = document.querySelector(selector);
+            const element = document.querySelector<HTMLElement>(selector);
+
+            if (!element) {
+                console.error('Element not found for selector: %o. Unable to set attribute: "%s".', selector, `data-${name}-style`);
+                return;
+            }
 
             _.each(stylesArray, (style: CSSStyleDeclaration) => {
                 element.setAttribute(

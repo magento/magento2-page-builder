@@ -49,6 +49,11 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       _.each(styles, function (stylesArray, selector) {
         var element = document.querySelector(selector);
 
+        if (!element) {
+          console.error('Element not found for selector: %o. Unable to set attribute: "%s".', selector, "data-" + name + "-style");
+          return;
+        }
+
         _.each(stylesArray, function (style) {
           element.setAttribute("data-" + name + "-style", element.getAttribute("data-" + name + "-style") ? element.getAttribute("data-" + name + "-style") + style.cssText : style.cssText);
         });
