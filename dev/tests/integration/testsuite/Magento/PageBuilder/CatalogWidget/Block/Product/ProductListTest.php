@@ -113,6 +113,7 @@ class ProductListTest extends TestCase
     /**
      * Test that filtering by category works correctly together with sorting
      *
+     * @magentoDbIsolation disabled
      * @magentoDataFixture Magento/Catalog/_files/multiple_products.php
      * @magentoDataFixture Magento/Catalog/_files/products_list.php
      * @magentoDataFixture Magento/Catalog/_files/categories_no_products.php
@@ -152,7 +153,7 @@ class ProductListTest extends TestCase
     /**
      * @return array
      */
-    public function priceFilterDataProvider(): array
+    public static function priceFilterDataProvider(): array
     {
         return [
             [
@@ -188,7 +189,7 @@ class ProductListTest extends TestCase
     /**
      * @return array
      */
-    public function priceSortDataProvider(): array
+    public static function priceSortDataProvider(): array
     {
         return [
             [
@@ -211,7 +212,7 @@ class ProductListTest extends TestCase
     /**
      * @return array
      */
-    public function categoryFilterAndSortDataProvider(): array
+    public static function categoryFilterAndSortDataProvider(): array
     {
         $categories = [
             //Category 1

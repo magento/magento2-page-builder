@@ -556,6 +556,10 @@
                     <item name="category" xsi:type="string">Category</item>
                     <item name="block" xsi:type="string">Block</item>
                 </item>
+                <item name="reserved_html_attributes" xsi:type="array">
+                    <item name="data-content-type" xsi:type="string">data-content-type</item>
+                    <item name="contenteditable" xsi:type="string">contenteditable</item>
+                </item>
             </argument>
             <argument name="rootContainerConfig" xsi:type="array">
                 <item name="label" xsi:type="string">Root Container</item>
@@ -583,14 +587,14 @@
     <type name="Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList">
         <arguments>
             <argument name="wysiwygAdaptersSupportingInlineEditing" xsi:type="array">
-                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce5Adapter" xsi:type="boolean">true</item>
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymceAdapter" xsi:type="boolean">true</item>
             </argument>
         </arguments>
     </type>
     <type name="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config">
         <arguments>
             <argument name="editors" xsi:type="array">
-                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce5Adapter" xsi:type="array">
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymceAdapter" xsi:type="array">
                     <item name="component" xsi:type="string">Magento_PageBuilder/js/wysiwyg/tinymce</item>
                     <item name="component_initializers" xsi:type="array">
                         <item name="text" xsi:type="string">Magento_PageBuilder/js/content-type/text/wysiwyg/tinymce/component-initializer</item>
@@ -614,7 +618,7 @@
     <virtualType name="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\BannerConfig" type="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config">
         <arguments>
             <argument name="editors" xsi:type="array">
-                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce5Adapter" xsi:type="array">
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymceAdapter" xsi:type="array">
                     <item name="parentSelectorsToUnderlay" xsi:type="null"/>
                 </item>
             </argument>
@@ -630,6 +634,7 @@
             <argument name="overrideSnapshot" xsi:type="boolean">true</argument>
         </arguments>
     </virtualType>
+    <preference for="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\CategoryWysiwyg" />
     <type name="Magento\PageBuilder\Ui\Component\Template\DataProvider">
         <arguments>
             <argument name="additionalFilterPool" xsi:type="array">
@@ -637,14 +642,14 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Framework\Filter\Template">
-        <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
-    </type>
     <type name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav">
         <plugin name="pagebuilder_product_form_eav" type="Magento\PageBuilder\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifier\EavPlugin" sortOrder="20"/>
     </type>
     <type name="Magento\Backend\Model\Auth">
         <plugin name="pagebuilder_clear_editor_config_cache"
                 type="Magento\PageBuilder\Plugin\ClearEditorConfigCache" sortOrder="10"/>
+    </type>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" sortOrder="1"/>
     </type>
 </config>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright 2024 Adobe
+ * All Rights Reserved.
+ */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="UploadNewImageToContentTypeFromStageActionGroup">
+        <arguments>
+            <argument name="property"/>
+            <argument name="section" defaultValue="PageBuilderStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector="{{section.uploadNewImageInputWithUploaderId(index)}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
+    </actionGroup>
+</actionGroups>

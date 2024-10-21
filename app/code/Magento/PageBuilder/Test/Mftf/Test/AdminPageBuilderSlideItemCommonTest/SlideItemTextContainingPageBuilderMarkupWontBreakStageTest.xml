@@ -40,5 +40,15 @@
         <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCode"/>
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideItemVisible"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeTestStringInSlideItem"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDesktop"/>
+        <actionGroup ref="AdminSaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageDesktop"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCodeAfterSave"/>
+        <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideItemVisibleAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeTestStringInSlideItemAfterSave"/>
     </test>
 </tests>

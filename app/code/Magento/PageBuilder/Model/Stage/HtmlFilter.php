@@ -41,11 +41,17 @@ class HtmlFilter
     public function filterHtml(string $content): string
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
+        $previous = '';
         try {
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
             $content = '<div>' . $content . '</div>';
-            $string = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+            $convmap = [0x80, 0x10FFFF, 0, 0x1FFFFF];
+            $string = mb_encode_numericentity(
+                $content,
+                $convmap,
+                'UTF-8'
+            );
             $dom->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } catch (\Exception $e) {
             $this->loggerInterface->critical($e->getMessage());
@@ -72,17 +78,43 @@ class HtmlFilter
         );
         foreach ($htmlContentTypes as $htmlContentType) {
             /* @var \DOMElement $htmlContentType */
-            $innerHTML = '';
-            $children = $htmlContentType->childNodes;
-            foreach ($children as $child) {
-                $innerHTML .= $child->ownerDocument->saveXML($child);
-            }
             $htmlContentType->setAttribute(
                 "class",
                 $htmlContentType->getAttribute("class") . " placeholder-html-code"
             );
+
+            $innerHTML = $this->getChildrenInnerHtml($htmlContentType);
+
             $htmlContentType->nodeValue = htmlentities($innerHTML);
         }
         return substr(trim($dom->saveHTML()), 5, -6);
+    }
+
+    /**
+     * Get inner HTML of element's children
+     *
+     * @param \DOMElement $element
+     * @return string
+     */
+    private function getChildrenInnerHtml(\DOMElement $element): string
+    {
+        $innerHTML = '';
+        $childrenIterator = $element->childNodes->getIterator();
+        while ($childrenIterator->valid()) {
+            $child = $childrenIterator->current();
+            try {
+                $ownerDocument = $child->ownerDocument;
+            } catch (\Error $error) {
+                $ownerDocument = null;
+                $this->loggerInterface->critical($error->getMessage());
+            }
+            if ($ownerDocument === null) {
+                $childrenIterator->next();
+                continue;
+            }
+            $innerHTML .= $ownerDocument->saveXML($child);
+            $childrenIterator->next();
+        }
+        return $innerHTML;
     }
 }

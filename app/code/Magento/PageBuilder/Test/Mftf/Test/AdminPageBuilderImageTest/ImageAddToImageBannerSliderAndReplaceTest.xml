@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright 2024 Adobe
+ * All Rights Reserved.
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ImageAddToImageBannerSliderAndReplaceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Add Missing Image Upload functionality to all media components that support image upload in PageBuilder"/>
+            <description value="Add Missing Upload Image button for new Media Image, Banner and Slider and allow replacement of image in PageBuilder."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="ACP2E-3122"/>
+            <testCaseId value="AC-12646"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="cloud"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage" />
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Go to CMS Page in Admin -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <!-- Switch to PageBuilder stage -->
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Add a row to PageBuilder stage with image -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+
+        <!-- Attach image to PageBuilder stage -->
+        <comment userInput="Upload image from stage" stepKey="uploadImageFromStage"/>
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+
+        <!-- Reattach image to PageBuilder stage -->
+        <comment userInput="Reattach image from stage" stepKey="uploadImageFromStage2"/>
+        <actionGroup ref="UploadNewImageToContentTypeFromStageActionGroup" stepKey="addImageToStage2">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+
+        <!-- Remove Image Content -->
+        <comment userInput="Remove Image Content" stepKey="commentRemoveImageContent"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeImageContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+
+        <!-- Verify On Hover Upload Button Work-->
+        <comment userInput="Verify On Hover Upload Buttons Work" stepKey="commentVerifyButtonsOnBanner"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenuOnBanner">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+
+        <!-- Attach image to Banner in PageBuilder stage -->
+        <comment userInput="Attach image to Banner in PageBuilder stage" stepKey="commentAttachImageToBanner"/>
+        <actionGroup ref="UploadNewBackgroundImageToContentTypeFromStageActionGroup" stepKey="addImageToBannerFromStage">
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+
+        <!-- Reattach image to Banner in PageBuilder stage -->
+        <comment userInput="Reattach image to Banner in PageBuilder stage" stepKey="commentReattachImageToBanner"/>
+        <actionGroup ref="UploadNewBackgroundImageToContentTypeFromStageActionGroup" stepKey="addNewImageToBannerFromStage">
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+
+        <!-- Remove Banner Content -->
+        <comment userInput="Remove Banner Content" stepKey="commentRemoveBannerContent"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeBannerContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+
+        <!-- Add Slider -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+
+        <!-- Verify On Hover Upload Button Work-->
+        <comment userInput="Verify On Hover Upload Buttons Work" stepKey="commentVerifyButtonsOnSlider"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlider"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+
+        <!-- Attach image to Slider in PageBuilder stage -->
+        <actionGroup ref="UploadNewBackgroundImageToContentTypeFromStageActionGroup" stepKey="addNewImageToSliderFromStage">
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+
+        <!-- Remove Slider Content -->
+        <comment userInput="Remove Slider Content" stepKey="commentRemoveSliderContent"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeSliderContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+    </test>
+</tests>

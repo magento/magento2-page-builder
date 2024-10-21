@@ -18,18 +18,25 @@
             <testCaseId value="MC-42373"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
+                <argument name="enabled" value="0"/>
+            </actionGroup>
         </before>
         <after>
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+            </actionGroup>
+            <actionGroup ref="CliMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
+                <argument name="enabled" value="1"/>
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -87,12 +94,12 @@
         <dontSeeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="dontSeeMobileImageOnDefaultRes"/>
 
         <!-- Validate images with window width of 768px -->
-        <resizeWindow width="769" height="1024" stepKey="resizeWindowTo768by1024"/>
+        <resizeWindow width="768" height="1024" stepKey="resizeWindowTo768by1024"/>
         <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeMainImageOn768by1024"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="dontSeeMobileImageOn768by1024"/>
 
         <!-- Validate images with window width of 767px -->
-        <resizeWindow width="768" height="1024" stepKey="resizeWindowTo767by1024"/>
+        <resizeWindow width="767" height="1024" stepKey="resizeWindowTo767by1024"/>
         <seeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="seeMobileImageOn767by1024"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="dontSeeDesktopImageOn767by1024"/>
     </test>

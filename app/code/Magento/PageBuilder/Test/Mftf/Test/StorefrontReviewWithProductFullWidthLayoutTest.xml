@@ -17,9 +17,6 @@
             <severity value="BLOCKER"/>
             <useCaseId value="MC-18071"/>
             <testCaseId value="MC-19606"/>
-            <skip>
-                <issueId value="MQE-3442"/>
-            </skip>
             <group value="pagebuilder"/>
             <group value="pagebuilder-layout"/>
             <group value="pagebuilder-fullwidth"/>
@@ -35,6 +32,7 @@
         <after>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <actionGroup ref="StorefrontCustomerLogoutActionGroup" stepKey="logoutCustomer" />
             <actionGroup ref="DeleteCustomerByEmailActionGroup" stepKey="deleteCustomer">
                 <argument name="email" value="{{CustomerEntityOne.email}}"/>
             </actionGroup>
@@ -71,7 +69,10 @@
         <actionGroup ref="StorefrontOpenProductPageActionGroup" stepKey="openCreatedProductPage">
             <argument name="productUrl" value="$$createProduct.custom_attributes[url_key]$$"/>
         </actionGroup>
-        <!-- Click on reviews and add review with current user -->
+        <comment userInput="BIC workaround" stepKey="scrollToQuality"/>
+        <comment userInput="BIC workaround" stepKey="clickButton1"/>
+        <comment userInput="BIC workaround" stepKey="clickButton2"/>
+        <comment userInput="BIC workaround" stepKey="clickButton3"/>
         <actionGroup ref="StorefrontAddProductReviewProductFullWidthLayoutActionGroup" stepKey="addReview"/>
         <!-- Go to "Pending reviews" page and clear filters -->
         <actionGroup ref="AdminOpenPendingReviewsPageActionGroup" stepKey="openReviewsPage"/>

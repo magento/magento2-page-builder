@@ -67,7 +67,7 @@ define([
      * @return {Boolean}
      */
     function validateCssClass(str) {
-        return (/^[a-zA-Z _\-\d]+$/i).test(str);
+        return (/^[a-zA-Z\d\-_/:.[\]&@()! ]+$/i).test(str);
     }
 
     /**
@@ -193,7 +193,8 @@ define([
 
                 href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
 
-                return validateIsUrl(href) && (href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/));
+                return validateIsUrl(href)
+                    && (href.match(/youtube\.com|youtu\.be|youtube-nocookie\.com/) || href.match(/vimeo\.com/));
             },
             $.mage.__('Please enter a valid video URL.')
         );
@@ -208,7 +209,7 @@ define([
                 href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
 
                 return validateIsUrl(href) && (
-                    href.match(/youtube\.com|youtu\.be/) ||
+                    href.match(/youtube\.com|youtu\.be|youtube-nocookie\.com/) ||
                     href.match(/vimeo\.com/) ||
                     href.match(/\.(mp4|ogv|webm)(?!\w)/)
                 );
@@ -234,7 +235,7 @@ define([
                 var allFilled;
 
                 // Validation only for margins and paddings
-                if (typeof value === 'object' && !!(value.padding || value.margin)) {
+                if (value !== null && typeof value === 'object' && !!(value.padding || value.margin)) {
                     allFilled = true;
 
                     _.flatten(_.map(value, _.values)).forEach(function (val) {

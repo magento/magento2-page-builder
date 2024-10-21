@@ -9,12 +9,20 @@
         <div class="pagebuilder-options-wrapper">
             <ul class="pagebuilder-options-links">
                 <li class="pagebuilder-options-link">
-                    <label
-                        data-bind="event: {mousedown: stopEvent}"
-                        class="file-uploader-button action-default"
-                        attr="for: uid"
-                        disable="disabled"
-                        translate="translations.uploadNewImage"></label>
+                    <span class="file-uploader-area" if="visibleControls">
+                        <input
+                            type="file"
+                            afterRender="onElementRender"
+                            attr="id: uid, name: inputName, multiple: isMultipleFiles"
+                            class="file-upload-options-link"
+                            disable="disabled"></input>
+                        <label
+                            data-bind="event: {mousedown: stopEvent}"
+                            class="file-uploader-button action-default action-upload-image"
+                            attr="for: uid"
+                            disable="disabled"
+                            translate="translations.uploadNewImage"></label>
+                    </span>
                 </li>
                 <li class="pagebuilder-options-link">
                     <label
@@ -38,8 +46,17 @@
             <div class="file-uploader image-uploader">
                 <div class="file-uploader-area" if="visibleControls">
                     <p class="image-upload-instructions" translate="translations.dragImageHere"></p>
-                    <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled"/>
-                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadImage"></label>
+                    <input
+                        type="file"
+                        class="file-upload-empty-preview"
+                        afterRender="onElementRender"
+                        attr="id: uid, name: inputName, multiple: isMultipleFiles"
+                        disable="disabled"></input>
+                    <label
+                        class="file-uploader-button action-default action-upload-image"
+                        attr="for: uid"
+                        disable="disabled"
+                        translate="translations.uploadImage"></label>
                     <span translate="translations.or"></span>
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"

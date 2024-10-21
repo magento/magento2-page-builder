@@ -24,6 +24,7 @@ import {
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
+    removeReservedHtmlAttributes,
     unlockImageSize,
 } from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
@@ -493,6 +494,14 @@ export default class Preview extends BasePreview {
      * @inheritDoc
      */
     protected bindEvents() {
+        this.contentType.dataStore.subscribe((state: DataObject) => {
+            const sanitizedContent = removeReservedHtmlAttributes(state.message);
+
+            if (sanitizedContent !== state.message) {
+                state.message = sanitizedContent;
+            }
+        }, "message");
+
         super.bindEvents();
         events.on("banner:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.contentType.id) {

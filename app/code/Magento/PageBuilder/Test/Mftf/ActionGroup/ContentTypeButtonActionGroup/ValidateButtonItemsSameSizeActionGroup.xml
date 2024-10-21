@@ -15,6 +15,7 @@
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
+        <waitForPageLoad stepKey="waitForPageLoadToAssert"/>
         <comment userInput="validateButtonItemsSameSize" stepKey="comment"/>
         <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupIndex)}}" stepKey="waitForButtonGroup"/>
         <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Enabled.value)}}" stepKey="seeButtonSameSizeValue"/>

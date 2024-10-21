@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsSelectBySKUWithSpecialCharacterAndVerifyProductIsDisplayedTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Grid - Select Products By SKU with special characters, delete one product, verify product is displayed in the content preview and storefront"/>
+            <description value="Verify that a product is shown in the content preview and storefront if the content type is filtered by 'Select By SKU' and the SKU contains special characters"/>
+            <severity value="MINOR"/>
+            <useCaseId value="ACP2E-1444"/>
+            <testCaseId value="AC-7586"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
+        </annotations>
+        <before>
+            <createData entity="ProductWithSpecialCharsInSKU" stepKey="createProduct1"/>
+            <createData entity="SimpleProduct" stepKey="createProduct2"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
+        </actionGroup>
+        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
+            <argument name="SKUs" value="$$createProduct1.sku$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="ProductWithSpecialCharsInSKU"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForReload"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="ProductWithSpecialCharsInSKU"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openProductsContentType">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="assertFieldSlideOutPropertyValueEquals" stepKey="assertSKUFilterValueEqualsToProductSKU">
+            <argument name="property" value="PageBuilderProductsEnterSKUsInput"/>
+            <argument name="value" value="$$createProduct1.sku$$"/>
+        </actionGroup>
+    </test>
+</tests>
