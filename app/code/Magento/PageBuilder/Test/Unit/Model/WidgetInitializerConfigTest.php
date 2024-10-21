@@ -35,7 +35,7 @@ class WidgetInitializerConfigTest extends TestCase
     /**
      * @return array
      */
-    public function configProvider(): array
+    public static function configProvider(): array
     {
         return [
             [

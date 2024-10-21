@@ -66,7 +66,7 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function reportDataProvider(): array
+    public static function reportDataProvider(): array
     {
         return [
             [

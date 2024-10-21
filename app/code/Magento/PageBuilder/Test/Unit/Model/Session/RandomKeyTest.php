@@ -84,7 +84,7 @@ class RandomKeyTest extends TestCase
     /**
      * @return array[]
      */
-    public function getValueDataProvider(): array
+    public static function getValueDataProvider(): array
     {
         return [
             [
