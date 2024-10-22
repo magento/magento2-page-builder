@@ -4,34 +4,38 @@
  * See COPYING.txt for license details.
  */
 -->
-
-<div class="pagebuilder-content-type pagebuilder-slider children-min-height"
-     attr="data.main.attributes"
-     event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false">
-    <render args="getOptions().template" ></render>
-    <div class="slider-container"
-         css="data.main.css"
-         ko-style="data.main.style">
-        <render args="childTemplate" ></render>
-    </div>
-    <div class="slider-controls focus-options">
-        <div class="slider-navigation"
-             afterRender="afterNavigationRender"
-             each="$parent.getChildren()"
-             data-bind="sortableChildren: { handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: onSortStart.bind($parent.preview), stop: onSortStop.bind($parent.preview) }">
-            <div class="navigation-dot"
-                 tabindex="0"
-                 event="focusin: $parent.setFocusedSlide.bind($parent, $index(), false), focusout: $parent.onFocusOut.bind($parent)"
-                 css="active: $parent.activeSlide() === $index(), focus: $parent.focusedSlide() === $index()">
-                <a class="navigation-dot-anchor" href="#" click="$parent.onControlClick.bind($parent, $index())" data-bind="hasFocusNoScroll: $parent.focusedSlide() === $index()"></a>
-                <with args="preview">
-                    <render with="preview" args="getOptions().template" ></render>
-                </with>
-                <span if="preview.slideName() !== ''"
-                      class="tooltip-content"
-                      role="tooltip"
-                      text="preview.slideName">
-                </span>
+<div class="pagebuilder-content-type-wrapper pagebuilder-content-type-affordance">
+    <div class="pagebuilder-content-type pagebuilder-slider children-min-height pagebuilder-content-type-affordance"
+         attr="data.main.attributes"
+         style="padding-top: 10px;"
+         event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+        <div class="pagebuilder-display-label"
+             text="function () { return displayLabel().toUpperCase(); }()"></div>
+        <render args="getOptions().template" ></render>
+        <div class="slider-container"
+             css="data.main.css"
+             ko-style="data.main.style">
+            <render args="childTemplate" ></render>
+        </div>
+        <div class="slider-controls focus-options">
+            <div class="slider-navigation"
+                 afterRender="afterNavigationRender"
+                 each="$parent.getChildren()"
+                 data-bind="sortableChildren: { handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: onSortStart.bind($parent.preview), stop: onSortStop.bind($parent.preview) }">
+                <div class="navigation-dot"
+                     tabindex="0"
+                     event="focusin: $parent.setFocusedSlide.bind($parent, $index(), false), focusout: $parent.onFocusOut.bind($parent)"
+                     css="active: $parent.activeSlide() === $index(), focus: $parent.focusedSlide() === $index()">
+                    <a class="navigation-dot-anchor" href="#" click="$parent.onControlClick.bind($parent, $index())" data-bind="hasFocusNoScroll: $parent.focusedSlide() === $index()"></a>
+                    <with args="preview">
+                        <render with="preview" args="getOptions().template" ></render>
+                    </with>
+                    <span if="preview.slideName() !== ''"
+                          class="tooltip-content"
+                          role="tooltip"
+                          text="preview.slideName">
+                    </span>
+                </div>
             </div>
         </div>
     </div>
