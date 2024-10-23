@@ -1,13 +1,20 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 
+use function preg_replace;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function substr;
+use function uniqid;
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Api\ImageContent;
@@ -15,16 +22,19 @@ use Magento\Framework\Api\ImageContentFactory;
 use Magento\Framework\Api\ImageContentValidator;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Exception\FileSystemException;
+use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
+use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Helper\File\Storage\Database;
 use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\Image\AdapterFactory;
 
 /**
  * Save a template within template manager
@@ -33,7 +43,7 @@ use Magento\Framework\Image\AdapterFactory;
  */
 class Save extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_PageBuilder::template_save';
+    public const ADMIN_RESOURCE = 'Magento_PageBuilder::template_save';
 
     /**
      * @var LoggerInterface
@@ -151,7 +161,7 @@ class Save extends Action implements HttpPostActionInterface
                 $filePath = $this->storePreviewImage($request);
                 // Store the preview image within the new entity
                 $template->setPreviewImage($filePath);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->logger->critical($e);
 
                 return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
@@ -176,7 +186,7 @@ class Save extends Action implements HttpPostActionInterface
                 'status' => 'error',
                 'message' => $e->getMessage()
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical($e);
 
             $result = [
@@ -215,26 +225,28 @@ class Save extends Action implements HttpPostActionInterface
      * Handle storing the preview image
      *
      * @param RequestInterface $request
-     * @return string
+     * @return null|string
+     * @throws Exception
+     * @throws FileSystemException
+     * @throws InputException
      * @throws LocalizedException
-     * @throws \Magento\Framework\Exception\FileSystemException
-     * @throws \Magento\Framework\Exception\InputException
      */
-    private function storePreviewImage(RequestInterface $request) : ?string
+    private function storePreviewImage(RequestInterface $request): ?string
     {
         $fileName = preg_replace("/[^A-Za-z0-9]/", '', str_replace(
-                ' ',
-                '-',
-                strtolower($request->getParam(TemplateInterface::KEY_NAME))
-            )) . uniqid() . '.jpg';
+            ' ',
+            '-',
+            strtolower($request->getParam(TemplateInterface::KEY_NAME))
+        )) . uniqid() . '.jpg';
 
         // Prepare the image data
         $imgData = str_replace(' ', '+', $request->getParam('previewImage'));
-        $imgData = substr($imgData, strpos($imgData, ",") + 1);
-        // phpcs:ignore
+        $imgData = substr($imgData, strpos($imgData, ',') + 1);
+        // phpcs:ignore Magento2.Functions.DiscouragedFunction
         $decodedImage = base64_decode($imgData);
 
         $imageProperties = getimagesizefromstring($decodedImage);
+
         if (!$imageProperties) {
             throw new LocalizedException(__('Unable to get properties from image.'));
         }
@@ -246,16 +258,16 @@ class Save extends Action implements HttpPostActionInterface
         $imageContent->setType($imageProperties['mime']);
 
         if ($this->imageContentValidator->isValid($imageContent)) {
-            $mediaDirWrite = $this->filesystem
-                ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+            $mediaDirWrite = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
             $directory = $mediaDirWrite->getAbsolutePath('.template-manager');
             $mediaDirWrite->create($directory);
-            $fileAbsolutePath = $directory . $fileName;
+
+            $fileAbsolutePath = $directory . DIRECTORY_SEPARATOR . $fileName;
             // Write the file to the directory
             $mediaDirWrite->getDriver()->filePutContents($fileAbsolutePath, $decodedImage);
             // Generate a thumbnail, called -thumb next to the image for usage in the grid
             $thumbPath = str_replace('.jpg', '-thumb.jpg', $fileName);
-            $thumbAbsolutePath = $directory . $thumbPath;
+            $thumbAbsolutePath = $directory . DIRECTORY_SEPARATOR . $thumbPath;
             $imageFactory = $this->imageAdapterFactory->create();
             $imageFactory->open($fileAbsolutePath);
             $imageFactory->resize(350);
