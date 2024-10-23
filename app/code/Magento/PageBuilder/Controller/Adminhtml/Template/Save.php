@@ -43,7 +43,7 @@ use Psr\Log\LoggerInterface;
  */
 class Save extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_PageBuilder::template_save';
+    public const ADMIN_RESOURCE = 'Magento_PageBuilder::template_save';
 
     /**
      * @var LoggerInterface
@@ -234,10 +234,10 @@ class Save extends Action implements HttpPostActionInterface
     private function storePreviewImage(RequestInterface $request): ?string
     {
         $fileName = preg_replace("/[^A-Za-z0-9]/", '', str_replace(
-                ' ',
-                '-',
-                strtolower($request->getParam(TemplateInterface::KEY_NAME))
-            )) . uniqid() . '.jpg';
+            ' ',
+            '-',
+            strtolower($request->getParam(TemplateInterface::KEY_NAME))
+        )) . uniqid() . '.jpg';
 
         // Prepare the image data
         $imgData = str_replace(' ', '+', $request->getParam('previewImage'));
