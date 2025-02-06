@@ -98,7 +98,10 @@
             <argument name="expectedProperty" value="{{PageBuilderBackgroundColor_Transparent.rgb}}"/>
             <argument name="cssProperty" value="backgroundColor"/>
         </actionGroup>
+        <moveMouseOver selector="//a[@class='logo']" stepKey="moveMouseOverBannerStageOutside"/>
+        <wait time="5" stepKey="pauseAfterIconHover"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefront"/>
+        <wait time="10" stepKey="pause1"/>
         <waitForPageLoad time="30" stepKey="waitForSlideTransitionStorefront"/>
         <actionGroup ref="ValidateContentTypesStyleEqualsExpectedStyleActionGroup" stepKey="seeOverlayOnHoverStorefront">
             <argument name="selector" value="{{SlideOnFrontend.overlay('1')}}"/>
