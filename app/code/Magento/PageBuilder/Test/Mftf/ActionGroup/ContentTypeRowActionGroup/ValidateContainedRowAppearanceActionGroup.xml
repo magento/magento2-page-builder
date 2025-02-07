@@ -14,7 +14,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
-        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <resizeWindow width="2560" height="1440" stepKey="resizeWindow"/>
         <executeJS function="return {{pageOrStageWidthJS}}" stepKey="pageOrStageWidth"/>
         <executeJS function="return {{section.rowWidthJS(index)}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
@@ -25,6 +25,6 @@
             <expectedResult type="variable">pageOrStageWidth</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
         </assertLessThan>
-        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+        <resizeWindow width="1920" height="1080" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
 </actionGroups>
