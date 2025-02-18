@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 
 import html2canvas from "html2canvas";
@@ -138,6 +138,7 @@ function createCapture(stage: Stage) {
     renderingLock.then(() => {
         // Resolve issues with Parallax
         const parallaxRestore = disableParallax(stageElement);
+        const canvasElement = document.querySelector("#" + stage.id + " .pagebuilder-canvas") as HTMLElement;
 
         stageElement.style.height = $(stageElement).outerHeight(false) + "px";
         stageElement.classList.add("capture");
@@ -151,11 +152,12 @@ function createCapture(stage: Stage) {
 
         _.defer(() => {
             html2canvas(
-                document.querySelector("#" + stage.id + " .pagebuilder-canvas"),
+                canvasElement,
                 {
                     scale: 1,
                     useCORS: true,
                     scrollY: (window.pageYOffset * -1),
+                    height: correctCanvasHeight(canvasElement),
                 },
             ).then((canvas: HTMLCanvasElement) => {
                 const imageSrc = canvas.toDataURL("image/jpeg", 0.85);
@@ -214,6 +216,16 @@ function restoreParallax(rows: ResetRowInterface[]) {
         element.style.cssText = styles;
         container.style.display = "";
     });
+}
+
+/**
+ * Adjust canvas element size to prevent area overflow.
+ *
+ * @param canvasElement
+ */
+function correctCanvasHeight(canvasElement: HTMLElement) {
+    // @ts-ignore
+    return canvasElement.getHeight() < 4096 ? canvasElement.getHeight() : 4096;
 }
 
 interface ResetRowInterface {
