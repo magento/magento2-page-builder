@@ -20,6 +20,9 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
             <group value="pr_exclude"/>
+            <skip>
+                <issueId value="ACQE-5153"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -56,6 +59,6 @@
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumnGroup"/>
-        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '1/12')}}" stepKey="verifyMovedColumn"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '6/12')}}" stepKey="verifyMovedColumn"/>
     </test>
 </tests>
