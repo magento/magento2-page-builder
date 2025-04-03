@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /**
-  * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
-  */
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
@@ -20,6 +31,7 @@
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowBackground"/>
             <group value="pagebuilder-video-background"/>
+            <group value="pr_exclude"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
@@ -98,7 +110,7 @@
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_Embedded"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoEmbedded"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoEmbeddedStage">
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrlVimeoActionGroup" stepKey="validateVimeoEmbeddedStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_Embedded"/>
         </actionGroup>
@@ -110,7 +122,7 @@
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoNonEmbedded"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoNonEmbeddedStage">
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrlVimeoActionGroup" stepKey="validateVimeoNonEmbeddedStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded"/>
         </actionGroup>
@@ -122,7 +134,7 @@
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_Insecure"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoInsecure"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoInsecureStage">
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrlVimeoActionGroup" stepKey="validateVimeoInsecureStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_Insecure"/>
         </actionGroup>

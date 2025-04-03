@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /**
-  * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
-  */
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="VideoValidateAutoplayDisabled">
         <annotations>
             <features value="PageBuilder"/>
@@ -19,6 +30,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-video"/>
             <group value="pr_exclude"/>
+            <group value="cloud"/>
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
@@ -45,13 +57,13 @@
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
-            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="property" value="PageBuilderVideoUrl_Cloud"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoNotPlayingStage">
             <argument name="page" value="VideoOnStage"/>
-            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="url" value="PageBuilderVideoUrl_Cloud"/>
         </actionGroup>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -59,13 +71,13 @@
         <!-- Validate Stage After Save -->
         <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoNotPlayingStage2">
             <argument name="page" value="VideoOnStage"/>
-            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="url" value="PageBuilderVideoUrl_Cloud"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeVideoUrlInAdmin">
-            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="property" value="PageBuilderVideoUrl_Cloud"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeAutoplayDisabledAfterSave">
             <argument name="property" value="PageBuilderVideoAutoplay_Disabled"/>
@@ -76,7 +88,7 @@
         <!-- Validate Storefront -->
         <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoPlayingStorefront">
             <argument name="page" value="VideoOnStorefront"/>
-            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="url" value="PageBuilderVideoUrl_Cloud"/>
         </actionGroup>
     </test>
 </tests>
