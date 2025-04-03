@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /**
-  * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
-  */
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateVideoBackgroundWithAllAttributes">
         <annotations>
             <description>Validates all video background attributes when all attributes are configured</description>
@@ -32,7 +43,7 @@
         </assertEquals>
         <wait time="5" stepKey="waitToPreventVideoFlakiness"/>
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
-        <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
+        <comment userInput="BIC Change for PB Video: {{videoUrl.name}} is encrypted" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
         <assertStringContainsString stepKey="assertHeight">
             <expectedResult type="string">height: 100%;</expectedResult>
