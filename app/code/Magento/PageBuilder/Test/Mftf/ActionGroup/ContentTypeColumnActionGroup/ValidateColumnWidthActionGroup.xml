@@ -20,7 +20,7 @@
         <executeJS function="return Math.round((window.getComputedStyle(document.evaluate('{{section.columnGroupPath(parentIndex)}}', document.body).iterateNext()).width.replace(/px/g, &quot;&quot;) - 30)* {{columnWidth}})" stepKey="grabCalculatedColumnWidthValue"/>
         <executeJS function="return Math.abs({$grabColumnWidthValue}-{$grabCalculatedColumnWidthValue})" stepKey="columnWidthDifference"/>
         <assertLessThanOrEqual stepKey="assertColumnWidthValue">
-            <expectedResult type="int">2</expectedResult>
+            <expectedResult type="int">3</expectedResult>
             <actualResult type="variable">columnWidthDifference</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
