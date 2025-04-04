@@ -2,8 +2,8 @@
 /* jscs:disable */
 define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/confirm-alert", "Magento_PageBuilder/js/modal/template-manager-save", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "uiRegistry", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _confirmAlert, _templateManagerSave, _saveContentModal, _uiRegistry, _underscore, _acl, _config) {
   /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
+   * Copyright 2019 Adobe
+   * All Rights Reserved.
    */
 
   /**
@@ -128,6 +128,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
     renderingLock.then(function () {
       // Resolve issues with Parallax
       var parallaxRestore = disableParallax(stageElement);
+      var canvasElement = document.querySelector("#" + stage.id + " .pagebuilder-canvas");
       stageElement.style.height = (0, _jquery)(stageElement).outerHeight(false) + "px";
       stageElement.classList.add("capture");
       stageElement.classList.add("interacting");
@@ -139,10 +140,11 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
       }
 
       _underscore.defer(function () {
-        (0, _html2canvas)(document.querySelector("#" + stage.id + " .pagebuilder-canvas"), {
+        (0, _html2canvas)(canvasElement, {
           scale: 1,
           useCORS: true,
-          scrollY: window.pageYOffset * -1
+          scrollY: window.pageYOffset * -1,
+          height: correctCanvasHeight(canvasElement)
         }).then(function (canvas) {
           var imageSrc = canvas.toDataURL("image/jpeg", 0.85);
           deferred.resolve(imageSrc);
@@ -203,6 +205,17 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
       element.style.cssText = styles;
       container.style.display = "";
     });
+  }
+  /**
+   * Adjust canvas element size to prevent area overflow.
+   *
+   * @param canvasElement
+   */
+
+
+  function correctCanvasHeight(canvasElement) {
+    // @ts-ignore
+    return canvasElement.getHeight() < 4096 ? canvasElement.getHeight() : 4096;
   }
 
   return {

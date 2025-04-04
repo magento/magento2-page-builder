@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2021 Adobe
+ * All Rights Reserved.
  */
 declare(strict_types=1);
 
@@ -10,7 +10,10 @@ namespace Magento\PageBuilder\CatalogWidget\Block\Product;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\CatalogWidget\Block\Product\ProductsList;
 use Magento\Store\Model\Store;
+use Magento\TestFramework\Fixture\AppArea;
+use Magento\TestFramework\Fixture\Config;
 use Magento\TestFramework\Helper\Bootstrap;
+use Magento\Widget\Model\Template\Filter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -290,5 +293,38 @@ class ProductListTest extends TestCase
                 ]
             ]
         ];
+    }
+
+    #[
+        AppArea('frontend'),
+        Config('dev/template/minify_html', 1, 'store', 'default')
+    ]
+    public function testWidgetWithMinification()
+    {
+        /** @var Filter $filter */
+        $filter = Bootstrap::getObjectManager()->create(
+            Filter::class
+        );
+        $notExistedSku = uniqid();
+        $construction = [
+            0 => '{{widget type="Magento\CatalogWidget\Block\Product\ProductsList" ' .
+                'template="Magento_PageBuilder::catalog/product/widget/content/carousel.phtml" anchor_text="" ' .
+                'id_path="" show_pager="0" products_count="20" condition_option="sku" condition_option_value="' .
+                $notExistedSku . '" ' .
+                'type_name="Catalog Products Carousel" conditions_encoded="^[`1`:^[`aggregator`:`all`,`new_child`:``,' .
+                '`type`:`Magento||CatalogWidget||Model||Rule||Condition||Combine`,`value`:`1`^],`1--1`:' .
+                '^[`operator`:`()`,`type`:`Magento||CatalogWidget||Model||Rule||Condition||Product`,`attribute`:`sku`' .
+                ',`value`:`' . $notExistedSku . '`^]^]" sort_order="position_by_sku" store_id="0"}}',
+            1 => 'widget',
+            2 => 'type="Magento\CatalogWidget\Block\Product\ProductsList" ' .
+                'template="Magento_PageBuilder::catalog/product/widget/content/carousel.phtml" anchor_text="" ' .
+                'id_path="" show_pager="0" products_count="20" condition_option="sku" condition_option_value="' .
+                $notExistedSku . '" ' .
+                'type_name="Catalog Products Carousel" conditions_encoded="^[`1`:^[`aggregator`:`all`,`new_child`:``,' .
+                '`type`:`Magento||CatalogWidget||Model||Rule||Condition||Combine`,`value`:`1`^],`1--1`:' .
+                '^[`operator`:`()`,`type`:`Magento||CatalogWidget||Model||Rule||Condition||Product`,`attribute`:' .
+                '`sku`,`value`:`' . $notExistedSku . '`^]^]" sort_order="position_by_sku" store_id="0"'
+        ];
+        $this->assertEquals('', $filter->generateWidget($construction));
     }
 }

@@ -45,7 +45,7 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
         $config->addData(
             [
                 'tinymce' => [
-                    'toolbar' => 'undo redo | styles | fontfamily fontsize | lineheight | forecolor backcolor ' .
+                    'toolbar' => 'undo redo | styles | fontfamily fontsizeinput | lineheight | forecolor backcolor ' .
                         '| bold italic underline | alignleft aligncenter alignright | numlist bullist ' .
                         '| link image table charmap',
 
