@@ -31,6 +31,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         self::TYPE_PATH . '/appearances/appearance/elements/element/static_style'
             => 'source',
         self::TYPE_PATH . '/additional_data/item' => 'name',
+        self::TYPE_PATH . '/additional_data/item/item' => 'name',
         self::TYPE_PATH . '/appearances/appearance/elements/element/attribute' => 'name',
         self::TYPE_PATH . '/appearances/appearance/elements/element/static_attribute'
             => 'source',
