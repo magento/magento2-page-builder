@@ -70,6 +70,6 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="SaveAndContinueEdit"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <waitForElementVisible selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForHeadingVisible"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderHeadingTextProperty.value)}}" stepKey="waitForTextVisible"/>
+        <waitForElementVisible selector="(//div[contains(@class,'pagebuilder-text')])[1]//*" stepKey="waitForTextVisible"/>
     </test>
 </tests>

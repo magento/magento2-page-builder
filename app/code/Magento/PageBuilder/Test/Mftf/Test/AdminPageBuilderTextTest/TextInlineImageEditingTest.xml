@@ -20,11 +20,9 @@
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set {{MediaGalleryConfigDataDisabled.path}} {{MediaGalleryConfigDataDisabled.value}}" stepKey="enabledOldMediaGallery"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="enableOldMediaGallery">
-                <argument name="enabled" value="0"/>
-            </actionGroup>
             <actionGroup ref="CliEnableTinyMCEActionGroup" stepKey="enableTinyMCE" />
             <magentoCLI command="config:set cms/wysiwyg/use_static_urls_in_catalog 1" stepKey="useStaticURLForMediaContentInWYSIWYG"/>
         </before>
@@ -45,6 +43,7 @@
             <actionGroup ref="AdminMediaGalleryEnhancedEnableActionGroup" stepKey="disableOldMediaGallery">
                 <argument name="enabled" value="1"/>
             </actionGroup>
+	    <magentoCLI command="config:set {{MediaGalleryConfigDataEnabled.path}} {{MediaGalleryConfigDataEnabled.value}}" stepKey="disabledOldMediaGallery"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">

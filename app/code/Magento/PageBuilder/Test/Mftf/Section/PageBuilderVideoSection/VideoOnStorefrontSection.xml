@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /**
-  * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
-  */
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
 -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="VideoOnStorefront">
         <element name="allVideo" type="text" selector="[data-content-type='video']"/>
+        <element name="videoWithPlaysinline" type="text" selector="video[playsinline=true]"/>
         <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
         <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
         <element name="main" type="text" selector="(//div[@data-content-type=&quot;video&quot;])[{{arg1}}]" parameterized="true"/>
@@ -24,6 +36,8 @@
         <element name="width" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='inner'][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[@data-content-type='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <element name="videoElement" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//iframe|(//div[@data-content-type='row'])[{{videoIndex}}]//video"/>
+        <element name="videoNotAutoplay" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{videoIndex}}]//video[not(contains(@autoplay,'true'))]" parameterized="true"/>
+        <element name="videoAutoplay" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{videoIndex}}]//video[contains(@autoplay,'true')]" parameterized="true"/>
         <element name="iframePlaying" type="text" selector="(//div[@id='player'])[{{playerIndex}}]//div[contains(@class, 'playing-mode')]" parameterized="true"/>
         <element name="iframeNotAutoplaying" type="text" selector="(//div[@id='player'])[{{playerIndex}}]//div[contains(@class, 'unstarted-mode')]" parameterized="true"/>
         <!-- Advanced Configuration -->
