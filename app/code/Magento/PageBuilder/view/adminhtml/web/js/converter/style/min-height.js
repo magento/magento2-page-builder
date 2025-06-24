@@ -36,6 +36,10 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
 
     _proto.toDom = function toDom(name, data) {
       var value = (0, _object.get)(data, name);
+      // We need to check that value is not undefined at this point to avoid split to crash if the key does not exist
+      if (value === undefined) {
+        return '';
+      }
       return value.split(/\+|\-|\*|\//).length > 1 ? "calc(" + (0, _object.get)(data, name) + ")" : value;
     };
 
