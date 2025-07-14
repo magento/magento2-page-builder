@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2025 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminAddCategoryDescriptionUsingPageBuilderEditorTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Category Description Can Be Added Using Page Builder Editor"/>
+            <description value="Validate admin can add category description using page builder editor when scope is set to storeview level"/>
+            <severity value="MINOR"/>
+            <testCaseId value="AC-11807"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <!--Step 1&2: Create Category-->
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <!--Custom Store View -->
+            <actionGroup ref="AdminCreateStoreViewActionGroup" stepKey="createCustomStoreView">
+                <argument name="customStore" value="NewStoreViewData"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="DeleteCustomStoreViewWithoutBackupActionGroup" stepKey="deleteCustomStoreView">
+                <argument name="storeViewName" value="{{NewStoreViewData.name}}"/>
+            </actionGroup>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <!--Step 3: Edit category in the backend on storeview level-->
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
+            <argument name="Category" value="$$createPreReqCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="SwitchCategoryStoreViewActionGroup" stepKey="SwitchStoreView">
+            <argument name="Store" value="NewStoreViewData.name"/>
+            <argument name="CatName" value="_defaultCategory.name"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        <!--Step 4: Untick the box 'Use default value' next to the category description field WYSWYG editor-->
+        <scrollTo selector="{{AdminCategoryContentSection.categoryDescriptionUseDefault}}" x="0" y="-80" stepKey="scrollToDescription"/>
+        <conditionalClick selector="{{AdminCategoryContentSection.categoryDescriptionUseDefault}}" dependentSelector="{{AdminCategoryContentSection.categoryDescriptionUseDefault}}" visible="true" stepKey="uncheckUseDefaultValueStoreView"/>
+        <scrollTo selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" x="0" y="-80" stepKey="scrollToPageBuilderbtn"/>
+        <!--Step 5: Enter a description in the WYSIWYG editor and assert the description-->
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderEditor"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterCatorgyDescriptionInPageBuilderEditor"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <actionGroup ref="AssertMessageInAdminPanelActionGroup" stepKey="seeCategorySavedSuccessMessage">
+            <argument name="message" value="{{AssertCategoryConfigSavedMessage.value}}"/>
+        </actionGroup>
+    </test>
+</tests>
