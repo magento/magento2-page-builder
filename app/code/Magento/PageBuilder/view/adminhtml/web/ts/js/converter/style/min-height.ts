@@ -32,7 +32,7 @@ export default class MinHeight implements ConverterInterface {
         const value = get<string>(data, name);
         // We need to check that value is not undefined at this point to avoid split to crash if the key does not exist
         if (value === undefined) {
-            return '';
+            return "";
         }
 
         return value.split(/\+|\-|\*|\//).length > 1 ? `calc(${get(data, name)})` : value;
