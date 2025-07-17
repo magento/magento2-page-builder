@@ -180,7 +180,7 @@ export default class Wysiwyg implements WysiwygInterface {
         // Wait for everything else to finish
         _.defer(() => delayUntil(
             () => {
-                const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
+                const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-hugerte-inline");
                 const self = this;
 
                 $inlineToolbar.css("min-width", this.config.adapter_config.minToolbarWidth + "px");
@@ -202,7 +202,7 @@ export default class Wysiwyg implements WysiwygInterface {
                     });
                     this.resizeObserver.observe($inlineToolbar.get(0));
                 }
-                const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-tinymce-aux`);
+                const dialogContainer = document.querySelector(`#${this.elementId} ~ .tox-hugerte-aux`);
                 if (!!dialogContainer) {
                     dialogContainer.setAttribute("data-editor-aux", this.elementId);
                     document.body.appendChild(dialogContainer);
@@ -227,11 +227,11 @@ export default class Wysiwyg implements WysiwygInterface {
     private onBlur() {
         this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active")
-            .find(".tox-tinymce-inline")
+            .find(".tox-hugerte-inline")
             .css("top", "");
 
         if (this.resizeObserver) {
-            this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+            this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-hugerte-inline").get(0));
         }
         this.toolbarHeight = 0;
 
@@ -271,7 +271,7 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
+        const $inlineToolbar = this.getFixedToolbarContainer().find(".tox-hugerte-inline");
 
         if (!$inlineToolbar.length) {
             return;
