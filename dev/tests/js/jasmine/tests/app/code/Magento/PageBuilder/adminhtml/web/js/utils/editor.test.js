@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
@@ -9,7 +9,7 @@ define([
     'jquery',
     'Magento_PageBuilder/js/config'
 ], function (utils, $, Config) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/utils/editor.js', function () {
         describe('lockImageSize', function () {

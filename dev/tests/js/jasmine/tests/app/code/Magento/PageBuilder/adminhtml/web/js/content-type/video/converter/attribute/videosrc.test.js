@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
@@ -8,7 +8,7 @@ define([
     'jquery',
     'Magento_PageBuilder/js/content-type/video/converter/attribute/videosrc'
 ], function ($, VideoSrc) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/content-type/video/converter/attribute/videosrc', function () {
         var model;

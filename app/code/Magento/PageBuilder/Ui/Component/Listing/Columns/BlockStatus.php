@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -14,7 +14,7 @@ namespace Magento\PageBuilder\Ui\Component\Listing\Columns;
 class BlockStatus extends \Magento\Ui\Component\Listing\Columns\Column
 {
     /** Status column name used to get its column value */
-    const SOURCE_FIELD_NAME = 'is_active';
+    public const SOURCE_FIELD_NAME = 'is_active';
 
     /**
      * Prepare Data Source

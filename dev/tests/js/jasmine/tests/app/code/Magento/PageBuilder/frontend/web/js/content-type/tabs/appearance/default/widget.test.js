@@ -1,12 +1,12 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 define([
     'Magento_PageBuilder/js/content-type/tabs/appearance/default/widget',
     'jquery'
 ], function (tabsInitializerWidget, $) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/content-type/tabs/appearance/default/widget', function () {
         it('Should call $.ui.tabs with active based on element\'s activeTab data', function () {

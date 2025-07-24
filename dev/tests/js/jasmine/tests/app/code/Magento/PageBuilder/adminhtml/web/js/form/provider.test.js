@@ -1,14 +1,14 @@
 /**
-* Copyright 2024 Adobe
-* All Rights Reserved.
-*/
+ * Copyright 2024 Adobe
+ * All Rights Reserved.
+ */
 
 define([
     'Magento_PageBuilder/js/form/provider',
     'Magento_PageBuilder/js/events',
     'jquery'
 ], function (Provider, events, $) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/form/provider', function () {
         let instance;
@@ -29,21 +29,21 @@ define([
 
         it('should trigger form saveAfter event and refresh slick if infinite is true', function () {
             const slickMock = {
-                options: { infinite: true, rows: 1},
-                getSlick: function () {
-                    return { options: this.options };
-                }
-            };
-
-            const slickListMock = {
-                length: 1,
-                parent: jasmine.createSpy('parent').and.returnValue({
-                    slick: jasmine.createSpy('slick').and.returnValue(slickMock)
-                })
-            };
+                    options: { infinite: true, rows: 1},
+                    getSlick: function () {
+                        return { options: this.options };
+                    }
+                },
+                slickListMock = {
+                    length: 1,
+                    parent: jasmine.createSpy('parent').and.returnValue({
+                        slick: jasmine.createSpy('slick').and.returnValue(slickMock)
+                    })
+                };
 
             spyOn($.fn, 'find').and.returnValue(slickListMock);
 
+            // eslint-disable-next-line one-var
             const result = instance.save();
 
             expect(events.trigger).toHaveBeenCalledWith('form:' + instance.id + ':saveAfter', instance.get('data'));
@@ -70,6 +70,7 @@ define([
                 })
             });
 
+            // eslint-disable-next-line one-var
             const result = instance.save();
 
             expect(events.trigger).toHaveBeenCalledWith('form:' + instance.id + ':saveAfter', instance.get('data'));

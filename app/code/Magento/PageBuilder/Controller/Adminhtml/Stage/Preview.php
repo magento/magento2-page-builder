@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -16,7 +16,7 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
  */
 class Preview extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Backend::content';
+    public const ADMIN_RESOURCE = 'Magento_Backend::content';
 
     /**
      * @var \Magento\PageBuilder\Model\Stage\RendererPool

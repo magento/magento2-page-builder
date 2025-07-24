@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -15,7 +15,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  */
 class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\ConfigInterface
 {
-    const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
+    public const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
 
     private const IS_PAGEBUILDER_CONTENT_PREVIEW_ENABLED = 'cms/pagebuilder/enable_content_preview';
 

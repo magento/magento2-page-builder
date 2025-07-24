@@ -1,7 +1,7 @@
 <!--
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
  */
 -->
 <each args="data: Object.keys(viewports), as: 'name'">
@@ -14,8 +14,8 @@
             <img data-bind="attr:{src: $parent.viewports[name].icon}" draggable="false" aria-hidden="true"/>
         </button>
         <span class="tooltip-content">
-            <span class="tooltip-label" translate="$parent.viewports[name].label"></span><br/>
-            <span translate="'View your content for '"></span><text args="name"></text><br/>
+            <span class="tooltip-label" translate="$parent.viewports[name].label"></span><br>
+            <span translate="'View your content for '"></span><text args="name"></text><br>
             <span translate="'Width'"></span>: <text args="Object.values($parent.viewports[name].conditions)[0]"></text>
         </span>
     </span>

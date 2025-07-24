@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -14,6 +14,8 @@ use Magento\Framework\View\Result\Page as ResultPage;
 class Page
 {
     /**
+     * Adjusts the layout handles classes to the body when using full width variants
+     *
      * @param ResultPage $subject
      * @param ResponseInterface $response
      * @return array

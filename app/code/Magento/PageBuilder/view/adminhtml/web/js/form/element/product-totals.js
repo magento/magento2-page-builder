@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 
 define([
@@ -10,7 +10,7 @@ define([
     'Magento_PageBuilder/js/form/provider/conditions-data-processor',
     'Magento_Ui/js/form/element/abstract'
 ], function (_, $, $t, conditionsDataProcessor, Abstract) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     return Abstract.extend({
         defaults: {
@@ -62,10 +62,35 @@ define([
          * @param {Object} jqXHR
          */
         callSuperError: function (jqXHR) {
-            // eslint-disable-next-line jquery-no-bind-unbind
+            /* eslint-disable */
             var superError = $.ajaxSettings.error.bind(window, jqXHR);
+            /* eslint-enable */
 
             superError();
+        },
+
+        /**
+         * Show upload error message
+         */
+        showForbiddenErrorMessage: function () {
+            let bodyObj = $('body');
+
+            bodyObj.notification('clear');
+            bodyObj.notification('add', {
+                error: true,
+                message: $.mage.__(
+                    'Forbidden. You do not have permission to perform this action.'
+                ),
+
+                /**
+                 * @param {String} message
+                 */
+                insertMethod: function (message) {
+                    let $wrapper = $('<div></div>').html(message);
+
+                    $('.page-main-actions').after($wrapper);
+                }
+            });
         },
 
         /**
@@ -128,7 +153,13 @@ define([
                 this.loading(false);
             }.bind(this)).fail(function () {
                 if (this.jqXHR.statusText !== 'abort') {
-                    this.value($t('An unknown error occurred. Please try again.'));
+                    if (this.jqXHR.status === 403) {
+                        this.showForbiddenErrorMessage();
+                        $('.save.primary').attr('disabled', true);
+                        $('body').trigger('processStop');
+                    } else {
+                        this.value($t('An unknown error occurred. Please try again.'));
+                    }
                 }
                 this.loading(false);
             }.bind(this));

@@ -6,7 +6,8 @@
 /// <reference types="jquery"/>
 
 /**
- * Scroll calculations used by onScroll event
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 interface JarallaxOnScrollCalculations {
     rect: object;

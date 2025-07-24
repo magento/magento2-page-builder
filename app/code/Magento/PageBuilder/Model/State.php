@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 declare(strict_types=1);
 
@@ -25,7 +25,8 @@ class State
 
     /**
      * Returns information if use page builder based on system configuration and xml configuration
-     * @param $isPageBuilderUsed
+     *
+     * @param mixed $isPageBuilderUsed
      * @return bool
      */
     public function isPageBuilderInUse($isPageBuilderUsed) : bool

@@ -1,11 +1,11 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
  */
 
 define(['underscore', 'Magento_PageBuilderAdminAnalytics/js/page-builder/event-builder'],
     function (_, EventBuilder) {
-        'use strict';
+        'use strict'; // eslint-disable-line strict
 
         return function (target) {
             var originalTarget = target.trigger,

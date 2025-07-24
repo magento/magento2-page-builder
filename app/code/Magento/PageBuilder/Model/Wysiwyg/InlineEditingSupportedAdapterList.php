@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 declare(strict_types=1);
 
@@ -37,6 +37,7 @@ class InlineEditingSupportedAdapterList
 
     /**
      * Check if inline editing available for current adapter
+     *
      * @param string $editorPath
      * @return bool
      */

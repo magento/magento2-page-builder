@@ -1,12 +1,13 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 /* @var $block \Magento\PageBuilder\Block\Adminhtml\Html\Head\BabelPolyfill */
+/** @var $escaper \Magento\Framework\Escaper */
 
-if ($block->shouldLoadPolyfill()) : ?>
-<script src="<?= $block->escapeUrl($block->getJsUrl()) ?>"></script>
+if ($block->shouldLoadPolyfill()): ?>
+<script src="<?= $escaper->escapeUrl($block->getJsUrl()) ?>"></script>
 <?php endif; ?>
 

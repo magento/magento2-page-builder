@@ -1,13 +1,13 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
 define([
     'squire'
 ], function (Squire) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     var injector = new Squire(),
         eventObject = {
@@ -46,6 +46,7 @@ define([
             injector.clean();
             injector.remove();
             window._satellite = origSatellite;
+            // eslint-disable-next-line no-unused-vars
         } catch (e) {
         }
     });

@@ -1,10 +1,10 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
  */
 
 define(['underscore'], function (_) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     return {
 
@@ -25,28 +25,23 @@ define(['underscore'], function (_) {
             }
 
             switch (name) {
-                case 'contentType:duplicateAfter':
-                    action = 'duplicate';
-                    break;
-
-                case 'contentType:removeAfter':
-                    action = 'remove';
-                    break;
-
-                case 'contentType:createAfter':
-                    action = 'create';
-                    break;
-
-                case 'contentType:editBefore':
-                    action = 'edit';
-                    break;
-
-                case 'contentType:visibilityAfter':
-                    action = args.visibility ? 'show' : 'hide';
-                    break;
-
-                default:
-                    break;
+            case 'contentType:duplicateAfter':
+                action = 'duplicate';
+                break;
+            case 'contentType:removeAfter':
+                action = 'remove';
+                break;
+            case 'contentType:createAfter':
+                action = 'create';
+                break;
+            case 'contentType:editBefore':
+                action = 'edit';
+                break;
+            case 'contentType:visibilityAfter':
+                action = args.visibility ? 'show' : 'hide';
+                break;
+            default:
+                break;
             }
 
             if (!_.isUndefined(args.contentType)) {
