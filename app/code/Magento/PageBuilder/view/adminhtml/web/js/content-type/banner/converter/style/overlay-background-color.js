@@ -37,7 +37,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
         return value;
       }
 
-      return "transparent";
+      return "";
     };
 
     return OverlayBackgroundColor;
