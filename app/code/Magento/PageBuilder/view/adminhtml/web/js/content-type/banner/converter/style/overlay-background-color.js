@@ -2,7 +2,7 @@
 /* jscs:disable */
 define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
-   * Copyright 2025 Adobe
+   * Copyright 2018 Adobe
    * All Rights Reserved.
    */
   var OverlayBackgroundColor = /*#__PURE__*/function () {
