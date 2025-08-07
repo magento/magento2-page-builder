@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /**
-  * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
-  */
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2017 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
 -->
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
     <!-- URL -->
     <entity name="PageBuilderVideoUrl_Default" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
@@ -15,12 +26,19 @@
         <data key="fieldName">video_source</data>
         <data key="text">Video</data>
     </entity>
+    <entity name="PageBuilderVideoUrl_Cloud" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">{{_CREDS.magento/PAGE_BUILDER_PUBLIC_VIDEO_URL}}</data>
+        <data key="renderedValue">{{_CREDS.magento/PAGE_BUILDER_PUBLIC_VIDEO_URL}}</data>
+    </entity>
     <entity name="PageBuilderVideoUrl_YouTube" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
-        <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
-        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="value">https://player.vimeo.com/video/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
     </entity>
     <entity name="PageBuilder_InvalidVideoURL_Text" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
@@ -40,8 +58,8 @@
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
-        <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
-        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="value">https://player.vimeo.com/video/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
     </entity>
     <entity name="PageBuilderVideoUrl_Empty" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
@@ -54,8 +72,15 @@
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
-        <data key="value">http://www.youtube.com/watch?v=slOtnjsbff0</data>
-        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="value">https://player.vimeo.com/video/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_YouTube_Nocookie" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://player.vimeo.com/video/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
     </entity>
     <entity name="PageBuilderVideoUrl_Vimeo_Embedded" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
