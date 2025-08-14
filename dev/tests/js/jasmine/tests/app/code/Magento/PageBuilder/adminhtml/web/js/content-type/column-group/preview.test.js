@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2023 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
@@ -11,7 +11,7 @@ define([
     'Magento_PageBuilder/js/config',
     'Magento_PageBuilder/js/events'
 ], function (ko,$, Preview, Config, Events) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/content-type/column-group/preview', function () {
         var model;

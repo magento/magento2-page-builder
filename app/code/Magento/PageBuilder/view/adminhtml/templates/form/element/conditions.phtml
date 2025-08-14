@@ -1,23 +1,24 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
-?>
-<?php
+
 /** @var $block \Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions */
+/** @var $escaper \Magento\Framework\Escaper */
+
 $attribute = $block->getData('attribute');
 $id = $block->getData('formNamespace') . '_' . $attribute;
 $role = 'pagebuilder-conditions-form-placeholder-' . $attribute;
 ?>
 <label class="admin__field-label">
-    <span><?= $block->escapeHtml($block->getData('label')) ?></span>
+    <span><?= $escaper->escapeHtml($block->getData('label')) ?></span>
 </label>
 <div class="admin__field-control">
     <div class="rule-tree">
-        <fieldset id="<?= $block->escapeHtmlAttr($id) ?>" class="fieldset">
+        <fieldset id="<?= $escaper->escapeHtmlAttr($id) ?>" class="fieldset">
             <div class="rule-tree-wrapper">
-                <div data-role="<?= $block->escapeHtmlAttr($role) ?>"></div>
+                <div data-role="<?= $escaper->escapeHtmlAttr($role) ?>"></div>
             </div>
         </fieldset>
     </div>

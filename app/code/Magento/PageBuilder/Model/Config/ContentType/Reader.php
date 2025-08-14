@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -10,8 +10,8 @@ namespace Magento\PageBuilder\Model\Config\ContentType;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
-    const TYPE_PATH = '/config/type';
-    
+    public const TYPE_PATH = '/config/type';
+
     /**
      * List of id attributes for merge
      *
@@ -50,6 +50,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @param array $idAttributes
      * @param string $domDocumentClass
      * @param string $defaultScope
+     * phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config\FileResolver $fileResolver,

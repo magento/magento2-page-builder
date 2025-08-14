@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -12,6 +12,7 @@ use Magento\Rule\Model\Condition\Combine;
 
 /**
  * Responsible for rendering the top-level conditions rule tree using the provided params
+ * @SuppressWarnings(PHPMD.AllPurposeAction)
  */
 class ProductConditions extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
 {
@@ -41,7 +42,7 @@ class ProductConditions extends \Magento\CatalogWidget\Controller\Adminhtml\Prod
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
     public function execute()
     {
@@ -58,7 +59,7 @@ class ProductConditions extends \Magento\CatalogWidget\Controller\Adminhtml\Prod
         // The Combine class doesn't need the data attribute on children but we do.
         $this->configureConditionsFormName($conditions, $formName);
         $result = $conditions->asHtmlRecursive();
-        $this->getResponse()->setBody($result);
+        return $this->getResponse()->setBody($result);
     }
 
     /**

@@ -11,11 +11,8 @@ export const resources: AclResources = {
 };
 
 /**
- * Determine if the current user is allowed to access this resource
- *
- * Usage: isAllowed(resources.TEMPLATE_SAVE)
- *
- * @param resource
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
  */
 export function isAllowed(resource: string) {
     return Config.getConfig("acl")[resource] === true;

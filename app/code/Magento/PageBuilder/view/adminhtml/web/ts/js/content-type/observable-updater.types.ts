@@ -3,8 +3,8 @@ import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 /// <reference types="knockout" />
 

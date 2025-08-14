@@ -1,22 +1,23 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
+/** @var $escaper \Magento\Framework\Escaper */
 ?>
 <div class="pagebuilder-modal-content-body">
-    <p><?= $block->escapeHtml(__('This will change your Admin and storefront by:')) ?></p>
+    <p><?= $escaper->escapeHtml(__('This will change your Admin and storefront by:')) ?></p>
     <ul>
         <li>
-            <strong><?= $block->escapeHtml(__('Removing PageBuilder\'s advanced content tools')) ?></strong>
-            <?= $block->escapeHtml(
+            <strong><?= $escaper->escapeHtml(__('Removing PageBuilder\'s advanced content tools')) ?></strong>
+            <?= $escaper->escapeHtml(
                 __('from their assigned text fields and adding a basic text editor as replacement.')
             ) ?>
         </li>
         <li>
-            <strong><?= $block->escapeHtml(__('Potentially creating display errors on your storefront')) ?></strong>
-            <?= $block->escapeHtml(
+            <strong><?= $escaper->escapeHtml(__('Potentially creating display errors on your storefront')) ?></strong>
+            <?= $escaper->escapeHtml(
                 __(', due to content reformatting. Also, some content may no longer be editable from within the Admin.')
             ) ?>
         </li>

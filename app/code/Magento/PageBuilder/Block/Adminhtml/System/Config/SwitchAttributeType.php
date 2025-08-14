@@ -1,16 +1,16 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
-use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Phrase;
+use Magento\Backend\Block\Template\Context;
 
 /**
  * Class SwitchAttributeType renders modal window to confirm changing attribute type
@@ -22,6 +22,7 @@ class SwitchAttributeType extends Field
     /**
      * @param Context $context
      * @param array $data
+     * phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
      */
     public function __construct(
         Context $context,

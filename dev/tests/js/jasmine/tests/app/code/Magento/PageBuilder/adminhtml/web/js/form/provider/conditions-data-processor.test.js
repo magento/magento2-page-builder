@@ -1,13 +1,13 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
 define([
     'Magento_PageBuilder/js/form/provider/conditions-data-processor'
 ], function (processor) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/form/provider/conditions-data-processor', function () {
         it('Should delete and then normalize the data to the specified attribute', function () {

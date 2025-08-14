@@ -1,25 +1,26 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 /**
  * @var \Magento\PageBuilder\Block\Adminhtml\System\Config\Form\Field\GoogleMapsApiKey $block
+ * @var $escaper \Magento\Framework\Escaper
  */
 ?>
 <button class="scalable"
         type="button"
-        id="<?= $block->escapeHtmlAttr($block->getHtmlId()) ?>"
+        id="<?= $escaper->escapeHtmlAttr($block->getHtmlId()) ?>"
         data-mage-init='{
             "Magento_PageBuilder/js/system/config/google-maps-api-key-validator": {
-                "elementId": "<?= $block->escapeJs($block->getHtmlId()) ?>",
-                "validateUrl": "<?= $block->escapeJs($block->getValidateUrl()) ?>",
-                "buttonLabel": "<?= $block->escapeJs($block->getButtonLabel()) ?>",
-                "validLabel": "<?= $block->escapeJs($block->getValidLabel()) ?>",
-                "invalidLabel": "<?= $block->escapeJs($block->getInvalidLabel()) ?>",
-                "sourceField": "<?= $block->escapeJs($block->getSourceField()) ?>"
+                "elementId": "<?= $escaper->escapeJs($block->getHtmlId()) ?>",
+                "validateUrl": "<?= $escaper->escapeJs($block->getValidateUrl()) ?>",
+                "buttonLabel": "<?= $escaper->escapeJs($block->getButtonLabel()) ?>",
+                "validLabel": "<?= $escaper->escapeJs($block->getValidLabel()) ?>",
+                "invalidLabel": "<?= $escaper->escapeJs($block->getInvalidLabel()) ?>",
+                "sourceField": "<?= $escaper->escapeJs($block->getSourceField()) ?>"
             }
         }'
         disabled="disabled"
-><span class="result"><?= $block->escapeHtml($block->getButtonLabel()) ?></span></button>
+><span class="result"><?= $escaper->escapeHtml($block->getButtonLabel()) ?></span></button>

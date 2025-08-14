@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -25,7 +25,7 @@ class CancelButton implements ButtonProviderInterface
     /**
      * Constructor
      *
-     * @param $targetName
+     * @param string $targetName
      */
     public function __construct(string $targetName)
     {

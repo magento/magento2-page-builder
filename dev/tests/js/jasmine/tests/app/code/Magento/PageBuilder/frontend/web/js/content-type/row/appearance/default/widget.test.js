@@ -1,11 +1,11 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 define([
     'Magento_PageBuilder/js/content-type/row/appearance/default/widget'
 ], function (rowWidgetInitializer) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     describe('Magento_PageBuilder/js/content-type/row/appearance/default/widget', function () {
         it('Should not call jarallax if enableParallax !== 1', function () {

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -18,9 +18,9 @@ use Magento\Framework\UrlInterface;
  */
 class PreviewImage extends Column
 {
-    const NAME = 'preview_image';
+    public const NAME = 'preview_image';
 
-    const ALT_FIELD = 'name';
+    public const ALT_FIELD = 'name';
 
     /**
      * @var UrlInterface

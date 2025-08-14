@@ -1,8 +1,7 @@
 <?php
 /**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Stage;
@@ -18,7 +17,7 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Render extends \Magento\Backend\App\Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Backend::content';
+    public const ADMIN_RESOURCE = 'Magento_Backend::content';
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -36,7 +35,8 @@ class Render extends \Magento\Backend\App\Action implements HttpGetActionInterfa
         PageFactory $pageFactory
     ) {
         $this->pageFactory = $pageFactory;
-        return parent::__construct($context);
+
+        parent::__construct($context);
     }
 
     /**

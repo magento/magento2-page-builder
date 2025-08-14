@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 declare(strict_types=1);
 
@@ -14,9 +14,9 @@ use Magento\Framework\DataObject;
  */
 class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
 {
-    const DISPLAY_ATTRIBUTES_NON_PAGEBUILDER = 'non_pagebuilder';
+    public const DISPLAY_ATTRIBUTES_NON_PAGEBUILDER = 'non_pagebuilder';
 
-    const DISPLAY_ATTRIBUTES_PAGEBUILDER_ONLY = 'pagebuilder_only';
+    public const DISPLAY_ATTRIBUTES_PAGEBUILDER_ONLY = 'pagebuilder_only';
 
     /**
      * @inheritdoc

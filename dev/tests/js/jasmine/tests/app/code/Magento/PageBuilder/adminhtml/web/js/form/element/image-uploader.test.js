@@ -1,7 +1,6 @@
 /**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
@@ -9,7 +8,7 @@ define([
     'jquery',
     'squire'
 ], function ($, Squire) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     var uploader,
         modifierClassSet1 = {

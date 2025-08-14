@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -45,7 +45,7 @@ class FileResolver implements \Magento\Framework\Config\FileResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function get($filename, $scope): array
     {
@@ -54,7 +54,9 @@ class FileResolver implements \Magento\Framework\Config\FileResolverInterface
         $files = $this->baseFiles->getFiles($this->design->getDesignTheme(), $filename);
         foreach ($files as $file) {
             $fullFileName = $file->getFileName();
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
             $fileDir = dirname($fullFileName);
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
             $fileName = basename($fullFileName);
             $dirRead = $this->readFactory->create($fileDir);
             $result[$fullFileName] = $dirRead->readFile($fileName);

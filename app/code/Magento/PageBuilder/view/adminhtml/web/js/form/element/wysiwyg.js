@@ -1,6 +1,6 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2017 Adobe
+ * All Rights Reserved.
  */
 
 define([
@@ -11,9 +11,10 @@ define([
     'Magento_PageBuilder/js/events',
     'Magento_Ui/js/lib/view/utils/dom-observer',
     'Magento_PageBuilder/js/page-builder',
+    'Magento_Ui/js/modal/alert',
     'Magento_Ui/js/lib/view/utils/async'
-], function ($, _, Wysiwyg, $t, events, domObserver, PageBuilder) {
-    'use strict';
+], function ($, _, Wysiwyg, $t, events, domObserver, PageBuilder, alertDialog) {
+    'use strict'; // eslint-disable-line strict
 
     /**
      * Extend the original WYSIWYG with added PageBuilder functionality
@@ -67,6 +68,15 @@ define([
          * Handle button click, init the Page Builder application
          */
         pageBuilderEditButtonClick: function (context, event) {
+            let aclResource = this.pageBuilder.config && this.pageBuilder.config.acl;
+
+            if (aclResource !== undefined && aclResource.widget === false) {
+                return alertDialog({
+                    content: $t('Sorry, you need permissions to view this content.'),
+                    title: $t('Permission Error')
+                });
+            }
+
             this.determineIfWithinModal(event.currentTarget);
             this.transition(false);
 
@@ -85,8 +95,8 @@ define([
             if (!this.isComponentInitialized()) {
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(
-                  this.wysiwygConfigData(),
-                  this.initialValue
+                    this.wysiwygConfigData(),
+                    this.initialValue
                 );
                 if (!this.source.get('pageBuilderInstances')) {
                     this.source.set('pageBuilderInstances', []);

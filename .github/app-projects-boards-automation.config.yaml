@@ -1,0 +1,310 @@
+automations:
+
+  ############################################################################################################
+  # PR Automation for Community Dashboard - PageBuilder                                                                                            #
+  ############################################################################################################
+  # 1. Whenever a pull request is labeled with the "Project: Community Picked" label:
+  #   a. it must be assigned to the "Community Dashboard" project
+  #   b. it must be removed from the "Pull Requests Dashboard" project
+  - trigger: pull_request.labeled
+    conditions:
+      - ['modifiedLabel.name', 'eq', 'Project: Community Picked']
+      - [ 'projects#number', 'in', 24 ]
+      - ['projectsByNumber.24.column.name', 'eq', 'Ready for Review']
+    actions:
+      - addToProject: [17] #['Community Dashboard']
+      - moveTo: [17, 'Pending Review']
+      - removeFromProject: [24] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'Changes Requested' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'Changes Requested' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'Reviewer Approved' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'Ready for Testing' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'On Hold' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'On Hold' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'Acceptance Testing' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'Testing in Progress' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'Ready for Delivery' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'Merge in Progress' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'Done' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'Recently Merged' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  - trigger: pull_request.labeled
+    conditions:
+      - [ 'modifiedLabel.name', 'eq', 'Project: Community Picked' ]
+      - [ 'projects#number', 'in', 24 ]
+      - [ 'projectsByNumber.24.column.name', 'eq', 'Review in Progress' ]
+    actions:
+      - addToProject: [ 17 ] #['Community Dashboard']
+      - moveTo: [ 17, 'Review in Progress' ]
+      - removeFromProject: [ 24 ] #['Pull Requests Dashboard']
+
+  # 2. Whenever a pull request is labeled with the "Priority: XX" label and has no "Project: Community Picked" label assigned:
+  #   a. it must be assigned to the "Pull Requests Dashboard" project
+  #   b. it must be removed from the "Community Dashboard" project (if assigned to it)
+  #   c. it must be labeled with the "Progress: pending review" label
+  #   d. it must be moved to the "Pending review" column on the "Pull Requests Dashboard" project
+  - trigger: pull_request.labeled
+    conditions:
+      - ['modifiedLabel.name', 'includes', 'Priority:']
+      - ['labels#name', 'ne', 'Project: Community Picked']
+    actions:
+      - addToProject: [24] #['Pull Requests Dashboard']
+      - moveTo: [24, 'Ready for Review']
+      - removeFromProject: [17] #['Community Dashboard']
+      - addLabels: ['Progress: pending review']
+
+  # 3. Whenever a review was requested for a pull request and its not in Changes Requested
+  #   a. it must be labeled with the "Progress: review" label
+  #   b. it must remove the "Progress: needs update" label
+  #   c. it must be moved to the "Review in Progress" column
+  - trigger: pull_request.review_requested
+    conditions:
+    actions:
+      - addLabels: ['Progress: review']
+      - removeLabels: ['Progress: needs update', 'Progress: pending review']
+      - moveTo: [24, 'Review in Progress'] #['Pull Requests Dashboard', 'Review in Progress']
+      - moveTo: [17, 'Review in Progress'] #['Community Dashboard', 'Review in Progress']
+
+  # 4. Whenever a pull request is labeled with the "Progress: needs update" label and the reviewer adds comment/s:
+  #   a. it must be moved to the "Changes Requested" column
+  - trigger: pull_request.labeled
+    conditions:
+      - ['modifiedLabel.name', 'eq', 'Progress: needs update']
+    actions:
+      - removeLabels: [ 'Progress: review' ]
+      - moveTo: [24, 'Changes Requested'] #['Pull Requests Dashboard', 'Changes Requested']
+      - moveTo: [17, 'Changes Requested'] #['Community Dashboard', 'Changes Requested']
+
+  # 5. Whenever a label "Progress: needs update" is removed from a pull request:
+  #   a. it must be labeled with "Progress: review"
+  #   b. it must be moved to the "Review in Progress" column
+  - trigger: pull_request.unlabeled
+    conditions:
+      - ['modifiedLabel.name', 'eq', 'Progress: needs update']
+    actions:
+      - removeLabels: ['Progress: review']
+      - addLabels: ['Progress: pending review']
+      - moveTo: [24, 'Ready for Review'] #['Pull Requests Dashboard', 'Review in Progress']
+      - moveTo: [17, 'Pending Review'] #['Community Dashboard', 'Review in Progress']
+
+  # 6. Whenever a pull request is approved:
+  #   a. the below labels must be removed from a pull request: "Progress: review", "Progress: needs update"
+  #   b. it must be moved to the "Ready for Testing" column
+  - trigger: pull_request_review.submitted
+    conditions:
+      - ['review', 'eq', 'approved']
+    actions:
+      - removeLabels: ['Progress: review']
+      - moveTo: [24, 'Reviewer Approved'] #['Pull Requests Dashboard', 'Reviewer Approved']
+      - moveTo: [17, 'Ready for Testing'] #['Community Dashboard', 'Ready for Testing']
+
+  # 7. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Pending review" column:
+  #   a. it must be labeled with the "Progress: pending review" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - [
+          ['movedToColumn.name', 'eq', 'Pending Review'],
+          ['movedToColumn.name', 'eq', 'Ready for Review']
+        ]
+      - [
+          ['projects#number', 'in', 17],
+          ['projects#number', 'in', 24]
+        ]
+    actions:
+      - addLabels: ['Progress: pending review']
+      - removeLabels: ['Progress: needs update']
+
+  # 8. Whenever a pull request is in the "Ready for Testing" column and gets assigned to anyone:
+  #   a. it must be labeled with the "Progress: testing in progress" label
+  #   b. it must remove the "Progress: ready for testing" label
+  #   c. it must be moved to the "Testing in Progress" column
+  - trigger: pull_request.assigned
+    conditions:
+      - [
+          ['projects#column.name', 'in', 'Ready for Testing'],
+          ['projects#column.name', 'in', 'Reviewer Approved']
+        ]
+    actions:
+      - addLabels: ['Progress: Testing in Progress']
+      - removeLabels: ['Progress: ready for testing']
+      - moveTo: [24, 'Acceptance Testing'] #['Pull Requests Dashboard', 'Acceptance Testing']
+      - moveTo: [17, 'Testing in Progress'] #['Community Dashboard', 'Testing in Progress']
+
+  # 9. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Review in Progress" column:
+  #   a. it must be labeled with the "Progress: review" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - ['movedToColumn.name', 'eq', 'Review in Progress']
+      - [
+          ['projects#number', 'in', 17],
+          ['projects#number', 'in', 24]
+        ]
+    actions:
+      - addLabels: ['Progress: review']
+      - removeLabels: ['Progress: needs update']
+
+  # 10. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Changes Requested" column:
+  #   a. it must be labeled with the "Progress: needs updates" label
+  #   b. it must remove the "Progress: review" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - ['movedToColumn.name', 'eq', 'Changes Requested']
+      - [
+          ['projects#number', 'in', 17],
+          ['projects#number', 'in', 24]
+        ]
+    actions:
+      - addLabels: ['Progress: needs update']
+      - removeLabels: ['Progress: review']
+
+  # 11. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "On Hold" column:
+  #   a. it must be labeled with the "Progress: On Hold" label
+  #   b. it must remove the "Progress: review", "Progress: needs update","Progress: testing in progress", "Progress: extended testing" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - ['movedToColumn.name', 'eq', 'On Hold']
+      - [
+          ['projects#number', 'in', 17],
+          ['projects#number', 'in', 14]
+        ]
+    actions:
+      - addLabels: ['Progress: On Hold']
+      - removeLabels: ['Progress: review', 'Progress: needs update', 'Progress: testing in progress', 'Progress: extended testing' ]
+
+  # 12. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Ready for Testing" column:
+  #   a. it must be labeled with the "Progress: ready for testing" label
+  #   b. it must remove the "Progress: review" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - [
+          ['movedToColumn.name', 'eq', 'Ready for Testing'],
+          ['movedToColumn.name', 'eq', 'Reviewer Approved']
+        ]
+      - [
+          ['projects#number', 'in', 17],
+          ['projects#number', 'in', 24]
+        ]
+    actions:
+      - addLabels: ['Progress: ready for testing']
+      - removeLabels: ['Progress: review', 'Progress: needs update']
+
+  # 13. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Extended Testing" column:
+  #   a. it must be labeled with the "Progress: extended testing" label
+  #   b. it must remove the "Progress: testing in progress" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - ['movedToColumn.name', 'eq', 'Extended Testing (Optional)']
+      - ['projects#number', 'in', 17]
+    actions:
+      - addLabels: ['Progress: extended testing']
+      - removeLabels: ['Progress: testing in progress', 'Progress: pending approval']
+
+  # 14. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "To Approve" column:
+  #   a. it must be labeled with the "Progress: to approve" label
+  #   b. it must remove the "Progress: extended testing" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - ['movedToColumn.name', 'eq', 'To Approve']
+      - ['projects#number', 'in', 17]
+    actions:
+      - addLabels: ['Progress: to approve']
+      - removeLabels: ['Progress: extended testing']
+
+  # 15. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Pending Approval" column:
+  #   a. it must be labeled with the "Progress: pending approval" label
+  #   b. it must remove the "Progress: to approve" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - ['movedToColumn.name', 'eq', 'Pending Approval']
+      - ['projects#number', 'in', 17]
+    actions:
+      - addLabels: ['Progress: pending approval']
+      - removeLabels: ['Progress: to approve']
+
+  # 16. Whenever a pull request belongs to the "Community Dashboard" or "Pull Requests Dashboard" and is moved to the "Merge in Progress" column:
+  #   a. it must remove the "Progress: extended testing" label
+  - trigger: projects_v2_item.edited
+    conditions:
+      - [
+          ['movedToColumn.name', 'eq', 'Merge in Progress'],
+          ['movedToColumn.name', 'eq', 'Ready for Delivery']
+        ]
+      - [
+          ['projects#number', 'in', 17],
+          ['projects#number', 'in', 24]
+        ]
+    actions:
+      - removeLabels: ['Progress: extended testing']
+      - addLabels: ['Progress: accept']
+
+  # 17. Whenever a pull request is merged:
+  #   a. it must be moved to the "Recently Merged" column
+  - trigger: pull_request.closed
+    conditions:
+      - ['merged', 'eq', true]
+    actions:
+      - moveTo: [17, 'Recently Merged']
+      - moveTo: [24, 'Done']
+
+  # 18. Whenever a pull request is closed:
+  #   a. it must be removed from the "Pull Requests Dashboard" project
+  #   b. it must be removed from the "Community Dashboard" project
+  - trigger: pull_request.closed
+    conditions:
+      - ['merged', 'ne', true]
+    actions:
+      - removeFromProject: [24] #['Pull Requests Dashboard']
+      - removeFromProject: [17] #['Community Dashboard']
+
+
+  ############################################################################################################
+  # Automation Rules related to issues goes here                                                             #
+  ############################################################################################################

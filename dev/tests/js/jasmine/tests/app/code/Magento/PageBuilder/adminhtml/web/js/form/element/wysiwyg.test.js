@@ -1,14 +1,13 @@
 /**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2023 Adobe
+ * All Rights Reserved.
  */
 
 /* eslint-disable max-nested-callbacks */
 define([
     'squire'
 ], function (Squire) {
-    'use strict';
+    'use strict'; // eslint-disable-line strict
 
     var $,
         wysiwyg,
@@ -76,7 +75,7 @@ define([
         try {
             injector.clean();
             injector.remove();
-        } catch (e) {}
+        } catch (e) { console.log(e); }
     });
 
     describe('Magento_PageBuilder/js/form/element/wysiwyg', function () {
