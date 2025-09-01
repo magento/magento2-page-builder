@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+ * Copyright 2025 Adobe
+ * All Rights Reserved.
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderNoTimeoutTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="PageBuilder Performance"/>
+            <title value="PageBuilder should not timeout on save"/>
+            <description value="PageBuilder should not take more than 5s to generate content source"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="ACP2E-2016"/>
+            <testCaseId value="AC-9079"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <executeJS function="
+((logger, storage) => {
+    let _super = logger.error;
+    logger.error = function (...args) {
+        let records = storage.getItem('consoleErrors') ? JSON.parse(storage.getItem('consoleErrors')) : [];
+        records.push(...args.filter(arg => typeof arg === 'string'));
+        storage.setItem('consoleErrors', JSON.stringify(records));
+        _super.apply(logger, args);
+    };
+})(window.console, window.sessionStorage)
+" stepKey="storeConsoleErrorsInSessionStorage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <executeJS function="return sessionStorage.getItem('consoleErrors') || ''" stepKey="getConsoleErrors"/>
+        <assertStringNotContainsString stepKey="assertConsoleErrors">
+            <expectedResult type="string">Page Builder was rendering for 5 seconds without releasing locks.</expectedResult>
+            <actualResult type="variable">getConsoleErrors</actualResult>
+        </assertStringNotContainsString>
+    </test>
+</tests>
