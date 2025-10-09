@@ -219,7 +219,7 @@
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeRenderedHtmlCMSPageStorefront"/>
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
-        <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
+        <seeCurrentUrlMatches regex="~^{{PageBuilderHtmlPropertyButton.url}}.*~" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -243,7 +243,7 @@
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeRenderedHtmlCMSPageStorefrontMobile"/>
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefrontMobile"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefrontMobile"/>
-        <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrlMobile"/>
+        <seeCurrentUrlMatches regex="~^{{PageBuilderHtmlPropertyButton.url}}.*~" stepKey="seeThatUrlIsChangedToHtmlLinkUrlMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2Mobile">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>

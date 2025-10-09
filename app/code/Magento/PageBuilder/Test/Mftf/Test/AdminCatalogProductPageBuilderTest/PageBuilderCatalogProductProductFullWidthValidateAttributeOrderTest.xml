@@ -33,6 +33,8 @@
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
+            <!-- Delete product created via UI -->
+            <helper class="Magento\Catalog\Test\Mftf\Helper\ProductApiHelper" method="deleteAllProductsApi" stepKey="deleteAllProductsViaApi"/>
             <deleteData createDataKey="createPageBuilderAttribute1" stepKey="deleteAttribute1"/>
             <deleteData createDataKey="createPageBuilderAttribute2" stepKey="deleteAttribute2"/>
             <actionGroup ref="CliIndexerReindexActionGroup" stepKey="reindex">

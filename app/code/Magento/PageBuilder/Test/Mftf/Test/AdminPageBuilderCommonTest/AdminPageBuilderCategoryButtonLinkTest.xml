@@ -23,22 +23,23 @@
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="SimpleSubCategory" stepKey="createCategoryB"/>
+            <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryY">
+                <requiredEntity createDataKey="createCategoryB"/>
+            </createData>
+            <createData entity="_defaultCategory" stepKey="createCategoryA"/>
+            <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryX">
+                <requiredEntity createDataKey="createCategoryA"/>
+            </createData>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <deleteData createDataKey="createCategoryA" stepKey="deletePreReqCatalogA"/>
+            <deleteData createDataKey="createCategoryB" stepKey="deletePreReqCatalogB"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <createData entity="SimpleSubCategory" stepKey="createCategoryB"/>
-        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryY">
-            <requiredEntity createDataKey="createCategoryB"/>
-        </createData>
-        <createData entity="_defaultCategory" stepKey="createCategoryA"/>
-        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryX">
-            <requiredEntity createDataKey="createCategoryA"/>
-        </createData>
-
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
@@ -123,6 +124,5 @@
             <expectedResult type="string">/Category with ID: [0-9]+ doesn't exist$/</expectedResult>
             <actualResult type="variable">textFromDropDown3</actualResult>
         </assertRegExp>
-        <deleteData createDataKey="createCategoryA" stepKey="deletePreReqCatalogA"/>
     </test>
 </tests>

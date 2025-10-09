@@ -80,9 +80,10 @@
         <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted"/>
 
         <!--Select another page from dropdown-->
-	<clearField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" stepKey="clearLinkSearchField"/>
+	    <clearField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" stepKey="clearLinkSearchField"/>
         <fillField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="{{$createCMSPageB.title$}}" stepKey="fillCreateCMSPageBInSearchField"/>
-	<scrollTo selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="scrollToLinks"/>
+	    <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="waitForCMSPageBVisible"/>
+	    <scrollTo selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="scrollToLinks"/>
         <waitForElementClickable selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="waitForCMSPageBClickable"/>
         <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
         <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>

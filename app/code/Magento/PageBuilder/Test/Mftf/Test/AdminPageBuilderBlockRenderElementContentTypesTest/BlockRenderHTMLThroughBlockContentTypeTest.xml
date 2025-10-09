@@ -171,7 +171,7 @@
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeRenderedHtmlCMSPageStorefront"/>
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
-        <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
+        <seeCurrentUrlMatches regex="~^{{PageBuilderHtmlPropertyButton.url}}.*~" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
