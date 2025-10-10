@@ -12,7 +12,7 @@
             <argument name="index" defaultValue="0" type="string"/>
         </arguments>
         <executeJS function="return document.querySelectorAll('[data-content-type=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
-        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <executeJS function="return document.querySelector('main#maincontent').clientWidth" stepKey="pageWidth"/>
         <assertEquals stepKey="assertRowWidth100Percent">
             <expectedResult type="variable">pageWidth</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>

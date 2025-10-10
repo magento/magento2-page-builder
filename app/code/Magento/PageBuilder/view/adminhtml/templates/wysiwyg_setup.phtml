@@ -4,15 +4,22 @@
  * See COPYING.txt for license details.
  */
 
-/** @var Magento\PageBuilder\Block\WysiwygSetup $block */
+/**
+ * @var Magento\PageBuilder\Block\WysiwygSetup $block
+ * @var Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
 
 ?>
-<script>
+<?php
+$config = $block->getConfigJson();
+$script = <<<SCRIPT
     require.config({
         config: {
             'mage/adminhtml/wysiwyg/tiny_mce/setup': {
-                config: <?= /* @noEscape */ $block->getConfigJson() ?>
+                config: {$config}
             }
         }
     });
-</script>
+SCRIPT;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $script, false) ?>
