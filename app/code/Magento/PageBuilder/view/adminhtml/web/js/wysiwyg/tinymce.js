@@ -145,7 +145,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
       _underscore.defer(function () {
         return (0, _delayUntil)(function () {
-          var $inlineToolbar = _this2.getFixedToolbarContainer().find(".tox-tinymce-inline");
+          var $inlineToolbar = _this2.getFixedToolbarContainer().find(".tox-hugerte-inline");
 
           var self = _this2;
           $inlineToolbar.css("min-width", _this2.config.adapter_config.minToolbarWidth + "px");
@@ -170,7 +170,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
             _this2.resizeObserver.observe($inlineToolbar.get(0));
           }
 
-          var dialogContainer = document.querySelector("#" + _this2.elementId + " ~ .tox-tinymce-aux");
+          var dialogContainer = document.querySelector("#" + _this2.elementId + " ~ .tox-hugerte-aux");
 
           if (!!dialogContainer) {
             dialogContainer.setAttribute("data-editor-aux", _this2.elementId);
@@ -196,10 +196,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.onBlur = function onBlur() {
-      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".tox-tinymce-inline").css("top", "");
+      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".tox-hugerte-inline").css("top", "");
 
       if (this.resizeObserver) {
-        this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-tinymce-inline").get(0));
+        this.resizeObserver.unobserve(this.getFixedToolbarContainer().find(".tox-hugerte-inline").get(0));
       }
 
       this.toolbarHeight = 0;
@@ -238,7 +238,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
         return;
       }
 
-      var $inlineToolbar = this.getFixedToolbarContainer().find(".tox-tinymce-inline");
+      var $inlineToolbar = this.getFixedToolbarContainer().find(".tox-hugerte-inline");
 
       if (!$inlineToolbar.length) {
         return;
