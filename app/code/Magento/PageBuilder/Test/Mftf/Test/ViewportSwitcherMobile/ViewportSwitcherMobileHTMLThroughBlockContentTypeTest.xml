@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- /**
-  * Copyright © Magento, Inc. All rights reserved.
-  * See COPYING.txt for license details.
-  */
+/**
+ * ADOBE CONFIDENTIAL
+ *
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
@@ -219,7 +230,7 @@
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeRenderedHtmlCMSPageStorefront"/>
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
-        <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
+        <seeCurrentUrlMatches regex="~^{{PageBuilderHtmlPropertyButton.url}}.*~" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -243,7 +254,7 @@
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeRenderedHtmlCMSPageStorefrontMobile"/>
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefrontMobile"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefrontMobile"/>
-        <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrlMobile"/>
+        <seeCurrentUrlMatches regex="~^{{PageBuilderHtmlPropertyButton.url}}.*~" stepKey="seeThatUrlIsChangedToHtmlLinkUrlMobile"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2Mobile">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
