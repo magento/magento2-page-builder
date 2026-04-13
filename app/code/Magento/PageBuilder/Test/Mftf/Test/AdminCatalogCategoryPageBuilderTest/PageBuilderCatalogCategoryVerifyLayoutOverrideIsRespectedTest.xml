@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright 2019 Adobe
+  * All Rights Reserved.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryVerifyLayoutOverrideIsRespectedTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify layout override is respected on category page when PageBuilder is active"/>
+            <description value="When PageBuilder is active on a category page, the page layout should not be hardcoded. A layout set on the category design settings must be respected on the storefront, allowing themes to control the layout."/>
+            <severity value="AVERAGE"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+
+        <!-- Navigate to category and expand content section -->
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandContentSection"/>
+
+        <!-- Enable PageBuilder on category description and add a row to confirm PageBuilder is active -->
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+
+        <!-- Override the layout to 1 column via category design settings -->
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setOneColumnLayout">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="1 column"/>
+        </actionGroup>
+
+        <!-- Save the category -->
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+
+        <!-- Navigate to storefront and verify the layout override is respected -->
+        <actionGroup ref="StorefrontGoToCategoryPageActionGroup" stepKey="openStorefrontCategoryPage">
+            <argument name="categoryName" value="$$createCategory.name$$"/>
+        </actionGroup>
+
+        <!-- Verify the 1 column layout class is applied on the body -->
+        <seeElement selector="body.page-layout-1column" stepKey="seeOneColumnLayoutClass"/>
+
+        <!-- Verify the previously hardcoded 2columns-left layout is not applied -->
+        <dontSeeElement selector="body.page-layout-2columns-left" stepKey="dontSeeTwoColumnsLeftLayoutClass"/>
+    </test>
+</tests>
