@@ -49,9 +49,10 @@
             <expectedResult type="string">position: absolute;</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
         </assertStringContainsString>
+        <grabAttributeFrom selector="{{section.videoBackgroundJarallaxImageLayer(index)}}" userInput="style" stepKey="imageLayerStyle"/>
         <assertStringContainsString stepKey="assertVideoPlaying">
             <expectedResult type="string">transform: translate3d(</expectedResult>
-            <actualResult type="variable">$videoStyle</actualResult>
+            <actualResult type="variable">$imageLayerStyle</actualResult>
         </assertStringContainsString>
         <dontSeeElementInDOM selector="{{section.videoBackgroundOverlayElement(index)}}" stepKey="dontSeeOverlayColorInDOM"/>
         <waitForElementVisible selector="{{section.videoBackgroundInfiniteLoop(index, infiniteLoop.value)}}" stepKey="waitForInfiniteLoop"/>

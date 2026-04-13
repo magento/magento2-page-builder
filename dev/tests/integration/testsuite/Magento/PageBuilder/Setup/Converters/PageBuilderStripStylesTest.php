@@ -36,8 +36,7 @@ class PageBuilderStripStylesTest extends TestCase
     /**
      * Test Batch Conversion of Page Builder Content
      */
-    #[DataProvider('conversionData')]
-    #[DataProvider('conversionDataRaw')]
+    #[DataProvider('conversionDataMerged')]
     public function testConvert(string $htmlString, int $expectedStyleTags)
     {
         $convertPageBuilderStripStyles = $this->objectManager->create(PageBuilderStripStyles::class);
@@ -230,5 +229,15 @@ class PageBuilderStripStylesTest extends TestCase
             ]
         ];
         // phpcs:enable Generic.Files.LineLength.TooLong
+    }
+
+    /**
+     * Merged datasets from conversionData and conversionDataRaw
+     *
+     * @return array
+     */
+    public static function conversionDataMerged(): array
+    {
+        return array_merge(self::conversionData(), self::conversionDataRaw());
     }
 }

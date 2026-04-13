@@ -13,6 +13,7 @@ import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
 import checkStageFullScreen from "../utils/check-stage-full-screen";
 import delayUntil from "../utils/delay-until";
+import {convertMediaDirectivesToUrls, convertMediaUrlsToDirectives} from "../utils/directives";
 import pageBuilderHeaderHeight from "../utils/pagebuilder-header-height";
 import WysiwygInterface from "./wysiwyg-interface";
 
@@ -250,7 +251,7 @@ export default class Wysiwyg implements WysiwygInterface {
     private saveContentFromWysiwygToDataStore() {
         this.dataStore.set(
             this.fieldName,
-            this.getAdapter().getContent(),
+            convertMediaUrlsToDirectives(this.getAdapter().getContent()),
         );
     }
 
@@ -259,7 +260,7 @@ export default class Wysiwyg implements WysiwygInterface {
      */
     private setContentFromDataStoreToWysiwyg() {
         this.getAdapter().setContent(
-            this.dataStore.get(this.fieldName) as string,
+            convertMediaDirectivesToUrls(this.dataStore.get(this.fieldName) as string),
         );
     }
 

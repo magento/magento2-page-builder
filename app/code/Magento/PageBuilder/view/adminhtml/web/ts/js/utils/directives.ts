@@ -4,6 +4,7 @@
  */
 
 import Config from "../config";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "./url";
 
 /**
  * MIME type to use in place of the image
@@ -130,6 +131,62 @@ export function convertMediaDirectivesToUrls(html: string): string {
         });
     }
     return html;
+}
+
+/**
+ * If the URL is under the configured media base, return a {{media url=...}} directive; otherwise null.
+ *
+ * @param {string} imageUrl
+ * @param {string} mediaUrlConfig
+ * @returns {string | null}
+ */
+function tryConvertAbsoluteMediaUrlToDirective(imageUrl: string, mediaUrlConfig: string): string | null {
+    if (!imageUrl || !mediaUrlConfig) {
+        return null;
+    }
+    const trimmed = imageUrl.trim();
+    if (trimmed.indexOf("{{media") !== -1 || trimmed.indexOf("data:") === 0) {
+        return null;
+    }
+    const mediaBase = convertUrlToPathIfOtherUrlIsOnlyAPath(mediaUrlConfig, trimmed);
+    const parts = trimmed.split(mediaBase);
+    if (parts.length < 2 || parts[1] === undefined || parts[1] === "") {
+        return null;
+    }
+    return "{{media url=" + parts[1] + "}}";
+}
+
+/**
+ * Replace absolute media URLs in img[src] with {{media url=...}} directives for datastore persistence.
+ *
+ * @param {string} html
+ * @returns {string}
+ * @api
+ */
+export function convertMediaUrlsToDirectives(html: string): string {
+    if (!html) {
+        return "";
+    }
+    const mediaUrlConfig = Config.getConfig("media_url");
+    if (!mediaUrlConfig) {
+        return html;
+    }
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    if (!doc.body) {
+        return html;
+    }
+    const images = doc.body.querySelectorAll("img[src]");
+    images.forEach((img: HTMLImageElement) => {
+        const src = img.getAttribute("src");
+        if (!src) {
+            return;
+        }
+        const directive = tryConvertAbsoluteMediaUrlToDirective(src, mediaUrlConfig);
+        if (directive !== null) {
+            img.setAttribute("src", directive);
+        }
+    });
+    return doc.body.innerHTML;
 }
 
 /**

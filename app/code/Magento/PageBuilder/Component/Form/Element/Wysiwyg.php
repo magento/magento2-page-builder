@@ -19,11 +19,14 @@ use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\PageBuilder\Model\Stage\Config as Config;
 use Magento\Framework\AuthorizationInterface;
+use Magento\Ui\Model\Validation\WysiwygValidationConfigResolver;
 
 /**
  * Updates wysiwyg element with Page Builder specific config
  *
  * @api
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
@@ -56,6 +59,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param bool $overrideSnapshot
      * @param Repository|null $assetRepo
      * @param AuthorizationInterface|null $authorization
+     * @param WysiwygValidationConfigResolver|null $validationConfigResolver
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -73,10 +77,12 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         ?PageBuilderConfig $pageBuilderConfig = null,
         bool $overrideSnapshot = false,
         ?Repository $assetRepo = null,
-        ?AuthorizationInterface $authorization = null
+        ?AuthorizationInterface $authorization = null,
+        ?WysiwygValidationConfigResolver $validationConfigResolver = null
     ) {
         $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
         $this->authorization = $authorization ?: ObjectManager::getInstance()->get(AuthorizationInterface::class);
+        $validationConfigResolver ??= ObjectManager::getInstance()->get(WysiwygValidationConfigResolver::class);
         $wysiwygConfigData = $config['wysiwygConfigData'] ?? [];
 
         // If a dataType is present we're dealing with an attribute
@@ -105,6 +111,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $wysiwygConfigData = $stageConfig->getConfig();
             $wysiwygConfigData['pagebuilder_button'] = true;
             $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
+            $wysiwygConfigData['allowUtf8mb4'] = $validationConfigResolver->resolveAllowUtf8mb4($config);
             $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
 
             if ($overrideSnapshot) {
@@ -128,7 +135,15 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $config['wysiwygConfigData'] = $wysiwygConfigData;
         }
 
-        parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+        parent::__construct(
+            $context,
+            $formFactory,
+            $wysiwygConfig,
+            $components,
+            $data,
+            $config,
+            $validationConfigResolver
+        );
     }
 
     /**

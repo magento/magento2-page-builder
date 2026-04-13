@@ -1,20 +1,32 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2026 Adobe
+ * All Rights Reserved.
  */
 
 /* global MediabrowserUtility, widgetTools, MagentovariablePlugin */
 define([
     'Magento_Ui/js/form/element/textarea',
+    'Magento_PageBuilder/js/config',
     'mage/adminhtml/wysiwyg/widget'
-], function (Textarea) {
+], function (Textarea, Config) {
     'use strict';
 
     var HTML_ID_PLACEHOLDER = 'HTML_ID_PLACEHOLDER';
 
     return Textarea.extend({
         defaults: {
-            elementTmpl: 'Magento_PageBuilder/form/element/html-code'
+            elementTmpl: 'Magento_PageBuilder/form/element/html-code',
+            validationParams: {}
+        },
+
+        /**
+         * @inheritdoc
+         */
+        initialize: function () {
+            this._super();
+            this.validationParams.allowUtf8mb4 = Config.getConfig('allowUtf8mb4') === true;
+
+            return this;
         },
 
         /**
