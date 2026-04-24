@@ -90,9 +90,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEImage(ImageUpload3.fileName)}}" stepKey="waitForImage3"/>
-        <switchToIFrame stepKey="exitIFrame"/>
+        <waitForElementVisible selector="#{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="waitForTinyMCEIFrame"/>
+        <waitForJS function="return typeof tinymce !== 'undefined' &amp;&amp; tinymce.activeEditor &amp;&amp; tinymce.activeEditor.getContent().indexOf('{{ImageUpload3.fileName}}') !== -1" time="30" stepKey="waitForImage3"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
