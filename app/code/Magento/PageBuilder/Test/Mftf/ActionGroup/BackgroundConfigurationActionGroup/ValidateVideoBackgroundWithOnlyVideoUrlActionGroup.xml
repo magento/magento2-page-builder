@@ -59,7 +59,7 @@
         <waitForElementVisible selector="{{section.videoBackgroundLazyLoad(index, lazyLoad.value)}}" stepKey="waitForLazyLoad"/>
         <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyWhenVisible(index, playOnlyWhenVisible.value)}}" stepKey="waitForPlayOnlyWhenVisible"/>
         <waitForElement selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="waitForNoFallbackImage"/>
-        <dontSeeElement selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="dontSeeFallbackImage"/>
+        <waitForElementNotVisible selector="{{section.videoBackgroundNoFallbackImage(index)}}" time="30" stepKey="dontSeeFallbackImage"/>
         <dontSeeElementInDOM selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="dontSeeFallbackImageInDOM"/>
     </actionGroup>
 </actionGroups>
