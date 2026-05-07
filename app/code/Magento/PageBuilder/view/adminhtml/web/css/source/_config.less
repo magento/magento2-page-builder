@@ -1,6 +1,6 @@
 // /**
-//  * Copyright © Magento, Inc. All rights reserved.
-//  * See COPYING.txt for license details.
+//  * Copyright 2018 Adobe
+//  * All Rights Reserved.
 //  */
 
 .error-border (@color) {
@@ -10,8 +10,7 @@
 
 [data-role='modal'] {
     .action-pagebuilder-cancel,
-    .action-pagebuilder-cancel:hover {
-        color: @color-black;
+    .action-pagebuilder-cancel:hover {color: @color-black;
     }
 
     .pagebuilder-modal-content-body li {
@@ -37,7 +36,7 @@
                     .textarea {
                         .error-border(@field-error-control__border-color);
                     }
-                    .tox-tinymce {
+                    .tox-hugerte {
                         .error-border(@field-error-control__border-color);
                     }
                 }
@@ -50,8 +49,10 @@
 //  Page Builder full width field
 //  _____________________________________________
 
+//  @phpcs:ignoreFile
+
 .admin__fieldset {
-    > .admin__field.admin__field-wide.admin__field-page-builder[class]:not(.admin__field-option),
+    > .admin__field.admin__field-wide.admin__field-page-builder[class]:not(.admin__field-option), // @phpcs:ignore Generic.Commenting.DocComment
     .admin__field.admin__field-wide.admin__fieldset-page-builder .admin__field-page-builder {
         > .admin__field-label {
             margin-bottom: @indent__xs;
