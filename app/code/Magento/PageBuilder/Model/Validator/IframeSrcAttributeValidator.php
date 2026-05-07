@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2020 Adobe
+ * All Rights Reserved.
  */
 
 declare(strict_types=1);
@@ -17,9 +17,14 @@ use Magento\Framework\Validator\HTML\AttributeValidatorInterface;
 class IframeSrcAttributeValidator implements AttributeValidatorInterface
 {
     /**
+     * @var array
+     */
+    private array $allowedHostsMap;
+
+    /**
      * @var string[]
      */
-    private $allowedHosts;
+    private array $allowedHosts;
 
     /**
      * IframeSrcAttributeValidator constructor.
@@ -28,7 +33,9 @@ class IframeSrcAttributeValidator implements AttributeValidatorInterface
      */
     public function __construct(array $allowedHosts)
     {
-        $this->allowedHosts = $allowedHosts;
+        $normalized = array_map('strtolower', $allowedHosts);
+        $this->allowedHosts = $normalized;
+        $this->allowedHostsMap = array_fill_keys($normalized, true);
     }
 
     /**
@@ -36,25 +43,23 @@ class IframeSrcAttributeValidator implements AttributeValidatorInterface
      */
     public function validate(string $tag, string $attributeName, string $value): void
     {
-        if ($tag !== 'iframe' || $attributeName !== 'src') {
+        if ($tag !== 'iframe' || $attributeName !== 'src' || !$this->allowedHosts) {
             return;
         }
 
-        if (mb_strpos($value, 'http') !== 0) {
-            //Relative link
-            return;
-        }
         // phpcs:ignore Magento2.Functions.DiscouragedFunction
         $srcHost = parse_url($value, PHP_URL_HOST);
-        if (!$srcHost || !$this->allowedHosts) {
-            //Either the link is invalid or we do not have the allowed list.
+        if (!$srcHost) {
+            throw new ValidationException(__('Invalid IFRAME source provided'));
+        }
+
+        $srcHost = strtolower($srcHost);
+        if (isset($this->allowedHostsMap[$srcHost])) {
             return;
         }
-        $srcHostLength = mb_strlen($srcHost);
+
         foreach ($this->allowedHosts as $host) {
-            $hostLength = mb_strlen($host);
-            $foundIndex = mb_strpos($srcHost, $host);
-            if ($foundIndex !== false && ($foundIndex + $hostLength) === $srcHostLength) {
+            if (str_ends_with($srcHost, '.' . $host)) {
                 return;
             }
         }

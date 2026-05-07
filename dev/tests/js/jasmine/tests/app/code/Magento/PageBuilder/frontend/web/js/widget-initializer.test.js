@@ -41,7 +41,7 @@ define([
         }
     };
 
-    describe('Magento_PageBuilder/js/content-type/map/appearance/default/widget', function () {
+    describe('Magento_PageBuilder/js/widget-initializer', function () {
         beforeEach(loadWidgetInitializer);
         afterEach(removeCreatedElement);
 
