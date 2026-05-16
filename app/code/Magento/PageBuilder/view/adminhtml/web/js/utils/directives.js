@@ -140,6 +140,25 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/url"], fu
 
     return html;
   }
+
+  function isMagentoWidgetPlaceholderImage(img) {
+    if (img.closest(".magento-widget")) {
+        return true;
+    }
+
+    var base64 = typeof window !== "undefined" && window.Base64 ? window.Base64 : null;
+
+    if (!base64 || !img.id) {
+        return false;
+    }
+
+    try {
+        return base64.idDecode(img.id).indexOf("{{widget") !== -1;
+    } catch (e) {
+        return false;
+    }
+  }
+
   /**
    * If the URL is under the configured media base, return a {{media url=...}} directive; otherwise null.
    *
@@ -193,6 +212,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/url"], fu
       return html;
     }
 
+    var updated = false;
     var images = doc.body.querySelectorAll("img[src]");
     images.forEach(function (img) {
       var src = img.getAttribute("src");
@@ -201,13 +221,18 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/url"], fu
         return;
       }
 
+      if (isMagentoWidgetPlaceholderImage(img)) {
+          return;
+      }
+
       var directive = tryConvertAbsoluteMediaUrlToDirective(src, mediaUrlConfig);
 
       if (directive !== null) {
         img.setAttribute("src", directive);
+        updated = true;
       }
     });
-    return doc.body.innerHTML;
+    return updated ? doc.body.innerHTML : html;
   }
   /**
    * Replace data-src attribute with src.

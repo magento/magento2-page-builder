@@ -133,6 +133,25 @@ export function convertMediaDirectivesToUrls(html: string): string {
     return html;
 }
 
+function isMagentoWidgetPlaceholderImage(img: HTMLImageElement): boolean {
+    if (img.closest(".magento-widget")) {
+        return true;
+    }
+    const win = typeof window !== "undefined" ? window : undefined;
+    const base64 =
+        win && "Base64" in win
+            ? (win as Window & { Base64: { idDecode: (id: string) => string } }).Base64
+            : undefined;
+    if (!base64 || !img.id) {
+        return false;
+    }
+    try {
+        return base64.idDecode(img.id).indexOf("{{widget") !== -1;
+    } catch {
+        return false;
+    }
+}
+
 /**
  * If the URL is under the configured media base, return a {{media url=...}} directive; otherwise null.
  *
@@ -175,18 +194,23 @@ export function convertMediaUrlsToDirectives(html: string): string {
     if (!doc.body) {
         return html;
     }
+    let updated = false;
     const images = doc.body.querySelectorAll("img[src]");
     images.forEach((img: HTMLImageElement) => {
         const src = img.getAttribute("src");
         if (!src) {
             return;
         }
+        if (isMagentoWidgetPlaceholderImage(img)) {
+            return;
+        }
         const directive = tryConvertAbsoluteMediaUrlToDirective(src, mediaUrlConfig);
         if (directive !== null) {
             img.setAttribute("src", directive);
+            updated = true;
         }
     });
-    return doc.body.innerHTML;
+    return updated ? doc.body.innerHTML : html;
 }
 
 /**
