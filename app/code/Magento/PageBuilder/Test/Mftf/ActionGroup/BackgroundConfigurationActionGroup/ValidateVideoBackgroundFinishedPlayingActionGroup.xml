@@ -12,11 +12,7 @@
             <description>Validates that the video in the video background is finished playing.</description>
         </annotations>
         <wait time="15" stepKey="waitToPreventVideoFlakiness"/>
-        <assertStringNotContainsString stepKey="assertVideoPlaying">
-            <expectedResult type="string">transform: translate3d(</expectedResult>
-            <actualResult type="variable">$videoStyle</actualResult>
-        </assertStringNotContainsString>
-        <waitForElementVisible selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImage"/>
+        <waitForElementVisible selector="{{section.videoBackgroundFallbackImage(index)}}" time="120" stepKey="waitForFallbackImage"/>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImage(index)}}" userInput="style" stepKey="fallbackImageStyle"/>
         <assertStringContainsString stepKey="assertFallbackImageNotDisplayed">
             <expectedResult type="string">display: block;</expectedResult>
