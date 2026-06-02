@@ -31,9 +31,9 @@
         <after>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" after="deleteCMSPage"/>
             <!--Clear filter product listing grid-->
-            <actionGroup ref="AdminOpenCatalogProductPageActionGroup" stepKey="goToProductCatalogPageBeforeClearFilters"/>
-            <actionGroup ref="ClearFiltersAdminProductGridActionGroup" stepKey="clearProductGridFilters"/>
-</after>
+            <actionGroup ref="AdminOpenCatalogProductPageActionGroup" stepKey="goToProductCatalogPageBeforeClearFilters" after="deletePreReqCategory"/>
+            <actionGroup ref="ClearFiltersAdminProductGridActionGroup" stepKey="clearProductGridFilters" after="goToProductCatalogPageBeforeClearFilters"/>
+        </after>
         <!-- Save Category and Verify Expected Content Types on Stage -->
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductsSection" after="saveAndContinueEditCmsPage"/>
