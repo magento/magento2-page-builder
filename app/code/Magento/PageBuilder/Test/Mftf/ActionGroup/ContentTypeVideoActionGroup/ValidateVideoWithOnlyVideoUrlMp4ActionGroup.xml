@@ -11,12 +11,11 @@
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="url" defaultValue=""/>
             <!-- This is 2 because the width and the height may both have fractions that could round by a maximum of 1 for each which makes the maximum 2-->
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
-        <waitForElementVisible selector="{{page.sourceVideo(index, url.renderedValue)}}" stepKey="waitForUrl"/>
+        <waitForElementVisible selector="{{page.video(index)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
         <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.video(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
