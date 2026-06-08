@@ -103,7 +103,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Validate Stage -->
-        <wait time="5" stepKey="waitForVideoCompleteStage"/>
+        <wait time="15" stepKey="waitForVideoCompleteStage"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoFinishedPlayingStage1">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
@@ -118,7 +118,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
-        <wait time="5" stepKey="waitForVideoCompleteStage2"/>
+        <wait time="15" stepKey="waitForVideoCompleteStage2"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
@@ -141,7 +141,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Validate Storefront -->
-        <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
+        <wait time="15" stepKey="waitForVideoCompleteStorefront"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
@@ -154,7 +154,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <scrollTo selector="{{BannerOnFrontend.base('4')}}" stepKey="scrollBanner4Storefront"/>
-        <wait time="5" stepKey="waitForVideoCompleteStorefront2"/>
+        <wait time="15" stepKey="waitForVideoCompleteStorefront2"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront2">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
