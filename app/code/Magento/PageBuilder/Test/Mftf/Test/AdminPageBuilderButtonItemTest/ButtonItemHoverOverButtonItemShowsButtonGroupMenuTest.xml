@@ -27,10 +27,12 @@
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
                 <argument name="contentType" value="PageBuilderButtonsContentType"/>
             </actionGroup>
-            <actionGroup ref="dragContentTypeToStageWithoutJsErrorCheck" stepKey="dragRowToRootContainer">
-                <argument name="contentType" value="PageBuilderRowContentType"/>
-                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
-            </actionGroup>
+            <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusBeforeRowDrag"/>
+            <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" stepKey="waitForRowInPanel"/>
+            <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderRootContainerContentType.role, '1')}}" stepKey="dropRowIntoStage"/>
+            <waitForPageLoad stepKey="waitForRowDragAnimation" time="30"/>
+            <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" stepKey="waitForRowInStage"/>
+            <waitForPageLoad stepKey="waitForRowToolbarsToLoad" time="30"/>
         </before>
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -38,9 +40,12 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageWithoutJsErrorCheck" stepKey="dragButtonsOntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusBeforeButtonsDrag"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" stepKey="waitForButtonsInPanel"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderRowContentType.role, '1')}}" stepKey="dropButtonsIntoStage"/>
+        <waitForPageLoad stepKey="waitForButtonsDragAnimation" time="30"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderButtonsContentType.role)}}" stepKey="waitForButtonsInStage"/>
+        <waitForPageLoad stepKey="waitForButtonsToolbarsToLoad" time="30"/>
         <!-- Must Click Button Item To Show Menu -->
         <comment userInput="Must Click Button Item To Show Menu" stepKey="commentValidateOptionMenu"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base('1')}}" stepKey="waitForButtonItemOnStage"/>
