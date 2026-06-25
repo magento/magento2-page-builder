@@ -26,9 +26,11 @@
             <group value="pr_exclude"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set admin/usage/enabled 0" stepKey="disableAdminAnalytics"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
+            <magentoCLI command="config:set admin/usage/enabled 1" stepKey="enableAdminAnalytics"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>

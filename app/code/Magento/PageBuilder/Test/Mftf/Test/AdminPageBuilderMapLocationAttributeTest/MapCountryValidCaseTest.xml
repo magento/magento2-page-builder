@@ -27,6 +27,7 @@
             <group value="pr_exclude"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set admin/usage/enabled 0" stepKey="disableAdminAnalytics"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -37,6 +38,7 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set admin/usage/enabled 1" stepKey="enableAdminAnalytics"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">

@@ -22,14 +22,13 @@
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
             <group value="pagebuilder-requiresValidMapAPIKey"/>
-            <skip>
-                <issueId value="MTS-657"/>
-            </skip>
             <group value="pr_exclude"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <magentoCLI command="config:set admin/usage/enabled 0" stepKey="disableAdminAnalytics"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
@@ -42,6 +41,7 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set admin/usage/enabled 1" stepKey="enableAdminAnalytics"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
@@ -94,7 +94,6 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenBeforeSave"/>
         <!-- Save Block and Set Valid API Key -->
         <comment userInput="Save Block and Set Valid API Key" stepKey="commentSaveBlockAndSetKey"/>
-        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
