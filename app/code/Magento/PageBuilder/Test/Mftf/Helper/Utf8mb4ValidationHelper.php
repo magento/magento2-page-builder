@@ -36,6 +36,26 @@ class Utf8mb4ValidationHelper extends Helper
     }
 
     /**
+     * Skip the current test when the target storage is NOT utf8mb4-safe.
+     *
+     * @param string $table
+     * @param string $column
+     * @return void
+     */
+    public function skipIfUtf8mb4NotSupported(string $table, string $column): void
+    {
+        if (!$this->isColumnSupported($table, $column)) {
+            throw new SkippedWithMessageException(
+                sprintf(
+                    'Skipping utf8mb4 acceptance path because %s.%s is not utf8mb4-safe.',
+                    $table,
+                    $column
+                )
+            );
+        }
+    }
+
+    /**
      * Check whether the target storage can safely persist utf8mb4 characters.
      *
      * @param string $table
