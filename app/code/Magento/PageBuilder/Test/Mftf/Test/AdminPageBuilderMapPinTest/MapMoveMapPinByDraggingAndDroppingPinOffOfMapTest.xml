@@ -95,7 +95,7 @@
         </actionGroup>
         <!-- Move Map Pin By Dragging And Dropping Pin Off Of Map-->
         <comment userInput="Move Map Pin By Dragging And Dropping Pin Off Of Map" stepKey="commentMoveMapPin"/>
-        <executeJS function="return {{AddLocationForm.baseJS}}.clientWidth" stepKey="mapWidth"/>
+        <executeJS function="return Math.floor({{AddLocationForm.baseJS}}.clientWidth / 2) - 10" stepKey="mapWidth"/>
         <actionGroup ref="moveMapPinByDraggingAndDroppingPin" stepKey="moveMapPinByDraggingAndDroppingPin">
             <argument name="x" value="$mapWidth"/>
         </actionGroup>
