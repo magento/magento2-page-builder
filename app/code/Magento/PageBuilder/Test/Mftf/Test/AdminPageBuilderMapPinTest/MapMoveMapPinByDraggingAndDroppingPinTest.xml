@@ -101,10 +101,12 @@
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved -->
         <comment userInput="Edit Panel: Verify Pin Location Moved" stepKey="commentVerifyPinMoveEditPanel"/>
-        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel1">
-            <argument name="page" value="AddLocationForm"/>
-            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
-        </actionGroup>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForNewLatitude"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="newLatitudeEditPanel"/>
+        <assertNotEquals stepKey="verifyPinLocationEditPanel1">
+            <expectedResult type="variable">initialLatitudeEditPanel</expectedResult>
+            <actualResult type="variable">newLatitudeEditPanel</actualResult>
+        </assertNotEquals>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
@@ -130,10 +132,12 @@
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved After Save -->
         <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
-        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel2">
-            <argument name="page" value="AddLocationForm"/>
-            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
-        </actionGroup>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForSavedLatitude"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="savedLatitudeEditPanel"/>
+        <assertNotEquals stepKey="verifyPinLocationEditPanel2">
+            <expectedResult type="variable">initialLatitudeEditPanel</expectedResult>
+            <actualResult type="variable">savedLatitudeEditPanel</actualResult>
+        </assertNotEquals>
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>

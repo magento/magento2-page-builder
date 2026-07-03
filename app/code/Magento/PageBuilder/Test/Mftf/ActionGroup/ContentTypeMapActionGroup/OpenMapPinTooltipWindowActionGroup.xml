@@ -19,7 +19,7 @@
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
-        <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
+        <executeJS function="{{page.clickablePinJS(mapIndex, pinIndex)}}.click()" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
     </actionGroup>
 </actionGroups>
