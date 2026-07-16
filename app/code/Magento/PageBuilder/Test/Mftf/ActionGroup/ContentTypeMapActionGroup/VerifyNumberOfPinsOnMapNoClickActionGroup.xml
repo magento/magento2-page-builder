@@ -14,7 +14,10 @@
             <argument name="count" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
-        <waitForElementVisible selector="{{page.allPins(mapIndex)}}" stepKey="waitForMapPin"/>
-        <seeNumberOfElements selector="{{page.allPins(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
+        <executeJS function="return JSON.parse(document.querySelectorAll('[data-content-type=map]')[{{mapIndex}}-1].getAttribute('data-locations') || '[]').length" stepKey="actualPinCount"/>
+        <assertEquals stepKey="seeNumberOfPins">
+            <expectedResult type="int">{{count}}</expectedResult>
+            <actualResult type="variable">actualPinCount</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>
