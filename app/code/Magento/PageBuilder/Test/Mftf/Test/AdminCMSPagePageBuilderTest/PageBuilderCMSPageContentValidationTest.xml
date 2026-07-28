@@ -6,7 +6,7 @@
  */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="PageBuilderCMSPageContentValidationTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -23,6 +23,10 @@
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <helper class="Magento\PageBuilder\Test\Mftf\Helper\Utf8mb4ValidationHelper" method="skipIfUtf8mb4Supported" stepKey="skipIfUtf8mb4Supported">
+                <argument name="table">cms_page</argument>
+                <argument name="column">content</argument>
+            </helper>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>

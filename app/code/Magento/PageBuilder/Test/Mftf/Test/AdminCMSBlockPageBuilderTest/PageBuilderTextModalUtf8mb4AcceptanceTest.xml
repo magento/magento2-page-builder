@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+ * Copyright 2026 Adobe
+ * All Rights Reserved.
+ */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderTextModalUtf8mb4AcceptanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Validate emoji characters are accepted in the Text content type modal on a utf8mb4 database"/>
+            <description value="Verify that inserting emoji characters (utf8mb4) in the Text content type edit panel does not trigger a validation error when the database column supports utf8mb4."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="ACP2E-4822"/>
+            <testCaseId value="AC-16891"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <helper class="Magento\PageBuilder\Test\Mftf\Helper\Utf8mb4ValidationHelper" method="skipIfUtf8mb4NotSupported" stepKey="skipIfUtf8mb4NotSupported">
+                <argument name="table">cms_block</argument>
+                <argument name="column">content</argument>
+            </helper>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlock">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlayActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+        </after>
+
+        <!-- Drag Text content type to stage and open the edit panel via the gear icon -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openTextEditPanel">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+
+        <!-- Insert base text followed by emoji characters into the textarea (WYSIWYG disabled) -->
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello " stepKey="fillTextAreaWithBaseText"/>
+        <actionGroup ref="addTextToHtmlCodeWYSIWYGActionGroup" stepKey="addEmojiCharactersToTextArea">
+            <argument name="selector" value="//textarea[@id=&quot;{{TextOnConfiguration.textAreaId}}&quot;][1]"/>
+            <argument name="text" value="\u{1F535}\u{26AA}\u{1F534}"/>
+        </actionGroup>
+
+        <!-- Click the modal save button — on a utf8mb4 database the emoji must be accepted without an error -->
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="saveTextModal"/>
+        <waitForElementNotVisible selector="{{TextOnConfiguration.textAreaError}}" stepKey="assertNoValidationErrorAfterSave"/>
+
+        <!-- Exit PageBuilder full screen and save the CMS block — no page-level field error must appear -->
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <waitForElementNotVisible selector="//div[contains(@class, &quot;field-page-builder&quot;)]//label[@class=&quot;admin__field-error&quot;]" stepKey="assertNoBlockLevelFieldError"/>
+    </test>
+</tests>

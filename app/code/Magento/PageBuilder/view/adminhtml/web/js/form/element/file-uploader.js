@@ -17,26 +17,37 @@ define([
             replaceInputTypeFile: function (fileInput) {
                 let fileId = fileInput.id, fileName = fileInput.name, fileClass = fileInput.className,
                     spanElement = '<span id=\'' + fileId + fileClass + '\' ></span>',
-                    self = this;
+                    self = this,
+                    clickHandler = function (e) {
+                        let $clickArea = $(this).closest('.file-uploader-area');
+
+                        e.preventDefault();
+                        if (self.triggerFileBrowser) {
+                            self.triggerFileBrowser($clickArea);
+                        } else {
+                            $clickArea.find('.uppy-Dashboard-browse').trigger('click');
+                        }
+                    },
+                    $area,
+                    areaEl,
+                    clickTarget;
 
                 $('#' + fileId).closest('.file-uploader-area').attr('upload-area-id', fileName);
                 $('#' + fileId + fileClass).closest('.file-uploader-area').attr('upload-area-id', fileName);
 
                 $(fileInput).replaceWith(spanElement);
 
-                $('#' + fileId + fileClass)
-                    .closest('.file-uploader-area')
-                    .find('.action-upload-image')
-                    .on('click', function (e) {
-                        let $area = $(this).closest('.file-uploader-area');
+                $area = $('#' + fileId + fileClass).closest('.file-uploader-area');
+                areaEl = $area[0];
 
-                        e.preventDefault();
-                        if (self.triggerFileBrowser) {
-                            self.triggerFileBrowser($area);
-                        } else {
-                            $area.find('.uppy-Dashboard-browse').trigger('click');
-                        }
-                    });
+                if (areaEl) {
+                    clickTarget = areaEl.querySelector('.action-upload-image') ||
+                        areaEl.querySelector('.file-uploader-button');
+
+                    if (clickTarget) {
+                        $(clickTarget).on('click', clickHandler);
+                    }
+                }
             }
         });
     };
