@@ -7,10 +7,10 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/pagebuilder-header-height"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen, _delayUntil, _pagebuilderHeaderHeight) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/pagebuilder-header-height"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen, _delayUntil, _directives, _pagebuilderHeaderHeight) {
   /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
+   * Copyright 2021 Adobe
+   * All Rights Reserved.
    */
 
   /**
@@ -218,7 +218,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      this.dataStore.set(this.fieldName, this.getAdapter().getContent());
+      this.dataStore.set(this.fieldName, (0, _directives.convertMediaUrlsToDirectives)(this.getAdapter().getContent()));
     }
     /**
      * Update content in our stage wysiwyg after our data store gets updated
@@ -226,7 +226,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
-      this.getAdapter().setContent(this.dataStore.get(this.fieldName));
+      this.getAdapter().setContent((0, _directives.convertMediaDirectivesToUrls)(this.dataStore.get(this.fieldName)));
     }
     /**
      * Adjust padding on stage if in fullscreen mode to accommodate inline wysiwyg toolbar overflowing fixed viewport
@@ -275,4 +275,5 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
   return Wysiwyg;
 });
+
 //# sourceMappingURL=tinymce.js.map

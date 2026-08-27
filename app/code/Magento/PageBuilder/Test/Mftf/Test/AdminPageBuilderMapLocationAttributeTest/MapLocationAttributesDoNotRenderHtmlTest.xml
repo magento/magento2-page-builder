@@ -21,17 +21,16 @@
             <group value="pagebuilder-mapLocation"/>
             <group value="pagebuilder-mapLocationAttributes"/>
             <group value="pagebuilder-requiresValidMapAPIKey"/>
-            <skip>
-                <issueId value="MTS-657"/>
-            </skip>
             <group value="pr_exclude"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <magentoCLI command="config:set admin/usage/enabled 0" stepKey="disableAdminAnalytics"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set admin/usage/enabled 1" stepKey="enableAdminAnalytics"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
@@ -41,6 +40,10 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterNavigate"/>
         <!-- Add Map to Stage -->
         <comment userInput="Add Map to Stage" stepKey="commentAddMapToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowToRootContainer">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>

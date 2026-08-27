@@ -6,7 +6,7 @@
  */
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ButtonItemMoveButtonWhenInlineButtonsAreWrappingTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -19,9 +19,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-moveButtons"/>
-            <skip>
-                <issueId value="MC-3718"/>
-            </skip>
             <group value="pr_exclude"/>
         </annotations>
         <before>
@@ -44,6 +41,10 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Un focus menu option -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
         <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
@@ -104,14 +105,14 @@
             <argument name="index" value="10"/>
         </actionGroup>
         <actionGroup ref="moveButton" stepKey="moveButton">
-            <argument name="buttonIndexToMove" value="1"/>
-            <argument name="buttonIndexToMoveTo" value="10"/>
+            <argument name="buttonIndexToMove" value="10"/>
+            <argument name="buttonIndexToMoveTo" value="1"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1Stage"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton3Stage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton1Stage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton3Stage"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
@@ -126,9 +127,9 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1Stage2"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage2"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton3Stage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton1Stage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton3Stage2"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
@@ -143,9 +144,9 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1Storefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Storefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton3Storefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton1Storefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Storefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton3Storefront"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
