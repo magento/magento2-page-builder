@@ -119,8 +119,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (this.hasDataChanged(this.previousData, data)) {
         this.displayPreview(false);
+        var hasCategoryListing = data.condition_option === "category_listing" && typeof data.category_listing === "string" && data.category_listing.length > 0;
 
-        if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
+        if (!hasCategoryListing && (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0)) {
           this.placeholderText(this.messages.EMPTY);
           return;
         }

@@ -25,11 +25,21 @@ export default class WidgetDirective extends BaseWidgetDirective {
             sort_order: string;
             condition_option: string;
             condition_option_value: string;
+            category_id: string;
         };
 
         data.carousel_products_count = attributes.products_count;
         data.sort_order = attributes.sort_order;
         data.condition_option = attributes.condition_option || "condition";
+
+        if (data.condition_option === "category_listing") {
+            data.category_listing = this.decodeWysiwygCharacters(
+                this.decodeHtmlCharacters(attributes.category_id || attributes.condition_option_value || ""),
+            );
+            data.conditions_encoded = "";
+            return data;
+        }
+
         data[data.condition_option] = this.decodeWysiwygCharacters(
             this.decodeHtmlCharacters(attributes.condition_option_value || ""),
         );
@@ -46,6 +56,10 @@ export default class WidgetDirective extends BaseWidgetDirective {
      * @returns {object}
      */
     public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
+        if (data.condition_option === "category_listing") {
+            return this.categoryListingToDom(data, config);
+        }
+
         const attributes = {
             type: "Magento\\CatalogWidget\\Block\\Product\\ProductsList",
             template: "Magento_PageBuilder::catalog/product/widget/content/carousel.phtml",
@@ -69,6 +83,41 @@ export default class WidgetDirective extends BaseWidgetDirective {
 
         if (attributes.conditions_encoded.length === 0) {
             return data;
+        }
+
+        set(data, config.html_variable, this.buildDirective(attributes));
+        return data;
+    }
+
+    /**
+     * Convert a category listing selection to the widget directive; this option produces no conditions
+     *
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
+     */
+    private categoryListingToDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
+        const categoryId = data.category_listing;
+
+        if (typeof categoryId !== "string" || categoryId.length === 0) {
+            return data;
+        }
+
+        const attributes = {
+            type: "Magento\\PageBuilder\\Block\\Catalog\\Product\\CategoryListing",
+            template: "Magento_PageBuilder::catalog/product/widget/content/carousel.phtml",
+            anchor_text: "",
+            id_path: "",
+            show_pager: 0,
+            products_count: data.carousel_products_count,
+            condition_option: "category_listing",
+            condition_option_value: this.encodeWysiwygCharacters(categoryId),
+            category_id: this.encodeWysiwygCharacters(categoryId),
+            type_name: "Catalog Products Carousel",
+        } as { [key: string]: any; };
+
+        if (data.sort_order) {
+            attributes.sort_order = data.sort_order;
         }
 
         set(data, config.html_variable, this.buildDirective(attributes));
