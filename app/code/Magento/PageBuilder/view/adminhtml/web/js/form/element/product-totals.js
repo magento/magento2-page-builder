@@ -16,6 +16,7 @@ define([
         defaults: {
             conditionOption: '',
             conditionValue: '',
+            categoryId: '',
             formData: {},
             totalProductCount: 0,
             totalDisabledProducts: 0,
@@ -24,6 +25,7 @@ define([
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
+                categoryId: 'updateProductTotals',
                 '${ $.provider }:data.modalClosed': 'abortRunningRequest'
             },
             imports: {
@@ -98,33 +100,51 @@ define([
          */
         updateProductTotals: _.debounce(function () {
             var totalText,
-                negativeTotals = [];
+                negativeTotals = [],
+                ajaxData,
+                conditionsSignature;
 
             if (!this.conditionOption || _.isEmpty(this.formData)) {
                 return;
             }
 
-            if (this.conditionOption === 'category_ids' && typeof this.formData['category_ids'] !== 'string') {
-                this.formData['category_ids'] = '';
-            }
+            if (this.conditionOption === 'category_listing') {
+                ajaxData = {
+                    conditionOption: this.conditionOption,
+                    conditionValue: '',
+                    categoryId: this.categoryId || ''
+                };
+                conditionsSignature = this.conditionOption + ':' + ajaxData.categoryId;
 
-            _.extend(this.formData, this.conditionValue);
-            conditionsDataProcessor(this.formData, this.conditionOption + '_source');
+                if (this.previousConditions === conditionsSignature) {
+                    return;
+                }
+                this.previousConditions = conditionsSignature;
+            } else {
+                if (this.conditionOption === 'category_ids' && typeof this.formData['category_ids'] !== 'string') {
+                    this.formData['category_ids'] = '';
+                }
 
-            // Store the previous conditions so we don't update the totals when nothing has changed
-            if (this.previousConditions === this.formData['conditions_encoded']) {
-                return;
+                _.extend(this.formData, this.conditionValue);
+                conditionsDataProcessor(this.formData, this.conditionOption + '_source');
+
+                // Store the previous conditions so we don't update the totals when nothing has changed
+                if (this.previousConditions === this.formData['conditions_encoded']) {
+                    return;
+                }
+                this.previousConditions = this.formData['conditions_encoded'];
+
+                ajaxData = {
+                    conditionValue: this.formData['conditions_encoded']
+                };
             }
-            this.previousConditions = this.formData['conditions_encoded'];
 
             this.loading(true);
             this.abortRunningRequest();
             this.jqXHR = $.ajax({
                 url: this.url,
                 method: 'POST',
-                data: {
-                    conditionValue: this.formData['conditions_encoded']
-                },
+                data: ajaxData,
                 error: function (jqXHR) {
                     if (jqXHR.statusText !== 'abort') {
                         this.callSuperError(jqXHR);
