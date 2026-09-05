@@ -33,8 +33,11 @@ define(["Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/converter
     ;
 
     _proto.toDom = function toDom(name, data) {
-      if ((0, _object.get)(data, "background_type") !== "video") {
-        return false;
+      var value = (0, _object.get)(data, name);
+      var hasImage = !!value && value.length > 0 && !!value[0] && value[0].url !== undefined;
+
+      if (!hasImage) {
+        return (0, _object.get)(data, "background_type") === "video" ? "" : false;
       }
 
       return this.src.toDom(name, data);

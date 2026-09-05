@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @returns {string}
      */
     _proto.fromDom = function fromDom(value) {
-      return value === null || value === undefined ? "0.5" : value;
+      return value === null || value === undefined ? ParallaxSpeed.DEFAULT : value;
     }
     /**
      * Convert value to knockout format
@@ -31,24 +31,26 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
     ;
 
     _proto.toDom = function toDom(name, data) {
-      var enableParallax = (0, _object.get)(data, "enable_parallax");
-
-      if (!enableParallax || enableParallax === "0") {
-        return false;
-      }
-
       var value = (0, _object.get)(data, name);
 
-      if (value === null || value === undefined) {
+      if (value === null || value === undefined || value === "") {
         return false;
       }
 
-      return value.toString();
+      var speed = value.toString();
+      var enableParallax = (0, _object.get)(data, "enable_parallax");
+
+      if (speed === ParallaxSpeed.DEFAULT && (!enableParallax || enableParallax === "0")) {
+        return false;
+      }
+
+      return speed;
     };
 
     return ParallaxSpeed;
   }();
 
+  ParallaxSpeed.DEFAULT = "0.5";
   return ParallaxSpeed;
 });
 //# sourceMappingURL=parallax-speed.js.map

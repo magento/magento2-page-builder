@@ -17,31 +17,49 @@ define([
         });
 
         describe('toDom', function () {
-            it('Should return false when the background is an image', function () {
+            it('Should return false for the default value on an image background', function () {
                 expect(model.toDom('video_loop', {
                     background_type: 'image',
                     video_loop: 'true'
                 })).toBe(false);
             });
 
-            it('Should return false when the background type is not set', function () {
+            it('Should return false for the default value when the background type is not set', function () {
                 expect(model.toDom('video_loop', {
                     video_loop: 'true'
                 })).toBe(false);
             });
 
-            it('Should return the value when the background is a video', function () {
+            it('Should return false when the value is missing', function () {
+                expect(model.toDom('video_loop', {})).toBe(false);
+            });
+
+            it('Should return a non-default value on an image background', function () {
                 expect(model.toDom('video_loop', {
-                    background_type: 'video',
+                    background_type: 'image',
                     video_loop: 'false'
                 })).toBe('false');
             });
 
-            it('Should cast a boolean value to a string', function () {
+            it('Should return the default value on a video background', function () {
+                expect(model.toDom('video_loop', {
+                    background_type: 'video',
+                    video_loop: 'true'
+                })).toBe('true');
+            });
+
+            it('Should return a non-default value on a video background', function () {
                 expect(model.toDom('video_lazy_load', {
                     background_type: 'video',
-                    video_lazy_load: true
-                })).toBe('true');
+                    video_lazy_load: 'false'
+                })).toBe('false');
+            });
+
+            it('Should cast a boolean value to a string', function () {
+                expect(model.toDom('video_play_only_visible', {
+                    background_type: 'image',
+                    video_play_only_visible: false
+                })).toBe('false');
             });
         });
 
@@ -57,17 +75,24 @@ define([
         });
 
         describe('round trip', function () {
-            it('Should fall back to the default for an image background', function () {
+            it('Should recover the default when the attribute was omitted', function () {
                 expect(model.fromDom(model.toDom('video_play_only_visible', {
                     background_type: 'image',
                     video_play_only_visible: 'true'
                 }) || null)).toBe('true');
             });
 
-            it('Should preserve the value for a video background', function () {
+            it('Should preserve a non-default value saved with an image background', function () {
                 expect(model.fromDom(model.toDom('video_play_only_visible', {
-                    background_type: 'video',
+                    background_type: 'image',
                     video_play_only_visible: 'false'
+                }))).toBe('false');
+            });
+
+            it('Should preserve a non-default value saved with a video background', function () {
+                expect(model.fromDom(model.toDom('video_loop', {
+                    background_type: 'video',
+                    video_loop: 'false'
                 }))).toBe('false');
             });
         });

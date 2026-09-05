@@ -17,30 +17,42 @@ define([
         });
 
         describe('toDom', function () {
-            it('Should return false when parallax is disabled', function () {
+            it('Should return false for the default speed when parallax is disabled', function () {
                 expect(model.toDom('parallax_speed', {
                     enable_parallax: '0',
                     parallax_speed: '0.5'
                 })).toBe(false);
             });
 
-            it('Should return false when parallax is not set', function () {
+            it('Should return false for the default speed when parallax is not set', function () {
                 expect(model.toDom('parallax_speed', {
                     parallax_speed: '0.5'
                 })).toBe(false);
             });
 
-            it('Should return the speed when parallax is enabled', function () {
+            it('Should return false when the value is missing', function () {
+                expect(model.toDom('parallax_speed', {})).toBe(false);
+            });
+
+            it('Should return a non-default speed even when parallax is disabled', function () {
                 expect(model.toDom('parallax_speed', {
-                    enable_parallax: '1',
+                    enable_parallax: '0',
                     parallax_speed: '2'
                 })).toBe('2');
             });
 
-            it('Should return false when parallax is enabled without a speed', function () {
+            it('Should return the default speed when parallax is enabled', function () {
                 expect(model.toDom('parallax_speed', {
-                    enable_parallax: '1'
-                })).toBe(false);
+                    enable_parallax: '1',
+                    parallax_speed: '0.5'
+                })).toBe('0.5');
+            });
+
+            it('Should cast a numeric value to a string', function () {
+                expect(model.toDom('parallax_speed', {
+                    enable_parallax: '1',
+                    parallax_speed: 2
+                })).toBe('2');
             });
         });
 
@@ -56,14 +68,21 @@ define([
         });
 
         describe('round trip', function () {
-            it('Should fall back to the default when parallax is disabled', function () {
+            it('Should recover the default when the attribute was omitted', function () {
                 expect(model.fromDom(model.toDom('parallax_speed', {
                     enable_parallax: '0',
                     parallax_speed: '0.5'
                 }) || null)).toBe('0.5');
             });
 
-            it('Should preserve the speed when parallax is enabled', function () {
+            it('Should preserve a non-default speed saved with parallax disabled', function () {
+                expect(model.fromDom(model.toDom('parallax_speed', {
+                    enable_parallax: '0',
+                    parallax_speed: '2'
+                }))).toBe('2');
+            });
+
+            it('Should preserve a non-default speed saved with parallax enabled', function () {
                 expect(model.fromDom(model.toDom('parallax_speed', {
                     enable_parallax: '1',
                     parallax_speed: '2'

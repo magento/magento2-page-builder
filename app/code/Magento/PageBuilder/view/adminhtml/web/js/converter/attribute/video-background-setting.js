@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @returns {string}
      */
     _proto.fromDom = function fromDom(value) {
-      return value === null || value === undefined ? "true" : value;
+      return value === null || value === undefined ? VideoBackgroundSetting.DEFAULT : value;
     }
     /**
      * Convert value to knockout format
@@ -31,22 +31,25 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
     ;
 
     _proto.toDom = function toDom(name, data) {
-      if ((0, _object.get)(data, "background_type") !== "video") {
-        return false;
-      }
-
       var value = (0, _object.get)(data, name);
 
-      if (value === null || value === undefined) {
+      if (value === null || value === undefined || value === "") {
         return false;
       }
 
-      return value.toString();
+      var setting = value.toString();
+
+      if (setting === VideoBackgroundSetting.DEFAULT && (0, _object.get)(data, "background_type") !== "video") {
+        return false;
+      }
+
+      return setting;
     };
 
     return VideoBackgroundSetting;
   }();
 
+  VideoBackgroundSetting.DEFAULT = "true";
   return VideoBackgroundSetting;
 });
 //# sourceMappingURL=video-background-setting.js.map

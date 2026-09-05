@@ -8,6 +8,8 @@ import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 export default class ParallaxSpeed implements ConverterInterface {
+    private static readonly DEFAULT = "0.5";
+
     /**
      * Convert value to internal format
      *
@@ -15,7 +17,7 @@ export default class ParallaxSpeed implements ConverterInterface {
      * @returns {string}
      */
     public fromDom(value: string): string {
-        return value === null || value === undefined ? "0.5" : value;
+        return value === null || value === undefined ? ParallaxSpeed.DEFAULT : value;
     }
 
     /**
@@ -26,18 +28,19 @@ export default class ParallaxSpeed implements ConverterInterface {
      * @returns {string | boolean}
      */
     public toDom(name: string, data: DataObject): string | boolean {
-        const enableParallax = get<string | number>(data, "enable_parallax");
-
-        if (!enableParallax || enableParallax === "0") {
-            return false;
-        }
-
         const value = get<string | number>(data, name);
 
-        if (value === null || value === undefined) {
+        if (value === null || value === undefined || value === "") {
             return false;
         }
 
-        return value.toString();
+        const speed = value.toString();
+        const enableParallax = get<string | number>(data, "enable_parallax");
+
+        if (speed === ParallaxSpeed.DEFAULT && (!enableParallax || enableParallax === "0")) {
+            return false;
+        }
+
+        return speed;
     }
 }

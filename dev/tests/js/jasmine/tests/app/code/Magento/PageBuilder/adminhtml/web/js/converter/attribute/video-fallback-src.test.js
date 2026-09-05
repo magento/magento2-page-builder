@@ -34,29 +34,40 @@ define([
         });
 
         describe('toDom', function () {
-            it('Should return false when the background is an image', function () {
+            it('Should return false when empty on an image background', function () {
                 expect(model.toDom('video_fallback_image', {
                     background_type: 'image',
                     video_fallback_image: []
                 })).toBe(false);
             });
 
-            it('Should return false when the background type is not set', function () {
+            it('Should return false when the value is missing', function () {
                 expect(model.toDom('video_fallback_image', {
-                    video_fallback_image: []
+                    background_type: 'image'
                 })).toBe(false);
             });
 
-            it('Should return an empty string for a video background without a fallback image', function () {
+            it('Should return an empty string when empty on a video background', function () {
                 expect(model.toDom('video_fallback_image', {
                     background_type: 'video',
                     video_fallback_image: []
                 })).toBe('');
             });
 
-            it('Should return a media directive for a video background with a fallback image', function () {
+            it('Should return a media directive on a video background', function () {
                 expect(model.toDom('video_fallback_image', {
                     background_type: 'video',
+                    video_fallback_image: [
+                        {
+                            url: 'http://example.com/media/fallback.jpg'
+                        }
+                    ]
+                })).toBe('{{media url=fallback.jpg}}');
+            });
+
+            it('Should return a media directive on an image background', function () {
+                expect(model.toDom('video_fallback_image', {
+                    background_type: 'image',
                     video_fallback_image: [
                         {
                             url: 'http://example.com/media/fallback.jpg'
@@ -72,14 +83,30 @@ define([
                 expect(model.fromDom(undefined)).toBe('');
                 expect(model.fromDom('')).toBe('');
             });
+
+            it('Should decode a media directive into an image object', function () {
+                expect(model.fromDom('{{media url=fallback.jpg}}')[0].url)
+                    .toBe('http://example.com/media/fallback.jpg');
+            });
         });
 
         describe('round trip', function () {
-            it('Should read the same value for an image background as an emitted empty attribute', function () {
+            it('Should recover an empty value when the attribute was omitted', function () {
                 expect(model.fromDom(model.toDom('video_fallback_image', {
                     background_type: 'image',
                     video_fallback_image: []
                 }) || null)).toBe('');
+            });
+
+            it('Should preserve a fallback image saved with an image background', function () {
+                expect(model.fromDom(model.toDom('video_fallback_image', {
+                    background_type: 'image',
+                    video_fallback_image: [
+                        {
+                            url: 'http://example.com/media/fallback.jpg'
+                        }
+                    ]
+                }))[0].url).toBe('http://example.com/media/fallback.jpg');
             });
         });
     });

@@ -8,6 +8,8 @@ import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 export default class VideoBackgroundSetting implements ConverterInterface {
+    private static readonly DEFAULT = "true";
+
     /**
      * Convert value to internal format
      *
@@ -15,7 +17,7 @@ export default class VideoBackgroundSetting implements ConverterInterface {
      * @returns {string}
      */
     public fromDom(value: string): string {
-        return value === null || value === undefined ? "true" : value;
+        return value === null || value === undefined ? VideoBackgroundSetting.DEFAULT : value;
     }
 
     /**
@@ -26,16 +28,18 @@ export default class VideoBackgroundSetting implements ConverterInterface {
      * @returns {string | boolean}
      */
     public toDom(name: string, data: DataObject): string | boolean {
-        if (get<string>(data, "background_type") !== "video") {
-            return false;
-        }
-
         const value = get<string | boolean>(data, name);
 
-        if (value === null || value === undefined) {
+        if (value === null || value === undefined || value === "") {
             return false;
         }
 
-        return value.toString();
+        const setting = value.toString();
+
+        if (setting === VideoBackgroundSetting.DEFAULT && get<string>(data, "background_type") !== "video") {
+            return false;
+        }
+
+        return setting;
     }
 }

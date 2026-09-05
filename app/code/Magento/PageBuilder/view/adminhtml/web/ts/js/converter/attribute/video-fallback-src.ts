@@ -29,8 +29,11 @@ export default class VideoFallbackSrc implements ConverterInterface {
      * @returns {string | boolean}
      */
     public toDom(name: string, data: DataObject): string | boolean {
-        if (get<string>(data, "background_type") !== "video") {
-            return false;
+        const value = get<Array<{url?: string}>>(data, name);
+        const hasImage = !!value && value.length > 0 && !!value[0] && value[0].url !== undefined;
+
+        if (!hasImage) {
+            return get<string>(data, "background_type") === "video" ? "" : false;
         }
 
         return this.src.toDom(name, data);
