@@ -148,5 +148,36 @@
                 </validation>
             </settings>
         </field>
+        <field name="lazy_loading" sortOrder="30" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Lazy Loading</label>
+                <dataScope>lazy_loading</dataScope>
+                <tooltip>
+                    <description translate="true">
+                        <![CDATA[
+                        Defers loading of the image until it is close to the viewport. Disable it for images that
+                        appear at the top of the page.
+                        ]]>
+                    </description>
+                </tooltip>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
     </fieldset>
 </form>
