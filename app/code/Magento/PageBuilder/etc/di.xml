@@ -5,27 +5,43 @@
  * All Rights Reserved.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Ui\Component\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Ui\Component\Form\Element\Wysiwyg"
+                type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Magento\PageBuilder\Block\Element\Editor" />
     <preference for="Magento\PageBuilder\Model\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\AttrInterface" type="Magento\PageBuilder\Model\Dom\Attr" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\CharacterDataInterface" type="Magento\PageBuilder\Model\Dom\CharacterData" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\CommentInterface" type="Magento\PageBuilder\Model\Dom\Comment" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\DocumentInterface" type="Magento\PageBuilder\Model\Dom\Document" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\DocumentFragmentInterface" type="Magento\PageBuilder\Model\Dom\DocumentFragment" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\DocumentTypeInterface" type="Magento\PageBuilder\Model\Dom\DocumentType" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\ElementInterface" type="Magento\PageBuilder\Model\Dom\Element" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface" type="Magento\PageBuilder\Model\Dom\HtmlCollection" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface" type="Magento\PageBuilder\Model\Dom\HtmlDocument" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\CharacterDataInterface"
+                type="Magento\PageBuilder\Model\Dom\CharacterData" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\CommentInterface"
+                type="Magento\PageBuilder\Model\Dom\Comment" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\DocumentInterface"
+                type="Magento\PageBuilder\Model\Dom\Document" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\DocumentFragmentInterface"
+                type="Magento\PageBuilder\Model\Dom\DocumentFragment" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\DocumentTypeInterface"
+                type="Magento\PageBuilder\Model\Dom\DocumentType" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\ElementInterface"
+                type="Magento\PageBuilder\Model\Dom\Element" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface"
+                type="Magento\PageBuilder\Model\Dom\HtmlCollection" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface"
+                type="Magento\PageBuilder\Model\Dom\HtmlDocument" />
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\NodeInterface" type="Magento\PageBuilder\Model\Dom\Node" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\NodeListInterface" type="Magento\PageBuilder\Model\Dom\NodeList" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\PropertyAttributeInterface" type="Magento\PageBuilder\Model\Dom\PropertyAttribute" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\StringMapInterface" type="Magento\PageBuilder\Model\Dom\StringMap" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\NodeListInterface"
+                type="Magento\PageBuilder\Model\Dom\NodeList" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\PropertyAttributeInterface"
+                type="Magento\PageBuilder\Model\Dom\PropertyAttribute" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\StringMapInterface"
+                type="Magento\PageBuilder\Model\Dom\StringMap" />
     <preference for="Magento\PageBuilder\Model\Dom\Adapter\TextInterface" type="Magento\PageBuilder\Model\Dom\Text" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\TokenListInterface" type="Magento\PageBuilder\Model\Dom\TokenList" />
-    <preference for="Magento\PageBuilder\Model\Dom\Adapter\XmlDocumentInterface" type="Magento\PageBuilder\Model\Dom\XmlDocument" />
-    <virtualType name="Magento\PageBuilder\Model\Cache\Type\EditorConfig" type="Magento\Framework\Cache\Frontend\Decorator\TagScope">
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\TokenListInterface"
+                type="Magento\PageBuilder\Model\Dom\TokenList" />
+    <preference for="Magento\PageBuilder\Model\Dom\Adapter\XmlDocumentInterface"
+                type="Magento\PageBuilder\Model\Dom\XmlDocument" />
+    <virtualType name="Magento\PageBuilder\Model\Cache\Type\EditorConfig"
+                 type="Magento\Framework\Cache\Frontend\Decorator\TagScope">
         <arguments>
             <argument name="frontend" xsi:type="object">Magento\Framework\App\Cache\Type\Config</argument>
             <argument name="tag" xsi:type="string">PB_EDITOR_CONFIG</argument>
@@ -63,9 +79,12 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="pagebuilder_block_select_grid_data_source" xsi:type="string">Magento\Cms\Model\ResourceModel\Block\Grid\Collection</item>
-                <item name="pagebuilder_stage_template_grid_data_source" xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection</item>
-                <item name="pagebuilder_template_grid_data_source" xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection</item>
+                <item name="pagebuilder_block_select_grid_data_source"
+                      xsi:type="string">Magento\Cms\Model\ResourceModel\Block\Grid\Collection</item>
+                <item name="pagebuilder_stage_template_grid_data_source"
+                      xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection</item>
+                <item name="pagebuilder_template_grid_data_source"
+                      xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
@@ -78,13 +97,18 @@
         </arguments>
     </type>
     <type name="Magento\Catalog\Model\Product\Attribute\Repository">
-        <plugin name="process_extension_attributes" type="Magento\PageBuilder\Plugin\Catalog\Model\Product\Attribute\RepositoryPlugin"/>
+        <plugin name="process_extension_attributes"
+                type="Magento\PageBuilder\Plugin\Catalog\Model\Product\Attribute\RepositoryPlugin"/>
     </type>
     <type name="Magento\PageBuilder\Model\Config\CompositeReader">
         <arguments>
             <argument name="readers" xsi:type="array">
-                <item name="contentTypeReader" xsi:type="object" sortOrder="10">Magento\PageBuilder\Model\Config\ContentType\Reader</item>
-                <item name="menuSectionReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\MenuSection\Reader</item>
+                <item name="contentTypeReader"
+                      xsi:type="object"
+                      sortOrder="10">Magento\PageBuilder\Model\Config\ContentType\Reader</item>
+                <item name="menuSectionReader"
+                      xsi:type="object"
+                      sortOrder="20">Magento\PageBuilder\Model\Config\MenuSection\Reader</item>
             </argument>
         </arguments>
     </type>
@@ -98,30 +122,38 @@
             <argument name="config" xsi:type="array">
                 <item name="slider" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/slider/appearance/default/widget</item>
+                        <item name="component"
+                              xsi:type="string"
+                              >Magento_PageBuilder/js/content-type/slider/appearance/default/widget</item>
                         <!--optional if you want load widget per appearance-->
                         <item name="appearance" xsi:type="string">default</item>
                     </item>
                 </item>
                 <item name="map" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/map/appearance/default/widget</item>
+                        <item name="component"
+                              xsi:type="string">Magento_PageBuilder/js/content-type/map/appearance/default/widget</item>
                     </item>
                 </item>
                 <item name="row" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/row/appearance/default/widget</item>
+                        <item name="component"
+                              xsi:type="string">Magento_PageBuilder/js/content-type/row/appearance/default/widget</item>
                     </item>
                 </item>
                 <item name="tabs" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/tabs/appearance/default/widget</item>
+                        <item name="component"
+                              xsi:type="string"
+                              >Magento_PageBuilder/js/content-type/tabs/appearance/default/widget</item>
                     </item>
                 </item>
                 <item name="slide" xsi:type="array">
                     <item name="default" xsi:type="array">
                         <!--required argument-->
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/slide/appearance/default/widget</item>
+                        <item name="component"
+                              xsi:type="string"
+                              >Magento_PageBuilder/js/content-type/slide/appearance/default/widget</item>
                         <!--optional if you need provide some config for your widget-->
                         <item name="config" xsi:type="array">
                             <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
@@ -132,7 +164,9 @@
                 </item>
                 <item name="banner" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/banner/appearance/default/widget</item>
+                        <item name="component"
+                              xsi:type="string"
+                              >Magento_PageBuilder/js/content-type/banner/appearance/default/widget</item>
                         <item name="config" xsi:type="array">
                             <item name="buttonSelector" xsi:type="string">.pagebuilder-banner-button</item>
                             <item name="showOverlay" xsi:type="string">hover</item>
@@ -142,41 +176,53 @@
                 </item>
                 <item name="buttons" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/buttons/appearance/inline/widget</item>
+                        <item name="component"
+                              xsi:type="string"
+                              >Magento_PageBuilder/js/content-type/buttons/appearance/inline/widget</item>
                     </item>
                 </item>
                 <item name="products" xsi:type="array">
                     <item name="default" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/products/appearance/carousel/widget</item>
+                        <item name="component"
+                              xsi:type="string"
+                              >Magento_PageBuilder/js/content-type/products/appearance/carousel/widget</item>
                         <item name="appearance" xsi:type="string">carousel</item>
                     </item>
                 </item>
             </argument>
         </arguments>
     </type>
-    <virtualType name="pageBuilderComponentAggregatedSourceBase" type="Magento\PageBuilder\Model\View\File\Collector\PageBuilder">
+    <virtualType name="pageBuilderComponentAggregatedSourceBase"
+                 type="Magento\PageBuilder\Model\View\File\Collector\PageBuilder">
         <arguments>
             <argument name="subDir" xsi:type="string">pagebuilder</argument>
         </arguments>
     </virtualType>
-    <virtualType shared="false" name="pageBuilderComponentAggregatedSourceBaseFiltered" type="Magento\Framework\View\File\Collector\Decorator\ModuleOutput">
+    <virtualType shared="false"
+                 name="pageBuilderComponentAggregatedSourceBaseFiltered"
+                 type="Magento\Framework\View\File\Collector\Decorator\ModuleOutput">
         <arguments>
             <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBase</argument>
         </arguments>
     </virtualType>
-    <virtualType name="pageBuilderComponentAggregatedSourceBaseSorted" type="Magento\Framework\View\File\Collector\Decorator\ModuleDependency">
+    <virtualType name="pageBuilderComponentAggregatedSourceBaseSorted"
+                 type="Magento\Framework\View\File\Collector\Decorator\ModuleDependency">
         <arguments>
             <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBaseFiltered</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCancelButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CancelButton">
+    <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCancelButton"
+                 type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CancelButton">
         <arguments>
-            <argument name="targetName" xsi:type="string">ns = pagebuilder_map_form, index = map_location_modal</argument>
+            <argument name="targetName"
+                      xsi:type="string">ns = pagebuilder_map_form, index = map_location_modal</argument>
         </arguments>
     </virtualType>
-    <virtualType name="pageBuilderProductCollectionFactory" type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+    <virtualType name="pageBuilderProductCollectionFactory"
+                 type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
         <arguments>
-            <argument name="instanceName" xsi:type="string">Magento\PageBuilder\Ui\DataProvider\Product\ProductCollection</argument>
+            <argument name="instanceName"
+                      xsi:type="string">Magento\PageBuilder\Ui\DataProvider\Product\ProductCollection</argument>
         </arguments>
     </virtualType>
     <type name="Magento\CatalogWidget\Block\Product\ProductsList">
@@ -196,84 +242,100 @@
     <type name="Magento\Catalog\Helper\Output">
         <arguments>
             <argument name="directivePatterns" xsi:type="array">
-                <item name="backgroundImage" xsi:type="const">\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::BACKGROUND_IMAGE_PATTERN</item>
-                <item name="htmlContentType" xsi:type="const">\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::HTML_CONTENT_TYPE_PATTERN</item>
+                <item name="backgroundImage"
+                      xsi:type="const"
+                      >\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::BACKGROUND_IMAGE_PATTERN</item>
+                <item name="htmlContentType"
+                      xsi:type="const"
+                      >\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::HTML_CONTENT_TYPE_PATTERN</item>
             </argument>
         </arguments>
     </type>
     <type name="Magento\Framework\Session\SidResolver">
-        <plugin name="pagebuilder_preview_sid_resolving" type="Magento\PageBuilder\Plugin\Framework\Session\SidResolver" />
+        <plugin name="pagebuilder_preview_sid_resolving"
+                type="Magento\PageBuilder\Plugin\Framework\Session\SidResolver" />
     </type>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Newest products first</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
             <argument name="attributeField" xsi:type="string">entity_id</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Oldest products first</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
             <argument name="attributeField" xsi:type="string">entity_id</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Name: A - Z</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
             <argument name="attributeField" xsi:type="string">name</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Name: Z - A</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
             <argument name="attributeField" xsi:type="string">name</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">SKU: ascending</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
             <argument name="attributeField" xsi:type="string">sku</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">SKU: descending</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
             <argument name="attributeField" xsi:type="string">sku</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Stock: low stock first</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
             <argument name="attributeField" xsi:type="string">quantity_and_stock_status</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Stock: high stock first</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
             <argument name="attributeField" xsi:type="string">quantity_and_stock_status</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Price: high to low</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Price: low to high</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
         </arguments>
     </virtualType>
     <!-- @deprecated no longer used -->
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Position</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
@@ -281,24 +343,28 @@
             <argument name="attributeField" xsi:type="string">position</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Position</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\Price">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\Descending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\Price">
         <arguments>
             <argument name="label" xsi:type="string">Price: high to low</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\Price">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\Price">
         <arguments>
             <argument name="label" xsi:type="string">Price: low to high</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\Category\Position">
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position\Ascending"
+                 type="Magento\PageBuilder\Model\Catalog\Sorting\Category\Position">
         <arguments>
             <argument name="label" xsi:type="string">Position</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
@@ -308,18 +374,30 @@
     <type name="Magento\PageBuilder\Model\Catalog\Sorting">
         <arguments>
             <argument name="sortClasses" xsi:type="array">
-                <item name="position" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position\Ascending</item>
-                <item name="position_by_sku" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku</item>
-                <item name="date_newest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop</item>
-                <item name="date_oldest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop</item>
-                <item name="name_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending</item>
-                <item name="name_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending</item>
-                <item name="sku_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending</item>
-                <item name="sku_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending</item>
-                <item name="low_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending</item>
-                <item name="high_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending</item>
-                <item name="price_high_to_low" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Descending</item>
-                <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending</item>
+                <item name="position"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position\Ascending</item>
+                <item name="position_by_sku"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku</item>
+                <item name="date_newest_top"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop</item>
+                <item name="date_oldest_top"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop</item>
+                <item name="name_ascending"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending</item>
+                <item name="name_descending"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending</item>
+                <item name="sku_ascending"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending</item>
+                <item name="sku_descending"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending</item>
+                <item name="low_stock_first"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending</item>
+                <item name="high_stock_first"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending</item>
+                <item name="price_high_to_low"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Descending</item>
+                <item name="price_low_to_high"
+                      xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending</item>
             </argument>
         </arguments>
     </type>
@@ -452,7 +530,8 @@
             </argument>
             <argument name="attributeValidators" xsi:type="array">
                 <item name="src" xsi:type="array">
-                    <item name="iframe-src" xsi:type="object">Magento\PageBuilder\Model\Validator\IframeSrcAttributeValidator</item>
+                    <item name="iframe-src"
+                          xsi:type="object">Magento\PageBuilder\Model\Validator\IframeSrcAttributeValidator</item>
                 </item>
             </argument>
             <argument name="tagValidators" xsi:type="array">

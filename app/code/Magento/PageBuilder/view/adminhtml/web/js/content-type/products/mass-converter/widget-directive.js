@@ -7,8 +7,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Magento_PageBuilder/js/utils/object"], function (_widgetDirectiveAbstract, _object) {
   /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
+   * Copyright 2026 Adobe
+   * All Rights Reserved.
    */
 
   /**
