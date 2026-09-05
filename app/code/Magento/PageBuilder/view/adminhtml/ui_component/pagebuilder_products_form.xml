@@ -79,6 +79,7 @@
                     <link name="category_idsVisible">${$.parentName}.category_ids:visible</link>
                     <link name="conditionVisible">${$.parentName}.conditions_form:visible</link>
                     <link name="skuVisible">${$.parentName}.sku:visible</link>
+                    <link name="category_listingVisible">${$.parentName}.category_listing:visible</link>
                     <link name="value">${$.parentName}.sort_order:filter</link>
                 </exports>
                 <dataScope>condition_option</dataScope>
@@ -102,6 +103,11 @@
                                 <item name="value" xsi:type="string">condition</item>
                                 <item name="title" xsi:type="string" translate="true">Condition</item>
                             </option>
+                            <option name="3" xsi:type="array">
+                                <item name="size" xsi:type="string">small</item>
+                                <item name="value" xsi:type="string">category_listing</item>
+                                <item name="title" xsi:type="string" translate="true">Category Listing (search engine)</item>
+                            </option>
                         </options>
                     </settings>
                 </select>
@@ -123,6 +129,35 @@
                 <dataScope>category_ids</dataScope>
                 <componentType>field</componentType>
                 <visible>false</visible>
+                <listens>
+                    <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
+                </listens>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Catalog\Ui\Component\Product\Form\Categories\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="category_listing" component="Magento_Catalog/js/components/new-category" sortOrder="35" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+                <label translate="true">Category</label>
+                <dataScope>category_listing</dataScope>
+                <componentType>field</componentType>
+                <visible>false</visible>
+                <notice translate="true">Products are loaded through the search engine with the same rules as the category page.</notice>
                 <listens>
                     <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
                 </listens>
@@ -176,6 +211,7 @@
                         <item name="condition" xsi:type="string">position,position_by_sku</item>
                         <item name="sku" xsi:type="string">position</item>
                         <item name="category_ids" xsi:type="string">position_by_sku</item>
+                        <item name="category_listing" xsi:type="string">position_by_sku</item>
                     </item>
                 </item>
             </argument>
