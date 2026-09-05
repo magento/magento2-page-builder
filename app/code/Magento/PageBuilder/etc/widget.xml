@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright 2026 Adobe
+ * All Rights Reserved.
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="products_category_listing"
+            class="Magento\PageBuilder\Block\Catalog\Product\CategoryListing"
+            is_email_compatible="false"
+            placeholder_image="Magento_CatalogWidget::images/products_list.png"
+            ttl="86400">
+        <label translate="true">Catalog Category Listing</label>
+        <description translate="true">Products of a category, listed the way the category page lists them</description>
+        <parameters>
+            <parameter name="title" xsi:type="text" required="false" visible="true">
+                <label translate="true">Title</label>
+            </parameter>
+            <parameter name="id_path" xsi:type="block" required="true" visible="true" sort_order="10">
+                <label translate="true">Category</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <parameter name="category_id" xsi:type="text" required="false" visible="false"/>
+            <parameter name="products_count" xsi:type="text" required="true" visible="true" sort_order="20">
+                <label translate="true">Number of Products to Display</label>
+                <value>10</value>
+            </parameter>
+            <parameter name="sort_order" xsi:type="select" required="false" visible="true" sort_order="30"
+                       source_model="Magento\PageBuilder\Model\Catalog\Sorting\Options">
+                <label translate="true">Sort Order</label>
+            </parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="40">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" selected="true"
+                            value="Magento_CatalogWidget::product/widget/content/grid.phtml">
+                        <label translate="true">Products Grid Template</label>
+                    </option>
+                    <option name="carousel" value="Magento_PageBuilder::catalog/product/widget/content/carousel.phtml">
+                        <label translate="true">Products Carousel Template</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="cache_lifetime" xsi:type="text" visible="true" sort_order="50">
+                <label translate="true">Cache Lifetime (Seconds)</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
