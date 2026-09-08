@@ -32,10 +32,9 @@ define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder
         if (!_underscore.isUndefined(images.mobile_image)) {
           (0, _object.set)(data, config.mobile_image_variable, (0, _image.decodeUrl)(images.mobile_image));
         }
-
-        delete data[config.attribute_name];
       }
 
+      delete data[config.attribute_name];
       return data;
     }
     /**
@@ -58,6 +57,11 @@ define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder
 
       if (!_underscore.isUndefined(mobileImage) && mobileImage && !_underscore.isUndefined(mobileImage[0])) {
         directiveData.mobile_image = (0, _image.urlToDirective)(mobileImage[0].url);
+      }
+
+      if (_underscore.isEmpty(directiveData)) {
+        delete data[config.attribute_name];
+        return data;
       } // Add the directive data, ensuring we escape double quotes
 
 
