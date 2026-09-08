@@ -11,6 +11,14 @@
         <annotations>
             <description>Validates Map with error overlay</description>
         </annotations>
+        <arguments>
+            <argument name="borderColor" defaultValue="PageBuilderAdvancedBorderColorProperty_green"/>
+        </arguments>
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement" after="waitForElement"/>
+        <remove keyForRemoval="assertNoBorderColor"/>
+        <assertEquals stepKey="assertNoBorderColor" after="grabColorValue">
+            <expectedResult type="string">{{borderColor.rgb}}</expectedResult>
+            <actualResult type="variable">grabBorderColorValue</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>
