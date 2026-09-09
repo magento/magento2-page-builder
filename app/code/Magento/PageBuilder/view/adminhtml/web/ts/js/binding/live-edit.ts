@@ -33,14 +33,13 @@ function stripHtml(html: string) {
  * @param {Element} element
  */
 function handlePlaceholderClass(element: Element) {
-    if (stripHtml(element.innerHTML).length === 0) {
-        element.innerHTML = "";
+    if (element.textContent.length === 0) {
+        element.textContent = "";
         element.classList.add("placeholder-text");
     } else {
         element.classList.remove("placeholder-text");
     }
 }
-
 // Custom Knockout binding for live editing text inputs
 ko.bindingHandlers.liveEdit = {
 
