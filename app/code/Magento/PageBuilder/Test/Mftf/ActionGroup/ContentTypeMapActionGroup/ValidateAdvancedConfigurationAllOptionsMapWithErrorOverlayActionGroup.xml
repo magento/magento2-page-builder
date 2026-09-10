@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+ * Copyright 2026 Adobe
+ * All Rights Reserved.
+ */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ValidateAdvancedConfigurationAllOptionsMapWithErrorOverlayActionGroup" extends="ValidateAdvancedConfigurationAllOptionsActionGroup">
+        <annotations>
+            <description>Validates applied Advanced Configuration styles on a Map with error overlay (invalid Google Maps API key)</description>
+        </annotations>
+        <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="waitForWarningLink" after="waitForElementVisible"/>
+        <remove keyForRemoval="waitForCSSClassesVisible"/>
+        <waitForElement selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible" after="assertBorderRadius"/>
+    </actionGroup>
+</actionGroups>
