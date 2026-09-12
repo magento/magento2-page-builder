@@ -122,6 +122,45 @@ define([
 
                 expect(result.myhtml).not.toContain('sort_order');
             });
+            it('Should emit the category listing directive when a category is selected', function () {
+                var data = {
+                        products_count: 8,
+                        condition_option: 'category_listing',
+                        category_listing: '42',
+                        sort_order: 'name_ascending'
+                    },
+                    config = {
+                        html_variable: 'myhtml'
+                    },
+                    result = model.toDom(data, config);
+
+                expect(result.myhtml).toMatch(/^\{\{widget\s.*\}\}$/);
+                expect(result.myhtml)
+                    .toContain(' type="Magento\\PageBuilder\\Block\\Catalog\\Product\\CategoryListing"');
+                expect(result.myhtml).toContain(' template="Magento_CatalogWidget::product/widget/content/grid.phtml"');
+                expect(result.myhtml).toContain(' anchor_text=""');
+                expect(result.myhtml).toContain(' id_path=""');
+                expect(result.myhtml).toContain(' show_pager="0"');
+                expect(result.myhtml).toContain(' products_count="8"');
+                expect(result.myhtml).toContain(' condition_option="category_listing"');
+                expect(result.myhtml).toContain(' condition_option_value="42"');
+                expect(result.myhtml).toContain(' category_id="42"');
+                expect(result.myhtml).toContain(' sort_order="name_ascending"');
+                expect(result.myhtml).toContain(' type_name="Catalog Products List"');
+                expect(result.myhtml).not.toContain('conditions_encoded');
+            });
+            it('Should emit nothing for category listing without a selected category', function () {
+                var data = {
+                        products_count: 8,
+                        condition_option: 'category_listing'
+                    },
+                    config = {
+                        html_variable: 'myhtml'
+                    },
+                    result = model.toDom(data, config);
+
+                expect(result.myhtml).toBe(undefined);
+            });
         });
         describe('fromDom', function () {
             it('Should parse regular properties without conditions_encoded', function () {
@@ -165,6 +204,21 @@ define([
                 // assert the automatically added properties do not get returned.
                 expect(result.type).toBe(undefined);
                 expect(result.id_path).toBe(undefined);
+            });
+            it('Should round trip the category listing directive', function () {
+                var config = {
+                        html_variable: 'myhtml'
+                    },
+                    attributes = {
+                        myhtml: '{{widget products_count="8" condition_option="category_listing" ' +
+                            'condition_option_value="42" category_id="42" sort_order="name_ascending"}}'
+                    },
+                    result = model.fromDom(attributes, config);
+
+                expect(result.condition_option).toBe('category_listing');
+                expect(result.category_listing).toBe('42');
+                expect(result.conditions_encoded).toBe('');
+                expect(result.sort_order).toBe('name_ascending');
             });
         });
     });

@@ -7,8 +7,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Magento_PageBuilder/js/utils/object"], function (_widgetDirectiveAbstract, _object) {
   /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
+   * Copyright 2026 Adobe
+   * All Rights Reserved.
    */
 
   /**
@@ -38,6 +38,13 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
       data.products_count = attributes.products_count;
       data.sort_order = attributes.sort_order;
       data.condition_option = attributes.condition_option || "condition";
+
+      if (data.condition_option === "category_listing") {
+        data.category_listing = this.decodeWysiwygCharacters(this.decodeHtmlCharacters(attributes.category_id || attributes.condition_option_value || ""));
+        data.conditions_encoded = "";
+        return data;
+      }
+
       data[data.condition_option] = this.decodeWysiwygCharacters(this.decodeHtmlCharacters(attributes.condition_option_value || ""));
       data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
       data[data.condition_option + "_source"] = data.conditions_encoded;
@@ -53,6 +60,10 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
     ;
 
     _proto.toDom = function toDom(data, config) {
+      if (data.condition_option === "category_listing") {
+        return this.categoryListingToDom(data, config);
+      }
+
       var attributes = {
         type: "Magento\\CatalogWidget\\Block\\Product\\ProductsList",
         template: "Magento_CatalogWidget::product/widget/content/grid.phtml",
@@ -76,6 +87,42 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
 
       if (attributes.conditions_encoded.length === 0) {
         return data;
+      }
+
+      (0, _object.set)(data, config.html_variable, this.buildDirective(attributes));
+      return data;
+    }
+    /**
+     * Convert a category listing selection to the widget directive; this option produces no conditions
+     *
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
+     */
+    ;
+
+    _proto.categoryListingToDom = function categoryListingToDom(data, config) {
+      var categoryId = data.category_listing;
+
+      if (typeof categoryId !== "string" || categoryId.length === 0) {
+        return data;
+      }
+
+      var attributes = {
+        type: "Magento\\PageBuilder\\Block\\Catalog\\Product\\CategoryListing",
+        template: "Magento_CatalogWidget::product/widget/content/grid.phtml",
+        anchor_text: "",
+        id_path: "",
+        show_pager: 0,
+        products_count: data.products_count,
+        condition_option: "category_listing",
+        condition_option_value: this.encodeWysiwygCharacters(categoryId),
+        category_id: this.encodeWysiwygCharacters(categoryId),
+        type_name: "Catalog Products List"
+      };
+
+      if (data.sort_order) {
+        attributes.sort_order = data.sort_order;
       }
 
       (0, _object.set)(data, config.html_variable, this.buildDirective(attributes));

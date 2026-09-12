@@ -7,8 +7,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _config, _hideShowOption, _preview) {
   /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
+   * Copyright 2026 Adobe
+   * All Rights Reserved.
    */
 
   /**
@@ -119,8 +119,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (this.hasDataChanged(this.previousData, data)) {
         this.displayPreview(false);
+        var hasCategoryListing = data.condition_option === "category_listing" && typeof data.category_listing === "string" && data.category_listing.length > 0;
 
-        if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
+        if (!hasCategoryListing && (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0)) {
           this.placeholderText(this.messages.EMPTY);
           return;
         }
