@@ -19,9 +19,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-moveButtons"/>
-            <skip>
-                <issueId value="MC-3718"/>
-            </skip>
             <group value="pr_exclude"/>
         </annotations>
         <before>
@@ -90,7 +87,7 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal1"/>
         <!-- Stage: Validate After Delete -->
         <comment userInput="Stage: Validate After Delete" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Stage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton2Stage2"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="seeTotalButtonsStage2"/>
         <!-- Attempt To Move Button To Row -->

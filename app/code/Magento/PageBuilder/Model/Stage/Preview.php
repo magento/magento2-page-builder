@@ -108,27 +108,26 @@ class Preview
         }
         $this->emulation->startEnvironmentEmulation($storeId);
 
-        return $this->appState->emulateAreaCode(
-            $this->getPreviewArea(),
-            function () use ($callback) {
-                $themeId = $this->scopeConfig->getValue(
-                    'design/theme/theme_id',
-                    ScopeInterface::SCOPE_STORE
-                );
-                $theme = $this->themeProvider->getThemeById($themeId);
-                $this->design->setDesignTheme($theme, $this->getPreviewArea());
+        try {
+            return $this->appState->emulateAreaCode(
+                $this->getPreviewArea(),
+                function () use ($callback) {
+                    $themeId = $this->scopeConfig->getValue(
+                        'design/theme/theme_id',
+                        ScopeInterface::SCOPE_STORE
+                    );
+                    $theme = $this->themeProvider->getThemeById($themeId);
+                    $this->design->setDesignTheme($theme, $this->getPreviewArea());
 
-                try {
-                    $result = $callback();
-                } catch (\Exception $e) {
-                    $this->isPreview = false;
-                    throw $e;
+                    return $callback();
                 }
-
-                $this->emulation->stopEnvironmentEmulation();
-                return $result;
-            }
-        );
+            );
+        } catch (\Exception $e) {
+            $this->isPreview = false;
+            throw $e;
+        } finally {
+            $this->emulation->stopEnvironmentEmulation();
+        }
     }
 
     /**

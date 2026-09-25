@@ -5,7 +5,7 @@
 define([
     'Magento_PageBuilder/js/content-type/row/appearance/default/widget'
 ], function (rowWidgetInitializer) {
-    'use strict'; // eslint-disable-line strict
+    'use strict';
 
     describe('Magento_PageBuilder/js/content-type/row/appearance/default/widget', function () {
         it('Should not call jarallax if enableParallax !== 1', function () {
@@ -50,7 +50,7 @@ define([
             expect(window.jarallax).toHaveBeenCalledWith(el, {
                 imgPosition: '0px 50%',
                 imgRepeat: 'repeat',
-                imgSize: '100%',
+                imgSize: '100% auto',
                 speed: 1
             });
             document.body.removeChild(el);
