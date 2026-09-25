@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.9.0
+ Version: 2.0.0
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -522,6 +522,10 @@
         });
 
         _.$slider.addClass('slick-slider');
+
+        if (_.options.rtl === true) {
+            _.$slider.attr('dir', 'rtl');
+        }
 
         _.$slideTrack = (_.slideCount === 0) ?
             $('<div class="slick-track"></div>').appendTo(_.$slider) :
