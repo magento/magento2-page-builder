@@ -50,10 +50,16 @@ class ProductTotals extends Widget implements HttpPostActionInterface
      */
     public function execute()
     {
-        $conditions = $this->getRequest()->getParam('conditionValue');
+        $conditions = (string)$this->getRequest()->getParam('conditionValue');
+        $conditionOption = $this->getRequest()->getParam('conditionOption');
+        $categoryId = $this->getRequest()->getParam('categoryId');
 
         try {
-            $response = $this->productTotals->getProductTotals($conditions);
+            $response = $this->productTotals->getProductTotals(
+                $conditions,
+                $conditionOption === null ? null : (string)$conditionOption,
+                $categoryId === null ? null : (int)$categoryId
+            );
         } catch (Exception $e) {
             $response = [
                 'total' => 0,
