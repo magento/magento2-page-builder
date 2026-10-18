@@ -15,13 +15,18 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\CatalogWidget\Model\Rule;
 use Magento\CatalogWidget\Model\Rule\Condition\Product\CategoryConditionProcessor;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\PageBuilder\Model\Catalog\CategoryListing\CollectionBuilder;
 use Magento\Rule\Model\Condition\Combine;
 use Magento\Rule\Model\Condition\Sql\Builder;
+use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\Store;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Widget\Helper\Conditions;
 use Zend_Db_Select_Exception;
 
@@ -32,6 +37,8 @@ use Zend_Db_Select_Exception;
  */
 class ProductTotals
 {
+    public const CONDITION_OPTION_CATEGORY_LISTING = 'category_listing';
+
     /**
      * @var CollectionFactory
      */
@@ -73,6 +80,21 @@ class ProductTotals
     private CategoryConditionProcessor $categoryConditionProcessor;
 
     /**
+     * @var CollectionBuilder
+     */
+    private CollectionBuilder $categoryListingCollectionBuilder;
+
+    /**
+     * @var Emulation
+     */
+    private Emulation $emulation;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private StoreManagerInterface $storeManager;
+
+    /**
      * @param CollectionFactory $productCollectionFactory
      * @param Builder $sqlBuilder
      * @param Rule $rule
@@ -81,6 +103,10 @@ class ProductTotals
      * @param MetadataPool|null $metadataPool
      * @param ResourceConnection|null $resource
      * @param CategoryConditionProcessor|null $categoryConditionProcessor
+     * @param CollectionBuilder|null $categoryListingCollectionBuilder
+     * @param Emulation|null $emulation
+     * @param StoreManagerInterface|null $storeManager
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         CollectionFactory $productCollectionFactory,
@@ -90,7 +116,10 @@ class ProductTotals
         CategoryRepositoryInterface $categoryRepository,
         ?MetadataPool $metadataPool = null,
         ?ResourceConnection $resource = null,
-        ?CategoryConditionProcessor $categoryConditionProcessor = null
+        ?CategoryConditionProcessor $categoryConditionProcessor = null,
+        ?CollectionBuilder $categoryListingCollectionBuilder = null,
+        ?Emulation $emulation = null,
+        ?StoreManagerInterface $storeManager = null
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->sqlBuilder = $sqlBuilder;
@@ -101,6 +130,10 @@ class ProductTotals
         $this->resource = $resource ?: ObjectManager::getInstance()->get(ResourceConnection::class);
         $this->categoryConditionProcessor = $categoryConditionProcessor ?: ObjectManager::getInstance()
             ->get(CategoryConditionProcessor::class);
+        $this->categoryListingCollectionBuilder = $categoryListingCollectionBuilder ?: ObjectManager::getInstance()
+            ->get(CollectionBuilder::class);
+        $this->emulation = $emulation ?: ObjectManager::getInstance()->get(Emulation::class);
+        $this->storeManager = $storeManager ?: ObjectManager::getInstance()->get(StoreManagerInterface::class);
     }
 
     /**
@@ -311,12 +344,21 @@ class ProductTotals
      * Retrieve product totals for collection
      *
      * @param string $conditions
+     * @param string|null $conditionOption
+     * @param int|null $categoryId
      * @return array
      * @throws LocalizedException
      * @throws Zend_Db_Select_Exception
      */
-    public function getProductTotals(string $conditions): array
-    {
+    public function getProductTotals(
+        string $conditions,
+        ?string $conditionOption = null,
+        ?int $categoryId = null
+    ): array {
+        if ($conditionOption === self::CONDITION_OPTION_CATEGORY_LISTING) {
+            return $this->getCategoryListingTotals((int)$categoryId);
+        }
+
         $enabledCount = $this->getEnabledCount($conditions);
         $disabledCount = $this->getDisabledCount($conditions);
         $notVisibleCount = $this->getNotVisibleCount($conditions);
@@ -326,5 +368,49 @@ class ProductTotals
             'disabled' => $disabledCount,
             'notVisible' => $notVisibleCount,
         ];
+    }
+
+    /**
+     * Retrieve totals for the category listing option, counted through the storefront catalog layer
+     *
+     * @param int $categoryId
+     * @return array
+     * @throws \Exception
+     */
+    private function getCategoryListingTotals(int $categoryId): array
+    {
+        $storeId = $this->getStorefrontStoreId();
+        $this->emulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND, true);
+
+        try {
+            $total = $this->categoryListingCollectionBuilder
+                ->build($categoryId, null, null, $storeId)
+                ->getSize();
+        } finally {
+            $this->emulation->stopEnvironmentEmulation();
+        }
+
+        return [
+            'total' => $total,
+            'disabled' => 0,
+            'notVisible' => 0,
+        ];
+    }
+
+    /**
+     * Resolve a store view to build the storefront collection for
+     *
+     * @return int
+     * @throws NoSuchEntityException
+     */
+    private function getStorefrontStoreId(): int
+    {
+        $store = $this->storeManager->getStore();
+
+        if ((int)$store->getId() === Store::DEFAULT_STORE_ID) {
+            $store = $this->storeManager->getDefaultStoreView();
+        }
+
+        return $store === null ? Store::DEFAULT_STORE_ID : (int)$store->getId();
     }
 }

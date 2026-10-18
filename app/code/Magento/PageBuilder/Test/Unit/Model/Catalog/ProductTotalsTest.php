@@ -17,9 +17,13 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\EntityManager\EntityMetadataInterface;
 use Magento\Framework\EntityManager\MetadataPool;
+use Magento\PageBuilder\Model\Catalog\CategoryListing\CollectionBuilder;
 use Magento\PageBuilder\Model\Catalog\ProductTotals;
 use Magento\Rule\Model\Condition\Combine;
 use Magento\Rule\Model\Condition\Sql\Builder;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\App\Emulation;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Widget\Helper\Conditions;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -70,6 +74,11 @@ class ProductTotalsTest extends TestCase
     private $categoryConditionProcessorMock;
 
     /**
+     * @var CollectionBuilder|MockObject
+     */
+    private $categoryListingCollectionBuilder;
+
+    /**
      * @var ProductTotals|MockObject
      */
     private ProductTotals $productTotals;
@@ -87,6 +96,12 @@ class ProductTotalsTest extends TestCase
         $this->metadataPool = $this->createMock(MetadataPool::class);
         $this->resource = $this->createMock(ResourceConnection::class);
         $this->categoryConditionProcessorMock = $this->createMock(CategoryConditionProcessor::class);
+        $this->categoryListingCollectionBuilder = $this->createMock(CollectionBuilder::class);
+
+        $store = $this->createMock(StoreInterface::class);
+        $store->method('getId')->willReturn(1);
+        $storeManager = $this->createMock(StoreManagerInterface::class);
+        $storeManager->method('getStore')->willReturn($store);
 
         $this->productTotals = new ProductTotals(
             $this->productCollectionFactory,
@@ -96,7 +111,10 @@ class ProductTotalsTest extends TestCase
             $this->categoryRepository,
             $this->metadataPool,
             $this->resource,
-            $this->categoryConditionProcessorMock
+            $this->categoryConditionProcessorMock,
+            $this->categoryListingCollectionBuilder,
+            $this->createMock(Emulation::class),
+            $storeManager
         );
 
         parent::setUp();
@@ -143,5 +161,26 @@ class ProductTotalsTest extends TestCase
         $this->rule->expects($this->exactly(3))->method('getConditions')->willReturn($combine);
 
         $this->productTotals->getProductTotals('{conditions}');
+    }
+
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Zend_Db_Select_Exception
+     */
+    public function testGetCategoryListingTotals(): void
+    {
+        $collection = $this->createMock(Collection::class);
+        $collection->method('getSize')->willReturn(7);
+
+        $this->categoryListingCollectionBuilder->expects($this->once())
+            ->method('build')
+            ->with(42, null, null, 1)
+            ->willReturn($collection);
+
+        $this->assertSame(
+            ['total' => 7, 'disabled' => 0, 'notVisible' => 0],
+            $this->productTotals->getProductTotals('', 'category_listing', 42)
+        );
     }
 }
