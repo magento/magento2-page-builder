@@ -192,8 +192,9 @@ define(["consoleLogger", "knockout", "underscore", "Magento_PageBuilder/js/confi
       var _this = this;
 
       var result = {};
+      var defaultState = dataStoreStates[_config.getConfig("defaultViewport")];
       Object.keys(dataStoreStates).forEach(function (name) {
-        result[name] = _underscore.isEmpty(dataStoreStates[name]) ? {} : _this.generateKnockoutBinding(binding, elementName, config, dataStoreStates[name]);
+        result[name] = _underscore.isEmpty(dataStoreStates[name]) ? {} : _this.generateKnockoutBinding(binding, elementName, config, _underscore.extend({}, defaultState, dataStoreStates[name]));
       });
       return result;
     };
