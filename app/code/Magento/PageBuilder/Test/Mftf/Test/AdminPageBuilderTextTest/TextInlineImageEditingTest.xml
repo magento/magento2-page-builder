@@ -91,7 +91,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="#{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="waitForTinyMCEIFrame"/>
-        <waitForJS function="return typeof tinymce !== 'undefined' &amp;&amp; tinymce.activeEditor &amp;&amp; tinymce.activeEditor.getContent().indexOf('{{ImageUpload3.fileName}}') !== -1" time="30" stepKey="waitForImage3"/>
+        <waitForJS function="var ed = window.hugerte || window.tinymce; var editor = ed ? ed.get('{{TextOnConfiguration.textAreaId}}') : null; return !!editor &amp;&amp; editor.getContent().indexOf('{{ImageUpload3.fileName}}') !== -1;" time="30" stepKey="waitForImage3"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
