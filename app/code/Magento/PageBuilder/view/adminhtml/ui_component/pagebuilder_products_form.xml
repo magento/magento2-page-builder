@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2026 Adobe
+ * All Rights Reserved.
  */
 -->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+      extends="pagebuilder_base_form">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">pagebuilder_products_form.pagebuilder_products_form_data_source</item>
+            <item name="provider"
+                  xsi:type="string">pagebuilder_products_form.pagebuilder_products_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">Products</item>
     </argument>
@@ -22,17 +24,21 @@
     <dataSource name="pagebuilder_products_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/products/form/provider</item>
+                <item name="component"
+                      xsi:type="string">Magento_PageBuilder/js/content-type/products/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_products_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+        <dataProvider name="pagebuilder_products_form_data_source"
+                      class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+    <fieldset name="appearance_fieldset"
+              sortOrder="10"
+              component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
             <additionalClasses>
@@ -45,7 +51,10 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
+        <field name="appearance"
+               formElement="select"
+               sortOrder="10"
+               component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">grid</item>
@@ -70,7 +79,10 @@
                 </select>
             </formElements>
         </field>
-        <field name="condition_option" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/condition-options">
+        <field name="condition_option"
+               sortOrder="20"
+               formElement="select"
+               component="Magento_PageBuilder/js/form/element/condition-options">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Select Products By</label>
@@ -79,6 +91,7 @@
                     <link name="category_idsVisible">${$.parentName}.category_ids:visible</link>
                     <link name="conditionVisible">${$.parentName}.conditions_form:visible</link>
                     <link name="skuVisible">${$.parentName}.sku:visible</link>
+                    <link name="category_listingVisible">${$.parentName}.category_listing:visible</link>
                     <link name="value">${$.parentName}.sort_order:filter</link>
                 </exports>
                 <dataScope>condition_option</dataScope>
@@ -102,12 +115,22 @@
                                 <item name="value" xsi:type="string">condition</item>
                                 <item name="title" xsi:type="string" translate="true">Condition</item>
                             </option>
+                            <option name="3" xsi:type="array">
+                                <item name="size" xsi:type="string">small</item>
+                                <item name="value" xsi:type="string">category_listing</item>
+                                <item name="title"
+                                      xsi:type="string"
+                                      translate="true">Category Listing (search engine)</item>
+                            </option>
                         </options>
                     </settings>
                 </select>
             </formElements>
         </field>
-        <field name="category_ids" component="Magento_Catalog/js/components/new-category" sortOrder="30" formElement="select">
+        <field name="category_ids"
+               component="Magento_Catalog/js/components/new-category"
+               sortOrder="30"
+               formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
@@ -123,6 +146,39 @@
                 <dataScope>category_ids</dataScope>
                 <componentType>field</componentType>
                 <visible>false</visible>
+                <listens>
+                    <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
+                </listens>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Catalog\Ui\Component\Product\Form\Categories\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="category_listing"
+               component="Magento_Catalog/js/components/new-category"
+               sortOrder="35"
+               formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+                <label translate="true">Category</label>
+                <dataScope>category_listing</dataScope>
+                <componentType>field</componentType>
+                <visible>false</visible>
+                <notice translate="true"
+                >Products are loaded through the search engine with the same rules as the category page.</notice>
                 <listens>
                     <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
                 </listens>
@@ -153,7 +209,10 @@
                 <elementTmpl>Magento_PageBuilder/form/element/input-no-maxlength</elementTmpl>
             </settings>
         </field>
-        <htmlContent name="conditions_form" sortOrder="50" template="Magento_PageBuilder/form/element/widget-conditions" component="Magento_PageBuilder/js/form/element/html">
+        <htmlContent name="conditions_form"
+                     sortOrder="50"
+                     template="Magento_PageBuilder/form/element/widget-conditions"
+                     component="Magento_PageBuilder/js/form/element/html">
             <settings>
                 <visible>false</visible>
                 <additionalClasses>
@@ -168,7 +227,10 @@
                 </arguments>
             </block>
         </htmlContent>
-        <field name="sort_order" sortOrder="60" formElement="select" component="Magento_PageBuilder/js/form/element/select-filtered-options">
+        <field name="sort_order"
+               sortOrder="60"
+               formElement="select"
+               component="Magento_PageBuilder/js/form/element/select-filtered-options">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">position</item>
@@ -176,6 +238,7 @@
                         <item name="condition" xsi:type="string">position,position_by_sku</item>
                         <item name="sku" xsi:type="string">position</item>
                         <item name="category_ids" xsi:type="string">position_by_sku</item>
+                        <item name="category_listing" xsi:type="string">position_by_sku</item>
                     </item>
                 </item>
             </argument>
@@ -219,7 +282,10 @@
                     </validation>
                 </settings>
             </field>
-            <field name="product_totals" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/product-totals">
+            <field name="product_totals"
+                   sortOrder="20"
+                   formElement="input"
+                   component="Magento_PageBuilder/js/form/element/product-totals">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="default" xsi:type="string">of ${ $.totalProductCount } total</item>
@@ -235,7 +301,8 @@
                     <tooltip>
                         <description translate="true">
                             <![CDATA[
-                                <p>The products displayed may vary from this total due to several factors, including but not limited to:</p>
+                                <p>The products displayed may vary from this total due to several factors,
+                                including but not limited to:</p>
                                 <ul>
                                     <li>Disabled status</li>
                                     <li>Visibility configuration (not visible in catalog)</li>
@@ -248,10 +315,14 @@
                     <imports>
                         <link name="conditionOption">ns = ${ $.ns }, index = condition_option:value</link>
                         <link name="conditionValue">ns = ${ $.ns }, index = conditions_form:value</link>
+                        <link name="categoryId">ns = ${ $.ns }, index = category_listing:value</link>
                     </imports>
                     <listens>
-                        <link name="${ $.ns }.${ $.ns }.appearance_fieldset.category_ids:value">updateProductTotals</link>
+                        <link name="${ $.ns }.${ $.ns }.appearance_fieldset.category_ids:value"
+                        >updateProductTotals</link>
                         <link name="${ $.ns }.${ $.ns }.appearance_fieldset.sku:value">updateProductTotals</link>
+                        <link name="${ $.ns }.${ $.ns }.appearance_fieldset.category_listing:value"
+                        >updateProductTotals</link>
                     </listens>
                 </settings>
             </field>

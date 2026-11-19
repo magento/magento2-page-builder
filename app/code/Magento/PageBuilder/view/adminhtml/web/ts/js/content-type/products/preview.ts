@@ -127,7 +127,12 @@ export default class Preview extends BasePreview {
         if (this.hasDataChanged(this.previousData, data)) {
             this.displayPreview(false);
 
-            if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
+            const hasCategoryListing = data.condition_option === "category_listing" &&
+                typeof data.category_listing === "string" && data.category_listing.length > 0;
+
+            if (!hasCategoryListing &&
+                ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0)
+            ) {
                 this.placeholderText(this.messages.EMPTY);
 
                 return;
