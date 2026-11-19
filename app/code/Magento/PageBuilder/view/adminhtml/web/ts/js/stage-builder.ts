@@ -60,6 +60,11 @@ function convertToInlineStyles(document: Document): void {
         _.each(styles, (stylesArray: CSSStyleDeclaration[], selector: string) => {
             const element: HTMLElement = document.querySelector(selector);
 
+            // a stored style rule can outlive its element; skip it instead of failing the whole stage
+            if (!element) {
+                return;
+            }
+
             _.each(stylesArray, (style: CSSStyleDeclaration) => {
                 element.setAttribute(
                     `data-${name}-style`,
