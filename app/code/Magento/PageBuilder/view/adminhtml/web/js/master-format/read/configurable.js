@@ -156,7 +156,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
           value = converterPool.get(attributeConfig.converter).fromDom(value);
         }
 
-        if (_jquery.type(result[attributeConfig.var]) === "object") {
+        if (Object.prototype.toString.call(result[attributeConfig.var]) === "[object Object]") {
           var _mageUtils$extend;
 
           value = _mageUtils.extend((_mageUtils$extend = {}, _mageUtils$extend[attributeConfig.name] = value, _mageUtils$extend), result[attributeConfig.var]);
