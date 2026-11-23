@@ -15,7 +15,7 @@
       <argument name="expectedProperty" type="string"/>
       <argument name="cssProperty" defaultValue="backgroundColor" type="string"/>
     </arguments>
-    <executeJS function="return window.getComputedStyle(document.evaluate('{{selector}}', document.body).iterateNext()).{{cssProperty}}.replace(/px/g, &quot;&quot;)" stepKey="fetchedProperty"/>
+    <executeJS function="return window.getComputedStyle(document.evaluate('{{selector}}', document.body).iterateNext()).{{cssProperty}}.replace(/px/g, &quot;&quot;).replace(/^flow-(start|end)$/, &quot;flex-$1&quot;)" stepKey="fetchedProperty"/>
     <assertEquals stepKey="propertyIsEqualsAsExpected">
       <expectedResult type="string">{{expectedProperty}}</expectedResult>
       <actualResult type="variable">fetchedProperty</actualResult>

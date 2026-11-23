@@ -10,5 +10,6 @@
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="AdminDisableWYSIWYGActionGroup">
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+        <magentoCLI command="cache:flush config full_page" stepKey="flushCacheAfterDisablingPageBuilder"/>
     </actionGroup>
 </actionGroups>
