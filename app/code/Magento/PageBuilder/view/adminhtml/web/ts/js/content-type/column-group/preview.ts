@@ -584,7 +584,7 @@ export default class Preview extends PreviewCollection {
      * Update the grid size on enter or blur of the input
      */
     public updateGridSize() {
-        if (!$.isNumeric(this.gridSizeInput())) {
+        if (isNaN(parseFloat(String(this.gridSizeInput()))) || !isFinite(this.gridSizeInput())) {
             this.gridSizeError($t("Please enter a valid number."));
         }
 
