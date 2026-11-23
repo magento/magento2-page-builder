@@ -40,7 +40,7 @@ define([
                         $('.page-main-actions').after($wrapper);
                     }
                 });
-                $('.save.primary').attr('disabled', true);
+                $('.save.primary').attr('disabled', 'disabled');
                 $('body').trigger('processStop');
             }
             this.loading(false);

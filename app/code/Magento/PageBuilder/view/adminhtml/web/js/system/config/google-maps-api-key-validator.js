@@ -47,7 +47,7 @@ define(['jquery'], function ($) {
             var elementValue = event.currentTarget.value,
                 buttonText = config.buttonLabel;
 
-            $(el).attr('disabled', !elementValue);
+            $(el).attr('disabled', elementValue ? false : 'disabled');
             resultElement.html(buttonText);
         });
     };
