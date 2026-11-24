@@ -27,8 +27,8 @@ export default class BackgroundImages implements ConverterInterface {
             if (!_.isUndefined(images.mobile_image)) {
                 set(data, config.mobile_image_variable, decodeUrl(images.mobile_image));
             }
-            delete data[config.attribute_name];
         }
+        delete data[config.attribute_name];
         return data;
     }
 
@@ -52,6 +52,12 @@ export default class BackgroundImages implements ConverterInterface {
         }
         if (!_.isUndefined(mobileImage) && mobileImage && !_.isUndefined(mobileImage[0])) {
             directiveData.mobile_image = urlToDirective(mobileImage[0].url);
+        }
+
+        if (_.isEmpty(directiveData)) {
+            delete data[config.attribute_name];
+
+            return data;
         }
 
         // Add the directive data, ensuring we escape double quotes
