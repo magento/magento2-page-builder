@@ -74,7 +74,7 @@ function normalizeHeader(string $text): string
  */
 function shouldExclude(string $filePath): bool
 {
-    static $allowedExts = ['php','phtml','html','js','xml','xsd','less','css','scss','graphqls'];
+    static $allowedExts = ['php','phtml','html','js','ts','xml','xsd','less','css','scss','graphqls'];
 
     $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
     if (!in_array($ext, $allowedExts, true)) return true;
