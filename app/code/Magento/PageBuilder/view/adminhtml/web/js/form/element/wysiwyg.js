@@ -144,7 +144,7 @@ define([
                 focusableSelector = ' :focusable:not(' + this.overlaySelector + ')',
                 mediaSelector = pageBuilderSelector + ' iframe,' + pageBuilderSelector + ' video',
                 tabIndexValue = this.pageBuilder.isFullScreen() ? '0' : '-1',
-                editableValue = this.pageBuilder.isFullScreen();
+                editableValue = this.pageBuilder.isFullScreen() ? 'true' : 'false';
 
             editable.attr('contenteditable', editableValue);
             if (this.pageBuilder.isFullScreen()) {

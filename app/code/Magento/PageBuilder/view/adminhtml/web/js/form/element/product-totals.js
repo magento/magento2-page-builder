@@ -155,7 +155,7 @@ define([
                 if (this.jqXHR.statusText !== 'abort') {
                     if (this.jqXHR.status === 403) {
                         this.showForbiddenErrorMessage();
-                        $('.save.primary').attr('disabled', true);
+                        $('.save.primary').attr('disabled', 'disabled');
                         $('body').trigger('processStop');
                     } else {
                         this.value($t('An unknown error occurred. Please try again.'));

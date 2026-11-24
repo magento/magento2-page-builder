@@ -162,7 +162,7 @@ export default class Configurable implements ReadInterface {
             if (converterPool.get(attributeConfig.converter)) {
                 value = converterPool.get(attributeConfig.converter).fromDom(value);
             }
-            if ($.type(result[attributeConfig.var]) === "object") {
+            if (Object.prototype.toString.call(result[attributeConfig.var]) === "[object Object]") {
                 value = mageUtils.extend(
                     {[attributeConfig.name]: value},
                     result[attributeConfig.var],
@@ -201,7 +201,7 @@ export default class Configurable implements ReadInterface {
             if (converterPool.get(propertyConfig.converter)) {
                 value = converterPool.get(propertyConfig.converter).fromDom(value);
             }
-            if ($.type(result[propertyConfig.var]) === "object") {
+            if (Object.prototype.toString.call(result[propertyConfig.var]) === "[object Object]") {
                 value = mageUtils.extend(result[propertyConfig.var], value);
             }
             result[propertyConfig.var] = value;

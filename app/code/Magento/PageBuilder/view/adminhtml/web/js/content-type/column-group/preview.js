@@ -553,7 +553,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     _proto.updateGridSize = function updateGridSize() {
       var _this8 = this;
 
-      if (!_jquery.isNumeric(this.gridSizeInput())) {
+      if (isNaN(parseFloat(String(this.gridSizeInput()))) || !isFinite(this.gridSizeInput())) {
         this.gridSizeError((0, _translate)("Please enter a valid number."));
       }
 
