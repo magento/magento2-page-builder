@@ -143,6 +143,7 @@ jobs:
           # Verify required CI files are not removed in this PR
           required=(
             .github/workflows/pr-quality-gates.yml
+            .github/scripts/check_copyright_pr.php
             .github/scripts/copyright-template.txt
           )
           missing=false
@@ -629,11 +630,32 @@ jobs:
           filtered_less=$(mktemp)
           python3 - /tmp/changed_less.txt /tmp/less_blacklist.txt "$filtered_less" <<'PYEOF'
           import fnmatch, sys
+
+          NON_MODULE_DIRS = {
+              'app', 'lib', 'dev', 'pub', 'setup', 'vendor', '.github',
+              'bin', 'generated', 'var', 'build', 'node_modules',
+          }
+
+          def matching_paths(fp):
+              paths = [fp]
+              prefix = 'app/code/Magento/'
+              if fp.startswith(prefix):
+                  paths.append(fp[len(prefix):])
+              else:
+                  first = fp.split('/')[0]
+                  if first and first[0].isupper() and first not in NON_MODULE_DIRS:
+                      paths.append(prefix + fp)
+              return paths
+
           with open(sys.argv[2]) as f:
               patterns = [l.strip() for l in f if l.strip() and not l.strip().startswith('//')]
           with open(sys.argv[1]) as f:
               files = [l.strip() for l in f if l.strip()]
-          filtered = [fp for fp in files if not any(fnmatch.fnmatch(fp, p) for p in patterns)]
+          filtered = []
+          for fp in files:
+              paths = matching_paths(fp)
+              if not any(fnmatch.fnmatch(path, p) for p in patterns for path in paths):
+                  filtered.append(fp)
           with open(sys.argv[3], 'w') as out:
               out.write('\n'.join(filtered) + ('\n' if filtered else ''))
           PYEOF
@@ -935,11 +957,16 @@ jobs:
               'bin', 'generated', 'var', 'build', 'node_modules',
           }
 
-          def whitelist_path(fp):
-              first = fp.split('/')[0]
-              if first and first[0].isupper() and first not in NON_MODULE_DIRS:
-                  return 'app/code/Magento/' + fp
-              return fp
+          def matching_paths(fp):
+              paths = [fp]
+              prefix = 'app/code/Magento/'
+              if fp.startswith(prefix):
+                  paths.append(fp[len(prefix):])
+              else:
+                  first = fp.split('/')[0]
+                  if first and first[0].isupper() and first not in NON_MODULE_DIRS:
+                      paths.append(prefix + fp)
+              return paths
 
           with open(sys.argv[1]) as f:
               files = [l.strip() for l in f if l.strip()]
@@ -948,10 +975,10 @@ jobs:
 
           result = []
           for fp in files:
-              match_fp = whitelist_path(fp)
-              if whitelist and not any(r.match(match_fp) for r in whitelist):
+              paths = matching_paths(fp)
+              if whitelist and not any(r.match(path) for r in whitelist for path in paths):
                   continue
-              if any(r.match(match_fp) for r in blacklist):
+              if any(r.match(path) for r in blacklist for path in paths):
                   continue
               result.append(fp)
           for fp in result:
@@ -975,28 +1002,35 @@ jobs:
         if: always() && steps.gate.outputs.tslint == 'true' && env.HAS_TS == 'true'
         run: |
           set -euo pipefail
+          if [ ! -s /tmp/changed_ts.txt ]; then
+            echo "No TypeScript files to check. Skipping."
+            exit 0
+          fi
+          mapfile -t ts_files < /tmp/changed_ts.txt
+          if [ ${#ts_files[@]} -eq 0 ] || [ -z "${ts_files[*]}" ]; then
+            echo "No TypeScript files to check. Skipping."
+            exit 0
+          fi
           git show "HEAD:package.json" > /tmp/repo-package.json 2>/dev/null || true
-          read -r _ts_spec tslint_spec <<< "$(
+          read -r ts_spec tslint_spec <<< "$(
             python3 .github/scripts/resolve_magento_tool_constraints.py \
               --npm-package-json /tmp/repo-package.json 2>/dev/null \
               || echo "typescript tslint"
           )"
-          echo "Installing: $tslint_spec"
-          npm install --prefix /tmp/ts-tools "$tslint_spec" 2>/dev/null
+          echo "Installing: $ts_spec $tslint_spec"
+          npm install --prefix /tmp/ts-tools "$ts_spec" "$tslint_spec" 2>/dev/null
           TSLINT=/tmp/ts-tools/node_modules/.bin/tslint
-
-          mapfile -t ts_files < /tmp/changed_ts.txt
 
           _tmp=$(mktemp)
           if git show "HEAD:tslint.json" > "$_tmp" 2>/dev/null && [ -s "$_tmp" ]; then
             mv "$_tmp" tslint.json
             echo "Using repo tslint.json"
-            "$TSLINT" -c tslint.json --format stylish "${ts_files[@]}"
           else
             rm -f "$_tmp"
             cp .github/scripts/tslint.json tslint.json
             echo "Using bundled .github/scripts/tslint.json (repo has no tslint.json)"
           fi
+          "$TSLINT" -c tslint.json --format stylish "${ts_files[@]}"
 
       - name: Coding standard results summary
         if: always() && steps.install-mcs.outputs.ready == 'true'
