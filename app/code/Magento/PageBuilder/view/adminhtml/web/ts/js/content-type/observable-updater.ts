@@ -228,11 +228,12 @@ export default class ObservableUpdater {
         dataStoreStates: {[key: string]: DataObject},
     ) {
         const result: {[key: string]: any} = {};
+        const defaultState = dataStoreStates[Config.getConfig("defaultViewport")];
 
         Object.keys(dataStoreStates).forEach((name: string) => {
             result[name] = _.isEmpty(dataStoreStates[name]) ?
                 {} :
-                this.generateKnockoutBinding(binding, elementName, config, dataStoreStates[name]);
+                this.generateKnockoutBinding(binding, elementName, config, _.extend({}, defaultState, dataStoreStates[name]));
         });
 
         return result;
